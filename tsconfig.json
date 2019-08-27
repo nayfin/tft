@@ -16,7 +16,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@tft/api-interfaces": ["libs/api-interfaces/src/index.ts"]
+      "@tft/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@tft/interact": ["libs/interact/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

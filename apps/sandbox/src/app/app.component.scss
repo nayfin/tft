@@ -1,0 +1,25 @@
+.drag-container {
+  width: 1000px;
+  height: 400px;
+  background: green;
+  .interact-item {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: brown;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .handle {
+      width: 40px;
+      height: 40px;
+      background: black;
+    }
+  }
+}
+
+.drop-container {
+  width: 1000px;
+  height: 1000px;
+  background: blue;
+}

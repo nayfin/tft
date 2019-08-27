@@ -1,8 +1,26 @@
-<div style="text-align:center">
-  <h1>Welcome to sandbox!</h1>
-  <img
-    width="450"
-    src="https://raw.githubusercontent.com/nrwl/nx/master/nx-logo.png"
-  />
+
+<div class="drag-container">
+
+  <section 
+    tftResizable
+    tftDraggable
+    [dragOptions]="dragConfig"
+    class="interact-item">
+    <div class="handle"></div>
+
+  </section>
+
+  
+  <!-- <section 
+    tftResizable
+    tftDraggable
+    [dragOptions]="dragConfig"
+    class="interact-item">
+
+  </section> -->
+
 </div>
-<div>Message: {{ hello$ | async | json }}</div>
+
+<div class="drop-container">
+
+</div>

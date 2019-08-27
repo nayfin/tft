@@ -19,6 +19,15 @@
     },
     "api-interfaces": {
       "tags": []
+    },
+    "documentation-e2e": {
+      "tags": []
+    },
+    "documentation": {
+      "tags": []
+    },
+    "interact": {
+      "tags": []
     }
   }
 }
