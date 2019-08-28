@@ -1,65 +1,81 @@
 
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { tap, scan, distinct, filter, map } from 'rxjs/operators';
+import { Injectable, Renderer2 } from '@angular/core';
+import { BehaviorSubject, Observable, merge, combineLatest } from 'rxjs';
+import { tap, scan, filter, map } from 'rxjs/operators';
+import { TftDraggable } from '../models.ts/draggable';
 
 @Injectable()
 export class InteractService {
 
-  private location$ = new BehaviorSubject({ x: 0, y: 0, el: null });
-  private size$ = new BehaviorSubject({ deltaX: 0, deltaY: 0, width: 150, height: 150, el: null });
-
-
-  
-  constructor() {
-
-    this.location$.pipe(
-      // ensure we have an element to drag
-      filter(location => location.el),
-      // we add the deltas to the positions state as the drag events come through
-      scan((acc, deltaLocation ) => {
-        if (deltaLocation.el) {
-          return {
-            x: (deltaLocation.x + acc.x),
-            y: (deltaLocation.y + acc.y),
-            el: acc.el
-          };
-        }
-      }),
-      tap(location => { 
-        this.setElementTransform(location.x, location.y, location.el);
-      })
-    ).subscribe();
-
+  // tracks the position deltas as they occur
+  readonly deltas$ = new BehaviorSubject({x: 0, y: 0, targetElement: null });
+  // tracks the size of the element
+  readonly size$ = new BehaviorSubject({width: 250, height: 250, targetElement: null });
+  // Stream of positions as they change
+  readonly position$ = new BehaviorSubject({x: 0, y: 0, targetElement: null });
+   
+  readonly draggable$: Observable<TftDraggable> = combineLatest(
     this.size$.pipe(
-      // ensure we have an element to drag
-      filter(size => size.el),
-      tap(size => {
-        const { el, deltaX, deltaY, height, width} = size;
-        // When resizing up or left we need to adjust location of element as well
-        if(deltaX || deltaY) {
-          this.updateLocation({ deltaX, deltaY }, el);
+      filter(resizeEvent => !!resizeEvent.targetElement),
+      tap(({width, height, targetElement}) => this.setElementSize(width, height, targetElement))
+    ),
+    this.position$.pipe(
+      filter(position => !!position.targetElement),
+      tap( position => this.setElementTransform(position.x, position.y, position.targetElement))
+    )
+  ).pipe(
+    map( ([size, position]): TftDraggable => {
+      return {
+        x: position.x,
+        y: position.y,
+        width: size.width,
+        height: size.height,
+        targetElement: size.targetElement || position.targetElement
+      }
+    }),  
+  ); 
+
+  constructor(
+    private renderer: Renderer2
+  ) {
+    this.deltas$.pipe(
+      filter(dragEvent => !!dragEvent.targetElement),
+      tap((dragEvent:{x: number, y: number, targetElement: any}) => {
+        const position = this.position$.value;
+        const newPosition = {
+          x: dragEvent.x + position.x,
+          y: dragEvent.y + position.y,
+          targetElement: dragEvent.targetElement
         }
-        this.setElementSize(width, height, el);
+        this.position$.next(newPosition);
       })
     ).subscribe();
+    this.draggable$.subscribe();
   }
 
-  updateLocation({ deltaX, deltaY }, el) {
-    this.location$.next({ x: deltaX, y: deltaY, el })
+  updateDeltas({ x, y }, targetElement) {
+    this.deltas$.next({ x, y, targetElement })
   }
 
-  updateSize({ deltaX, deltaY, width, height }, el) {
-    this.size$.next({ deltaX, deltaY, width, height, el })
+  updatePosition({ x, y }, targetElement) {
+    this.position$.next({ x, y, targetElement })
+  }
+
+  updateSize({ deltaX, deltaY, width, height }, targetElement) {
+    // only reposition if necessary i.e when resizing left or up
+    if(deltaX || deltaY) {
+      this.updateDeltas({x: deltaX, y: deltaY}, targetElement);
+    }
+    this.size$.next({width, height, targetElement});
   }
 
   setElementSize(width: number, height: number, target: any) {
-    target.style.width  = width + 'px';
-    target.style.height = height + 'px';
+    this.renderer.setStyle(target, 'width', `${width}px`);
+    this.renderer.setStyle(target, 'height', `${height}px`);
   }
 
   setElementTransform(x: number, y: number, target: any) {
     const transformString = `translate3d(${x}px, ${y}px, 0)`;
-    target.style.webkitTransform = target.style.transform = transformString;
+    this.renderer.setStyle(target, 'transform', transformString );
   }
 }

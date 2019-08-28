@@ -1,7 +1,9 @@
-import { Directive, ElementRef, Input, OnInit, AfterViewInit } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
 import interact from 'interactjs';
 import { InteractService } from '../services/interact.service';
 import { DraggableOptions } from '@interactjs/types/types';
+import { TftDraggable } from '../models.ts/draggable';
+import { Subject } from 'rxjs';
 
 
 @Directive({
@@ -10,11 +12,10 @@ import { DraggableOptions } from '@interactjs/types/types';
   host: {    
     '[style.touchAction]': '"none"',
     '[style.position]': '"absolute"',
-
   },
   providers: [InteractService]
 })
-export class DraggableDirective implements OnInit, AfterViewInit {
+export class DraggableDirective implements OnInit, OnChanges {
 
   DEFAULT_OPTIONS = {
     // inertia: true,
@@ -28,28 +29,38 @@ export class DraggableDirective implements OnInit, AfterViewInit {
   }
 
   @Input() dragOptions: DraggableOptions;
+
+  @Input() x: number;
+  @Input() y: number;
+
+  @Output() move = new Subject<TftDraggable>();
   constructor(
     private el: ElementRef,
     private interactService: InteractService
   ) { }
 
   ngOnInit() {
+    interact(this.el.nativeElement).draggable({ ...this.DEFAULT_OPTIONS, ...this.dragOptions });
+    this.interactService.position$.subscribe(position => this.move.next(position));
+    this.alignPositionWithInputs()
   }
 
-  ngAfterViewInit() {
-    const draggable = this.el.nativeElement;
-    interact(draggable).draggable({ ...this.DEFAULT_OPTIONS, ...this.dragOptions });  
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes.x || changes.y) {
+      this.alignPositionWithInputs();
+    }
   }
 
   dragMoveListener(event) {
     event.preventDefault();
     event.stopPropagation();
-    this.interactService.updateLocation({deltaX: event.dx, deltaY: event.dy}, this.el.nativeElement);
+    this.interactService.updateDeltas({x: event.dx, y: event.dy}, this.el.nativeElement);
   }
 
-
-
-
+  alignPositionWithInputs() {
+    console.log('aligning position', this.x, this.y)
+    if(this.x && this.y) {
+      this.interactService.updatePosition({x: this.x, y: this.y}, this.el.nativeElement);
+    }
+  }
 }
-
-

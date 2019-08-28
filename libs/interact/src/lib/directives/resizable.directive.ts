@@ -1,50 +1,40 @@
-import { Directive, AfterViewInit, ElementRef} from '@angular/core';
+import { Directive, AfterViewInit, ElementRef, Input} from '@angular/core';
 import interact from 'interactjs';
 import { InteractService } from '../services/interact.service';
+import { ResizableOptions } from '@interactjs/types/types';
+import { Options } from '@interactjs/core/defaultOptions';
+import { Observable } from 'rxjs';
 
 @Directive({
   selector: '[tftResizable]'
 })
 export class ResizableDirective implements AfterViewInit {
 
-  // location$: Observable<Location> = this.locationService.location$;
+  // location$: Observable<{x: number, y: number, el: any}> = this.interactService.location$;
 
-
+  @Input() resizeConfig: ResizableOptions;
+  defaultConfig: Options = {
+    drag: {onend: console.log}
+  };
   constructor(
     private el: ElementRef,
     private interactService: InteractService
-    // private renderer: Renderer2
   ) { }
 
   ngAfterViewInit() {
     const resizable = this.el.nativeElement;
     interact(resizable).resizable({
-      // resize from all edges and corners
       edges: { left: true, right: true, bottom: true, top: true },
-      // keep the edges inside the parent
-      // restrictEdges: {
-      //   outer: 'parent',
-      //   endOnly: true,
-      // },
-      inertia: true,
-    }).on('resizemove', (event) => { this.resizeListener(event, resizable)});
+    }).on('resizemove', this.resizeListener( resizable));
   }
 
-  resizeListener(event, nativeElement ) {
-    const target = nativeElement;
-    const deltaX = event.deltaRect.left;
-    const deltaY = event.deltaRect.top;
-    const width = event.rect.width;
-    const height = event.rect.height;
-    // this.x = (parseFloat(target.getAttribute('data-x')) || 0),
-    // this.y = (parseFloat(target.getAttribute('data-y')) || 0);
-
-    // update the element's style
-    // target.style.width  = event.rect.width + 'px';
-    // target.style.height = event.rect.height + 'px';
-
-    this.interactService.updateSize({ deltaX, deltaY, width, height}, target);
-    
-  
+  resizeListener( nativeElement ) {
+    return (event) => {
+      const deltaX = event.deltaRect.left;
+      const deltaY = event.deltaRect.top;
+      const width  = event.rect.width;
+      const height = event.rect.height;
+      this.interactService.updateSize({ deltaX, deltaY, width, height}, nativeElement);  
+    }
   }
 }

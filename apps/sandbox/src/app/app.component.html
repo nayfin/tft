@@ -1,9 +1,12 @@
 
 <div class="drag-container">
-
+  <button (click)="incrementX()">Increment X</button>
   <section 
+    *ngFor="let item of dragItems"
     tftResizable
     tftDraggable
+    [x]="item.x"
+    [y]="item.y"
     [dragOptions]="dragConfig"
     class="interact-item">
     <div class="handle"></div>
@@ -21,6 +24,16 @@
 
 </div>
 
-<div class="drop-container">
-
+<div class="drop-container" tftDropzone [dropzoneConfig]="dropzoneConfig">
+  <section 
+    *ngFor="let item of droppedItems"
+    tftResizable
+    tftDraggable
+    [x]="item.x"
+    [y]="item.y"
+    [dragOptions]="dragConfig"
+    class="dropzone-item">
+    <div class="handle"></div>
+    {{item.name}}
+  </section>
 </div>
