@@ -2,7 +2,7 @@ import { Directive, ElementRef, Input, OnInit, Output, OnChanges, SimpleChanges 
 import interact from 'interactjs';
 import { InteractService } from '../services/interact.service';
 import { DraggableOptions } from '@interactjs/types/types';
-import { TftDraggable } from '../models.ts/draggable';
+import { TftDraggable } from '../models.ts/interact';
 import { Subject } from 'rxjs';
 
 
@@ -13,7 +13,9 @@ import { Subject } from 'rxjs';
     '[style.touchAction]': '"none"',
     '[style.position]': '"absolute"',
   },
-  providers: [InteractService]
+  providers: [
+    InteractService,
+  ]
 })
 export class DraggableDirective implements OnInit, OnChanges {
 
@@ -27,7 +29,7 @@ export class DraggableDirective implements OnInit, OnChanges {
       this.dragMoveListener(event);
     }
   }
-
+  @Input() enableDragDefault = true;
   @Input() dragOptions: DraggableOptions;
 
   @Input() x: number;
@@ -41,7 +43,7 @@ export class DraggableDirective implements OnInit, OnChanges {
 
   ngOnInit() {
     interact(this.el.nativeElement).draggable({ ...this.DEFAULT_OPTIONS, ...this.dragOptions });
-    this.interactService.position$.subscribe(position => this.move.next(position));
+    this.interactService.draggable$.subscribe(draggable => this.move.next(draggable));
     this.alignPositionWithInputs()
   }
 
@@ -54,7 +56,7 @@ export class DraggableDirective implements OnInit, OnChanges {
   dragMoveListener(event) {
     event.preventDefault();
     event.stopPropagation();
-    this.interactService.updateDeltas({x: event.dx, y: event.dy}, this.el.nativeElement);
+    this.interactService.updateDeltas({deltaX: event.dx, deltaY: event.dy}, this.el.nativeElement);
   }
 
   alignPositionWithInputs() {
