@@ -1,9 +1,10 @@
-import { Directive, ElementRef, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, Output, OnChanges, SimpleChanges, OnDestroy, EventEmitter } from '@angular/core';
 import interact from 'interactjs';
-import { InteractService } from '../services/interact.service';
+import { InteractService, InteractableSystem } from '../services/interact.service';
 import { DraggableOptions } from '@interactjs/types/types';
 import { TftDraggable } from '../models.ts/interact';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
+import { DragEvent } from '@interactjs/actions';
 
 
 @Directive({
@@ -12,38 +13,59 @@ import { Subject } from 'rxjs';
   host: {    
     '[style.touchAction]': '"none"',
     '[style.position]': '"absolute"',
-  },
-  providers: [
-    InteractService,
-  ]
+  }
 })
-export class DraggableDirective implements OnInit, OnChanges {
+export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
 
-  DEFAULT_OPTIONS = {
+  draggableId: string;
+
+  DEFAULT_OPTIONS: Partial<Interact.OrBoolean<DraggableOptions>> = {
     // inertia: true,
     // keep the element within the area of it's parent
     autoScroll: true,
-
     // call this function on every dragmove event
-    onmove: (event) => {
-      this.dragMoveListener(event);
-    }
+    onmove: (event: DragEvent) => {
+      if (this.enableDragDefault) {
+        this.dragMoveListener(event);
+      }
+      this.dragMove.emit(event);
+    },
+    onstart: (event: DragEvent) => {
+      this.dragStart.emit(event);
+    },
+    onend: (event: DragEvent) => {
+      this.dragEnd.emit(event);
+    },
+    oninertiastart: (event: DragEvent) => {
+      this.inertiaStart.emit(event);
+    },
   }
-  @Input() enableDragDefault = true;
-  @Input() dragOptions: DraggableOptions;
 
+  @Input() enableDragDefault = true;
+  @Input() dragOptions: Partial<Interact.OrBoolean<DraggableOptions>>;
   @Input() x: number;
   @Input() y: number;
+  @Input() interactableId: string;
+  // pipes all interact events to event emitters 
+  @Output() dragMove = new EventEmitter<DragEvent>();
+  @Output() dragStart = new EventEmitter<DragEvent>();
+  @Output() dragEnd = new EventEmitter<DragEvent>();
+  @Output() inertiaStart = new EventEmitter<DragEvent>();
 
-  @Output() move = new Subject<TftDraggable>();
+  // interactableSystem: InteractableSystem
+  interactableSubscription: Subscription;
+
   constructor(
     private el: ElementRef,
     private interactService: InteractService
   ) { }
 
   ngOnInit() {
+    
     interact(this.el.nativeElement).draggable({ ...this.DEFAULT_OPTIONS, ...this.dragOptions });
-    this.interactService.draggable$.subscribe(draggable => this.move.next(draggable));
+
+    this.interactableId = this.interactService.addDraggableToRegistry();
+    this.interactableSubscription = this.interactService.dragRegistry[this.interactableId].draggable$.subscribe();
     this.alignPositionWithInputs()
   }
 
@@ -53,16 +75,19 @@ export class DraggableDirective implements OnInit, OnChanges {
     }
   }
 
-  dragMoveListener(event) {
+  ngOnDestroy() {
+    this.interactableSubscription.unsubscribe();
+  }
+
+  dragMoveListener(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
-    this.interactService.updateDeltas({deltaX: event.dx, deltaY: event.dy}, this.el.nativeElement);
+    this.interactService.updateDeltas(this.interactableId, {deltaX: event.dx, deltaY: event.dy}, this.el.nativeElement);
   }
 
   alignPositionWithInputs() {
-    console.log('aligning position', this.x, this.y)
     if(this.x && this.y) {
-      this.interactService.updatePosition({x: this.x, y: this.y}, this.el.nativeElement);
+      this.interactService.updatePosition(this.interactableId, {x: this.x, y: this.y}, this.el.nativeElement);
     }
   }
 }

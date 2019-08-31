@@ -7,6 +7,7 @@ This is an angular wrapper for the interactjs library.  We aim to build a versat
 Run `nx test interact` to execute the unit tests.
 
 Upcoming Features
-- basic drag/resize
-- drag/resize registry to track multiple drag items
-- ejecting location service for end-users to track drag/resize state
+- method of cloning/replacing drag item
+- method of correlating and passing data between drag item and drop zone
+- way to eject all drag registry state to end-developer
+- use zones to run outside angular? (if it improves performance)
