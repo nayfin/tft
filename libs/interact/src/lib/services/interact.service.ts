@@ -4,7 +4,6 @@ import { BehaviorSubject, Observable, combineLatest, Subscription } from 'rxjs';
 import { tap, filter, map, shareReplay } from 'rxjs/operators';
 import { TftDraggable, Delta, Size, Position } from '../models.ts/interact';
 
-
 export interface InteractableSystem {
   deltas$: BehaviorSubject<Delta>;
   position$: BehaviorSubject<Position>;
@@ -35,20 +34,17 @@ export class InteractService {
   
   private _interactableIndex = 0;
   private renderer: Renderer2;
+
   get interactableCount() {
     return this._interactableIndex + 1;
   }
   
   readonly dragRegistry: {[key: string]: InteractableSystem } = {};
-  // tracks the position deltas as they occur
   
-  // subscriptionRegistry: {[key: string]: Subscription} = {};
-
   constructor(
     private rendererFactory: RendererFactory2
   ) {
     this.renderer = this.rendererFactory.createRenderer(null, null);
-    // this.draggable$.subscribe();
   }
 
   addDeltaToPosition(delta: Delta, position: Position) {
@@ -62,15 +58,10 @@ export class InteractService {
   addDraggableToRegistry() {
     const key = this.createDragId(this._interactableIndex++);
     this.dragRegistry[key] = this.createDraggable(defaultPosition, defaultSize, defaultDelta);
-    // this.subscriptionRegistry[key] = this.dragRegistry[key].draggable$.subscribe();
     return key
   }
 
   destroyInteractable(interactableId: string) {
-    // if(this.subscriptionRegistry[interactableId]) {
-    //   this.subscriptionRegistry[interactableId].unsubscribe();
-    //   delete this.subscriptionRegistry[interactableId];
-    // }
     if(this.dragRegistry[interactableId]) {
       delete this.dragRegistry[interactableId];
     }

@@ -1,10 +1,11 @@
-import { Directive, ElementRef, Input, OnInit, Output, OnChanges, SimpleChanges, OnDestroy, EventEmitter } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, Output, OnChanges, SimpleChanges, OnDestroy, EventEmitter, Optional } from '@angular/core';
 import interact from 'interactjs';
 import { InteractService, InteractableSystem } from '../services/interact.service';
 import { DraggableOptions } from '@interactjs/types/types';
 import { TftDraggable } from '../models.ts/interact';
 import { Subject, Subscription } from 'rxjs';
 import { DragEvent } from '@interactjs/actions';
+import { ResizableDirective } from './resizable.directive';
 
 
 @Directive({
@@ -13,11 +14,10 @@ import { DragEvent } from '@interactjs/actions';
   host: {    
     '[style.touchAction]': '"none"',
     '[style.position]': '"absolute"',
+    '[id]': 'interactableId',
   }
 })
 export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
-
-  draggableId: string;
 
   DEFAULT_OPTIONS: Partial<Interact.OrBoolean<DraggableOptions>> = {
     // inertia: true,
@@ -30,15 +30,9 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
       }
       this.dragMove.emit(event);
     },
-    onstart: (event: DragEvent) => {
-      this.dragStart.emit(event);
-    },
-    onend: (event: DragEvent) => {
-      this.dragEnd.emit(event);
-    },
-    oninertiastart: (event: DragEvent) => {
-      this.inertiaStart.emit(event);
-    },
+    onstart: (event: DragEvent) => this.dragStart.emit(event),
+    onend: (event: DragEvent) => this.dragEnd.emit(event),
+    oninertiastart: (event: DragEvent) => this.dragInertiaStart.emit(event),
   }
 
   @Input() enableDragDefault = true;
@@ -50,14 +44,14 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
   @Output() dragMove = new EventEmitter<DragEvent>();
   @Output() dragStart = new EventEmitter<DragEvent>();
   @Output() dragEnd = new EventEmitter<DragEvent>();
-  @Output() inertiaStart = new EventEmitter<DragEvent>();
+  @Output() dragInertiaStart = new EventEmitter<DragEvent>();
 
   // interactableSystem: InteractableSystem
   interactableSubscription: Subscription;
 
   constructor(
     private el: ElementRef,
-    private interactService: InteractService
+    private interactService: InteractService,
   ) { }
 
   ngOnInit() {
@@ -66,7 +60,7 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
 
     this.interactableId = this.interactService.addDraggableToRegistry();
     this.interactableSubscription = this.interactService.dragRegistry[this.interactableId].draggable$.subscribe();
-    this.alignPositionWithInputs()
+    this.alignPositionWithInputs();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -77,6 +71,7 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy() {
     this.interactableSubscription.unsubscribe();
+    this.interactService.destroyInteractable(this.interactableId);
   }
 
   dragMoveListener(event: DragEvent) {
@@ -86,8 +81,17 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   alignPositionWithInputs() {
-    if(this.x && this.y) {
+    if(this.isValidPosition(this.x, this.y)) {
       this.interactService.updatePosition(this.interactableId, {x: this.x, y: this.y}, this.el.nativeElement);
     }
+  }
+
+  isValidPosition(x: number, y: number) {
+    return this.isNumeric(x, y);
+  }
+  // We use use this instead of isNaN here to try and help performance
+  // We should be able to reliably restrict to numbers or falsey values
+  isNumeric(x: number, y: number) {
+    return (x || x === 0) && (y || y === 0);
   }
 }

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Message } from '@tft/api-interfaces';
+import { interval } from 'rxjs';
 import { DraggableOptions, DropzoneOptions } from '@interactjs/types/types';
+import { tap, take, switchMap, delay } from 'rxjs/operators';
 
 
 @Component({
@@ -12,50 +14,25 @@ import { DraggableOptions, DropzoneOptions } from '@interactjs/types/types';
 export class AppComponent {
   hello$ = this.http.get<Message>('/api/hello');
   
+  dragSteps = 1
+  dragJumps = 500
   dragConfig: DraggableOptions = {
     inertia: true,
     allowFrom: '.handle'   
   }
 
   dropzoneConfig: DropzoneOptions = {
-    ondropactivate: (event) => {
-      // add active dropzone feedback
-      event.target.classList.add('drop-active')
-    },
-    ondragenter: (event) => {
-      const draggableElement = event.relatedTarget
-      const dropzoneElement = event.target
-      console.log({dragenter: event});
-      // feedback the possibility of a drop
-      dropzoneElement.classList.add('drop-target')
-      draggableElement.classList.add('can-drop')
-    },
-    ondragleave: (event) => {
-      // remove the drop feedback style
-      event.target.classList.remove('drop-target')
-      event.relatedTarget.classList.remove('can-drop')
-      // event.relatedTarget.textContent = 'Dragged out'
-    },
-    ondrop: (event) => {
-      console.log({dropEvent: event});
-      this.droppedItems.push({x: 60, y: 80, name: 'bill'})
-      // event.relatedTarget.textContent = 'Dropped'
-    },
-    ondropdeactivate: function (event) {
-      // remove active dropzone feedback
-      event.target.classList.remove('drop-active')
-      event.target.classList.remove('drop-target')
-    }
+  
   }
 
   dragItems = [
     {
       x: 50,
-      y: 600,
+      y: 0,
       name: 'red'
     },
     {
-      x: 900,
+      x: 50,
       y: 50,
       name: 'green'
     }
@@ -63,14 +40,41 @@ export class AppComponent {
 
   droppedItems = [];
 
-  constructor(private http: HttpClient) {}
-
-  handleMove(event) {
-    console.log(event);
+  constructor(private http: HttpClient) {
+    
   }
 
+  clicked() {
+    console.log('clicked');
+  }
+
+  startTest(steps: number, jumps: number) {
+    this.move('right', 0, 1, steps).pipe(
+      take(jumps),
+      switchMap(() => this.move('left', 0, 1, steps)),
+      take(jumps),
+      switchMap(() => this.move('right', 0, 1, steps)),
+      take(jumps)
+    ).subscribe();
+  }
   incrementX() {
     this.dragItems[0].x += 8;
   }
+
+
+  move(
+    direction: 'right' | 'left', 
+    dragIndex: number, 
+    period: number, 
+    steps: number
+  ) {
+    return interval(period).pipe(
+      tap( count => {
+        const delta = direction === 'right' ? steps : -steps; 
+        this.dragItems[dragIndex].x += delta;
+      })
+    )
+  } 
+
 
 }

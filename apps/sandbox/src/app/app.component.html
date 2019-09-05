@@ -1,15 +1,18 @@
 
 <div class="drag-container">
-  <button (click)="incrementX()">Increment X</button>
+  <button (click)="startTest(dragSteps, dragJumps)">Start Test</button>
   <section 
     *ngFor="let item of dragItems"
-    tftResizable
     tftDraggable
+    tftResizable
     [x]="item.x"
     [y]="item.y"
     [dragOptions]="dragConfig"
     class="interact-item">
-    <div class="handle"></div>
+    <div 
+      (click)="clicked()"
+      class="handle">
+    </div>
 
   </section>
 
