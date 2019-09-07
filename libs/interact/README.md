@@ -1,4 +1,6 @@
 # interact
+## THIS LIBRARY WILL HAVE BREAKING CHANGES DAILY
+## PLEASE DO NOT USE THIS FOR ANYTHING CLOSE TO PRODUCTION UNTIL STABLE
 
 This is an angular wrapper for the interactjs library.  We aim to build a versatile API that will all deep customization of drag behavior while also simplifying common usage of common behaviors.
 
