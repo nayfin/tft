@@ -19,5 +19,4 @@ Upcoming Features
 - sort drag registry by DragZones
 - way to eject all drag registry state to end-developer
     - move dragRegistry into a BehaviorSubject? (wait until can test performance impact)
-- use zones to run outside angular? (if it improves performance)
 - move all effects to tap (add deltaX, deltaY parameters to resize subject, decide on update strategy i.e. remove update functions?, )
