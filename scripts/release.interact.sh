@@ -37,7 +37,7 @@ fi
 # go into the library, bump the version according to update type then get out
 cd 'libs/interact' && npm version "${update_type}" && cd ../../
 #  build the library and prepare to publish
-ng build --prod interact
-cd dist/libs/interact && npm pack 
+ng build interact
+cd dist/libs/interact && npm pack && cd ../../../
 # share it
-npm publish dist/tft-library
+npm publish dist/libs/interacts
