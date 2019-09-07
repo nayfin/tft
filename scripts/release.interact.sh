@@ -40,4 +40,4 @@ cd 'libs/interact' && npm version "${update_type}" && cd ../../
 ng build interact
 cd dist/libs/interact && npm pack && cd ../../../
 # share it
-npm publish dist/libs/interacts
+npm publish dist/libs/interact
