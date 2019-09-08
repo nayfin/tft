@@ -8,6 +8,7 @@ export interface InteractableSystem {
   deltas$: BehaviorSubject<Delta>;
   position$: BehaviorSubject<Position>;
   size$: BehaviorSubject<Size>;
+  
   draggable$: Observable<TftDraggable>;
 }
 

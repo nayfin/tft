@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import interact from 'interactjs';
-import { DropzoneOptions } from '@interactjs/types/types';
+import { DropzoneOptions, InteractEvent } from '@interactjs/types/types';
 
 @Directive({
   selector: '[tftDropzone]'
@@ -9,42 +9,37 @@ export class DropzoneDirective implements OnInit {
   
   DEFAULT_CONFIG: DropzoneOptions = {
     overlap: 0.5,
-    ondropactivate: (event) => {
+    ondropactivate: (event: InteractEvent) => {
       // add active dropzone feedback
-      event.target.classList.add('drop-active')
+      this.dropActivate.emit(event);
     },
-    ondragenter: (event) => {
-      const draggableElement = event.relatedTarget
-      const dropzoneElement = event.target
-      console.log({dragenter: event});
-      // feedback the possibility of a drop
-      dropzoneElement.classList.add('drop-target')
-      draggableElement.classList.add('can-drop')
+    ondragenter: (event: InteractEvent) => {
+      this.dragEnter.emit(event);
     },
-    ondragleave: (event) => {
-      // remove the drop feedback style
-      event.target.classList.remove('drop-target')
-      event.relatedTarget.classList.remove('can-drop')
-      // event.relatedTarget.textContent = 'Dragged out'
+    ondragleave: (event: InteractEvent) => {
+      this.dragLeave.emit(event);
     },
-    ondrop: (event) => {
-      console.log({dropEvent: event});
-      // event.relatedTarget.textContent = 'Dropped'
+    ondrop: (event: InteractEvent) => {
+      this.dragDrop.emit(event);
     },
-    ondropdeactivate: function (event) {
-      // remove active dropzone feedback
-      event.target.classList.remove('drop-active')
-      event.target.classList.remove('drop-target')
+    ondropdeactivate: function (event: InteractEvent) {
+      this.dropActivate.emit(event);
     }
   }
 
   @Input() dropzoneConfig: DropzoneOptions;
+
   @Output() dropActivate = new EventEmitter();  
+  @Output() dropDeactivate = new EventEmitter();  
+  @Output() dragEnter = new EventEmitter();  
+  @Output() dragLeave = new EventEmitter(); 
+  @Output() dragDrop = new EventEmitter();  
+
   constructor(
     private el: ElementRef,
   ) { }
   
   ngOnInit() {
-    interact(this.el.nativeElement).dropzone({ ...this.DEFAULT_CONFIG, ...this.dropzoneConfig})
+    interact(this.el.nativeElement).dropzone({ ...this.DEFAULT_CONFIG, ...this.dropzoneConfig});
   }
 }
