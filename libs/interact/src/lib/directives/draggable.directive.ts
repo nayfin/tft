@@ -87,11 +87,11 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   isValidPosition(x: number, y: number) {
-    return this.isNumeric(x, y);
+    return this.isNumeric(x) && this.isNumeric(y);
   }
   // We use use this instead of isNaN here to try and help performance
   // We should be able to reliably restrict to numbers or falsey values
-  isNumeric(x: number, y: number) {
-    return (x || x === 0) && (y || y === 0);
+  isNumeric(num: number) {
+    return typeof num === 'number' && num !== NaN;
   }
 }
