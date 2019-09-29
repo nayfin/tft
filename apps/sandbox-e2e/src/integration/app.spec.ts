@@ -17,7 +17,7 @@ describe('sandbox', () => {
   it('should wiggle the draggable around a bunch', () => {
     let count = 0;
     // const dragInterval = setInterval(()=>{
-    movePiece(`#draggable${0} > .handle`, [{x: 4000, y: 400}]);
+    movePiece(`#interactable${0} > .handle`, [{x: 4000, y: 400}]);
     count++;
     // }, 5);
   //   setTimeout(() => {

@@ -19,13 +19,12 @@ export class ResizableDirective implements OnInit, OnDestroy {
   @Input() enableResizeDefault = true;
 
   @Input() resizeConfig: Partial<Interact.OrBoolean<ResizableOptions>>;
-  @Input() interactableId: string;
   
   @Output() resizeStart = new EventEmitter<ResizeEvent>();
   @Output() resizeMove = new EventEmitter<ResizeEvent>();
   @Output() resizeInertiaStart = new EventEmitter<ResizeEvent>();
   @Output() resizeEnd = new EventEmitter<ResizeEvent>();
-
+  
   defaultConfig: Partial<Interact.OrBoolean<ResizableOptions>> = {
     edges: { left: true, right: true, bottom: true, top: true },
     onstart:  (event: ResizeEvent) => this.resizeStart.emit(event),
@@ -36,9 +35,11 @@ export class ResizableDirective implements OnInit, OnDestroy {
       this.resizeMove.emit(event)
     },
     oninertiastart:  (event: ResizeEvent) => this.resizeInertiaStart.emit(event),
-    onend: (event: ResizeEvent) => this.resizeEnd.emit(event),
-
+    onend: (event: ResizeEvent) =>  this.resizeEnd.emit(event),
+    
   };
+  interactableId: string;
+  registryId: string;
 
   private interactableSubscription: Subscription;
 
@@ -51,21 +52,24 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
   ngOnInit() {
     const resizable = this.el.nativeElement;
-    // console.log({drop: this.dropzone_dir})
+    // warn user when they are overriding default behavior
+    this.interactService.checkForOverridesInConfig(this.resizeConfig, ['onstart', 'onmove', 'onend', 'oninertiastart']);
     interact(resizable).resizable({...this.defaultConfig, ...this.resizeConfig})
+    // TODO: 
+    this.registryId = this.dropzone_dir && this.dropzone_dir.dropzoneId
+      ? this.dropzone_dir.dropzoneId
+      : 'default';
 
     this.interactableId = this.draggable_dir && this.draggable_dir.interactableId
       ? this.draggable_dir.interactableId
-      : this.interactService.addDraggableToRegistry();
-
-    this.interactableSubscription = this.interactService.dragRegistry[this.interactableId].draggable$.subscribe();
-    const registry = this.interactService.dragRegistry;
-    console.log('initializing resizable directive', registry);
+      : this.interactService.addDraggableToRegistry(this.registryId);
+    
+    this.interactableSubscription = this.interactService.getInteractable(this.interactableId, this.registryId).subscribe();
   }
 
   ngOnDestroy() {
     this.interactableSubscription.unsubscribe();
-    this.interactService.destroyInteractable(this.interactableId);
+    this.interactService.destroyInteractable(this.interactableId, this.registryId);
   }
 
   resizeListener(event: ResizeEvent) {
@@ -73,7 +77,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
     const deltaY = event.deltaRect.top;
     const width  = event.rect.width;
     const height = event.rect.height;
-    this.interactService.updateSize(this.interactableId, { deltaX, deltaY, width, height}, this.el.nativeElement);  
-    
+    this.interactService.updateSize(this.interactableId, this.registryId, { deltaX, deltaY, width, height}, this.el.nativeElement);  
   }
+
 }

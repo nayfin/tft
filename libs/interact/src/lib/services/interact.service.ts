@@ -7,10 +7,14 @@ import { TftDraggable, Delta, Size, Position } from '../models.ts/interact';
 export interface InteractableSystem {
   deltas$: BehaviorSubject<Delta>;
   position$: BehaviorSubject<Position>;
-  size$: BehaviorSubject<Size>;
+  size$: BehaviorSubject<Size & Delta>;
   
-  draggable$: Observable<TftDraggable>;
+  interactable$: Observable<TftDraggable>;
 }
+
+export interface InteractableRegistry {
+  [key: string]: InteractableSystem  
+} 
 
 const defaultDelta: Delta = {
   deltaX: 0, 
@@ -34,13 +38,14 @@ const defaultPosition: Position = {
 export class InteractService {
   
   private _interactableIndex = 0;
+  private _dropzoneIndex = 0;
   private renderer: Renderer2;
 
   get interactableCount() {
     return this._interactableIndex + 1;
   }
   
-  readonly dragRegistry: {[key: string]: InteractableSystem } = {};
+  readonly dragRegistrySystem: { [key: string]: InteractableRegistry } = { };
   
   constructor(
     private rendererFactory: RendererFactory2
@@ -56,35 +61,50 @@ export class InteractService {
     }
   }
 
-  addDraggableToRegistry() {
-    const key = this.createDragId(this._interactableIndex++);
-    this.dragRegistry[key] = this.createDraggable(defaultPosition, defaultSize, defaultDelta);
+
+  addRegistryToSystem() {
+    const registryId = this.createDropzoneId(this._dropzoneIndex)
+    this.dragRegistrySystem[registryId] = {};
+    return registryId;
+  }
+  addDraggableToRegistry(registryId = 'default') {
+    const key = this.createInteractableId(this._interactableIndex++);
+    if (!this.dragRegistrySystem.hasOwnProperty(registryId)) {
+      this.dragRegistrySystem[registryId] = {};
+    }
+    this.dragRegistrySystem[registryId][key] = this.createDraggable(defaultPosition, defaultSize, defaultDelta);
     return key
   }
 
-  destroyInteractable(interactableId: string) {
-    if(this.dragRegistry[interactableId]) {
-      delete this.dragRegistry[interactableId];
+  destroyInteractable(interactableId: string, registryId = 'default') {
+    if(this.dragRegistrySystem[registryId][interactableId]) {
+      delete this.dragRegistrySystem[registryId][interactableId];
     }
   }
 
-  subscribeToInteractable(interactableId: string) {
-    return this.dragRegistry[interactableId];
+  subscribeToInteractable(interactableId: string, registryId = 'default') {
+    return this.dragRegistrySystem[registryId][interactableId];
   }
 
   createDraggable(initialPosition: Position, initialSize: Size, initialDelta: Delta ) {
     
     const deltas$ = new BehaviorSubject(initialDelta);
     // tracks the size of the element
-    const size$ = new BehaviorSubject(initialSize);
+    const size$ = new BehaviorSubject({...initialSize, ...initialDelta});
     // Stream of positions as they change
     const position$ = new BehaviorSubject(initialPosition);
   
     // All draggable data mapped together
-    const draggable$: Observable<TftDraggable> = combineLatest(
+    const interactable$: Observable<TftDraggable> = combineLatest(
       size$.pipe(
         filter(resizeEvent => !!resizeEvent.targetElement),
-        tap(({width, height, targetElement}) => this.setElementSize(width, height, targetElement))
+        tap(({deltaX, deltaY, width, height, targetElement}) => {
+          this.setElementSize(width, height, targetElement);
+          // only reposition if necessary i.e when resizing left or up
+          if(deltaX || deltaY) {
+            deltas$.next({deltaX, deltaY, targetElement});
+          }
+        })
       ),
       deltas$.pipe(
         filter(delta => !!delta.targetElement),
@@ -116,36 +136,42 @@ export class InteractService {
       deltas$,
       position$,
       size$,
-      draggable$
+      interactable$
     }
   }
 
-  createDragId(index: number) {
-    return `draggable${index}`
+  createInteractableId(index: number) {
+    return `interactable${index}`
+  }
+
+  createDropzoneId(index: number) {
+    return `dropzone${index}`
+  }
+
+  getInteractable( interactableId: string, registryId = 'default') {
+    return this.dragRegistrySystem[registryId][interactableId].interactable$;
   }
   
-  updateDeltas(interactId, { deltaX, deltaY }, targetElement) {
-    if (!this.interactableExistOnRegistry(interactId)) return;
-    this.dragRegistry[interactId].deltas$.next({ deltaX, deltaY, targetElement })
+  updateDeltas(interactId: string, registryId: string, { deltaX, deltaY }, targetElement) {
+    if (!this.interactableExistOnRegistry(interactId, registryId)) return;
+    this.dragRegistrySystem[registryId][interactId].deltas$.next({ deltaX, deltaY, targetElement })
   }
 
-  updatePosition(interactId, { x, y }, targetElement) {
-    if (!this.interactableExistOnRegistry(interactId)) return;
-    this.dragRegistry[interactId].position$.next({ x, y, targetElement })
+  updatePosition(interactId: string, registryId: string, { x, y }, targetElement) {
+    if (!this.interactableExistOnRegistry(interactId, registryId)) return;
+    this.dragRegistrySystem[registryId][interactId].position$.next({ x, y, targetElement })
   }
 
-  updateSize(interactId, { deltaX, deltaY, width, height }, targetElement) {
-    if (!this.interactableExistOnRegistry(interactId)) return
-    // only reposition if necessary i.e when resizing left or up
-    if(deltaX || deltaY) {
-      this.updateDeltas(interactId, {deltaX, deltaY}, targetElement);
-    }
-    this.dragRegistry[interactId].size$.next({width, height, targetElement});
+  updateSize(interactId: string, registryId: string, { deltaX, deltaY, width, height }, targetElement) {
+    if (!this.interactableExistOnRegistry(interactId, registryId)) return
+    this.dragRegistrySystem[registryId][interactId].size$.next({deltaX, deltaY, width, height, targetElement});
   }
 
-  interactableExistOnRegistry(interactId) {
-    return this.dragRegistry.hasOwnProperty(interactId);
+  interactableExistOnRegistry(interactId: string, registryId = 'default') {
+    return this.dragRegistrySystem.hasOwnProperty(registryId)
+      && this.dragRegistrySystem[registryId].hasOwnProperty(interactId);
   }
+
   setElementSize(width: number, height: number, target: any) {
     this.renderer.setStyle(target, 'width', `${width}px`);
     this.renderer.setStyle(target, 'height', `${height}px`);
@@ -154,5 +180,17 @@ export class InteractService {
   setElementTransform(x: number, y: number, target: any) {
     const transformString = `translate3d(${x}px, ${y}px, 0)`;
     this.renderer.setStyle(target, 'transform', transformString );
+  }
+
+  checkForOverridesInConfig(config: {}, keysToCheck: string[]) {
+    // const keysToCheck = [];
+    if(!config) return;
+    keysToCheck.forEach( (key: string) => {
+      if(config.hasOwnProperty(key)) {
+        console.warn(`Default ${key} behavior has been overridden by the drag config. 
+          You can avoid this by using the event listeners of the resize directive
+        `)
+      }
+    });
   }
 }

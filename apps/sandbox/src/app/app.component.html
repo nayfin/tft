@@ -1,5 +1,5 @@
 
-<div class="drag-container">
+<div class="drag-container" tftDropzone>
   <button (click)="startTest(dragSteps, dragJumps)">Start Test</button>
   <section 
     *ngFor="let item of dragItems"
@@ -27,7 +27,7 @@
 
 </div>
 
-<div class="drop-container" tftDropzone [dropzoneConfig]="dropzoneConfig">
+<div class="drop-container" tftDropzone>
   <section 
     *ngFor="let item of droppedItems"
     tftResizable

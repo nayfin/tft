@@ -18,11 +18,7 @@ export class AppComponent {
   dragJumps = 500
   dragConfig: DraggableOptions = {
     inertia: true,
-    allowFrom: '.handle'   
-  }
-
-  dropzoneConfig: DropzoneOptions = {
-  
+    allowFrom: '.handle',
   }
 
   dragItems = [
