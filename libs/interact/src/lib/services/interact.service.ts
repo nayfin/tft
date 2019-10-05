@@ -2,7 +2,7 @@
 import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest, Subscription } from 'rxjs';
 import { tap, filter, map, shareReplay } from 'rxjs/operators';
-import { TftDraggable, Delta, Size, Position } from '../models.ts/interact';
+import { TftDraggable, Delta, Size, Position } from '../models';
 
 export interface InteractableSystem {
   deltas$: BehaviorSubject<Delta>;

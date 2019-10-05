@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit, Output, OnChanges, SimpleChanges, OnDestroy, EventEmitter, Optional, SkipSelf } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, Output, OnChanges, SimpleChanges, OnDestroy, EventEmitter, Optional, SkipSelf, Renderer2 } from '@angular/core';
 import interact from 'interactjs';
 import { InteractService } from '../services/interact.service';
 import { DraggableOptions } from '@interactjs/types/types';
@@ -32,8 +32,9 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
     onstart: (event: DragEvent) => this.dragStart.emit(event),
     oninertiastart: (event: DragEvent) => this.dragInertiaStart.emit(event),
     onend: (event: DragEvent) => this.dragEnd.emit(event),
+    
   }
-
+  @Input() data: any;
   @Input() enableDragDefault = true;
   @Input() dragOptions: Partial<Interact.OrBoolean<DraggableOptions>>;
   @Input() x: number;
@@ -52,8 +53,8 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
   constructor(
     private el: ElementRef,
     private interactService: InteractService,
-    @Optional() @SkipSelf() private dropzone_dir?: DropzoneDirective
-
+    private renderer: Renderer2,
+    @Optional() @SkipSelf() public dropzone_dir?: DropzoneDirective
   ) { }
 
   ngOnInit() {
@@ -68,11 +69,19 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
     this.interactableId = this.interactService.addDraggableToRegistry(this.registryId);
    
     this.interactableSubscription = this.interactService.getInteractable(this.interactableId, this.registryId).subscribe();
-  }
+    
+    // this.el.nativeElement.data = this.data;
+    this.renderer.setProperty(this.el.nativeElement, 'dragRef', this);
+    this.renderer.setProperty(this.el.nativeElement, 'data', this.data);
+    this.alignPositionWithInputs()
+  };
 
   ngOnChanges(changes: SimpleChanges) {
     if(changes.x || changes.y) {
       this.alignPositionWithInputs();
+    }
+    if (changes.data) {
+      this.renderer.setProperty(this.el.nativeElement, 'data', this.data);
     }
   }
 

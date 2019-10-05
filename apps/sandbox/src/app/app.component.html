@@ -1,5 +1,7 @@
 
-<div class="drag-container" tftDropzone>
+<div class="drag-container"     
+  [dropzoneData]="dragItems"
+  tftDropzone>
   <button (click)="startTest(dragSteps, dragJumps)">Start Test</button>
   <section 
     *ngFor="let item of dragItems"
@@ -8,10 +10,13 @@
     [x]="item.x"
     [y]="item.y"
     [dragOptions]="dragConfig"
+    (dragEnd)='interactDragEnd($event)'
+    [data]="item"
     class="interact-item">
     <div 
       (click)="clicked()"
       class="handle">
+      {{item.name}}
     </div>
 
   </section>
@@ -27,12 +32,21 @@
 
 </div>
 
-<div class="drop-container" tftDropzone>
+<div 
+  class="drop-container" 
+  #dropContainer2
+  tftDropzone 
+  (dragDrop)="handleDrop($event)"
+  [dropzoneData]="droppedItems">
   <section 
     *ngFor="let item of droppedItems"
     tftResizable
+    tftDraggable
+    [dragOptions]="dragConfigB"
+    [x]="item.x"
+    [y]="item.y"
+    [data]="item"
     class="dropzone-item">
-    <div class="handle"></div>
-    {{item.name}}
+    <div class="handle">{{item.name}}</div>
   </section>
 </div>

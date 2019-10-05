@@ -44,7 +44,7 @@
     "@nestjs/platform-express": "^6.2.4",
     "@nrwl/angular": "8.4.12",
     "@nrwl/schematics": "^8.4.12",
-    "interactjs": "~1.5.4",
+    "interactjs": "~1.6.2",
     "core-js": "^2.5.4",
     "global": "^4.4.0",
     "reflect-metadata": "^0.1.12",
