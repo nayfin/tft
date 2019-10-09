@@ -2,7 +2,7 @@
 import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest, Subscription } from 'rxjs';
 import { tap, filter, map, shareReplay } from 'rxjs/operators';
-import { TftDraggable, Delta, Size, Position } from '../models';
+import { TftDraggable, Delta, Size, Position, NgDropEvent, NgDragEvent } from '../models';
 
 export interface InteractableSystem {
   deltas$: BehaviorSubject<Delta>;
@@ -63,7 +63,7 @@ export class InteractService {
 
 
   addRegistryToSystem() {
-    const registryId = this.createDropzoneId(this._dropzoneIndex)
+    const registryId = this.createDropzoneId(this._dropzoneIndex++)
     this.dragRegistrySystem[registryId] = {};
     return registryId;
   }
@@ -178,8 +178,11 @@ export class InteractService {
   }
 
   setElementTransform(x: number, y: number, target: any) {
-    const transformString = `translate3d(${x}px, ${y}px, 0)`;
+    const transformString = this.createTransformString(x, y);
     this.renderer.setStyle(target, 'transform', transformString );
+  }
+  createTransformString(x: number, y: number) {
+    return `translate3d(${x}px, ${y}px, 0)`
   }
 
   checkForOverridesInConfig(config: {}, keysToCheck: string[]) {
@@ -192,5 +195,14 @@ export class InteractService {
         `)
       }
     });
+  }
+
+  calculatePositionInDropzone(zoneElement: Interact.Element, dragElement: HTMLElement) {
+    const zoneRect = zoneElement.getBoundingClientRect(),
+          dragRect = dragElement.getBoundingClientRect();
+    return {
+      x: dragRect.left - zoneRect.left,
+      y: dragRect.top - zoneRect.top
+    } 
   }
 }

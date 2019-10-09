@@ -5,7 +5,7 @@ import { DraggableOptions } from '@interactjs/types/types';
 import { Subscription } from 'rxjs';
 import { DragEvent } from '@interactjs/actions';
 import { DropzoneDirective } from './dropzone.directive';
-
+import { NgDragEvent } from '../models';
 
 @Directive({
   selector: '[tftDraggable]',
@@ -19,31 +19,35 @@ import { DropzoneDirective } from './dropzone.directive';
 export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
 
   DEFAULT_CONFIG: Partial<Interact.OrBoolean<DraggableOptions>> = {
-    // inertia: true,
-    // keep the element within the area of it's parent
     autoScroll: true,
-    // call this function on every dragmove event
-    onmove: (event: DragEvent) => {
+    onstart: (event: NgDragEvent) => {
+      this.dragStart.emit(this.mapDragEvent(event))
+    },
+    onmove: (event: NgDragEvent) => {
       if (this.enableDragDefault) {
+        console.log('inside listener')
         this.dragMoveListener(event);
       }
-      this.dragMove.emit(event);
+      this.dragMove.emit(this.mapDragEvent(event));
     },
-    onstart: (event: DragEvent) => this.dragStart.emit(event),
-    oninertiastart: (event: DragEvent) => this.dragInertiaStart.emit(event),
-    onend: (event: DragEvent) => this.dragEnd.emit(event),
-    
+    oninertiastart: (event: NgDragEvent) => {
+      this.dragInertiaStart.emit(this.mapDragEvent(event))
+    },
+    onend: (event: NgDragEvent) => {
+      this.dragEnd.emit(this.mapDragEvent(event))
+    },  
   }
+
   @Input() data: any;
   @Input() enableDragDefault = true;
   @Input() dragOptions: Partial<Interact.OrBoolean<DraggableOptions>>;
   @Input() x: number;
   @Input() y: number;
   // pipes all interact events to event emitters 
-  @Output() dragMove = new EventEmitter<DragEvent>();
-  @Output() dragStart = new EventEmitter<DragEvent>();
-  @Output() dragEnd = new EventEmitter<DragEvent>();
-  @Output() dragInertiaStart = new EventEmitter<DragEvent>();
+  @Output() dragStart = new EventEmitter();
+  @Output() dragMove = new EventEmitter();
+  @Output() dragInertiaStart = new EventEmitter();
+  @Output() dragEnd = new EventEmitter();
   
   interactableId: string;
   registryId: string;
@@ -61,7 +65,8 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
     
     this.interactService.checkForOverridesInConfig(this.dragOptions, ['onstart', 'onmove', 'onend', 'oninertiastart'])
     interact(this.el.nativeElement).draggable({ ...this.DEFAULT_CONFIG, ...this.dragOptions });
-
+    
+    this.el.nativeElement.dropTarget = this.dropzone_dir || null;
     this.registryId = this.dropzone_dir && this.dropzone_dir.dropzoneId
       ? this.dropzone_dir.dropzoneId
       : 'default';
@@ -90,10 +95,44 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
     this.interactService.destroyInteractable(this.interactableId, this.registryId);
   }
 
-  dragMoveListener(event: DragEvent) {
+  dragMoveListener(event: NgDragEvent) {
     event.preventDefault();
     event.stopPropagation();
     this.interactService.updateDeltas(this.interactableId, this.registryId, {deltaX: event.dx, deltaY: event.dy}, this.el.nativeElement);
+  }
+
+  mapDragEvent(event: NgDragEvent) {
+    const { target } = event;
+    const relatedTarget = target.dropTarget 
+      ? target.dropTarget.el.nativeElement 
+      : null;
+    const positionInDropzone = target && relatedTarget
+      ? this.interactService.calculatePositionInDropzone(relatedTarget, target)
+      : null;
+    return {
+      event: event,
+      // TODO: getting set and getting data from the target element is not ideal way to transfer data
+      // find an Angulary way to do this
+      // dragRef,
+      dragRef: target.dragRef,
+      dropTarget: target.dropTarget,
+      positionInDropzone
+    }
+
+  }
+  
+  cloneElement(element: HTMLElement) {
+    const elementRect = element.getBoundingClientRect()
+    const clone = element.cloneNode(true) as HTMLElement;
+    element.style.transform = this.interactService.createTransformString(elementRect.left, elementRect.top);
+    const interactId = this.interactService.addDraggableToRegistry();
+    // clone.draggable = true;
+    this.interactService.updatePosition(interactId, 'default', {x:40, y: 90}, clone);
+    clone.removeAttribute('id');
+    clone.style.width = '150px';
+    clone.style.height = '150px';
+
+    return clone;
   }
 
   alignPositionWithInputs() {
@@ -110,4 +149,21 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
   isNumeric(num: number) {
     return typeof num === 'number' && num !== NaN;
   }
+  
+}
+
+
+/**
+ * Component utils
+ */
+
+function getPreviewInsertionPoint(documentRef: any): HTMLElement {
+  // We can't use the body if the user is in fullscreen mode,
+  // because the preview will render under the fullscreen element.
+  // TODO(crisbeto): dedupe this with the `FullscreenOverlayContainer` eventually.
+  return documentRef.fullscreenElement ||
+         documentRef.webkitFullscreenElement ||
+         documentRef.mozFullScreenElement ||
+         documentRef.msFullscreenElement ||
+         documentRef.body;
 }

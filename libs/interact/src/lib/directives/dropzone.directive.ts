@@ -12,25 +12,21 @@ export class DropzoneDirective implements OnInit {
     overlap: 0.5,
     ondropactivate: (event: NgDropEvent) => {
       // add active dropzone feedback
-      this.dropActivate.emit(event);
+      this.dropActivate.emit(this.mapDropzoneEvent(event));
     },
     ondragenter: (event: NgDropEvent) => {
-      this.dragEnter.emit(event);
+      event.draggable.target.dropTarget = this;
+      this.dragEnter.emit(this.mapDropzoneEvent(event));
     },
     ondragleave: (event: NgDropEvent) => {
-      this.dragLeave.emit(event);
+      const target = event.draggable.target;
+      if ( target.dropTarget === this) {
+        target.dropTarget = null;
+      }
+      this.dragLeave.emit(this.mapDropzoneEvent(event));
     },
     ondrop: (event: NgDropEvent) => {
-      const dropPoint = this.calculateDropPoint(event);
-      const emitItems = {
-        event: event,
-        // TODO: getting set and getting data from the target element is not ideal way to transfer data
-        // find an Angulary way to do this
-        dragRef: event.draggable.target.dragRef,
-        previousContainer: event.draggable.target.dragRef.dropzone_dir,
-        dropPoint
-      }
-      this.dragDrop.emit(emitItems);
+      this.dragDrop.emit(this.mapDropzoneEvent(event));
     }
   }
 
@@ -46,7 +42,7 @@ export class DropzoneDirective implements OnInit {
   dropzoneId: string;
 
   constructor(
-    private el: ElementRef,
+    public el: ElementRef,
     private interactService: InteractService
   ) { }
   
@@ -56,12 +52,20 @@ export class DropzoneDirective implements OnInit {
     this.dropzoneId = this.interactService.addRegistryToSystem();
   }
 
-  calculateDropPoint(event: NgDropEvent) {
-    const zoneRect = event.target.getBoundingClientRect(),
-          draggableRect = event.draggable.target.getBoundingClientRect();
+  mapDropzoneEvent(event: NgDropEvent) {
+
+    const positionInDropzone = this.interactService.calculatePositionInDropzone(event.target, event.draggable.target);
+    const dragRef = event.draggable.target.dragRef;
     return {
-      x: draggableRect.left - zoneRect.left,
-      y: draggableRect.top - zoneRect.top
-    } 
+      event: event,
+      // TODO: getting set and getting data from the target element is not ideal way to transfer data
+      // find an Angulary way to do this
+      dragRef,
+      dragOrigin: dragRef.dropzone_dir,
+      dropzone: event.draggable.dropzone,
+      positionInDropzone
+    }
   }
+
+
 }

@@ -5,6 +5,16 @@
  
 }
 
+.drag-origin-container {
+  width: 1000px;
+  height: 200px;
+  display: flex;
+  .drag-origin {
+    width: 180px;
+    height: 180px;
+    background: rgba(0, 255, 21, 0.555);
+  }
+}
 .drop-container {
   width: 1000px;
   height: 1000px;
