@@ -12,7 +12,7 @@ import interact from 'interactjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewInit{
+export class AppComponent {
 
   @ViewChild('dropContainer2', {static: false}) dropzone2: ElementRef
 
@@ -55,19 +55,6 @@ export class AppComponent implements AfterViewInit{
 
   constructor(private http: HttpClient, private el: ElementRef) { }
 
-  ngAfterViewInit() {
-    this.dragConfigB = {
-      // modifiers: [
-      //   interact.modifiers.restrict({
-      //     restriction: this.dropzone2.nativeElement,
-      //     elementRect: { top: 0, left: 0, bottom: 1, right: 1 },
-      //     endOnly: false
-      //   })
-      // ],
-     
-    }
-  }
-
   clicked() {
     console.log('clicked');
   }
@@ -93,16 +80,19 @@ export class AppComponent implements AfterViewInit{
   log(name: string, event) {
     console.log(name, event);
   }
-  handleDrop(event: TftDropEvent) {
-    console.log({dropzoneEvent: event})
-    // const previousIndex = event.previousContainer.dropzoneData.indexOf(event.dragRef.data);
-    // const item = {
-    //   x: event.dropPoint.x,
-    //   y: event.dropPoint.y,
-    //   name: event.dragRef.data.name
-    // }
-    // event.previousContainer.dropzoneData.splice(previousIndex, 1);
-    // this.droppedItems.push(item);
+  handleDrop(event: TftDropEvent, initialIndex) {
+    console.log({dropzoneEvent: event.dragOrigin.dropzoneData})
+    if (event.dropTarget && event.dropTarget !== event.dragOrigin) {
+      const item = {
+        x: event.positionInDropzone.x,
+        y: event.positionInDropzone.y,
+        name: event.dragRef.data.name
+      }
+      const dragData = this.dragItems[initialIndex]
+      console.log({dragData, initialIndex});
+      dragData.count.pop();
+      this.droppedItems.push(item); 
+    }
   }
   incrementX() {
     this.dragItems[0].x += 8;

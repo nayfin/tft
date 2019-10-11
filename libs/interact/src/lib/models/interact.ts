@@ -3,7 +3,38 @@ import DropEvent from '@interactjs/actions/drop/DropEvent'
 import Interactable from '@interactjs/core/Interactable';
 import { DropzoneDirective } from '../directives/dropzone.directive';
 import { Point, DragEvent } from '@interactjs/types/types';
+import { BehaviorSubject, Observable } from 'rxjs';
 
+
+
+export const defaultDelta: Delta = {
+  deltaX: 0, 
+  deltaY: 0, 
+  targetElement: null 
+};
+
+export const defaultSize: Size = {
+  width: null, 
+  height: null, 
+  targetElement: null 
+}
+
+export const defaultPosition: Position = {
+  x: 0, 
+  y: 0, 
+  targetElement: null 
+}
+export interface InteractableSystem {
+  deltas$: BehaviorSubject<Delta>;
+  position$: BehaviorSubject<Position>;
+  size$: BehaviorSubject<Size & Delta>;
+  
+  interactable$: Observable<TftDraggable>;
+}
+
+export interface InteractableRegistry {
+  [key: string]: InteractableSystem  
+} 
 /**
  * Extends the interact drop events by adding reference to the dropped components drag  
  * directive to the html element. This gives the dropzone access to things like data
@@ -26,12 +57,22 @@ export type NgDragEvent = DragEvent & {
     dropTarget?: DropzoneDirective
   } 
 };
+
 export interface TftDropEvent {
   event: NgDropEvent
-  dragRef: DraggableDirective,
-  previousContainer: DropzoneDirective,
-  dropPoint: Point
+  dragRef: DraggableDirective;
+  dragOrigin: DropzoneDirective;
+  dropTarget: DropzoneDirective;
+  positionInDropzone: Point;  
 }
+export interface TftDragEvent {
+  event: NgDragEvent
+  dragRef: DraggableDirective;
+  dragOrigin: DropzoneDirective;
+  dropTarget: DropzoneDirective;
+  positionInDropzone: Point;  
+}
+
 
 export type TftDraggable = Delta & Position & Size;
 

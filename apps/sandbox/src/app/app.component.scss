@@ -1,20 +1,25 @@
-.drag-container {
-  width: 1000px;
-  height: 400px;
-  background: green;
- 
-}
-
 .drag-origin-container {
   width: 1000px;
-  height: 200px;
   display: flex;
   .drag-origin {
-    width: 180px;
-    height: 180px;
-    background: rgba(0, 255, 21, 0.555);
+    display: flex;
+    flex-direction: column;
+    margin: 8px;
+    .drag-origin-header {
+      background: blue;
+      color: white;
+    }
+    .drag-origin-content {
+      width: 120px;
+      height: 120px;
+      background: rgba(0, 255, 21, 0.555);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }
+
 .drop-container {
   width: 1000px;
   height: 1000px;
@@ -28,6 +33,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 400;
   .handle {
     width: 40px;
     height: 40px;

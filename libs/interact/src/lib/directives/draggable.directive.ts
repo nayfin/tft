@@ -5,7 +5,7 @@ import { DraggableOptions } from '@interactjs/types/types';
 import { Subscription } from 'rxjs';
 import { DragEvent } from '@interactjs/actions';
 import { DropzoneDirective } from './dropzone.directive';
-import { NgDragEvent } from '../models';
+import { NgDragEvent, TftDragEvent } from '../models';
 
 @Directive({
   selector: '[tftDraggable]',
@@ -21,7 +21,7 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
   DEFAULT_CONFIG: Partial<Interact.OrBoolean<DraggableOptions>> = {
     autoScroll: true,
     onstart: (event: NgDragEvent) => {
-      this.dragStart.emit(this.mapDragEvent(event))
+      this.dragStart.emit(this.mapDragEvent(event));
     },
     onmove: (event: NgDragEvent) => {
       if (this.enableDragDefault) {
@@ -44,10 +44,10 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
   @Input() x: number;
   @Input() y: number;
   // pipes all interact events to event emitters 
-  @Output() dragStart = new EventEmitter();
-  @Output() dragMove = new EventEmitter();
-  @Output() dragInertiaStart = new EventEmitter();
-  @Output() dragEnd = new EventEmitter();
+  @Output() dragStart = new EventEmitter<TftDragEvent>();
+  @Output() dragMove = new EventEmitter<TftDragEvent>();
+  @Output() dragInertiaStart = new EventEmitter<TftDragEvent>();
+  @Output() dragEnd = new EventEmitter<TftDragEvent>();
   
   interactableId: string;
   registryId: string;
@@ -65,12 +65,13 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
     
     this.interactService.checkForOverridesInConfig(this.dragOptions, ['onstart', 'onmove', 'onend', 'oninertiastart'])
     interact(this.el.nativeElement).draggable({ ...this.DEFAULT_CONFIG, ...this.dragOptions });
-    
-    this.el.nativeElement.dropTarget = this.dropzone_dir || null;
+    // Set our target and origin to the parent zone, since we're starting here
+    this.el.nativeElement.dropTarget = this.el.nativeElement.dragOrigin = this.dropzone_dir || null;
+    // register with parent dropzone if it exists, otherwise use default
     this.registryId = this.dropzone_dir && this.dropzone_dir.dropzoneId
       ? this.dropzone_dir.dropzoneId
       : 'default';
-      
+    // add draggable to directory and store its id 
     this.interactableId = this.interactService.addDraggableToRegistry(this.registryId);
    
     this.interactableSubscription = this.interactService.getInteractable(this.interactableId, this.registryId).subscribe();
@@ -101,7 +102,7 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
     this.interactService.updateDeltas(this.interactableId, this.registryId, {deltaX: event.dx, deltaY: event.dy}, this.el.nativeElement);
   }
 
-  mapDragEvent(event: NgDragEvent) {
+  mapDragEvent(event: NgDragEvent): TftDragEvent {
     const { target } = event;
     const relatedTarget = target.dropTarget 
       ? target.dropTarget.el.nativeElement 
@@ -115,6 +116,7 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
       // find an Angulary way to do this
       // dragRef,
       dragRef: target.dragRef,
+      dragOrigin: target.dragOrigin,
       dropTarget: target.dropTarget,
       positionInDropzone
     }

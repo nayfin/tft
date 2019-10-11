@@ -2,7 +2,7 @@ import { Directive, ElementRef, Input, OnInit, Output, EventEmitter } from '@ang
 import interact from 'interactjs';
 import { DropzoneOptions } from '@interactjs/types/types';
 import { InteractService } from '../services/interact.service';
-import { NgDropEvent } from '../models';
+import { NgDropEvent, TftDropEvent } from '../models';
 @Directive({
   selector: '[tftDropzone]'
 })
@@ -52,7 +52,7 @@ export class DropzoneDirective implements OnInit {
     this.dropzoneId = this.interactService.addRegistryToSystem();
   }
 
-  mapDropzoneEvent(event: NgDropEvent) {
+  mapDropzoneEvent(event: NgDropEvent): TftDropEvent {
 
     const positionInDropzone = this.interactService.calculatePositionInDropzone(event.target, event.draggable.target);
     const dragRef = event.draggable.target.dragRef;
@@ -62,7 +62,7 @@ export class DropzoneDirective implements OnInit {
       // find an Angulary way to do this
       dragRef,
       dragOrigin: dragRef.dropzone_dir,
-      dropzone: event.draggable.dropzone,
+      dropTarget: event.draggable.target.dropTarget,
       positionInDropzone
     }
   }

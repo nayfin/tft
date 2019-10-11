@@ -1,30 +1,34 @@
 
 
-<button (click)="startTest(dragSteps, dragJumps)">Start Test</button>
+<!-- <button (click)="startTest(dragSteps, dragJumps)">Start Test</button> -->
 <div class="drag-origin-container">
 
   <div class="drag-origin" 
-    *ngFor="let item of dragItems"    
+    *ngFor="let item of dragItems; let i = index;"    
     [dropzoneData]="item"
     (dragEnter)="log('enter', $event)"
     (dragDrop)="handleDrop($event)"
     tftDropzone>
-    <section 
-      *ngFor="let count of item.count"
-      tftDraggable
-      tftResizable
-      (dragStart)="log('dragStart', $event)"
-      [dragOptions]="dragConfig"
-      [data]="count"
-      class="interact-item">
-      <div 
-        (click)="clicked()"
-        class="handle">
-        {{item.name}}
-      </div>
-  
-    </section>
-  
+    <div class="drag-origin-header">
+      remaining: {{ item.count.length }}
+    </div>
+    <div class="drag-origin-content">
+      <section 
+        *ngFor="let count of item.count"
+        tftDraggable
+        (dragEnd)="handleDrop($event, i)"
+        [dragOptions]="dragConfig"
+        [data]="count"
+        class="interact-item">
+        <div 
+          (click)="clicked()"
+          class="handle">
+          {{item.name}} {{ count }}
+        </div>
+    
+      </section>
+    
+    </div>
     
    
   
@@ -35,11 +39,13 @@
   class="drop-container" 
   #dropContainer2
   tftDropzone 
+  tftDraggable
+  tftResizable
   (dragDrop)="handleDrop($event)"
   [dropzoneData]="droppedItems">
   <section 
     *ngFor="let item of droppedItems"
-    tftResizable
+    
     tftDraggable
     [dragOptions]="dragConfigB"
     [x]="item.x"

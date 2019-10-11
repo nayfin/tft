@@ -1,38 +1,8 @@
 
 import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { tap, filter, map, shareReplay } from 'rxjs/operators';
-import { TftDraggable, Delta, Size, Position, NgDropEvent, NgDragEvent } from '../models';
-
-export interface InteractableSystem {
-  deltas$: BehaviorSubject<Delta>;
-  position$: BehaviorSubject<Position>;
-  size$: BehaviorSubject<Size & Delta>;
-  
-  interactable$: Observable<TftDraggable>;
-}
-
-export interface InteractableRegistry {
-  [key: string]: InteractableSystem  
-} 
-
-const defaultDelta: Delta = {
-  deltaX: 0, 
-  deltaY: 0, 
-  targetElement: null 
-};
-
-const defaultSize: Size = {
-  width: null, 
-  height: null, 
-  targetElement: null 
-}
-
-const defaultPosition: Position = {
-  x: 0, 
-  y: 0, 
-  targetElement: null 
-}
+import { TftDraggable, Delta, Size, Position, InteractableRegistry, defaultPosition, defaultSize, defaultDelta } from '../models';
 
 @Injectable({providedIn: 'root'})
 export class InteractService {
@@ -61,12 +31,12 @@ export class InteractService {
     }
   }
 
-
   addRegistryToSystem() {
     const registryId = this.createDropzoneId(this._dropzoneIndex++)
     this.dragRegistrySystem[registryId] = {};
     return registryId;
   }
+
   addDraggableToRegistry(registryId = 'default') {
     const key = this.createInteractableId(this._interactableIndex++);
     if (!this.dragRegistrySystem.hasOwnProperty(registryId)) {
@@ -181,6 +151,7 @@ export class InteractService {
     const transformString = this.createTransformString(x, y);
     this.renderer.setStyle(target, 'transform', transformString );
   }
+
   createTransformString(x: number, y: number) {
     return `translate3d(${x}px, ${y}px, 0)`
   }
