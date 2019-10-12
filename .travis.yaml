@@ -6,6 +6,8 @@ sudo: required
 branches:
 only:
   - master
+before_install:
+  - gem install rake
 before_script:
   - npm install -g @angular/cli
 script:
