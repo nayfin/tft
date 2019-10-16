@@ -2,10 +2,8 @@ import { DraggableDirective } from '../directives/draggable.directive';
 import DropEvent from '@interactjs/actions/drop/DropEvent'
 import Interactable from '@interactjs/core/Interactable';
 import { DropzoneDirective } from '../directives/dropzone.directive';
-import { Point, DragEvent } from '@interactjs/types/types';
+import { Point, DragEvent, ResizeEvent } from '@interactjs/types/types';
 import { BehaviorSubject, Observable } from 'rxjs';
-
-
 
 export const defaultDelta: Delta = {
   deltaX: 0, 
@@ -58,21 +56,22 @@ export type NgDragEvent = DragEvent & {
   } 
 };
 
-export interface TftDropEvent {
-  event: NgDropEvent
+export interface TftInteractableEvent {
   dragRef: DraggableDirective;
   dragOrigin: DropzoneDirective;
   dropTarget: DropzoneDirective;
   positionInDropzone: Point;  
 }
-export interface TftDragEvent {
+export interface TftDropEvent extends TftInteractableEvent {
+  event: NgDropEvent
+}
+export interface TftDragEvent extends TftInteractableEvent {
   event: NgDragEvent
-  dragRef: DraggableDirective;
-  dragOrigin: DropzoneDirective;
-  dropTarget: DropzoneDirective;
-  positionInDropzone: Point;  
 }
 
+export interface TftResizeEvent extends TftInteractableEvent {
+  event: ResizeEvent
+}
 
 export type TftDraggable = Delta & Position & Size;
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, Renderer2, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Message } from '@tft/api-interfaces';
 import { interval } from 'rxjs';
@@ -10,111 +10,73 @@ import interact from 'interactjs';
 @Component({
   selector: 'tft-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
 
   @ViewChild('dropContainer2', {static: false}) dropzone2: ElementRef
 
-  hello$ = this.http.get<Message>('/api/hello');
-  
-  dragSteps = 1;
-  dragJumps = 500;
-  dragConfig: DraggableOptions = {
-    inertia: true,
-  };
-  dragConfigB;
+  dragConfig: DraggableOptions; 
+  dragConfigB: DraggableOptions;
   dragItems = [
-    // {
-    //   x: 0,
-    //   y: 0,
-    //   name: 'red',
-    //   count: [0,1,2,3]
-    // },
     {
-      x: 0,
-      y: 0,
       name: 'green',
-      count: [0,1,2,3,4,5]
+      count: Infinity
     },
     {
-      x: 0,
-      y: 0,
       name: 'red',
-      count: [0,1,2,3]
+      count: 3
     },
     {
-      x: 0,
-      y: 0,
       name: 'yellow',
-      count: [0,1,2,3]
+      count: 5
     },
   ];
 
   droppedItems = [];
 
-  constructor(private http: HttpClient, private el: ElementRef) { }
+  constructor(
+    private el: ElementRef,
+    private renderer: Renderer2
+  ) { }
 
-  clicked() {
-    console.log('clicked');
-  }
-
-  copyDrag(event, data) {
-    const { positionInDropzone } = event; 
-    this.dragItems.push({
-      name: data.name,
-      x: positionInDropzone ? positionInDropzone.x : 55,
-      y: positionInDropzone ? positionInDropzone.y : 55,
-      count: [0]
-    })
-  }
-  startTest(steps: number, jumps: number) {
-    this.move('right', 0, 1, steps).pipe(
-      take(jumps),
-      switchMap(() => this.move('left', 0, 1, steps)),
-      take(jumps),
-      switchMap(() => this.move('right', 0, 1, steps)),
-      take(jumps)
-    ).subscribe();
-  }
   log(name: string, event) {
     console.log(name, event);
   }
+
+  countAsArray(n: number) : number[] {
+    const count = n === Infinity ? 2 : n;
+    console.log({count})
+    return [...Array(count).keys()];
+  }
+
   handleDrop(event: TftDropEvent, initialIndex) {
-    console.log({dropzoneEvent: event.dragOrigin.dropzoneData})
+    const dragData = this.dragItems[initialIndex];
     if (event.dropTarget && event.dropTarget !== event.dragOrigin) {
       const item = {
         x: event.positionInDropzone.x,
         y: event.positionInDropzone.y,
-        name: event.dragRef.data.name
+        name: event.dragRef.dragData.name
       }
-      const dragData = this.dragItems[initialIndex]
-      console.log({dragData, initialIndex});
-      dragData.count.pop();
+      dragData.count--;
       this.droppedItems.push(item); 
+    } else {
+      const {dragRef} = event;
+      this.renderer.setStyle(
+        event.event.target,
+        'transition',
+        'transform 500ms ease-in-out'
+      )
+      dragRef.setPosition(0, 0);
+      setTimeout(() => {
+        this.renderer.removeStyle(
+          event.event.target,
+          'transition'
+        )
+      }, 500)
     }
   }
-  incrementX() {
-    this.dragItems[0].x += 8;
-  }
 
-
-  move(
-    direction: 'right' | 'left', 
-    dragIndex: number, 
-    period: number, 
-    steps: number
-  ) {
-    return interval(period).pipe(
-      tap( count => {
-        const delta = direction === 'right' ? steps : -steps; 
-        this.dragItems[dragIndex].x += delta;
-      })
-    )
-  } 
-
-  interactDragEnd(interactEvent) {
-    console.log({interactEvent})
-  }
 
 }

@@ -25,7 +25,6 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
     },
     onmove: (event: NgDragEvent) => {
       if (this.enableDragDefault) {
-        console.log('inside listener')
         this.dragMoveListener(event);
       }
       this.dragMove.emit(this.mapDragEvent(event));
@@ -38,9 +37,9 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
     },  
   }
 
-  @Input() data: any;
+  @Input() dragData: any;
   @Input() enableDragDefault = true;
-  @Input() dragOptions: Partial<Interact.OrBoolean<DraggableOptions>>;
+  @Input() dragConfig: Partial<Interact.OrBoolean<DraggableOptions>>;
   @Input() x: number;
   @Input() y: number;
   // pipes all interact events to event emitters 
@@ -63,8 +62,8 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
     
-    this.interactService.checkForOverridesInConfig(this.dragOptions, ['onstart', 'onmove', 'onend', 'oninertiastart'])
-    interact(this.el.nativeElement).draggable({ ...this.DEFAULT_CONFIG, ...this.dragOptions });
+    this.interactService.checkForOverridesInConfig(this.dragConfig, ['onstart', 'onmove', 'onend', 'oninertiastart'])
+    interact(this.el.nativeElement).draggable({ ...this.DEFAULT_CONFIG, ...this.dragConfig });
     // Set our target and origin to the parent zone, since we're starting here
     this.el.nativeElement.dropTarget = this.el.nativeElement.dragOrigin = this.dropzone_dir || null;
     // register with parent dropzone if it exists, otherwise use default
@@ -78,16 +77,13 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
     
     // this.el.nativeElement.data = this.data;
     this.renderer.setProperty(this.el.nativeElement, 'dragRef', this);
-    this.renderer.setProperty(this.el.nativeElement, 'data', this.data);
+    // this.renderer.setProperty(this.el.nativeElement, 'dragData', this.dragData);
     this.alignPositionWithInputs()
   };
 
   ngOnChanges(changes: SimpleChanges) {
     if(changes.x || changes.y) {
       this.alignPositionWithInputs();
-    }
-    if (changes.data) {
-      this.renderer.setProperty(this.el.nativeElement, 'data', this.data);
     }
   }
 
@@ -114,8 +110,7 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
       event: event,
       // TODO: getting set and getting data from the target element is not ideal way to transfer data
       // find an Angulary way to do this
-      // dragRef,
-      dragRef: target.dragRef,
+      dragRef: this, //target.dragRef,
       dragOrigin: target.dragOrigin,
       dropTarget: target.dropTarget,
       positionInDropzone
@@ -123,6 +118,14 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
 
   }
   
+  setPosition(x: number, y: number) {
+    this.interactService.updatePosition(
+      this.interactableId,
+      this.registryId,
+      {x, y},
+      this.el.nativeElement
+    );
+  }
   cloneElement(element: HTMLElement) {
     const elementRect = element.getBoundingClientRect()
     const clone = element.cloneNode(true) as HTMLElement;

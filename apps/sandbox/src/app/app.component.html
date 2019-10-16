@@ -7,21 +7,19 @@
     *ngFor="let item of dragItems; let i = index;"    
     [dropzoneData]="item"
     (dragEnter)="log('enter', $event)"
-    (dragDrop)="handleDrop($event)"
     tftDropzone>
     <div class="drag-origin-header">
-      remaining: {{ item.count.length }}
+      remaining: {{ item.count }}
     </div>
     <div class="drag-origin-content">
       <section 
-        *ngFor="let count of item.count"
+        *ngFor="let count of countAsArray(item.count)"
         tftDraggable
         (dragEnd)="handleDrop($event, i)"
-        [dragOptions]="dragConfig"
-        [data]="count"
+        [dragConfig]="dragConfig"
+        [dragData]="count"
         class="interact-item">
         <div 
-          (click)="clicked()"
           class="handle">
           {{item.name}} {{ count }}
         </div>
@@ -41,16 +39,16 @@
   tftDropzone 
   tftDraggable
   tftResizable
-  (dragDrop)="handleDrop($event)"
+  (dragLeave)="log('leave', $event)"
+
   [dropzoneData]="droppedItems">
   <section 
     *ngFor="let item of droppedItems"
-    
     tftDraggable
-    [dragOptions]="dragConfigB"
+    [dragConfig]="dragConfigB"
     [x]="item.x"
     [y]="item.y"
-    [data]="item"
+    [dragData]="item"
     class="dropzone-item">
     <div class="handle">{{item.name}}</div>
   </section>
