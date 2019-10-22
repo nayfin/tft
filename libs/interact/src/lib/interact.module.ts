@@ -3,21 +3,23 @@ import { CommonModule } from '@angular/common';
 import { DraggableDirective } from './directives/draggable.directive';
 import { ResizableDirective } from './directives/resizable.directive';
 import { DropzoneDirective } from './directives/dropzone.directive';
+import { ArrayOfNPipe } from './pipes/array-of-n.pipe';
 
-const DIRECTIVES = [
+const EXPORTS = [
   DraggableDirective,
   ResizableDirective,
-  DropzoneDirective
+  DropzoneDirective,
+  ArrayOfNPipe
 ];
 
 
 @NgModule({
   imports: [CommonModule],
   declarations: [
-    ...DIRECTIVES
+    ...EXPORTS,
   ],
   exports: [
-    ...DIRECTIVES
+    ...EXPORTS
   ]
 })
 export class InteractModule {}

@@ -1,0 +1,32 @@
+<tft-scoreboard [redScore]="players.RED.score">
+
+</tft-scoreboard>
+<tft-board>
+  <tft-puck 
+    tftDraggable
+    (dragMove)="drag($event)"
+    [dragConfig]="puckDragConfig">
+  </tft-puck>
+  <tft-player-zone class="a">
+
+    <tft-tray>
+    </tft-tray>
+
+    <tft-target></tft-target>
+    <tft-target></tft-target>
+    <tft-target></tft-target>
+
+  </tft-player-zone>
+
+  <tft-player-zone class="b">
+    
+    <tft-target 
+      *ngFor="let target of targets; let i = index;" 
+      [value]="(i+1)*10"
+      (scorePoints)="handleScore($event)"></tft-target>
+
+    
+    <tft-tray></tft-tray>
+
+  </tft-player-zone>
+</tft-board>

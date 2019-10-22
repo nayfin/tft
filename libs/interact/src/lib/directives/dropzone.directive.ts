@@ -4,7 +4,10 @@ import { DropzoneOptions } from '@interactjs/types/types';
 import { InteractService } from '../services/interact.service';
 import { NgDropEvent, TftDropEvent } from '../models';
 @Directive({
-  selector: '[tftDropzone]'
+  selector: '[tftDropzone]',
+  host: {    
+    '[id]': 'dropzoneId',
+  }
 })
 export class DropzoneDirective implements OnInit {
   
@@ -29,7 +32,7 @@ export class DropzoneDirective implements OnInit {
       this.dragDrop.emit(this.mapDropzoneEvent(event));
     }
   }
-
+  @Input() dropzoneId: string;
   @Input() dropzoneConfig: DropzoneOptions;
   // tslint:disable-next-line: no-input-rename
   @Input() dropzoneData: any[];
@@ -39,7 +42,6 @@ export class DropzoneDirective implements OnInit {
   @Output() dragLeave = new EventEmitter(); 
   @Output() dragDrop = new EventEmitter();  
 
-  dropzoneId: string;
 
   constructor(
     public el: ElementRef,
@@ -49,21 +51,23 @@ export class DropzoneDirective implements OnInit {
   ngOnInit() {
     this.interactService.checkForOverridesInConfig(this.dropzoneConfig, ['ondropactivate', 'ondragenter', 'ondragleave','ondrop'] );
     interact(this.el.nativeElement).dropzone({ ...this.DEFAULT_CONFIG, ...this.dropzoneConfig});
-    this.dropzoneId = this.interactService.addRegistryToSystem();
+    // this is weird... addRegistryToSystem return the dropzoneId if one is passed in. It creates one 
+    // if it hasn't been defined. TODO: do this more gooder, and better too
+    this.dropzoneId = this.interactService.addRegistryToSystem(this.dropzoneId);
   }
 
   mapDropzoneEvent(event: NgDropEvent): TftDropEvent {
 
-    const positionInDropzone = this.interactService.calculatePositionInDropzone(event.target, event.draggable.target);
+    const positionInDropTarget = this.interactService.calculatePositionInDropzone(event.target, event.draggable.target);
     const dragRef = event.draggable.target.dragRef;
     return {
-      event: event,
+      interactEvent: event,
       // TODO: getting set and getting data from the target element is not ideal way to transfer data
       // find an Angulary way to do this
       dragRef,
       dragOrigin: dragRef.dropzone_dir,
       dropTarget: event.draggable.target.dropTarget,
-      positionInDropzone
+      positionInDropTarget
     }
   }
 

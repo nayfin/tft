@@ -1,0 +1,10 @@
+<div 
+  class="drop-target"
+  tftDropzone
+  (dragDrop)="score(value)" 
+  (dragEnter)="toggleHighlight(true)"
+  (dragLeave)="toggleHighlight(false)"
+  [ngClass]="{'highlight': highlighted}">
+
+  {{highlighted}}
+</div>

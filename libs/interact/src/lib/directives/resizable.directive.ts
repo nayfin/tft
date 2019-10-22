@@ -24,7 +24,8 @@ export class ResizableDirective implements OnInit, OnDestroy {
   @Output() resizeMove = new EventEmitter<ResizeEvent>();
   @Output() resizeInertiaStart = new EventEmitter<ResizeEvent>();
   @Output() resizeEnd = new EventEmitter<ResizeEvent>();
-  
+  @Input() interactableId: string;
+
   defaultConfig: Partial<Interact.OrBoolean<ResizableOptions>> = {
     edges: { left: true, right: true, bottom: true, top: true },
     onstart:  (event: ResizeEvent) => this.resizeStart.emit(event),
@@ -38,7 +39,6 @@ export class ResizableDirective implements OnInit, OnDestroy {
     onend: (event: ResizeEvent) =>  this.resizeEnd.emit(event),
     
   };
-  interactableId: string;
   registryId: string;
 
   private interactableSubscription: Subscription;

@@ -25,7 +25,9 @@
               "apps/sandbox/src/favicon.ico",
               "apps/sandbox/src/assets"
             ],
-            "styles": ["apps/sandbox/src/styles.scss"],
+            "styles": [
+              "apps/sandbox/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -80,7 +82,10 @@
               "apps/sandbox/tsconfig.app.json",
               "apps/sandbox/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/sandbox/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/sandbox/**"
+            ]
           }
         },
         "test": {
@@ -114,8 +119,13 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/sandbox-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/sandbox-e2e/**"]
+            "tsConfig": [
+              "apps/sandbox-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/sandbox-e2e/**"
+            ]
           }
         }
       }
@@ -133,7 +143,9 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": ["apps/api/src/assets"]
+            "assets": [
+              "apps/api/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -162,7 +174,10 @@
               "apps/api/tsconfig.app.json",
               "apps/api/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/api/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/api/**"
+            ]
           }
         },
         "test": {
@@ -187,7 +202,10 @@
               "libs/api-interfaces/tsconfig.lib.json",
               "libs/api-interfaces/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/api-interfaces/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/api-interfaces/**"
+            ]
           }
         },
         "test": {
@@ -223,7 +241,9 @@
               "apps/documentation/src/favicon.ico",
               "apps/documentation/src/assets"
             ],
-            "styles": ["apps/documentation/src/styles.scss"],
+            "styles": [
+              "apps/documentation/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -277,7 +297,10 @@
               "apps/documentation/tsconfig.app.json",
               "apps/documentation/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/documentation/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/documentation/**"
+            ]
           }
         },
         "test": {
@@ -311,8 +334,13 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/documentation-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/documentation-e2e/**"]
+            "tsConfig": [
+              "apps/documentation-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/documentation-e2e/**"
+            ]
           }
         }
       }
@@ -337,7 +365,10 @@
               "libs/interact/tsconfig.lib.json",
               "libs/interact/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/interact/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/interact/**"
+            ]
           }
         },
         "test": {
@@ -366,6 +397,9 @@
     },
     "@nrwl/angular:library": {
       "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "styleext": "scss"
     }
   },
   "defaultProject": "sandbox"

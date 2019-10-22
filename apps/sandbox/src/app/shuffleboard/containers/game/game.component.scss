@@ -1,0 +1,40 @@
+$center-offset: 200px;
+$puck-diameter: 75px;
+:host {
+  padding: 20px;
+}
+tft-board {
+  display: flex;
+  align-items: center;
+  height: 500px;
+  width: 90vw;
+  background: royalblue;
+  tft-puck {
+    height: $puck-diameter;
+    width: $puck-diameter;
+    border-radius: 50%;
+    // shape-outside: circle(50%);
+    background: yellow;
+  }
+  tft-player-zone {
+    display: flex;
+    flex-grow: 1;
+    height: 100%;
+    &.a {
+      background: red;
+      margin-right: $center-offset;
+    }
+    &.b {
+      background: blue;
+      margin-left: $center-offset;
+      justify-content: flex-end;
+    }
+    tft-target, tft-tray {
+      height: 100%;
+      outline: 2px solid white;
+    }
+    tft-tray {
+      width: 100px;
+    }
+  }
+}

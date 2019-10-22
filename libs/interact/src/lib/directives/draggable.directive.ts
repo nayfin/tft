@@ -21,10 +21,15 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
   DEFAULT_CONFIG: Partial<Interact.OrBoolean<DraggableOptions>> = {
     autoScroll: true,
     onstart: (event: NgDragEvent) => {
+      console.log('start', event)
       this.dragStart.emit(this.mapDragEvent(event));
     },
     onmove: (event: NgDragEvent) => {
-      if (this.enableDragDefault) {
+      if (event.dx > 200 || event.dy > 200 ) {
+        console.log({event})
+      }
+      // console.log({});
+      if (this.enableDragDefault && event.type === 'dragmove') {
         this.dragMoveListener(event);
       }
       this.dragMove.emit(this.mapDragEvent(event));
@@ -48,7 +53,7 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
   @Output() dragInertiaStart = new EventEmitter<TftDragEvent>();
   @Output() dragEnd = new EventEmitter<TftDragEvent>();
   
-  interactableId: string;
+  @Input() interactableId: string;
   registryId: string;
 
   interactableSubscription: Subscription;
@@ -63,7 +68,14 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {
     
     this.interactService.checkForOverridesInConfig(this.dragConfig, ['onstart', 'onmove', 'onend', 'oninertiastart'])
-    interact(this.el.nativeElement).draggable({ ...this.DEFAULT_CONFIG, ...this.dragConfig });
+    interact(this.el.nativeElement).draggable({ ...this.DEFAULT_CONFIG, ...this.dragConfig })
+      .on('dragresume', (event: NgDragEvent) => { 
+        event.delta = {x: 0, y: 0}; 
+        event.preventDefault(), 
+        event.stopImmediatePropagation(); 
+        event.stopPropagation();
+        console.log('resuming', event._interaction);
+      });
     // Set our target and origin to the parent zone, since we're starting here
     this.el.nativeElement.dropTarget = this.el.nativeElement.dragOrigin = this.dropzone_dir || null;
     // register with parent dropzone if it exists, otherwise use default
@@ -71,7 +83,7 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
       ? this.dropzone_dir.dropzoneId
       : 'default';
     // add draggable to directory and store its id 
-    this.interactableId = this.interactService.addDraggableToRegistry(this.registryId);
+    this.interactableId = this.interactService.addDraggableToRegistry(this.registryId, this.interactableId);
    
     this.interactableSubscription = this.interactService.getInteractable(this.interactableId, this.registryId).subscribe();
     
@@ -95,7 +107,8 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
   dragMoveListener(event: NgDragEvent) {
     event.preventDefault();
     event.stopPropagation();
-    this.interactService.updateDeltas(this.interactableId, this.registryId, {deltaX: event.dx, deltaY: event.dy}, this.el.nativeElement);
+    const { dx, dy } = event;
+    this.interactService.updateDeltas(this.interactableId, this.registryId, {deltaX: dx, deltaY: dy}, this.el.nativeElement);
   }
 
   mapDragEvent(event: NgDragEvent): TftDragEvent {
@@ -103,17 +116,17 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
     const relatedTarget = target.dropTarget 
       ? target.dropTarget.el.nativeElement 
       : null;
-    const positionInDropzone = target && relatedTarget
+    const positionInDropTarget = target && relatedTarget
       ? this.interactService.calculatePositionInDropzone(relatedTarget, target)
       : null;
     return {
-      event: event,
+      interactEvent: event,
       // TODO: getting set and getting data from the target element is not ideal way to transfer data
       // find an Angulary way to do this
       dragRef: this, //target.dragRef,
       dragOrigin: target.dragOrigin,
       dropTarget: target.dropTarget,
-      positionInDropzone
+      positionInDropTarget
     }
 
   }

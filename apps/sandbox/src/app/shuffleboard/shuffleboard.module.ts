@@ -1,0 +1,23 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { ShuffleboardRoutingModule } from './shuffleboard-routing.module';
+import { GameComponent } from './containers/game/game.component';
+import { BoardComponent } from './components/board/board.component';
+import { PlayerZoneComponent } from './components/player-zone/player-zone.component';
+import { TargetComponent } from './components/target/target.component';
+import { TrayComponent } from './components/tray/tray.component';
+import { PuckComponent } from './components/puck/puck.component';
+import { InteractModule } from '@tft/interact';
+import { ScoreboardComponent } from './components/scoreboard/scoreboard.component';
+
+
+@NgModule({
+  declarations: [GameComponent, BoardComponent, PlayerZoneComponent, TargetComponent, TrayComponent, PuckComponent, ScoreboardComponent],
+  imports: [
+    CommonModule,
+    ShuffleboardRoutingModule,
+    InteractModule,
+  ]
+})
+export class ShuffleboardModule { }
