@@ -10,10 +10,20 @@ import { TrayComponent } from './components/tray/tray.component';
 import { PuckComponent } from './components/puck/puck.component';
 import { InteractModule } from '@tft/interact';
 import { ScoreboardComponent } from './components/scoreboard/scoreboard.component';
+import { TargetZoneComponent } from './components/target-zone/target-zone.component';
 
 
 @NgModule({
-  declarations: [GameComponent, BoardComponent, PlayerZoneComponent, TargetComponent, TrayComponent, PuckComponent, ScoreboardComponent],
+  declarations: [
+    GameComponent,
+    BoardComponent,
+    PlayerZoneComponent,
+    TargetComponent,
+    TrayComponent,
+    PuckComponent,
+    ScoreboardComponent,
+    TargetZoneComponent
+  ],
   imports: [
     CommonModule,
     ShuffleboardRoutingModule,

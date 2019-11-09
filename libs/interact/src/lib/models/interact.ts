@@ -4,6 +4,8 @@ import Interactable from '@interactjs/core/Interactable';
 import { DropzoneDirective } from '../directives/dropzone.directive';
 import { Point, DragEvent, ResizeEvent } from '@interactjs/types/types';
 import { BehaviorSubject, Observable } from 'rxjs';
+
+export const DEFAULT_REGISTRY_ID = 'DEFAULT';
 /**
  * Default initial value for Delta BehaviorSubject
  */
@@ -30,7 +32,7 @@ export const defaultPosition: Position = {
 }
 /**
  * The shape of the state/events/behavior system for each dropzone 
- * and the 'default' system (for drop components initialized outside  
+ * and the DEFAULT_REGISTRY_ID system (for drop components initialized outside  
  * of a dropzone).
  */
 export interface InteractableSystem {
@@ -56,6 +58,19 @@ export type NgDropEvent = DropEvent & {
   draggable:  Interactable & {
     target: HTMLElement & { 
       dragRef: DraggableDirective
+      dragOrigin?: DropzoneDirective
+      dropTarget?: DropzoneDirective
+    } 
+  } 
+};
+/**
+ * Extends the interact resize events by adding a reference to the dragRef 
+ * directive to the html element. 
+ */
+export type  NgResizeEvent = ResizeEvent & { 
+  draggable:  Interactable & {
+    target: HTMLElement & { 
+      dragRef?: DraggableDirective
       dragOrigin?: DropzoneDirective
       dropTarget?: DropzoneDirective
     } 

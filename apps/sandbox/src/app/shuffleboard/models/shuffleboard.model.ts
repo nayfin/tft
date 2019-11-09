@@ -1,12 +1,15 @@
 import { Point } from '@interactjs/types/types';
 
 export interface Puck {
-  location: Point;
-  team: Team;
+  location?: Point;
+  startLocation: Point;
+  team?: Team;
 }
 
 export interface Player {
   score: number;
+  pucksRemaining: number;
+  pucks: { [key: string]: Puck};
 }
 export enum Team {
   RED = 'RED',

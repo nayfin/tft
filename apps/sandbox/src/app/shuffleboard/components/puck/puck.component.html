@@ -1,2 +1,13 @@
-<div>
+<div 
+  class="puck" 
+  tftDraggable
+  [dragData]="{team: team, key: key}"    
+  [x]="puck.location.x"
+  [y]="puck.location.y"
+  (dragEnd)="puckDrop.emit($event)"
+  [disabled]="!(whosTurn === team && turnCount === index)"
+  [dragConfig]="dragConfig"
+  [ngClass]="teamClass"
+  [ngStyle]="{'z-index': 1000 - index}">
+{{index}}
 </div>

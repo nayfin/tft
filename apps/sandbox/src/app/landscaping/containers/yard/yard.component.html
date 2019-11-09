@@ -10,6 +10,7 @@
   <div class="drag-origin" 
     *ngFor="let item of dragItems; let i = index;"    
     [dropzoneData]="item"
+    [dropzoneId]="item.name + i"
     (dragEnter)="log('enter', $event)"
     tftDropzone>
     <div class="drag-origin-header">
@@ -36,24 +37,29 @@
   
   </div>
 </div>
+<div
+  tftDropzone
+  class="yard">
 
-<div 
-  class="drop-container" 
-  #dropContainer2
-  tftDropzone 
-  tftDraggable
-  tftResizable
-  (dragLeave)="log('leave', $event)"
-  (dragEnter)="log('enter', $event)"
-  [dropzoneData]="droppedItems">
-  <section 
-    *ngFor="let item of droppedItems"
+  <div 
+    class="drop-container" 
+    #dropContainer2
+    tftDropzone 
     tftDraggable
-    [dragConfig]="dragConfigB"
-    [x]="item.x"
-    [y]="item.y"
-    [dragData]="item"
-    class="dropzone-item">
-    <div class="handle">{{item.name}}</div>
-  </section>
+    tftResizable
+    (dragLeave)="log('leave', $event)"
+    (dragEnter)="log('enter', $event)"
+    [dropzoneData]="droppedItems"
+    [dropzoneId]="'yard'">
+    <section 
+      *ngFor="let item of droppedItems"
+      tftDraggable
+      [dragConfig]="dragConfigB"
+      [x]="item.x"
+      [y]="item.y"
+      [dragData]="item"
+      class="dropzone-item">
+      <div class="handle">{{item.name}}</div>
+    </section>
+  </div>
 </div>

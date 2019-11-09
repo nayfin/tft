@@ -2,7 +2,9 @@
 import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { tap, filter, map, shareReplay } from 'rxjs/operators';
-import { TftInteractable, Delta, Size, Position, InteractableRegistry, defaultPosition, defaultSize, defaultDelta } from '../models';
+import { 
+  TftInteractable, Delta, Size, Position, InteractableRegistry, 
+  defaultPosition, defaultSize, defaultDelta, DEFAULT_REGISTRY_ID } from '../models';
 
 @Injectable({providedIn: 'root'})
 export class InteractService {
@@ -38,28 +40,28 @@ export class InteractService {
   }
 
   addDraggableToRegistry(registryId = null, interactableId: string | null = null ) {
-    const defaultRegistryId = registryId || 'default';
+    const defaultRegistryId = registryId || DEFAULT_REGISTRY_ID;
     // if we pass an id to createInteractableId then it is used when creating the interactable
     // and returned, otherwise a an id is created for the draggable. 
     const key = this.createInteractableId(interactableId );
     if (!this.dragRegistrySystem.hasOwnProperty(defaultRegistryId)) {
       this.dragRegistrySystem[defaultRegistryId] = {};
     }
-    this.dragRegistrySystem[defaultRegistryId][key] = this.createDraggable(defaultPosition, defaultSize, defaultDelta);
+    this.dragRegistrySystem[defaultRegistryId][key] = this.createInteractableState(defaultPosition, defaultSize, defaultDelta);
     return key
   }
 
-  destroyInteractable(interactableId: string, registryId = 'default') {
+  destroyInteractable(interactableId: string, registryId = DEFAULT_REGISTRY_ID) {
     if(this.dragRegistrySystem[registryId][interactableId]) {
       delete this.dragRegistrySystem[registryId][interactableId];
     }
   }
 
-  subscribeToInteractable(interactableId: string, registryId = 'default') {
+  subscribeToInteractable(interactableId: string, registryId = DEFAULT_REGISTRY_ID) {
     return this.dragRegistrySystem[registryId][interactableId];
   }
 
-  createDraggable(initialPosition: Position, initialSize: Size, initialDelta: Delta ) {
+  createInteractableState(initialPosition: Position, initialSize: Size, initialDelta: Delta ) {
     
     const deltas$ = new BehaviorSubject(initialDelta);
     // tracks the size of the element
@@ -82,6 +84,7 @@ export class InteractService {
       deltas$.pipe(
         filter(delta => !!delta.targetElement),
         tap((delta) => {
+          console.log('delta', delta          )
           const position = position$.value;
           const newPosition = this.addDeltaToPosition(delta, position);
           position$.next(newPosition);
@@ -94,6 +97,7 @@ export class InteractService {
     ).pipe(
       shareReplay(1),
       map( ([size, deltas, position]): TftInteractable => {
+        
         return {
           x: position.x,
           y: position.y,
@@ -105,6 +109,7 @@ export class InteractService {
         }
       }),  
     )
+    // TODO: update system to handle only returning interactable$
     return {
       deltas$,
       position$,
@@ -121,7 +126,7 @@ export class InteractService {
     return `dropzone${index}`
   }
 
-  getInteractable( interactableId: string, registryId = 'default') {
+  getInteractableState( interactableId: string, registryId = DEFAULT_REGISTRY_ID) {
     return this.dragRegistrySystem[registryId][interactableId].interactable$;
   }
   
@@ -140,7 +145,7 @@ export class InteractService {
     this.dragRegistrySystem[registryId][interactId].size$.next({deltaX, deltaY, width, height, targetElement});
   }
 
-  interactableExistOnRegistry(interactId: string, registryId = 'default') {
+  interactableExistOnRegistry(interactId: string, registryId = DEFAULT_REGISTRY_ID) {
     return this.dragRegistrySystem.hasOwnProperty(registryId)
       && this.dragRegistrySystem[registryId].hasOwnProperty(interactId);
   }

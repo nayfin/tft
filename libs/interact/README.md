@@ -27,12 +27,14 @@ This is an angular wrapper for the interactjs library. We aim to build a versati
 ```
 
 ## Roadmap
+- allow dragging of alternate element
+  - ondragstart:append new element to root of pageelement
 - github pages docs 
 - performance testing
-  - look into using Cypress for this
+  - look into using Cypress for this (having trouble dragging in test)
   - ngZone runOutsideAngular
   - round coordinates and filter duplicates
   - performing drag behavior when listening to output vs. passing callback through the config
 
-- way to eject all drag registry state to end-developer
+- Define way to eject all drag registry state to end-developer
   - move dragRegistry into a BehaviorSubject? (wait until can test performance impact)

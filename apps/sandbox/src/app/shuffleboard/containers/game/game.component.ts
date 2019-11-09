@@ -1,9 +1,9 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
-import { DraggableOptions } from '@interactjs/types/types';
-import interact from 'interactjs';
-import { TftDragEvent } from '@tft/interact';
-import { Player, Team } from '../../models/shuffleboard.model'
-import { RestrictOptions } from '@interactjs/modifiers/restrict/pointer';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { TftDragEvent, TftDropEvent } from '@tft/interact';
+import { initialGameState } from './consts';
+import { Team } from '../../models/shuffleboard.model'
+import { TargetComponent } from '../../components/target/target.component';
+// import { RestrictOptions } from '@interactjs/modifiers/restrict/pointer';
 
 @Component({
   selector: 'tft-game',
@@ -12,55 +12,95 @@ import { RestrictOptions } from '@interactjs/modifiers/restrict/pointer';
 })
 export class GameComponent implements OnInit {
   moves = 0;
+  team = Team;
+  whosTurn: Team = Team.RED;
+  turnCount = 0;
+  game = initialGameState;
 
-  players: {[key in Team]: Player} = {
-    'RED': {
-      score: 0
-    },
-    'BLUE': {
-      score: 0
-    }
-  };
-
-  targets = [
-    { value: 10},
-    { value: 20},
-    { value: 30},
-  ]
-  restrictOptions: RestrictOptions;
-  puckDragConfig: DraggableOptions = {
-    inertia: {
-      resistance: .9,
-      allowResume: true,
-    },
-    modifiers: [
-      interact.modifiers.restrict({
-        restriction: 'parent',
-        endOnly: false,    
-        elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
-      })
-    ]
+  get allPucks() {
+    return {
+      ...this.game.BLUE.pucks, 
+      ...this.game.RED.pucks
+    };
   }
 
-  constructor() { }
+  targets = [
+    { 
+      value: 10,
+      pucksInTarget: 0
+    }, { 
+      value: 20,
+      pucksInTarget: 0
+    }, { 
+      value: 30,
+      pucksInTarget: 0
+    },
+  ];
+
+  constructor(
+    // private cdr: ChangeDetectorRef,
+  ) { }
 
   ngOnInit() {
   }
 
-  handleScore(points: number) {
-    console.log('scoring', points);
-    this.players.RED.score += points;
+  checkForFoul(event) {
+    console.log({foul: event})
   }
 
-  highlightTarget(index: number, el: ElementRef) {
-    console.log({index, el});
+  updateLocation(event: TftDropEvent, key: string) {
+    const team = event.dragRef.dragData.team;
+    this.game[team].pucks[key].location.x = event.dragRef.x;
+    this.game[team].pucks[key].location.y = event.dragRef.y;
   }
 
-  drag(event: TftDragEvent) {
-    const {dx, dy} = event.interactEvent;
-    this.moves++;
-    // console.log('drag', event, { moves: this.moves, dx, dy})
+  updateTargetState(index:number, state: 'enter' | 'leave') {
+    if ( state === 'leave') {
+      this.targets[index].pucksInTarget--
+      return
+    }
+    this.targets[index].pucksInTarget++
   }
+  handleDrop(event: TftDropEvent) {
+    const { team, key} = event.dragRef.dragData;
+    this.updateLocation(event, key);
+    this.changeTeams(team);
+    if ( team === Team.BLUE ) { 
+      this.turnCount++; 
+    }
+  }
+
+  resetBoard() {
+    this.resetPucks();
+    this.targets.forEach(target => target.pucksInTarget = 0);
+    this.turnCount = 0;
+  }
+
+  resetTeamPucks(team: Team) {
+    const pucks = this.game[team].pucks;
+    Object.keys(pucks).forEach(key => {
+      const { x, y } = pucks[key].startLocation;
+      pucks[key].location.x = x;
+      pucks[key].location.y = y;
+    });
+  }
+
+  resetPucks() {
+    this.resetTeamPucks(Team.RED);
+    this.resetTeamPucks(Team.BLUE);
+  }
+
+  handleScore(event: TftDropEvent) {
+    const points = event.dropTarget.dropzoneData.points;
+    const team = event.dragRef.dragData.team;
+    this.game[team].score += points;
+    this.handleDrop(event);
+  }
+
+  changeTeams(currentTeam: Team) {
+    this.whosTurn = currentTeam === Team.BLUE ? Team.RED : Team.BLUE;
+  }
+
   log(name: string, event) {
     console.log(name, event);
   }

@@ -2,41 +2,46 @@ import { Directive, OnInit, OnDestroy, ElementRef, Input, Optional, SkipSelf, Ou
 import interact from 'interactjs';
 import { InteractService } from '../services/interact.service';
 import { ResizableOptions } from '@interactjs/types/types';
-import { DraggableDirective } from './draggable.directive';
 import { Subscription } from 'rxjs';
 import { ResizeEvent } from '@interactjs/actions';
+import { DraggableDirective } from './draggable.directive';
 import { DropzoneDirective } from './dropzone.directive';
+import { NgResizeEvent, TftResizeEvent, DEFAULT_REGISTRY_ID } from '../models';
 @Directive({
   selector: '[tftResizable]',
-  host: {    
+  host: { 
+    // prevents touch events from colliding with with mouse events 
+    // on touch screen   
     '[style.touchAction]': '"none"',
-    '[style.position]': '"absolute"',
+    // default to absolute here to accommodate likely use cases
+    // consuming component can easily over ride with position input
+    '[style.position]': 'position',
   }
 })
 export class ResizableDirective implements OnInit, OnDestroy {
 
-  // location$: Observable<{x: number, y: number, el: any}> = this.interactService.location$;
   @Input() enableResizeDefault = true;
-
+  @Input() position = 'absolute';
   @Input() resizeConfig: Partial<Interact.OrBoolean<ResizableOptions>>;
   
-  @Output() resizeStart = new EventEmitter<ResizeEvent>();
-  @Output() resizeMove = new EventEmitter<ResizeEvent>();
-  @Output() resizeInertiaStart = new EventEmitter<ResizeEvent>();
-  @Output() resizeEnd = new EventEmitter<ResizeEvent>();
+  @Output() resizeStart = new EventEmitter<TftResizeEvent>();
+  @Output() resizeMove = new EventEmitter<TftResizeEvent>();
+  @Output() resizeInertiaStart = new EventEmitter<TftResizeEvent>();
+  @Output() resizeEnd = new EventEmitter<TftResizeEvent>();
   @Input() interactableId: string;
 
   defaultConfig: Partial<Interact.OrBoolean<ResizableOptions>> = {
     edges: { left: true, right: true, bottom: true, top: true },
-    onstart:  (event: ResizeEvent) => this.resizeStart.emit(event),
-    onmove: (event: ResizeEvent) => {
+    onstart:  (event: NgResizeEvent) => this.resizeStart.emit(this.mapResizeEvent(event)  ),
+    onmove: (event: NgResizeEvent) => {
       if (this.enableResizeDefault) {
         this.resizeListener(event)
       }
-      this.resizeMove.emit(event)
+      const mappedEvent = this.mapResizeEvent(event);
+      this.resizeMove.emit(mappedEvent)
     },
-    oninertiastart:  (event: ResizeEvent) => this.resizeInertiaStart.emit(event),
-    onend: (event: ResizeEvent) =>  this.resizeEnd.emit(event),
+    oninertiastart:  (event: NgResizeEvent) => this.resizeInertiaStart.emit(this.mapResizeEvent(event)),
+    onend: (event: NgResizeEvent) =>  this.resizeEnd.emit(this.mapResizeEvent(event)),
     
   };
   registryId: string;
@@ -51,20 +56,28 @@ export class ResizableDirective implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    const resizable = this.el.nativeElement;
     // warn user when they are overriding default behavior
     this.interactService.checkForOverridesInConfig(this.resizeConfig, ['onstart', 'onmove', 'onend', 'oninertiastart']);
+    // get the element our directive is attached to
+    const resizable = this.el.nativeElement;
+    // hook elements into interacts resize event listeners
+    // we spread the configs so that the consuming component only overwrites the 
+    // pieces that it explicitly indicates
     interact(resizable).resizable({...this.defaultConfig, ...this.resizeConfig})
-    // TODO: 
+    // we check for a dropzone, we use its id as the registry id if there is on
+    // otherwise, we use DEFAULT_REGISTRY_ID as a registry id. This allows us to keep our interactable 
+    // drag state organized by dropzones.
     this.registryId = this.dropzone_dir && this.dropzone_dir.dropzoneId
       ? this.dropzone_dir.dropzoneId
-      : 'default';
+      : DEFAULT_REGISTRY_ID;
 
     this.interactableId = this.draggable_dir && this.draggable_dir.interactableId
       ? this.draggable_dir.interactableId
-      : this.interactService.addDraggableToRegistry(this.registryId);
+      : this.interactService.addDraggableToRegistry(this.registryId, this.interactableId);
     
-    this.interactableSubscription = this.interactService.getInteractable(this.interactableId, this.registryId).subscribe();
+    this.interactableSubscription = this.interactService
+      .getInteractableState(this.interactableId, this.registryId)
+      .subscribe();
   }
 
   ngOnDestroy() {
@@ -75,9 +88,31 @@ export class ResizableDirective implements OnInit, OnDestroy {
   resizeListener(event: ResizeEvent) {
     const deltaX = event.deltaRect.left;
     const deltaY = event.deltaRect.top;
-    const width  = event.rect.width;
-    const height = event.rect.height;
-    this.interactService.updateSize(this.interactableId, this.registryId, { deltaX, deltaY, width, height}, this.el.nativeElement);  
+    const { width, height } = event.rect;
+    this.interactService.updateSize(
+      this.interactableId, 
+      this.registryId, 
+      {deltaX, deltaY, width, height}, 
+      this.el.nativeElement
+    );  
   }
 
+  mapResizeEvent(event: NgResizeEvent ): TftResizeEvent {
+    const { target } = event;
+    const relatedTarget = this.draggable_dir && this.draggable_dir.dropzone_dir
+      ? this.draggable_dir.dropzone_dir.el.nativeElement
+      : null;
+      
+    const positionInDropTarget = target && relatedTarget
+      ? this.interactService.calculatePositionInDropzone(relatedTarget, target as HTMLElement)
+      : null;
+    return {
+      interactEvent: event,
+      dragRef: this.draggable_dir,
+      dragOrigin: this.dropzone_dir,
+      dropTarget: this.el.nativeElement.dropTarget,
+      positionInDropTarget
+    }
+
+  }
 }

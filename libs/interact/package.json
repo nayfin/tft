@@ -9,6 +9,6 @@
   "peerDependencies": {
     "@angular/common": "^8.1.1",
     "@angular/core": "^8.1.1",
-    "interactjs": "~1.6.2"
+    "interactjs": "~1.6.3"
   }
 }

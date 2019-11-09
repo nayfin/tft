@@ -35,21 +35,22 @@ export class DropzoneDirective implements OnInit {
   @Input() dropzoneId: string;
   @Input() dropzoneConfig: DropzoneOptions;
   // tslint:disable-next-line: no-input-rename
-  @Input() dropzoneData: any[];
+  @Input() dropzoneData: any;
 
   @Output() dropActivate = new EventEmitter();  
   @Output() dragEnter = new EventEmitter();  
   @Output() dragLeave = new EventEmitter(); 
   @Output() dragDrop = new EventEmitter();  
 
-
+  blackListedConfigKeys: string[] = ['ondropactivate', 'ondragenter', 'ondragleave','ondrop'];
+  
   constructor(
     public el: ElementRef,
     private interactService: InteractService
   ) { }
   
   ngOnInit() {
-    this.interactService.checkForOverridesInConfig(this.dropzoneConfig, ['ondropactivate', 'ondragenter', 'ondragleave','ondrop'] );
+    this.interactService.checkForOverridesInConfig(this.dropzoneConfig, this.blackListedConfigKeys );
     interact(this.el.nativeElement).dropzone({ ...this.DEFAULT_CONFIG, ...this.dropzoneConfig});
     // this is weird... addRegistryToSystem return the dropzoneId if one is passed in. It creates one 
     // if it hasn't been defined. TODO: do this more gooder, and better too
@@ -62,8 +63,6 @@ export class DropzoneDirective implements OnInit {
     const dragRef = event.draggable.target.dragRef;
     return {
       interactEvent: event,
-      // TODO: getting set and getting data from the target element is not ideal way to transfer data
-      // find an Angulary way to do this
       dragRef,
       dragOrigin: dragRef.dropzone_dir,
       dropTarget: event.draggable.target.dropTarget,

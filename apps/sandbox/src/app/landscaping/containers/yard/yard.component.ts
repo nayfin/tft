@@ -45,7 +45,7 @@ export class YardComponent {
     console.log({initialIndex, dragData, items: this.dragItems})
     const {dragRef, dropTarget} = event;
 
-    if (dropTarget && dropTarget.dropzoneId === 'dropzone0') {
+    if (dropTarget && dropTarget.dropzoneId === 'yard') {
       const item = {
         x: event.positionInDropTarget.x,
         y: event.positionInDropTarget.y,

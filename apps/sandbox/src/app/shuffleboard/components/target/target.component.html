@@ -1,10 +1,15 @@
 <div 
   class="drop-target"
   tftDropzone
-  (dragDrop)="score(value)" 
-  (dragEnter)="toggleHighlight(true)"
-  (dragLeave)="toggleHighlight(false)"
-  [ngClass]="{'highlight': highlighted}">
-
-  {{highlighted}}
+  (dragDrop)="score($event, value)" 
+  (dragEnter)="puckEnterTarget($event)"
+  (dragLeave)="puckLeaveTarget()"
+  [dropzoneData]="{points: value}"
+  [ngClass]="{'highlight': pucksInTarget > 0}">
+  <!-- <div class="inset-border"> -->
+    {{pucksInTarget}}
+    <span class="points-display">
+      {{value}}
+    </span>
+  <!-- </div> -->
 </div>

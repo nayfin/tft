@@ -21,11 +21,16 @@
 }
 
 .drop-container {
-  width: 1000px;
-  height: 1000px;
+  width: 100px;
+  height: 100px;
   background: blue;
 }
-
+.yard {
+  display: flex;
+  width: 100%;
+  height: 8000px;
+  background: rosybrown;
+}
 .interact-item, .dropzone-item {
   width: 80px;
   height: 80px;

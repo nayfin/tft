@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { TftDragEvent, TftDropEvent } from '@tft/interact';
+import { Team } from '../../models/shuffleboard.model';
 
 @Component({
   selector: 'tft-target',
@@ -8,21 +10,27 @@ import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy
 })
 export class TargetComponent implements OnInit {
   @Input() value = 10;
-  @Output() scorePoints: EventEmitter<number> = new EventEmitter<number>();
+  @Input() pucksInTarget = 0;
+  @Output() scorePoints: EventEmitter<TftDropEvent> = new EventEmitter();
+  @Output() puckEnter = new EventEmitter<void>();
+  @Output() puckLeave = new EventEmitter<void>();
 
-  highlighted = false
   constructor() { }
 
   ngOnInit() {
   }
 
-  score(points: number) {
-    console.log({points})
-    this.scorePoints.emit(points);
+  score(event: TftDropEvent) {
+    this.scorePoints.emit(event);
   }
 
-  toggleHighlight(highlight: boolean) {
-    this.highlighted = highlight;
+
+  puckEnterTarget(event: TftDropEvent) {
+    if(event.dragRef.disabled) return;
+    this.puckEnter.emit();
   }
 
+  puckLeaveTarget() {
+    this.puckLeave.emit();
+  }
 }
