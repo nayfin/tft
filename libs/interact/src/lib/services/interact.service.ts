@@ -1,7 +1,7 @@
 
 import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
-import { tap, filter, map, shareReplay } from 'rxjs/operators';
+import { tap, filter, map, shareReplay, startWith } from 'rxjs/operators';
 import { 
   TftInteractable, Delta, Size, Position, InteractableRegistry, 
   defaultPosition, defaultSize, defaultDelta, DEFAULT_REGISTRY_ID } from '../models';
@@ -12,9 +12,13 @@ export class InteractService {
   private _interactableIndex = 0;
   private _dropzoneIndex = 0;
   private renderer: Renderer2;
-
+  
+  // TODO: this should work as expected, but I don't know if we need it
   // get interactableCount() {
-  //   return this._interactableIndex + 1;
+  //   // counts all the interactable systems in the registry
+  //   return Object.keys(this.dragRegistrySystem).reduce((acc, curr) => {
+  //     return acc + Object.keys(this.dragRegistrySystem[curr]).length;
+  //   }, 0);
   // }
   
   readonly dragRegistrySystem: { [key: string]: InteractableRegistry } = { };
@@ -29,7 +33,7 @@ export class InteractService {
     return {
       x: delta.deltaX + position.x,
       y: delta.deltaY + position.y,
-      targetElement: delta.targetElement
+      targetElement: position.targetElement || delta.targetElement
     }
   }
 
@@ -39,15 +43,15 @@ export class InteractService {
     return registryId;
   }
 
-  addDraggableToRegistry(registryId = null, interactableId: string | null = null ) {
-    const defaultRegistryId = registryId || DEFAULT_REGISTRY_ID;
+  addDraggableToRegistry(customRegistryId = null, interactableId: string | null = null ) {
+    const registryId = customRegistryId || DEFAULT_REGISTRY_ID;
     // if we pass an id to createInteractableId then it is used when creating the interactable
     // and returned, otherwise a an id is created for the draggable. 
     const key = this.createInteractableId(interactableId );
-    if (!this.dragRegistrySystem.hasOwnProperty(defaultRegistryId)) {
-      this.dragRegistrySystem[defaultRegistryId] = {};
+    if (!this.dragRegistrySystem.hasOwnProperty(registryId)) {
+      this.dragRegistrySystem[registryId] = {};
     }
-    this.dragRegistrySystem[defaultRegistryId][key] = this.createInteractableState(defaultPosition, defaultSize, defaultDelta);
+    this.dragRegistrySystem[registryId][key] = this.createInteractableState(defaultPosition, defaultSize, defaultDelta);
     return key
   }
 
@@ -72,7 +76,9 @@ export class InteractService {
     // All draggable data mapped together
     const interactable$: Observable<TftInteractable> = combineLatest(
       size$.pipe(
-        filter(resizeEvent => !!resizeEvent.targetElement),
+        // startWith({...initialSize, ...initialDelta}),
+        shareReplay(1),
+        // filter(resizeEvent => !!resizeEvent.targetElement),
         tap(({deltaX, deltaY, width, height, targetElement}) => {
           this.setElementSize(width, height, targetElement);
           // only reposition if necessary i.e when resizing left or up
@@ -82,22 +88,22 @@ export class InteractService {
         })
       ),
       deltas$.pipe(
-        filter(delta => !!delta.targetElement),
+        shareReplay(1),
         tap((delta) => {
-          console.log('delta', delta          )
           const position = position$.value;
           const newPosition = this.addDeltaToPosition(delta, position);
           position$.next(newPosition);
         })
       ),
       position$.pipe(
-        filter(position => !!position.targetElement),
-        tap( position => this.setElementTransform(position.x, position.y, position.targetElement))
+        shareReplay(1),
+        tap( position => {
+          this.setElementTransform(position.x, position.y, position.targetElement);
+        })
       )
     ).pipe(
       shareReplay(1),
       map( ([size, deltas, position]): TftInteractable => {
-        
         return {
           x: position.x,
           y: position.y,
@@ -151,11 +157,13 @@ export class InteractService {
   }
 
   setElementSize(width: number, height: number, target: any) {
+    if(!target) return;
     this.renderer.setStyle(target, 'width', `${width}px`);
     this.renderer.setStyle(target, 'height', `${height}px`);
   }
 
   setElementTransform(x: number, y: number, target: any) {
+    if(!target) return;
     const transformString = this.createTransformString(x, y);
     this.renderer.setStyle(target, 'transform', transformString );
   }

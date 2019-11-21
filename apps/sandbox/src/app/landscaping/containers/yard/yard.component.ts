@@ -42,7 +42,6 @@ export class YardComponent {
 
   handleDrop(event: TftDropEvent, initialIndex) {
     const dragData = this.dragItems[initialIndex];
-    console.log({initialIndex, dragData, items: this.dragItems})
     const {dragRef, dropTarget} = event;
 
     if (dropTarget && dropTarget.dropzoneId === 'yard') {

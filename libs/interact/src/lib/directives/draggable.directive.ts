@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Input, OnInit, Output,
-   OnDestroy, EventEmitter, Optional, SkipSelf, Renderer2 } from '@angular/core';
+   OnDestroy, EventEmitter, Optional, SkipSelf, Renderer2, SimpleChanges, OnChanges } from '@angular/core';
 import interact from 'interactjs';
 import { InteractService } from '../services/interact.service';
 import { DraggableOptions } from '@interactjs/types/types';
@@ -19,57 +19,12 @@ import { tap } from 'rxjs/operators';
     '[id]': 'interactableId',
   }
 })
-export class DraggableDirective implements OnInit, OnDestroy {
+export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
 
-  DEFAULT_CONFIG: Partial<Interact.OrBoolean<DraggableOptions>> = {
-    autoScroll: true,
-    onstart: (event: NgDragEvent) => {
-      if (this.disabled) return;
-      this.dragStart.emit(this.mapDragEvent(event));
-    },
-    onmove: (event: NgDragEvent) => {
-      if (this.disabled) return;
-      if (this.enableDragDefault) {
-        this.dragMoveListener(event);
-      }
-      const mappedEvent = this.mapDragEvent(event);
-      this.dragMove.emit(mappedEvent);
-    },
-    oninertiastart: (event: NgDragEvent) => {
-      if (this.disabled) return;
-      this.dragInertiaStart.emit(this.mapDragEvent(event))
-    },
-    onend: (event: NgDragEvent) => {
-      if (this.disabled) return;
-      this.dragEnd.emit(this.mapDragEvent(event))
-    },  
-  }
-
-  private registryId: string;
-
-  private interactableSubscription: Subscription;
   
-  // getters and setters for x and y  
-  private _x: number;
-  @Input() set x(val: number) {
-    if (val === this._x) return;
-    this._x = val;
-    this.alignPositionWithInputs(val,  this.y);
-  };
-  get x() {
-    return this._x;
-  }
-  // getters and setters for y
-  private _y: number;
-  @Input() set y(val: number) {
-    if (val === this._y) return;
-    this._y = val;
-    this.alignPositionWithInputs(this.x, val);
-  }; 
-  get y() {
-    return this._y;
-  }
-
+  @Input() x: number;
+  @Input() y: number;
+  
   @Input() interactableId: string;
   @Input() dragData: any;
   @Input() enableDragDefault = true;
@@ -81,10 +36,14 @@ export class DraggableDirective implements OnInit, OnDestroy {
   @Output() dragMove = new EventEmitter<TftDragEvent>();
   @Output() dragInertiaStart = new EventEmitter<TftDragEvent>();
   @Output() dragEnd = new EventEmitter<TftDragEvent>();
+  
   interactableState: Observable<TftInteractable>;
   interactable: Interactable;
+  private registryId: string;
+
+  private interactableSubscription: Subscription;
+
   constructor(
-    // public cdr: ChangeDetectorRef,
     public el: ElementRef,
     private interactService: InteractService,
     private renderer: Renderer2,
@@ -92,10 +51,8 @@ export class DraggableDirective implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.interactService.checkForOverridesInConfig(this.dragConfig, ['onstart', 'onmove', 'onend', 'oninertiastart']);
     
-    this.interactable = interact(this.el.nativeElement).draggable({ ...this.DEFAULT_CONFIG, ...this.dragConfig });
-      // .on('dragresume', (event: NgDragEvent) => {  });
+    this.interactable = this.initiateInteractEvents(this.dragConfig, this.el.nativeElement);
 
     // Set our target and origin to the parent zone, since we're starting here
     this.el.nativeElement.dropTarget = this.el.nativeElement.dragOrigin = this.dropzone_dir || null;
@@ -105,16 +62,31 @@ export class DraggableDirective implements OnInit, OnDestroy {
       : DEFAULT_REGISTRY_ID; 
     // add draggable to directory and store its id 
     this.interactableId = this.interactService.addDraggableToRegistry(this.registryId, this.interactableId);
-    // cache subscription to interactable so we can unsubscribe onDestroy
+    // cache subscription to interactable state so we can unsubscribe onDestroy
     this.interactableState = this.interactService
-      .getInteractableState(this.interactableId, this.registryId).pipe(tap(console.log));
-    console.log(this.interactableState.subscribe());
-    this.interactableSubscription = this.interactableState.subscribe((state) => { console.log({state})})
-    
+      .getInteractableState(this.interactableId, this.registryId);
+  
     // we create a property 'dragRef' on the element so that we can easily pass the class to the drop zone
     this.renderer.setProperty(this.el.nativeElement, 'dragRef', this);
     this.alignPositionWithInputs(this.x, this.y);
+    // keep our cached position values in line with our drag state
+    this.interactableSubscription = this.interactableState.subscribe((state) => { 
+      this.y = state.y;
+      this.x = state.x;
+    });
   };
+  // TODO: watch config here as well and update interactable
+  ngOnChanges(changes: SimpleChanges) {
+    // we do this here instead of using a setter on the input so that it 
+    // will only run once when there is a change to x and y
+    if(changes.y || changes.x) {
+      this.alignPositionWithInputs(this.x, this.y);
+    }
+    if(changes.dragConfig) {
+      if(!this.interactable) return;
+      this.interactable.draggable(this.dragConfig);
+    }
+  }
 
   ngOnDestroy() {
     // clean up state and subscriptions related to destroyed component
@@ -124,10 +96,6 @@ export class DraggableDirective implements OnInit, OnDestroy {
 
   dragMoveListener(event: NgDragEvent) {
     const { dx, dy } = event;
-    // TODO: this should be done by hooking into interactable$
-    this._x += dx;
-    this._y += dy;
-
     this.interactService.updateDeltas(
       this.interactableId, 
       this.registryId, 
@@ -154,9 +122,6 @@ export class DraggableDirective implements OnInit, OnDestroy {
   }
   
   setPosition(x: number, y: number) {
-    // TODO: setting these caches on class is stupid, should be way to hook into state of interact service
-    this._x = y;
-    this._y = y
     this.interactService.updatePosition(
       this.interactableId,
       this.registryId,
@@ -168,14 +133,12 @@ export class DraggableDirective implements OnInit, OnDestroy {
   alignPositionWithInputs(x: number, y: number) {
     // short circuit if positions aren't numbers or  if they haven't changed
     if(!this.isValidPosition(x, y)) return;
-  
     this.interactService.updatePosition(
       this.interactableId, 
       this.registryId,
       {x, y}, 
       this.el.nativeElement
     );
-    
   }
 
   isValidPosition(x: number, y: number) {
@@ -187,7 +150,25 @@ export class DraggableDirective implements OnInit, OnDestroy {
     return typeof num === 'number' && num !== NaN;
   }
 
-  
+  initiateInteractEvents(dragConfig: Partial<Interact.OrBoolean<DraggableOptions>>, nativeElement: any) {
+    return interact(nativeElement).draggable({ ...dragConfig })
+      .on('dragstart',  (event: NgDragEvent) => {
+          this.dragStart.emit(this.mapDragEvent(event));
+      })
+      .on('dragmove',  (event: NgDragEvent) => {
+        if (this.enableDragDefault) {
+          this.dragMoveListener(event);
+        }
+        const mappedEvent = this.mapDragEvent(event);
+        this.dragMove.emit(mappedEvent);
+      })
+      .on('draginertiastart', (event: NgDragEvent) => {
+        this.dragInertiaStart.emit(this.mapDragEvent(event))
+      })
+      .on('dragend', (event: NgDragEvent) => {
+        this.dragEnd.emit(this.mapDragEvent(event))
+      });
+  }
   // TODO: this doesn't do anything yet...
   // eventually it should create a clone of the component passed
   // in and add it to the root component
@@ -207,11 +188,9 @@ export class DraggableDirective implements OnInit, OnDestroy {
   
 }
 
-
 /**
  * Component utils
  */
-
 function getPreviewInsertionPoint(documentRef: any): HTMLElement {
   // We can't use the body if the user is in fullscreen mode,
   // because the preview will render under the fullscreen element.

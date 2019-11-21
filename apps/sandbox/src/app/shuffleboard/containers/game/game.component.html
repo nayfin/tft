@@ -4,6 +4,7 @@
 
 </tft-scoreboard>
 {{ whosTurn }} {{ turnCount }} 
+<input type="number" step=".1" [formControl]="inertiaResistanceControl">
 <button *ngIf="turnCount > 2" (click)="resetBoard()">RESET BOARD</button>
 <tft-board>
   <!-- Red Pucks -->
@@ -13,6 +14,7 @@
     [team]="team.RED"
     [key]="puck.key"
     [whosTurn]="whosTurn"
+    [resistance]="resistance"
     [turnCount]="turnCount"
     [index]="i">
   </tft-puck>
@@ -23,6 +25,7 @@
     [team]="team.BLUE"
     [key]="puck.key"
     [whosTurn]="whosTurn"
+    [resistance]="resistance"
     [turnCount]="turnCount"
     [index]="i">
   </tft-puck>

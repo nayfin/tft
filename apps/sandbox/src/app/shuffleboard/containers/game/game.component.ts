@@ -3,6 +3,8 @@ import { TftDragEvent, TftDropEvent } from '@tft/interact';
 import { initialGameState } from './consts';
 import { Team } from '../../models/shuffleboard.model'
 import { TargetComponent } from '../../components/target/target.component';
+import { FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 // import { RestrictOptions } from '@interactjs/modifiers/restrict/pointer';
 
 @Component({
@@ -36,12 +38,16 @@ export class GameComponent implements OnInit {
       pucksInTarget: 0
     },
   ];
-
+  resistance = 2;
+  inertiaResistanceControl = new FormControl(this.resistance);
+  ircSubscription: Subscription;
   constructor(
     // private cdr: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
+    this.ircSubscription = this.inertiaResistanceControl.valueChanges
+      .subscribe(resistance => this.resistance = resistance)
   }
 
   checkForFoul(event) {
@@ -55,16 +61,17 @@ export class GameComponent implements OnInit {
   }
 
   updateTargetState(index:number, state: 'enter' | 'leave') {
-    if ( state === 'leave') {
-      this.targets[index].pucksInTarget--
+    if (state === 'leave') {
+      this.targets[index].pucksInTarget--;
       return
     }
-    this.targets[index].pucksInTarget++
+    this.targets[index].pucksInTarget++;
   }
   handleDrop(event: TftDropEvent) {
     const { team, key} = event.dragRef.dragData;
     this.updateLocation(event, key);
     this.changeTeams(team);
+    console.log('handleDrop', event)
     if ( team === Team.BLUE ) { 
       this.turnCount++; 
     }

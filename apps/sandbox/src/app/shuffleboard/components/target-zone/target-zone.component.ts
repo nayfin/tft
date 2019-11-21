@@ -17,7 +17,6 @@ export class TargetZoneComponent implements OnInit {
   }
 
   onDragDrop(event: TftDropEvent) {
-    console.log('dragDrop', event);
     this.turnOver.emit(event);
   }
 

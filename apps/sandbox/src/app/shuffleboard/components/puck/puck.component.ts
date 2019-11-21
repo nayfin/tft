@@ -17,14 +17,22 @@ export class PuckComponent implements OnInit {
   @Input() team: Team;
   @Input() puck: Puck;
   @Input() key: string;
-  @Input() resistance: number;
+  _resistance = 2;
+  @Input() set resistance(val: number){
+    this._resistance = val;
+    this.dragConfig = {...this.dragConfig, ...{inertia: {resistance: val}}}
+    // this.dragConfig.inertia.resistance = val;
+  };
+  get resistance() {
+    return this._resistance;
+  }
   @Output() puckDrop = new EventEmitter<TftDragEvent>();
 
   teamClass: string;
   // restrictOptions: RestrictOptions;
   dragConfig: DraggableOptions = {
     inertia: {
-      resistance: 2,
+      resistance: 1,
       allowResume: true,
       endSpeed: 10,
       smoothEndDuration: 2000 

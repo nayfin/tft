@@ -9,5 +9,5 @@
   [dragConfig]="dragConfig"
   [ngClass]="teamClass"
   [ngStyle]="{'z-index': 1000 - index}">
-{{index}}
+{{index}} {{ !(whosTurn === team && turnCount === index)}}
 </div>
