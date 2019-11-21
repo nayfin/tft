@@ -5,9 +5,8 @@
   [x]="puck.location.x"
   [y]="puck.location.y"
   (dragEnd)="puckDrop.emit($event)"
-  [disabled]="!(whosTurn === team && turnCount === index)"
   [dragConfig]="dragConfig"
   [ngClass]="teamClass"
   [ngStyle]="{'z-index': 1000 - index}">
-{{index}} {{ !(whosTurn === team && turnCount === index)}}
+  {{dragConfig.enabled ? 'MY TURN' : ''}}
 </div>

@@ -22,6 +22,7 @@ import { NgResizeEvent, TftResizeEvent, DEFAULT_REGISTRY_ID } from '../models';
 export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
   
   @Input() enableResizeDefault = true;
+  // TODO: should this be an input with default or should consuming user set display in styles each time
   @Input() position = 'absolute';
   @Input() resizeConfig: Partial<Interact.OrBoolean<ResizableOptions>>;
   @Input() interactableId: string;

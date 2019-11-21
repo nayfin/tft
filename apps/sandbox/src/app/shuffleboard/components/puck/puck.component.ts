@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { Team, Puck } from '../../models/shuffleboard.model';
 import { DraggableOptions } from '@interactjs/types/types';
 import interact from 'interactjs';
@@ -10,7 +10,7 @@ import { TftDragEvent } from '@tft/interact';
   styleUrls: ['./puck.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PuckComponent implements OnInit {
+export class PuckComponent implements OnInit, OnChanges {
   @Input() whosTurn: Team;
   @Input() turnCount: number;
   @Input() index: number;
@@ -51,4 +51,14 @@ export class PuckComponent implements OnInit {
     this.teamClass = this.team.toLowerCase();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if( changes.whosTurn || changes.turnCount) {
+      const enabled = (this.whosTurn === this.team && this.turnCount === this.index)
+      // console.log({enabled})
+      this.dragConfig = {
+        ...this.dragConfig, 
+        enabled
+      }
+    }
+  }
 }

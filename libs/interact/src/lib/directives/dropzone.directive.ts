@@ -13,7 +13,7 @@ import Interactable from '@interactjs/core/Interactable';
 export class DropzoneDirective implements OnInit {
 
   @Input() dropzoneId: string;
-  @Input() dropzoneConfig: DropzoneOptions;
+  @Input() dropzoneConfig: DropzoneOptions = {};
   // tslint:disable-next-line: no-input-rename
   @Input() dropzoneData: any;
   // proxies to pass interact events through to consumer of directive
@@ -30,10 +30,7 @@ export class DropzoneDirective implements OnInit {
   
   ngOnInit() {
     // connects 
-    this.dropzone =this.connectDropzoneEvents(this.el.nativeElement, this.dropzoneConfig);
-    // this is weird... addRegistryToSystem returns the dropzoneId if one is passed in. It creates one 
-    // if it hasn't been defined.
-    // TODO: make this more gooder, and better too
+    this.dropzone = this.connectDropzoneEvents(this.el.nativeElement, this.dropzoneConfig);
     this.dropzoneId = this.interactService.addRegistryToSystem(this.dropzoneId);
   }
   /**
@@ -43,7 +40,10 @@ export class DropzoneDirective implements OnInit {
   */
   connectDropzoneEvents(nativeElement, dropzoneConfig: DropzoneOptions) {
     return interact(nativeElement).dropzone(dropzoneConfig)
-      .on('dropactivate', (event: NgDropEvent) => this.dropActivate.emit(this.mapDropzoneEvent(event))) 
+      .on('dropactivate', (event: NgDropEvent) => {
+        // add active dropzone feedback
+        this.dropActivate.emit(this.mapDropzoneEvent(event));
+      }) 
       .on('dragenter', (event: NgDropEvent) => {
         event.draggable.target.dropTarget = this;
         this.dragEnter.emit(this.mapDropzoneEvent(event));
@@ -55,7 +55,9 @@ export class DropzoneDirective implements OnInit {
         }
         this.dragLeave.emit(this.mapDropzoneEvent(event));
       }) 
-      .on('drop',  (event: NgDropEvent) => this.dragDrop.emit(this.mapDropzoneEvent(event)));
+      .on('drop',  (event: NgDropEvent) => {
+        this.dragDrop.emit(this.mapDropzoneEvent(event));
+      });
   }
   /**
    * Maps the drop event emitted by interact to something a little easier to use
