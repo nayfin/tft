@@ -1,7 +1,7 @@
 
 import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
-import { tap, filter, map, shareReplay, startWith } from 'rxjs/operators';
+import { tap, map, shareReplay } from 'rxjs/operators';
 import { 
   TftInteractable, Delta, Size, Position, InteractableRegistry, 
   defaultPosition, defaultSize, defaultDelta, DEFAULT_REGISTRY_ID } from '../models';
@@ -155,36 +155,40 @@ export class InteractService {
     return this.dragRegistrySystem.hasOwnProperty(registryId)
       && this.dragRegistrySystem[registryId].hasOwnProperty(interactId);
   }
-
+  /**
+   * Uses renderer to set width and height of angular component
+   * @param width the desired width of component
+   * @param height the desired height of component
+   * @param target the element to transform
+   */
   setElementSize(width: number, height: number, target: any) {
     if(!target) return;
     this.renderer.setStyle(target, 'width', `${width}px`);
     this.renderer.setStyle(target, 'height', `${height}px`);
   }
-
+  /**
+   * Uses renderer to set position of angular component
+   * @param x position on x axis
+   * @param y position on y axis
+   * @param target the element to transform
+   */
   setElementTransform(x: number, y: number, target: any) {
     if(!target) return;
     const transformString = this.createTransformString(x, y);
     this.renderer.setStyle(target, 'transform', transformString );
   }
-
+  /**
+   * Generates a translate string for the x and y arguments passed to
+   * be passed to css transform
+   * @param x the position along the x axis
+   * @param y the position along the y axis
+   */
   createTransformString(x: number, y: number) {
     return `translate3d(${x}px, ${y}px, 0)`
   }
 
-  checkForOverridesInConfig(config: {}, keysToCheck: string[]) {
-    // const keysToCheck = [];
-    if(!config) return;
-    keysToCheck.forEach( (key: string) => {
-      if(config.hasOwnProperty(key)) {
-        console.warn(`Default ${key} behavior has been overridden by the drag config. 
-          You can avoid this by using the event listeners of the resize directive
-        `)
-      }
-    });
-  }
-
   calculatePositionInDropzone(zoneElement: Interact.Element, dragElement: HTMLElement) {
+    // TODO: this calculation may not cover a lot of scenarios, keep an eye out for possible improvements
     const zoneRect = zoneElement.getBoundingClientRect(),
           dragRect = dragElement.getBoundingClientRect();
     return {
