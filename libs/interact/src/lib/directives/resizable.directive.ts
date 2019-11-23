@@ -63,14 +63,14 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
       {...this.defaultConfig, ...this.resizeConfig }, 
       this.el.nativeElement
     ); 
-    // console.log(this.interactable);
+
     this.interactableSubscription = this.interactService
       .getInteractableState(this.interactableId, this.registryId)
       .subscribe();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.resizeConfig) {
+    if (changes.resizeConfig && this.interactable) {
       this.interactable.resizable(this.resizeConfig);
     }
   }

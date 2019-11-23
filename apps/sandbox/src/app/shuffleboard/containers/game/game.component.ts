@@ -71,7 +71,6 @@ export class GameComponent implements OnInit {
     const { team, key} = event.dragRef.dragData;
     this.updateLocation(event, key);
     this.changeTeams(team);
-    console.log('handleDrop', event)
     if ( team === Team.BLUE ) { 
       this.turnCount++; 
     }

@@ -17,24 +17,28 @@ This is an angular wrapper for the interactjs library. We aim to build a versati
 ### Draggables
 
 ```html
-<div tftDraggable ></div>
+<div tftDraggable 
+  dragConfig="dragConfig"
+  [x]="x"
+  [y]="y">
+</div>
 ```
 
+Any config that will work with with interactjs will work here
+```typescript
+dragConfig = {
+  enabled = true,
+  lockAxis
+}
+```
 ### Resizable
 
 ```html
 <div tftResizable></div>
 ```
 
-## Roadmap
-- allow dragging of alternate element
-  - ondragstart:append new element to root of pageelement
-- github pages docs 
-- performance testing
-  - look into using Cypress for this (having trouble dragging in test)
-  - ngZone runOutsideAngular
-  - round coordinates and filter duplicates
-  - performing drag behavior when listening to output vs. passing callback through the config
+### Stackblitz Examples
+ COMING SOON!
 
-- Define way to eject all drag registry state to end-developer
-  - move dragRegistry into a BehaviorSubject? (wait until can test performance impact)
+### Docs
+  COMING SOON!

@@ -54,7 +54,6 @@ export class PuckComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if( changes.whosTurn || changes.turnCount) {
       const enabled = (this.whosTurn === this.team && this.turnCount === this.index)
-      // console.log({enabled})
       this.dragConfig = {
         ...this.dragConfig, 
         enabled

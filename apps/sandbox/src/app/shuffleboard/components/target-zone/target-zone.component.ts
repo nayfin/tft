@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { TftDropEvent } from '@tft/interact';
 import { Team } from '../../models/shuffleboard.model';
+import { DropzoneOptions } from '@interactjs/types/types';
 
 @Component({
   selector: 'tft-target-zone',
@@ -8,7 +9,6 @@ import { Team } from '../../models/shuffleboard.model';
   styleUrls: ['./target-zone.component.scss']
 })
 export class TargetZoneComponent implements OnInit {
-  
   @Output() turnOver = new EventEmitter<TftDropEvent>();
 
   constructor() { }

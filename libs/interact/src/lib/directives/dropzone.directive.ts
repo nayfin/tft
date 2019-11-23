@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import interact from 'interactjs';
 import { DropzoneOptions } from '@interactjs/types/types';
 import { InteractService } from '../services/interact.service';
@@ -10,7 +10,7 @@ import Interactable from '@interactjs/core/Interactable';
     '[id]': 'dropzoneId',
   }
 })
-export class DropzoneDirective implements OnInit {
+export class DropzoneDirective implements OnInit, OnChanges {
 
   @Input() dropzoneId: string;
   @Input() dropzoneConfig: DropzoneOptions = {};
@@ -33,6 +33,13 @@ export class DropzoneDirective implements OnInit {
     this.dropzone = this.connectDropzoneEvents(this.el.nativeElement, this.dropzoneConfig);
     this.dropzoneId = this.interactService.addRegistryToSystem(this.dropzoneId);
   }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if(!changes.dropzoneConfig || !this.dropzone) return;
+    // this.dropzone.unset();
+    // this.dropzone = this.connectDropzoneEvents(this.el.nativeElement, this.dropzoneConfig)
+    this.dropzone.dropzone(this.dropzoneConfig)
+  }
   /**
   * Connects element to interacts dropzone events and returns a reference to the interactable
   * @param nativeElement the element to tie drop events to
@@ -41,7 +48,6 @@ export class DropzoneDirective implements OnInit {
   connectDropzoneEvents(nativeElement, dropzoneConfig: DropzoneOptions) {
     return interact(nativeElement).dropzone(dropzoneConfig)
       .on('dropactivate', (event: NgDropEvent) => {
-        // add active dropzone feedback
         this.dropActivate.emit(this.mapDropzoneEvent(event));
       }) 
       .on('dragenter', (event: NgDropEvent) => {

@@ -1,6 +1,6 @@
 
 .drop-target {
-  width: 75px;
+  width: 125px;
   height: 100%;
   color: white;
   display: flex;
@@ -13,6 +13,9 @@
   .points-display {
     font-size: 30px;
     font-weight: 700;
+  }
+  input {
+    width: 80px;
   }
 }
 .highlight {

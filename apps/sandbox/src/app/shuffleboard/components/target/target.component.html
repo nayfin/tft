@@ -1,12 +1,13 @@
 <div 
   class="drop-target"
   tftDropzone
+  [dropzoneConfig]="dropzoneConfig"
   (dragDrop)="score($event, value)" 
   (dragEnter)="puckEnterTarget($event)"
   (dragLeave)="puckLeaveTarget()"
   [dropzoneData]="{points: value}"
   [ngClass]="{'highlight': pucksInTarget > 0}">
-  <!-- <div class="inset-border"> -->
+  <input step="0.05" min="0" max="1" [value]="dropzoneConfig.overlap" (change)="onChange($event)" type="number">
     {{pucksInTarget}}
     <span class="points-display">
       {{value}}

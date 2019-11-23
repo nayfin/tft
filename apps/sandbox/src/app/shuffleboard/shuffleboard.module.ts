@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms'
+import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { ShuffleboardRoutingModule } from './shuffleboard-routing.module';
 import { GameComponent } from './containers/game/game.component';
 import { BoardComponent } from './components/board/board.component';
@@ -22,13 +22,14 @@ import { TargetZoneComponent } from './components/target-zone/target-zone.compon
     TrayComponent,
     PuckComponent,
     ScoreboardComponent,
-    TargetZoneComponent
+    TargetZoneComponent,
   ],
   imports: [
     CommonModule,
     ShuffleboardRoutingModule,
     InteractModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class ShuffleboardModule { }
