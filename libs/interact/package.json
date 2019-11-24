@@ -1,6 +1,6 @@
 {
   "name": "@tft/interact",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -9,6 +9,6 @@
   "peerDependencies": {
     "@angular/common": "^8.1.1",
     "@angular/core": "^8.1.1",
-    "interactjs": "~1.7.2"
+    "interactjs": "~1.6.0"
   }
 }

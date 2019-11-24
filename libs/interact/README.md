@@ -9,7 +9,8 @@ This is an angular wrapper for the interactjs library. We aim to build a versati
 
 ## Installation
 
-`npm i interactjs --save`
+`npm i interactjs@^1.6.0 --save`
+Make sure to version lock interact to < 1.7.0, newer versions have a TypeScript compatibility build issue.
 `npm i @tft/interact --save`
 
 ## Usage
@@ -28,7 +29,7 @@ Any config that will work with with interactjs will work here
 ```typescript
 dragConfig = {
   enabled = true,
-  lockAxis
+  lockAxis:  'y'
 }
 ```
 ### Resizable
@@ -37,8 +38,7 @@ dragConfig = {
 <div tftResizable></div>
 ```
 
-### Stackblitz Examples
- COMING SOON!
-
-### Docs
-  COMING SOON!
+### COMING SOON!
+- intseract gesture support
+- Stackblitz Examples
+- Docs
