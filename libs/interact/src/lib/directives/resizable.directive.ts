@@ -27,6 +27,9 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
   @Input() resizeConfig: Partial<Interact.OrBoolean<ResizableOptions>>;
   @Input() interactableId: string;
   
+  @Input() width: number;
+  @Input() height: number;
+
   @Output() resizeStart = new EventEmitter<TftResizeEvent>();
   @Output() resizeMove = new EventEmitter<TftResizeEvent>();
   @Output() resizeInertiaStart = new EventEmitter<TftResizeEvent>();
@@ -63,6 +66,8 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
       {...this.defaultConfig, ...this.resizeConfig }, 
       this.el.nativeElement
     ); 
+    
+    this.alignDimensionsWithInputs(this.width, this.height);
 
     this.interactableSubscription = this.interactService
       .getInteractableState(this.interactableId, this.registryId)
@@ -72,6 +77,9 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.resizeConfig && this.interactable) {
       this.interactable.resizable(this.resizeConfig);
+    }
+    if (changes.width || changes.height) {
+      this.alignDimensionsWithInputs(this.width, this.height);
     }
   }
 
@@ -128,5 +136,14 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
       dropTarget: this.el.nativeElement.dropTarget,
       positionInDropTarget
     }
+  }
+
+  alignDimensionsWithInputs(width: number, height: number) {
+    this.interactService.updateSize(
+      this.interactableId,
+      this.registryId,
+      {deltaX: 0, deltaY: 0, width, height},
+      this.el.nativeElement
+    );
   }
 }

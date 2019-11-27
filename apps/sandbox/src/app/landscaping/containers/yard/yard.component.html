@@ -50,7 +50,9 @@
     (dragLeave)="log('leave', $event)"
     (dragEnter)="log('enter', $event)"
     [dropzoneData]="droppedItems"
-    [dropzoneId]="'yard'">
+    [dropzoneId]="'yard'"
+    [width]="400"
+    [height]="600">
     <section 
       *ngFor="let item of droppedItems"
       tftDraggable
