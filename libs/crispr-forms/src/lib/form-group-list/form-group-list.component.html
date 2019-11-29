@@ -1,0 +1,35 @@
+
+<tft-field-container
+  [config]="config"
+  [formGroup]="group">
+
+  <div [formArrayName]="config.controlName">
+    <!-- TODO: add sortBy function -->
+    <div *ngFor="let control of this.formArray.controls; let i = index;">
+      <!-- TODO: use content projection to allow custom item label component -->
+      <span class="mat-h3" *ngIf="config.itemLabelBuilder"> {{  config.itemLabelBuilder(i) }} </span>
+      <button
+        mat-icon-button
+        *ngIf="i + 1 > minListLength">
+        <mat-icon (click)="deleteGroup(i)">delete</mat-icon>
+      </button>
+      <div
+        [formGroupName]="i">
+        <ng-container
+          *ngFor="let field of config.itemConfig.fields;"
+          tftDynamicField
+          [config]="field"
+          [group]="control">
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <button
+    type="button"
+    mat-raised-button
+    (click)="addGroup()">
+    {{addItemLabel}}
+  </button>
+
+</tft-field-container>

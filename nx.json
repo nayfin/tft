@@ -28,6 +28,12 @@
     },
     "interact": {
       "tags": []
+    },
+    "crispr-forms": {
+      "tags": []
+    },
+    "form-validation-handler": {
+      "tags": []
     }
   }
 }

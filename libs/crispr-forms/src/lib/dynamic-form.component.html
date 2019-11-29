@@ -1,0 +1,14 @@
+<form
+  class="dynamic-form"
+  [formGroup]="form"
+  (ngSubmit)="handleSubmit()"
+  [errorDictionary]="config.errorDictionary">
+
+  <ng-container
+    *ngFor="let field of config.fields;"
+    tftDynamicField
+    [config]="field"
+    [group]="form">
+  </ng-container>
+
+</form>

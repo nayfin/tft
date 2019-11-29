@@ -1,0 +1,20 @@
+<tft-field-container
+  [config]="config"
+  [group]="group">
+
+  <mat-form-field
+    [formGroup]="group">
+     <mat-select
+      [formControlName]="config.controlName"
+      [placeholder]="config.placeholder"
+      [multiple]="config.multiple">
+
+      <mat-option
+        *ngFor="let option of options$ | async"
+        [value]="option.value">
+        {{ option.label }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</tft-field-container>

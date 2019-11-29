@@ -1,5 +1,12 @@
 
 #!/bin/bash
+package=$1
+
+if [ "$package" != "interact" ] && [ "$package" != "crispr-forms" ] && [ "$package" != "form-validation-handler" ]
+then
+  echo "Not a valid package to release, try 'interact', 'crispr-forms', or 'form-validation-handler'"
+  exit 1
+fi
 
 set -e # exit when error
 
@@ -14,7 +21,7 @@ fi
 # TODO: Request git status and ask user to commit changes if needed
 #       Below code doesn't work as it checking dist folder, need to figure out why and change to check package.json of root folder
 # # read actual dist/package.json version
-actual_version=$(grep version 'libs/interact/package.json')
+actual_version=$(grep version "libs/$package/package.json")
 
 # ask user for next version
 echo
@@ -35,9 +42,9 @@ then
   exit 1
 fi
 # go into the library, bump the version according to update type then get out
-cd 'libs/interact' && npm version "${update_type}" && cd ../../
+cd "libs/$package" && npm version "${update_type}" && cd ../../
 #  build the library and prepare to publish
-ng build interact
-cd dist/libs/interact && npm pack && cd ../../../
+ng build $package
+cd "dist/libs/$package" && npm pack && cd ../../../
 # share it
-npm publish dist/libs/interact
+npm publish "dist/libs/$package"

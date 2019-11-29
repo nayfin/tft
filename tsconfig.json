@@ -17,7 +17,11 @@
     "baseUrl": ".",
     "paths": {
       "@tft/api-interfaces": ["libs/api-interfaces/src/index.ts"],
-      "@tft/interact": ["libs/interact/src/index.ts"]
+      "@tft/interact": ["libs/interact/src/index.ts"],
+      "@tft/crispr-forms": ["libs/crispr-forms/src/index.ts"],
+      "@tft/form-validation-handler": [
+        "libs/form-validation-handler/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

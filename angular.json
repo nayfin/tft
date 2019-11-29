@@ -26,6 +26,7 @@
               "apps/sandbox/src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "apps/sandbox/src/styles.scss"
             ],
             "scripts": []
@@ -377,6 +378,88 @@
             "jestConfig": "libs/interact/jest.config.js",
             "tsConfig": "libs/interact/tsconfig.spec.json",
             "setupFile": "libs/interact/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "crispr-forms": {
+      "projectType": "library",
+      "root": "libs/crispr-forms",
+      "sourceRoot": "libs/crispr-forms/src",
+      "prefix": "tft",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/crispr-forms/tsconfig.lib.json",
+            "project": "libs/crispr-forms/ng-package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/crispr-forms/tsconfig.lib.json",
+              "libs/crispr-forms/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/crispr-forms/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/crispr-forms/jest.config.js",
+            "tsConfig": "libs/crispr-forms/tsconfig.spec.json",
+            "setupFile": "libs/crispr-forms/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "form-validation-handler": {
+      "projectType": "library",
+      "root": "libs/form-validation-handler",
+      "sourceRoot": "libs/form-validation-handler/src",
+      "prefix": "tft",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/form-validation-handler/tsconfig.lib.json",
+            "project": "libs/form-validation-handler/ng-package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/form-validation-handler/tsconfig.lib.json",
+              "libs/form-validation-handler/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/form-validation-handler/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/form-validation-handler/jest.config.js",
+            "tsConfig": "libs/form-validation-handler/tsconfig.spec.json",
+            "setupFile": "libs/form-validation-handler/src/test-setup.ts"
           }
         }
       },
