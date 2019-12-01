@@ -2,7 +2,7 @@ import { FormGroup, ValidatorFn } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AutocompleteFieldConfig } from '../models';
 import { FormGroupListConfig } from '../form-group-list/form-group-list.config';
-// import { ErrorDictionary } from '../../validation-handling/public_api';
+import { ErrorDictionary } from '@tft/form-validation-handler';
 import { ComputeFieldConfig, CheckControlConfig, CheckControlsConfig } from '../dynamic-form.helpers';
 import { SelectFieldConfig, InputFieldConfig, CheckboxFieldConfig, TextareaFieldConfig } from '../models';
 
@@ -26,7 +26,7 @@ interface FormConfig {
   controlType?: ControlType;
   controlName: string;
   label?: string;
-  // errorDictionary?: ErrorDictionary;
+  errorDictionary?: ErrorDictionary;
   fields: AnyFieldConfig[];
 }
 

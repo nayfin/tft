@@ -3,10 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 // custom modules
 import { MaterialModule } from './material/material.module'
-// import { CoreModule } from '../core/public_api';
-// import { DesignModule } from '../design/public_api';
-// import { UtilitiesModule } from '../utilities/public_api';
-// import { ValidationHandlingModule } from '../validation-handling/public_api';
+
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
 // components
@@ -40,10 +37,6 @@ const FORM_FIELD_COMPONENTS = [
     ReactiveFormsModule,
     FormValidationHandlerModule,
     MaterialModule
-    // DesignModule,
-    // CoreModule,
-    // UtilitiesModule,
-    // ValidationHandlingModule,
   ],
   declarations: [
     DynamicFieldDirective,

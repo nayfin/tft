@@ -16,5 +16,8 @@
     "strictInjectionParameters": true,
     "enableResourceInlining": true
   },
+  "paths": {
+    "@tft/*": ["dist/libs/*"],
+  },
   "exclude": ["src/test.ts", "**/*.spec.ts"]
 }

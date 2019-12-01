@@ -1,7 +1,7 @@
 
 #!/bin/bash
 package=$1
-
+# TODO: learn how
 if [ "$package" != "interact" ] && [ "$package" != "crispr-forms" ] && [ "$package" != "form-validation-handler" ]
 then
   echo "Not a valid package to release, try 'interact', 'crispr-forms', or 'form-validation-handler'"
@@ -44,10 +44,9 @@ fi
 # go into the library, bump the version according to update type then get out
 cd "libs/$package" && npm version "${update_type}" && cd ../../
 #  build the library and prepare to publish
-# ng build $package
-npm run affected:build -- --all
+ng build $package
+# npm run affected:build -- --all
 
-
-cd "dist/libs/$package" && npm pack && cd ../../../
+npm pack "dist/libs/$package"
 # share it
-npm publish "dist/libs/$package"
+npm publish "dist/libs/$package" --access public

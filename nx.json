@@ -30,7 +30,9 @@
       "tags": []
     },
     "crispr-forms": {
-      "tags": []
+      "tags": [],
+      "implicitDependencies": ["form-validation-handler"]
+
     },
     "form-validation-handler": {
       "tags": []
