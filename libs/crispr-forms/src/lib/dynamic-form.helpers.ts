@@ -1,13 +1,13 @@
 
 /**
- * DYNAMIC FORM UTILS: a collection of pure/mostly pure functions that are useful both internally and for 
- * developing the consuming app. 
- * 
- * They are sorted by use case: building out the form object; helper functions to use with the showField function; 
+ * DYNAMIC FORM UTILS: a collection of pure/mostly pure functions that are useful both internally and for
+ * developing the consuming app.
+ *
+ * They are sorted by use case: building out the form object; helper functions to use with the showField function;
  * helper functions to use with the compute field function; and other logic shared between components
  */
 
-import { 
+import {
   SelectFieldConfig,
   SelectOption,
   DEFAULT_EMPTY_OPTIONS_MESSAGE,
@@ -43,9 +43,9 @@ export interface CheckControlConfig {
   // the function to run on the boolean returned by the watcher
   evaluate?: (isValueInValues: boolean) => boolean;
 }
- 
+
 /**
-* Watches a single control for a list of values, returns true when field value matches any value in list 
+* Watches a single control for a list of values, returns true when field value matches any value in list
 * unless an evaluate method is found on config, in which case that method is run on the returned boolean value
 * @param group the direct parent of the field we want to watch
 * @param config
@@ -78,6 +78,7 @@ export interface CheckControlsConfig {
   // the function to run against the array of current field valueIn responses
   evaluate?: ( bools: boolean[] ) => boolean;
 }
+
 /**
  * Watches a list of fields for individual lists of values returning true when any field contains one
  * of the values being watched for, or optionally running a function on the array of resolved booleans
@@ -88,7 +89,7 @@ export interface CheckControlsConfig {
 export function checkControlsForValues(group: FormGroup, config: CheckControlsConfig): Observable<any> {
   // if no config is passed we just want to show the field, so we return an observable of true
   if (!config || !config.watchConfigs) { return of(true); }
-  // we run checkControlForValues on every control in the list of WatchConfigs creating 
+  // we run checkControlForValues on every control in the list of WatchConfigs creating
   // an array of Observable watching fields for values
   const fieldTriggers = config.watchConfigs.map(watchConfig => {
     // resolves a boolean, true when field value matches a watched value, otherwise false
@@ -110,7 +111,6 @@ export function checkControlsForValues(group: FormGroup, config: CheckControlsCo
   );
 }
 
-
 /**
  * The required configuration when running the computeValue function
  */
@@ -119,16 +119,16 @@ export interface ComputeFieldConfig {
   controlNameToSet?: string;
   // array of control names who's values we want to watch
   controlNamesToWatch: string[];
-  // the function we want to call on the array of watched values to compute the value of the control we 
+  // the function we want to call on the array of watched values to compute the value of the control we
   computeCallback: (
     values: (string | number)[]
   ) => string | number;
 }
 
 /**
-   * Watches values on an array of fields, computing their values as they change 
+   * Watches values on an array of fields, computing their values as they change
    * @param group the group to get the fields from, for now it can only be the parent of the computed field
-   * @param computeFieldsConfig the configuration that drives the computation, holds the names to watch and the 
+   * @param computeFieldsConfig the configuration that drives the computation, holds the names to watch and the
    * computation function that get called against the array of values
    */
   export function computeValueFromFields(group: FormGroup, computeFieldsConfig: ComputeFieldConfig): Observable<any> {
@@ -158,9 +158,9 @@ function getValueChanges(group: FormGroup, controlName: string) {
     return control.valueChanges;
   }
 /**
- *  Allows developer to pass an array of operators into the pipe of an Observable. 
+ *  Allows developer to pass an array of operators into the pipe of an Observable.
  *  Useful for creating function with a variable amount of operators to be run
- * @param observable the observable to pass the operators to 
+ * @param observable the observable to pass the operators to
  * @param operators array of operators to pipe
  */
 function pipeOperatorsIntoObservable(observable: Observable<any>, operators: OperatorFunction<any, any>[]) {
@@ -175,14 +175,14 @@ function pipeOperatorsIntoObservable(observable: Observable<any>, operators: Ope
 }
 /**
  * The user can give us select options as an array, a function that resolves to a promise,
- * or an observable. This functions consumes any of those and returns an observable that 
+ * or an observable. This functions consumes any of those and returns an observable that
  * resolves an array of options
- * 
+ *
  * @param options the options passed in from the config
  * @param emptyMessageOption the message to display when the array is empty
  */
 export function observablifyOptions(
-  config: SelectFieldConfig | AutocompleteFieldConfig, 
+  config: SelectFieldConfig | AutocompleteFieldConfig,
   group?: FormGroup
 ):  Observable<SelectOption[]> {
   const {options, reactiveOptionsConfig, emptyOptionsMessage} = config;
@@ -203,7 +203,7 @@ export function observablifyOptions(
 }
 
 /**
- * 
+ * builds out form group based on config
  * @param config a configuration for a form group
  * @param value an object of initial values to pass in
  * @param group the form group to modify and build out
@@ -215,7 +215,8 @@ export function buildFormGroupFromConfig(config: FormConfig, value: any = null, 
     if (controlConfig.controlType !== ControlType.BUTTON) {
       // then add a control to the group using the controlName from configuration
       const {controlName} = controlConfig;
-      // if there's a value object and it has a value for this field (including zero), use it. Otherwise, default to null 
+      // if there's a value object and it has a value for this field (including zero), use it.
+      // Otherwise, default to null
       const controlValue = value && isRealValue(value[controlName])
                          ? value[controlName]
                          : null;
@@ -224,8 +225,9 @@ export function buildFormGroupFromConfig(config: FormConfig, value: any = null, 
   });
   return group;
 }
+
 /**
- * Analyze the config and build a form control to spec. Notice we don't use FormBuilder here 
+ * Analyze the config and build a form control to spec. Notice we don't use FormBuilder here
  * as we want to keep this function pure.
  * @param controlConfig the configuration object for the control to build
  * @param value an initial value to use if passed in

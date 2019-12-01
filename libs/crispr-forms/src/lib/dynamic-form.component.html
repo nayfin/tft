@@ -2,6 +2,7 @@
   class="dynamic-form"
   [formGroup]="form"
   (ngSubmit)="handleSubmit()"
+  [autocomplete]="config.autocomplete || 'on'"
   [errorDictionary]="config.errorDictionary">
 
   <ng-container

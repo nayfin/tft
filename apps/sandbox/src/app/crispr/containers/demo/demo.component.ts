@@ -11,6 +11,7 @@ export class DemoComponent implements OnInit {
   config: FormConfig = {
     controlType: ControlType.GROUP,
     controlName: 'myForm',
+    autocomplete: 'off',
     fields: [
       // a basic input field in the form with the following configuration
       {
@@ -21,6 +22,18 @@ export class DemoComponent implements OnInit {
         rows: 3,
         classes: [],
         validators: [Validators.required],
+      },
+      {
+        controlType: ControlType.INPUT,
+        label: 'Testing the error handler',
+        controlName: 'errorHandler',
+        placeholder: 'Hello mando',
+        tooltip: {
+          content: 'test tooltip',
+          position: 'above'
+        },
+        classes: [],
+        validators: [Validators.required, Validators.minLength(5)],
       }
     ]
   }
