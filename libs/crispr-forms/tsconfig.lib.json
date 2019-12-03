@@ -17,7 +17,7 @@
     "enableResourceInlining": true
   },
   "paths": {
-    "@tft/*": ["dist/libs/*"],
+    "@tft/form-validation-handler": ["./some-fake-path.ts"],
   },
   "exclude": ["src/test.ts", "**/*.spec.ts"]
 }
