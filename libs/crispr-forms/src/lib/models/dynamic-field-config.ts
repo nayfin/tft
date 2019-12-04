@@ -12,6 +12,7 @@ interface DynamicFieldConfig {
   controlType: ControlType;
   label?: string;
   placeholder?: string;
+  info?: string;
   tooltip?: {
     position?: TooltipPosition,
     content: string

@@ -3,9 +3,6 @@
   "dest": "../../dist/libs/crispr-forms",
   "lib": {
     "entryFile": "src/index.ts",
-    "umdId": "tft.crispr-forms",
-    "umdModuleIds": {
-      "@tft/form-validation-handler": "tft.form-validation-handler"
-    }
+    "umdId": "tft.crispr-forms"
   }
 }

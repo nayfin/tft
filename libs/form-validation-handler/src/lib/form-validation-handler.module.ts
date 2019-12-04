@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ControlErrorsDirective, ControlErrorsFormDirective, ControlErrorContainerDirective } from './directives';
-import { ControlErrorComponent } from './components';
+import { ControlErrorsDirective } from './directives/control-errors.directive';
+import { ControlErrorsFormDirective } from './directives/control-errors-form.directive';
+import { ControlErrorContainerDirective } from './directives/control-error-container.directive';
+
+import { ControlErrorComponent } from './components/control-error/control-error.component';
 
 @NgModule({
   declarations: [

@@ -49,20 +49,14 @@ const FORM_FIELD_COMPONENTS = [
     ...FORM_FIELD_COMPONENTS
   ],
   entryComponents: [
-    ...FORM_FIELD_COMPONENTS
+    InputFieldComponent,
+    SelectFieldComponent,
+    AutocompleteFieldComponent,
+    CheckboxFieldComponent,
+    TextareaFieldComponent,
+    RaisedButtonComponent,
+    FormGroupComponent,
+    FormGroupListComponent
   ]
 })
 export class CrisprFormsModule { }
-
-export {
-  DynamicFormComponent,
-  InputFieldComponent,
-  SelectFieldComponent,
-  AutocompleteFieldComponent,
-  CheckboxFieldComponent,
-  TextareaFieldComponent,
-  RaisedButtonComponent,
-  FormGroupComponent,
-  FormGroupListComponent,
-};
-
