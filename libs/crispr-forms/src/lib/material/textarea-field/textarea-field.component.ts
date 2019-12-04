@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, AbstractControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { TextareaFieldConfig } from '../../models';
 
 @Component({

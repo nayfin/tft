@@ -1,4 +1,15 @@
-<p>demo works!</p>
-<tft-dynamic-form [config]="config" (submitted)="handleSubmit($event)">
+<div class="container">
+  <h2 class="mat-h1">CRISPR Forms</h2>
 
-</tft-dynamic-form>
+  <p>
+    Building forms like a genome builds life
+  </p>
+  <mat-card>
+    <h3>I am a form dynamically generated from a configuration object</h3>
+    <tft-dynamic-form [config]="config"  (submitted)="handleSubmit($event)">
+
+    </tft-dynamic-form>
+
+  </mat-card>
+
+</div>

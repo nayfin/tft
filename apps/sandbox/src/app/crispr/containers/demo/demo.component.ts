@@ -76,7 +76,38 @@ export class DemoComponent implements OnInit {
         placeholder: 'I am a placeholder in a select field',
         classes: [],
         // validators: [Validators.required],
-        options: this.optionsPromise
+        options: (): Promise<SelectOption[]> => {
+          return new Promise( (resolve, reject) => {
+            // make an http request here
+            setTimeout( () => {
+              resolve([
+                {label: 'BLUE',     value: 'blue' } ,
+                {label: 'DR. DOG',  value: 'dr. dog'  },
+                {label: 'GOLD',     value: 'gold' }
+              ]);
+            }, 5000);
+          });
+        }
+      },
+      {
+        controlType: ControlType.AUTOCOMPLETE,
+        label: 'This autocomplete field uses an observable to resolve options',
+        controlName: 'autocompleteFieldObservable',
+        placeholder: 'I am a placeholder in a autocomplete field',
+        classes: [],
+        // validators: [Validators.required],
+        options: of([
+          {label: 'good', value: 'a'},
+          {label: 'evil', value: 'b'},
+        ])
+      },
+      {
+        controlType: ControlType.CHECKBOX,
+        controlName: 'horizontalCheckbox',
+        value: 'likesCrispr',
+        label: 'I am a checkbox?',
+        labelPosition: 'after',
+        inline: true
       },
       {
         controlType: ControlType.BUTTON,
@@ -84,21 +115,10 @@ export class DemoComponent implements OnInit {
         label: 'I AM A SUBMIT BUTTON',
         classes: []
       },
+
     ]
   }
 
-  optionsPromise(): Promise<SelectOption[]> {
-    return new Promise( (resolve, reject) => {
-      // make an http request here
-      setTimeout( () => {
-        resolve([
-          {label: 'BLUE',     value: 'blue' } ,
-          {label: 'DR. DOG',  value: 'dr. dog'  },
-          {label: 'GOLD',     value: 'gold' }
-        ]);
-      }, 5000);
-    });
-  }
   constructor() { }
 
   ngOnInit() {
