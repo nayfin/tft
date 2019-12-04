@@ -12,11 +12,10 @@ interface DynamicFieldConfig {
   controlType: ControlType;
   label?: string;
   placeholder?: string;
-  info?: string;
-  tooltip?: {
-    position?: TooltipPosition,
-    content: string
-  },
+  info?: {
+    content: string;
+    tooltipPosition?: TooltipPosition;
+  };
   classes?: string[];
   flexLayoutConfig?: any;
   computeField?: ( group: FormGroup, config: any) => Observable<any>;

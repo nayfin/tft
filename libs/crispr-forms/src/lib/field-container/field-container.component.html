@@ -7,7 +7,10 @@
   <label
     *ngIf="!!config.label"
     class="mat-h3">{{ config.label }}
-    <mat-icon *ngIf="config.info" [matTooltip]="config.info">info</mat-icon>
+    <mat-icon
+      *ngIf="config.info"
+      [matTooltip]="config.info?.content"
+      [matTooltipPosition]="config.info?.tooltipPosition || 'below'">info</mat-icon>
   </label>
   <ng-content>
   </ng-content>

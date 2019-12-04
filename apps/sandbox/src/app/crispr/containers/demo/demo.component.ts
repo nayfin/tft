@@ -19,13 +19,12 @@ export class DemoComponent implements OnInit {
       {
         controlType: ControlType.INPUT,
         label: 'I am a label on a text input',
-        info: 'I am some info about this field',
+        info: {
+          content: 'I am some info about this field',
+          tooltipPosition: 'left'
+        },
         controlName: 'textInput',
         placeholder: 'I am a placeholder in a text input',
-        tooltip: {
-          content: 'I am a tooltip above field',
-          position: 'above'
-        },
         validators: [Validators.required, Validators.minLength(5)],
       },
       {
@@ -34,10 +33,6 @@ export class DemoComponent implements OnInit {
         controlName: 'numberInput',
         inputType: 'number',
         placeholder: 'I am a placeholder in a number input',
-        tooltip: {
-          content: 'I am a tooltip below field',
-          position: 'below'
-        },
         validators: [Validators.required, Validators.min(5)],
       },
       {
