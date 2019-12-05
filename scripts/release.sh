@@ -17,16 +17,11 @@ then
   echo "Not on master branch, exiting"
   exit 1
 fi
-
-# TODO: Request git status and ask user to commit changes if needed
-#       Below code doesn't work as it checking dist folder, need to figure out why and change to check package.json of root folder
+# get current version of package being released
 actual_version=$(grep version "libs/$package/package.json")
-
-# ask user for next version
-echo
 echo " ${actual_version}"
 
-# holds viable update types to check against user input
+# holds variable update types to check against user input
 update_options=(major minor patch)
 
 echo "What type of update is this?"
@@ -40,13 +35,15 @@ then
   echo "Not a valid semantic update, try 'patch', 'minor', or 'major'"
   exit 1
 fi
+
 # go into the library, bump the version according to update type then get out
 cd "libs/$package" && npm version "${update_type}" && cd ../../
 #  build the library and prepare to publish
 ng build $package
-
+# package the build code in dist and publish it then go back to root
 cd "dist/libs/$package" && npm pack && npm publish --access public && cd ../../../
 
+# get the new version from the library's package.json
 release_version=$(grep version "libs/$package/package.json")
-
-git add . && git commit -m "release: $release_version"
+# stage, commit and push all changes
+git add . && git commit -m "release: $release_version" && git push
