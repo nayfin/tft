@@ -1,4 +1,7 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -14,7 +17,16 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-const TFT_DESIGN_MODULES = [
+import { FieldContainerComponent } from '../field-container/field-container.component';
+import { InputFieldComponent } from './input-field/input-field.component';
+import { SelectFieldComponent } from './select-field/select-field.component';
+import { AutocompleteFieldComponent } from './autocomplete-field/autocomplete-field.component';
+import { CheckboxFieldComponent } from './checkbox-field/checkbox-field.component';
+import { TextareaFieldComponent } from './textarea-field/textarea-field.component';
+import { RaisedButtonComponent } from './raised-button/raised-button.component';
+import { DatepickerFieldComponent } from './datepicker-field/datepicker-field.component';
+
+const MAT_DESIGN_MODULES = [
   MatIconModule,
   MatAutocompleteModule,
   MatDatepickerModule,
@@ -28,12 +40,33 @@ const TFT_DESIGN_MODULES = [
   MatButtonToggleModule,
   MatChipsModule,
   MatTooltipModule,
-  MatFormFieldModule
+  MatFormFieldModule,
 ];
 
+const CRISPR_FIELDS = [
+  FieldContainerComponent,
+  InputFieldComponent,
+  SelectFieldComponent,
+  AutocompleteFieldComponent,
+  CheckboxFieldComponent,
+  TextareaFieldComponent,
+  DatepickerFieldComponent,
+  RaisedButtonComponent
+];
 @NgModule({
-  imports: TFT_DESIGN_MODULES,
-  exports: TFT_DESIGN_MODULES
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ...MAT_DESIGN_MODULES,
+  ],
+  exports: [
+    ...MAT_DESIGN_MODULES,
+    ...CRISPR_FIELDS
+  ],
+  declarations: [
+    CRISPR_FIELDS,
+  ],
+  entryComponents: CRISPR_FIELDS
 })
 
 export class MaterialModule {

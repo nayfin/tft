@@ -4,3 +4,4 @@ export * from './autocomplete-field/autocomplete-field.component';
 export * from './checkbox-field/checkbox-field.component';
 export * from './textarea-field/textarea-field.component';
 export * from './raised-button/raised-button.component';
+export * from './datepicker-field/datepicker-field.component';
