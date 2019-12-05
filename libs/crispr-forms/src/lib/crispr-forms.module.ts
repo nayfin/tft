@@ -7,7 +7,7 @@ import { MaterialModule } from './material/material.module'
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
 // components
-import { DynamicFormComponent } from './dynamic-form.component';
+import { CrisprFormComponent } from './crispr-form.component';
 import { FieldContainerComponent } from './field-container/field-container.component';
 import { InputFieldComponent } from './material/input-field/input-field.component';
 import { SelectFieldComponent } from './material/select-field/select-field.component';
@@ -41,11 +41,11 @@ const FORM_FIELD_COMPONENTS = [
   declarations: [
     DynamicFieldDirective,
     FieldContainerComponent,
-    DynamicFormComponent,
+    CrisprFormComponent,
     ...FORM_FIELD_COMPONENTS,
   ],
   exports: [
-    DynamicFormComponent,
+    CrisprFormComponent,
     ...FORM_FIELD_COMPONENTS
   ],
   entryComponents: [

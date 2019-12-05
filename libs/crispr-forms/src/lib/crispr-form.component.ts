@@ -3,12 +3,12 @@ import { FormGroup } from '@angular/forms';
 import { FormConfig } from './models';
 import { buildFormGroupFromConfig } from './dynamic-form.helpers';
 @Component({
-  selector: 'tft-dynamic-form',
-  styleUrls: ['dynamic-form.component.scss'],
-  templateUrl: 'dynamic-form.component.html',
+  selector: 'tft-crispr-form',
+  styleUrls: ['crispr-form.component.scss'],
+  templateUrl: 'crispr-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DynamicFormComponent implements OnInit {
+export class CrisprFormComponent implements OnInit {
   // if no form has been passed in by consuming component, we create an empty group to build out
   @Input() form: FormGroup = new FormGroup({});
   @Input() config: FormConfig;
