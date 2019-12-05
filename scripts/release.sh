@@ -44,8 +44,9 @@ fi
 cd "libs/$package" && npm version "${update_type}" && cd ../../
 #  build the library and prepare to publish
 ng build $package
-# npm run affected:build -- --all
 
 cd "dist/libs/$package" && npm pack && npm publish --access public && cd ../../../
 
-git add . && git commit -m "release: $released_version"
+release_version=$(grep version "libs/$package/package.json")
+
+git add . && git commit -m "release: $release_version"
