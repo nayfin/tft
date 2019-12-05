@@ -47,3 +47,5 @@ ng build $package
 # npm run affected:build -- --all
 
 cd "dist/libs/$package" && npm pack && npm publish --access public && cd ../../../
+
+git add . && git commit -m "release: $released_version"

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormConfig, ControlType, SelectOption } from '@tft/crispr-forms';
 import { Validators, FormGroup } from '@angular/forms';
 import { of } from 'rxjs';
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'tft-demo',
   templateUrl: './demo.component.html',
@@ -26,6 +27,27 @@ export class DemoComponent implements OnInit {
         controlName: 'textInput',
         placeholder: 'I am a placeholder in a text input',
         validators: [Validators.required, Validators.minLength(5)],
+      },
+      {
+        controlType: ControlType.GROUP,
+        controlName: 'dynamicallyShownSubGroup',
+        showFieldConfig: {
+
+        },
+        showField: ( form, config) => {
+          console.log(form, config);
+          return form.get('textInput').valueChanges.pipe(
+            map( inputValue => inputValue === 'hello')
+          )
+        },
+        fields: [
+          {
+            controlType: ControlType.INPUT,
+            controlName: 'subTextInput',
+            placeholder: 'I am a placeholder in a NESTED text input',
+            validators: [Validators.required, Validators.minLength(5)],
+          }
+        ]
       },
       {
         controlType: ControlType.INPUT,
