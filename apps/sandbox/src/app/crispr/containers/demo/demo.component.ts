@@ -14,9 +14,11 @@ export class DemoComponent implements OnInit {
     controlType: ControlType.GROUP,
     controlName: 'myForm',
     autocomplete: 'off',
+    errorDictionary: {
+      required: () => 'hello',
+    },
     fields: [
       // a basic input field in the form with the following configuration
-
       {
         controlType: ControlType.INPUT,
         label: 'I am a label on a text input',

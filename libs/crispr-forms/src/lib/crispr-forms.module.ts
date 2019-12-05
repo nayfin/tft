@@ -7,11 +7,11 @@ import { MaterialModule } from './material/material.module'
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
 // components
-import { CrisprFormComponent } from './crispr-form.component';
+import { CrisprFormComponent } from './form.component';
 import { FormGroupComponent } from './form-group/form-group.component';
 import { FormGroupListComponent } from './form-group-list/form-group-list.component';
 // directives
-import { DynamicFieldDirective } from './dynamic-field.directive';
+import { CrisprFieldDirective } from './field.directive';
 
 @NgModule({
   imports: [
@@ -21,7 +21,7 @@ import { DynamicFieldDirective } from './dynamic-field.directive';
     MaterialModule
   ],
   declarations: [
-    DynamicFieldDirective,
+    CrisprFieldDirective,
     CrisprFormComponent,
     FormGroupComponent,
     FormGroupListComponent,

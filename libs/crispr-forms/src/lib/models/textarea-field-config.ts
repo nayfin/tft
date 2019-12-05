@@ -1,5 +1,5 @@
-import { DynamicFieldConfig } from '../models';
+import { CrisprFieldConfig } from '../models';
 
-export interface TextareaFieldConfig extends DynamicFieldConfig {
+export interface TextareaFieldConfig extends CrisprFieldConfig {
   rows?: number;
 }

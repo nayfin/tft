@@ -1,4 +1,4 @@
-<tft-field-container
+<crispr-field-container
   [config]="config"
   [group]="group">
   <div [formGroup]="group">
@@ -6,11 +6,11 @@
       [formGroupName]="config.controlName">
       <ng-container
         *ngFor="let field of config.fields;"
-        tftDynamicField
+        crisprField
         [config]="field"
         [group]="subGroup">
       </ng-container>
     </div>
   </div>
-</tft-field-container>
+</crispr-field-container>
 

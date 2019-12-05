@@ -3,7 +3,7 @@ import { FormGroup, AbstractControl } from '@angular/forms';
 import { CheckboxFieldConfig } from '../../models';
 
 @Component({
-  selector: 'tft-checkbox-field',
+  selector: 'crispr-checkbox-field',
   templateUrl: './checkbox-field.component.html',
   styleUrls: ['./checkbox-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

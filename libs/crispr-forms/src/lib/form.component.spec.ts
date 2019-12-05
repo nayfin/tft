@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CrisprFormComponent } from './crispr-form.component';
 
-describe('DynamicFormComponent', () => {
+describe('CrisprFormComponent', () => {
   let component: CrisprFormComponent;
   let fixture: ComponentFixture<CrisprFormComponent>;
 

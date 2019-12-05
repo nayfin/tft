@@ -2,10 +2,10 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
 
 import { FormGroupListConfig } from './form-group-list.config';
-import { createControlForType } from '../dynamic-form.helpers';
+import { createControlForType } from '../form.helpers';
 
 @Component({
-  selector: 'tft-form-group-list',
+  selector: 'crispr-form-group-list',
   templateUrl: './form-group-list.component.html',
   styleUrls: ['./form-group-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

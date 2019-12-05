@@ -1,5 +1,5 @@
 
-<tft-field-container
+<crispr-field-container
   [config]="config"
   [formGroup]="group">
 
@@ -17,7 +17,7 @@
         [formGroupName]="i">
         <ng-container
           *ngFor="let field of config.itemConfig.fields;"
-          tftDynamicField
+          crisprField
           [config]="field"
           [group]="control">
         </ng-container>
@@ -32,4 +32,4 @@
     {{addItemLabel}}
   </button>
 
-</tft-field-container>
+</crispr-field-container>

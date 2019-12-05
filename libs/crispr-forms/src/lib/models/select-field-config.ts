@@ -1,8 +1,8 @@
-import { DynamicFieldConfig } from '../models';
+import { CrisprFieldConfig } from '../models';
 import { Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 
-export interface SelectFieldConfig extends DynamicFieldConfig {
+export interface SelectFieldConfig extends CrisprFieldConfig {
   emptyOptionsMessage?: string;
   reactiveOptionsConfig: ReactiveOptionsConfig;
   multiple?: boolean;

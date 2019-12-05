@@ -6,9 +6,10 @@
   </p>
   <mat-card>
     <h3>I am a form dynamically generated from a configuration object</h3>
-    <tft-crispr-form [config]="config"  (submitted)="handleSubmit($event)">
-
-    </tft-crispr-form>
+    <crispr-form
+      [config]="config"
+      (submitted)="handleSubmit($event)">
+    </crispr-form>
 
   </mat-card>
 

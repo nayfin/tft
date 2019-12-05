@@ -3,7 +3,7 @@ import { FormGroup, AbstractControl } from '@angular/forms';
 import { FormConfig } from '../models';
 
 @Component({
-  selector: 'tft-form-group',
+  selector: 'crispr-form-group',
   templateUrl: './form-group.component.html',
   styleUrls: ['./form-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

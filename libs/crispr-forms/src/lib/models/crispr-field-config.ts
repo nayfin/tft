@@ -3,11 +3,11 @@ import { Observable } from 'rxjs';
 import { AutocompleteFieldConfig } from '../models';
 import { FormGroupListConfig } from '../form-group-list/form-group-list.config';
 import { ErrorDictionary } from '@tft/form-validation-handler';
-import { ComputeFieldConfig, CheckControlConfig, CheckControlsConfig } from '../dynamic-form.helpers';
+import { ComputeFieldConfig, CheckControlConfig, CheckControlsConfig } from '../form.helpers';
 import { SelectFieldConfig, InputFieldConfig, CheckboxFieldConfig, TextareaFieldConfig } from '../models';
 import { TooltipPosition } from '@angular/material/tooltip';
 
-interface DynamicFieldConfig {
+interface CrisprFieldConfig {
   controlName: string;
   controlType: ControlType;
   label?: string;
@@ -36,7 +36,7 @@ interface FormConfig {
   fields: AnyFieldConfig[];
 }
 
-type AnyFieldConfig = DynamicFieldConfig
+type AnyFieldConfig = CrisprFieldConfig
   | SelectFieldConfig
   | InputFieldConfig
   | FormGroupListConfig
@@ -61,4 +61,4 @@ enum ControlType {
   GROUP_LIST = 'groupList'
 }
 
-export {ControlType, AnyFieldConfig, DynamicFieldConfig, FormGroupListConfig, FormConfig};
+export {ControlType, AnyFieldConfig, CrisprFieldConfig, FormGroupListConfig, FormConfig};

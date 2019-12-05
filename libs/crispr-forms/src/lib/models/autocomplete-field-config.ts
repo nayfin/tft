@@ -1,6 +1,6 @@
-import { OptionsType, SelectOption, ReactiveOptionsConfig, DynamicFieldConfig } from '../models';
+import { OptionsType, SelectOption, ReactiveOptionsConfig, CrisprFieldConfig } from '../models';
 
-export interface AutocompleteFieldConfig extends DynamicFieldConfig {
+export interface AutocompleteFieldConfig extends CrisprFieldConfig {
   emptyOptionsMessage?: string;
   options: OptionsType;
   reactiveOptionsConfig: ReactiveOptionsConfig;

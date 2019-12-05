@@ -24,9 +24,9 @@ const components = {
 };
 
 @Directive({
-  selector: '[tftDynamicField]'
+  selector: '[crisprField]'
 })
-export class DynamicFieldDirective implements OnInit {
+export class CrisprFieldDirective implements OnInit {
 
   @Input() config: AnyFieldConfig;
   @Input() group: FormGroup;

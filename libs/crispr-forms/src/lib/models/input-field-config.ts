@@ -1,6 +1,6 @@
-import { DynamicFieldConfig } from '../models';
+import { CrisprFieldConfig } from '../models';
 
-export interface InputFieldConfig extends DynamicFieldConfig {
+export interface InputFieldConfig extends CrisprFieldConfig {
   inputType?: InputType;
 }
 

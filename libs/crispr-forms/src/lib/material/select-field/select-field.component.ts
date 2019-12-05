@@ -3,10 +3,10 @@ import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { SelectFieldConfig, SelectOption } from '../../models';
-import { observablifyOptions } from '../../dynamic-form.helpers';
+import { observablifyOptions } from '../../form.helpers';
 
 @Component({
-  selector: 'tft-select-field',
+  selector: 'crispr-select-field',
   templateUrl: './select-field.component.html',
   styleUrls: ['./select-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

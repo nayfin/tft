@@ -1,11 +1,11 @@
 import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormConfig } from './models';
-import { buildFormGroupFromConfig } from './dynamic-form.helpers';
+import { buildFormGroupFromConfig } from './form.helpers';
 @Component({
-  selector: 'tft-crispr-form',
-  styleUrls: ['crispr-form.component.scss'],
-  templateUrl: 'crispr-form.component.html',
+  selector: 'crispr-form',
+  styleUrls: ['form.component.scss'],
+  templateUrl: 'form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CrisprFormComponent implements OnInit {

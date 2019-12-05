@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { TextareaFieldConfig } from '../../models';
 
 @Component({
-  selector: 'tft-textarea-field',
+  selector: 'crispr-textarea-field',
   templateUrl: './textarea-field.component.html',
   styleUrls: ['./textarea-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

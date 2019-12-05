@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'tft-datepicker-field',
+  selector: 'crispr-datepicker-field',
   templateUrl: './datepicker-field.component.html',
   styleUrls: ['./datepicker-field.component.scss']
 })

@@ -1,18 +1,18 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { DynamicFieldConfig } from '../models';
+import { CrisprFieldConfig } from '../models';
 import { Observable, of, Subscription } from 'rxjs';
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { tap } from 'rxjs/operators';
 
 @Component({
-  selector: 'tft-field-container',
+  selector: 'crispr-field-container',
   templateUrl: './field-container.component.html',
   styleUrls: ['./field-container.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FieldContainerComponent implements OnInit, OnDestroy {
   // the configuration object for the field
-  @Input() config: DynamicFieldConfig;
+  @Input() config: CrisprFieldConfig;
   // the parent formGroup
   @Input() group: FormGroup;
   // boolean whether field-container is inline
@@ -50,7 +50,7 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
    * @param group used to get valueChanges from control
    * @param config configuration object used to
    */
-  connectShowField(group: FormGroup, config: DynamicFieldConfig = null) {
+  connectShowField(group: FormGroup, config: CrisprFieldConfig = null) {
     const control = group.get(config.controlName);
     // If the showField function exists on the field config then call it with the showFieldConfig
     // as a parameter otherwise return an observable of true.

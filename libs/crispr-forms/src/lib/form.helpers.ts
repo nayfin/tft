@@ -16,7 +16,7 @@ import {
   FormConfig,
   ControlType,
   FormGroupListConfig,
-  DynamicFieldConfig
+  CrisprFieldConfig
 } from './models';
 import {
   from,
@@ -27,7 +27,7 @@ import {
   OperatorFunction
 } from 'rxjs';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
-import { valueIn } from './dynamic-form.operators';
+import { valueIn } from './form.operators';
 import { map, tap, startWith } from 'rxjs/operators';
 import { AutocompleteFieldConfig } from './models';
 
@@ -240,7 +240,7 @@ export function createControlForType(controlConfig: AnyFieldConfig, value: any) 
     ? new FormArray([], (controlConfig as FormGroupListConfig).validators)
     : new FormControl(
       isRealValue(value) ? value : null,
-      (controlConfig as DynamicFieldConfig).validators || null
+      (controlConfig as CrisprFieldConfig).validators || null
     );
   // if it was a GROUP_LIST and it had initial values passed in, add the values to the form array
   if (controlConfig.controlType === ControlType.GROUP_LIST && Array.isArray(value)) {

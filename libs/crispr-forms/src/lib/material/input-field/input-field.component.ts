@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { InputFieldConfig } from '../../models';
 
 @Component({
-  selector: 'tft-input-field',
+  selector: 'crispr-input-field',
   templateUrl: './input-field.component.html',
   styleUrls: ['./input-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

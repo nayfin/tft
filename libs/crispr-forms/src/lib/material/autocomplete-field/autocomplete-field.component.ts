@@ -5,10 +5,10 @@ import { SelectOption, AutocompleteFieldConfig } from '../../models';
 
 import { Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
-import { observablifyOptions } from '../../dynamic-form.helpers';
+import { observablifyOptions } from '../../form.helpers';
 
 @Component({
-  selector: 'tft-autocomplete-field',
+  selector: 'crispr-autocomplete-field',
   templateUrl: './autocomplete-field.component.html',
   styleUrls: ['./autocomplete-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -44,7 +44,7 @@ export class AutocompleteFieldComponent implements OnInit {
                 return this.config.filterFunction(options, searchString);
               } catch (error) {
                 console.error(error, 'Error running filterFunction, falling back to default filter');
-              } 
+              }
             }
             // fallback to default in the absence of custom filter function or on error
             return this.defaultFilterFunction(options, searchString);
@@ -56,7 +56,7 @@ export class AutocompleteFieldComponent implements OnInit {
   /**
    * The material autocomplete defaults to displaying the options value instead of its label.
    * We only have the value from the selected option to work with, so we have to pass the options
-   * through a function called in the template and return the function that the material displayWith 
+   * through a function called in the template and return the function that the material displayWith
    * input is expecting.
    * @param options the array of options to search for option with corresponding value
    */
@@ -66,7 +66,7 @@ export class AutocompleteFieldComponent implements OnInit {
       return correspondingOption ? correspondingOption.label : '';
     };
   }
-  /**   
+  /**
    * To follow ARIA standards we want to select the active option on blur.
    * @param event blur event that triggers the handle blur, TODO: remove this parameter if not used by 7/4/19
    */
@@ -77,9 +77,9 @@ export class AutocompleteFieldComponent implements OnInit {
     }
   }
   /**
-   * A basic filter function that filters the search string against the label of the options object 
+   * A basic filter function that filters the search string against the label of the options object
    * @param options the array of options to filter
-   * @param searchString the string from the input 
+   * @param searchString the string from the input
    */
   defaultFilterFunction(options: SelectOption[], searchString: string)  {
     return options.filter(option => option.label && option.label.toLowerCase().includes(searchString.toLowerCase()));

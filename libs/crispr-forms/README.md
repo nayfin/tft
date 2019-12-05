@@ -36,10 +36,10 @@ With CRISPR Forms we've abstracted out form template entirely allowing you to ge
 In `some-component.html` we pass the configuration to the component and `handleSubmit` function to the `submitted` event.
 
 ```html
-<tft-crispr-form
+<crispr-form
   [config]="config"
   (submitted)="handleSubmit($event)">
-</tft-crispr-form>
+</crispr-form>
 ```
 In `some-component.ts` we define the `config` and `handleSubmit` function.
 
