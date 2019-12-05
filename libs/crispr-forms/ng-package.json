@@ -2,7 +2,6 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/libs/crispr-forms",
   "lib": {
-    "entryFile": "src/index.ts",
-    "umdId": "tft.crispr-forms"
+    "entryFile": "src/index.ts"
   }
 }

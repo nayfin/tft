@@ -20,7 +20,6 @@ fi
 
 # TODO: Request git status and ask user to commit changes if needed
 #       Below code doesn't work as it checking dist folder, need to figure out why and change to check package.json of root folder
-# # read actual dist/package.json version
 actual_version=$(grep version "libs/$package/package.json")
 
 # ask user for next version
@@ -47,6 +46,4 @@ cd "libs/$package" && npm version "${update_type}" && cd ../../
 ng build $package
 # npm run affected:build -- --all
 
-npm pack "dist/libs/$package"
-# share it
-npm publish "dist/libs/$package" --access public
+cd "dist/libs/$package" && npm pack && npm publish --access public && cd ../../../
