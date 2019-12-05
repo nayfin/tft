@@ -24,7 +24,6 @@ fdescribe('FUNCTIONS', () => {
       let watcher = checkControlForValues(group, config);
       control.setValue('abc');
       watcher.subscribe((isInValues) => {
-        console.log({a:'isInValues'});
         expect(isInValues).not.toEqual(true);
       })
       // expect(false).toEqual(true);

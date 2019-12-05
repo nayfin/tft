@@ -15,7 +15,7 @@ export class TargetComponent implements OnInit {
   @Output() scorePoints: EventEmitter<TftDropEvent> = new EventEmitter();
   @Output() puckEnter = new EventEmitter<void>();
   @Output() puckLeave = new EventEmitter<void>();
-  
+
   dropzoneConfig: DropzoneOptions = {
     overlap: 0.5
   }
@@ -30,8 +30,8 @@ export class TargetComponent implements OnInit {
 
   onChange(event) {
     this.dropzoneConfig = {...this.dropzoneConfig, overlap:  +event.target.value}
-    console.log({changed: this.dropzoneConfig})
   }
+
   puckEnterTarget(event: TftDropEvent) {
     if(event.dragRef.disabled) return;
     this.puckEnter.emit();

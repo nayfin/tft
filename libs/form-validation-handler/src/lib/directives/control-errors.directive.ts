@@ -44,7 +44,6 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
 
   ngOnInit() {
     // build array of subscriptions
-    console.log('control errors')
     this.subs.push(
       this.getInteractionHandler().subscribe(),
     );
@@ -63,7 +62,6 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
       this.control.valueChanges
     ).pipe(
       tap( event => {
-        console.log('control-errors.directive')
         // prevents displaying error messages before user interaction unless submitting
         if (this.control.touched || event === 'submitted') {
           const errorMessage = this.getErrorMessage();

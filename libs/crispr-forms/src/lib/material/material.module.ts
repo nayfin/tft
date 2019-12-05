@@ -17,6 +17,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
+import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+
 import { FieldContainerComponent } from '../field-container/field-container.component';
 import { InputFieldComponent } from './input-field/input-field.component';
 import { SelectFieldComponent } from './select-field/select-field.component';
@@ -57,6 +59,7 @@ const CRISPR_FIELDS = [
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormValidationHandlerModule,
     ...MAT_DESIGN_MODULES,
   ],
   exports: [
