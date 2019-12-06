@@ -9,7 +9,8 @@ import {
   AutocompleteFieldComponent,
   CheckboxFieldComponent,
   TextareaFieldComponent,
-  RaisedButtonComponent
+  RaisedButtonComponent,
+  DatepickerFieldComponent
 } from './material';
 
 const components = {
@@ -20,7 +21,8 @@ const components = {
   groupList: FormGroupListComponent,
   autocomplete: AutocompleteFieldComponent,
   textarea: TextareaFieldComponent,
-  checkbox: CheckboxFieldComponent
+  checkbox: CheckboxFieldComponent,
+  datepicker: DatepickerFieldComponent
 };
 
 @Directive({

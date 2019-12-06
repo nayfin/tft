@@ -3,5 +3,6 @@ export * from './select-field-config';
 export * from './autocomplete-field-config';
 export * from './checkbox-field-config';
 export * from './textarea-field-config';
+export * from './datepicker-field-config';
 
 export * from './crispr-field-config';

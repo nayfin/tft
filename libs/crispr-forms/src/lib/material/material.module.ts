@@ -27,6 +27,7 @@ import { CheckboxFieldComponent } from './checkbox-field/checkbox-field.componen
 import { TextareaFieldComponent } from './textarea-field/textarea-field.component';
 import { RaisedButtonComponent } from './raised-button/raised-button.component';
 import { DatepickerFieldComponent } from './datepicker-field/datepicker-field.component';
+import { MatNativeDateModule } from '@angular/material';
 
 const MAT_DESIGN_MODULES = [
   MatIconModule,
@@ -43,6 +44,7 @@ const MAT_DESIGN_MODULES = [
   MatChipsModule,
   MatTooltipModule,
   MatFormFieldModule,
+  MatNativeDateModule
 ];
 
 const CRISPR_FIELDS = [

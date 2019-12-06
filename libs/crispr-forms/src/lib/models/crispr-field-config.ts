@@ -1,11 +1,11 @@
 import { FormGroup, ValidatorFn } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { TooltipPosition, ThemePalette, MatFormFieldAppearance } from '@angular/material';
+import { ErrorDictionary } from '@tft/form-validation-handler';
 import { AutocompleteFieldConfig } from '../models';
 import { FormGroupListConfig } from '../form-group-list/form-group-list.config';
-import { ErrorDictionary } from '@tft/form-validation-handler';
 import { ComputeFieldConfig, CheckControlConfig, CheckControlsConfig } from '../form.helpers';
-import { SelectFieldConfig, InputFieldConfig, CheckboxFieldConfig, TextareaFieldConfig } from '../models';
-import { TooltipPosition } from '@angular/material/tooltip';
+import { SelectFieldConfig, DatepickerFieldConfig, InputFieldConfig, CheckboxFieldConfig, TextareaFieldConfig } from '../models';
 
 interface CrisprFieldConfig {
   controlName: string;
@@ -17,7 +17,8 @@ interface CrisprFieldConfig {
     tooltipPosition?: TooltipPosition;
   };
   classes?: string[];
-  flexLayoutConfig?: any;
+  appearance?: MatFormFieldAppearance;
+  color?: ThemePalette;
   computeField?: ( group: FormGroup, config: any) => Observable<any>;
   computeFieldConfig?: ComputeFieldConfig | any;
   // function that returns an observable that resolves to a boolean
@@ -43,12 +44,8 @@ type AnyFieldConfig = CrisprFieldConfig
   | FormConfig
   | AutocompleteFieldConfig
   | TextareaFieldConfig
-  | CheckboxFieldConfig;
-
-interface Attr {
-  name: string;
-  value: string;
-}
+  | CheckboxFieldConfig
+  | DatepickerFieldConfig;
 
 enum ControlType {
   AUTOCOMPLETE = 'autocomplete',
@@ -58,7 +55,8 @@ enum ControlType {
   SELECT = 'select',
   BUTTON = 'button',
   GROUP = 'group',
-  GROUP_LIST = 'groupList'
+  GROUP_LIST = 'groupList',
+  DATEPICKER = 'datepicker'
 }
 
 export {ControlType, AnyFieldConfig, CrisprFieldConfig, FormGroupListConfig, FormConfig};

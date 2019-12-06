@@ -1,1 +1,18 @@
-<p>datepicker-field works!</p>
+<crispr-field-container
+  [config]="config"
+  [group]="group">
+  <mat-form-field
+    [formGroup]="group">
+    <!-- <mat-label>Some label</mat-label> -->
+    <input
+      matInput
+      [formControlName]="config.controlName"
+      [min]="config.min"
+      [max]="config.max"
+      [matDatepicker]="picker"
+      [placeholder]="config.placeholder">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</crispr-field-container>
+
