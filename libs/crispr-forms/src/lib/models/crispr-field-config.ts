@@ -8,8 +8,8 @@ import { ComputeFieldConfig, CheckControlConfig, CheckControlsConfig } from '../
 import { SelectFieldConfig, DatepickerFieldConfig, InputFieldConfig, CheckboxFieldConfig, TextareaFieldConfig } from '../models';
 
 interface CrisprFieldConfig {
-  controlName: string;
   controlType: ControlType;
+  controlName?: string;
   label?: string;
   placeholder?: string;
   info?: {
@@ -56,7 +56,8 @@ enum ControlType {
   BUTTON = 'button',
   GROUP = 'group',
   GROUP_LIST = 'groupList',
-  DATEPICKER = 'datepicker'
+  DATEPICKER = 'datepicker',
+  HEADING = 'heading'
 }
 
 export {ControlType, AnyFieldConfig, CrisprFieldConfig, FormGroupListConfig, FormConfig};

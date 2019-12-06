@@ -3,7 +3,12 @@
   [group]="group">
 
   <mat-form-field
+    [color]="config.color"
+    [appearance]="config.appearance"
     [formGroup]="group">
+    <mat-label *ngIf="config.label">
+      {{config.label}}
+    </mat-label>
     <mat-select
       [formControlName]="config.controlName"
       [placeholder]="config.placeholder"
@@ -15,6 +20,13 @@
         {{ option.label }}
       </mat-option>
     </mat-select>
+    <mat-icon
+      *ngIf="config.info"
+      [matTooltip]="config.info?.content"
+      [matTooltipPosition]="config.info?.tooltipPosition || 'below'"
+      matSuffix>
+      info
+    </mat-icon>
   </mat-form-field>
 
 </crispr-field-container>

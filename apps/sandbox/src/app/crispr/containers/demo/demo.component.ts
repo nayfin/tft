@@ -58,6 +58,12 @@ export class DemoComponent implements OnInit {
         inputType: 'number',
         placeholder: 'I am a placeholder in a number input',
         validators: [Validators.required, Validators.min(5)],
+        info: {
+          content: 'I am an info tooltip on a number input',
+          tooltipPosition: 'below'
+        },
+        appearance: 'outline',
+        color: 'accent'
       },
       {
         controlType: ControlType.TEXTAREA,
@@ -66,6 +72,13 @@ export class DemoComponent implements OnInit {
         placeholder: 'I am a placeholder in a textarea input',
         rows: 3,
         classes: [],
+        info: {
+          content: 'I am an info tooltip on a textarea field',
+          tooltipPosition: 'left'
+        },
+        appearance: 'outline',
+        color: 'accent'
+
         // validators: [Validators.required],
       },
       {
@@ -79,7 +92,11 @@ export class DemoComponent implements OnInit {
           {label: 'option a', value: 'a'},
           {label: 'option b', value: 'b'},
           {label: 'option c', value: 'c'},
-        ]
+        ],
+        info: {
+          content: 'I am an info tooltip on a select field',
+          tooltipPosition: 'above'
+        }
       },
       {
         controlType: ControlType.SELECT,
@@ -111,7 +128,12 @@ export class DemoComponent implements OnInit {
               ]);
             }, 5000);
           });
-        }
+        },
+        info: {
+          content: 'This select field gets its options from a function that returns a promise of select options',
+        },
+        appearance: 'outline',
+        color: 'accent'
       },
       {
         controlType: ControlType.AUTOCOMPLETE,
@@ -124,6 +146,14 @@ export class DemoComponent implements OnInit {
           {label: 'good', value: 'a'},
           {label: 'evil', value: 'b'},
         ])
+      },
+      {
+        controlType: ControlType.HEADING,
+        label: 'I am a heading',
+        info: {
+          content: 'I am an info tooltip on a heading',
+          tooltipPosition: 'right'
+        }
       },
       {
         controlType: ControlType.DATEPICKER,

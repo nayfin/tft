@@ -4,14 +4,6 @@
   [class.inline-field]="inlineField"
   class="field-container">
 
-  <label
-    *ngIf="!!config.label"
-    class="mat-h3">{{ config.label }}
-    <mat-icon
-      *ngIf="config.info"
-      [matTooltip]="config.info?.content"
-      [matTooltipPosition]="config.info?.tooltipPosition || 'below'">info</mat-icon>
-  </label>
   <ng-content>
   </ng-content>
 

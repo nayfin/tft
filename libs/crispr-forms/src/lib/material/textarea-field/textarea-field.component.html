@@ -2,13 +2,25 @@
   [config]="config"
   [group]="group">
   <mat-form-field
+    [color]="config.color"
+    [appearance]="config.appearance"
     [formGroup]="group">
+    <mat-label *ngIf="config.label">
+      {{config.label}}
+    </mat-label>
     <textarea
       [rows]="rows"
       matInput
       [placeholder]="config.placeholder"
       [formControlName]="config.controlName">
     </textarea>
+    <mat-icon
+      *ngIf="config.info"
+      [matTooltip]="config.info?.content"
+      [matTooltipPosition]="config.info?.tooltipPosition || 'below'"
+      matSuffix>
+      info
+    </mat-icon>
   </mat-form-field>
 
 

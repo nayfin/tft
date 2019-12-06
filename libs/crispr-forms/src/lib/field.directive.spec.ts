@@ -1,4 +1,4 @@
-import { CrisprFieldDirective } from './dynamic-field.directive';
+import { CrisprFieldDirective } from './field.directive';
 import { ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
 
 // describe('CrisprFieldDirective', () => {
