@@ -163,8 +163,9 @@ export class DemoComponent implements OnInit {
       {
         controlType: ControlType.CHECKBOX,
         controlName: 'horizontalCheckbox',
-        value: 'likesCrispr',
+        value: 'isCheckbox',
         label: 'I am a checkbox?',
+        color: 'primary',
         labelPosition: 'after',
         inline: true
       },
