@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module'
 
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { MatMomentDateModule } from "@angular/material-moment-adapter";
 
 // components
 import { CrisprFormComponent } from './form.component';

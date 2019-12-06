@@ -41,6 +41,7 @@
     "@angular/forms": "^8.2.14",
     "@angular/material": "^8.2.0",
     "@angular/platform-browser": "^8.2.14",
+    "@angular/material-moment-adapter": "^8.2.0",
     "@angular/platform-browser-dynamic": "^8.2.14",
     "@angular/router": "^8.2.14",
     "@nestjs/common": "^6.10.4",
