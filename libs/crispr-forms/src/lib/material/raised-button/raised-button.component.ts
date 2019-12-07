@@ -9,11 +9,14 @@ import { ButtonConfig } from '../../models';
   styleUrls: ['./raised-button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RaisedButtonComponent implements OnInit {
+export class ButtonComponent implements OnInit {
 
   config: ButtonConfig;
   group: FormGroup;
 
+  get matButtonClass () {
+    return this.config.buttonType ? `mat-${this.config.buttonType}-button` : '';
+  }
   constructor() { }
 
   ngOnInit() {

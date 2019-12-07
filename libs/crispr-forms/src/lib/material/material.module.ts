@@ -25,7 +25,7 @@ import { SelectFieldComponent } from './select-field/select-field.component';
 import { AutocompleteFieldComponent } from './autocomplete-field/autocomplete-field.component';
 import { CheckboxFieldComponent } from './checkbox-field/checkbox-field.component';
 import { TextareaFieldComponent } from './textarea-field/textarea-field.component';
-import { RaisedButtonComponent } from './raised-button/raised-button.component';
+import { ButtonComponent } from './raised-button/raised-button.component';
 import { DatepickerFieldComponent } from './datepicker-field/datepicker-field.component';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { HeadingComponent } from './heading/heading.component';
@@ -58,7 +58,7 @@ const CRISPR_FIELDS = [
   CheckboxFieldComponent,
   TextareaFieldComponent,
   DatepickerFieldComponent,
-  RaisedButtonComponent,
+  ButtonComponent,
   HeadingComponent
 ];
 @NgModule({

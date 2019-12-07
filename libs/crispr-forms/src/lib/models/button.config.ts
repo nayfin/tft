@@ -1,5 +1,6 @@
 import { CrisprFieldConfig } from './crispr-field.config';
 
 export interface ButtonConfig extends CrisprFieldConfig {
-  icon?: string
+  buttonType: 'raised' | 'flat' | 'stroked' | 'icon'; // 'fab' || 'mini-fab'
+  icon?: string;
 }

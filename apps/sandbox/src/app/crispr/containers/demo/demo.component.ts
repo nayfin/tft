@@ -183,6 +183,7 @@ export class DemoComponent implements OnInit {
       {
         controlType: ControlType.BUTTON,
         controlName: 'button',
+        buttonType: 'flat',
         label: 'I AM A SUBMIT BUTTON',
         color: 'primary',
         icon: 'info',

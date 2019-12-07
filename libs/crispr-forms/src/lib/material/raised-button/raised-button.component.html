@@ -2,7 +2,8 @@
   [ngClass]="config.classes">
   <button
     [formGroup]="group"
-    mat-raised-button
+    mat-button
+    [ngClass]="matButtonClass"
     [color]="config.color"
     type="submit">
     {{ config.label }}

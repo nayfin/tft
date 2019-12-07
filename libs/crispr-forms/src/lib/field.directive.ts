@@ -9,13 +9,13 @@ import {
   AutocompleteFieldComponent,
   CheckboxFieldComponent,
   TextareaFieldComponent,
-  RaisedButtonComponent,
+  ButtonComponent,
   DatepickerFieldComponent,
   HeadingComponent
 } from './material';
 
 const components = {
-  button: RaisedButtonComponent,
+  button: ButtonComponent,
   input: InputFieldComponent,
   select: SelectFieldComponent,
   group: FormGroupComponent,
