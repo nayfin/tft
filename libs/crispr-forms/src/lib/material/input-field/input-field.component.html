@@ -13,13 +13,11 @@
       matInput
       [placeholder]="config.placeholder"
       [formControlName]="config.controlName">
-    <mat-icon
+    <crispr-info
+      matSuffix
       *ngIf="config.info"
-      [matTooltip]="config.info?.content"
-      [matTooltipPosition]="config.info?.tooltipPosition || 'below'"
-      matSuffix>
-      info
-    </mat-icon>
+      [info]="config.info">
+    </crispr-info>
 
   </mat-form-field>
 

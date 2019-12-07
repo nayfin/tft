@@ -29,6 +29,7 @@ import { RaisedButtonComponent } from './raised-button/raised-button.component';
 import { DatepickerFieldComponent } from './datepicker-field/datepicker-field.component';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { HeadingComponent } from './heading/heading.component';
+import { InfoComponent } from './info/info.component';
 // import { MatNativeDateModule } from '@angular/material';
 
 const MAT_DESIGN_MODULES = [
@@ -74,6 +75,7 @@ const CRISPR_FIELDS = [
   declarations: [
     CRISPR_FIELDS,
     HeadingComponent,
+    InfoComponent,
   ],
   entryComponents: CRISPR_FIELDS
 })

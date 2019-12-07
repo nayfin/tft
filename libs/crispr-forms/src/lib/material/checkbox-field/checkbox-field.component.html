@@ -9,6 +9,10 @@
       [labelPosition]="labelPosition"
       [formControlName]="config.controlName">
       {{config.label}}
+      <crispr-info
+        matSuffix *ngIf="config.info"
+        [info]="config.info">
+      </crispr-info>
     </mat-checkbox>
   </div>
 </crispr-field-container>

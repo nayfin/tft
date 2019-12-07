@@ -6,5 +6,8 @@
     [color]="config.color"
     type="submit">
     {{ config.label }}
+    <mat-icon *ngIf="config.icon">
+      {{ config.icon}}
+    </mat-icon>
   </button>
 </div>

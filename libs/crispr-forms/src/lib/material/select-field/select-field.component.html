@@ -20,13 +20,11 @@
         {{ option.label }}
       </mat-option>
     </mat-select>
-    <mat-icon
+    <crispr-info
       *ngIf="config.info"
-      [matTooltip]="config.info?.content"
-      [matTooltipPosition]="config.info?.tooltipPosition || 'below'"
-      matSuffix>
-      info
-    </mat-icon>
+      matSuffix
+      [info]="config.info">
+    </crispr-info>
   </mat-form-field>
 
 </crispr-field-container>

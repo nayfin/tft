@@ -1,7 +1,7 @@
 
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { CrisprFieldConfig } from '../../models';
+import { ButtonConfig } from '../../models';
 
 @Component({
   selector: 'crispr-raised-button',
@@ -11,7 +11,7 @@ import { CrisprFieldConfig } from '../../models';
 })
 export class RaisedButtonComponent implements OnInit {
 
-  config: CrisprFieldConfig;
+  config: ButtonConfig;
   group: FormGroup;
 
   constructor() { }

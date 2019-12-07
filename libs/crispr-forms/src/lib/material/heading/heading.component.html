@@ -1,10 +1,9 @@
   <label
     *ngIf="!!config.label"
-    class="mat-h3">{{ config.label }}
-    <mat-icon
-      *ngIf="config.info"
-      [matTooltip]="config.info?.content"
-      [matTooltipPosition]="config.info?.tooltipPosition || 'below'">
-      info
-    </mat-icon>
+    [class.mat-h3]=" !config.classes?.length"
+    [ngClass]="config.classes">{{ config.label }}
+    <crispr-info
+      matSuffix *ngIf="config.info"
+      [info]="config.info">
+    </crispr-info>
   </label>

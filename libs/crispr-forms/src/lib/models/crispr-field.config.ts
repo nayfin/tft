@@ -5,17 +5,15 @@ import { ErrorDictionary } from '@tft/form-validation-handler';
 import { AutocompleteFieldConfig } from '../models';
 import { FormGroupListConfig } from '../form-group-list/form-group-list.config';
 import { ComputeFieldConfig, CheckControlConfig, CheckControlsConfig } from '../form.helpers';
-import { SelectFieldConfig, DatepickerFieldConfig, InputFieldConfig, CheckboxFieldConfig, TextareaFieldConfig } from '../models';
+import { SelectFieldConfig, HeadingConfig, ButtonConfig, DatepickerFieldConfig,
+  InputFieldConfig, CheckboxFieldConfig, TextareaFieldConfig } from '../models';
 
 interface CrisprFieldConfig {
   controlType: ControlType;
   controlName?: string;
   label?: string;
   placeholder?: string;
-  info?: {
-    content: string;
-    tooltipPosition?: TooltipPosition;
-  };
+  info?: Info;
   classes?: string[];
   appearance?: MatFormFieldAppearance;
   color?: ThemePalette;
@@ -28,6 +26,11 @@ interface CrisprFieldConfig {
   value?: string | number;
 }
 
+export interface Info {
+  content: string;
+  tooltipPosition?: TooltipPosition;
+  iconName?:string;
+}
 interface FormConfig {
   controlType?: ControlType;
   controlName: string;
@@ -45,7 +48,9 @@ type AnyFieldConfig = CrisprFieldConfig
   | AutocompleteFieldConfig
   | TextareaFieldConfig
   | CheckboxFieldConfig
-  | DatepickerFieldConfig;
+  | DatepickerFieldConfig
+  | HeadingConfig
+  | ButtonConfig;
 
 enum ControlType {
   AUTOCOMPLETE = 'autocomplete',

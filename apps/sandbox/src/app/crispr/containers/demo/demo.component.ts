@@ -15,7 +15,7 @@ export class DemoComponent implements OnInit {
     controlName: 'myForm',
     autocomplete: 'off',
     errorDictionary: {
-      required: () => 'hello',
+      required: () => `I am a custom error message on a required field`,
     },
     fields: [
       // a basic input field in the form with the following configuration
@@ -24,7 +24,8 @@ export class DemoComponent implements OnInit {
         label: 'I am a label on a text input',
         info: {
           content: 'I am some info about this field',
-          tooltipPosition: 'left'
+          tooltipPosition: 'left',
+          iconName: 'delete'
         },
         controlName: 'textInput',
         placeholder: 'I am a placeholder in a text input',
@@ -95,7 +96,8 @@ export class DemoComponent implements OnInit {
         ],
         info: {
           content: 'I am an info tooltip on a select field',
-          tooltipPosition: 'above'
+          tooltipPosition: 'above',
+          iconName: 'delete'
         }
       },
       {
@@ -140,7 +142,11 @@ export class DemoComponent implements OnInit {
         label: 'This autocomplete field uses an observable to resolve options',
         controlName: 'autocompleteFieldObservable',
         placeholder: 'I am a placeholder in a autocomplete field',
-        classes: [],
+        info: {
+          content: 'I am an info tooltip on an autocomplete field',
+          tooltipPosition: 'left',
+          iconName: 'delete'
+        },
         // validators: [Validators.required],
         options: of([
           {label: 'good', value: 'a'},
@@ -153,7 +159,8 @@ export class DemoComponent implements OnInit {
         info: {
           content: 'I am an info tooltip on a heading',
           tooltipPosition: 'right'
-        }
+        },
+        classes: ['mat-h2']
       },
       {
         controlType: ControlType.DATEPICKER,
@@ -167,12 +174,18 @@ export class DemoComponent implements OnInit {
         label: 'I am a checkbox?',
         color: 'primary',
         labelPosition: 'after',
-        inline: true
+        inline: true,
+        info: {
+          content: 'I am a tooltip on a checkbox'
+
+        }
       },
       {
         controlType: ControlType.BUTTON,
         controlName: 'button',
         label: 'I AM A SUBMIT BUTTON',
+        color: 'primary',
+        icon: 'info',
         classes: []
       },
 
