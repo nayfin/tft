@@ -189,6 +189,9 @@ export class DemoComponent implements OnInit {
         }
       },
       {
+        controlType: ControlType.DIVIDER
+      },
+      {
         controlType: ControlType.SLIDER,
         controlName: 'slider',
         label: 'I am a label on a slider',
@@ -198,7 +201,7 @@ export class DemoComponent implements OnInit {
         info: {
           content: 'I am a tooltip on a slider'
         },
-        vertical: true,
+        vertical: false,
         thumbLabel: true,
         min: 2,
         max: 88

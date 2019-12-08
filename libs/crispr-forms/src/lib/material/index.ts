@@ -7,3 +7,4 @@ export * from './slider-field/slider-field.component';
 export * from './button/button.component';
 export * from './datepicker-field/datepicker-field.component';
 export * from './heading/heading.component';
+export * from './divider/divider.component';

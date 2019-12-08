@@ -4,7 +4,7 @@
 
 ## WARNING:
 
-API is stabilizing but we are tackling a lot of tech debt and updating some naming conventions this month. We should be finished by the New Year of 2020.
+API is mostly stable, and there are no planned breaking changes. However, we are working on some new features (layout system!!!) so there is the possibility there could be minor changes to API.
 
 ## Description
 
@@ -20,6 +20,11 @@ Supported Angular Material fields:
  - Input
  - Select
  - Textarea
+ - Slider
+ - Datepicker
+ - Button
+ - Heading
+ - Divider
 
 More fields coming soon!
 
@@ -91,8 +96,6 @@ Better docs are in the works but for now you can check out this [example](https:
 - Static Layout for fields in forms
 - Responsive Layout for fields in forms
 - The rest of the Angular Material fields:
-  - Datepicker
   - Radio button
-  - Slider
   - Slide toggle
 

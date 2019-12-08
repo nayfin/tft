@@ -16,6 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDividerModule } from '@angular/material';
 
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
@@ -31,6 +32,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { HeadingComponent } from './heading/heading.component';
 import { InfoComponent } from './info/info.component';
 import { SliderFieldComponent } from './slider-field/slider-field.component';
+import { DividerComponent } from './divider/divider.component';
 
 const MAT_DESIGN_MODULES = [
   MatIconModule,
@@ -47,7 +49,8 @@ const MAT_DESIGN_MODULES = [
   MatChipsModule,
   MatTooltipModule,
   MatFormFieldModule,
-  MatMomentDateModule
+  MatMomentDateModule,
+  MatDividerModule
 ];
 
 const CRISPR_FIELDS = [
@@ -61,6 +64,7 @@ const CRISPR_FIELDS = [
   SliderFieldComponent,
   ButtonComponent,
   HeadingComponent,
+  DividerComponent,
 ];
 @NgModule({
   imports: [

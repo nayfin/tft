@@ -65,7 +65,8 @@ enum ControlType {
   DATEPICKER = 'datepicker',
   SLIDER = 'slider',
   BUTTON = 'button',
-  HEADING = 'heading'
+  HEADING = 'heading',
+  DIVIDER = 'divider'
 }
 
 export {ControlType, AnyFieldConfig, CrisprFieldConfig, FormGroupListConfig, FormConfig};

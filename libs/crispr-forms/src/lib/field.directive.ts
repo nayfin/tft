@@ -12,7 +12,8 @@ import {
   ButtonComponent,
   DatepickerFieldComponent,
   SliderFieldComponent,
-  HeadingComponent
+  HeadingComponent,
+  DividerComponent
 } from './material';
 
 const components = {
@@ -26,7 +27,8 @@ const components = {
   checkbox: CheckboxFieldComponent,
   slider: SliderFieldComponent,
   datepicker: DatepickerFieldComponent,
-  heading: HeadingComponent
+  heading: HeadingComponent,
+  divider: DividerComponent
 };
 
 @Directive({
