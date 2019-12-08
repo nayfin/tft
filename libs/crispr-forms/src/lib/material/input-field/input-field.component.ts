@@ -13,6 +13,7 @@ export class InputFieldComponent implements OnInit {
   config: InputFieldConfig;
   group: FormGroup;
   inputType: string;
+
   constructor(
   ) { }
 

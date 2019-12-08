@@ -1,11 +1,12 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GestureConfig } from '@angular/material';
 import { NgModule } from '@angular/core';
 import { Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const routes: Routes = [
   { path: '', redirectTo: 'landscaping', pathMatch: 'full'},
@@ -21,12 +22,14 @@ const routes: Routes = [
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
-    BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    {provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

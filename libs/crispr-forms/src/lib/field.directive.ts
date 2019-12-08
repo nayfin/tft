@@ -11,6 +11,7 @@ import {
   TextareaFieldComponent,
   ButtonComponent,
   DatepickerFieldComponent,
+  SliderFieldComponent,
   HeadingComponent
 } from './material';
 
@@ -23,6 +24,7 @@ const components = {
   autocomplete: AutocompleteFieldComponent,
   textarea: TextareaFieldComponent,
   checkbox: CheckboxFieldComponent,
+  slider: SliderFieldComponent,
   datepicker: DatepickerFieldComponent,
   heading: HeadingComponent
 };

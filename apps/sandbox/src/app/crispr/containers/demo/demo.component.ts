@@ -3,6 +3,7 @@ import { FormConfig, ControlType, SelectOption } from '@tft/crispr-forms';
 import { Validators, FormGroup } from '@angular/forms';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Moment } from 'moment';
 @Component({
   selector: 'tft-demo',
   templateUrl: './demo.component.html',
@@ -165,20 +166,42 @@ export class DemoComponent implements OnInit {
       {
         controlType: ControlType.DATEPICKER,
         controlName: 'datepickerField',
+        touchUi: true,
+        startView: 'month',
+        startAt: new Date('Apr 12, 2019'),
+        datepickerFilter: (date: Moment) => {
+          const day = date.day();
+          return [2,4,6].includes(day);
+        },
+        min: new Date('Apr 5 2019'),
+        max: new Date('Apr 23 2019'),
         label: 'I am a label for a datepicker field',
       },
       {
         controlType: ControlType.CHECKBOX,
         controlName: 'horizontalCheckbox',
-        value: 'isCheckbox',
         label: 'I am a checkbox?',
         color: 'primary',
         labelPosition: 'after',
         inline: true,
         info: {
           content: 'I am a tooltip on a checkbox'
-
         }
+      },
+      {
+        controlType: ControlType.SLIDER,
+        controlName: 'slider',
+        label: 'I am a label on a slider',
+        placeholder: 'I am a placeholder on a slider',
+        color: 'primary',
+        labelPosition: 'after',
+        info: {
+          content: 'I am a tooltip on a slider'
+        },
+        vertical: true,
+        thumbLabel: true,
+        min: 2,
+        max: 88
       },
       {
         controlType: ControlType.BUTTON,

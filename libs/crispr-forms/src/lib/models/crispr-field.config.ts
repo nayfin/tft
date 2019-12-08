@@ -7,6 +7,7 @@ import { FormGroupListConfig } from '../form-group-list/form-group-list.config';
 import { ComputeFieldConfig, CheckControlConfig, CheckControlsConfig } from '../form.helpers';
 import { SelectFieldConfig, HeadingConfig, ButtonConfig, DatepickerFieldConfig,
   InputFieldConfig, CheckboxFieldConfig, TextareaFieldConfig } from '../models';
+import { SliderFieldConfig } from './slider-field.config';
 
 interface CrisprFieldConfig {
   controlType: ControlType;
@@ -49,6 +50,7 @@ type AnyFieldConfig = CrisprFieldConfig
   | TextareaFieldConfig
   | CheckboxFieldConfig
   | DatepickerFieldConfig
+  | SliderFieldConfig
   | HeadingConfig
   | ButtonConfig;
 
@@ -58,10 +60,11 @@ enum ControlType {
   TEXTAREA = 'textarea',
   CHECKBOX = 'checkbox',
   SELECT = 'select',
-  BUTTON = 'button',
   GROUP = 'group',
   GROUP_LIST = 'groupList',
   DATEPICKER = 'datepicker',
+  SLIDER = 'slider',
+  BUTTON = 'button',
   HEADING = 'heading'
 }
 

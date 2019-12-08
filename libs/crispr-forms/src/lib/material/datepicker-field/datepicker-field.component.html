@@ -14,9 +14,15 @@
       [min]="config.min"
       [max]="config.max"
       [matDatepicker]="picker"
+      [matDatepickerFilter]="config.datepickerFilter"
       [placeholder]="config.placeholder">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
+    <mat-datepicker
+      [touchUi]="config.touchUi"
+      [startView]="config.startView || 'month'"
+      [startAt]="config.startAt"
+      #picker>
+    </mat-datepicker>
   </mat-form-field>
 </crispr-field-container>
 

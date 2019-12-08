@@ -13,6 +13,8 @@ import { FormGroupComponent } from './form-group/form-group.component';
 import { FormGroupListComponent } from './form-group-list/form-group-list.component';
 // directives
 import { CrisprFieldDirective } from './field.directive';
+import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { GestureConfig } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -33,6 +35,7 @@ import { CrisprFieldDirective } from './field.directive';
   entryComponents: [
     FormGroupComponent,
     FormGroupListComponent
-  ]
+  ],
+
 })
 export class CrisprFormsModule { }

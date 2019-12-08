@@ -25,12 +25,12 @@ import { SelectFieldComponent } from './select-field/select-field.component';
 import { AutocompleteFieldComponent } from './autocomplete-field/autocomplete-field.component';
 import { CheckboxFieldComponent } from './checkbox-field/checkbox-field.component';
 import { TextareaFieldComponent } from './textarea-field/textarea-field.component';
-import { ButtonComponent } from './raised-button/raised-button.component';
+import { ButtonComponent } from './button/button.component';
 import { DatepickerFieldComponent } from './datepicker-field/datepicker-field.component';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { HeadingComponent } from './heading/heading.component';
 import { InfoComponent } from './info/info.component';
-// import { MatNativeDateModule } from '@angular/material';
+import { SliderFieldComponent } from './slider-field/slider-field.component';
 
 const MAT_DESIGN_MODULES = [
   MatIconModule,
@@ -58,12 +58,14 @@ const CRISPR_FIELDS = [
   CheckboxFieldComponent,
   TextareaFieldComponent,
   DatepickerFieldComponent,
+  SliderFieldComponent,
   ButtonComponent,
-  HeadingComponent
+  HeadingComponent,
 ];
 @NgModule({
   imports: [
     CommonModule,
+
     ReactiveFormsModule,
     FormValidationHandlerModule,
     ...MAT_DESIGN_MODULES,
@@ -73,8 +75,7 @@ const CRISPR_FIELDS = [
     ...CRISPR_FIELDS
   ],
   declarations: [
-    CRISPR_FIELDS,
-    HeadingComponent,
+    ...CRISPR_FIELDS,
     InfoComponent,
   ],
   entryComponents: CRISPR_FIELDS
