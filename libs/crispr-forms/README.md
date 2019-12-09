@@ -32,7 +32,8 @@ More fields coming soon!
 
 CRISPR Forms has a few dependencies. First you'll need Angular Material. Usually you can just run `ng add @angular/material`. Find installation docs [here](https://material.angular.io/guide/getting-started).
 
-If you want drag support for mat-slider and mat-slide-toggle you'll have to provide `HAMMER_GESTURE_CONFIG` in your root app module like this:
+In some scenarios you might have to provide `HAMMER_GESTURE_CONFIG` in your root app module, if you want drag support for mat-slider and mat-slide-toggle.
+
 ```typescript
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
