@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { FormConfig } from '../models';
+import { FieldContainerComponent } from '../field-container/field-container.component';
 
 @Component({
   selector: 'crispr-form-group',
@@ -8,14 +9,16 @@ import { FormConfig } from '../models';
   styleUrls: ['./form-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormGroupComponent implements OnInit {
+export class FormGroupComponent extends FieldContainerComponent implements OnInit {
 
-  @Input() config: FormConfig;
+  // @Input() config: FormConfig;
 
   group: FormGroup;
   subGroup: AbstractControl;
 
-  constructor() { }
+  constructor() {
+    super();
+  }
 
   ngOnInit() {
     this.subGroup = this.group.get(this.config.controlName);
