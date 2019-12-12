@@ -11,7 +11,7 @@ import { FieldContainerComponent } from '../field-container/field-container.comp
 })
 export class FormGroupComponent extends FieldContainerComponent implements OnInit {
 
-  // @Input() config: FormConfig;
+  @Input() config: FormConfig;
 
   group: FormGroup;
   subGroup: AbstractControl;
@@ -22,5 +22,6 @@ export class FormGroupComponent extends FieldContainerComponent implements OnIni
 
   ngOnInit() {
     this.subGroup = this.group.get(this.config.controlName);
+    this.showField = this.connectShowField(this.group, this.config);
   }
 }

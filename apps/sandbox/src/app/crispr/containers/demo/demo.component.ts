@@ -10,6 +10,9 @@ import { Moment } from 'moment';
   styleUrls: ['./demo.component.scss']
 })
 export class DemoComponent implements OnInit {
+  value = {
+    // textInput: 'hello'
+  };
 
   config: FormConfig = {
     controlType: ControlType.GROUP,
@@ -39,7 +42,6 @@ export class DemoComponent implements OnInit {
 
         },
         showField: ( form, config) => {
-          console.log(form, config);
           return form.get('textInput').valueChanges.pipe(
             map( inputValue => inputValue === 'hello')
           )
@@ -52,6 +54,40 @@ export class DemoComponent implements OnInit {
             validators: [Validators.required, Validators.minLength(5)],
           }
         ]
+      },
+      {
+        controlType: ControlType.GROUP_LIST,
+        label: 'I am a list of form groups',
+        controlName: 'formArray',
+        itemLabelBuilder: (index: number) => {
+          return `This is item number ${index}`;
+        },
+        showField: ( form, config) => {
+          return form.get('textInput').valueChanges.pipe(
+            map( inputValue => inputValue === 'hello')
+          )
+        },
+        minListLength: 0,
+        itemConfig: {
+          controlType: ControlType.GROUP,
+          controlName: 'arrayGroup',
+          fields: [
+            // configuration will create an input field in the form with the following configuration
+            {
+              controlType: ControlType.INPUT,
+              label: 'Nested text input',
+              controlName: 'arrayTextInput',
+              placeholder: 'I am a text input in a nested form group',
+            },
+            {
+              controlType: ControlType.INPUT,
+              label: 'Nested number input',
+              inputType: 'number',
+              controlName: 'arrayNumberInput',
+              placeholder: 'I am a number input in a nest form group',
+            },
+          ]
+        },
       },
       {
         controlType: ControlType.INPUT,

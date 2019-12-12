@@ -32,10 +32,7 @@ export interface Info {
   tooltipPosition?: TooltipPosition;
   iconName?:string;
 }
-interface FormConfig {
-  controlType?: ControlType;
-  controlName: string;
-  label?: string;
+interface FormConfig extends CrisprFieldConfig {
   errorDictionary?: ErrorDictionary;
   autocomplete?: 'off' | 'on';
   fields: AnyFieldConfig[];

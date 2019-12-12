@@ -1,7 +1,11 @@
 <!-- <crispr-field-container
   [config]="config"
   [group]="group"> -->
-  <div [formGroup]="group">
+  <div
+    *ngIf="showField | async"
+    [ngClass]="config.classes"
+    [class.inline-field]="inlineField"
+    [formGroup]="group">
     <div
       [formGroupName]="config.controlName">
       <ng-container

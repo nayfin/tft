@@ -1,16 +1,18 @@
 
-<crispr-field-container
-  [config]="config"
+<div
+  *ngIf="showField | async"
+  [ngClass]="config.classes"
+  [class.inline-field]="inlineField"
   [formGroup]="group">
-
-  <div [formArrayName]="config.controlName">
+  <h3 *ngIf="config.label" class="mat-h3">{{config.label}} </h3>
+  <div  [formArrayName]="config.controlName">
     <!-- TODO: add sortBy function -->
     <div *ngFor="let control of this.formArray.controls; let i = index;">
       <!-- TODO: use content projection to allow custom item label component -->
       <span class="mat-h3" *ngIf="config.itemLabelBuilder"> {{  config.itemLabelBuilder(i) }} </span>
       <button
         mat-icon-button
-        *ngIf="i + 1 > minListLength">
+        *ngIf="(i + 1) > minListLength">
         <mat-icon (click)="deleteGroup(i)">delete</mat-icon>
       </button>
       <div
@@ -32,4 +34,4 @@
     {{addItemLabel}}
   </button>
 
-</crispr-field-container>
+</div>

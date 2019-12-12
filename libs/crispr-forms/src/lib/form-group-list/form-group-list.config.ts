@@ -5,4 +5,5 @@ export interface FormGroupListConfig extends CrisprFieldConfig {
   addItemLabel?: string;
   itemLabelBuilder?: (index: number) => string;
   minListLength?: number;
+  initialListItemCount?: number;
 }

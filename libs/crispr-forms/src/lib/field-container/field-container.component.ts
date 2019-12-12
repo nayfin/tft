@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { CrisprFieldConfig } from '../models';
+import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy, HostBinding } from '@angular/core';
+import { CrisprFieldConfig, AnyFieldConfig } from '../models';
 import { Observable, of, Subscription } from 'rxjs';
 import { FormGroup, AbstractControl } from '@angular/forms';
-import { tap } from 'rxjs/operators';
+import { tap, shareReplay, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'crispr-field-container',
@@ -17,6 +17,8 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
   @Input() group: FormGroup;
   // boolean whether field-container is inline
   @Input() inlineField = false;
+
+  @HostBinding('style.display') display: string;
   // used to determine whether or not field should be shown
   showField: Observable<boolean>;
   alignFormWithView$: Observable<boolean>;
@@ -52,12 +54,20 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
    */
   connectShowField(group: FormGroup, config: CrisprFieldConfig = null) {
     const control = group.get(config.controlName);
+
+    // console.log('connectingShowField', config.showField)
+
     // If the showField function exists on the field config then call it with the showFieldConfig
     // as a parameter otherwise return an observable of true.
     return config.showField && config.showField instanceof Function
       ? config.showField(group, config.showFieldConfig || null).pipe(
+        startWith(false),
         // This enables/disables control when when it is shown/hidden keeping form form value inline with view
         tap(this.alignFormWithView(control)),
+        tap(showField => {
+          console.log({showField});
+          this.display = showField ? 'block' : 'none';
+        })
       )
       : of(true);
   }
@@ -69,9 +79,12 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
    */
   alignFormWithView(control: AbstractControl) {
     return ((shouldShowField: boolean) => {
+      // console.log('aligning form')
       if (!shouldShowField) {
+        // this.display = 'none';
         control.disable();
       } else if (shouldShowField) {
+        // this.display = 'block';
         control.enable();
       }
     });
