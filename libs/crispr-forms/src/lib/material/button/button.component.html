@@ -5,6 +5,7 @@
     mat-button
     [ngClass]="matButtonClass"
     [color]="config.color"
+    [disabled]="config.disabledOnInvalidForm && !(formValid$ | async)"
     type="submit">
     {{ config.label }}
     <mat-icon *ngIf="config.icon">

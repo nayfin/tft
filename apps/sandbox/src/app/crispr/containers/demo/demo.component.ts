@@ -30,7 +30,7 @@ export class DemoComponent implements OnInit {
         },
         controlName: 'textInput',
         placeholder: 'I am a placeholder in a text input',
-        validators: [Validators.required, Validators.minLength(5)],
+        // validators: [Validators.required, Validators.minLength(5)],
       },
       {
         controlType: ControlType.GROUP,
@@ -49,7 +49,7 @@ export class DemoComponent implements OnInit {
             controlType: ControlType.INPUT,
             controlName: 'subTextInput',
             placeholder: 'I am a placeholder in a NESTED text input',
-            validators: [Validators.required, Validators.minLength(5)],
+            // validators: [Validators.required, Validators.minLength(5)],
           }
         ]
       },
@@ -80,7 +80,6 @@ export class DemoComponent implements OnInit {
         },
         appearance: 'outline',
         color: 'accent'
-
         // validators: [Validators.required],
       },
       {
@@ -208,6 +207,7 @@ export class DemoComponent implements OnInit {
       },
       {
         controlType: ControlType.BUTTON,
+        disabledOnInvalidForm: true,
         controlName: 'button',
         buttonType: 'flat',
         label: 'I AM A SUBMIT BUTTON',
