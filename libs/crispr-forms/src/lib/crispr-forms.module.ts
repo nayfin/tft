@@ -5,16 +5,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module'
 
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
-import { MatMomentDateModule } from "@angular/material-moment-adapter";
 
 // components
-import { CrisprFormComponent } from './form.component';
+import { CrisprFormComponent } from './form/form.component';
 import { FormGroupComponent } from './form-group/form-group.component';
 import { FormGroupListComponent } from './form-group-list/form-group-list.component';
 // directives
 import { CrisprFieldDirective } from './field.directive';
-import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import { GestureConfig } from '@angular/material';
 
 @NgModule({
   imports: [

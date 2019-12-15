@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormConfig } from './models';
-import { buildFormGroupFromConfig } from './form.helpers';
+import { FormConfig } from '../models';
+import { buildFormGroupFromConfig } from '../form.helpers';
 @Component({
   selector: 'crispr-form',
   styleUrls: ['form.component.scss'],
