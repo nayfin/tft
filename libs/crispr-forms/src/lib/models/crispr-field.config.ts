@@ -15,6 +15,7 @@ interface CrisprFieldConfig {
   label?: string;
   placeholder?: string;
   info?: Info;
+  // heading?:
   classes?: string[];
   appearance?: MatFormFieldAppearance;
   color?: ThemePalette;
@@ -32,10 +33,11 @@ export interface Info {
   tooltipPosition?: TooltipPosition;
   iconName?:string;
 }
+
 interface FormConfig {
   controlType?: ControlType;
-  controlName: string;
-  label?: string;
+  controlName?: string;
+  classes?: string[];
   errorDictionary?: ErrorDictionary;
   autocomplete?: 'off' | 'on';
   fields: AnyFieldConfig[];

@@ -158,6 +158,7 @@ function getValueChanges(group: FormGroup, controlName: string) {
     return control.valueChanges;
   }
 /**
+ *  TODO: move to utils library after library is built
  *  Allows developer to pass an array of operators into the pipe of an Observable.
  *  Useful for creating function with a variable amount of operators to be run
  * @param observable the observable to pass the operators to

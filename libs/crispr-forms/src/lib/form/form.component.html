@@ -1,5 +1,6 @@
 <form
   class="crispr-form"
+  [ngClass]="config.classes"
   [formGroup]="form"
   (ngSubmit)="handleSubmit()"
   [autocomplete]="config.autocomplete || 'on'"
