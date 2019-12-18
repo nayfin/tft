@@ -21,6 +21,11 @@ export class DemoComponent implements OnInit {
     fields: [
       // a basic input field in the form with the following configuration
       {
+        heading: {
+          label: 'Heading for text input',
+          info: { content: 'some info'}
+        },
+        buttonType: 'flat',
         controlType: ControlType.INPUT,
         label: 'I am a label on a text input',
         info: {

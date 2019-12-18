@@ -12,10 +12,10 @@ import { SliderFieldConfig } from './slider-field.config';
 interface CrisprFieldConfig {
   controlType: ControlType;
   controlName?: string;
+  heading?: HeadingConfig;
   label?: string;
   placeholder?: string;
   info?: Info;
-  // heading?:
   classes?: string[];
   appearance?: MatFormFieldAppearance;
   color?: ThemePalette;

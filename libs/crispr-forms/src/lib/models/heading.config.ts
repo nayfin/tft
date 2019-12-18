@@ -1,7 +1,5 @@
 import { CrisprFieldConfig } from '../models';
-// TODO: We may not need this
-export interface HeadingConfig extends CrisprFieldConfig {
-  // labelPosition: 'before' | 'after';
-  // // TODO: @david I think we might be able to get rid of this after changing 'text' to 'label'
-  // inline: boolean;
-}
+// This is done different from the rest of the fields because
+// when we use the heading inside of a field we don't want to have to
+// pass a controlType
+export type HeadingConfig = Partial<CrisprFieldConfig>;

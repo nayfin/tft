@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CrisprFieldConfig } from '../../models';
+import { Component, OnInit, Input } from '@angular/core';
+import { HeadingConfig } from '../../models';
 
 @Component({
   selector: 'crispr-heading',
@@ -7,7 +7,7 @@ import { CrisprFieldConfig } from '../../models';
   styleUrls: ['./heading.component.scss']
 })
 export class HeadingComponent implements OnInit {
-  config: CrisprFieldConfig;
+  @Input() config: HeadingConfig;
 
   constructor() { }
 

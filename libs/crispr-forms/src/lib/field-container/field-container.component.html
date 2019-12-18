@@ -4,6 +4,11 @@
   [class.inline-field]="inlineField"
   class="field-container">
 
+  <crispr-heading
+    *ngIf="config.heading"
+    [config]="config.heading">
+  </crispr-heading>
+
   <ng-content>
   </ng-content>
 
