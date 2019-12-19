@@ -7,5 +7,5 @@ export * from './datepicker-field.config';
 export * from './button.config';
 export * from './heading.config';
 export * from './slider-field.config';
-
+export * from './form-group-list.config';
 export * from './crispr-field.config';

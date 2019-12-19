@@ -2,50 +2,50 @@ import { FormGroup, ValidatorFn } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { TooltipPosition, ThemePalette, MatFormFieldAppearance } from '@angular/material';
 import { ErrorDictionary } from '@tft/form-validation-handler';
-import { AutocompleteFieldConfig } from '../models';
-import { FormGroupListConfig } from '../form-group-list/form-group-list.config';
 import { ComputeFieldConfig, CheckControlConfig, CheckControlsConfig } from '../form.helpers';
 import { SelectFieldConfig, HeadingConfig, ButtonConfig, DatepickerFieldConfig,
-  InputFieldConfig, CheckboxFieldConfig, TextareaFieldConfig } from '../models';
+  InputFieldConfig, CheckboxFieldConfig, TextareaFieldConfig,
+  AutocompleteFieldConfig, FormGroupListConfig  } from '../models';
 import { SliderFieldConfig } from './slider-field.config';
 
-interface CrisprFieldConfig {
+/**
+ * The base interface for all the fields in the form's config
+ */
+export interface CrisprFieldConfig {
   controlType: ControlType;
-  controlName?: string;
-  heading?: HeadingConfig;
   label?: string;
   placeholder?: string;
   info?: Info;
   classes?: string[];
-  appearance?: MatFormFieldAppearance;
-  color?: ThemePalette;
-  computeField?: ( group: FormGroup, config: any) => Observable<any>;
-  computeFieldConfig?: ComputeFieldConfig | any;
-  // function that returns an observable that resolves to a boolean
-  hideDisabled?: boolean;
-  disabledCallback?: (group: FormGroup, config?: any ) => Observable<boolean>;
-  disabledCallbackConfig?: CheckControlConfig | CheckControlsConfig | any; // any is required for user defined configs
-  validators?: ValidatorFn[];
-  value?: string | number;
 }
 
+export interface ControlFieldConfig extends CrisprFieldConfig {
+  controlName: string;
+  value?: string | number;
+  validators?: ValidatorFn[];
+  computeField?: ( group: FormGroup, config: any) => Observable<any>;
+  // TODO: Determine if this is necessary
+  computeFieldConfig?: ComputeFieldConfig | any;
+  disabledCallback?: (group: FormGroup, config?: any ) => Observable<boolean>;
+  disabledCallbackConfig?: CheckControlConfig | CheckControlsConfig | any; // any is required for user defined configs
+  hideDisabled?: boolean; // defaults to false
+  heading?: HeadingConfig;
+  appearance?: MatFormFieldAppearance;
+  color?: ThemePalette;
+}
 export interface Info {
   content: string;
   tooltipPosition?: TooltipPosition;
   iconName?:string;
 }
 
-interface FormConfig {
-  controlType?: ControlType;
-  controlName?: string;
-  classes?: string[];
+export interface FormConfig extends ControlFieldConfig{
   errorDictionary?: ErrorDictionary;
   autocomplete?: 'off' | 'on';
   fields: AnyFieldConfig[];
 }
 
-type AnyFieldConfig = CrisprFieldConfig
-  | SelectFieldConfig
+export type AnyFieldConfig = SelectFieldConfig
   | InputFieldConfig
   | FormGroupListConfig
   | FormConfig
@@ -57,7 +57,7 @@ type AnyFieldConfig = CrisprFieldConfig
   | HeadingConfig
   | ButtonConfig;
 
-enum ControlType {
+export enum ControlType {
   AUTOCOMPLETE = 'autocomplete',
   INPUT = 'input',
   TEXTAREA = 'textarea',
@@ -71,5 +71,3 @@ enum ControlType {
   HEADING = 'heading',
   DIVIDER = 'divider'
 }
-
-export {ControlType, AnyFieldConfig, CrisprFieldConfig, FormGroupListConfig, FormConfig};

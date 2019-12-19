@@ -1,7 +1,7 @@
-import { CrisprFieldConfig } from '../models';
+import { ControlFieldConfig } from '../models';
 import { Moment } from 'moment';
 
-export interface DatepickerFieldConfig extends CrisprFieldConfig {
+export interface DatepickerFieldConfig extends ControlFieldConfig {
   min?: Date;
   max?: Date;
   startView?: 'month' | 'year' | 'multi-year';

@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormArray } from '@angular/forms';
 
-import { FormGroupListConfig } from './form-group-list.config';
+import { FormGroupListConfig } from '../models';
 import { createControlForType } from '../form.helpers';
 
 @Component({

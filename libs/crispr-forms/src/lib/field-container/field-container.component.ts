@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { CrisprFieldConfig } from '../models';
+import { CrisprFieldConfig, ControlFieldConfig } from '../models';
 import { Observable, of, Subscription } from 'rxjs';
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { tap, startWith, shareReplay } from 'rxjs/operators';
@@ -12,7 +12,7 @@ import { tap, startWith, shareReplay } from 'rxjs/operators';
 })
 export class FieldContainerComponent implements OnInit, OnDestroy {
   // the configuration object for the field
-  @Input() config: CrisprFieldConfig;
+  @Input() config: ControlFieldConfig;
   // the parent formGroup
   @Input() group: FormGroup;
   // boolean whether field-container is inline
@@ -61,7 +61,7 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
    * @param group used to get valueChanges from control
    * @param config configuration object used to
    */
-  connectDisabledCallback(group: FormGroup, config: CrisprFieldConfig = null) {
+  connectDisabledCallback(group: FormGroup, config: ControlFieldConfig = null) {
     const control = group.get(config.controlName);
     // If the disabled$ function exists on the field config then call it with the disabledCallbackConfig
     // as a parameter otherwise return an observable of true.

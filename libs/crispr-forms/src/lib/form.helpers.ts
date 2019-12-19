@@ -16,7 +16,8 @@ import {
   FormConfig,
   ControlType,
   FormGroupListConfig,
-  CrisprFieldConfig
+  CrisprFieldConfig,
+  ControlFieldConfig
 } from './models';
 import {
   from,
@@ -211,7 +212,7 @@ export function observablifyOptions(
  */
 export function buildFormGroupFromConfig(config: FormConfig, value: any = null, group: FormGroup = new FormGroup({}) ) {
 
-  config.fields.forEach( (controlConfig: AnyFieldConfig) => {
+  config.fields.forEach( (controlConfig: ControlFieldConfig) => {
     // if it's not a button config
     if (controlConfig.controlType !== ControlType.BUTTON) {
       // then add a control to the group using the controlName from configuration
@@ -241,7 +242,7 @@ export function createControlForType(controlConfig: AnyFieldConfig, value: any) 
     ? new FormArray([], (controlConfig as FormGroupListConfig).validators)
     : new FormControl(
       isRealValue(value) ? value : null,
-      (controlConfig as CrisprFieldConfig).validators || null
+      (controlConfig as ControlFieldConfig).validators || null
     );
   // if it was a GROUP_LIST and it had initial values passed in, add the values to the form array
   if (controlConfig.controlType === ControlType.GROUP_LIST && Array.isArray(value)) {

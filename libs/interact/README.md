@@ -9,9 +9,8 @@ This is an angular wrapper for the interactjs library. We aim to build a versati
 
 ## Installation
 
-`npm i interactjs@^1.6.0 --save`
+`npm i interactjs@~1.6.0 --save`
 Make sure to version lock interact to < 1.7.0, newer versions have a TypeScript compatibility build issue.
-`npm i @tft/interact --save`
 
 ## Usage
 
@@ -39,6 +38,6 @@ dragConfig = {
 ```
 
 ### COMING SOON!
-- intseract gesture support
+- interact gesture support
 - Stackblitz Examples
 - Docs

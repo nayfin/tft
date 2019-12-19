@@ -1,6 +1,6 @@
-import { CrisprFieldConfig } from '../models';
+import { ControlFieldConfig } from '../models';
 // TODO: We may not need this
-export interface SliderFieldConfig extends CrisprFieldConfig {
+export interface SliderFieldConfig extends ControlFieldConfig {
   displayWith?: (value: number) => string | number;
   invert?: boolean;
   displayLimits?: boolean;

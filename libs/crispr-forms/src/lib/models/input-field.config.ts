@@ -1,6 +1,6 @@
-import { CrisprFieldConfig } from '../models';
+import { ControlFieldConfig } from '../models';
 
-export interface InputFieldConfig extends CrisprFieldConfig {
+export interface InputFieldConfig extends ControlFieldConfig {
   inputType?: InputType;
 }
 

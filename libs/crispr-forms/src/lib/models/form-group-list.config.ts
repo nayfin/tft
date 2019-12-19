@@ -1,6 +1,6 @@
-import { CrisprFieldConfig, FormConfig } from '../models';
+import { ControlFieldConfig, FormConfig } from './';
 
-export interface FormGroupListConfig extends CrisprFieldConfig {
+export interface FormGroupListConfig extends ControlFieldConfig {
   itemConfig: FormConfig;
   addItemLabel?: string;
   itemLabelBuilder?: (index: number) => string;
