@@ -22,12 +22,12 @@ export class CrisprFormComponent implements OnInit {
     // build out the form, not we pass in the form as the third argument and the function modifies it
     // TODO: code smell, a function modifies the state of one of its arguments (this.form). There should be a better way to do this
     buildFormGroupFromConfig(this.config, this.value, this.form);
-    // If values are passed in trigger onChanges on each control so that showField controlled fields respond appropriately
-    if (this.value) {
-      setTimeout( () => {
-        this.triggerOnChangesForChildren(this.form);
-      });
-    }
+    // If values are passed in trigger onChanges on each control so that disabled$ controlled fields respond appropriately
+    // if (this.value) {
+    //   setTimeout( () => {
+    //     this.triggerOnChangesForChildren(this.form);
+    //   });
+    // }
   }
 
   handleSubmit() {

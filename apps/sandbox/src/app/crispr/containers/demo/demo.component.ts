@@ -11,6 +11,9 @@ import { Moment } from 'moment';
 })
 export class DemoComponent implements OnInit {
 
+  value = {
+    textInput: 'hell'
+  }
   config: FormConfig = {
     controlType: ControlType.GROUP,
     controlName: 'myForm',
@@ -38,29 +41,8 @@ export class DemoComponent implements OnInit {
         // validators: [Validators.required, Validators.minLength(5)],
       },
       {
-        controlType: ControlType.GROUP,
-        controlName: 'dynamicallyShownSubGroup',
-        showFieldConfig: {
-
-        },
-        showField: ( form, config) => {
-          console.log(form, config);
-          return form.get('textInput').valueChanges.pipe(
-            map( inputValue => inputValue === 'hello')
-          )
-        },
-        fields: [
-          {
-            controlType: ControlType.INPUT,
-            controlName: 'subTextInput',
-            placeholder: 'I am a placeholder in a NESTED text input',
-            // validators: [Validators.required, Validators.minLength(5)],
-          }
-        ]
-      },
-      {
         controlType: ControlType.INPUT,
-        label: 'I am a label on a number input',
+        label: 'I am bill a label on a number input',
         controlName: 'numberInput',
         inputType: 'number',
         placeholder: 'I am a placeholder in a number input',
@@ -70,7 +52,13 @@ export class DemoComponent implements OnInit {
           tooltipPosition: 'below'
         },
         appearance: 'outline',
-        color: 'accent'
+        color: 'accent',
+        // hideDisabled: true,
+        disabledCallback: ( form, config) => {
+          return form.get('textInput').valueChanges.pipe(
+            map( inputValue => inputValue !== 'hello')
+          )
+        }
       },
       {
         controlType: ControlType.TEXTAREA,
@@ -230,6 +218,7 @@ export class DemoComponent implements OnInit {
   }
 
   handleSubmit(form: FormGroup) {
-    console.log({form});
+    const rawValue = form.getRawValue();
+    console.log({rawValue, form});
   }
 }

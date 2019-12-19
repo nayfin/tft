@@ -22,8 +22,9 @@ interface CrisprFieldConfig {
   computeField?: ( group: FormGroup, config: any) => Observable<any>;
   computeFieldConfig?: ComputeFieldConfig | any;
   // function that returns an observable that resolves to a boolean
-  showField?: (group: FormGroup, config?: any ) => Observable<boolean>;
-  showFieldConfig?: CheckControlConfig | CheckControlsConfig | any; // any is required for user defined configs
+  hideDisabled?: boolean;
+  disabledCallback?: (group: FormGroup, config?: any ) => Observable<boolean>;
+  disabledCallbackConfig?: CheckControlConfig | CheckControlsConfig | any; // any is required for user defined configs
   validators?: ValidatorFn[];
   value?: string | number;
 }

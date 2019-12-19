@@ -1,7 +1,7 @@
 
 # tft/interact
 
-## WARNING: THIS LIBRARY IS IN BETA 
+## WARNING: THIS LIBRARY IS IN BETA
 Our API is stabilizing but changes could happen at any time
 
 ## Description
@@ -18,7 +18,7 @@ Make sure to version lock interact to < 1.7.0, newer versions have a TypeScript 
 ### Draggables
 
 ```html
-<div tftDraggable 
+<div tftDraggable
   dragConfig="dragConfig"
   [x]="x"
   [y]="y">
@@ -26,7 +26,7 @@ Make sure to version lock interact to < 1.7.0, newer versions have a TypeScript 
 ```
 
 Any config that will work with with interactjs will work here
-```typescript
+```ts
 dragConfig = {
   enabled = true,
   lockAxis:  'y'
