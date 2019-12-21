@@ -2,7 +2,7 @@
 #!/bin/bash
 package=$1
 # TODO: learn how
-if [ "$package" != "interact" ] && [ "$package" != "crispr-forms" ] && [ "$package" != "form-validation-handler" ]
+if [ "$package" != "interact" ] && [ "$package" != "crispr-forms" ] && [ "$package" != "form-validation-handler" ] && [ "$package" != "core" ]
 then
   echo "Not a valid package to release, try 'interact', 'crispr-forms', or 'form-validation-handler'"
   exit 1

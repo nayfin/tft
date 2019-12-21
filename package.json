@@ -14,6 +14,7 @@
     "release:interact": "bash ./scripts/release.sh interact",
     "release:crispr-forms": "ng build form-validation-handler && bash ./scripts/release.sh crispr-forms",
     "release:form-validation-handler": "bash ./scripts/release.sh form-validation-handler",
+    "release:core": "ng build ui-imports && bash ./scripts/release.sh core",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",
     "affected:build": "nx affected:build",

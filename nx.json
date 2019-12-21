@@ -36,10 +36,10 @@
     "form-validation-handler": {
       "tags": []
     },
-    "ui-imports": {
-      "tags": []
-    },
     "core": {
+      "implicitDependencies": ["ui-imports"]
+    },
+    "ui-imports": {
       "tags": []
     }
   }

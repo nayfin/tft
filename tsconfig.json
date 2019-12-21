@@ -22,8 +22,8 @@
       "@tft/form-validation-handler": [
         "libs/form-validation-handler/src/index.ts"
       ],
-      "@tft/ui-imports": ["libs/ui-imports/src/index.ts"],
-      "@tft/core": ["libs/core/src/index.ts"]
+      "@tft/core": ["libs/core/src/index.ts"],
+      "@tft/ui-imports": ["libs/ui-imports/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
