@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'ng-root',
@@ -6,5 +7,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'documentation';
+  @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;
+  title = 'app';
+
+  linksToExamples = [
+    {
+      title: 'Home',
+      path: 'home',
+      description: `Overview of search components`,
+    }
+  ];
+
+  onLinkSelected(item: any) {
+    this.sidenav.close();
+  }
 }

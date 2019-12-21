@@ -34,6 +34,8 @@ import { InfoComponent } from './info/info.component';
 import { SliderFieldComponent } from './slider-field/slider-field.component';
 import { DividerComponent } from './divider/divider.component';
 
+// TODO: Should we imort UI library?
+// Will the tree shaker shake the unused modules?
 const MAT_DESIGN_MODULES = [
   MatIconModule,
   MatAutocompleteModule,

@@ -3,9 +3,19 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase:  {
+    apiKey: 'AIzaSyClPsiH6DFJc_XvltxqrhLeFRWVm3jUZoo',
+    authDomain: 'tft-library.firebaseapp.com',
+    databaseURL: 'https://tft-library.firebaseio.com',
+    projectId: 'tft-library',
+    storageBucket: 'tft-library.appspot.com',
+    messagingSenderId: '113394856035'
+  },
+  // TODO: get version for each project
+  // e.g. version: { CRISPR_FORMS: require('../../crispr-forms/package.json').version };
+  // VERSION: require('../../package.json').version
 };
-
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

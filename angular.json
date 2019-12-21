@@ -83,10 +83,7 @@
               "apps/sandbox/tsconfig.app.json",
               "apps/sandbox/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/sandbox/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/sandbox/**"]
           }
         },
         "test": {
@@ -120,13 +117,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/sandbox-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/sandbox-e2e/**"
-            ]
+            "tsConfig": ["apps/sandbox-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/sandbox-e2e/**"]
           }
         }
       }
@@ -144,9 +136,7 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": [
-              "apps/api/src/assets"
-            ]
+            "assets": ["apps/api/src/assets"]
           },
           "configurations": {
             "production": {
@@ -175,10 +165,7 @@
               "apps/api/tsconfig.app.json",
               "apps/api/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/api/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/api/**"]
           }
         },
         "test": {
@@ -203,10 +190,7 @@
               "libs/api-interfaces/tsconfig.lib.json",
               "libs/api-interfaces/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/api-interfaces/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/api-interfaces/**"]
           }
         },
         "test": {
@@ -243,6 +227,7 @@
               "apps/documentation/src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "apps/documentation/src/styles.scss"
             ],
             "scripts": []
@@ -298,10 +283,7 @@
               "apps/documentation/tsconfig.app.json",
               "apps/documentation/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/documentation/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/documentation/**"]
           }
         },
         "test": {
@@ -335,13 +317,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/documentation-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/documentation-e2e/**"
-            ]
+            "tsConfig": ["apps/documentation-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/documentation-e2e/**"]
           }
         }
       }
@@ -366,10 +343,7 @@
               "libs/interact/tsconfig.lib.json",
               "libs/interact/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/interact/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/interact/**"]
           }
         },
         "test": {
@@ -407,10 +381,7 @@
               "libs/crispr-forms/tsconfig.lib.json",
               "libs/crispr-forms/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/crispr-forms/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/crispr-forms/**"]
           }
         },
         "test": {
@@ -460,6 +431,75 @@
             "jestConfig": "libs/form-validation-handler/jest.config.js",
             "tsConfig": "libs/form-validation-handler/tsconfig.spec.json",
             "setupFile": "libs/form-validation-handler/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "ui-imports": {
+      "projectType": "library",
+      "root": "libs/ui-imports",
+      "sourceRoot": "libs/ui-imports/src",
+      "prefix": "tft",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/ui-imports/tsconfig.lib.json",
+              "libs/ui-imports/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/ui-imports/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/ui-imports/jest.config.js",
+            "tsConfig": "libs/ui-imports/tsconfig.spec.json",
+            "setupFile": "libs/ui-imports/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "core": {
+      "projectType": "library",
+      "root": "libs/core",
+      "sourceRoot": "libs/core/src",
+      "prefix": "tft",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/core/tsconfig.lib.json",
+            "project": "libs/core/ng-package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/tsconfig.lib.json",
+              "libs/core/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/core/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/core/jest.config.js",
+            "tsConfig": "libs/core/tsconfig.spec.json",
+            "setupFile": "libs/core/src/test-setup.ts"
           }
         }
       },
