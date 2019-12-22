@@ -3,7 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'tft-sidenav-navigation',
   templateUrl: './sidenav-navigation.component.html',
-  styleUrls: ['./sidenav-navigation.component.css']
+  styleUrls: ['./sidenav-navigation.component.scss']
 })
 export class SidenavNavigationComponent implements OnInit {
 

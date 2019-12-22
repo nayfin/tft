@@ -125,8 +125,7 @@ export class DemoComponent implements OnInit {
   }
 }
 ```
-
-Better docs are in the works but for now you can check out this [example](https://stackblitz.com/edit/crispr-forms-poc) on StackBlitz of basic usage. We will be expanding on this to give clear examples of usage for each available field and feature in the near future.
+Interactive documentation can be found on Stackblitz [here](https://stackblitz.com/github/nayfin/tft-documentation). We will be expanding on this to give clear examples of usage for each available field and feature in the near future.
 
 ## Upcoming
 

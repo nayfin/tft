@@ -16,6 +16,7 @@
     "release:form-validation-handler": "bash ./scripts/release.sh form-validation-handler",
     "release:ui-imports": "bash ./scripts/release.sh ui-imports",
     "release:core": "ng build ui-imports && bash ./scripts/release.sh core",
+    "release:documentation": "bash ./scripts/documentation.sh",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",
     "affected:build": "nx affected:build",

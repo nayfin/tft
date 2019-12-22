@@ -6,8 +6,8 @@ const routes: Routes = [
   { path: ''    , redirectTo: 'crispr-forms-demo', pathMatch: 'full'},
   {
     path: 'crispr-forms-demo',
-    loadChildren: () => import('./crispr-forms-demo/crispr-forms-demo-routing.module')
-      .then(m => m.CrisprFormsDemoRoutingModule)
+    loadChildren: () => import('./crispr-forms-demo/crispr-forms-demo.module')
+      .then(m => m.CrisprFormsDemoModule)
   },
   { path: '**'  , redirectTo: 'crispr-forms-demo' },
 ];
