@@ -27,7 +27,8 @@ import { CrisprFieldDirective } from './field.directive';
     FormGroupListComponent,
   ],
   exports: [
-    CrisprFormComponent
+    CrisprFormComponent,
+    MaterialModule
   ],
   entryComponents: [
     FormGroupComponent,
