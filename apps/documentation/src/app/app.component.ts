@@ -12,9 +12,9 @@ export class AppComponent {
 
   linksToExamples = [
     {
-      title: 'Home',
-      path: 'home',
-      description: `Overview of search components`,
+      title: 'CRISPR Forms',
+      path: 'crispr-forms-demo',
+      description: `Overview of CRISPR Forms`,
     }
   ];
 
