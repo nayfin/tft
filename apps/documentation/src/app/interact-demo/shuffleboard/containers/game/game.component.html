@@ -1,0 +1,61 @@
+<tft-scoreboard 
+  [redScore]="game.RED.score"
+  [blueScore]="game.BLUE.score">
+
+</tft-scoreboard>
+{{ whosTurn }} {{ turnCount }} 
+<input type="number" step=".1" [formControl]="inertiaResistanceControl">
+<button *ngIf="turnCount > 2" (click)="resetBoard()">RESET BOARD</button>
+<tft-board>
+  <!-- Red Pucks -->
+  <tft-puck 
+    *ngFor="let puck of game[team.RED].pucks | keyvalue; let i = index;"
+    [puck]="puck.value"
+    [team]="team.RED"
+    [key]="puck.key"
+    [whosTurn]="whosTurn"
+    [resistance]="resistance"
+    [turnCount]="turnCount"
+    [index]="i">
+  </tft-puck>
+  <!-- Blue Pucks -->
+  <tft-puck 
+    *ngFor="let puck of game[team.BLUE].pucks | keyvalue; let i = index;"
+    [puck]="puck.value"
+    [team]="team.BLUE"
+    [key]="puck.key"
+    [whosTurn]="whosTurn"
+    [resistance]="resistance"
+    [turnCount]="turnCount"
+    [index]="i">
+  </tft-puck>
+
+  <tft-player-zone 
+    tftDropzone 
+    dropzoneId="'launchZone'"
+    (dragLeave)="checkForFoul($event)"
+    class="a">
+
+    <tft-tray>
+    </tft-tray>
+    
+  </tft-player-zone>
+
+  <tft-target-zone
+    (turnOver)="handleDrop($event)">
+    <tft-target 
+      *ngFor="let target of targets; let i = index;" 
+      [value]="target.value"
+      [pucksInTarget]="target.pucksInTarget"
+      (puckEnter)="updateTargetState(i, 'enter')"
+      (puckLeave)="updateTargetState(i, 'leave')"
+      (scorePoints)="handleScore($event)">
+    </tft-target>
+    <tft-tray></tft-tray>
+    
+  </tft-target-zone>
+
+</tft-board>
+<pre>
+    {{game | json}}
+  </pre>

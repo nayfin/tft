@@ -1,7 +1,7 @@
 <mat-nav-list>
 
-  <mat-accordion *ngFor="let section of sections">
-    <mat-expansion-panel>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let section of sections">
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{section.title}}

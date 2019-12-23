@@ -9,6 +9,11 @@ const routes: Routes = [
     loadChildren: () => import('./crispr-forms-demo/crispr-forms-demo.module')
       .then(m => m.CrisprFormsDemoModule)
   },
+  {
+    path: 'interact-demo',
+    loadChildren: () => import('./interact-demo/interact-demo.module')
+      .then(m => m.InteractDemoModule)
+  },
   { path: '**'  , redirectTo: 'crispr-forms-demo' },
 ];
 
