@@ -5,6 +5,7 @@ import { CrisprFormsDemoRoutingModule } from './crispr-forms-demo-routing.module
 import { OverviewComponent } from './containers/overview/overview.component';
 import { CrisprFormsModule } from '@tft/crispr-forms';
 import { UiImportsModule } from '@tft/ui-imports';
+import { SelectComponent } from './containers/select/select.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { UiImportsModule } from '@tft/ui-imports';
     CrisprFormsDemoRoutingModule
   ],
   declarations: [
-    OverviewComponent
+    OverviewComponent,
+    SelectComponent
   ],
 })
 export class CrisprFormsDemoModule { }

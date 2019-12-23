@@ -24,7 +24,6 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
   subs: Subscription[] = [];
 
   get hideDisabled() {
-    console.log('hide disabled')
     return this.config.hideDisabled === undefined
       ? true
       : this.config.hideDisabled;
@@ -45,7 +44,6 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
       };
       this.subs.push(
         this.config.computeField(this.group, computeFieldConfig).subscribe(),
-        // this.disabled$.subscribe()
       );
     }
   }
@@ -54,10 +52,9 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
     this.subs.forEach(sub => sub.unsubscribe);
   }
   /**
-   * Connects user defined show field function to the the view, so that the UI is shown/hidden
-   * appropriately. It also keeps the form value in line with the view i.e. adds/removes field value
-   * from form value as it is shown/hidden. We call it here because it will effect all form fields and
-   * we have easy access to the form group and field configuration here.
+   * Connects user defined disabledCallback function to the the view, so that the control is enabled/disabled
+   * appropriately. It also keeps the form will hide disabled fields in the UI unless `hideDisabled` is set to
+   * false in the controls config
    * @param group used to get valueChanges from control
    * @param config configuration object used to
    */
@@ -67,11 +64,8 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
     // as a parameter otherwise return an observable of true.
     return config.disabledCallback && config.disabledCallback instanceof Function
       ? config.disabledCallback(group, config.disabledCallbackConfig || null).pipe(
-        // shareReplay(1),
         // This enables/disables control when when it is shown/hidden keeping form form value inline with view
-        // startWith(true),
         tap( (val) => {
-          console.log({val})
           this.alignFormWithView(control)(val);
         })
       )
@@ -85,7 +79,6 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
    */
   alignFormWithView(control: AbstractControl) {
     return ((shouldDisable: boolean) => {
-      console.log({shouldDisable})
       if (shouldDisable) {
         control.disable();
       } else if (!shouldDisable) {

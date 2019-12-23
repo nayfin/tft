@@ -1,17 +1,29 @@
 <mat-nav-list>
-  <mat-list-item 
-    *ngFor="let link of links"
-    [routerLink]="link.path"
-    (click)="onItemClicked(link)">
-    
-    <a matLine> 
-        {{ link.title }}
-      </a>
-      <mat-icon *ngIf="!!link.description"
-        [matTooltip]="link.description || 'Description coming soon!'">
-        info
-      </mat-icon>
 
-    
-  </mat-list-item>
+  <mat-accordion *ngFor="let section of sections">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{section.title}}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{section.subtitle}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-list-item
+        *ngFor="let link of section.links"
+        (click)="onItemClicked(link)">
+
+        <a matLine>
+          {{ link.title }}
+        </a>
+        <mat-icon *ngIf="!!link.description"
+          [matTooltip]="link.description || 'Description coming soon!'">
+          info
+        </mat-icon>
+      </mat-list-item>
+      <tft-sidenav-navigation [sections]="section.subsections" (itemClicked)="onItemClicked($event)">
+      </tft-sidenav-navigation>
+    </mat-expansion-panel>
+  </mat-accordion>
 </mat-nav-list>

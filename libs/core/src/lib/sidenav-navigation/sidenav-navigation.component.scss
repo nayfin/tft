@@ -1,0 +1,6 @@
+mat-expansion-panel {
+  margin: 8px;
+}
+::ng-deep.mat-expansion-panel-content .mat-expansion-panel-body {
+  padding: 0 0 12px;
+}

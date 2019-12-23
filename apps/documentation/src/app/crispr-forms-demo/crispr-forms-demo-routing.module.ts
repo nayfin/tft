@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { OverviewComponent } from './containers/overview/overview.component';
+import { SelectComponent, OverviewComponent } from './containers';
 
 
 const routes: Routes = [
   { path: '', redirectTo: 'overview', pathMatch: 'full'},
   { path: 'overview', component: OverviewComponent},
+  { path: 'select', component: SelectComponent},
   { path: '**', redirectTo: 'overview'},
 ];
 

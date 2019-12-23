@@ -14,7 +14,7 @@ import { CoreModule } from '@tft/core';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,

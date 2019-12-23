@@ -1,17 +1,15 @@
-<!-- TODO: this is weird -->
-<ng-container>
-  <div
-    *ngIf="(disabled$ | async) ? !hideDisabled : true"
-    [ngClass]="config.classes"
-    [class.inline-field]="inlineField"
-    class="field-container">
-    <crispr-heading
-      *ngIf="config.heading"
-      [config]="config.heading">
-    </crispr-heading>
+<div
+  *ngIf="(disabled$ | async) ? !hideDisabled : true"
+  [ngClass]="config.classes"
+  [class.inline-field]="inlineField"
+  class="field-container">
 
-    <ng-content>
-    </ng-content>
+  <crispr-heading
+    *ngIf="config.heading"
+    [config]="config.heading">
+  </crispr-heading>
 
-  </div>
-</ng-container>
+  <ng-content>
+  </ng-content>
+
+</div>
