@@ -187,10 +187,9 @@ export function observablifyOptions(
   config: SelectFieldConfig | AutocompleteFieldConfig,
   group?: FormGroup
 ):  Observable<SelectOption[]> {
-  const {options, reactiveOptionsConfig, emptyOptionsMessage} = config;
-  // TODO: there must be a better way of doing this, not a fan of if or switch solutions though
-  const options$ = reactiveOptionsConfig && options instanceof Function
-  ? options(group, reactiveOptionsConfig)
+  const {options, reactiveOptions, emptyOptionsMessage} = config;
+  const options$ = reactiveOptions && options instanceof Function
+  ? options(group)
   : options instanceof Function
   ? from( (options as OptionsCallback)())
   : Array.isArray(options)

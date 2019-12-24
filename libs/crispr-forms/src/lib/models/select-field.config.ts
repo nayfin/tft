@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 
 export interface SelectFieldConfig extends ControlFieldConfig {
   emptyOptionsMessage?: string;
-  reactiveOptionsConfig: ReactiveOptionsConfig;
+  reactiveOptions?: boolean;
   multiple?: boolean;
   options: OptionsType;
 }
@@ -12,14 +12,10 @@ export interface SelectFieldConfig extends ControlFieldConfig {
 export type OptionsType = SelectOption[] | Observable<SelectOption[]> | OptionsCallback | ReactiveOptionsCallback;
 
 export type OptionsCallback = () => Promise<SelectOption[]>;
-export type ReactiveOptionsCallback =  (group?: FormGroup, config?: ReactiveOptionsConfig) => Observable<SelectOption[]>
+export type ReactiveOptionsCallback =  (group?: FormGroup) => Observable<SelectOption[]>
 export interface SelectOption {
   label: string;
   value: any;
 }
 
-
-export interface ReactiveOptionsConfig {
-  controlNamesToWatch: string[];
-}
 export const DEFAULT_EMPTY_OPTIONS_MESSAGE = 'No Items';

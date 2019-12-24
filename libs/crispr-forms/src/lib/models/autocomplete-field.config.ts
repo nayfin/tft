@@ -1,9 +1,9 @@
-import { OptionsType, SelectOption, ReactiveOptionsConfig, ControlFieldConfig } from '../models';
+import { OptionsType, SelectOption, ControlFieldConfig } from '../models';
 
 export interface AutocompleteFieldConfig extends ControlFieldConfig {
   emptyOptionsMessage?: string;
   options: OptionsType;
-  reactiveOptionsConfig: ReactiveOptionsConfig;
+  reactiveOptions?: boolean;
   filterFunction?: (options: SelectOption[], searchString: string) => SelectOption[];
 }
 
