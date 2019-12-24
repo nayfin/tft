@@ -5,11 +5,11 @@ import { RouterModule } from '@angular/router';
 import { UiImportsModule } from '@tft/ui-imports';
 
 import { HeaderComponent } from './header/header.component';
-import { SidenavNavigationComponent } from './sidenav-navigation/sidenav-navigation.component';
+import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
 
 const CORE_COMPONENTS = [
   HeaderComponent,
-  SidenavNavigationComponent,
+  SidenavListComponent,
 ];
 
 @NgModule({

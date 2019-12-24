@@ -22,8 +22,10 @@
           info
         </mat-icon>
       </mat-list-item>
-      <tft-sidenav-navigation [sections]="section.subsections" (itemClicked)="onItemClicked($event)">
-      </tft-sidenav-navigation>
+      <tft-sidenav-list
+        [sections]="section.subsections"
+        (itemClicked)="onItemClicked($event)">
+      </tft-sidenav-list>
     </mat-expansion-panel>
   </mat-accordion>
 </mat-nav-list>

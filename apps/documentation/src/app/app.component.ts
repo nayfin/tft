@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { SidenavSection } from 'libs/core/src/lib/sidenav-navigation/sidenav-navigation.component';
+import { SidenavSection } from '@tft/core';
 
 @Component({
   selector: 'ng-root',
