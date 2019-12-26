@@ -32,27 +32,7 @@ More fields coming soon!
 
 CRISPR Forms has a few dependencies. First you'll need Angular Material. Usually you can just run `ng add @angular/material`. Find installation docs [here](https://material.angular.io/guide/getting-started).
 
-In some scenarios you might have to provide `HAMMER_GESTURE_CONFIG` in your root app module, if you want drag support for mat-slider and mat-slide-toggle.
-
-```typescript
-import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { GestureConfig } from '@angular/material';
-
-@NgModule({
-  declarations: [AppComponent],
-  imports: [
-    BrowserAnimationsModule,
-  ],
-  // Add HAMMER_GESTURE_CONFIG here
-  providers: [
-    {provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig}
-  ],
-  bootstrap: [AppComponent]
-})
-export class AppModule {}
-```
-Next, you'll need our sister library `npm i --save @tft/form-validation-handler` this enables automatic error handling of invalid fields. There are default messages for all the built in Angular validators, but they can easily overwritten by setting the `errorDictionary` field on the `config` input.
+Next, you'll need our sister library `npm i --save @tft/form-validation-handler` this enables automatic user messages on invalid fields. There are default messages for all the built in Angular validators, but they can easily overwritten by setting the `errorDictionary` field on the `config` input. Custom messages can also be created for custom validators.
 
 ## Usage
 

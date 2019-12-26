@@ -63,7 +63,7 @@ export function checkControlForValues(group: FormGroup, config: CheckControlConf
       })
     );
   } else {
-    // otherwas
+    //
     return of(true);
   }
 }

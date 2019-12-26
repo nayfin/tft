@@ -33,6 +33,18 @@ export class AppComponent {
               path: 'crispr-forms-demo/select'
             }
           ]
+        },
+        {
+          title: 'Reactive API',
+          subtitle: 'Configure fields that react to other field values',
+          description: 'Configure fields that react to other field values',
+          links: [
+            {
+              title: 'Computed Fields',
+              description: `Compute field value to react to other field values in the parent form group`,
+              path: 'crispr-forms-demo/computed-field'
+            }
+          ]
         }
       ]
     },
