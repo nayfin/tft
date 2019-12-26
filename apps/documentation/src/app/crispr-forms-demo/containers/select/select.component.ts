@@ -72,7 +72,6 @@ export class SelectComponent implements OnInit {
   reactiveOptionsConfig: FormConfig = {
     controlType: ControlType.GROUP,
     controlName: 'observableSelectDemo',
-
     fields: [
       {
         controlType: ControlType.SELECT,
@@ -94,13 +93,13 @@ export class SelectComponent implements OnInit {
               if (valueOfWatchedControl === 'a') {
                 // this could easily be an httpClient get request
                 return of([
-                  { label: 'Options set a value 1', value: 'a1'},
-                  { label: 'Options set a value 2', value: 'a2'}
+                  { label: 'a1', value: 'a1'},
+                  { label: 'a2', value: 'a2'}
                 ]);
               } else {
                 return of([
-                  { label: 'Options set b value 1', value: 'b1'},
-                  { label: 'Options set b value 2', value: 'b2'}
+                  { label: 'b1', value: 'b1'},
+                  { label: 'b2', value: 'b2'}
                 ]);
               }
             })

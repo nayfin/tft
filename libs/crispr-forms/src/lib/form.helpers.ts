@@ -1,12 +1,3 @@
-
-/**
- * DYNAMIC FORM UTILS: a collection of pure/mostly pure functions that are useful both internally and for
- * developing the consuming app.
- *
- * They are sorted by use case: building out the form object; helper functions to use with the disabled$ function;
- * helper functions to use with the compute field function; and other logic shared between components
- */
-
 import {
   SelectFieldConfig,
   SelectOption,
@@ -16,7 +7,6 @@ import {
   FormConfig,
   ControlType,
   FormGroupListConfig,
-  CrisprFieldConfig,
   ControlFieldConfig
 } from './models';
 import {
@@ -32,6 +22,13 @@ import { valueIn } from './form.operators';
 import { map, tap, startWith } from 'rxjs/operators';
 import { AutocompleteFieldConfig } from './models';
 
+/**
+ * DYNAMIC FORM UTILS: a collection of pure/mostly pure functions that are useful both internally and for
+ * developing the consuming app.
+ *
+ * They are sorted by use case: building out the form object; helper functions to use with the disabled$ function;
+ * helper functions to use with the compute field function; and other logic shared between components
+ */
 
 /**
  * Required configuration to use with checkControlForValues function
@@ -66,6 +63,7 @@ export function checkControlForValues(group: FormGroup, config: CheckControlConf
       })
     );
   } else {
+    // otherwas
     return of(true);
   }
 }

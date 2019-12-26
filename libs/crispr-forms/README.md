@@ -4,45 +4,7 @@
 
 ## WARNING:
 
-API is mostly stable, and there are no planned breaking changes. However, we are working on some new features so there is the possibility there could be minor changes to API.
-
-### Breaking change 8.3.3 -> 8.4.0
-
-`showField` and `showFieldConfig` fields have changed to `disabledCallback` and   `disabledCallbackConfig` with inverted logic.
-
-The old API was designed to take a callback function that returned type  `Observable<boolean>`, showing the field on `true` hiding it on `false`.
-
-The new API still takes a callback function that returns type  `Observable<boolean>`, but now it disables field on `true` and enables on `false`. By default it still hides the disabled field, but you can pass `hideDisabled: false` to the field configuration if you wish to show disabled fields.
-
-#### Old API
-Show `someControl` field only when `textInput` field has value of `hello`
-```typescript
-{
-  controlName: 'someControl',
-  controlType: ControlType.INPUT,
-  showField: (form) => {
-    return form.get('textInput').valueChanges.pipe(
-      map( inputValue => inputValue === 'hello')
-    )
-  }
-  ...
-}
-```
-#### New API
- Disable `someControl` field when `textInput` field has any value other than `hello`. Notice we are returning the opposite of the value above. Also, `hideDisabled` is set to `false`, so field will be shown when disabled.
-```typescript
-{
-  controlName: 'someControl',
-  controlType: ControlType.INPUT,
-  disabled: (form) => {
-    return form.get('textInput').valueChanges.pipe(
-      map( inputValue => inputValue !== 'hello')
-    )
-  },
-  hideDisabled: false,
-  ...
-}
-```
+API is mostly stable, and there are no planned breaking changes. However, we are working on some new features so there is the possibility there could be minor changes to API. [Recent breaking changes](#breaking-changes).
 
 ## Description
 
@@ -126,6 +88,45 @@ export class DemoComponent implements OnInit {
 }
 ```
 Interactive documentation can be found on Stackblitz [here](https://stackblitz.com/github/nayfin/tft-documentation). We will be expanding on this to give clear examples of usage for each available field and feature in the near future.
+
+
+### <a name="breaking-changes"></a> Breaking change 8.3.3 -> 8.4.0
+
+`showField` and `showFieldConfig` fields have changed to `disabledCallback` and   `disabledCallbackConfig` with inverted logic.
+
+The old API was designed to take a callback function that returned type  `Observable<boolean>`, showing the field on `true` hiding it on `false`.
+
+The new API still takes a callback function that returns type  `Observable<boolean>`, but now it disables field on `true` and enables on `false`. By default it still hides the disabled field, but you can pass `hideDisabled: false` to the field configuration if you wish to show disabled fields.
+
+#### Old API
+Show `someControl` field only when `textInput` field has value of `hello`
+```typescript
+{
+  controlName: 'someControl',
+  controlType: ControlType.INPUT,
+  showField: (form) => {
+    return form.get('textInput').valueChanges.pipe(
+      map( inputValue => inputValue === 'hello')
+    )
+  }
+  ...
+}
+```
+#### New API
+ Disable `someControl` field when `textInput` field has any value other than `hello`. Notice we are returning the opposite of the value above. Also, `hideDisabled` is set to `false`, so field will be shown when disabled.
+```typescript
+{
+  controlName: 'someControl',
+  controlType: ControlType.INPUT,
+  hideDisabled: false,
+  disabled: (form) => {
+    return form.get('textInput').valueChanges.pipe(
+      map( inputValue => inputValue !== 'hello')
+    )
+  },
+  ...
+}
+```
 
 ## Upcoming
 
