@@ -7,6 +7,7 @@ import { CrisprFormsModule } from '@tft/crispr-forms';
 import { UiImportsModule } from '@tft/ui-imports';
 import { SelectComponent } from './containers/select/select.component';
 import { ComputedFieldComponent } from './containers/computed-field/computed-field.component';
+import { DisabledFieldComponent } from './containers/disabled-field/disabled-field.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ComputedFieldComponent } from './containers/computed-field/computed-fie
   declarations: [
     OverviewComponent,
     SelectComponent,
-    ComputedFieldComponent
+    ComputedFieldComponent,
+    DisabledFieldComponent
   ],
 })
 export class CrisprFormsDemoModule { }

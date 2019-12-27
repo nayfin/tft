@@ -40,12 +40,17 @@ export class AppComponent {
           description: 'Configure fields that react to other field values',
           links: [
             {
-              title: 'Computed Fields',
+              title: 'Computed Field',
               description: `Compute field value to react to other field values in the parent form group`,
               path: 'crispr-forms-demo/computed-field'
+            },
+            {
+              title: 'Disabled Field',
+              description: `Dynamically disable fields`,
+              path: 'crispr-forms-demo/disabled-field'
             }
           ]
-        }
+        },
       ]
     },
     {
