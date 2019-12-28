@@ -3,7 +3,7 @@ import { ControlType, FormConfig, computeValueFromFields } from '@tft/crispr-for
 import { of } from 'rxjs';
 
 @Component({
-  selector: 'ng-computed-field',
+  selector: 'doc-computed-field',
   templateUrl: './computed-field.component.html',
   styleUrls: ['./computed-field.component.scss']
 })

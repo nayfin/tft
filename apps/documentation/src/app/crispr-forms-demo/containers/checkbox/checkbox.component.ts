@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormConfig, ControlType } from '@tft/crispr-forms';
 
 @Component({
-  selector: 'ng-checkbox',
+  selector: 'doc-checkbox',
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.scss']
 })

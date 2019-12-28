@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ControlType, FormConfig } from '@tft/crispr-forms';
 
 @Component({
-  selector: 'ng-textarea',
+  selector: 'doc-textarea',
   templateUrl: './textarea.component.html',
   styleUrls: ['./textarea.component.scss']
 })

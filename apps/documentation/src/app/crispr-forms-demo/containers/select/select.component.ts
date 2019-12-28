@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'ng-select',
+  selector: 'doc-select',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss']
 })

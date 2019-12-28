@@ -3,7 +3,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { SidenavSection } from '@tft/core';
 
 @Component({
-  selector: 'ng-root',
+  selector: 'doc-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })

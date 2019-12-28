@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormConfig, ControlType } from '@tft/crispr-forms';
 
 @Component({
-  selector: 'ng-slider',
+  selector: 'doc-slider',
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.scss']
 })

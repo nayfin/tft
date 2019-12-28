@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'ng-autocomplete',
+  selector: 'doc-autocomplete',
   templateUrl: './autocomplete.component.html',
   styleUrls: ['./autocomplete.component.scss']
 })

@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { Moment } from 'moment';
 
 @Component({
-  selector: 'ng-overview',
+  selector: 'doc-overview',
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss']
 })

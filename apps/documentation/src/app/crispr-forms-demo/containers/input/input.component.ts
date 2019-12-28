@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ControlType, FormConfig } from '@tft/crispr-forms';
 
 @Component({
-  selector: 'ng-input',
+  selector: 'doc-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss']
 })

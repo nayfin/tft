@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'ng-disabled-field',
+  selector: 'doc-disabled-field',
   templateUrl: './disabled-field.component.html',
   styleUrls: ['./disabled-field.component.scss']
 })
