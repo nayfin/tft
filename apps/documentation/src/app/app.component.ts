@@ -29,9 +29,29 @@ export class AppComponent {
           description: 'Available configuration fields',
           links: [
             {
+              title: 'Input Field',
+              path: 'crispr-forms-demo/input'
+            },
+            {
+              title: 'Textarea Field',
+              path: 'crispr-forms-demo/textarea'
+            },
+            {
               title: 'Select Field',
               path: 'crispr-forms-demo/select'
-            }
+            },
+            {
+              title: 'Autocomplete Field',
+              path: 'crispr-forms-demo/autocomplete'
+            },
+            {
+              title: 'Checkbox Field',
+              path: 'crispr-forms-demo/checkbox'
+            },
+            {
+              title: 'Slider Field',
+              path: 'crispr-forms-demo/slider'
+            },
           ]
         },
         {

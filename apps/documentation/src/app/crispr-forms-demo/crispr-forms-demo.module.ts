@@ -8,6 +8,11 @@ import { UiImportsModule } from '@tft/ui-imports';
 import { SelectComponent } from './containers/select/select.component';
 import { ComputedFieldComponent } from './containers/computed-field/computed-field.component';
 import { DisabledFieldComponent } from './containers/disabled-field/disabled-field.component';
+import { AutocompleteComponent } from './containers/autocomplete/autocomplete.component';
+import { InputComponent } from './containers/input/input.component';
+import { TextareaComponent } from './containers/textarea/textarea.component';
+import { CheckboxComponent } from './containers/checkbox/checkbox.component';
+import { SliderComponent } from './containers/slider/slider.component';
 
 
 @NgModule({
@@ -21,7 +26,12 @@ import { DisabledFieldComponent } from './containers/disabled-field/disabled-fie
     OverviewComponent,
     SelectComponent,
     ComputedFieldComponent,
-    DisabledFieldComponent
+    DisabledFieldComponent,
+    AutocompleteComponent,
+    InputComponent,
+    TextareaComponent,
+    CheckboxComponent,
+    SliderComponent
   ],
 })
 export class CrisprFormsDemoModule { }

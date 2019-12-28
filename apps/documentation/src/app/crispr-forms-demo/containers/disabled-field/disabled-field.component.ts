@@ -28,6 +28,7 @@ export class DisabledFieldComponent implements OnInit {
         inputType: 'text',
         controlName: 'dynamicallyDisabled',
         label: 'Formatted Name',
+        // true by default
         hideDisabled: false,
         disabledCallback: (group) => {
           return group.get('enabler').valueChanges.pipe(map(value => value !== 'enable'))
