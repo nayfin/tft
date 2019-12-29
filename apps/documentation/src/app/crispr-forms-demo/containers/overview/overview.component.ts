@@ -39,7 +39,7 @@ export class OverviewComponent implements OnInit {
         },
         controlName: 'textInput',
         placeholder: 'I am a placeholder in a text input',
-        // validators: [Validators.required, Validators.minLength(5)],
+        validators: [Validators.required, Validators.minLength(5)],
       },
       {
         controlType: ControlType.INPUT,
@@ -221,6 +221,13 @@ export class OverviewComponent implements OnInit {
   handleSubmit(form: FormGroup) {
     const rawValue = form.getRawValue();
     console.log({rawValue, form});
+  }
+
+  handleValueChanges(value: any) {
+    console.log({valueChanges: value})
+  }
+  handleStatusChanges(status: any) {
+    console.log({statusChanges: status})
   }
 
 }
