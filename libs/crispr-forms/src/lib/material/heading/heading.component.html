@@ -1,5 +1,5 @@
   <label
-    *ngIf="!!config.label"
+    *ngIf="!!config?.label"
     [class.mat-h3]=" !config.classes?.length"
     [ngClass]="config.classes">{{ config.label }}
     <crispr-info
