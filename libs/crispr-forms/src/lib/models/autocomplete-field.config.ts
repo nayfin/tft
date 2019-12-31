@@ -4,6 +4,7 @@ export interface AutocompleteFieldConfig extends ControlFieldConfig {
   emptyOptionsMessage?: string;
   options: OptionsType;
   reactiveOptions?: boolean;
+  autoActiveFirstOption?: boolean;
   filterFunction?: (options: SelectOption[], searchString: string) => SelectOption[];
 }
 

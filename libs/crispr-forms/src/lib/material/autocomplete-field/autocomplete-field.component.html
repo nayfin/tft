@@ -16,20 +16,16 @@
     [placeholder]="config.placeholder"
     [matAutocomplete]="auto"
     [formControlName]="config.controlName"
-    (blur)="handleBlur($event)">
-  <!-- <mat-icon
+    (keydown.tab)="handleTab($event)">
+  <crispr-info
     *ngIf="config.info"
-    [matTooltip]="config.info?.content"
-    [matTooltipPosition]="config.info?.tooltipPosition || 'below'"
-    matSuffix>
-    info
-  </mat-icon> -->
-  <crispr-info *ngIf="config.info" matSuffix [info]="config.info ">
-
+    matSuffix
+    [info]="config.info ">
   </crispr-info>
+
   <mat-autocomplete
     #auto="matAutocomplete"
-    autoActiveFirstOption
+    [autoActiveFirstOption]="autoActiveFirstOption"
     [displayWith]="displayLabel(options$ | async)">
 
     <mat-option

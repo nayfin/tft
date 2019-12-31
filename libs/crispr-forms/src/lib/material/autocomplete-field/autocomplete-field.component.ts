@@ -11,7 +11,10 @@ import { observablifyOptions } from '../../form.helpers';
   selector: 'crispr-autocomplete-field',
   templateUrl: './autocomplete-field.component.html',
   styleUrls: ['./autocomplete-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  // host: {
+  //   'class': `${config.classes}`
+  // }
 })
 export class AutocompleteFieldComponent implements OnInit {
 
@@ -21,8 +24,15 @@ export class AutocompleteFieldComponent implements OnInit {
   group: FormGroup;
   options$: Observable<SelectOption[]>;
   filteredOptions$: Observable<SelectOption[]>;
+
   get control(): AbstractControl {
     return this.group.get(this.config.controlName);
+  }
+
+  get autoActiveFirstOption(): boolean {
+    return this.config.autoActiveFirstOption === undefined
+    ? true
+    : this.config.autoActiveFirstOption;
   }
 
   constructor() { }
@@ -70,7 +80,7 @@ export class AutocompleteFieldComponent implements OnInit {
    * To follow ARIA standards we want to select the active option on blur.
    * @param event blur event that triggers the handle blur, TODO: remove this parameter if not used by 7/4/19
    */
-  handleBlur(_event: FocusEvent) {
+  handleTab(_event: FocusEvent) {
     if (this.autoInput.activeOption) {
       this.autoInput.activeOption.select();
       this.control.setValue(this.autoInput.activeOption.value);
