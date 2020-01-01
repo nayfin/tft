@@ -1,6 +1,6 @@
 ::ng-deep.form {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(10rem, 100%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-gap: 1em;
   crispr-heading {
     grid-column: 1/-1;
