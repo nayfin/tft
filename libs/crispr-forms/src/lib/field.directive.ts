@@ -61,8 +61,9 @@ export class CrisprFieldDirective implements OnInit {
     this.component.group = this.group;
     // adds any config classes to the dynamically generated component
     // doing this here keeps us from having to extend a base component into each field component individually
+    if(!this.config.classes) return;
     this.config.classes.forEach((klass) => {
       this.renderer.addClass(componentRef.location.nativeElement, klass)
-    })
+    });
   }
 }
