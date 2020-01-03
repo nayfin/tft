@@ -15,7 +15,7 @@ export class HeadingComponent implements OnInit {
     fields: [
       {
         controlType: ControlType.HEADING,
-        label: 'I am a stand alone heading, unconnected to a field',
+        label: 'I am a stand alone heading, unconnected to a field. This allows us to create a layout where the heading spans multiple fields',
         typographyClass: 'mat-h2',
         classes: ['heading']
       },
@@ -23,19 +23,22 @@ export class HeadingComponent implements OnInit {
         controlType: ControlType.INPUT,
         touchUi: true,
         label: 'Field A',
-        heading: {
-          label: 'Field A label',
-          typographyClass: 'mat-h1'
-        },
         controlName: 'fieldA',
-        classes: ['heading green']
+        classes: ['field-container']
       },
       {
         controlType: ControlType.INPUT,
         touchUi: true,
-        label: 'Field ',
+        label: 'Field B',
         controlName: 'fieldB',
-        classes: ['control-field']
+        classes: ['field-container']
+      },
+      {
+        controlType: ControlType.INPUT,
+        touchUi: true,
+        label: 'Field C',
+        controlName: 'fieldC',
+        classes: ['field-container']
       }
 
     ]

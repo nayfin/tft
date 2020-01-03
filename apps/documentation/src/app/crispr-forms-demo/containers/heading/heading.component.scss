@@ -1,11 +1,15 @@
 ::ng-deep.form {
   display: grid;
+  // Creates a responsive grid where each column will be at least 200px.
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  // add some space between fields
   grid-gap: 1em;
+  // the heading will always span the entire width of the form
   .heading {
     grid-column: 1/-1;
   }
+  // while each field will only span one column
   .field-container {
-    grid-column: 1/-1;
+    grid-column: span 1;
   }
 }

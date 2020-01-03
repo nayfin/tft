@@ -63,7 +63,12 @@ export class CrisprFieldDirective implements OnInit {
     // doing this here keeps us from having to extend a base component into each field component individually
     if(!this.config.classes) return;
     this.config.classes.forEach((klass) => {
-      this.renderer.addClass(componentRef.location.nativeElement, klass)
+      // check for passing multiple classes in one array element
+      if(klass.includes(' ')) {
+        throw Error(`Improperly formatted class. '${klass}' cannot contain spaces.`);
+      } else {
+        this.renderer.addClass(componentRef.location.nativeElement, klass);
+      }
     });
   }
 }
