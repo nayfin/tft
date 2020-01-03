@@ -16,14 +16,19 @@ export class HeadingComponent implements OnInit {
       {
         controlType: ControlType.HEADING,
         label: 'I am a stand alone heading, unconnected to a field',
-        classes: ['mat-h2']
+        typographyClass: 'mat-h2',
+        classes: ['heading']
       },
       {
         controlType: ControlType.INPUT,
         touchUi: true,
         label: 'Field A',
+        heading: {
+          label: 'Field A label',
+          typographyClass: 'mat-h1'
+        },
         controlName: 'fieldA',
-        classes: ['control-field']
+        classes: ['heading green']
       },
       {
         controlType: ControlType.INPUT,

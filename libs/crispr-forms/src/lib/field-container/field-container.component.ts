@@ -32,6 +32,7 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.disabled$ = this.connectDisabledCallback( this.group, this.config);
+    // TODO: try moving this to a different event loop maybe afterViewInit
     setTimeout(()=> {
       this.group.get(this.config.controlName).updateValueAndValidity();
     })

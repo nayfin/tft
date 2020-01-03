@@ -1,17 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { HeadingConfig } from '../../models';
 
 @Component({
   selector: 'crispr-heading',
   templateUrl: './heading.component.html',
-  styleUrls: ['./heading.component.scss']
+  styleUrls: ['./heading.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeadingComponent implements OnInit {
+export class HeadingComponent {
   @Input() config: HeadingConfig;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

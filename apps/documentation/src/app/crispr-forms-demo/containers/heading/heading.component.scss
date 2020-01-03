@@ -2,7 +2,10 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-gap: 1em;
-  crispr-heading {
+  .heading {
+    grid-column: 1/-1;
+  }
+  .field-container {
     grid-column: 1/-1;
   }
 }

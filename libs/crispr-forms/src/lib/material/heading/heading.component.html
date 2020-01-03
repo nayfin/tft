@@ -1,7 +1,7 @@
   <label
     *ngIf="!!config?.label"
-    [class.mat-h3]=" !config.classes?.length"
-    [ngClass]="config.classes">{{ config.label }}
+    [class.mat-h3]=" !config.typographyClass?.length"
+    [ngClass]="config.typographyClass">{{ config.label }}
     <crispr-info
       matSuffix *ngIf="config.info"
       [info]="config.info">

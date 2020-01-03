@@ -2,6 +2,8 @@
 
 ### Build forms like DNA builds life
 
+[Interactive docs](https://stackblitz.com/github/nayfin/tft-documentation)
+
 ## WARNING:
 
 API is mostly stable, and there are no planned breaking changes. However, we are working on some new features so there is the possibility there could be minor changes to API. [Recent breaking changes](#breaking-changes).
@@ -10,7 +12,7 @@ API is mostly stable, and there are no planned breaking changes. However, we are
 
 Web development tends to involve building a lot of forms, and even though it can be repetitive it's not necessarily easy. Connecting templates to `FormGroup`s takes time and there are a lot of opportunities  to make mistakes along the way that can difficult to debug. Large form are difficult to keep organized, and long form templates are cumbersome to update.
 
-Luckily, we've abstracted out the template work entirely, allowing the end developer to simply pass a `config` of instructions to the `tft-crispr-forms` component and generate the form dynamically. This allows the end developer to focus on the business logic and not the template details.
+Luckily, we've abstracted out the template work entirely, allowing the end developer to simply pass a `config` object to the `tft-crispr-forms` component and it will use these instructions to build out the form. This allows the end developer to focus on the business logic and not the template details.
 
 We currently only support styling for Material Design, but support for other design systems is on our roadmap.
 
@@ -37,6 +39,8 @@ Next, you'll need our sister library `npm i --save @tft/form-validation-handler`
 ## Usage
 
 With CRISPR Forms we've abstracted out form template entirely allowing you to generate your form by simply passing a configuration object to the `tft-crispr-form` component.
+
+Interactive documentation can be found on Stackblitz [here](https://stackblitz.com/github/nayfin/tft-documentation). We will be expanding on this to give clear examples of usage for each available field and feature in the near future.
 
 In `some-component.html` we pass the configuration to the component and `handleSubmit` function to the `submitted` event.
 
@@ -67,8 +71,6 @@ export class DemoComponent implements OnInit {
   }
 }
 ```
-Interactive documentation can be found on Stackblitz [here](https://stackblitz.com/github/nayfin/tft-documentation). We will be expanding on this to give clear examples of usage for each available field and feature in the near future.
-
 
 ### <a name="breaking-changes"></a> Breaking change 8.3.3 -> 8.4.0
 
@@ -117,6 +119,5 @@ Show `someControl` field only when `textInput` field has value of `hello`
 - The rest of the Angular Material fields:
   - Radio button
   - Slide toggle
-  - Slider
   - Button toggle
 
