@@ -92,13 +92,13 @@ export const appNavTree: SidenavSection[] = [
           {title: 'Landscaping', path: 'interact-demo/landscaping'}
         ]
       },
-      {
-        title: 'APIs',
-        links: [
-          {title: 'Drag', path: 'interact-demo/shuffleboard'},
-          {title: 'Drop', path: 'interact-demo/landscaping'}
-        ]
-      }
+      // {
+      //   title: 'APIs',
+      //   links: [
+      //     {title: 'Drag', path: 'interact-demo/shuffleboard'},
+      //     {title: 'Drop', path: 'interact-demo/landscaping'}
+      //   ]
+      // }
     ]
   }
 ];
