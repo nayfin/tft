@@ -1,15 +1,13 @@
-<div
-  [ngClass]="config.classes">
-  <button
-    [formGroup]="group"
-    mat-button
-    [ngClass]="matButtonClass"
-    [color]="config.color"
-    [disabled]="config.disabledOnInvalidForm && !(formValid$ | async)"
-    type="submit">
-    {{ config.label }}
-    <mat-icon *ngIf="config.icon">
-      {{ config.icon}}
-    </mat-icon>
-  </button>
-</div>
+<button
+  [formGroup]="group"
+  mat-button
+  [ngClass]="matButtonClass"
+  [color]="config.color"
+  [disabled]="config.disabledOnInvalidForm && !(formValid$ | async)"
+  type="submit">
+  {{ config.label }}
+  <mat-icon *ngIf="config.icon">
+    {{ config.icon}}
+  </mat-icon>
+</button>
+

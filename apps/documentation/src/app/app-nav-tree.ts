@@ -19,39 +19,43 @@ export const appNavTree: SidenavSection[] = [
         links: [
           {
             title: 'Input Field',
-            path: 'crispr-forms-demo/input'
+            path: 'crispr-forms-demo/fields/input'
           },
           {
             title: 'Textarea Field',
-            path: 'crispr-forms-demo/textarea'
+            path: 'crispr-forms-demo/fields/textarea'
           },
           {
             title: 'Select Field',
-            path: 'crispr-forms-demo/select'
+            path: 'crispr-forms-demo/fields/select'
           },
           {
             title: 'Autocomplete Field',
-            path: 'crispr-forms-demo/autocomplete'
+            path: 'crispr-forms-demo/fields/autocomplete'
           },
           {
             title: 'Checkbox Field',
-            path: 'crispr-forms-demo/checkbox'
+            path: 'crispr-forms-demo/fields/checkbox'
           },
           {
             title: 'Slider Field',
-            path: 'crispr-forms-demo/slider'
+            path: 'crispr-forms-demo/fields/slider'
           },
           {
             title: 'Datepicker Field',
-            path: 'crispr-forms-demo/datepicker'
+            path: 'crispr-forms-demo/fields/datepicker'
           },
           {
             title: 'Divider',
-            path: 'crispr-forms-demo/divider'
+            path: 'crispr-forms-demo/fields/divider'
           },
           {
             title: 'Heading',
-            path: 'crispr-forms-demo/heading'
+            path: 'crispr-forms-demo/fields/heading'
+          },
+          {
+            title: 'Button',
+            path: 'crispr-forms-demo/fields/button'
           },
         ]
       },

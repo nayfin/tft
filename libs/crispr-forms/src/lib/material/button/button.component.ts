@@ -1,15 +1,15 @@
 
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ButtonConfig } from '../../models';
 import { Observable } from 'rxjs';
 import { map, startWith, tap } from 'rxjs/operators';
 
 @Component({
-  selector: 'crispr-raised-button',
+  selector: 'crispr-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent implements OnInit {
 
