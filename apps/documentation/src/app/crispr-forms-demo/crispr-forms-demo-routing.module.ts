@@ -10,6 +10,10 @@ const routes: Routes = [
     path: 'fields',
     loadChildren: () => import('./fields/fields.module').then(m => m.FieldsModule)
   },
+  {
+    path: 'features',
+    loadChildren: () => import('./features/features.module').then(m => m.FeaturesModule)
+  },
 ];
 
 @NgModule({

@@ -60,19 +60,19 @@ export const appNavTree: SidenavSection[] = [
         ]
       },
       {
-        title: 'Reactive API',
+        title: 'Field Feature',
         subtitle: 'Configure fields that react to other field values',
         description: 'Configure fields that react to other field values',
         links: [
           {
             title: 'Computed Field',
             description: `Compute field value to react to other field values in the parent form group`,
-            path: 'crispr-forms-demo/computed-field'
+            path: 'crispr-forms-demo/features/computed-field'
           },
           {
             title: 'Disabled Field',
             description: `Dynamically disable fields`,
-            path: 'crispr-forms-demo/disabled-field'
+            path: 'crispr-forms-demo/features/disabled-field'
           }
         ]
       },

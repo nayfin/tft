@@ -9,7 +9,3 @@ export * from './input/input.component';
 export * from './slider/slider.component';
 export * from './textarea/textarea.component';
 export * from './button/button.component';
-
-
-export * from './computed-field/computed-field.component';
-export * from './disabled-field/disabled-field.component';

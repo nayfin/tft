@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {
   SelectComponent,
-  ComputedFieldComponent,
   AutocompleteComponent,
   InputComponent,
   TextareaComponent,
@@ -11,7 +10,6 @@ import {
   SliderComponent,
   DividerComponent,
   HeadingComponent,
-  DisabledFieldComponent,
   ButtonComponent
 } from '.';
 
@@ -29,8 +27,6 @@ const routes: Routes = [
   { path: 'divider', component: DividerComponent},
   { path: 'heading', component: HeadingComponent},
   { path: 'button', component: ButtonComponent},
-  { path: 'computed-field', component: ComputedFieldComponent},
-  { path: 'disabled-field', component: DisabledFieldComponent},
   { path: '**', redirectTo: 'select'},
 ];
 
