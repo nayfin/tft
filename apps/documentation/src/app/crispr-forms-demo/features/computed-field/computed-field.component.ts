@@ -31,9 +31,10 @@ export class ComputedFieldComponent implements OnInit {
         label: 'I am a computed value',
         computeFieldConfig: {
           controlNamesToWatch: ['factorA', 'factorB'],
-          computeCallback: (values: number[]) => {
-            console.log({values})
-            return values.reduce((acc, curr) => +acc * +curr, 1)
+          computeCallback: (fieldValues: number[]) => {
+            console.log(fieldValues);
+            const [factorA, factorB] = fieldValues;
+            return factorA * factorB;
           }
         },
         computeField: computeValueFromFields

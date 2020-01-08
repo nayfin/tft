@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy, AfterViewInit, AfterContentChecked } from '@angular/core';
 import { CrisprFieldConfig, ControlFieldConfig } from '../models';
 import { Observable, of, Subscription } from 'rxjs';
 import { FormGroup, AbstractControl } from '@angular/forms';
@@ -10,7 +10,7 @@ import { tap, startWith, shareReplay } from 'rxjs/operators';
   styleUrls: ['./field-container.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FieldContainerComponent implements OnInit, OnDestroy {
+export class FieldContainerComponent implements OnInit, OnDestroy, AfterContentChecked {
   // the configuration object for the field
   @Input() config: ControlFieldConfig;
   // the parent formGroup
@@ -33,9 +33,9 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.disabled$ = this.connectDisabledCallback( this.group, this.config);
     // TODO: try moving this to a different event loop maybe afterViewInit
-    setTimeout(()=> {
-      this.group.get(this.config.controlName).updateValueAndValidity();
-    })
+    // setTimeout(()=> {
+    //   this.group.get(this.config.controlName).updateValueAndValidity();
+    // })
     if (this.config.computeField && this.config.computeFieldConfig) {
       // if no controlNameToSet is specified use this control's controlName
       // TODO: this might not be the best place to set defaults...
@@ -47,6 +47,10 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
         this.config.computeField(this.group, computeFieldConfig).subscribe(),
       );
     }
+  }
+
+  ngAfterContentChecked() {
+    this.group.get(this.config.controlName).updateValueAndValidity();
   }
 
   ngOnDestroy(): void {

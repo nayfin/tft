@@ -125,24 +125,24 @@ export interface ComputeFieldConfig {
 }
 
 /**
-   * Watches values on an array of fields, computing their values as they change
-   * @param group the group to get the fields from, for now it can only be the parent of the computed field
-   * @param computeFieldsConfig the configuration that drives the computation, holds the names to watch and the
-   * computation function that get called against the array of values
-   */
-  export function computeValueFromFields(group: FormGroup, computeFieldsConfig: ComputeFieldConfig): Observable<any> {
-    // TODO: better checking
-    const { controlNamesToWatch, controlNameToSet } = computeFieldsConfig;
-    const controlToSet = group.get(controlNameToSet);
-    const valueChanges = controlNamesToWatch.map(controlNameToWatch => getValueChanges(group, controlNameToWatch));
-    return combineLatest(
-      valueChanges
-    ).pipe(
-      // we run the compute callback on the array of field values to reduce them to the single value for our computed field
-      map(valuesArray => computeFieldsConfig.computeCallback(valuesArray)),
-      tap(valueToSet => controlToSet.setValue(valueToSet))
-    );
-  }
+ * Watches values on an array of fields, computing their values as they change
+ * @param group the group to get the fields from, for now it can only be the parent of the computed field
+ * @param computeFieldsConfig the configuration that drives the computation, holds the names to watch and the
+ * computation function that get called against the array of values
+ */
+export function computeValueFromFields(group: FormGroup, computeFieldsConfig: ComputeFieldConfig): Observable<any> {
+  // TODO: better checking
+  const { controlNamesToWatch, controlNameToSet } = computeFieldsConfig;
+  const controlToSet = group.get(controlNameToSet);
+  const valueChanges = controlNamesToWatch.map(controlNameToWatch => getValueChanges(group, controlNameToWatch));
+  return combineLatest(
+    valueChanges
+  ).pipe(
+    // we run the compute callback on the array of field values to reduce them to the single value for our computed field
+    map(valuesArray => computeFieldsConfig.computeCallback(valuesArray)),
+    tap(valueToSet => controlToSet.setValue(valueToSet))
+  );
+}
 
 /**
  * A simple wrapper for doing error checking around getting the valueChanges observable from a control on a form group

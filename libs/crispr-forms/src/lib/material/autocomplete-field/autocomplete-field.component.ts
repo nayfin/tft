@@ -11,10 +11,7 @@ import { observablifyOptions } from '../../form.helpers';
   selector: 'crispr-autocomplete-field',
   templateUrl: './autocomplete-field.component.html',
   styleUrls: ['./autocomplete-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  // host: {
-  //   'class': `${config.classes}`
-  // }
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AutocompleteFieldComponent implements OnInit {
 

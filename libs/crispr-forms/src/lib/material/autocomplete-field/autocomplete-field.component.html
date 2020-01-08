@@ -1,40 +1,40 @@
 
 <crispr-field-container
-[config]="config"
-[group]="group">
+  [config]="config"
+  [group]="group">
 
-<mat-form-field
-  [color]="config.color"
-  [appearance]="config.appearance"
-  [formGroup]="group">
-  <mat-label *ngIf="config.label">
-    {{config.label}}
-  </mat-label>
-  <input
-    matInput
-    #autoInput
-    [placeholder]="config.placeholder"
-    [matAutocomplete]="auto"
-    [formControlName]="config.controlName"
-    (keydown.tab)="handleTab($event)">
-  <crispr-info
-    *ngIf="config.info"
-    matSuffix
-    [info]="config.info ">
-  </crispr-info>
+  <mat-form-field
+    [color]="config.color"
+    [appearance]="config.appearance"
+    [formGroup]="group">
+    <mat-label *ngIf="config.label">
+      {{config.label}}
+    </mat-label>
+    <input
+      matInput
+      #autoInput
+      [placeholder]="config.placeholder"
+      [matAutocomplete]="auto"
+      [formControlName]="config.controlName"
+      (keydown.tab)="handleTab($event)">
+    <crispr-info
+      *ngIf="config.info"
+      matSuffix
+      [info]="config.info ">
+    </crispr-info>
 
-  <mat-autocomplete
-    #auto="matAutocomplete"
-    [autoActiveFirstOption]="autoActiveFirstOption"
-    [displayWith]="displayLabel(options$ | async)">
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      [autoActiveFirstOption]="autoActiveFirstOption"
+      [displayWith]="displayLabel(options$ | async)">
 
-    <mat-option
-      *ngFor="let option of filteredOptions$ | async"
-      [value]="option.value">
-      {{ option.label }}
-    </mat-option>
+      <mat-option
+        *ngFor="let option of filteredOptions$ | async"
+        [value]="option.value">
+        {{ option.label }}
+      </mat-option>
 
-  </mat-autocomplete>
-</mat-form-field>
+    </mat-autocomplete>
+  </mat-form-field>
 
 </crispr-field-container>
