@@ -114,8 +114,6 @@ export function checkControlsForValues(group: FormGroup, config: CheckControlsCo
  * The required configuration when running the computeValue function
  */
 export interface ComputeFieldConfig {
-  // the name of the control to compute, defaults to the controlName of the configured field
-  controlNameToSet?: string;
   // array of control names who's values we want to watch
   controlNamesToWatch: string[];
   // the function we want to call on the array of watched values to compute the value of the control we
@@ -132,15 +130,14 @@ export interface ComputeFieldConfig {
  */
 export function computeValueFromFields(group: FormGroup, computeFieldsConfig: ComputeFieldConfig): Observable<any> {
   // TODO: better checking
-  const { controlNamesToWatch, controlNameToSet } = computeFieldsConfig;
-  const controlToSet = group.get(controlNameToSet);
-  const valueChanges = controlNamesToWatch.map(controlNameToWatch => getValueChanges(group, controlNameToWatch));
+  const { controlNamesToWatch } = computeFieldsConfig;
+  //creates an observable listener for each control in the controlNamesToWatch array
   return combineLatest(
-    valueChanges
+    controlNamesToWatch.map(controlNameToWatch => getValueChanges(group, controlNameToWatch))
   ).pipe(
-    // we run the compute callback on the array of field values to reduce them to the single value for our computed field
+    // each time a watched field values changes a new array of the latest field values is pipe through to the
+    // compute callback. Which runs the users logic on the values to compute this fields value
     map(valuesArray => computeFieldsConfig.computeCallback(valuesArray)),
-    tap(valueToSet => controlToSet.setValue(valueToSet))
   );
 }
 

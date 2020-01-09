@@ -29,8 +29,7 @@ export class DisabledFieldComponent implements OnInit {
         inputType: 'text',
         controlName: 'dynamicallyDisabled',
         label: 'Dynamically disabled field',
-        // true by default
-        hideDisabled: false,
+        hideDisabled: false, // default value
         disabledCallback: (group) => {
           return group.get('enabler').valueChanges.pipe(map(value => value !== 'enable'))
         }
@@ -56,6 +55,7 @@ export class DisabledFieldComponent implements OnInit {
         inputType: 'text',
         controlName: 'dynamicallyDisabled',
         label: 'Dynamically disabled field',
+        hideDisabled: true,
         disabledCallback: (group) => {
           return group.get('enabler').valueChanges.pipe(map(value => value !== 'enable'))
         }
@@ -93,7 +93,6 @@ export class DisabledFieldComponent implements OnInit {
         info: {
           content: `Set either of the above fields to 'Enable' to enable me`
         },
-        hideDisabled: false,
         disabledCallback: (group) => {
           return combineLatest([
             group.get('enablerA').valueChanges,

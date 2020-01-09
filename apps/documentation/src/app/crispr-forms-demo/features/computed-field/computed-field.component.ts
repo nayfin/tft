@@ -11,6 +11,7 @@ export class ComputedFieldComponent implements OnInit {
   computedNumberFieldConfig: FormConfig = {
     controlType: ControlType.GROUP,
     controlName: 'computedNumberDemo',
+    autocomplete: 'off',
     fields: [
       {
         controlType: ControlType.INPUT,
@@ -37,7 +38,7 @@ export class ComputedFieldComponent implements OnInit {
             return factorA * factorB;
           }
         },
-        computeField: computeValueFromFields
+        // computeField: computeValueFromFields
       }
     ]
   }
@@ -70,7 +71,6 @@ export class ComputedFieldComponent implements OnInit {
             return `${values[0] || ''} ${values[1] || ''}`.trim();
           }
         },
-        computeField: computeValueFromFields
       }
     ]
   }

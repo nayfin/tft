@@ -1,5 +1,5 @@
 <div
-  *ngIf="(disabled$ | async) ? !hideDisabled : true"
+  *ngIf="(disabled$ | async) ? !config.hideDisabled : true"
   [ngClass]="config.classes"
   [class.inline-field]="inlineField"
   class="field-container">
