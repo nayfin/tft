@@ -65,6 +65,21 @@ export const appNavTree: SidenavSection[] = [
         description: 'Configure fields that react to other field values',
         links: [
           {
+            title: 'Color',
+            description: `Take advantage of Material Theme colors`,
+            path: 'crispr-forms-demo/features/color'
+          },
+          {
+            title: 'Appearance',
+            description: `All the Material appearance options are available`,
+            path: 'crispr-forms-demo/features/appearance'
+          },
+          {
+            title: 'Info',
+            description: `A handy way to provide users more data via a tooltip`,
+            path: 'crispr-forms-demo/features/info'
+          },
+          {
             title: 'Computed Field',
             description: `Compute field value to react to other field values in the parent form group`,
             path: 'crispr-forms-demo/features/computed-field'

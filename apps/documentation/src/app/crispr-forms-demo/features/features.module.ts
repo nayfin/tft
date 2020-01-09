@@ -5,12 +5,18 @@ import { FeaturesRoutingModule } from './features-routing.module';
 import { DisabledFieldComponent, ComputedFieldComponent } from '.';
 import { UiImportsModule } from '@tft/ui-imports';
 import { CrisprFormsModule } from '@tft/crispr-forms';
+import { AppearanceComponent } from './appearance/appearance.component';
+import { ColorComponent } from './color/color.component';
+import { InfoComponent } from './info/info.component';
 
 
 @NgModule({
   declarations: [
     DisabledFieldComponent,
     ComputedFieldComponent,
+    AppearanceComponent,
+    ColorComponent,
+    InfoComponent,
   ],
   imports: [
     UiImportsModule,
