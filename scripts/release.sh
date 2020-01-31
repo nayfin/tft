@@ -46,6 +46,6 @@ cd "dist/libs/$package" && npm pack && npm publish --access public && cd ../../.
 # get the new version from the library's package.json
 release_version=$(grep version "libs/$package/package.json")
 # stage, commit and push all changes
-git add . && git commit -m "release: $release_version" && git push
+git add . && git commit -m "$package release: $release_version" && git push
 
 npm run release:documentation
