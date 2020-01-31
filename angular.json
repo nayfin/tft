@@ -515,6 +515,37 @@
           "styleext": "scss"
         }
       }
+    },
+    "algolia-instantsearch": {
+      "projectType": "library",
+      "root": "libs/algolia-instantsearch",
+      "sourceRoot": "libs/algolia-instantsearch/src",
+      "prefix": "mais",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/algolia-instantsearch/tsconfig.lib.json",
+              "libs/algolia-instantsearch/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/algolia-instantsearch/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/algolia-instantsearch/jest.config.js",
+            "tsConfig": "libs/algolia-instantsearch/tsconfig.spec.json",
+            "setupFile": "libs/algolia-instantsearch/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
     }
   },
   "cli": {

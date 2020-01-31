@@ -41,6 +41,9 @@
     },
     "ui-imports": {
       "tags": []
+    },
+    "algolia-instantsearch": {
+      "tags": []
     }
   }
 }
