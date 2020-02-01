@@ -28,10 +28,12 @@ echo "What type of update is this?"
 echo "options: ${update_options[*]}"
 
 read update_type
-
-# TODO: properly check against update_options array instead of limping through this if statement
-if [ "$update_type" != "patch" ] && [ "$update_type" != "minor" ] && [ "$update_type" != "major" ]
-then
+if [[ ! " ${update_options[@]} " =~ " ${update_type} " ]]; then
+    # whatever you want to do when arr doesn't contain value
+# fi
+# # TODO: properly check against update_options array instead of limping through this if statement
+# if [ "$update_type" != "patch" ] && [ "$update_type" != "minor" ] && [ "$update_type" != "major" ]
+# then
   echo "Not a valid semantic update, try 'patch', 'minor', or 'major'"
   exit 1
 fi
