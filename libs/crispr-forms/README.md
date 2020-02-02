@@ -1,6 +1,9 @@
 # CRISPR Forms
-
 ### Build forms like DNA builds life
+<a href="https://www.npmjs.com/package/@tft/interact">
+  <img alt="npm latest version" src="https://img.shields.io/npm/v/@tft/interact/latest.svg">
+</a>
+
 
 [Interactive docs](https://stackblitz.com/github/nayfin/tft-documentation)
 
