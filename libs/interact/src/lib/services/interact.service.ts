@@ -2,17 +2,17 @@
 import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { tap, map, shareReplay } from 'rxjs/operators';
-import { 
-  TftInteractable, Delta, Size, Position, InteractableRegistry, 
+import {
+  TftInteractable, Delta, Size, Position, InteractableRegistry,
   defaultPosition, defaultSize, defaultDelta, DEFAULT_REGISTRY_ID } from '../models';
 
 @Injectable({providedIn: 'root'})
 export class InteractService {
-  
+
   private _interactableIndex = 0;
   private _dropzoneIndex = 0;
   private renderer: Renderer2;
-  
+
   // TODO: this should work as expected, but I don't know if we need it
   // get interactableCount() {
   //   // counts all the interactable systems in the registry
@@ -20,9 +20,9 @@ export class InteractService {
   //     return acc + Object.keys(this.dragRegistrySystem[curr]).length;
   //   }, 0);
   // }
-  
+
   readonly dragRegistrySystem: { [key: string]: InteractableRegistry } = { };
-  
+
   constructor(
     private rendererFactory: RendererFactory2
   ) {
@@ -46,7 +46,7 @@ export class InteractService {
   addDraggableToRegistry(customRegistryId = null, interactableId: string | null = null ) {
     const registryId = customRegistryId || DEFAULT_REGISTRY_ID;
     // if we pass an id to createInteractableId then it is used when creating the interactable
-    // and returned, otherwise a an id is created for the draggable. 
+    // and returned, otherwise a an id is created for the draggable.
     const key = this.createInteractableId(interactableId );
     if (!this.dragRegistrySystem.hasOwnProperty(registryId)) {
       this.dragRegistrySystem[registryId] = {};
@@ -66,15 +66,15 @@ export class InteractService {
   }
 
   createInteractableState(initialPosition: Position, initialSize: Size, initialDelta: Delta ) {
-    
+
     const deltas$ = new BehaviorSubject(initialDelta);
     // tracks the size of the element
     const size$ = new BehaviorSubject({...initialSize, ...initialDelta});
     // Stream of positions as they change
     const position$ = new BehaviorSubject(initialPosition);
-  
+
     // All draggable data mapped together
-    const interactable$: Observable<TftInteractable> = combineLatest(
+    const interactable$: Observable<TftInteractable> = combineLatest([
       size$.pipe(
         // startWith({...initialSize, ...initialDelta}),
         shareReplay(1),
@@ -101,7 +101,7 @@ export class InteractService {
           this.setElementTransform(position.x, position.y, position.targetElement);
         })
       )
-    ).pipe(
+      ]).pipe(
       shareReplay(1),
       map( ([size, deltas, position]): TftInteractable => {
         return {
@@ -113,7 +113,7 @@ export class InteractService {
           height: size.height,
           targetElement: size.targetElement || position.targetElement || deltas.targetElement
         }
-      }),  
+      }),
     )
     // TODO: update system to handle only returning interactable$
     return {
@@ -135,7 +135,7 @@ export class InteractService {
   getInteractableState( interactableId: string, registryId = DEFAULT_REGISTRY_ID) {
     return this.dragRegistrySystem[registryId][interactableId].interactable$;
   }
-  
+
   updateDeltas(interactId: string, registryId: string, { deltaX, deltaY }, targetElement) {
     if (!this.interactableExistOnRegistry(interactId, registryId)) return;
     this.dragRegistrySystem[registryId][interactId].deltas$.next({ deltaX, deltaY, targetElement })
@@ -194,6 +194,6 @@ export class InteractService {
     return {
       x: dragRect.left - zoneRect.left,
       y: dragRect.top - zoneRect.top
-    } 
+    }
   }
 }

@@ -25,6 +25,27 @@ export class OverviewComponent implements OnInit {
     fields: [
       // a basic input field in the form with the following configuration
       {
+        controlType: ControlType.GROUP_LIST,
+        heading: {
+          label: 'Group List'
+        },
+        controlName: 'groupList',
+        itemLabelBuilder: ( index: number ) => `Step ${index + 1}`,
+        itemConfig: {
+          controlType: ControlType.GROUP,
+          controlName: 'group',
+          fields: [
+            // configuration will create an input field in the form with the following configuration
+            {
+              controlType: ControlType.INPUT,
+              inputType: 'text',
+              controlName: 'preparationStep',
+              placeholder: 'Add a preparation step',
+            },
+          ]
+        }
+      },
+      {
         heading: {
           label: 'Heading for text input',
           info: { content: 'some info'}
