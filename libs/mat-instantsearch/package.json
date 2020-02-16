@@ -1,0 +1,12 @@
+{
+  "name": "@tft/mat-instantsearch",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^8.2.11",
+    "@angular/core": "^8.2.11",
+    "@angular/material": "^8.2.0",
+    "@angular/cdk": "^8.2.0",
+    "@tft/ui-imports": "8.0.0",
+    "angular-instantsearch": "^2.2.2"
+  }
+}

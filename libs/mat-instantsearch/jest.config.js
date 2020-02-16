@@ -1,7 +1,7 @@
 module.exports = {
-  name: 'algolia-instantsearch',
+  name: 'mat-instantsearch',
   preset: '../../jest.config.js',
-  coverageDirectory: '../../coverage/libs/algolia-instantsearch',
+  coverageDirectory: '../../coverage/libs/mat-instantsearch',
   snapshotSerializers: [
     'jest-preset-angular/AngularSnapshotSerializer.js',
     'jest-preset-angular/HTMLCommentSerializer.js'

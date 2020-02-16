@@ -42,7 +42,7 @@
     "ui-imports": {
       "tags": []
     },
-    "algolia-instantsearch": {
+    "mat-instantsearch": {
       "tags": []
     }
   }

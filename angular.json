@@ -516,28 +516,35 @@
         }
       }
     },
-    "algolia-instantsearch": {
+    "mat-instantsearch": {
       "projectType": "library",
-      "root": "libs/algolia-instantsearch",
-      "sourceRoot": "libs/algolia-instantsearch/src",
-      "prefix": "mais",
+      "root": "libs/mat-instantsearch",
+      "sourceRoot": "libs/mat-instantsearch/src",
+      "prefix": "tft",
       "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/mat-instantsearch/tsconfig.lib.json",
+            "project": "libs/mat-instantsearch/ng-package.json"
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/algolia-instantsearch/tsconfig.lib.json",
-              "libs/algolia-instantsearch/tsconfig.spec.json"
+              "libs/mat-instantsearch/tsconfig.lib.json",
+              "libs/mat-instantsearch/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/algolia-instantsearch/**"]
+            "exclude": ["**/node_modules/**", "!libs/mat-instantsearch/**"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/algolia-instantsearch/jest.config.js",
-            "tsConfig": "libs/algolia-instantsearch/tsconfig.spec.json",
-            "setupFile": "libs/algolia-instantsearch/src/test-setup.ts"
+            "jestConfig": "libs/mat-instantsearch/jest.config.js",
+            "tsConfig": "libs/mat-instantsearch/tsconfig.spec.json",
+            "setupFile": "libs/mat-instantsearch/src/test-setup.ts"
           }
         }
       },

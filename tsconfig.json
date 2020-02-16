@@ -24,7 +24,7 @@
       ],
       "@tft/core": ["libs/core/src/index.ts"],
       "@tft/ui-imports": ["libs/ui-imports/src/index.ts"],
-      "@tft/algolia-instantsearch": ["libs/algolia-instantsearch/src/index.ts"]
+      "@tft/mat-instantsearch": ["libs/mat-instantsearch/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
