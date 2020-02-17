@@ -5,7 +5,16 @@ This library was generated with [Nx](https://nx.dev).
 ## Running unit tests
 
 Run `nx test mat-instantsearch` to execute the unit tests.
+
+Better docs are coming!
+
+Find StackBitz examples app [here](https://stackblitz.com/github/nayfin/tft-documentation)
+
 ## Setup
+
+`ng add @angular/material`
+
+`npm i --save angular-instantsearch @tft/mat-instantsearch`
 
 in `polyfills.ts` add
 ```ts
@@ -17,12 +26,10 @@ in `polyfills.ts` add
 
 
 ```ts
-import { UiImportsModule } from '@tft/ui-imports';
 import { NgAisModule } from 'angular-instantsearch';
 import { MatInstantsearchModule } from '@tft/mat-instantsearch';
 
   imports: [
-    UiImportsModule,
     MatInstantsearchModule,
     NgAisModule.forRoot(),
   ]
