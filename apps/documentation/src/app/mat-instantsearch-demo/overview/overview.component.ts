@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { SEARCH_CONFIG } from '../search.config'
 @Component({
   selector: 'doc-overview',
   templateUrl: './overview.component.html',
@@ -7,11 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OverviewComponent implements OnInit {
 
-  searchConfig = {
-    apiKey: '6be0576ff61c053d5f9a3225e2a90f76',
-    appId: 'latency',
-    indexName: 'instant_search'
-  };
+  searchConfig = SEARCH_CONFIG;
 
   constructor() { }
 

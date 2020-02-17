@@ -1,0 +1,21 @@
+<div class="page-container-which-should-be-unnecessary">
+  <ais-instantsearch [config]="searchConfig">
+
+    <mis-search-box></mis-search-box>
+<!--
+    <mis-filter-select attributeName="brand">
+    </mis-filter-select> -->
+
+    <mis-filter-chiplist
+      [placeholder]="'Filter by Brand Name'"
+      attributeName="brand"></mis-filter-chiplist>
+
+
+
+    <mis-pagination></mis-pagination>
+
+    <ais-hits>
+    </ais-hits>
+
+  </ais-instantsearch>
+</div>

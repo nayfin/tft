@@ -31,10 +31,10 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
   *     ...
   *   ]
   *
-  *  then you need to tell tft-autocomplete where to look, by passing it the parameter name as a string to the
+  *  then you need to tell mis-autocomplete where to look, by passing it the parameter name as a string to the
   *  imageUrlParam input
   *
-  *    <tft-autocomplete [imageUrlParam]="'imageUrl'"></tft-autocomplete>
+  *    <mis-autocomplete [imageUrlParam]="'imageUrl'"></mis-autocomplete>
   *
   *
   *
@@ -53,7 +53,7 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
   @Input() public clearOnSubmit = false;
   @Input() public validators: Validators[] = [];
 
-  @Output() select = new EventEmitter();
+  @Output() selectHit = new EventEmitter();
   // will listen for changes on formControl then fire refine off with the controls value
   hits: Observable<any>;
   selected: any;
@@ -72,7 +72,7 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
     ) {
     super('Autocomplete');
     this.formContainer = this.fb.group({
-      'autocomplete': [null, [Validators.required, ...this.validators]]
+      'autocomplete': [null, [...this.validators]]
     });
   }
 
@@ -93,7 +93,7 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
 
   public handleSelect( event: MatAutocompleteSelectedEvent ) {
     const item = event.option.value;
-    this.select.emit({ item } );
+    this.selectHit.emit({ item } );
     this.selected = item;
     // if ( this.selectToSubmit) {
     //   this.handleSubmit();

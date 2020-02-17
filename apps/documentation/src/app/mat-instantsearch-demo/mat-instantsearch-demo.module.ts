@@ -6,6 +6,7 @@ import { NgAisModule } from 'angular-instantsearch';
 import { MatInstantsearchModule } from '@tft/mat-instantsearch';
 import { MatInstantsearchDemoRoutingModule } from './mat-instantsearch-demo-routing.module';
 import { OverviewComponent } from './overview/overview.component';
+import { ComponentsModule } from './components/components.module';
 
 
 @NgModule({
@@ -13,7 +14,7 @@ import { OverviewComponent } from './overview/overview.component';
   imports: [
     CommonModule,
     MatInstantsearchDemoRoutingModule,
-    // UiImportsModule,
+    ComponentsModule,
     MatInstantsearchModule,
     NgAisModule.forRoot(),
   ]

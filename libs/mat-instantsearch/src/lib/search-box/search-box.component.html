@@ -1,4 +1,4 @@
-<div 
+<div
   fxFlex
   fxLayoutAlign="center center">
 
@@ -18,10 +18,10 @@
       #searchInput/>
     <mat-hint
       *ngIf="algoliaAttribution">
-      <tft-algolia-attribution></tft-algolia-attribution>
+      <mis-algolia-attribution></mis-algolia-attribution>
     </mat-hint>
   </mat-form-field>
-  
+
   <button mat-raised-button
     color="primary"
     type="submit"
@@ -31,8 +31,8 @@
     </mat-icon>
     {{ submitTitle }}
   </button>
-  
-  <button 
+
+  <button
     *ngIf="displayResetButton"
     mat-raised-button
     color="accent"
@@ -44,7 +44,7 @@
     </mat-icon>
     {{ resetTitle }}
   </button>
-  
+
 
 
 </div>

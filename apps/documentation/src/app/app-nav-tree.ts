@@ -110,14 +110,7 @@ export const appNavTree: SidenavSection[] = [
           {title: 'Shuffleboard', path: 'interact-demo/shuffleboard'},
           {title: 'Landscaping', path: 'interact-demo/landscaping'}
         ]
-      },
-      // {
-      //   title: 'APIs',
-      //   links: [
-      //     {title: 'Drag', path: 'interact-demo/shuffleboard'},
-      //     {title: 'Drop', path: 'interact-demo/landscaping'}
-      //   ]
-      // }
+      }
     ]
   },
   {
@@ -130,14 +123,18 @@ export const appNavTree: SidenavSection[] = [
         path: 'mat-instantsearch-demo/overview',
       }
     ],
-    // subsections: [
-    //   {
-    //     title: 'Examples',
-    //     links: [
-    //       {title: 'Shuffleboard', path: 'interact-demo/shuffleboard'},
-    //       {title: 'Landscaping', path: 'interact-demo/landscaping'}
-    //     ]
-    //   }
-    // ]
+    subsections: [
+      {
+        title: 'Search Components',
+        links: [
+          {title: 'Search Box', path: 'mat-instantsearch-demo/components/search-box'},
+          {title: 'Autocomplete', path: 'mat-instantsearch-demo/components/autocomplete'},
+          {title: 'Select Filter', path: 'mat-instantsearch-demo/components/filter-select'},
+          {title: 'Chiplist Filter', path: 'mat-instantsearch-demo/components/filter-chiplist'},
+          {title: 'Pagination', path: 'mat-instantsearch-demo/components/pagination'},
+          {title: 'Algolia Attribution', path: 'mat-instantsearch-demo/components/algolia-attribution'}
+        ]
+      }
+    ]
   }
 ];
