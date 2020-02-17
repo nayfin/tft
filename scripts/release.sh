@@ -4,7 +4,7 @@
 set -e
 # TODO: There's probably a fancy way to automate this
 # THIS LIST MUST BE UPDATEd WHEN NEW PUBLISHABLE LIBS ARE ADDED
-packages=(interact crispr-forms form-validation-handler core ui-imports)
+packages=(interact crispr-forms form-validation-handler core ui-imports mat-instantsearch)
 # prompt user to ask what package we are releasing
 PS3='What package are we releaseing? (input number)'
 select package in "${packages[@]}"
