@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { NgAisModule } from 'angular-instantsearch';
+import { UiImportsModule } from '@tft/ui-imports';
 // search components
 import { FilterSelectComponent } from './filter-select/filter-select.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
@@ -24,7 +25,8 @@ const SEARCH_COMPONENTS = [
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    NgAisModule
+    NgAisModule,
+    UiImportsModule
   ],
   declarations: SEARCH_COMPONENTS,
   exports: SEARCH_COMPONENTS

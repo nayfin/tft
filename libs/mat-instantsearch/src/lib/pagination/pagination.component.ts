@@ -8,7 +8,7 @@ import { BaseWidget, NgAisModule, NgAisInstantSearch } from 'angular-instantsear
 // import { TftResultsPerPageComponent } from '../results-per-page/results-per-page.component';
 
 @Component({
-  selector: 'tft-pagination',
+  selector: 'mis-pagination',
   templateUrl: 'pagination.component.html',
   styleUrls: ['pagination.component.scss']
 })

@@ -7,7 +7,7 @@ import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'tft-autocomplete',
+  selector: 'mis-autocomplete',
   templateUrl: './autocomplete.component.html',
   styleUrls: ['./autocomplete.component.scss'],
 })

@@ -520,7 +520,7 @@
       "projectType": "library",
       "root": "libs/mat-instantsearch",
       "sourceRoot": "libs/mat-instantsearch/src",
-      "prefix": "tft",
+      "prefix": "mis",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",

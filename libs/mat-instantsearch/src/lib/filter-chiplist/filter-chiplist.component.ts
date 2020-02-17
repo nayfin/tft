@@ -24,7 +24,7 @@ export interface RefinementListItem {
 }
 
 @Component({
-  selector: 'tft-filter-chiplist',
+  selector: 'mis-filter-chiplist',
   templateUrl: './filter-chiplist.component.html',
   styleUrls: ['./filter-chiplist.component.scss']
 })

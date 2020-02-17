@@ -3,7 +3,7 @@ import { BaseWidget, NgAisInstantSearch } from 'angular-instantsearch';
 import { connectSearchBox } from 'instantsearch.js/es/connectors';
 
 @Component({
-  selector: 'tft-search-box',
+  selector: 'mis-search-box',
   templateUrl: './search-box.component.html',
   styleUrls: ['./search-box.component.scss']
 })

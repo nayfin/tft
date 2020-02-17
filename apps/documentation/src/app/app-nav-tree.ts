@@ -119,5 +119,25 @@ export const appNavTree: SidenavSection[] = [
       //   ]
       // }
     ]
+  },
+  {
+    title: 'Material Instantsearch',
+    subtitle: 'Material Design Algolia Instantsearch components',
+    description: ``,
+    links: [
+      {
+        title: 'Overview',
+        path: 'mat-instantsearch-demo/overview',
+      }
+    ],
+    // subsections: [
+    //   {
+    //     title: 'Examples',
+    //     links: [
+    //       {title: 'Shuffleboard', path: 'interact-demo/shuffleboard'},
+    //       {title: 'Landscaping', path: 'interact-demo/landscaping'}
+    //     ]
+    //   }
+    // ]
   }
 ];

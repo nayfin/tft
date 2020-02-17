@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy, AfterViewInit, AfterViewChecked } from '@angular/core';
-import { CrisprFieldConfig, ControlFieldConfig } from '../models';
+import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { ControlFieldConfig } from '../models';
 import { Observable, of, Subscription } from 'rxjs';
-import { FormGroup, AbstractControl } from '@angular/forms';
-import { tap, startWith, shareReplay } from 'rxjs/operators';
+import { FormGroup } from '@angular/forms';
+import { tap } from 'rxjs/operators';
 import { computeValueFromFields } from '../form.helpers';
 
 @Component({

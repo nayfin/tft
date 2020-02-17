@@ -7,6 +7,7 @@
     "@angular/material": "^8.2.0",
     "@angular/cdk": "^8.2.0",
     "@tft/ui-imports": "8.0.0",
+    "lodash-es": "^4.17.10",
     "angular-instantsearch": "^2.2.2"
   }
 }

@@ -21,7 +21,7 @@ export interface FilterListItem {
 }
 
 @Component({
-  selector: 'tft-filter-select',
+  selector: 'mis-filter-select',
   templateUrl: './filter-select.component.html',
   styleUrls: ['./filter-select.component.scss']
 })
@@ -61,7 +61,7 @@ export class FilterSelectComponent extends BaseWidget implements OnInit {
     event.stopPropagation();
 
     if (this.state.canRefine) {
-      // if multi-select is deactivated clear refinements so that only last selected 
+      // if multi-select is deactivated clear refinements so that only last selected
       if (!this.multiple) {
         this.clearFilter();
       }
