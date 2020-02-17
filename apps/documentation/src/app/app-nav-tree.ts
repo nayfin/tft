@@ -132,7 +132,6 @@ export const appNavTree: SidenavSection[] = [
           {title: 'Select Filter', path: 'mat-instantsearch-demo/components/filter-select'},
           {title: 'Chiplist Filter', path: 'mat-instantsearch-demo/components/filter-chiplist'},
           {title: 'Pagination', path: 'mat-instantsearch-demo/components/pagination'},
-          {title: 'Algolia Attribution', path: 'mat-instantsearch-demo/components/algolia-attribution'}
         ]
       }
     ]
