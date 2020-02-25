@@ -14,7 +14,7 @@ Find StackBitz examples app [here](https://stackblitz.com/github/nayfin/tft-docu
 
 `ng add @angular/material`
 
-`npm i --save angular-instantsearch @tft/mat-instantsearch`
+`npm i --save angular-instantsearch @tft/mat-instantsearch lodash-es`
 
 in `polyfills.ts` add
 ```ts
