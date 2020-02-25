@@ -8,7 +8,7 @@ Run `nx test mat-instantsearch` to execute the unit tests.
 
 Better docs are coming!
 
-Find StackBitz examples app [here](https://stackblitz.com/github/nayfin/tft-documentation)
+<!-- Find StackBlitz examples app [here](https://stackblitz.com/github/nayfin/tft-documentation) -->
 
 ## Setup
 
