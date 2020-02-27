@@ -43,7 +43,7 @@ release_version=$(grep version "libs/$package/package.json")
 # stage, commit and push all changes
 git add . && git commit -m "$package release: $release_version" && git push
 # deploy updated docs
-npm run deploy:docs
+# npm run deploy:docs
 
 
 
