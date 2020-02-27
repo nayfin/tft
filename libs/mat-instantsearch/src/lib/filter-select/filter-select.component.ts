@@ -49,8 +49,7 @@ export class FilterSelectComponent extends BaseWidget implements OnInit {
   }
 
   public ngOnInit() {
-    console.log({attributeName: this.attributeName})
-    super.createWidget(connectRefinementList, { attributeName: this.attributeName, attribute: this.attributeName });
+    super.createWidget(connectRefinementList, { attributeName: this.attributeName });
     super.ngOnInit();
   }
 
