@@ -1,6 +1,5 @@
 
-<form
-  [formGroup]="formContainer"
+<div
   fxFlex
   fxLayoutAlign="center center"
   fxLayoutGap='8px'>
@@ -12,14 +11,14 @@
       autocapitalize="off"
       autocorrect="off"
       spellcheck="false"
-      formControlName="autocomplete"
+      [formControl]="autocomplete"
       [placeholder]="placeholder"
       [matAutocomplete]="auto"
       [value]="state.query">
 
     <mat-autocomplete
       (optionSelected)="handleSelect($event)"
-      [displayWith]="mapToName"
+      [displayWith]="displayWithFn"
       #auto="matAutocomplete">
 
       <mat-option
@@ -47,7 +46,7 @@
     <button
       *ngIf="displaySelectButton"
       mat-raised-button
-      [disabled]="formContainer.invalid"
+      [disabled]="autocomplete.invalid"
       color="primary"
       type="submit"
       (click)="handleSubmit($event)">
@@ -75,7 +74,7 @@
     fxHide.gt-xs>
     <button mat-mini-fab
       *ngIf="displaySelectButton"
-      [disabled]="formContainer.invalid"
+      [disabled]="autocomplete.invalid"
       color="primary"
       type="submit"
       (click)="handleSubmit($event)"
@@ -98,4 +97,4 @@
     </button>
   </div>
 
-</form>
+</div>

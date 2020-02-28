@@ -1,6 +1,8 @@
 <div class="page-container-which-should-be-unnecessary">
   <ais-instantsearch [config]="searchConfig">
-    <mis-autocomplete (selectHit)="handleSelect($event)">
+    <mis-autocomplete
+      [displayWithFn]="mapToDescription"
+      (selectHit)="handleSelect($event)">
 
     </mis-autocomplete>
 

@@ -17,4 +17,8 @@ export class AutocompleteDemoComponent implements OnInit {
   handleSelect(event) {
     console.log({selectEvent: event})
   }
+
+  mapToDescription(val) {
+    return val ? val.description : '';
+  }
 }
