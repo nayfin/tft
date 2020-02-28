@@ -11,7 +11,7 @@
       autocapitalize="off"
       autocorrect="off"
       spellcheck="false"
-      [formControl]="autocomplete"
+      [formControl]="autocompleteControl"
       [placeholder]="placeholder"
       [matAutocomplete]="auto"
       [value]="state.query">
@@ -46,7 +46,7 @@
     <button
       *ngIf="displaySelectButton"
       mat-raised-button
-      [disabled]="autocomplete.invalid"
+      [disabled]="autocompleteControl.invalid"
       color="primary"
       type="submit"
       (click)="handleSubmit($event)">
@@ -74,7 +74,7 @@
     fxHide.gt-xs>
     <button mat-mini-fab
       *ngIf="displaySelectButton"
-      [disabled]="autocomplete.invalid"
+      [disabled]="autocompleteControl.invalid"
       color="primary"
       type="submit"
       (click)="handleSubmit($event)"

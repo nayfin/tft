@@ -61,7 +61,7 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
   // Resets state of instantSearch's autocomplete mechanisms on submission of selected item
   @Input() clearOnSubmit = false;
   @Input() validators: Validators[] = [];
-  @Input() autocomplete = new FormControl(null, ...this.validators);
+  @Input() autocompleteControl = new FormControl(null, ...this.validators);
 
 
   @Output() selectHit = new EventEmitter();
@@ -79,7 +79,7 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
     super.createWidget(connectAutocomplete);
     super.ngOnInit();
 
-    this.hits = this.autocomplete.valueChanges.pipe(
+    this.hits = this.autocompleteControl.valueChanges.pipe(
       debounceTime(this.debounceTime),
       map(val => {
       return this.handleChange(val);
@@ -92,7 +92,7 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
   };
 
   handleChange( query: string ): any[] {
-    // this.autocomplete.setErrors({'valueSelected': false});
+    // this.autocompleteControl.setErrors({'valueSelected': false});
     const refinement: any = this.state.refine(query);
     return refinement.lastResults.hits;
     // this.change.emit({query, hits});
@@ -126,7 +126,7 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
   }
 
   clearValue() {
-    this.autocomplete.reset();
+    this.autocompleteControl.reset();
   }
 
 }
