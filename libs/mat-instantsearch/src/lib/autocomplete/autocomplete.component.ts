@@ -4,7 +4,7 @@ import { BaseWidget, NgAisInstantSearch } from 'angular-instantsearch';
 import { connectAutocomplete } from 'instantsearch.js/es/connectors';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable, Subject } from 'rxjs';
-import { map, debounceTime } from 'rxjs/operators';
+import { map, debounceTime, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'mis-autocomplete',
@@ -78,16 +78,14 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
   ngOnInit() {
     super.createWidget(connectAutocomplete);
     super.ngOnInit();
-
+    console.log({control: this.autocompleteControl })
     this.hits = this.autocompleteControl.valueChanges.pipe(
       debounceTime(this.debounceTime),
-      map(val => {
-      return this.handleChange(val);
-    }) );
+      map(val =>  this.handleChange(val))
+    );
   }
 
   @Input() displayWithFn: (val: any) => string  = (val) => {
-    console.log({val})
     return val ? val.name : '';
   };
 

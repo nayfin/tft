@@ -9,6 +9,7 @@ import { FilterChiplistDemoComponent } from './filter-chiplist-demo/filter-chipl
 import { FilterSelectDemoComponent } from './filter-select-demo/filter-select-demo.component';
 import { SearchBoxDemoComponent } from './search-box-demo/search-box-demo.component';
 import { PaginationDemoComponent } from './pagination-demo/pagination-demo.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { PaginationDemoComponent } from './pagination-demo/pagination-demo.compo
   imports: [
     CommonModule,
     ComponentsRoutingModule,
+    ReactiveFormsModule,
     MatInstantsearchModule,
     NgAisModule.forRoot(),
   ]
