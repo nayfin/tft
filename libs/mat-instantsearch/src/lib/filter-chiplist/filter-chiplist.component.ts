@@ -1,27 +1,12 @@
-import { Component, Inject, forwardRef, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { Component, Inject, forwardRef, OnInit, Input } from '@angular/core';
+import { Validators, FormControl } from '@angular/forms';
 import { BaseWidget, NgAisInstantSearch } from 'angular-instantsearch';
-// import { parseNumberInput } from 'angular-instantsearch';
 import { connectRefinementList } from 'instantsearch.js/es/connectors';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { RefinementListItem, RefinementListState } from '../models';
 // import { MatAutocompleteSelectedEvent } from '@angular/material';
-
-export interface RefinementListState {
-  canRefine: boolean;
-  // canToggleShowMore: boolean;
-  createURL: Function;
-  // isShowingMore: boolean;
-  items: {}[];
-  refine: Function;
-  searchForItems: Function;
-  isFormSearch: boolean;
-}
-
-export interface RefinementListItem {
-  isRefined: boolean;
-  value: string;
-}
 
 @Component({
   selector: 'mis-filter-chiplist',
@@ -31,28 +16,28 @@ export interface RefinementListItem {
 export class FilterChiplistComponent extends BaseWidget implements OnInit {
 
   // Title of chip list if needed
-  @Input() public title: string | null = null;
+  @Input() title: string | null = null;
   // attribute of search index to search and filter on
-  @Input() public attributeName: string;
+  @Input() attributeName: string;
   // or: results include any of the filter items | and: results include all of the filter items
-  @Input() public operator: 'or' | 'and' = 'or';
+  @Input() operator: 'or' | 'and' = 'or';
   // callback function to filter the attribute items as they are returned
-  @Input() public transformItems?: Function;
+  @Input() transformItems?: Function;
   // name of parameter on item holding image url path
   // e.g. if the item has a path to an image and it is located on item.imageUrl enter 'imageUrl'
-  @Input() public imageUrlParam = 'image';
+  @Input() imageUrlParam = 'image';
   // placeholder for chiplist
-  @Input() public placeholder = 'Type to search';
+  @Input() placeholder = 'Type to search';
   // any validators to pass into searchbox
-  @Input() public validators: Validators[] = [];
+  @Input() validators: Validators[] = [];
   // Text inside of clear button
-  @Input() public displaySubmitChipsButton = false;
-  @Input() public selectTitle = 'SELECT';
+  @Input() displaySubmitChipsButton = false;
+  @Input() selectTitle = 'SELECT';
   // Text inside of clear button
-  @Input() public displayClearButton = false;
-  @Input() public clearTitle = 'CLEAR';
+  @Input() displayClearButton = false;
+  @Input() clearTitle = 'CLEAR';
   // Resets state of instantSearch's autocomplete mechanisms on submission of selected item
-  @Input() public clearOnSubmit = true;
+  @Input() clearOnSubmit = true;
   // Selecting item emits the submit event with the item's value
   @Input() areChipsRemovable = true;
   // Tab to select chip
@@ -62,18 +47,19 @@ export class FilterChiplistComponent extends BaseWidget implements OnInit {
   @Input() chipSelectable = true;
 
   // TODO: where is this limiting?
-  @Input() public limitMin: number | string = 10;
-  @Input() public limitMax: number | string;
+  @Input() limitMin: number | string = 10;
+  @Input() limitMax: number | string;
   // TODO: what options do we get with sortBy?
-  @Input() public sortBy: string[] | ((item: object) => number);
+  @Input() sortBy: string[] | ((item: object) => number);
 
-  searchQuery = '';
+  @Input() searchQuery = '';
   chips = [];
 
-  formContainer: FormGroup;
+  autocompleteControl = new FormControl(null, ...this.validators);
+  chips$ = new BehaviorSubject<RefinementListItem[]>([])
   remainingItems$: Observable<any[]>;
 
-  public state: RefinementListState = {
+  state: RefinementListState = {
     canRefine: false,
     // canToggleShowMore: boolean;
     createURL: () => undefined,
@@ -87,12 +73,8 @@ export class FilterChiplistComponent extends BaseWidget implements OnInit {
   constructor (
     @Inject(forwardRef(() => NgAisInstantSearch))
     public instantSearchParent,
-    private fb: FormBuilder
     ) {
     super('RefinementList');
-    this.formContainer = this.fb.group({
-      'autocomplete': [null, [Validators.required, ...this.validators]]
-    });
   }
 
   ngOnInit() {
@@ -106,7 +88,7 @@ export class FilterChiplistComponent extends BaseWidget implements OnInit {
     });
     super.ngOnInit();
 
-    this.remainingItems$ = this.formContainer.get('autocomplete').valueChanges.pipe(
+    this.remainingItems$ = this.autocompleteControl.valueChanges.pipe(
       filter( (inputVal) => typeof inputVal === 'string' ),
       map( inputVal => {
         this.handleChange(inputVal);
@@ -115,7 +97,7 @@ export class FilterChiplistComponent extends BaseWidget implements OnInit {
     );
   }
 
-  public refine(
+ refine(
     item: RefinementListItem,
   ) {
     if (this.state.canRefine) {
@@ -136,16 +118,20 @@ export class FilterChiplistComponent extends BaseWidget implements OnInit {
     this.state.searchForItems(value);
   }
 
-  handleSelect(event: any) {
-    this.refine(event.option.value);
-    this.chips.push(event.option.value);
+  handleSelect(event: MatAutocompleteSelectedEvent) {
+    const value = event.option.value
+    this.refine(value);
+    // this.chips.push(value);
+    this.chips$.next([...this.chips$.value, value])
     this.searchQuery = '';
     // this.formContainer.get('autocomplete').reset();
   }
 
-  removeChip(chip) {
+  removeChip(chip: RefinementListItem) {
     this.refine(chip);
-    this.chips.splice(this.chips.indexOf(chip), 1);
+    const currentChips = this.chips$.value;
+    const splicedChips = currentChips.splice(currentChips.indexOf(chip), 1);
+    this.chips$.next(splicedChips)
   }
   // TODO: this is used all over the place. Abstract it into a utils
   mapToName(val) {

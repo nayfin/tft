@@ -50,6 +50,7 @@
     "@nestjs/platform-express": "^6.10.4",
     "@nrwl/angular": "8.8.3",
     "@nrwl/schematics": "^8.12.6",
+    "algoliasearch-helper": "^3.1.1",
     "angular-instantsearch": "^2.2.2",
     "core-js": "^3.4.5",
     "firebase": ">= 5.5.7 <8",

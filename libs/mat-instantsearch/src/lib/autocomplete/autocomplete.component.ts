@@ -5,6 +5,7 @@ import { connectAutocomplete } from 'instantsearch.js/es/connectors';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable, Subject } from 'rxjs';
 import { map, debounceTime, startWith } from 'rxjs/operators';
+import { AlgoliaSearchHelper } from 'algoliasearch-helper';
 
 @Component({
   selector: 'mis-autocomplete',
@@ -44,7 +45,7 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
 
   state: {
     query: '';
-    refine: (value: string) => void;
+    refine: (value: string) => AlgoliaSearchHelper;
     indices: { hits: any[], index: string, label: string }[];
   };
   @Input() imageUrlParam = 'image';
@@ -71,7 +72,7 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
   constructor (
     @Inject(forwardRef(() => NgAisInstantSearch))
     public instantSearchParent,
-    ) {
+  ) {
     super('Autocomplete');
   }
 
@@ -89,14 +90,19 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
     return val ? val.name : '';
   };
 
+  @Input() mapHitsToOptions(hit: any) {
+    return hit;
+  };
+
   handleChange( query: string ): any[] {
     // this.autocompleteControl.setErrors({'valueSelected': false});
-    const refinement: any = this.state.refine(query);
-    return refinement.lastResults.hits;
+    const refinement: AlgoliaSearchHelper = this.state.refine(query);
+    console.log({refinement})
+    return refinement.lastResults.hits.map(this.mapHitsToOptions);
     // this.change.emit({query, hits});
   }
 
- handleSelect( event: MatAutocompleteSelectedEvent ) {
+  handleSelect( event: MatAutocompleteSelectedEvent ) {
     const item = event.option.value;
     this.selectHit.emit({ item } );
     // if ( this.selectToSubmit) {
@@ -104,7 +110,7 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
     // }
   }
 
- handleSubmit(event: MouseEvent | KeyboardEvent) {
+  handleSubmit(event: MouseEvent | KeyboardEvent) {
     // send submit event to parent component with selected item
     if ( event ) {
       event.preventDefault();

@@ -1,6 +1,4 @@
-<form
-  [formGroup]="formContainer"
-  (submit)="handleSubmit($event)"
+<div
   fxFlex
   fxLayoutAlign="center center">
 
@@ -10,7 +8,7 @@
       #chipList>
       <mat-chip
         class="refinement-chip"
-        *ngFor="let chip of chips"
+        *ngFor="let chip of chips$ | async"
         [selectable]="chipSelectable"
         [removable]="areChipsRemovable"
         (removed)="removeChip(chip)">
@@ -26,7 +24,7 @@
       <input
         role="textbox"
         type="text"
-        formControlName="autocomplete"
+        [formControl]="autocompleteControl"
         [placeholder]="placeholder"
         [matChipInputFor]="chipList"
         [matAutocomplete]="auto"
@@ -59,4 +57,4 @@
 
 
   </mat-form-field>
-</form>
+</div>

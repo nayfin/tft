@@ -1,24 +1,7 @@
 import { Component, Inject, forwardRef, OnInit, Input } from '@angular/core';
 import { BaseWidget, NgAisInstantSearch } from 'angular-instantsearch';
 import { connectRefinementList } from 'instantsearch.js/es/connectors';
-
-
-export interface FilterListState {
-  canRefine: boolean;
-  canToggleShowMore: boolean;
-  createURL: Function;
-  isShowingMore: boolean;
-  items: {}[];
-  refine: Function;
-  toggleShowMore: Function;
-  searchForItems: Function;
-  isFormSearch: boolean;
-}
-
-export interface FilterListItem {
-  isRefined: boolean;
-  value: string;
-}
+import { FilterListState, RefinementListItem } from '../models';
 
 @Component({
   selector: 'mis-filter-select',
@@ -31,15 +14,7 @@ export class FilterSelectComponent extends BaseWidget implements OnInit {
   @Input() multiple = true;
   @Input() attributeName: string;
 
-  state: {
-    items: { label: string; value: string; isRefined?: boolean }[];
-    createURL: () => string;
-    refine: (value: string) => void;
-    canRefine: boolean;
-    isShowingMore: boolean;
-    toggleShowMore: () => void;
-    canToggleShowMore: boolean;
-  };
+  state: FilterListState
 
   constructor(
     @Inject(forwardRef(() => NgAisInstantSearch))
@@ -55,7 +30,7 @@ export class FilterSelectComponent extends BaseWidget implements OnInit {
 
   public refine(
     event: MouseEvent,
-    item: FilterListItem
+    item: RefinementListItem
   ) {
     event.preventDefault();
     event.stopPropagation();
@@ -67,7 +42,6 @@ export class FilterSelectComponent extends BaseWidget implements OnInit {
       }
       // update UI directly, it will update the checkbox state
       item.isRefined = !item.isRefined;
-
       // refine through Algolia API
       this.state.refine(item.value);
     }
@@ -75,7 +49,7 @@ export class FilterSelectComponent extends BaseWidget implements OnInit {
 
   clearFilter() {
     this.state.items.forEach( (item, i, arr) => {
-      if ( item.isRefined === true ) {
+      if (item.isRefined === true) {
         item.isRefined = false;
         this.state.refine(item.value);
       }
