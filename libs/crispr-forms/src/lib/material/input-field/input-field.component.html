@@ -18,6 +18,7 @@
       *ngIf="config.info"
       [info]="config.info">
     </crispr-info>
+    <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
 
   </mat-form-field>
 

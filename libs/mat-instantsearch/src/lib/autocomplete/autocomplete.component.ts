@@ -67,8 +67,6 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
 
   @Output() selectHit = new EventEmitter();
 
-
-
   constructor (
     @Inject(forwardRef(() => NgAisInstantSearch))
     public instantSearchParent,
@@ -97,7 +95,6 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
   handleChange( query: string ): any[] {
     // this.autocompleteControl.setErrors({'valueSelected': false});
     const refinement: AlgoliaSearchHelper = this.state.refine(query);
-    console.log({refinement})
     return refinement.lastResults.hits.map(this.mapHitsToOptions);
     // this.change.emit({query, hits});
   }

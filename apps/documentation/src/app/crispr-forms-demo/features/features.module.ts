@@ -8,6 +8,7 @@ import { CrisprFormsModule } from '@tft/crispr-forms';
 import { AppearanceComponent } from './appearance/appearance.component';
 import { ColorComponent } from './color/color.component';
 import { InfoComponent } from './info/info.component';
+import { SuffixComponent } from './suffix/suffix.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { InfoComponent } from './info/info.component';
     AppearanceComponent,
     ColorComponent,
     InfoComponent,
+    SuffixComponent,
   ],
   imports: [
     UiImportsModule,

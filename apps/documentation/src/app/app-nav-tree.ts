@@ -80,6 +80,11 @@ export const appNavTree: SidenavSection[] = [
             path: 'crispr-forms-demo/features/info'
           },
           {
+            title: 'Suffix',
+            description: `Helpful for adding units to fields`,
+            path: 'crispr-forms-demo/features/suffix'
+          },
+          {
             title: 'Computed Field',
             description: `Compute field value to react to other field values in the parent form group`,
             path: 'crispr-forms-demo/features/computed-field'

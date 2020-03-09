@@ -4,6 +4,7 @@ import { ComputedFieldComponent, DisabledFieldComponent } from '.';
 import { AppearanceComponent } from './appearance/appearance.component';
 import { ColorComponent } from './color/color.component';
 import { InfoComponent } from './info/info.component';
+import { SuffixComponent } from './suffix/suffix.component';
 
 
 const routes: Routes = [
@@ -12,6 +13,8 @@ const routes: Routes = [
   { path: 'appearance', component: AppearanceComponent},
   { path: 'color', component: ColorComponent},
   { path: 'info', component: InfoComponent},
+  { path: 'suffix', component: SuffixComponent},
+
 ];
 
 @NgModule({
