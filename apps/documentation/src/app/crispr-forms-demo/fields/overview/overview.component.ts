@@ -103,7 +103,6 @@ export class OverviewComponent implements OnInit {
         controlName: 'selectField',
         placeholder: 'I am a placeholder in a select field',
         classes: [],
-        // validators: [Validators.required],
         options: [
           {label: 'option a', value: 'a'},
           {label: 'option b', value: 'b'},
@@ -121,7 +120,6 @@ export class OverviewComponent implements OnInit {
         controlName: 'selectFieldObservable',
         placeholder: 'I am a placeholder in a select field',
         classes: [],
-        // validators: [Validators.required],
         options: of([
           {label: 'good', value: 'a'},
           {label: 'evil', value: 'b'},
@@ -133,7 +131,6 @@ export class OverviewComponent implements OnInit {
         controlName: 'selectFieldPromise',
         placeholder: 'I am a placeholder in a select field',
         classes: [],
-        // validators: [Validators.required],
         options: (): Promise<SelectOption[]> => {
           return new Promise( (resolve, reject) => {
             // make an http request here
