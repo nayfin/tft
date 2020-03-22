@@ -25,7 +25,7 @@ export interface ControlFieldConfig extends CrisprFieldConfig {
   validators?: ValidatorFn[];
   fieldSuffix?: string;
   // TODO: Determine if this is necessary
-  computeFieldConfig?: ComputeFieldConfig | any;
+  computeFieldConfig?: ComputeFieldConfig;
   disabledCallback?: (group: FormGroup, config?: any ) => Observable<boolean>;
   disabledCallbackConfig?: CheckControlConfig | CheckControlsConfig | any; // any is required for user defined configs
   hideDisabled?: boolean; // defaults to false
