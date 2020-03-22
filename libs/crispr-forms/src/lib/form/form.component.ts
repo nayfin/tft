@@ -29,6 +29,7 @@ export class CrisprFormComponent implements OnInit {
   }
 
   handleSubmit() {
+    this.form.markAllAsTouched();
     this.submitted.emit(this.form);
   }
 }

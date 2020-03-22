@@ -94,8 +94,8 @@ export class OverviewComponent implements OnInit {
           tooltipPosition: 'left'
         },
         appearance: 'outline',
-        color: 'accent'
-        // validators: [Validators.required],
+        color: 'accent',
+        validators: [Validators.required],
       },
       {
         controlType: ControlType.SELECT,
@@ -222,7 +222,7 @@ export class OverviewComponent implements OnInit {
       },
       {
         controlType: ControlType.BUTTON,
-        disabledOnInvalidForm: true,
+        disabledOnInvalidForm: false,
         controlName: 'button',
         buttonType: 'flat',
         label: 'I AM A SUBMIT BUTTON',
