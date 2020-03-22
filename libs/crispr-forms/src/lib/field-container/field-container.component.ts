@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy } from '@a
 import { ControlFieldConfig } from '../models';
 import { Observable, of, Subscription } from 'rxjs';
 import { FormGroup } from '@angular/forms';
-import { tap } from 'rxjs/operators';
+import { tap, distinctUntilChanged } from 'rxjs/operators';
 import { computeValueFromFields } from '../form.helpers';
 
 @Component({
@@ -36,6 +36,7 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
     if (this.config.computeFieldConfig) {
       this.subs.push(
         computeValueFromFields(this.group, this.config.computeFieldConfig).pipe(
+          distinctUntilChanged(),
           tap(computedValue => this.group.get(this.config.controlName).setValue(computedValue))
         ).subscribe(),
       );
