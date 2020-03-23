@@ -26,6 +26,7 @@ export class CrisprFormComponent implements OnInit {
   ngOnInit() {
     // build out the form, not we pass in the form as the third argument and the function modifies it
     buildFormGroupFromConfig(this.config, this.value, this.form);
+    console.log(this.value);
   }
 
   handleSubmit() {
