@@ -3,7 +3,7 @@
   [ngClass]="config.classes"
   [formGroup]="form"
   (ngSubmit)="handleSubmit()"
-  [autocomplete]="config.autocomplete || 'on'"
+  [autocomplete]="config.autocomplete || 'off'"
   [errorDictionary]="config.errorDictionary">
 
   <ng-container
@@ -12,7 +12,5 @@
     [config]="field"
     [group]="form">
   </ng-container>
-  <pre>
-    {{value | json}}
-  </pre>
+
 </form>
