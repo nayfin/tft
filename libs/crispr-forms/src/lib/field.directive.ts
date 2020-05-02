@@ -13,7 +13,8 @@ import {
   DatepickerFieldComponent,
   SliderFieldComponent,
   HeadingComponent,
-  DividerComponent
+  DividerComponent,
+  AutocompleteChiplistFieldComponent
 } from './material';
 
 const components = {
@@ -23,6 +24,7 @@ const components = {
   group: FormGroupComponent,
   groupList: FormGroupListComponent,
   autocomplete: AutocompleteFieldComponent,
+  autocompleteChiplist: AutocompleteChiplistFieldComponent,
   textarea: TextareaFieldComponent,
   checkbox: CheckboxFieldComponent,
   slider: SliderFieldComponent,

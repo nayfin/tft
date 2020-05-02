@@ -5,7 +5,7 @@ import { ErrorDictionary } from '@tft/form-validation-handler';
 import { ComputeFieldConfig, CheckControlConfig, CheckControlsConfig } from '../form.helpers';
 import { SelectFieldConfig, HeadingConfig, ButtonConfig, DatepickerFieldConfig,
   InputFieldConfig, CheckboxFieldConfig, TextareaFieldConfig,
-  AutocompleteFieldConfig, FormGroupListConfig  } from '../models';
+  AutocompleteFieldConfig, FormGroupListConfig, AutocompleteChiplistFieldConfig  } from '../models';
 import { SliderFieldConfig } from './slider-field.config';
 
 /**
@@ -50,6 +50,7 @@ export type AnyFieldConfig = SelectFieldConfig
   | FormGroupListConfig
   | FormConfig
   | AutocompleteFieldConfig
+  | AutocompleteChiplistFieldConfig
   | TextareaFieldConfig
   | CheckboxFieldConfig
   | DatepickerFieldConfig
@@ -59,6 +60,7 @@ export type AnyFieldConfig = SelectFieldConfig
 
 export enum ControlType {
   AUTOCOMPLETE = 'autocomplete',
+  AUTOCOMPLETE_CHIPLIST = 'autocompleteChiplist',
   INPUT = 'input',
   TEXTAREA = 'textarea',
   CHECKBOX = 'checkbox',
@@ -70,4 +72,4 @@ export enum ControlType {
   BUTTON = 'button',
   HEADING = 'heading',
   DIVIDER = 'divider'
-}
+};

@@ -1,0 +1,58 @@
+<crispr-field-container
+  [config]="config"
+  [group]="group">
+
+  <mat-form-field>
+    <mat-chip-list
+      #chipList>
+      <mat-chip
+        class="refinement-chip"
+        *ngFor="let chip of chips$ | async"
+        [selectable]="config.chipsSelectable"
+        [removable]="config.areChipsRemovable"
+        (removed)="removeChip(chip)">
+        {{chip.label}}
+        <mat-icon
+          matChipRemove
+          *ngIf="config.areChipsRemovable">
+          cancel
+        </mat-icon>
+      </mat-chip>
+
+      <!-- [value]="searchQuery" -->
+      <input
+        role="textbox"
+        type="text"
+        [formControl]="control"
+        [placeholder]="config.placeholder"
+        [matChipInputFor]="chipList"
+        [matAutocomplete]="auto"
+        [matChipInputAddOnBlur]="config.addChipOnBlur"
+        matInput
+        autocapitalize="off"
+        autocorrect="off"
+        spellcheck="false"
+        #chipInput/>
+      </mat-chip-list>
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        (optionSelected)="handleSelect($event)"
+        [displayWith]="mapToLabel">
+
+        <mat-option
+          *ngFor="let item of filteredOptions$ | async"
+          [value]="item">
+
+          <img
+            *ngIf="item[config.imageUrlParam]"
+            [src]="item[config.imageUrlParam]"
+            style="vertical-align:middle;"
+            aria-hidden
+            height="25"/>
+          {{ item.label }}
+        </mat-option>
+      </mat-autocomplete>
+
+
+  </mat-form-field>
+</crispr-field-container>

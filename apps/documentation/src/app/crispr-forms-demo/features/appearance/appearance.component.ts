@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ControlType, FormConfig } from '@tft/crispr-forms';
+import { of } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'doc-appearance',
@@ -54,7 +56,29 @@ export class AppearanceComponent implements OnInit {
           typographyClass: 'mat-h2'
         },
         appearance: 'legacy',
-      }
+      },
+      {
+        controlType: ControlType.AUTOCOMPLETE_CHIPLIST,
+        controlName: 'chiplist',
+        label: 'Formatted Name',
+        heading: {
+          label: `Chiplist`,
+          typographyClass: 'mat-h2'
+        },
+        options: of([
+          {value: 'a', label: 'A'},
+          {value: 'apple', label: 'Apple'},
+          {value: 'abe', label: 'Abe'},
+          {value: 'ape', label: 'Ape'},
+          {value: 'bat', label: 'bat'}
+        ])
+      },
+      {
+        controlType: ControlType.BUTTON,
+        label: 'STROKED BUTTON',
+        color: 'primary',
+        buttonType: 'stroked'
+      },
     ]
   }
   constructor() { }
@@ -62,4 +86,7 @@ export class AppearanceComponent implements OnInit {
   ngOnInit() {
   }
 
+  handleSubmit(form: FormGroup) {
+    console.log({value: form.value});
+  }
 }

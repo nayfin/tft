@@ -7,6 +7,7 @@
     can be wrapped with the 'mat-form-field' component. Find related docs <a href="https://material.angular.io/components/form-field/overview">here</a>.
   </p>
   <crispr-form
-    [config]="formConfig">
+    [config]="formConfig"
+    (submitted)="handleSubmit($event)">
   </crispr-form>
 </mat-card>

@@ -15,8 +15,7 @@ import { RefinementListItem, RefinementListState } from '../models';
 })
 export class FilterChiplistComponent extends BaseWidget implements OnInit {
 
-  // Title of chip list if needed
-  @Input() title: string | null = null;
+
   // attribute of search index to search and filter on
   @Input() attributeName: string;
   // or: results include any of the filter items | and: results include all of the filter items
@@ -31,13 +30,7 @@ export class FilterChiplistComponent extends BaseWidget implements OnInit {
   // any validators to pass into searchbox
   @Input() validators: Validators[] = [];
   // Text inside of clear button
-  @Input() displaySubmitChipsButton = false;
-  @Input() selectTitle = 'SELECT';
-  // Text inside of clear button
-  @Input() displayClearButton = false;
-  @Input() clearTitle = 'CLEAR';
-  // Resets state of instantSearch's autocomplete mechanisms on submission of selected item
-  @Input() clearOnSubmit = true;
+
   // Selecting item emits the submit event with the item's value
   @Input() areChipsRemovable = true;
   // Tab to select chip

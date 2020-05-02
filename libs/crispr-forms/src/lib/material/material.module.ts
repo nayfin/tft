@@ -33,8 +33,9 @@ import { HeadingComponent } from './heading/heading.component';
 import { InfoComponent } from './info/info.component';
 import { SliderFieldComponent } from './slider-field/slider-field.component';
 import { DividerComponent } from './divider/divider.component';
+import { AutocompleteChiplistFieldComponent } from './autocomplete-chiplist-field/autocomplete-chiplist-field.component';
 
-// TODO: Should we imort UI library?
+// TODO: Should we import UI library?
 // Will the tree shaker shake the unused modules?
 const MAT_DESIGN_MODULES = [
   MatIconModule,
@@ -44,6 +45,7 @@ const MAT_DESIGN_MODULES = [
   MatRadioModule,
   MatSelectModule,
   MatCheckboxModule,
+  MatChipsModule,
   MatSliderModule,
   MatSlideToggleModule,
   MatButtonModule,
@@ -60,6 +62,7 @@ const CRISPR_FIELDS = [
   InputFieldComponent,
   SelectFieldComponent,
   AutocompleteFieldComponent,
+  AutocompleteChiplistFieldComponent,
   CheckboxFieldComponent,
   TextareaFieldComponent,
   DatepickerFieldComponent,
@@ -83,6 +86,7 @@ const CRISPR_FIELDS = [
   declarations: [
     ...CRISPR_FIELDS,
     InfoComponent,
+    AutocompleteChiplistFieldComponent,
   ],
   entryComponents: CRISPR_FIELDS
 })
