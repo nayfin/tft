@@ -14,6 +14,8 @@ import { DatepickerComponent } from './datepicker/datepicker.component';
 import { DividerComponent } from './divider/divider.component';
 import { HeadingComponent } from './heading/heading.component';
 import { ButtonComponent } from './button/button.component';
+import { AutocompleteChiplistComponent } from './autocomplete-chiplist/autocomplete-chiplist.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -27,13 +29,15 @@ import { ButtonComponent } from './button/button.component';
     DatepickerComponent,
     DividerComponent,
     HeadingComponent,
-    ButtonComponent
+    ButtonComponent,
+    AutocompleteChiplistComponent
   ],
   imports: [
     CommonModule,
     FieldsRoutingModule,
     CrisprFormsModule,
-    UiImportsModule
+    UiImportsModule,
+    HttpClientModule
   ]
 })
 export class FieldsModule { }

@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { FormGroup, AbstractControl } from '@angular/forms';
-import { SelectOption, AutocompleteFieldConfig } from '../../models';
+import { SelectOption, AutocompleteFieldConfig, OptionsType, ReactiveOptionsCallback } from '../../models';
 
 import { Observable } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
-import { observablifyOptions } from '../../form.helpers';
+import { switchMap, map, debounceTime, tap } from 'rxjs/operators';
+import { observablifyOptions, connectReactiveOptionsToGroup } from '../../form.helpers';
 
 @Component({
   selector: 'crispr-autocomplete-field',
@@ -19,7 +19,7 @@ export class AutocompleteFieldComponent implements OnInit {
 
   config: AutocompleteFieldConfig;
   group: FormGroup;
-  options$: Observable<SelectOption[]>;
+  // options$: Observable<SelectOption[]>;
   filteredOptions$: Observable<SelectOption[]>;
 
   get control(): AbstractControl {
@@ -35,26 +35,31 @@ export class AutocompleteFieldComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    // sort out if options are passed in as an Observable, Array, or Promise then convert it into an observable
-    this.options$ = observablifyOptions(this.config, this.group);
     // filter options by the search string using either the default filter function or one passed in through config
     this.filteredOptions$ = this.control.valueChanges.pipe(
       // this prevents errors when value changes is not a string because the filter function is expecting on
-      map(value => value || ''),
-      switchMap((searchString: string) => {
-        return this.options$.pipe(
+      debounceTime(this.config.typeDebounceTime || 500),
+      map(searchText => searchText || ''),
+      switchMap((searchText: string) => {
+
+        // return observablifyOptions(connectReactiveOptionsToGroup(this.config, this.group));
+
+        return observablifyOptions(connectReactiveOptionsToGroup(this.config, this.group, searchText)).pipe(
           map((options: SelectOption[]) => {
             // check for filter function passed in through config
             if (this.config.filterFunction && this.config.filterFunction instanceof Function) {
               try {
                 // use if found
-                return this.config.filterFunction(options, searchString);
+                return this.config.filterFunction(options, searchText);
               } catch (error) {
                 console.error(error, 'Error running filterFunction, falling back to default filter');
               }
             }
             // fallback to default in the absence of custom filter function or on error
-            return this.defaultFilterFunction(options, searchString);
+            return this.defaultFilterFunction(options, searchText);
+          }),
+          tap((filteredOptions) => {
+            console.log({filteredOptions});
           })
         );
       })
@@ -89,7 +94,9 @@ export class AutocompleteFieldComponent implements OnInit {
    * @param searchString the string from the input
    */
   defaultFilterFunction(options: SelectOption[], searchString: string)  {
-    return options.filter(option => option.label && option.label.toLowerCase().includes(searchString.toLowerCase()));
+    return options.filter(option => {
+      return option.label && option.label.toLowerCase().includes(searchString.toLowerCase());
+    });
   }
 }
 

@@ -7,7 +7,9 @@ import {
   FormConfig,
   ControlType,
   FormGroupListConfig,
-  ControlFieldConfig
+  ControlFieldConfig,
+  ReactiveOptionsCallback,
+  OptionsType
 } from './models';
 import {
   from,
@@ -170,6 +172,24 @@ function pipeOperatorsIntoObservable(observable: Observable<any>, operators: Ope
     return of(null);
   }
 }
+
+export function connectReactiveOptionsToGroup(
+  config: SelectFieldConfig | AutocompleteFieldConfig,
+  group?: FormGroup,
+  searchTerm?: string
+) {
+  const { options, /* reactiveOptions */} = config;
+  return /* reactiveOptions && */ options instanceof Function
+  ? options(group, searchTerm)
+  : options;
+}
+
+export function callOptionsIfFunction(
+  options: OptionsType,
+  parentGroup?: FormGroup,
+  searchString?: string) {
+  return options instanceof Function ? options(parentGroup, searchString) : options;
+}
 /**
  * The user can give us select options as an array, a function that resolves to a promise,
  * or an observable. This functions consumes any of those and returns an observable that
@@ -179,23 +199,22 @@ function pipeOperatorsIntoObservable(observable: Observable<any>, operators: Ope
  * @param emptyMessageOption the message to display when the array is empty
  */
 export function observablifyOptions(
-  config: SelectFieldConfig | AutocompleteFieldConfig,
-  group?: FormGroup
-):  Observable<SelectOption[]> {
-  const {options, reactiveOptions, emptyOptionsMessage} = config;
-  const options$ = reactiveOptions && options instanceof Function
-  ? options(group)
-  : options instanceof Function
-  ? from( (options as OptionsCallback)())
+  options: OptionsType,
+  emptyOptionsMessage?: string
+): Observable<SelectOption[]> {
+  const calledOptions = callOptionsIfFunction(options);
+  return calledOptions instanceof Promise
+  ? from(calledOptions as Promise<SelectOption[]>)
   : Array.isArray(options)
   ? of(options)
   : isObservable(options)
   ? options
-  : of([{
-    label: emptyOptionsMessage || DEFAULT_EMPTY_OPTIONS_MESSAGE,
-    value: null
-    }]);
-    return options$ as Observable<SelectOption[]>
+  : of([
+    {
+      label: emptyOptionsMessage || DEFAULT_EMPTY_OPTIONS_MESSAGE,
+      value: null
+    }
+  ]);
 }
 
 /**

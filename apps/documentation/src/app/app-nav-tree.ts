@@ -34,6 +34,10 @@ export const appNavTree: SidenavSection[] = [
             path: 'crispr-forms-demo/fields/autocomplete'
           },
           {
+            title: 'Autocomplete Chiplist Field',
+            path: 'crispr-forms-demo/fields/autocomplete-chiplist'
+          },
+          {
             title: 'Checkbox Field',
             path: 'crispr-forms-demo/fields/checkbox'
           },
@@ -118,27 +122,27 @@ export const appNavTree: SidenavSection[] = [
       }
     ]
   },
-  // {
-  //   title: 'Material Instantsearch',
-  //   subtitle: 'Material Design Algolia Instantsearch components',
-  //   description: ``,
-  //   links: [
-  //     {
-  //       title: 'Overview',
-  //       path: 'mat-instantsearch-demo/overview',
-  //     }
-  //   ],
-  //   subsections: [
-  //     {
-  //       title: 'Search Components',
-  //       links: [
-  //         {title: 'Search Box', path: 'mat-instantsearch-demo/components/search-box'},
-  //         {title: 'Autocomplete', path: 'mat-instantsearch-demo/components/autocomplete'},
-  //         {title: 'Select Filter', path: 'mat-instantsearch-demo/components/filter-select'},
-  //         {title: 'Chiplist Filter', path: 'mat-instantsearch-demo/components/filter-chiplist'},
-  //         {title: 'Pagination', path: 'mat-instantsearch-demo/components/pagination'},
-  //       ]
-  //     }
-  //   ]
-  // }
+  {
+    title: 'Material Instantsearch',
+    subtitle: 'Material Design Algolia Instantsearch components',
+    description: ``,
+    links: [
+      {
+        title: 'Overview',
+        path: 'mat-instantsearch-demo/overview',
+      }
+    ],
+    subsections: [
+      {
+        title: 'Search Components',
+        links: [
+          {title: 'Search Box', path: 'mat-instantsearch-demo/components/search-box'},
+          {title: 'Autocomplete', path: 'mat-instantsearch-demo/components/autocomplete'},
+          {title: 'Select Filter', path: 'mat-instantsearch-demo/components/filter-select'},
+          {title: 'Chiplist Filter', path: 'mat-instantsearch-demo/components/filter-chiplist'},
+          {title: 'Pagination', path: 'mat-instantsearch-demo/components/pagination'},
+        ]
+      }
+    ]
+  }
 ];

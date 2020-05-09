@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
 import { AutocompleteChiplistFieldConfig, SelectOption, OptionsType } from '../../models';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Observable, Subscription, BehaviorSubject } from 'rxjs';
-import { observablifyOptions } from '../../form.helpers';
+import { observablifyOptions, connectReactiveOptionsToGroup } from '../../form.helpers';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { switchMap, map, filter, shareReplay, distinctUntilChanged, tap } from 'rxjs/operators';
 
@@ -34,27 +34,30 @@ export class AutocompleteChiplistFieldComponent implements OnInit {
   filteredOptions$: Observable<SelectOption[]>;
   remainingOptions$: Observable<SelectOption[]>;
   chips$ = new BehaviorSubject<SelectOption[]>([]);
-
   control: FormControl;
-  // subs: Subscription[] = [];
-  // filteredOptions$: Observable<SelectOption[]>;
+  // we need a separate control for the UI because of the way the material autocomplete chiplist works
+  autocompleteInputControl: FormControl;
+  @ViewChild('chipInput', {static: false}) chipInput: ElementRef<HTMLInputElement>
   constructor() { }
 
   ngOnInit() {
+    this.group.addControl(this.config.controlName, new FormControl);
     this.control = this.group.get(this.config.controlName) as FormControl;
-    this.options$ = observablifyOptions(this.config, this.group).pipe(
+    this.autocompleteInputControl = new FormControl('');
+
+    this.options$ = observablifyOptions(connectReactiveOptionsToGroup(this.config, this.group)).pipe(
       shareReplay(1)
     );
     this.remainingOptions$ = this.chips$.pipe(
       // shareReplay(1),
-      tap(console.log),
+      tap(chips => this.control.setValue(chips.map(chip => chip.value))),
       switchMap(chips => {
         return this.options$.pipe(
           map(options => options.filter(option => !chips.includes(option)))
         );
       })
     )
-    this.filteredOptions$ = this.control.valueChanges.pipe(
+    this.filteredOptions$ = this.autocompleteInputControl.valueChanges.pipe(
       map(inputText => inputText || ''),
       filter(inputText => typeof inputText === 'string'),
       // distinctUntilChanged(),
@@ -72,6 +75,8 @@ export class AutocompleteChiplistFieldComponent implements OnInit {
   handleSelect(event: MatAutocompleteSelectedEvent) {
     const selectedOption: SelectOption = event.option.value as SelectOption;
     this.chips$.next([...this.chips$.value,  selectedOption]);
+    this.chipInput.nativeElement.value = '';
+    this.autocompleteInputControl.setValue('');
   }
 
   mapToLabel(option: SelectOption) {

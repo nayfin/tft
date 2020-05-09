@@ -19,7 +19,6 @@
           cancel
         </mat-icon>
 			</mat-chip>
-
       <!-- [value]="state.query" -->
       <input
         role="textbox"
@@ -35,26 +34,26 @@
         autocorrect="off"
         spellcheck="false"
         #chipInput/>
-      </mat-chip-list>
-      <mat-autocomplete
-        #auto="matAutocomplete"
-        (optionSelected)="handleSelect($event)"
-        [displayWith]="mapToName">
+    </mat-chip-list>
 
-        <mat-option
-          *ngFor="let item of remainingItems$ | async"
-          [value]="item">
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      (optionSelected)="handleSelect($event)"
+      [displayWith]="mapToName">
 
-          <img
-            *ngIf="item[imageUrlParam]"
-            [src]="item[imageUrlParam]"
-            style="vertical-align:middle;"
-            aria-hidden
-            height="25"/>
-          {{ item.label }}
-        </mat-option>
-      </mat-autocomplete>
+      <mat-option
+        *ngFor="let item of remainingItems$ | async"
+        [value]="item">
 
+        <img
+          *ngIf="item[imageUrlParam]"
+          [src]="item[imageUrlParam]"
+          style="vertical-align:middle;"
+          aria-hidden
+          height="25"/>
+        {{ item.label }}
+      </mat-option>
+    </mat-autocomplete>
 
   </mat-form-field>
 </div>

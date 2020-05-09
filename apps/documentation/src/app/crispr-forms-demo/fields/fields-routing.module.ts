@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {
   SelectComponent,
   AutocompleteComponent,
+  AutocompleteChiplistComponent,
   InputComponent,
   TextareaComponent,
   CheckboxComponent,
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'select'},
   { path: 'select', component: SelectComponent},
   { path: 'autocomplete', component: AutocompleteComponent},
+  { path: 'autocomplete-chiplist', component: AutocompleteChiplistComponent},
   { path: 'input', component: InputComponent},
   { path: 'textarea', component: TextareaComponent},
   { path: 'checkbox', component: CheckboxComponent},

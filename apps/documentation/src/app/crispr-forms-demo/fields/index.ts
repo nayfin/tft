@@ -1,5 +1,6 @@
 export * from './overview/overview.component';
 export * from './autocomplete/autocomplete.component';
+export * from './autocomplete-chiplist/autocomplete-chiplist.component';
 export * from './checkbox/checkbox.component';
 export * from './datepicker/datepicker.component';
 export * from './divider/divider.component';

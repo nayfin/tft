@@ -9,10 +9,11 @@ export interface SelectFieldConfig extends ControlFieldConfig {
   options: OptionsType;
 }
 
-export type OptionsType = SelectOption[] | Observable<SelectOption[]> | OptionsCallback | ReactiveOptionsCallback;
+export type OptionsType = SelectOption[] | Observable<SelectOption[]> | OptionsCallback | Promise<SelectOption[]>;
 
-export type OptionsCallback = () => Promise<SelectOption[]>;
-export type ReactiveOptionsCallback =  (group?: FormGroup) => Observable<SelectOption[]>
+export type OptionsCallback = (group?: FormGroup, searchTerm?: string) => OptionsType | Promise<SelectOption[]>;
+export type ReactiveOptionsCallback =  (group?: FormGroup) => Observable<SelectOption[]>;
+// export type AutocompleteOptionsCallback = (group?: FormGroup, search?: string) => Observable<SelectOption[]>;
 export interface SelectOption {
   label: string;
   value: any;

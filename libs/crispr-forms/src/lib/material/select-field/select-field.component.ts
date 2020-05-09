@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { SelectFieldConfig, SelectOption } from '../../models';
-import { observablifyOptions } from '../../form.helpers';
+import { observablifyOptions, connectReactiveOptionsToGroup } from '../../form.helpers';
 
 @Component({
   selector: 'crispr-select-field',
@@ -22,7 +22,7 @@ export class SelectFieldComponent implements OnInit {
   ngOnInit() {
     // options$ can be passed as an array, promise that resolves array, or observable that resolves array
     // this functions accounts for all possibilities and converts to observable that resolves array
-    this.options$ = observablifyOptions(this.config, this.group);
+    this.options$ = observablifyOptions(connectReactiveOptionsToGroup(this.config, this.group));
   }
 }
 

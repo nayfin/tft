@@ -27,7 +27,7 @@
     <mat-autocomplete
       #auto="matAutocomplete"
       [autoActiveFirstOption]="autoActiveFirstOption"
-      [displayWith]="displayLabel(options$ | async)">
+      [displayWith]="displayLabel(filteredOptions$ | async)">
 
       <mat-option
         *ngFor="let option of filteredOptions$ | async"
