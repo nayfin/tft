@@ -1,6 +1,8 @@
 import { ControlFieldConfig } from '../models';
+import { ControlType } from './crispr-field.config';
 
 export interface InputFieldConfig extends ControlFieldConfig {
+  controlType: ControlType.INPUT,
   inputType?: InputType;
 }
 

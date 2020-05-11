@@ -1,6 +1,6 @@
-import { ControlFieldConfig } from '../models';
-// TODO: We may not need this
+import { ControlFieldConfig, ControlType } from '../models';
 export interface SliderFieldConfig extends ControlFieldConfig {
+  controlType: ControlType.SLIDER;
   displayWith?: (value: number) => string | number;
   invert?: boolean;
   displayLimits?: boolean;

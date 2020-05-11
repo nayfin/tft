@@ -18,7 +18,7 @@ export class AutocompleteChiplistComponent implements OnInit {
         controlType: ControlType.AUTOCOMPLETE_CHIPLIST,
         label: 'This select field uses a simple array of options',
         controlName: 'selectField',
-        options: [
+        options: () => [
           {label: 'option a', value: 'a'},
           {label: 'option b', value: 'b'},
           {label: 'option c', value: 'c'},
@@ -60,7 +60,7 @@ export class AutocompleteChiplistComponent implements OnInit {
         controlType: ControlType.AUTOCOMPLETE_CHIPLIST,
         label: 'This select field uses an observable to resolve options',
         controlName: 'selectFieldObservable',
-        options: of([
+        options: () => of([
           {label: 'option a', value: 'a'},
           {label: 'option b', value: 'b'},
           {label: 'option c', value: 'c'},

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ControlType, FormConfig } from '@tft/crispr-forms';
+import { ControlType, FormConfig, filterOptionsByLabel } from '@tft/crispr-forms';
 import { of } from 'rxjs';
 import { FormGroup } from '@angular/forms';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'doc-appearance',
@@ -65,13 +66,13 @@ export class AppearanceComponent implements OnInit {
           label: `Chiplist`,
           typographyClass: 'mat-h2'
         },
-        options: of([
+        options: (group, searchText) => of([
           {value: 'a', label: 'A'},
           {value: 'apple', label: 'Apple'},
           {value: 'abe', label: 'Abe'},
           {value: 'ape', label: 'Ape'},
           {value: 'bat', label: 'bat'}
-        ])
+        ]).pipe(map(options => filterOptionsByLabel(options, searchText)))
       },
       {
         controlType: ControlType.BUTTON,

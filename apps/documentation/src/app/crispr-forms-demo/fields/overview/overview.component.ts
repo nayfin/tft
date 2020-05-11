@@ -160,7 +160,7 @@ export class OverviewComponent implements OnInit {
           iconName: 'delete'
         },
         // validators: [Validators.required],
-        options: of([
+        options: () => of([
           {label: 'good', value: 'a'},
           {label: 'evil', value: 'b'},
         ])

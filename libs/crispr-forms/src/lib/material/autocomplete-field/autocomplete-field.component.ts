@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { FormGroup, AbstractControl } from '@angular/forms';
-import { SelectOption, AutocompleteFieldConfig, OptionsType, ReactiveOptionsCallback } from '../../models';
+import { SelectOption, AutocompleteFieldConfig } from '../../models';
 
 import { Observable } from 'rxjs';
 import { switchMap, map, debounceTime, tap } from 'rxjs/operators';
-import { observablifyOptions, connectReactiveOptionsToGroup } from '../../form.helpers';
+import { observablifyOptions, connectReactiveOptionsToGroup, filterOptionsByLabel } from '../../form.helpers';
 
 @Component({
   selector: 'crispr-autocomplete-field',
@@ -42,21 +42,12 @@ export class AutocompleteFieldComponent implements OnInit {
       map(searchText => searchText || ''),
       switchMap((searchText: string) => {
 
-        // return observablifyOptions(connectReactiveOptionsToGroup(this.config, this.group));
-
         return observablifyOptions(connectReactiveOptionsToGroup(this.config, this.group, searchText)).pipe(
           map((options: SelectOption[]) => {
-            // check for filter function passed in through config
-            if (this.config.filterFunction && this.config.filterFunction instanceof Function) {
-              try {
-                // use if found
-                return this.config.filterFunction(options, searchText);
-              } catch (error) {
-                console.error(error, 'Error running filterFunction, falling back to default filter');
-              }
-            }
-            // fallback to default in the absence of custom filter function or on error
-            return this.defaultFilterFunction(options, searchText);
+            // use filter function if passed in through config
+            return this.config.filterFunction && this.config.filterFunction instanceof Function
+              ? this.config.filterFunction(options, searchText)
+              : options;
           }),
           tap((filteredOptions) => {
             console.log({filteredOptions});
@@ -88,15 +79,6 @@ export class AutocompleteFieldComponent implements OnInit {
       this.control.setValue(this.autoInput.activeOption.value);
     }
   }
-  /**
-   * A basic filter function that filters the search string against the label of the options object
-   * @param options the array of options to filter
-   * @param searchString the string from the input
-   */
-  defaultFilterFunction(options: SelectOption[], searchString: string)  {
-    return options.filter(option => {
-      return option.label && option.label.toLowerCase().includes(searchString.toLowerCase());
-    });
-  }
+
 }
 

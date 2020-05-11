@@ -9,7 +9,9 @@ import {
   FormGroupListConfig,
   ControlFieldConfig,
   ReactiveOptionsCallback,
-  OptionsType
+  OptionsType,
+  AutocompleteOptionsCallback,
+  AutocompleteChiplistFieldConfig
 } from './models';
 import {
   from,
@@ -174,7 +176,7 @@ function pipeOperatorsIntoObservable(observable: Observable<any>, operators: Ope
 }
 
 export function connectReactiveOptionsToGroup(
-  config: SelectFieldConfig | AutocompleteFieldConfig,
+  config: SelectFieldConfig | AutocompleteFieldConfig | AutocompleteChiplistFieldConfig,
   group?: FormGroup,
   searchTerm?: string
 ) {
@@ -185,9 +187,10 @@ export function connectReactiveOptionsToGroup(
 }
 
 export function callOptionsIfFunction(
-  options: OptionsType,
+  options: OptionsType | AutocompleteOptionsCallback,
   parentGroup?: FormGroup,
-  searchString?: string) {
+  searchString?: string
+) {
   return options instanceof Function ? options(parentGroup, searchString) : options;
 }
 /**
@@ -203,12 +206,19 @@ export function observablifyOptions(
   emptyOptionsMessage?: string
 ): Observable<SelectOption[]> {
   const calledOptions = callOptionsIfFunction(options);
+  // if options are a promise
   return calledOptions instanceof Promise
-  ? from(calledOptions as Promise<SelectOption[]>)
-  : Array.isArray(options)
-  ? of(options)
-  : isObservable(options)
-  ? options
+  // convert to observable
+  ? from(calledOptions)
+  // if array
+  : Array.isArray(calledOptions)
+  // convert to observable
+  ? of(calledOptions)
+  // if observable
+  : isObservable(calledOptions)
+  // return it
+  ? calledOptions
+  // else return empty option
   : of([
     {
       label: emptyOptionsMessage || DEFAULT_EMPTY_OPTIONS_MESSAGE,
@@ -217,6 +227,10 @@ export function observablifyOptions(
   ]);
 }
 
+export function isControlField(fieldConfig: AnyFieldConfig): fieldConfig is ControlFieldConfig {
+  // determine if config is a controlConfig but not a FormConfig
+  return 'controlName' in fieldConfig;
+}
 /**
  * builds out form group based on config
  * @param config a configuration for a form group
@@ -225,9 +239,9 @@ export function observablifyOptions(
  */
 export function buildFormGroupFromConfig(config: FormConfig, value: any = null, group: FormGroup = new FormGroup({}) ) {
 
-  config.fields.forEach( (controlConfig: ControlFieldConfig) => {
+  config.fields.forEach( (controlConfig: AnyFieldConfig) => {
     // if it's not a button config
-    if (controlConfig.controlType !== ControlType.BUTTON) {
+    if (isControlField(controlConfig)) {
       // then add a control to the group using the controlName from configuration
       const {controlName} = controlConfig;
       // if there's a value object and it has a value for this field (including zero), use it.
@@ -235,7 +249,7 @@ export function buildFormGroupFromConfig(config: FormConfig, value: any = null, 
       const controlValue = value && isRealValue(value[controlName])
                          ? value[controlName]
                          : null;
-      group.addControl(controlConfig.controlName, createControlForType(controlConfig, controlValue));
+      group.addControl(controlName, createControlForType(controlConfig, controlValue));
     }
   });
   return group;
@@ -264,6 +278,17 @@ export function createControlForType(controlConfig: AnyFieldConfig, value: any) 
     });
   }
   return control;
+}
+
+/**
+ * A basic filter function that filters the search string against the label of the options object
+ * @param options the array of options to filter
+ * @param searchString the string from the input
+ */
+export function filterOptionsByLabel(options: SelectOption[], searchString: string)  {
+  return options.filter(option => {
+    return option.label && option.label.toLowerCase().includes(searchString.toLowerCase());
+  });
 }
 
 /**

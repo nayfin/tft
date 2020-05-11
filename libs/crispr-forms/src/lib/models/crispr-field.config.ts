@@ -7,6 +7,7 @@ import { SelectFieldConfig, HeadingConfig, ButtonConfig, DatepickerFieldConfig,
   InputFieldConfig, CheckboxFieldConfig, TextareaFieldConfig,
   AutocompleteFieldConfig, FormGroupListConfig, AutocompleteChiplistFieldConfig  } from '../models';
 import { SliderFieldConfig } from './slider-field.config';
+import { DividerConfig } from './divider.config';
 
 /**
  * The base interface for all the fields in the form's config
@@ -42,7 +43,9 @@ export interface Info {
 export interface FormConfig extends ControlFieldConfig{
   errorDictionary?: ErrorDictionary;
   autocomplete?: 'off' | 'on';
-  fields: AnyFieldConfig[];
+  // TODO: this should be required, but we get an issue with AnyFieldConfig in the isControlField function
+  // unless we make it optional
+  fields?: AnyFieldConfig[];
 }
 
 export type AnyFieldConfig = SelectFieldConfig
@@ -56,7 +59,8 @@ export type AnyFieldConfig = SelectFieldConfig
   | DatepickerFieldConfig
   | SliderFieldConfig
   | HeadingConfig
-  | ButtonConfig;
+  | ButtonConfig
+  | DividerConfig;
 
 export enum ControlType {
   AUTOCOMPLETE = 'autocomplete',

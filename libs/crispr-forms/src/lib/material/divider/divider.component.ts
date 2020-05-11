@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DividerConfig } from '../../models';
 
 @Component({
   selector: 'crispr-divider',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DividerComponent implements OnInit {
   // TODO: pull in type after configs are better organized
-  config: {classes: string[]};
+  config: DividerConfig;
 
   constructor() { }
 

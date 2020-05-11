@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormConfig, ControlType, SelectOption } from '@tft/crispr-forms';
-import { switchMap, tap, map } from 'rxjs/operators';
+import { FormConfig, ControlType, SelectOption, filterOptionsByLabel } from '@tft/crispr-forms';
+import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 
-const plantDatabases: {[key: string]: {url: string, mappingCallback: (any) => any}} = {
+const ENDPOINTS: {[key: string]: {url: string, mappingCallback: (any) => any}} = {
   openFarm: {
     url: 'https://openfarm.cc/api/v1/crops?filter=',
     mappingCallback: (dbResponse: {data: any[]}) => {
@@ -21,7 +21,7 @@ const plantDatabases: {[key: string]: {url: string, mappingCallback: (any) => an
   reddit: {
     url: 'https://www.reddit.com/r/php/search.json?q=',
     mappingCallback: ((redditRes) => {
-      console.log(redditRes)
+      console.log({redditRes})
       const listings: any[] = redditRes.data.children;
       const options = listings.map(listing => {
         const data = listing.data;
@@ -49,11 +49,12 @@ export class AutocompleteComponent implements OnInit {
         controlType: ControlType.AUTOCOMPLETE,
         label: 'This select field uses a simple array of options',
         controlName: 'selectField',
-        options: [
+        options: () => [
           {label: 'option a', value: 'a'},
           {label: 'option b', value: 'b'},
           {label: 'option c', value: 'c'},
-        ]
+        ],
+        filterFunction: filterOptionsByLabel
       }
     ]
   }
@@ -66,12 +67,12 @@ export class AutocompleteComponent implements OnInit {
         controlType: ControlType.AUTOCOMPLETE,
         label: 'This select field uses a function that returns a promise to resolve options',
         controlName: 'selectFieldPromise',
-        // validators: [Validators.required],
-        options: (): Promise<SelectOption[]> => {
-          return new Promise( (resolve, reject) => {
-            // make an http request here
-            fetch(`${plantDatabases['openFarm'].url}`)
-          });
+        options: (_group, searchString): Promise<SelectOption[]> => {
+          return fetch(`${ENDPOINTS['reddit'].url}${searchString}`)
+            .then(res => res.json())
+            .then( (dbPlants) => {
+              return ENDPOINTS['reddit'].mappingCallback(dbPlants)
+            })
         },
       },
     ]
@@ -86,11 +87,10 @@ export class AutocompleteComponent implements OnInit {
         label: 'This select field uses an observable to resolve options',
         controlName: 'selectFieldObservable',
         options: (_group, searchTerm) => {
-          return this.getSearchResults(plantDatabases['openFarm'].url, searchTerm).pipe(
-            map(plantDatabases['openFarm'].mappingCallback),
+          return this.getSearchResults(ENDPOINTS['openFarm'].url, searchTerm).pipe(
+            map(ENDPOINTS['openFarm'].mappingCallback),
           )
         },
-        filterFunction: (options) => options
       }
     ]
   }
@@ -112,15 +112,15 @@ export class AutocompleteComponent implements OnInit {
         controlType: ControlType.AUTOCOMPLETE,
         label: 'This select field uses an observable to resolve options',
         controlName: 'selectFieldObservable',
-        filterFunction: (option) => option,
+        // filterFunction: (option) => option,
         options: (group, searchText) => {
           console.log({searchText});
 
           const databaseKey = group.get('optionsDriver').value || 'openFarm';
-          return this.getSearchResults(plantDatabases[databaseKey].url, searchText).pipe(
+          return this.getSearchResults(ENDPOINTS[databaseKey].url, searchText).pipe(
             map((dbResponse) =>  {
               console.log({dbResponse});
-              return plantDatabases[databaseKey].mappingCallback(dbResponse);
+              return ENDPOINTS[databaseKey].mappingCallback(dbResponse);
             })
           );
 
@@ -128,7 +128,8 @@ export class AutocompleteComponent implements OnInit {
       },
       {
         controlType: ControlType.BUTTON,
-        label: 'SUBMIT'
+        label: 'SUBMIT',
+        buttonType: 'flat'
       }
     ]
   }

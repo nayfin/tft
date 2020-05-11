@@ -1,8 +1,10 @@
 import { ControlFieldConfig } from '../models';
 import { Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
+import { ControlType } from './crispr-field.config';
 
 export interface SelectFieldConfig extends ControlFieldConfig {
+  controlType: ControlType.SELECT,
   emptyOptionsMessage?: string;
   reactiveOptions?: boolean;
   multiple?: boolean;
@@ -11,9 +13,10 @@ export interface SelectFieldConfig extends ControlFieldConfig {
 
 export type OptionsType = SelectOption[] | Observable<SelectOption[]> | OptionsCallback | Promise<SelectOption[]>;
 
-export type OptionsCallback = (group?: FormGroup, searchTerm?: string) => OptionsType | Promise<SelectOption[]>;
+export type OptionsCallback = (group?: FormGroup) => OptionsType;
 export type ReactiveOptionsCallback =  (group?: FormGroup) => Observable<SelectOption[]>;
-// export type AutocompleteOptionsCallback = (group?: FormGroup, search?: string) => Observable<SelectOption[]>;
+// tslint:disable-next-line: max-line-length
+export type AutocompleteOptionsCallback = (group?: FormGroup, searchTerm?: string) => OptionsType;
 export interface SelectOption {
   label: string;
   value: any;
