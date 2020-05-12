@@ -3,8 +3,9 @@ import { AutocompleteChiplistFieldConfig, SelectOption, OptionsType } from '../.
 import { FormGroup, FormControl } from '@angular/forms';
 import { Observable, Subscription, BehaviorSubject } from 'rxjs';
 import { observablifyOptions, connectReactiveOptionsToGroup } from '../../form.helpers';
-import { MatAutocompleteSelectedEvent } from '@angular/material';
+// import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { switchMap, map, filter, shareReplay, distinctUntilChanged, tap } from 'rxjs/operators';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 export const defaultAutocompleteChiplistConfig: Partial<AutocompleteChiplistFieldConfig> = {
   chipsSelectable: true,

@@ -1,4 +1,4 @@
-import { Point } from '@interactjs/types/types';
+import { Point } from '@interactjs/types';
 
 export interface Puck {
   location?: Point;

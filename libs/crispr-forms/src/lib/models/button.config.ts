@@ -1,5 +1,5 @@
 import { CrisprFieldConfig, ControlType } from './crispr-field.config';
-import { ThemePalette } from '@angular/material';
+import { ThemePalette } from '@angular/material/core';
 
 export interface ButtonConfig extends CrisprFieldConfig {
   controlType: ControlType.BUTTON;

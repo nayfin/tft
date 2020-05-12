@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { Team, Puck } from '../../models/shuffleboard.model';
-import { DraggableOptions } from '@interactjs/types/types';
+import { DraggableOptions } from '@interactjs/types';
 import interact from 'interactjs';
 import { TftDragEvent } from '@tft/interact';
 
@@ -35,12 +35,12 @@ export class PuckComponent implements OnInit, OnChanges {
       resistance: 1,
       allowResume: true,
       endSpeed: 10,
-      smoothEndDuration: 2000 
+      smoothEndDuration: 2000
     },
     modifiers: [
       interact.modifiers.restrict({
         restriction: 'tft-board',
-        endOnly: false,   
+        endOnly: false,
         elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
       })
     ]
@@ -55,7 +55,7 @@ export class PuckComponent implements OnInit, OnChanges {
     if( changes.whosTurn || changes.turnCount) {
       const enabled = (this.whosTurn === this.team && this.turnCount === this.index)
       this.dragConfig = {
-        ...this.dragConfig, 
+        ...this.dragConfig,
         enabled
       }
     }

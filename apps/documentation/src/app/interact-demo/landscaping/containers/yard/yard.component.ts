@@ -1,6 +1,6 @@
 import { Component, OnInit, Renderer2, ElementRef, ViewChild } from '@angular/core';
 import { TftDropEvent, DropzoneDirective } from '@tft/interact';
-import { DraggableOptions } from '@interactjs/types/types';
+import { DraggableOptions } from '@interactjs/types';
 
 @Component({
   selector: 'tft-yard',
@@ -12,7 +12,7 @@ export class YardComponent {
 
   @ViewChild(DropzoneDirective, {static: false}) dropzone2: DropzoneDirective;
 
-  dragConfig: DraggableOptions; 
+  dragConfig: DraggableOptions;
   dragConfigB: DraggableOptions;
   dragItems = [
     {
@@ -51,7 +51,7 @@ export class YardComponent {
         name: event.dragRef.dragData.name
       }
       dragData.count--;
-      this.droppedItems.push(item); 
+      this.droppedItems.push(item);
     } else {
       this.renderer.setStyle(
         event.interactEvent.target,

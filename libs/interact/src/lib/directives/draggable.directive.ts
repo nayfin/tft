@@ -2,18 +2,16 @@ import { Directive, ElementRef, Input, OnInit, Output,
    OnDestroy, EventEmitter, Optional, SkipSelf, Renderer2, SimpleChanges, OnChanges } from '@angular/core';
 import interact from 'interactjs';
 import { InteractService } from '../services/interact.service';
-import { DraggableOptions } from '@interactjs/types/types';
+import { DraggableOptions } from '@interactjs/types';
 import { Subscription, Observable } from 'rxjs';
-import { DragEvent } from '@interactjs/actions';
 import { DropzoneDirective } from './dropzone.directive';
 import { NgDragEvent, TftDragEvent, DEFAULT_REGISTRY_ID, TftInteractable } from '../models';
 import Interactable from '@interactjs/core/Interactable';
-import { tap } from 'rxjs/operators';
 
 @Directive({
   selector: '[tftDraggable]',
   // tslint:disable-next-line: no-host-metadata-property
-  host: {    
+  host: {
     '[style.touchAction]': '"none"',
     '[style.position]': '"absolute"',
     '[id]': 'interactableId',
@@ -21,22 +19,22 @@ import { tap } from 'rxjs/operators';
 })
 export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
 
-  
+
   @Input() x: number;
   @Input() y: number;
-  
+
   @Input() interactableId: string;
   @Input() dragData: any;
   @Input() enableDragDefault = true;
   @Input() disabled = false;
   @Input() dragConfig: Partial<Interact.OrBoolean<DraggableOptions>>;
-  
-  // pipes all interact events to event emitters 
+
+  // pipes all interact events to event emitters
   @Output() dragStart = new EventEmitter<TftDragEvent>();
   @Output() dragMove = new EventEmitter<TftDragEvent>();
   @Output() dragInertiaStart = new EventEmitter<TftDragEvent>();
   @Output() dragEnd = new EventEmitter<TftDragEvent>();
-  
+
   interactableState: Observable<TftInteractable>;
   interactable: Interactable;
   private registryId: string;
@@ -51,7 +49,7 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
   ) { }
 
   ngOnInit() {
-    
+
     this.interactable = this.initiateInteractEvents(this.dragConfig, this.el.nativeElement);
 
     // Set our target and origin to the parent zone, since we're starting here
@@ -59,25 +57,25 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
     // register with parent dropzone if it exists, otherwise use default
     this.registryId = this.dropzone_dir && this.dropzone_dir.dropzoneId
       ? this.dropzone_dir.dropzoneId
-      : DEFAULT_REGISTRY_ID; 
-    // add draggable to directory and store its id 
+      : DEFAULT_REGISTRY_ID;
+    // add draggable to directory and store its id
     this.interactableId = this.interactService.addDraggableToRegistry(this.registryId, this.interactableId);
     // cache subscription to interactable state so we can unsubscribe onDestroy
     this.interactableState = this.interactService
       .getInteractableState(this.interactableId, this.registryId);
-  
+
     // we create a property 'dragRef' on the element so that we can easily pass the class to the drop zone
     this.renderer.setProperty(this.el.nativeElement, 'dragRef', this);
     this.alignPositionWithInputs(this.x, this.y);
     // keep our cached position values in line with our drag state
-    this.interactableSubscription = this.interactableState.subscribe((state) => { 
+    this.interactableSubscription = this.interactableState.subscribe((state) => {
       this.y = state.y;
       this.x = state.x;
     });
   };
   // TODO: watch config here as well and update interactable
   ngOnChanges(changes: SimpleChanges) {
-    // we do this here instead of using a setter on the input so that it 
+    // we do this here instead of using a setter on the input so that it
     // will only run once when there is a change to x and y
     if(changes.y || changes.x) {
       this.alignPositionWithInputs(this.x, this.y);
@@ -97,30 +95,30 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
   dragMoveListener(event: NgDragEvent) {
     const { dx, dy } = event;
     this.interactService.updateDeltas(
-      this.interactableId, 
-      this.registryId, 
-      {deltaX: dx, deltaY: dy}, 
+      this.interactableId,
+      this.registryId,
+      {deltaX: dx, deltaY: dy},
       this.el.nativeElement
     );
   }
 
   mapDragEvent(event: NgDragEvent): TftDragEvent {
     const { target } = event;
-    const relatedTarget = target.dropTarget 
-      ? target.dropTarget.el.nativeElement 
+    const relatedTarget = target.dropTarget
+      ? target.dropTarget.el.nativeElement
       : null;
     const positionInDropTarget = target && relatedTarget
       ? this.interactService.calculatePositionInDropzone(relatedTarget, target)
       : null;
     return {
       interactEvent: event,
-      dragRef: this, 
+      dragRef: this,
       dragOrigin: target.dragOrigin,
       dropTarget: this.el.nativeElement.dropTarget,
       positionInDropTarget
     }
   }
-  
+
   setPosition(x: number, y: number) {
     this.interactService.updatePosition(
       this.interactableId,
@@ -134,9 +132,9 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
     // short circuit if positions aren't numbers or  if they haven't changed
     if(!this.isValidPosition(x, y)) return;
     this.interactService.updatePosition(
-      this.interactableId, 
+      this.interactableId,
       this.registryId,
-      {x, y}, 
+      {x, y},
       this.el.nativeElement
     );
   }
@@ -185,7 +183,7 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy {
     clone.style.height = '150px';
     return clone;
   }
-  
+
 }
 
 /**

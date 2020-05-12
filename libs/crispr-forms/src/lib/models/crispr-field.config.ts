@@ -1,6 +1,9 @@
 import { FormGroup, ValidatorFn } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { TooltipPosition, ThemePalette, MatFormFieldAppearance } from '@angular/material';
+import { TooltipPosition } from '@angular/material/tooltip';
+import { MatFormFieldAppearance } from '@angular/material/form-field';
+// import { ThemePalette } from '@angular/material/';
+
 import { ErrorDictionary } from '@tft/form-validation-handler';
 import { ComputeFieldConfig, CheckControlConfig, CheckControlsConfig } from '../form.helpers';
 import { SelectFieldConfig, HeadingConfig, ButtonConfig, DatepickerFieldConfig,
@@ -8,6 +11,7 @@ import { SelectFieldConfig, HeadingConfig, ButtonConfig, DatepickerFieldConfig,
   AutocompleteFieldConfig, FormGroupListConfig, AutocompleteChiplistFieldConfig  } from '../models';
 import { SliderFieldConfig } from './slider-field.config';
 import { DividerConfig } from './divider.config';
+import { ThemePalette } from '@angular/material/core';
 
 /**
  * The base interface for all the fields in the form's config

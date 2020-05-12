@@ -2,7 +2,7 @@ import { DraggableDirective } from '../directives/draggable.directive';
 import DropEvent from '@interactjs/actions/drop/DropEvent'
 import Interactable from '@interactjs/core/Interactable';
 import { DropzoneDirective } from '../directives/dropzone.directive';
-import { Point, DragEvent, ResizeEvent } from '@interactjs/types/types';
+import { Point, DragEvent, ResizeEvent } from '@interactjs/types';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export const DEFAULT_REGISTRY_ID = 'DEFAULT';
@@ -10,36 +10,36 @@ export const DEFAULT_REGISTRY_ID = 'DEFAULT';
  * Default initial value for Delta BehaviorSubject
  */
 export const defaultDelta: Delta = {
-  deltaX: 0, 
-  deltaY: 0, 
-  targetElement: null 
+  deltaX: 0,
+  deltaY: 0,
+  targetElement: null
 };
 /**
  * Default initial value for Size BehaviorSubject
  */
 export const defaultSize: Size = {
-  width: null, 
-  height: null, 
-  targetElement: null 
+  width: null,
+  height: null,
+  targetElement: null
 }
 /**
  * Default initial value for Position BehaviorSubject
  */
 export const defaultPosition: Position = {
-  x: 0, 
-  y: 0, 
-  targetElement: null 
+  x: 0,
+  y: 0,
+  targetElement: null
 }
 /**
- * The shape of the state/events/behavior system for each dropzone 
- * and the DEFAULT_REGISTRY_ID system (for drop components initialized outside  
+ * The shape of the state/events/behavior system for each dropzone
+ * and the DEFAULT_REGISTRY_ID system (for drop components initialized outside
  * of a dropzone).
  */
 export interface InteractableSystem {
   deltas$: BehaviorSubject<Delta>;
   position$: BehaviorSubject<Position>;
   size$: BehaviorSubject<Size & Delta>;
-  
+
   interactable$: Observable<TftInteractable>;
 }
 /**
@@ -47,49 +47,49 @@ export interface InteractableSystem {
  * that originated outside of a dropzone, plus one for each dropzone.
  */
 export interface InteractableRegistry {
-  [key: string]: InteractableSystem  
-} 
+  [key: string]: InteractableSystem
+}
 /**
- * Extends the interact drop events by adding reference to the dropped components drag  
+ * Extends the interact drop events by adding reference to the dropped components drag
  * directive to the html element. This gives the dropzone access to things like data
  * and parent dropzone of the dropped component.
  */
-export type NgDropEvent = DropEvent & { 
+export type NgDropEvent = DropEvent & {
   draggable:  Interactable & {
-    target: HTMLElement & { 
+    target: HTMLElement & {
       dragRef: DraggableDirective
       dragOrigin?: DropzoneDirective
       dropTarget?: DropzoneDirective
-    } 
-  } 
+    }
+  }
 };
 /**
- * Extends the interact resize events by adding a reference to the dragRef 
- * directive to the html element. 
+ * Extends the interact resize events by adding a reference to the dragRef
+ * directive to the html element.
  */
-export type  NgResizeEvent = ResizeEvent & { 
+export type  NgResizeEvent = ResizeEvent & {
   draggable:  Interactable & {
-    target: HTMLElement & { 
+    target: HTMLElement & {
       dragRef?: DraggableDirective
       dragOrigin?: DropzoneDirective
       dropTarget?: DropzoneDirective
-    } 
-  } 
+    }
+  }
 };
 /**
- * We extend the interact DragEvent a little here, adding to the target element references for: 
+ * We extend the interact DragEvent a little here, adding to the target element references for:
  *  - the component we are dragging (dragRef)
  *  - the dropzone component where the drag component originated (dragOrigin)
  *  - the dropzone component that it was dropped in (dropTarget)
  * This helps us to pass references to directive classes as events like dragenter and drag exit happens.
  * We use these references to emit a (mostly) consistent event across drag, drop, resize event.
  */
-export type NgDragEvent = DragEvent & { 
-  target: HTMLElement & { 
+export type NgDragEvent = DragEvent & {
+  target: HTMLElement & {
     dragRef: DraggableDirective
     dragOrigin?: DropzoneDirective
     dropTarget?: DropzoneDirective
-  } 
+  }
 };
 /**
  * Event emitted when resizing, dragging, dropping
@@ -98,7 +98,7 @@ export interface TftInteractableEvent {
   dragRef: DraggableDirective;
   dragOrigin?: DropzoneDirective;
   dropTarget?: DropzoneDirective;
-  positionInDropTarget: Point;  
+  positionInDropTarget: Point;
 }
 /**
  * Event emitted on drop
@@ -134,7 +134,7 @@ export interface Position {
 }
 
 export interface Size {
-  width: number | null; 
-  height: number | null; 
+  width: number | null;
+  height: number | null;
   targetElement: any;
 }

@@ -2,17 +2,16 @@ import { Directive, OnInit, OnDestroy, ElementRef, Input, Optional, SkipSelf, Ou
 import interact from 'interactjs';
 import Interactable from '@interactjs/core/Interactable';
 import { InteractService } from '../services/interact.service';
-import { ResizableOptions } from '@interactjs/types/types';
+import { ResizableOptions, ResizeEvent } from '@interactjs/types';
 import { Subscription } from 'rxjs';
-import { ResizeEvent } from '@interactjs/actions';
 import { DraggableDirective } from './draggable.directive';
 import { DropzoneDirective } from './dropzone.directive';
 import { NgResizeEvent, TftResizeEvent, DEFAULT_REGISTRY_ID } from '../models';
 @Directive({
   selector: '[tftResizable]',
-  host: { 
-    // prevents touch events from colliding with with mouse events 
-    // on touch screen   
+  host: {
+    // prevents touch events from colliding with with mouse events
+    // on touch screen
     '[style.touchAction]': '"none"',
     // default to absolute here to accommodate likely use cases
     // consuming component can easily over ride with position input
@@ -20,13 +19,13 @@ import { NgResizeEvent, TftResizeEvent, DEFAULT_REGISTRY_ID } from '../models';
   }
 })
 export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
-  
+
   @Input() enableResizeDefault = true;
   // TODO: should this be an input with default or should consuming user set display in styles each time
   @Input() position = 'absolute';
   @Input() resizeConfig: Partial<Interact.OrBoolean<ResizableOptions>>;
   @Input() interactableId: string;
-  
+
   @Input() width: number;
   @Input() height: number;
 
@@ -52,7 +51,7 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit() {
     // we check for a dropzone, we use its id as the registry id if there is on
-    // otherwise, we use DEFAULT_REGISTRY_ID as a registry id. This allows us to keep our interactable 
+    // otherwise, we use DEFAULT_REGISTRY_ID as a registry id. This allows us to keep our interactable
     // drag state organized by dropzones.
     this.registryId = this.dropzone_dir && this.dropzone_dir.dropzoneId
       ? this.dropzone_dir.dropzoneId
@@ -61,12 +60,12 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
     this.interactableId = this.draggable_dir && this.draggable_dir.interactableId
       ? this.draggable_dir.interactableId
       : this.interactService.addDraggableToRegistry(this.registryId, this.interactableId);
-    
+
     this.interactable = this.initiateInteractEvents(
-      {...this.defaultConfig, ...this.resizeConfig }, 
+      {...this.defaultConfig, ...this.resizeConfig },
       this.el.nativeElement
-    ); 
-    
+    );
+
     this.alignDimensionsWithInputs(this.width, this.height);
 
     this.interactableSubscription = this.interactService
@@ -93,18 +92,18 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
     const deltaY = event.deltaRect.top;
     const { width, height } = event.rect;
     this.interactService.updateSize(
-      this.interactableId, 
-      this.registryId, 
-      {deltaX, deltaY, width, height}, 
+      this.interactableId,
+      this.registryId,
+      {deltaX, deltaY, width, height},
       this.el.nativeElement
-    );  
+    );
   }
   /**
    *  hook elements into interacts resize event listeners
-   *  we spread the configs so that the consuming component only overwrites the 
+   *  we spread the configs so that the consuming component only overwrites the
    *  pieces that it explicitly indicates
-   * @param resizeConfig 
-   * @param nativeElement 
+   * @param resizeConfig
+   * @param nativeElement
    */
   initiateInteractEvents(resizeConfig: Partial<Interact.OrBoolean<ResizableOptions>>, nativeElement: any) {
     return interact(nativeElement).resizable(resizeConfig)
@@ -125,7 +124,7 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
     const relatedTarget = this.draggable_dir && this.draggable_dir.dropzone_dir
       ? this.draggable_dir.dropzone_dir.el.nativeElement
       : null;
-      
+
     const positionInDropTarget = target && relatedTarget
       ? this.interactService.calculatePositionInDropzone(relatedTarget, target as HTMLElement)
       : null;

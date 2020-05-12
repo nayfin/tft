@@ -16,7 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatDividerModule } from '@angular/material';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
