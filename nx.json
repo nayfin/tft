@@ -9,7 +9,8 @@
   },
   "projects": {
     "sandbox-e2e": {
-      "tags": []
+      "tags": [],
+      "implicitDependencies": ["sandbox"]
     },
     "sandbox": {
       "tags": []
@@ -21,7 +22,8 @@
       "tags": []
     },
     "documentation-e2e": {
-      "tags": []
+      "tags": [],
+      "implicitDependencies": ["documentation"]
     },
     "documentation": {
       "tags": []
