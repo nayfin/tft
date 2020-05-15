@@ -1,4 +1,4 @@
-import { SelectOption, ControlFieldConfig, ControlType } from '../models';
+import { ControlFieldConfig, ControlType } from '../models';
 import { AutocompleteOptionsCallback } from './select-field.config';
 
 export interface AbstractAutocompleteFieldConfig extends ControlFieldConfig {
@@ -7,7 +7,6 @@ export interface AbstractAutocompleteFieldConfig extends ControlFieldConfig {
   emptyOptionsMessage?: string;
   options: AutocompleteOptionsCallback;
   autoActiveFirstOption?: boolean;
-  filterFunction?: (options: SelectOption[], searchString: string) => SelectOption[];
 }
 
 export interface AutocompleteFieldConfig extends AbstractAutocompleteFieldConfig {

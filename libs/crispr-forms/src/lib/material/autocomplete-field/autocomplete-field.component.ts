@@ -5,7 +5,7 @@ import { SelectOption, AutocompleteFieldConfig } from '../../models';
 
 import { Observable } from 'rxjs';
 import { switchMap, map, debounceTime, tap } from 'rxjs/operators';
-import { observablifyOptions, connectReactiveOptionsToGroup, filterOptionsByLabel } from '../../form.helpers';
+import { observablifyOptions } from '../../form.helpers';
 
 @Component({
   selector: 'crispr-autocomplete-field',
@@ -41,18 +41,7 @@ export class AutocompleteFieldComponent implements OnInit {
       debounceTime(this.config.typeDebounceTime || 500),
       map(searchText => searchText || ''),
       switchMap((searchText: string) => {
-
-        return observablifyOptions(connectReactiveOptionsToGroup(this.config, this.group, searchText)).pipe(
-          map((options: SelectOption[]) => {
-            // use filter function if passed in through config
-            return this.config.filterFunction && this.config.filterFunction instanceof Function
-              ? this.config.filterFunction(options, searchText)
-              : options;
-          }),
-          tap((filteredOptions) => {
-            console.log({filteredOptions});
-          })
-        );
+        return observablifyOptions(this.config.options, this.group, searchText)
       })
     );
   }

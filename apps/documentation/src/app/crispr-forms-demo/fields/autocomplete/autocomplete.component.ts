@@ -54,7 +54,6 @@ export class AutocompleteComponent implements OnInit {
           {label: 'option b', value: 'b'},
           {label: 'option c', value: 'c'},
         ],
-        filterFunction: filterOptionsByLabel
       }
     ]
   }
@@ -112,7 +111,6 @@ export class AutocompleteComponent implements OnInit {
         controlType: ControlType.AUTOCOMPLETE,
         label: 'This select field uses an observable to resolve options',
         controlName: 'selectFieldObservable',
-        // filterFunction: (option) => option,
         options: (group, searchText) => {
           console.log({searchText});
 

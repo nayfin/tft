@@ -1,10 +1,9 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
-import { AutocompleteChiplistFieldConfig, SelectOption, OptionsType } from '../../models';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
+import { AutocompleteChiplistFieldConfig, SelectOption } from '../../models';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Observable, Subscription, BehaviorSubject } from 'rxjs';
-import { observablifyOptions, connectReactiveOptionsToGroup } from '../../form.helpers';
-// import { MatAutocompleteSelectedEvent } from '@angular/material';
-import { switchMap, map, filter, shareReplay, distinctUntilChanged, tap } from 'rxjs/operators';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { observablifyOptions } from '../../form.helpers';
+import { switchMap, map, filter, shareReplay, tap } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 export const defaultAutocompleteChiplistConfig: Partial<AutocompleteChiplistFieldConfig> = {
@@ -46,7 +45,7 @@ export class AutocompleteChiplistFieldComponent implements OnInit {
     this.control = this.group.get(this.config.controlName) as FormControl;
     this.autocompleteInputControl = new FormControl('');
 
-    this.options$ = observablifyOptions(connectReactiveOptionsToGroup(this.config, this.group)).pipe(
+    this.options$ = observablifyOptions(this.config.options, this.group, this.config.emptyOptionsMessage).pipe(
       shareReplay(1)
     );
     this.remainingOptions$ = this.chips$.pipe(

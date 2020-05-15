@@ -175,22 +175,12 @@ function pipeOperatorsIntoObservable(observable: Observable<any>, operators: Ope
   }
 }
 
-export function connectReactiveOptionsToGroup(
-  config: SelectFieldConfig | AutocompleteFieldConfig | AutocompleteChiplistFieldConfig,
-  group?: FormGroup,
-  searchTerm?: string
-) {
-  const { options, /* reactiveOptions */} = config;
-  return /* reactiveOptions && */ options instanceof Function
-  ? options(group, searchTerm)
-  : options;
-}
 
 export function callOptionsIfFunction(
   options: OptionsType | AutocompleteOptionsCallback,
   parentGroup?: FormGroup,
   searchString?: string
-) {
+): OptionsType {
   return options instanceof Function ? options(parentGroup, searchString) : options;
 }
 /**
@@ -203,15 +193,17 @@ export function callOptionsIfFunction(
  */
 export function observablifyOptions(
   options: OptionsType,
-  emptyOptionsMessage?: string
+  parentGroup: FormGroup,
+  searchString?: string,
+  emptyOptionsMessage?: string,
 ): Observable<SelectOption[]> {
-  const calledOptions = callOptionsIfFunction(options);
+  const calledOptions = callOptionsIfFunction(options, parentGroup, searchString);
   // if options are a promise
   return calledOptions instanceof Promise
   // convert to observable
   ? from(calledOptions)
-  // if array
-  : Array.isArray(calledOptions)
+  // if array that isn't empty
+  : Array.isArray(calledOptions) && calledOptions.length
   // convert to observable
   ? of(calledOptions)
   // if observable
@@ -240,7 +232,6 @@ export function isControlField(fieldConfig: AnyFieldConfig): fieldConfig is Cont
 export function buildFormGroupFromConfig(config: FormConfig, value: any = null, group: FormGroup = new FormGroup({}) ) {
 
   config.fields.forEach( (controlConfig: AnyFieldConfig) => {
-    // if it's not a button config
     if (isControlField(controlConfig)) {
       // then add a control to the group using the controlName from configuration
       const {controlName} = controlConfig;

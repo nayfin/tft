@@ -19,31 +19,38 @@ Luckily, we've abstracted out the template work entirely, allowing the end devel
 
 We currently only support styling for Material Design, but support for other design systems is on our roadmap.
 
-Supported Angular Material fields:
- - Autocomplete
- - Checkbox
- - Input
- - Select
- - Textarea
- - Slider
- - Datepicker
- - Button
- - Heading
- - Divider
+### Supported Angular Material fields:
+  - Autocomplete
+  - Autocomplete Chiplist
+  - Checkbox
+  - Input
+  - Select
+  - Textarea
+  - Slider
+  - Datepicker
+  - Button
+  - Heading
+  - Divider
 
-More fields coming soon!
+### More fields coming soon!
+
+Super sweet features:
+  - computed values: field values based on one or many other field values (fieldC === fieldA * fieldB)
+  - dynamically disabled fields: disable a field reactively based on other field(s) values
+  - configurations to handle all the features of each Angular Material field
 
 ## Installation
 
 CRISPR Forms has a few dependencies. First you'll need Angular Material. Usually you can just run `ng add @angular/material`. Find installation docs [here](https://material.angular.io/guide/getting-started).
 
-Next, you'll need our sister library `npm i --save @tft/form-validation-handler` this enables automatic user messages on invalid fields. There are default messages for all the built in Angular validators, but they can easily overwritten by setting the `errorDictionary` field on the `config` input. Custom messages can also be created for custom validators.
+<!-- Next, you'll need our sister library `npm i --save @tft/form-validation-handler` this enables automatic user messages on invalid fields.  -->
+There are default messages for all the built in Angular validators, but they can easily overwritten by setting the `errorDictionary` field on the `config` input. Custom messages can also be created for custom validators.
 
 ## Usage
 
 With CRISPR Forms we've abstracted out form template entirely allowing you to generate your form by simply passing a configuration object to the `tft-crispr-form` component.
 
-Interactive documentation can be found on Stackblitz [here](https://stackblitz.com/github/nayfin/tft-documentation). We will be expanding on this to give clear examples of usage for each available field and feature in the near future.
+Interactive documentation can be found on Stackblitz [here](https://stackblitz.com/github/nayfin/tft-documentation), with editable examples for most features.
 
 In `some-component.html` we pass the configuration to the component and `handleSubmit` function to the `submitted` event.
 
@@ -70,57 +77,54 @@ export class DemoComponent implements OnInit {
         placeholder: 'I am a placeholder in a text input',
         validators: [Validators.required, Validators.minLength(5)],
       },
+      {
+        controlType: ControlType.SELECT,
+        label: 'I am a label on a text input',
+        controlName: 'textInput',
+        options: [
+          {label: 'option a', value: 'optionA'}
+          {label: 'option a', value: 'optionA'}
+        ],
+        placeholder: 'I am a placeholder in a text input',
+        validators: [Validators.required, Validators.minLength(5)],
+      },
     ]
   }
 }
 ```
 
-### <a name="breaking-changes"></a> Breaking change 8.3.3 -> 8.4.0
+### <a name="breaking-changes"></a> Breaking change 8.4.0 -> 9.0.0
 
-`showField` and `showFieldConfig` fields have changed to `disabledCallback` and   `disabledCallbackConfig` with inverted logic.
-
-The old API was designed to take a callback function that returned type  `Observable<boolean>`, showing the field on `true` hiding it on `false`.
-
-The new API still takes a callback function that returns type  `Observable<boolean>`, but now it disables field on `true` and enables on `false`. By default it still hides the disabled field, but you can pass `hideDisabled: false` to the field configuration if you wish to show disabled fields.
-
-#### Old API
-Show `someControl` field only when `textInput` field has value of `hello`
+While adding the Material Autocomplete chiplist field to the library, we cleaned up the autocomplete field API and enabled dynamically switching the autocomplete options based on other field's values (e.g. a select field could control what http endpoint was called by the autocomplete field). Now with both autocomplete fields we require a callback function for the `options` field. This function always passes the parent form group and search string as arguments. We've removed the `reactiveOptionsCallback` field from select and autocomplete fields. Now when options are a callback function, we always pass the parent form group as the first argument you can use it or not as suits your needs.
+#### New API
 ```typescript
 {
   controlName: 'someControl',
-  controlType: ControlType.INPUT,
-  showField: (form) => {
-    return form.get('textInput').valueChanges.pipe(
-      map( inputValue => inputValue === 'hello')
-    )
+  controlType: ControlType.AUTOCOMPLETE,
+  options: (_form: FormGroup, searchTerm: string) => {
+    // filter an array using the search term
+    return ['some', 'mock', 'options']
+      .filter(option => option.includes(searchTerm))
+      .map(option => { label: option, value: option });
+    // or make an http request based on it
+    return this.http.get(`some/endpoint?query=${searchTerm}`).pipe(
+      .map((res: {id: string, name: string}[]) => {
+        return res.map(val => { label: val.name, value: val.id })
+      })
   }
   ...
 }
 ```
-#### New API
- Disable `someControl` field when `textInput` field has any value other than `hello`. Notice we are returning the opposite of the value above. Also, `hideDisabled` is set to `false`, so field will be shown when disabled.
-```typescript
-{
-  controlName: 'someControl',
-  controlType: ControlType.INPUT,
-  hideDisabled: false,
-  disabled: (form) => {
-    return form.get('textInput').valueChanges.pipe(
-      map( inputValue => inputValue !== 'hello')
-    )
-  },
-  ...
-}
-```
+#### Old API
+
+You used to be able to just return an array of options and we would perform a basic search on them. Now you have to write the filtering logic, but this is better suited for http based searching, and custom filtering.
 
 ## Upcoming
 
 - Framework agnostic with Angular Elements
-- Better documentation
 - Static Layout for fields in forms
 - Responsive Layout for fields in forms
 - The rest of the Angular Material fields:
   - Radio button
   - Slide toggle
   - Button toggle
-
