@@ -47,13 +47,13 @@ export class AutocompleteComponent implements OnInit {
     fields: [
       {
         controlType: ControlType.AUTOCOMPLETE,
-        label: 'This select field uses a simple array of options',
+        label: 'This autocomplete field uses a simple array of options',
         controlName: 'selectField',
-        options: () => [
+        options: (_group, searchTerm) => [
           {label: 'option a', value: 'a'},
           {label: 'option b', value: 'b'},
           {label: 'option c', value: 'c'},
-        ],
+        ].filter(option => option.label.includes(searchTerm)),
       }
     ]
   }
@@ -86,6 +86,7 @@ export class AutocompleteComponent implements OnInit {
         label: 'This select field uses an observable to resolve options',
         controlName: 'selectFieldObservable',
         options: (_group, searchTerm) => {
+
           return this.getSearchResults(ENDPOINTS['openFarm'].url, searchTerm).pipe(
             map(ENDPOINTS['openFarm'].mappingCallback),
           )

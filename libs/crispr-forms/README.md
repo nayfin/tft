@@ -103,7 +103,7 @@ While adding the Material Autocomplete chiplist field to the library, we cleaned
   controlType: ControlType.AUTOCOMPLETE,
   options: (_form: FormGroup, searchTerm: string) => {
     // filter an array using the search term
-    return ['some', 'mock', 'options']
+    return ['some', 'demo', 'autocomplete', 'options']
       .filter(option => option.includes(searchTerm))
       .map(option => { label: option, value: option });
     // or make an http request based on it
