@@ -51,7 +51,8 @@ git add . && git commit -m "$package release: $release_version" && git push
 PS3='Release examples to stackblitz?'
 release_options=(yes no)
 select do_release in "${update_options[@]}"
-if [ "$do_release" == 1 ]
+echo "${do_release}"
+if [ "$do_release" == "1" ]
   then
     echo "deploying examples"
     npm run deploy:docs
