@@ -48,7 +48,13 @@ release_version=$(grep version "libs/$package/package.json")
 # stage, commit and push all changes
 git add . && git commit -m "$package release: $release_version" && git push
 # deploy updated docs
-npm run deploy:docs
+PS3='Release examples to stackblitz?'
+select do_release in "(yes no)"
+if [ "$do_release" == 1 ]
+  then
+    echo "deploying examples"
+    npm run deploy:docs
+fi
 
 
 
