@@ -2,9 +2,14 @@
 #!/bin/bash
 # exit when error
 set -e
-# TODO: There's probably a fancy way to automate this
-# THIS LIST MUST BE UPDATEd WHEN NEW PUBLISHABLE LIBS ARE ADDED
-packages=(interact crispr-forms form-validation-handler core ui-imports mat-instantsearch)
+# grab all the library names (except api-interfaces, we don't use this yet)
+for f in libs/*; do
+  dirname=("${f##*/}")
+  if [ -d ${f} ] && [[ "${dirname}" != "api-interfaces" ]]; then
+    packages+=("${dirname}")
+  fi
+done
+echo "${packages[@]}"
 # prompt user to ask what package we are releasing
 PS3='What package are we releaseing? (input number)'
 select package in "${packages[@]}"
