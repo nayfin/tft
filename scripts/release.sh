@@ -49,7 +49,8 @@ release_version=$(grep version "libs/$package/package.json")
 git add . && git commit -m "$package release: $release_version" && git push
 # deploy updated docs
 PS3='Release examples to stackblitz?'
-select do_release in "(yes no)"
+release_options=(yes no)
+select do_release in "${update_options[@]}"
 if [ "$do_release" == 1 ]
   then
     echo "deploying examples"
