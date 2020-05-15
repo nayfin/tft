@@ -47,16 +47,17 @@ cd "dist/libs/$package" && npm pack && npm publish --access public && cd ../../.
 release_version=$(grep version "libs/$package/package.json")
 # stage, commit and push all changes
 git add . && git commit -m "$package release: $release_version" && git push
-# deploy updated docs
+deploy updated docs
 PS3='Release examples to stackblitz?'
 release_options=(yes no)
-select do_release in "${update_options[@]}"
-echo "${do_release}"
-if [ "${do_release}" == "1" ]
-  then
-    echo "deploying examples"
-    npm run deploy:docs
-fi
+select do_release in "${release_options[@]}"
+do
+  if [ "${do_release}" == "yes" ]
+    then
+      npm run deploy:docs
+  fi
+  break
+done
 
 
 
