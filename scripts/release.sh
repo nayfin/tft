@@ -47,7 +47,7 @@ cd "dist/libs/$package" && npm pack && npm publish --access public && cd ../../.
 release_version=$(grep version "libs/$package/package.json")
 # stage, commit and push all changes
 git add . && git commit -m "$package release: $release_version" && git push
-deploy updated docs
+# deploy updated docs
 PS3='Release examples to stackblitz?'
 release_options=(yes no)
 select do_release in "${release_options[@]}"
