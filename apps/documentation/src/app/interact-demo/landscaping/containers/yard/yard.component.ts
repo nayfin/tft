@@ -31,7 +31,6 @@ export class YardComponent {
   droppedItems = [];
 
   constructor(
-    private el: ElementRef,
     private renderer: Renderer2
   ) { }
 

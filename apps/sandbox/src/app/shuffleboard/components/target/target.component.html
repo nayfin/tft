@@ -2,7 +2,7 @@
   class="drop-target"
   tftDropzone
   [dropzoneConfig]="dropzoneConfig"
-  (dragDrop)="score($event)"
+  (dragDrop)="score($event, 'butt')"
   (dragEnter)="puckEnterTarget($event)"
   (dragLeave)="puckLeaveTarget()"
   [dropzoneData]="{points: value}"
