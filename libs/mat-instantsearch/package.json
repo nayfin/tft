@@ -1,6 +1,6 @@
 {
   "name": "@tft/mat-instantsearch",
-  "version": "9.0.0",
+  "version": "9.0.1",
   "peerDependencies": {
     "@angular/common": "^9.0.0",
     "@angular/core": "^9.0.0",
