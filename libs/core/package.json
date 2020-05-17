@@ -5,6 +5,6 @@
     "@angular/common": "^9.0.0",
     "@angular/core": "^9.0.0",
     "@angular/material": "^9.0.0",
-    "@angular/flex-layout": "^9.0.0-beta.30",
+    "@angular/flex-layout": "^9.0.0-beta.30"
   }
 }
