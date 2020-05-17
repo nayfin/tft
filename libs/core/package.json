@@ -2,9 +2,9 @@
   "name": "@tft/core",
   "version": "9.0.0",
   "peerDependencies": {
-    "@angular/common": "^8.2.11",
-    "@angular/core": "^8.2.11",
-    "@angular/material": "^8.2.0",
-    "@angular/flex-layout": "^8.0.0-beta.27"
+    "@angular/common": "^9.0.0",
+    "@angular/core": "^9.0.0",
+    "@angular/material": "^9.0.0",
+    "@angular/flex-layout": "^9.0.0-beta.30",
   }
 }

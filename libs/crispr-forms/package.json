@@ -2,12 +2,12 @@
   "name": "@tft/crispr-forms",
   "version": "9.0.0",
   "peerDependencies": {
-    "@angular/common": "^8.1.1",
-    "@angular/core": "^8.1.1",
-    "@angular/material": "^8.1.1",
-    "@angular/cdk": "^8.1.1",
-    "@tft/form-validation-handler": "8.0.4",
-    "@angular/material-moment-adapter": "^8.2.0",
+    "@angular/common": "^9.0.0",
+    "@angular/core": "^9.0.0",
+    "@angular/material": "^9.0.0",
+    "@angular/cdk": "^9.0.0",
+    "@tft/form-validation-handler": "^9.0.0",
+    "@angular/material-moment-adapter": "^9.0.0",
     "moment": "^2.24.0"
   }
 }

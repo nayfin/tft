@@ -2,6 +2,13 @@
 #!/bin/bash
 # exit when error
 set -e
+# check that we are on master
+branch=$(git rev-parse --abbrev-ref HEAD)
+if [ "$branch" != "master" ]
+  then
+    echo "Not on master branch, exiting"
+    exit 1
+fi
 # grab all the library names (except api-interfaces, we don't use this yet)
 for f in libs/*; do
   dirname=("${f##*/}")
@@ -11,20 +18,13 @@ for f in libs/*; do
 done
 echo "${packages[@]}"
 # prompt user to ask what package we are releasing
-PS3='What package are we releaseing? (input number)'
+PS3='Which package are we releaseing? (input number)'
 select package in "${packages[@]}"
 # We only need this prompt to set the $package variable, but bash requires the do, break, done
 do
   break
 done
 
-# check that we are on master
-branch=$(git rev-parse --abbrev-ref HEAD)
-if [ "$branch" != "master" ]
-  then
-    echo "Not on master branch, exiting"
-    exit 1
-fi
 # get current version of package being released
 actual_version=$(grep version "libs/$package/package.json")
 echo "Current Version: ${actual_version}"
