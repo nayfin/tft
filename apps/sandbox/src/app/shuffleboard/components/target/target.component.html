@@ -1,8 +1,8 @@
-<div 
+<div
   class="drop-target"
   tftDropzone
   [dropzoneConfig]="dropzoneConfig"
-  (dragDrop)="score($event, value)" 
+  (dragDrop)="score($event)"
   (dragEnter)="puckEnterTarget($event)"
   (dragLeave)="puckLeaveTarget()"
   [dropzoneData]="{points: value}"

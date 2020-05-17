@@ -9,8 +9,7 @@ import { DraggableOptions } from '@interactjs/types';
 })
 export class YardComponent {
 
-
-  @ViewChild(DropzoneDirective, {static: false}) dropzone2: DropzoneDirective;
+  @ViewChild(DropzoneDirective) dropzone2: DropzoneDirective;
 
   dragConfig: DraggableOptions;
   dragConfigB: DraggableOptions;
