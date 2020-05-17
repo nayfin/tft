@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ElementRef, ViewChild } from '@angular/core';
+import { Component, Renderer2, ViewChild } from '@angular/core';
 import { TftDropEvent, DropzoneDirective } from '@tft/interact';
 import { DraggableOptions } from '@interactjs/types';
 
