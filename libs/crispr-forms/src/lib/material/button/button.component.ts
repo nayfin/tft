@@ -11,8 +11,8 @@ import { map, startWith, tap } from 'rxjs/operators';
   styleUrls: ['./button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ButtonComponent implements OnInit {
 
+export class ButtonComponent implements OnInit {
   config: ButtonConfig;
   group: FormGroup;
   formValid$: Observable<boolean>

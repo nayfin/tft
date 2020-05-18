@@ -1,37 +1,7 @@
-import { Directive, Input, ComponentFactoryResolver, ViewContainerRef, OnInit, HostBinding, Renderer2 } from '@angular/core';
+import { Directive, Input, ComponentFactoryResolver, ViewContainerRef, OnInit, Renderer2 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormGroupListComponent } from './form-group-list/form-group-list.component';
-import { FormGroupComponent } from './form-group/form-group.component';
 import { AnyFieldConfig } from './models';
-import {
-  InputFieldComponent,
-  SelectFieldComponent,
-  AutocompleteFieldComponent,
-  CheckboxFieldComponent,
-  TextareaFieldComponent,
-  ButtonComponent,
-  DatepickerFieldComponent,
-  SliderFieldComponent,
-  HeadingComponent,
-  DividerComponent,
-  AutocompleteChiplistFieldComponent
-} from './material';
-
-const components = {
-  button: ButtonComponent,
-  input: InputFieldComponent,
-  select: SelectFieldComponent,
-  group: FormGroupComponent,
-  groupList: FormGroupListComponent,
-  autocomplete: AutocompleteFieldComponent,
-  autocompleteChiplist: AutocompleteChiplistFieldComponent,
-  textarea: TextareaFieldComponent,
-  checkbox: CheckboxFieldComponent,
-  slider: SliderFieldComponent,
-  datepicker: DatepickerFieldComponent,
-  heading: HeadingComponent,
-  divider: DividerComponent
-};
+import { CrisprFieldComponent , FIELD_COMPONENTS, isControlComponent } from './field-component-map.const';
 
 @Directive({
   selector: '[crisprField]'
@@ -41,8 +11,7 @@ export class CrisprFieldDirective implements OnInit {
   @Input() config: AnyFieldConfig;
   @Input() group: FormGroup;
 
-  // TODO: strongly type component
-  component: any;
+  component: CrisprFieldComponent;
 
   constructor(
     private resolver: ComponentFactoryResolver,
@@ -54,13 +23,15 @@ export class CrisprFieldDirective implements OnInit {
     /**
      * create component and set values from config on its instance
      */
-    const component = components[this.config.controlType];
-    const factory = this.resolver.resolveComponentFactory<any>(component);
+    const component = FIELD_COMPONENTS[this.config.controlType];
+    const factory = this.resolver.resolveComponentFactory<CrisprFieldComponent>(component);
     const componentRef = this.container.createComponent(factory);
 
     this.component = componentRef.instance;
     this.component.config = this.config;
-    this.component.group = this.group;
+    if ( isControlComponent(this.component)) {
+      this.component.group = this.group;
+    }
     // adds any config classes to the dynamically generated component
     // doing this here keeps us from having to extend a base component into each field component individually
     if(!this.config.classes) return;
