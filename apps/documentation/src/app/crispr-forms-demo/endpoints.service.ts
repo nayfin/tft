@@ -12,9 +12,7 @@ export const ENDPOINTS: {[key: string]: {url: string, mappingCallback: (response
   openFarm: {
     url: 'https://openfarm.cc/api/v1/crops?filter=',
     mappingCallback: (openFarm: OpenFarmResponse) => {
-      console.log({openFarm})
       const options = openFarm.data.map(plant => {
-        console.log({plant})
         return {
           label: plant.attributes.name,
           value: plant.id
@@ -26,7 +24,6 @@ export const ENDPOINTS: {[key: string]: {url: string, mappingCallback: (response
   reddit: {
     url: 'https://www.reddit.com/r/php/search.json?q=',
     mappingCallback: ((redditRes) => {
-      console.log({redditRes})
       const listings: any[] = redditRes.data.children;
       const options = listings.map(listing => {
         const data = listing.data;

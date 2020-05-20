@@ -34,7 +34,6 @@ export class AutocompleteChiplistComponent implements OnInit {
         label: 'This autocomplete field uses a function that returns a promise to resolve options',
         controlName: 'selectFieldPromise',
         options: async (_group, searchString): Promise<SelectOption[]> => {
-          console.log({searchString, _group})
           const res = await fetch(`${ENDPOINTS['reddit'].url}${searchString}`);
           const dbPlants = await res.json();
           return ENDPOINTS['reddit'].mappingCallback(dbPlants);
@@ -52,7 +51,6 @@ export class AutocompleteChiplistComponent implements OnInit {
         label: 'This select field uses an observable to resolve options',
         controlName: 'selectFieldObservable',
         options: (_group, searchTerm) => {
-          console.log({_group, searchTerm})
           return this.endpointsService.searchEndpointForOptions(searchTerm, 'reddit')
         },
       }
@@ -77,8 +75,6 @@ export class AutocompleteChiplistComponent implements OnInit {
         label: 'This select field uses an observable to resolve options',
         controlName: 'selectFieldObservable',
         options: (group, searchText) => {
-          console.log({group, searchText});
-
           const databaseKey: string = group.get('optionsDriver').value || 'openFarm';
           return this.endpointsService.searchEndpointForOptions(searchText, databaseKey)
         },

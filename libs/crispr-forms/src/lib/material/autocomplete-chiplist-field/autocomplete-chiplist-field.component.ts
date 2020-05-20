@@ -62,7 +62,6 @@ export class AutocompleteChiplistFieldComponent implements OnInit {
     ]).pipe(
       map(([chips, options]) => {
         return options.filter(option => {
-          console.log({chips, option})
           return !chips.some(chip => chip.value === option.value);
         })
       })

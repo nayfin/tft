@@ -77,10 +77,9 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
   ngOnInit() {
     super.createWidget(connectAutocomplete);
     super.ngOnInit();
-    console.log({control: this.autocompleteControl })
     this.hits = this.autocompleteControl.valueChanges.pipe(
       debounceTime(this.debounceTime),
-      map(val =>  this.handleChange(val))
+      map(val => this.handleChange(val))
     );
   }
 
