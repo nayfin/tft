@@ -68,8 +68,7 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
   @Output() selectHit = new EventEmitter();
 
   constructor (
-    @Inject(forwardRef(() => NgAisInstantSearch))
-    public instantSearchParent,
+    @Inject(forwardRef(() => NgAisInstantSearch)) public instantSearchParent: NgAisInstantSearch,
   ) {
     super('Autocomplete');
   }

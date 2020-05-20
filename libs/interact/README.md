@@ -9,8 +9,7 @@ This is an angular wrapper for the interactjs library. We aim to build a versati
 
 ## Installation
 
-`npm i interactjs@~1.6.0 --save`
-Make sure to version lock interact to < 1.7.0, newer versions have a TypeScript compatibility build issue.
+`npm i interactjs @tft/interact --save`
 
 ## Usage
 
