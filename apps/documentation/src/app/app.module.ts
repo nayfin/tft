@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UiImportsModule } from '@tft/ui-imports';
 import { CoreModule } from '@tft/core';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { CoreModule } from '@tft/core';
     UiImportsModule,
     CoreModule,
     BrowserAnimationsModule,
+    HttpClientModule
     // AngularFireModule.initializeApp(environment.firebase),
     // AngularFireStorageModule,
     // AngularFirestoreModule

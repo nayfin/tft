@@ -6,8 +6,6 @@ import { OverviewComponent } from './fields/overview/overview.component';
 import { CrisprFormsModule } from '@tft/crispr-forms';
 import { UiImportsModule } from '@tft/ui-imports';
 
-
-
 @NgModule({
   imports: [
     CommonModule,

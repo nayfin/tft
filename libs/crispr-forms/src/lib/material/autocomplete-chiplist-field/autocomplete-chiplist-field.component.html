@@ -40,7 +40,7 @@
         [displayWith]="mapToLabel">
 
         <mat-option
-          *ngFor="let item of filteredOptions$ | async"
+          *ngFor="let item of remainingOptions$ | async"
           [value]="item">
 
           <img

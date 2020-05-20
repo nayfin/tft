@@ -3,6 +3,7 @@ import { InputFieldComponent, ButtonComponent, SelectFieldComponent, Autocomplet
 import { FormGroupComponent } from './form-group/form-group.component';
 import { FormGroupListComponent } from './form-group-list/form-group-list.component';
 import { isControlField } from './form.helpers';
+import { ControlType } from './models';
 
 export const FIELD_COMPONENTS = {
   button: ButtonComponent,
@@ -21,7 +22,7 @@ export const FIELD_COMPONENTS = {
 };
 
 export function isControlComponent(component: CrisprFieldComponent): component is CrisprControlComponent {
-  return isControlField(component.config);
+  return isControlField(component.config) || component.config.controlType === ControlType.BUTTON;
 }
 
 export type CrisprControlComponent = ButtonComponent|

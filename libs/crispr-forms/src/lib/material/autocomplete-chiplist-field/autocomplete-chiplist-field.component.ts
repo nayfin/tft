@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
 import { AutocompleteChiplistFieldConfig, SelectOption } from '../../models';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { observablifyOptions } from '../../form.helpers';
 import { switchMap, map, filter, shareReplay, tap } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -31,7 +31,7 @@ export class AutocompleteChiplistFieldComponent implements OnInit {
 
   group: FormGroup;
   options$: Observable<SelectOption[]>;
-  filteredOptions$: Observable<SelectOption[]>;
+  // options$: Observable<SelectOption[]>;
   remainingOptions$: Observable<SelectOption[]>;
   chips$ = new BehaviorSubject<SelectOption[]>([]);
   control: FormControl;
@@ -45,30 +45,30 @@ export class AutocompleteChiplistFieldComponent implements OnInit {
     this.control = this.group.get(this.config.controlName) as FormControl;
     this.autocompleteInputControl = new FormControl('');
 
-    this.options$ = observablifyOptions(this.config.options, this.group, this.config.emptyOptionsMessage).pipe(
-      shareReplay(1)
-    );
-    this.remainingOptions$ = this.chips$.pipe(
-      // shareReplay(1),
-      tap(chips => this.control.setValue(chips.map(chip => chip.value))),
-      switchMap(chips => {
-        return this.options$.pipe(
-          map(options => options.filter(option => !chips.includes(option)))
-        );
-      })
-    )
-    this.filteredOptions$ = this.autocompleteInputControl.valueChanges.pipe(
+    // this.options$ = observablifyOptions(this.config.options, this.group, this.config.emptyOptionsMessage).pipe(
+    //   shareReplay(1)
+    // );
+
+    this.options$ = this.autocompleteInputControl.valueChanges.pipe(
       map(inputText => inputText || ''),
       filter(inputText => typeof inputText === 'string'),
-      // distinctUntilChanged(),
       switchMap(inputText => {
-        return this.remainingOptions$.pipe(
-          filter(remainingOptions => remainingOptions.length > 0 ),
-          map(remainingOptions => remainingOptions.filter(remainingOption => {
-            return this.inputFilter(remainingOption.label, inputText)
-          }))
-        )
+        return observablifyOptions(this.config.options, this.group, inputText, this.config.emptyOptionsMessage);
       })
+    )
+    this.remainingOptions$ = combineLatest([
+      this.chips$,
+      this.options$
+    ]).pipe(
+      map(([chips, options]) => {
+        return options.filter(option => {
+          console.log({chips, option})
+          return !chips.some(chip => chip.value === option.value);
+        })
+      })
+    )
+    this.chips$.pipe(
+      tap(chips => this.control.setValue(chips.map(chip => chip.value))),
     )
   }
 

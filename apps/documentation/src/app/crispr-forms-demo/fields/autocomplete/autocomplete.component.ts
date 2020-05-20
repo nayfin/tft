@@ -1,39 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormConfig, ControlType, SelectOption, filterOptionsByLabel } from '@tft/crispr-forms';
-import { map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { FormConfig, ControlType, SelectOption } from '@tft/crispr-forms';
 import { FormGroup } from '@angular/forms';
+import { EndpointsService, ENDPOINTS } from '../../endpoints.service';
 
-const ENDPOINTS: {[key: string]: {url: string, mappingCallback: (any) => any}} = {
-  openFarm: {
-    url: 'https://openfarm.cc/api/v1/crops?filter=',
-    mappingCallback: (dbResponse: {data: any[]}) => {
-      console.log({dbResponse})
-      const options = dbResponse.data.map(plant => {
-        return {
-          label: plant.attributes.name,
-          value: plant.id
-        }
-      });
-      return options;
-    }
-  },
-  reddit: {
-    url: 'https://www.reddit.com/r/php/search.json?q=',
-    mappingCallback: ((redditRes) => {
-      console.log({redditRes})
-      const listings: any[] = redditRes.data.children;
-      const options = listings.map(listing => {
-        const data = listing.data;
-        return {
-          label: data.title,
-          value: data.id
-        }
-      })
-      return options;
-    })
-  }
-};
+
 @Component({
   selector: 'doc-autocomplete',
   templateUrl: './autocomplete.component.html',
@@ -64,14 +34,13 @@ export class AutocompleteComponent implements OnInit {
     fields: [
       {
         controlType: ControlType.AUTOCOMPLETE,
-        label: 'This select field uses a function that returns a promise to resolve options',
+        label: 'This autocomplete field uses a function that returns a promise to resolve options',
         controlName: 'selectFieldPromise',
-        options: (_group, searchString): Promise<SelectOption[]> => {
-          return fetch(`${ENDPOINTS['reddit'].url}${searchString}`)
-            .then(res => res.json())
-            .then( (dbPlants) => {
-              return ENDPOINTS['reddit'].mappingCallback(dbPlants)
-            })
+        options: async (_group, searchString): Promise<SelectOption[]> => {
+          console.log({searchString})
+          const res = await fetch(`${ENDPOINTS['reddit'].url}${searchString}`);
+          const dbPlants = await res.json();
+          return ENDPOINTS['reddit'].mappingCallback(dbPlants);
         },
       },
     ]
@@ -86,10 +55,7 @@ export class AutocompleteComponent implements OnInit {
         label: 'This select field uses an observable to resolve options',
         controlName: 'selectFieldObservable',
         options: (_group, searchTerm) => {
-
-          return this.getSearchResults(ENDPOINTS['openFarm'].url, searchTerm).pipe(
-            map(ENDPOINTS['openFarm'].mappingCallback),
-          )
+          return this.endpointsService.searchEndpointForOptions(searchTerm, 'reddit')
         },
       }
     ]
@@ -115,14 +81,8 @@ export class AutocompleteComponent implements OnInit {
         options: (group, searchText) => {
           console.log({searchText});
 
-          const databaseKey = group.get('optionsDriver').value || 'openFarm';
-          return this.getSearchResults(ENDPOINTS[databaseKey].url, searchText).pipe(
-            map((dbResponse) =>  {
-              console.log({dbResponse});
-              return ENDPOINTS[databaseKey].mappingCallback(dbResponse);
-            })
-          );
-
+          const databaseKey: string = group.get('optionsDriver').value || 'openFarm';
+          return this.endpointsService.searchEndpointForOptions(searchText, databaseKey)
         },
       },
       {
@@ -133,15 +93,13 @@ export class AutocompleteComponent implements OnInit {
     ]
   }
   constructor(
-    private http: HttpClient
+    private endpointsService: EndpointsService
   ) { }
 
   ngOnInit() {
   }
 
-  getSearchResults(databaseUrl: string, searchTerm: string) {
-    return this.http.get(databaseUrl + searchTerm);
-  }
+
 
   handleSubmit(form: FormGroup) {
     console.log({value: form.value})

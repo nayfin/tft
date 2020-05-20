@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormConfig, ControlType, SelectOption } from '@tft/crispr-forms';
 import { Validators, FormGroup } from '@angular/forms';
 import { of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Moment } from 'moment';
 
 @Component({
@@ -13,7 +13,7 @@ import { Moment } from 'moment';
 export class OverviewComponent implements OnInit {
 
   value = {
-    textInput: 'hell'
+    textareaInput: 'I am an initial value for this field'
   }
   config: FormConfig = {
     controlType: ControlType.GROUP,
@@ -50,35 +50,36 @@ export class OverviewComponent implements OnInit {
           label: 'Heading for text input',
           info: { content: 'some info'}
         },
-        buttonType: 'flat',
+        controlName: 'textInput',
         controlType: ControlType.INPUT,
         label: 'I am a label on a text input',
+        placeholder: 'I am a placeholder in a text input',
         info: {
-          content: 'I am some info about this field',
+          content: 'Type in this field to enable the field below',
           tooltipPosition: 'left',
           iconName: 'delete'
         },
-        controlName: 'textInput',
-        placeholder: 'I am a placeholder in a text input',
+        buttonType: 'flat',
+        // you can pass custom validators in here too.
         validators: [Validators.required, Validators.minLength(5)],
       },
       {
         controlType: ControlType.INPUT,
-        label: 'I am bill a label on a number input',
-        controlName: 'numberInput',
-        inputType: 'number',
-        placeholder: 'I am a placeholder in a number input',
+        label: 'I am dynamically disabled text input',
+        controlName: 'disabledText',
+        inputType: 'text',
         validators: [Validators.required, Validators.min(5)],
         info: {
-          content: 'I am an info tooltip on a number input',
-          tooltipPosition: 'below'
+          content: 'Type something into above input to enable',
+          tooltipPosition: 'left'
         },
         appearance: 'outline',
-        color: 'accent',
         // hideDisabled: true,
-        disabledCallback: ( form, config) => {
+        disabledCallback: ( form, _config) => {
+          // have access to the form here so we can hook into the valueChanges on the text input above
+          // to dynamically enable/disable this field
           return form.get('textInput').valueChanges.pipe(
-            map( inputValue => inputValue !== 'hello')
+            map( (inputValue: string) => (inputValue || '').trim().length === 0),
           )
         }
       },
@@ -242,10 +243,10 @@ export class OverviewComponent implements OnInit {
   }
 
   handleValueChanges(value: any) {
-    console.log({valueChanges: value})
+    // console.log({valueChanges: value})
   }
   handleStatusChanges(status: any) {
-    console.log({statusChanges: status})
+    // console.log({statusChanges: status})
   }
 
 }
