@@ -21,19 +21,19 @@ export class GameComponent implements OnInit {
 
   get allPucks() {
     return {
-      ...this.game.BLUE.pucks, 
+      ...this.game.BLUE.pucks,
       ...this.game.RED.pucks
     };
   }
 
   targets = [
-    { 
+    {
       value: 10,
       pucksInTarget: 0
-    }, { 
+    }, {
       value: 20,
       pucksInTarget: 0
-    }, { 
+    }, {
       value: 30,
       pucksInTarget: 0
     },
@@ -71,8 +71,8 @@ export class GameComponent implements OnInit {
     const { team, key} = event.dragRef.dragData;
     this.updateLocation(event, key);
     this.changeTeams(team);
-    if ( team === Team.BLUE ) { 
-      this.turnCount++; 
+    if ( team === Team.BLUE ) {
+      this.turnCount++;
     }
   }
 
@@ -105,10 +105,6 @@ export class GameComponent implements OnInit {
 
   changeTeams(currentTeam: Team) {
     this.whosTurn = currentTeam === Team.BLUE ? Team.RED : Team.BLUE;
-  }
-
-  log(name: string, event) {
-    console.log(name, event);
   }
 
 }

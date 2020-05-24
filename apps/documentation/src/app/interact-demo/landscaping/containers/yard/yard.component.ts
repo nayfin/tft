@@ -34,10 +34,6 @@ export class YardComponent {
     private renderer: Renderer2
   ) { }
 
-  log(name: string, event) {
-    console.log(name, event);
-  }
-
   handleDrop(event: TftDropEvent, initialIndex) {
     const dragData = this.dragItems[initialIndex];
     const {dragRef, dropTarget} = event;

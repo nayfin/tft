@@ -18,9 +18,9 @@ export class ProxyController {
     @Query() query: {url: string},
     @Res() response
     ) {
-    console.log('proxy', query)
+    // console.log('proxy', query)
     return this.proxyService.proxyGet(query.url).subscribe((res) => {
-      console.log(res)
+      // console.log(res)
       response.send(res.data);
     });
   }

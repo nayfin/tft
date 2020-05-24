@@ -99,7 +99,6 @@ export class DisabledFieldComponent implements OnInit {
             group.get('enablerB').valueChanges
           ]).pipe(
             map(([enablerA, enablerB]) => {
-              console.log({enablerA, enablerB})
               return enablerA !== 'enable' && enablerB !== 'enable'
             })
           );

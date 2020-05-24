@@ -12,7 +12,7 @@ export class YardComponent {
 
   @ViewChild(DropzoneDirective, {static: false}) dropzone2: DropzoneDirective;
 
-  dragConfig: DraggableOptions; 
+  dragConfig: DraggableOptions;
   dragConfigB: DraggableOptions;
   dragItems = [
     {
@@ -36,10 +36,6 @@ export class YardComponent {
     private renderer: Renderer2
   ) { }
 
-  log(name: string, event) {
-    console.log(name, event);
-  }
-
   handleDrop(event: TftDropEvent, initialIndex) {
     const dragData = this.dragItems[initialIndex];
     const {dragRef, dropTarget} = event;
@@ -51,7 +47,7 @@ export class YardComponent {
         name: event.dragRef.dragData.name
       }
       dragData.count--;
-      this.droppedItems.push(item); 
+      this.droppedItems.push(item);
     } else {
       this.renderer.setStyle(
         event.interactEvent.target,
