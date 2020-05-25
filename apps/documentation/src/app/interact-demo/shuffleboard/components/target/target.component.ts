@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { TftDragEvent, TftDropEvent } from '@tft/interact';
 import { Team } from '../../models/shuffleboard.model';
-import { DropzoneOptions } from '@interactjs/types';
+import { DropzoneOptions } from '@interactjs/types/index';
 
 @Component({
   selector: 'tft-target',

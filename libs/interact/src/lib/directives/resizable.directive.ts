@@ -1,8 +1,7 @@
 import { Directive, OnInit, OnDestroy, ElementRef, Input, Optional, SkipSelf, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
 import interact from 'interactjs';
-import Interactable from '@interactjs/core/Interactable';
 import { InteractService } from '../services/interact.service';
-import { ResizableOptions, ResizeEvent } from '@interactjs/types';
+import { ResizableOptions, ResizeEvent, Interactable } from '@interactjs/types/index';
 import { Subscription } from 'rxjs';
 import { DraggableDirective } from './draggable.directive';
 import { DropzoneDirective } from './dropzone.directive';

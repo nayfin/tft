@@ -1,6 +1,6 @@
 import { Component, Renderer2, ViewChild } from '@angular/core';
 import { TftDropEvent, DropzoneDirective } from '@tft/interact';
-import { DraggableOptions } from '@interactjs/types';
+import { DraggableOptions } from '@interactjs/types/index';
 
 @Component({
   selector: 'tft-yard',

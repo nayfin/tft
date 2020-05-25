@@ -2,11 +2,10 @@ import { Directive, ElementRef, Input, OnInit, Output,
    OnDestroy, EventEmitter, Optional, SkipSelf, Renderer2, SimpleChanges, OnChanges } from '@angular/core';
 import interact from 'interactjs';
 import { InteractService } from '../services/interact.service';
-import { DraggableOptions } from '@interactjs/types';
+import { DraggableOptions, Interactable } from '@interactjs/types/index';
 import { Subscription, Observable } from 'rxjs';
 import { DropzoneDirective } from './dropzone.directive';
 import { NgDragEvent, TftDragEvent, DEFAULT_REGISTRY_ID, TftInteractable } from '../models';
-import Interactable from '@interactjs/core/Interactable';
 
 @Directive({
   selector: '[tftDraggable]',

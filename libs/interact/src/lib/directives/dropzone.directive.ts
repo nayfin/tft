@@ -1,9 +1,8 @@
 import { Directive, ElementRef, Input, OnInit, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import interact from 'interactjs';
-import { DropzoneOptions } from '@interactjs/types';
+import { DropzoneOptions, Interactable } from '@interactjs/types/index';
 import { InteractService } from '../services/interact.service';
 import { NgDropEvent, TftDropEvent } from '../models';
-import Interactable from '@interactjs/core/Interactable';
 @Directive({
   selector: '[tftDropzone]',
   host: {

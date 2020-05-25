@@ -56,7 +56,7 @@
     "firebase": "7.14.3",
     "global": "^4.4.0",
     "hammerjs": "^2.0.8",
-    "interactjs": "~1.9.14",
+    "interactjs": "~1.9.18",
     "lodash-es": "^4.17.10",
     "reflect-metadata": "^0.1.12",
     "rxjs": "~6.5.5",

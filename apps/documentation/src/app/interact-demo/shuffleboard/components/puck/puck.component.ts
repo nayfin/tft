@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { Team, Puck } from '../../models/shuffleboard.model';
-import { DraggableOptions } from '@interactjs/types';
+import { DraggableOptions } from '@interactjs/types/index';
 import interact from 'interactjs';
 import { TftDragEvent } from '@tft/interact';
 
