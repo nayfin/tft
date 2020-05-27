@@ -3,7 +3,7 @@ import { AutocompleteChiplistFieldConfig, SelectOption } from '../../models';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { observablifyOptions } from '../../form.helpers';
-import { switchMap, map, filter, shareReplay, tap } from 'rxjs/operators';
+import { switchMap, map, filter, shareReplay, tap, debounceTime } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 export const defaultAutocompleteChiplistConfig: Partial<AutocompleteChiplistFieldConfig> = {
@@ -50,6 +50,7 @@ export class AutocompleteChiplistFieldComponent implements OnInit {
     // );
 
     this.options$ = this.autocompleteInputControl.valueChanges.pipe(
+      debounceTime(this.config.typeDebounceTime || 500),
       map(inputText => inputText || ''),
       filter(inputText => typeof inputText === 'string'),
       switchMap(inputText => {
