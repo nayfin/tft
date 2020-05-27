@@ -45,10 +45,6 @@ export class AutocompleteChiplistFieldComponent implements OnInit {
     this.control = this.group.get(this.config.controlName) as FormControl;
     this.autocompleteInputControl = new FormControl('');
 
-    // this.options$ = observablifyOptions(this.config.options, this.group, this.config.emptyOptionsMessage).pipe(
-    //   shareReplay(1)
-    // );
-
     this.options$ = this.autocompleteInputControl.valueChanges.pipe(
       debounceTime(this.config.typeDebounceTime || 500),
       map(inputText => inputText || ''),
