@@ -30,6 +30,8 @@
     Example of using one field to drive the options of another autocomplete field
   </h2>
   <crispr-form
-    [config]="reactiveOptionsConfig">
+    (submitted)="handleSubmit($event)"
+    [config]="reactiveOptionsConfig"
+    [value]="value">
   </crispr-form>
 </mat-card>

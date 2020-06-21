@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ControlType, FormConfig, SelectOption } from '@tft/crispr-forms';
 import { EndpointsService, ENDPOINTS } from '../../endpoints.service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'doc-autocomplete-chiplist',
@@ -8,6 +9,17 @@ import { EndpointsService, ENDPOINTS } from '../../endpoints.service';
   styleUrls: ['./autocomplete-chiplist.component.scss']
 })
 export class AutocompleteChiplistComponent implements OnInit {
+
+  value = {
+    optionsDriver: 'openFarm',
+    selectFieldObservable: [
+      {
+        label: 'initial value',
+        value: 'abcdefg'
+      }
+    ]
+  }
+
   arraySelectConfig: FormConfig = {
     controlType: ControlType.GROUP,
     controlName: 'arraySelectDemo',
@@ -73,6 +85,9 @@ export class AutocompleteChiplistComponent implements OnInit {
       {
         controlType: ControlType.AUTOCOMPLETE_CHIPLIST,
         label: 'This select field uses an observable to resolve options',
+        info: {
+          content: 'some cool content'
+        },
         controlName: 'selectFieldObservable',
         options: (group, searchText) => {
           const databaseKey: string = group.get('optionsDriver').value || 'openFarm';
@@ -93,4 +108,7 @@ export class AutocompleteChiplistComponent implements OnInit {
   ngOnInit() {
   }
 
+  handleSubmit(form: FormGroup) {
+    console.log({value: form.value});
+  }
 }
