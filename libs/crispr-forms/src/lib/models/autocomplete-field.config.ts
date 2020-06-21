@@ -1,5 +1,5 @@
 import { ControlFieldConfig, ControlType } from '../models';
-import { AutocompleteOptionsCallback } from './select-field.config';
+import { AutocompleteOptionsCallback, SelectOption } from './select-field.config';
 
 export interface AbstractAutocompleteFieldConfig extends ControlFieldConfig {
   typeToEmit?: boolean;
@@ -7,8 +7,10 @@ export interface AbstractAutocompleteFieldConfig extends ControlFieldConfig {
   emptyOptionsMessage?: string;
   options: AutocompleteOptionsCallback;
   autoActiveFirstOption?: boolean;
+  imageUrlParam?: string;
 }
 
 export interface AutocompleteFieldConfig extends AbstractAutocompleteFieldConfig {
   controlType: ControlType.AUTOCOMPLETE;
+  value: SelectOption;
 }

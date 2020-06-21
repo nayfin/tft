@@ -5,18 +5,23 @@
 
   <mat-form-field
     [color]="config.color"
-    [appearance]="config.appearance"
-    [formGroup]="group">
+    [appearance]="config.appearance">
     <mat-label *ngIf="config.label">
       {{config.label}}
     </mat-label>
     <input
       matInput
-      #autoInput
+      [formControl]="autocompleteInputControl"
       [placeholder]="config.placeholder"
       [matAutocomplete]="auto"
-      [formControlName]="config.controlName"
-      (keydown.tab)="handleTab($event)">
+      (keydown.tab)="handleTab($event)"
+      role="textbox"
+      type="textbox"
+      autocapitalize="off"
+      autocorrect="off"
+      spellcheck="false"
+      #autoInput>
+
     <crispr-info
       *ngIf="config.info"
       matSuffix
@@ -27,11 +32,18 @@
     <mat-autocomplete
       #auto="matAutocomplete"
       [autoActiveFirstOption]="autoActiveFirstOption"
+      (optionSelected)="handleSelect($event)"
       [displayWith]="displayLabel(filteredOptions$ | async)">
 
       <mat-option
         *ngFor="let option of filteredOptions$ | async"
         [value]="option.value">
+        <img
+          *ngIf="option[config.imageUrlParam]"
+          [src]="option[config.imageUrlParam]"
+          style="vertical-align:middle;"
+          aria-hidden
+          height="25"/>
         {{ option.label }}
       </mat-option>
 

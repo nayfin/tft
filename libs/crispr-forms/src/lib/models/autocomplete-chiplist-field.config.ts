@@ -1,5 +1,6 @@
 import { AbstractAutocompleteFieldConfig } from './index';
 import { ControlType } from './crispr-field.config';
+import { SelectOption } from './select-field.config';
 
 export interface AutocompleteChiplistFieldConfig extends AbstractAutocompleteFieldConfig {
   controlType: ControlType.AUTOCOMPLETE_CHIPLIST;
@@ -7,5 +8,5 @@ export interface AutocompleteChiplistFieldConfig extends AbstractAutocompleteFie
   chipsSelectable?: boolean;
   areChipsRemovable?: boolean;
   addChipOnBlur?: boolean;
-  imageUrlParam?: string;
+  value?: SelectOption[];
 }

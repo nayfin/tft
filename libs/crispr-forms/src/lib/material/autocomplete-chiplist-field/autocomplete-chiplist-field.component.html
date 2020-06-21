@@ -2,12 +2,17 @@
   [config]="config"
   [group]="group">
 
-  <mat-form-field>
+  <mat-form-field
+    [color]="config.color"
+    [appearance]="config.appearance">
+    <mat-label *ngIf="config.label">
+      {{config.label}}
+    </mat-label>
     <mat-chip-list
       #chipList>
       <mat-chip
         class="refinement-chip"
-        *ngFor="let chip of chips$ | async"
+        *ngFor="let chip of controlValue$ | async"
         [selectable]="config.chipsSelectable"
         [removable]="config.areChipsRemovable"
         (removed)="removeChip(chip)">
@@ -19,39 +24,46 @@
         </mat-icon>
       </mat-chip>
 
-      <!-- [value]="searchQuery" -->
       <input
-        role="textbox"
-        type="text"
+        matInput
         [formControl]="autocompleteInputControl"
         [placeholder]="config.placeholder"
         [matChipInputFor]="chipList"
         [matAutocomplete]="auto"
-        [matChipInputAddOnBlur]="config.addChipOnBlur"
-        matInput
+        (keydown.tab)="handleTab($event)"
+        role="textbox"
+        type="text"
         autocapitalize="off"
         autocorrect="off"
         spellcheck="false"
         #chipInput/>
-      </mat-chip-list>
-      <mat-autocomplete
-        #auto="matAutocomplete"
-        (optionSelected)="handleSelect($event)"
-        [displayWith]="mapToLabel">
+      <crispr-info
+        *ngIf="config.info"
+        matSuffix
+        [info]="config.info ">
+      </crispr-info>
+      <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
 
-        <mat-option
-          *ngFor="let item of remainingOptions$ | async"
-          [value]="item">
+    </mat-chip-list>
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      [autoActiveFirstOption]="this.config.autoActiveFirstOption"
+      (optionSelected)="handleSelect($event)"
+      [displayWith]="mapToLabel">
 
-          <img
-            *ngIf="item[config.imageUrlParam]"
-            [src]="item[config.imageUrlParam]"
-            style="vertical-align:middle;"
-            aria-hidden
-            height="25"/>
-          {{ item.label }}
-        </mat-option>
-      </mat-autocomplete>
+      <mat-option
+        *ngFor="let option of remainingOptions$ | async"
+        [value]="option">
+
+        <img
+          *ngIf="option[config.imageUrlParam]"
+          [src]="option[config.imageUrlParam]"
+          style="vertical-align:middle;"
+          aria-hidden
+          height="25"/>
+        {{ option.label }}
+      </mat-option>
+    </mat-autocomplete>
 
 
   </mat-form-field>
