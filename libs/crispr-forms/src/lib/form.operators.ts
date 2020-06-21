@@ -1,6 +1,5 @@
 import { map } from 'rxjs/operators';
 
-
 export function valueIn (values: string[]) {
   return map( (value: string) => {
     if (value) {
@@ -20,5 +19,5 @@ export function valueIn (values: string[]) {
 }
 
 function isRegex(string: string) {
-  return string[0] === '/' && string[string.length - 1] === '/';
+  return string.startsWith('/') && string.endsWith('/');
 }

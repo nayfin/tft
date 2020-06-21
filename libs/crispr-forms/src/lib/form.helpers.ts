@@ -1,17 +1,13 @@
 import {
-  SelectFieldConfig,
   SelectOption,
   DEFAULT_EMPTY_OPTIONS_MESSAGE,
-  OptionsCallback,
   AnyFieldConfig,
   FormConfig,
   ControlType,
   FormGroupListConfig,
   ControlFieldConfig,
-  ReactiveOptionsCallback,
   OptionsType,
-  AutocompleteOptionsCallback,
-  AutocompleteChiplistFieldConfig
+  AutocompleteOptionsCallback
 } from './models';
 import {
   from,
@@ -23,8 +19,7 @@ import {
 } from 'rxjs';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
 import { valueIn } from './form.operators';
-import { map, tap, startWith } from 'rxjs/operators';
-import { AutocompleteFieldConfig } from './models';
+import { map, startWith } from 'rxjs/operators';
 
 /**
  * DYNAMIC FORM UTILS: a collection of pure/mostly pure functions that are useful both internally and for
@@ -241,6 +236,7 @@ export function buildFormGroupFromConfig(config: FormConfig, value: any = null, 
                          ? value[controlName]
                          : null;
       group.addControl(controlName, createControlForType(controlConfig, controlValue));
+
     }
   });
   return group;

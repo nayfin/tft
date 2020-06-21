@@ -1,5 +1,5 @@
 // tslint:disable-next-line: max-line-length
-import { InputFieldComponent, ButtonComponent, SelectFieldComponent, AutocompleteFieldComponent, AutocompleteChiplistFieldComponent, TextareaFieldComponent, CheckboxFieldComponent, SliderFieldComponent, DatepickerFieldComponent, HeadingComponent, DividerComponent } from './material';
+import { InputFieldComponent, SelectFieldComponent, AutocompleteFieldComponent, AutocompleteChiplistFieldComponent, TextareaFieldComponent, CheckboxFieldComponent, SliderFieldComponent, DatepickerFieldComponent, HeadingComponent, DividerComponent, ButtonComponent } from './material';
 import { FormGroupComponent } from './form-group/form-group.component';
 import { FormGroupListComponent } from './form-group-list/form-group-list.component';
 import { isControlField } from './form.helpers';

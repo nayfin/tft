@@ -24,6 +24,7 @@ import {
 import { SliderFieldConfig } from './slider-field.config';
 import { DividerConfig } from './divider.config';
 import { ThemePalette } from '@angular/material/core';
+import { SelectOption } from './select-field.config';
 
 /**
  * The base interface for all the fields in the form's config
@@ -38,7 +39,7 @@ export interface CrisprFieldConfig {
 
 export interface ControlFieldConfig extends CrisprFieldConfig {
   controlName: string;
-  value?: string | number;
+  // value?: string | number | SelectOption | SelectOption[];
   validators?: ValidatorFn[];
   fieldSuffix?: string;
   // TODO: Determine if this is necessary
