@@ -23,7 +23,24 @@ export class OverviewComponent implements OnInit {
       required: () => `I am a custom error message on a required field`,
     },
     fields: [
-      // a basic input field in the form with the following configuration
+      {
+        controlType: ControlType.GROUP,
+        controlName: 'subGroup',
+        fields: [
+          // configuration will create an input field in the form with the following configuration
+          {
+            controlType: ControlType.INPUT,
+            inputType: 'text',
+            controlName: 'subField',
+            placeholder: 'First Name',
+          },
+          {
+            controlType: ControlType.INPUT,
+            controlName: 'secondSubField',
+            placeholder: 'Last Name',
+          },
+        ]
+      },
       {
         controlType: ControlType.GROUP_LIST,
         heading: {
@@ -32,15 +49,21 @@ export class OverviewComponent implements OnInit {
         controlName: 'groupList',
         itemLabelBuilder: ( index: number ) => `Step ${index + 1}`,
         itemConfig: {
+          heading: { label: 'Sub Group'},
           controlType: ControlType.GROUP,
-          controlName: 'group',
+          controlName: 'subGroup',
           fields: [
-            // configuration will create an input field in the form with the following configuration
             {
+              // a basic input field in the form with the following configuration
               controlType: ControlType.INPUT,
               inputType: 'text',
-              controlName: 'preparationStep',
-              placeholder: 'Add a preparation step',
+              controlName: 'subField',
+              placeholder: 'First Name',
+            },
+            {
+              controlType: ControlType.INPUT,
+              controlName: 'secondSubField',
+              placeholder: 'Last Name',
             },
           ]
         }
@@ -59,7 +82,6 @@ export class OverviewComponent implements OnInit {
           tooltipPosition: 'left',
           iconName: 'delete'
         },
-        buttonType: 'flat',
         // you can pass custom validators in here too.
         validators: [Validators.required, Validators.minLength(5)],
       },
@@ -209,7 +231,6 @@ export class OverviewComponent implements OnInit {
         label: 'I am a label on a slider',
         placeholder: 'I am a placeholder on a slider',
         color: 'primary',
-        labelPosition: 'after',
         info: {
           content: 'I am a tooltip on a slider'
         },
@@ -221,7 +242,6 @@ export class OverviewComponent implements OnInit {
       {
         controlType: ControlType.BUTTON,
         disabledOnInvalidForm: false,
-        controlName: 'button',
         buttonType: 'flat',
         label: 'I AM A SUBMIT BUTTON',
         color: 'primary',

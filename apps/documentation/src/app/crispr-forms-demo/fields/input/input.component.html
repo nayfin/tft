@@ -8,6 +8,7 @@
     Here are some examples of the most common types.
   </p>
   <crispr-form
-    [config]="formConfig">
+    [config]="formConfig"
+    (submitted)="handleSubmit($event)">
   </crispr-form>
 </mat-card>

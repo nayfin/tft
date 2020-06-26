@@ -38,7 +38,6 @@ export class AppearanceComponent implements OnInit {
       },
       {
         controlType: ControlType.DATEPICKER,
-        inputType: 'text',
         controlName: 'formattedName',
         label: 'Formatted Name',
         heading: {
@@ -49,7 +48,6 @@ export class AppearanceComponent implements OnInit {
       },
       {
         controlType: ControlType.TEXTAREA,
-        inputType: 'text',
         controlName: 'formattedName',
         label: 'Formatted Name',
         heading: {

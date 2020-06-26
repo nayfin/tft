@@ -35,7 +35,6 @@ export class ColorComponent implements OnInit {
       },
       {
         controlType: ControlType.TEXTAREA,
-        inputType: 'text',
         controlName: 'formattedName',
         label: 'Formatted Name',
         heading: {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ControlType, FormConfig } from '@tft/crispr-forms';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'doc-input',
@@ -16,6 +17,7 @@ export class InputComponent implements OnInit {
       {
         controlType: ControlType.INPUT,
         label: 'Text Input Field',
+        value: 'hey',
         inputType: 'text', // default
         controlName: 'textInput',
       },
@@ -23,6 +25,7 @@ export class InputComponent implements OnInit {
         controlType: ControlType.INPUT,
         label: 'Number Input Field',
         inputType: 'number',
+        value: 55,
         controlName: 'numberInput',
       },
       {
@@ -46,8 +49,14 @@ export class InputComponent implements OnInit {
       {
         controlType: ControlType.INPUT,
         label: 'Date Input Field',
+        value: '4-11-2003',
         inputType: 'date',
         controlName: 'dateInput',
+      },
+      {
+        controlType: ControlType.BUTTON,
+        buttonType: 'raised',
+        label: 'BUTTON'
       }
     ]
   }
@@ -55,6 +64,10 @@ export class InputComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  handleSubmit(form: FormGroup) {
+    console.log({form})
   }
 
 }

@@ -21,21 +21,18 @@ export class HeadingComponent implements OnInit {
       },
       {
         controlType: ControlType.INPUT,
-        touchUi: true,
         label: 'Field A',
         controlName: 'fieldA',
         classes: ['field-container']
       },
       {
         controlType: ControlType.INPUT,
-        touchUi: true,
         label: 'Field B',
         controlName: 'fieldB',
         classes: ['field-container']
       },
       {
         controlType: ControlType.INPUT,
-        touchUi: true,
         label: 'Field C',
         controlName: 'fieldC',
         classes: ['field-container']
