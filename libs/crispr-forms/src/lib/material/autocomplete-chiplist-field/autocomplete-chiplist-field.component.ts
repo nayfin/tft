@@ -1,12 +1,13 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
 import { AutocompleteChiplistFieldConfig, SelectOption } from '../../models';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { observablifyOptions } from '../../form.helpers';
 import { switchMap, map, tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { crisprControlMixin, CrisprFieldComponent } from '../../field.component.abstract';
 
-export const defaultAutocompleteChiplistConfig: Partial<AutocompleteChiplistFieldConfig> = {
+const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
   chipsSelectable: true,
   areChipsRemovable: true,
   addChipOnBlur: true,
@@ -15,28 +16,23 @@ export const defaultAutocompleteChiplistConfig: Partial<AutocompleteChiplistFiel
   typeDebounceTime: 500
 }
 
+const AutocompleteChiplistFieldMixin = crisprControlMixin<AutocompleteChiplistFieldConfig>(CrisprFieldComponent);
+
 @Component({
   selector: 'crispr-autocomplete-chiplist-field',
   templateUrl: './autocomplete-chiplist-field.component.html',
   styleUrls: ['./autocomplete-chiplist-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AutocompleteChiplistFieldComponent implements OnInit {
+export class AutocompleteChiplistFieldComponent extends AutocompleteChiplistFieldMixin implements OnInit {
   // This is stupid and annoying...
   // We need use ViewChild twice on the same template ref
   // - the MatAutocompleteTrigger is used to for selecting value on tab
   // - the ElementRef<HTMLInputElement> is used to clear the value from input element on selection
-  @ViewChild('chipInput', { read: MatAutocompleteTrigger, static: false }) chipInput: MatAutocompleteTrigger;
-  @ViewChild('chipInput', {static: false}) chipInputRef: ElementRef<HTMLInputElement>;
-  private _config: AutocompleteChiplistFieldConfig
-  set config(config: AutocompleteChiplistFieldConfig) {
-    this._config = {...defaultAutocompleteChiplistConfig, ...config }
-  }
-  get config() {
-    return this._config;
-  }
+  @ViewChild('autoInput', { read: MatAutocompleteTrigger }) chipInput: MatAutocompleteTrigger;
+  @ViewChild('autoInput') chipInputRef: ElementRef<HTMLInputElement>;
 
-  group: FormGroup;
+
   options$: Observable<SelectOption[]>;
   remainingOptions$: Observable<SelectOption[]>;
   chips$ = new BehaviorSubject<SelectOption[]>([]);
@@ -50,19 +46,21 @@ export class AutocompleteChiplistFieldComponent implements OnInit {
   control: FormControl;
   // we need a separate control for the UI because of the way the material autocomplete chiplist works
   autocompleteInputControl = new FormControl('');
-
-  constructor() { }
+  defaultConfig = defaultConfig;
+  constructor() {
+    super();
+  }
 
   ngOnInit() {
+    super.ngOnInit();
     this.group.addControl(this.config.controlName, new FormControl);
-    this.control = this.group.get(this.config.controlName) as FormControl;
 
     this.options$ = this.autocompleteInputControl.valueChanges.pipe(
+      debounceTime(this.config.typeDebounceTime),
       distinctUntilChanged(),
-      debounceTime(this.config.typeDebounceTime  ),
-      map(inputText => inputText || ''),
-      switchMap(inputText => {
-        return observablifyOptions(this.config.options, this.group, inputText, this.config.emptyOptionsMessage)
+      map(searchText => searchText || ''),
+      switchMap(searchText => {
+        return observablifyOptions(this.config.options, this.group, searchText, this.config.emptyOptionsMessage)
       })
     );
 
@@ -76,10 +74,6 @@ export class AutocompleteChiplistFieldComponent implements OnInit {
         })
       })
     )
-    // console.log({hello: this.config.value})
-    // if (this.config.value) {
-    //   this.chips$.next(this.config.value);
-    // }
   }
 
   handleSelect(event: MatAutocompleteSelectedEvent) {

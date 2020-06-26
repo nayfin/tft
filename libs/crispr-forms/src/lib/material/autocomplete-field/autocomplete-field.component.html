@@ -31,12 +31,12 @@
 
     <mat-autocomplete
       #auto="matAutocomplete"
-      [autoActiveFirstOption]="autoActiveFirstOption"
+      [autoActiveFirstOption]="config.autoActiveFirstOption"
       (optionSelected)="handleSelect($event)"
-      [displayWith]="displayLabel(filteredOptions$ | async)">
+      [displayWith]="displayLabel(options$ | async)">
 
       <mat-option
-        *ngFor="let option of filteredOptions$ | async"
+        *ngFor="let option of options$ | async"
         [value]="option.value">
         <img
           *ngIf="option[config.imageUrlParam]"

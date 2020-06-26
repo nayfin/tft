@@ -20,26 +20,30 @@ import {
   AutocompleteFieldConfig,
   FormGroupListConfig,
   AutocompleteChiplistFieldConfig,
+  SliderFieldConfig,
+  DividerConfig,
+  SelectOption
 } from '../models';
-import { SliderFieldConfig } from './slider-field.config';
-import { DividerConfig } from './divider.config';
 import { ThemePalette } from '@angular/material/core';
-import { SelectOption } from './select-field.config';
 
 /**
  * The base interface for all the fields in the form's config
  */
 export interface CrisprFieldConfig {
-  controlType: ControlType;
+  controlType?: ControlType;
   label?: string;
   placeholder?: string;
   info?: Info;
   classes?: string[];
 }
 
+/**
+ * The base interface for all control configs
+ */
 export interface ControlFieldConfig extends CrisprFieldConfig {
   controlName: string;
-  // value?: string | number | SelectOption | SelectOption[];
+  controlType: ControlType;
+  value?: ControlValue;
   validators?: ValidatorFn[];
   fieldSuffix?: string;
   // TODO: Determine if this is necessary
@@ -58,6 +62,7 @@ export interface Info {
 }
 
 export interface FormConfig extends ControlFieldConfig {
+  controlType: ControlType.GROUP;
   errorDictionary?: ErrorDictionary;
   autocomplete?: 'off' | 'on';
   // TODO: this should be required, but we get an issue with AnyFieldConfig in the isControlField function
@@ -79,6 +84,11 @@ export type AnyFieldConfig = SelectFieldConfig
   | ButtonConfig
   | DividerConfig;
 
+export type ControlValue = string | number | SelectOption | SelectOption[];
+
+/**
+ * DEPRECATED
+ */
 export enum ControlType {
   AUTOCOMPLETE = 'autocomplete',
   AUTOCOMPLETE_CHIPLIST = 'autocompleteChiplist',

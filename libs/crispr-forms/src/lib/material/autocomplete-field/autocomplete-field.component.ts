@@ -1,11 +1,44 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { MatAutocompleteTrigger, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { FormGroup, FormControl } from '@angular/forms';
-import { SelectOption, AutocompleteFieldConfig } from '../../models';
+import { FormControl } from '@angular/forms';
+import { SelectOption, AutocompleteFieldConfig, AbstractAutocompleteFieldConfig, AutocompleteChiplistFieldConfig } from '../../models';
 
 import { Observable, Subject } from 'rxjs';
 import { switchMap, map, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { observablifyOptions } from '../../form.helpers';
+import { crisprControlMixin, CrisprFieldComponent } from '../../field.component.abstract';
+
+
+const defaultConfig: Partial<AutocompleteFieldConfig> = {
+  autoActiveFirstOption: true,
+  typeDebounceTime: 500
+};
+
+type AutoCompleteTypes = AutocompleteFieldConfig | AutocompleteChiplistFieldConfig;
+
+const AbstractAutocompleteFieldMixin = crisprControlMixin<AutoCompleteTypes>(CrisprFieldComponent);
+
+
+export class AbstractAutocompleteComponent
+  extends crisprControlMixin<AutoCompleteTypes>(CrisprFieldComponent) implements OnInit {
+  autocompleteInputControl = new FormControl('');
+  options$: Observable<SelectOption[]>
+
+  ngOnInit() {
+    super.ngOnInit();
+
+    this.group.addControl(this.config.controlName, new FormControl());
+    // filter options by the search string using either the default filter function or one passed in through config
+    this.options$ = this.autocompleteInputControl.valueChanges.pipe(
+      debounceTime(this.config.typeDebounceTime),
+      distinctUntilChanged(),
+      map(searchText => searchText || ''),
+      switchMap((searchText: string) =>{
+        return observablifyOptions(this.config.options, this.group, searchText, this.config.emptyOptionsMessage)
+      }),
+    );
+  }
+}
 
 @Component({
   selector: 'crispr-autocomplete-field',
@@ -13,42 +46,17 @@ import { observablifyOptions } from '../../form.helpers';
   styleUrls: ['./autocomplete-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AutocompleteFieldComponent implements OnInit {
+export class AutocompleteFieldComponent
+  extends AbstractAutocompleteComponent
+  implements OnInit {
+
+  defaultConfig = defaultConfig;
 
   @ViewChild('autoInput', { read: MatAutocompleteTrigger }) autoInput: MatAutocompleteTrigger;
-  @ViewChild('autoInput', {static: false}) autoInputRef: ElementRef<HTMLInputElement>;
-
-  config: AutocompleteFieldConfig;
-  group: FormGroup;
-  autocompleteInputControl = new FormControl('');
-  // options$: Observable<SelectOption[]>;
-  filteredOptions$: Observable<SelectOption[]>
-  selectedOption$ = new Subject<SelectOption>();
-
-  control: FormControl;
-
-  get autoActiveFirstOption(): boolean {
-    return this.config.autoActiveFirstOption === undefined
-    ? true
-    : this.config.autoActiveFirstOption;
-  }
-
-  constructor() { }
+  @ViewChild('autoInput') autoInputRef: ElementRef<HTMLInputElement>;
 
   ngOnInit() {
-    this.group.addControl(this.config.controlName, new FormControl());
-    this.control = this.group.get(this.config.controlName) as FormControl;
-    // filter options by the search string using either the default filter function or one passed in through config
-    this.filteredOptions$ = this.autocompleteInputControl.valueChanges.pipe(
-      // this prevents errors when value changes is not a string because the filter function is expecting on
-      debounceTime(this.config.typeDebounceTime || 500),
-      distinctUntilChanged(),
-      map(searchText => searchText || ''),
-      switchMap((searchText: string) => observablifyOptions(this.config.options, this.group, searchText, this.config.emptyOptionsMessage)),
-    );
-    if(this.config.value) {
-      this.control.setValue(this.config.value);
-    }
+    super.ngOnInit();
   }
 
   /**

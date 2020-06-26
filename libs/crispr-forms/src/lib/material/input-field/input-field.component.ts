@@ -1,24 +1,18 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { InputFieldConfig } from '../../models';
+import { crisprControlMixin, CrisprFieldComponent } from '../../field.component.abstract';
 
+const InputFieldMixin = crisprControlMixin<InputFieldConfig>(CrisprFieldComponent);
 @Component({
   selector: 'crispr-input-field',
   templateUrl: './input-field.component.html',
   styleUrls: ['./input-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InputFieldComponent implements OnInit {
+export class InputFieldComponent extends InputFieldMixin{
 
-  config: InputFieldConfig;
-  group: FormGroup;
-  inputType: string;
-
-  constructor(
-  ) { }
-
-  ngOnInit() {
-    this.inputType = this.config.inputType || 'text';
+  defaultConfig: Partial<InputFieldConfig> = {inputType: 'text'};
+  constructor() {
+    super();
   }
-
 }

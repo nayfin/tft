@@ -1,7 +1,6 @@
 <crispr-field-container
   [config]="config"
   [group]="group">
-
   <div
     [formGroup]="group">
     <label *ngIf="config.label">
@@ -13,7 +12,7 @@
     </label>
     <div class="slider-container"
       [ngStyle]="{'flex-direction': flexDirection}">
-      <span *ngIf="displayLimits">
+      <span *ngIf="config.displayLimits">
         {{config.min}}
       </span>
       <mat-slider
@@ -27,7 +26,7 @@
         [tickInterval]="config.tickInterval"
         [vertical]="config.vertical">
       </mat-slider>
-      <span *ngIf="displayLimits">
+      <span *ngIf="config.displayLimits">
         {{config.max}}
       </span>
     </div>
@@ -35,4 +34,3 @@
   </div>
 </crispr-field-container>
 
-<!-- <mat-slider></mat-slider> -->

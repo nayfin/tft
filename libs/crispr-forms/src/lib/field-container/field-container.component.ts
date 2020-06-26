@@ -19,9 +19,8 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
   // boolean whether field-container is inline
   @Input() inlineField = false;
   // used to determine whether or not field should be shown
-  disabledCallback: Observable<boolean>;
   disabled$: Observable<boolean>;
-  alignFormWithView$: Observable<boolean>;
+
   subs: Subscription[] = [];
 
   constructor() { }
@@ -60,7 +59,7 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
     return config.disabledCallback && config.disabledCallback instanceof Function
       ? config.disabledCallback(group, config.disabledCallbackConfig || null).pipe(
         // This enables/disables when callback conditions are met
-        tap( (shouldDisable) => shouldDisable ? control.disable() : control.enable())
+        tap((shouldDisable) => shouldDisable ? control.disable() : control.enable())
       )
       : of(false);
   }

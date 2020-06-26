@@ -7,7 +7,8 @@ import {
   FormGroupListConfig,
   ControlFieldConfig,
   OptionsType,
-  AutocompleteOptionsCallback
+  AutocompleteOptionsCallback,
+  CrisprFieldConfig
 } from './models';
 import {
   from,
@@ -214,7 +215,7 @@ export function observablifyOptions(
   ]);
 }
 
-export function isControlField(fieldConfig: AnyFieldConfig): fieldConfig is ControlFieldConfig {
+export function isControlField(fieldConfig: CrisprFieldConfig ): fieldConfig is ControlFieldConfig {
   // determine if config is a controlConfig but not a FormConfig
   return 'controlName' in fieldConfig;
 }

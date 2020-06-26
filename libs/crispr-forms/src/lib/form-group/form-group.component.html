@@ -1,16 +1,11 @@
 <crispr-field-container
   [config]="config"
   [group]="group">
-  <div [formGroup]="group">
-    <div
-      [formGroupName]="config.controlName">
-      <ng-container
-        *ngFor="let field of config.fields;"
-        crisprField
-        [config]="field"
-        [group]="subGroup">
-      </ng-container>
-    </div>
-  </div>
+  <ng-container
+    *ngFor="let field of config.fields;"
+    crisprField
+    [config]="field"
+    [group]="subGroup">
+  </ng-container>
 </crispr-field-container>
 

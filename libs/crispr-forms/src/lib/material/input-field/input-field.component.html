@@ -12,7 +12,10 @@
       [type]="config.inputType"
       matInput
       [placeholder]="config.placeholder"
-      [formControlName]="config.controlName">
+      [formControlName]="config.controlName"
+      autocapitalize="off"
+      autocorrect="off"
+      autocomplete="off">
     <crispr-info
       matSuffix
       *ngIf="config.info"

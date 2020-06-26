@@ -4,4 +4,5 @@ import { CrisprFieldConfig, ControlType } from '../models';
 // pass a controlType
 export type DividerConfig = Partial<CrisprFieldConfig> & {
   controlType?: ControlType.DIVIDER;
+  vertical?: boolean;
 };

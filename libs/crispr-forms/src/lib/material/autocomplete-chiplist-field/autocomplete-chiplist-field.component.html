@@ -8,6 +8,7 @@
     <mat-label *ngIf="config.label">
       {{config.label}}
     </mat-label>
+
     <mat-chip-list
       #chipList>
       <mat-chip
@@ -36,7 +37,7 @@
         autocapitalize="off"
         autocorrect="off"
         spellcheck="false"
-        #chipInput/>
+        #autoInput/>
       <crispr-info
         *ngIf="config.info"
         matSuffix

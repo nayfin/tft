@@ -13,9 +13,10 @@ export class CrisprFormComponent implements OnInit {
   // if no form has been passed in by consuming component, we create an empty group to build out
   @Input() form: FormGroup = new FormGroup({});
   @Input() config: FormConfig;
+  /** DEPRECATED */
   @Input() value: any = null;
 
-  @Output() submitted: EventEmitter<any> = new EventEmitter<any>();
+  @Output() submitted = new EventEmitter<FormGroup>();
   // proxy value and status change events through to consuming component
   @Output() valueChanges: Observable<any> = this.form.valueChanges;
   @Output() statusChanges: Observable<string> = this.form.statusChanges;

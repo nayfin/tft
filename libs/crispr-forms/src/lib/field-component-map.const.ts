@@ -26,20 +26,20 @@ export function isControlComponent(component: CrisprFieldComponent): component i
 }
 
 export type CrisprControlComponent = ButtonComponent|
-InputFieldComponent|
-SelectFieldComponent|
-FormGroupComponent|
-FormGroupListComponent|
-AutocompleteFieldComponent|
-AutocompleteChiplistFieldComponent|
-TextareaFieldComponent|
-CheckboxFieldComponent|
-SliderFieldComponent|
-DatepickerFieldComponent;
+  InputFieldComponent|
+  SelectFieldComponent|
+  FormGroupComponent|
+  FormGroupListComponent|
+  AutocompleteFieldComponent|
+  AutocompleteChiplistFieldComponent|
+  TextareaFieldComponent|
+  CheckboxFieldComponent|
+  SliderFieldComponent|
+  DatepickerFieldComponent;
 
 // export type ComponentKeys = keyof typeof FIELD_COMPONENTS;
 // export type CrisprComponent = typeof FIELD_COMPONENTS[ComponentKeys];
 
 export type CrisprFieldComponent = CrisprControlComponent |
- HeadingComponent|
- DividerComponent;
+  HeadingComponent|
+  DividerComponent;

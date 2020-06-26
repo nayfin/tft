@@ -1,6 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SliderFieldConfig } from '../../models';
-import { FormGroup } from '@angular/forms';
+import { CrisprFieldComponent, crisprControlMixin } from '../../field.component.abstract';
+
+const SliderFieldMixin = crisprControlMixin<SliderFieldConfig>(CrisprFieldComponent);
 
 @Component({
   selector: 'crispr-slider-field',
@@ -8,20 +10,16 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./slider-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SliderFieldComponent implements OnInit {
+export class SliderFieldComponent extends SliderFieldMixin {
 
-  config: SliderFieldConfig;
-  group: FormGroup;
+  defaultConfig = {displayLimits: true}
+  constructor() {
+    super();
+    super.ngOnInit();
+  }
   get flexDirection() {
     return this.config.vertical ? 'column' : 'row';
   }
-  get displayLimits() {
-    // returns true if displayLimits is undefined or true
-    return this.config.displayLimits === undefined || this.config.displayLimits;
-  }
-  constructor() { }
 
-  ngOnInit() {
-  }
 
 }
