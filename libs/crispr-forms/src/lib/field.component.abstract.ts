@@ -26,6 +26,7 @@ export function crisprControlMixin<C extends ControlFieldConfig>(BaseClass: type
     specializedValueSetter: (value: ControlValue) => void;
 
     ngOnInit() {
+      super.ngOnInit();
       this.control = this.group.get(this.config.controlName) as FormControl;
       this.setControlValue(this.config.value);
     }

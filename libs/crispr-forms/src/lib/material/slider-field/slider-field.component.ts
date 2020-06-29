@@ -10,16 +10,19 @@ const SliderFieldMixin = crisprControlMixin<SliderFieldConfig>(CrisprFieldCompon
   styleUrls: ['./slider-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SliderFieldComponent extends SliderFieldMixin {
+export class SliderFieldComponent extends SliderFieldMixin implements OnInit {
 
   defaultConfig = {displayLimits: true}
   constructor() {
     super();
-    super.ngOnInit();
   }
+
   get flexDirection() {
     return this.config.vertical ? 'column' : 'row';
   }
 
+  ngOnInit() {
+    super.ngOnInit();
+  }
 
 }

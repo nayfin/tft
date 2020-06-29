@@ -20,6 +20,7 @@ export type AutocompleteOptionsCallback = (group?: FormGroup, searchTerm?: strin
 export interface SelectOption {
   label: string;
   value: any;
+  imageUrl?: string;
 }
 
 export const DEFAULT_EMPTY_OPTIONS_MESSAGE = 'No Items';
