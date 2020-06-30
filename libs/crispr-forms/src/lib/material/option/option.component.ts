@@ -1,17 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { SelectOption } from '../../models';
 
 @Component({
   selector: 'crispr-option',
   templateUrl: './option.component.html',
-  styleUrls: ['./option.component.css']
+  styleUrls: ['./option.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OptionComponent implements OnInit {
+export class OptionComponent {
 
   @Input() option: SelectOption
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

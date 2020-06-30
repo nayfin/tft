@@ -17,9 +17,12 @@
       <mat-option
         *ngFor="let option of options$ | async"
         [value]="option.value">
-        {{ option.label }}
+        <crispr-option [option]="option">
+        </crispr-option>
       </mat-option>
+
     </mat-select>
+
     <crispr-info
       *ngIf="config.info"
       matSuffix

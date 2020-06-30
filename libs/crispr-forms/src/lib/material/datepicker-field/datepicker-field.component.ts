@@ -1,6 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DatepickerFieldConfig } from '../../models';
-import { FormGroup } from '@angular/forms';
+import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
+
+const defaultConfig: Partial<DatepickerFieldConfig> = {
+  startView: 'month',
+}
+const CheckboxFieldMixin = crisprControlMixin<DatepickerFieldConfig>(CrisprFieldComponent);
 
 @Component({
   selector: 'crispr-datepicker-field',
@@ -8,15 +13,12 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./datepicker-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DatepickerFieldComponent implements OnInit {
+export class DatepickerFieldComponent extends CheckboxFieldMixin implements OnInit {
 
-  config: DatepickerFieldConfig;
-  group: FormGroup;
-
-  constructor() { }
-
+  defaultConfig = defaultConfig;
 
   ngOnInit() {
+    super.ngOnInit();
   }
 
 }

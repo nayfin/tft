@@ -1,6 +1,9 @@
 import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { FormConfig } from '../models';
+import { crisprControlMixin, CrisprFieldComponent } from '../abstracts';
+
+const FormGroupMixin = crisprControlMixin<FormConfig>(CrisprFieldComponent);
 
 @Component({
   selector: 'crispr-form-group',
@@ -8,16 +11,12 @@ import { FormConfig } from '../models';
   styleUrls: ['./form-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormGroupComponent implements OnInit {
+export class FormGroupComponent extends FormGroupMixin implements OnInit {
 
-  @Input() config: FormConfig;
-
-  group: FormGroup;
-  subGroup: AbstractControl;
-
-  constructor() { }
+  // subGroup: AbstractControl;
 
   ngOnInit() {
-    this.subGroup = this.group.get(this.config.controlName);
+    super.ngOnInit();
+    // this.subGroup = this.group.get(this.config.controlName);
   }
 }

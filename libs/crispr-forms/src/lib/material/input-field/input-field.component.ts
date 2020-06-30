@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { InputFieldConfig } from '../../models';
-import { crisprControlMixin, CrisprFieldComponent } from '../../field.component.abstract';
+import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 
 const InputFieldMixin = crisprControlMixin<InputFieldConfig>(CrisprFieldComponent);
 @Component({

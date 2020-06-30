@@ -13,7 +13,7 @@ export class CrisprFormComponent implements OnInit {
   // if no form has been passed in by consuming component, we create an empty group to build out
   @Input() form: FormGroup = new FormGroup({});
   @Input() config: FormConfig;
-  /** DEPRECATED */
+  /** DEPRECATED: removing in v11 */
   @Input() value: any = null;
 
   @Output() submitted = new EventEmitter<FormGroup>();
@@ -25,7 +25,7 @@ export class CrisprFormComponent implements OnInit {
   constructor( ) { }
 
   ngOnInit() {
-    // build out the form, not we pass in the form as the third argument and the function modifies it
+    // build out the form, note that we pass in the form as the third argument and the function modifies it
     buildFormGroupFromConfig(this.config, this.value, this.form);
   }
 

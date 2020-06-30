@@ -33,9 +33,9 @@ import { HeadingComponent } from './heading/heading.component';
 import { InfoComponent } from './info/info.component';
 import { SliderFieldComponent } from './slider-field/slider-field.component';
 import { DividerComponent } from './divider/divider.component';
+// tslint:disable-next-line: max-line-length
 import { AutocompleteChiplistFieldComponent } from './autocomplete-chiplist-field/autocomplete-chiplist-field.component';
 import { OptionComponent } from './option/option.component';
-// import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 
 // TODO: Should we import UI library?
 // Will the tree shaker shake the unused modules?
@@ -89,7 +89,6 @@ const CRISPR_FIELDS = [
     ...CRISPR_FIELDS,
     InfoComponent,
     OptionComponent,
-    // AutocompleteComponent,
   ],
   entryComponents: CRISPR_FIELDS
 })

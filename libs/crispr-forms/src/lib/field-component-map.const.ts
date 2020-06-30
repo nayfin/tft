@@ -38,7 +38,7 @@ export type CrisprControlComponent = ButtonComponent|
   DatepickerFieldComponent;
 
 // export type ComponentKeys = keyof typeof FIELD_COMPONENTS;
-// export type CrisprComponent = typeof FIELD_COMPONENTS[ComponentKeys];
+// export type CrisprFieldComponents = typeof FIELD_COMPONENTS[ComponentKeys];
 
 export type CrisprFieldComponent = CrisprControlComponent |
   HeadingComponent|

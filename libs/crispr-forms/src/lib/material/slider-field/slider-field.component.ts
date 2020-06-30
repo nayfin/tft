@@ -1,7 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SliderFieldConfig } from '../../models';
-import { CrisprFieldComponent, crisprControlMixin } from '../../field.component.abstract';
+import { CrisprFieldComponent, crisprControlMixin } from '../../abstracts';
 
+const defaultConfig = {displayLimits: true};
 const SliderFieldMixin = crisprControlMixin<SliderFieldConfig>(CrisprFieldComponent);
 
 @Component({
@@ -12,7 +13,7 @@ const SliderFieldMixin = crisprControlMixin<SliderFieldConfig>(CrisprFieldCompon
 })
 export class SliderFieldComponent extends SliderFieldMixin implements OnInit {
 
-  defaultConfig = {displayLimits: true}
+  defaultConfig = defaultConfig;
   constructor() {
     super();
   }

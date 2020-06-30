@@ -1,44 +1,13 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { MatAutocompleteTrigger, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { FormControl } from '@angular/forms';
-import { SelectOption, AutocompleteFieldConfig, AbstractAutocompleteFieldConfig, AutocompleteChiplistFieldConfig } from '../../models';
 
-import { Observable, Subject } from 'rxjs';
-import { switchMap, map, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-import { observablifyOptions } from '../../form.helpers';
-import { crisprControlMixin, CrisprFieldComponent } from '../../field.component.abstract';
-
+import { SelectOption, AutocompleteFieldConfig } from '../../models';
+import { AbstractAutocompleteComponent } from '../../abstracts';
 
 const defaultConfig: Partial<AutocompleteFieldConfig> = {
   autoActiveFirstOption: true,
   typeDebounceTime: 500
 };
-
-type AutoCompleteTypes = AutocompleteFieldConfig | AutocompleteChiplistFieldConfig;
-
-const AbstractAutocompleteFieldMixin = crisprControlMixin<AutoCompleteTypes>(CrisprFieldComponent);
-
-
-export class AbstractAutocompleteComponent
-  extends crisprControlMixin<AutoCompleteTypes>(CrisprFieldComponent) implements OnInit {
-  autocompleteInputControl = new FormControl('');
-  options$: Observable<SelectOption[]>
-
-  ngOnInit() {
-    super.ngOnInit();
-
-    this.group.addControl(this.config.controlName, new FormControl());
-    // filter options by the search string using either the default filter function or one passed in through config
-    this.options$ = this.autocompleteInputControl.valueChanges.pipe(
-      debounceTime(this.config.typeDebounceTime),
-      distinctUntilChanged(),
-      map(searchText => searchText || ''),
-      switchMap((searchText: string) =>{
-        return observablifyOptions(this.config.options, this.group, searchText, this.config.emptyOptionsMessage)
-      }),
-    );
-  }
-}
 
 @Component({
   selector: 'crispr-autocomplete-field',
@@ -47,7 +16,7 @@ export class AbstractAutocompleteComponent
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AutocompleteFieldComponent
-  extends AbstractAutocompleteComponent
+  extends AbstractAutocompleteComponent<AutocompleteFieldConfig>
   implements OnInit {
 
   defaultConfig = defaultConfig;

@@ -3,6 +3,12 @@ import { FormGroup, FormArray } from '@angular/forms';
 
 import { FormGroupListConfig } from '../models';
 import { createControlForType } from '../form.helpers';
+import { CrisprFieldComponent } from '../abstracts';
+
+const defaultConfig: Partial<FormGroupListConfig> = {
+  addItemLabel: 'ADD ITEM',
+  minListLength: 1,
+};
 
 @Component({
   selector: 'crispr-form-group-list',
@@ -10,18 +16,20 @@ import { createControlForType } from '../form.helpers';
   styleUrls: ['./form-group-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormGroupListComponent implements OnInit {
-
-  config: FormGroupListConfig;
+export class FormGroupListComponent extends CrisprFieldComponent<FormGroupListConfig> implements OnInit {
+  defaultConfig = defaultConfig
   group: FormGroup;
-  addItemLabel: string;
   formArray: FormArray;
-  minListLength: number;
 
   ngOnInit() {
-    this.addItemLabel = this.config.addItemLabel || 'ADD ITEM';
-    this.minListLength = Number.isInteger(this.config.minListLength) ? this.config.minListLength : 1;
+    super.ngOnInit();
     this.formArray = this.getFormArray(this.group, this.config.controlName);
+    const initialValue = this.config.value;
+    if(initialValue ) {
+      initialValue.forEach(value => this.addGroup(value));
+    } else if (this.config.minListLength > 0) {
+      this.addGroup()
+    }
   }
 
   getFormArray(group: FormGroup, controlName: string): FormArray {
@@ -29,7 +37,7 @@ export class FormGroupListComponent implements OnInit {
   }
 
   addGroup(value = null) {
-    this.formArray.push( createControlForType(this.config.itemConfig, value) );
+    this.formArray.push(createControlForType(this.config.itemConfig, value) );
   }
 
   deleteGroup(index: number) {

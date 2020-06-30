@@ -1,6 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TextareaFieldConfig } from '../../models';
+import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
+
+const defaultConfig: Partial<TextareaFieldConfig> = {rows: 5};
+const TextareaFieldMixin = crisprControlMixin<TextareaFieldConfig>(CrisprFieldComponent);
 
 @Component({
   selector: 'crispr-textarea-field',
@@ -8,16 +12,11 @@ import { TextareaFieldConfig } from '../../models';
   styleUrls: ['./textarea-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TextareaFieldComponent implements OnInit {
-
-  config: TextareaFieldConfig;
-  group: FormGroup;
-  rows: number;
-
-  constructor() { }
+export class TextareaFieldComponent extends TextareaFieldMixin implements OnInit {
+  defaultConfig = defaultConfig;
 
   ngOnInit() {
-    this.rows = this.config.rows || 5;
+    super.ngOnInit()
   }
 }
 

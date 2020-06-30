@@ -1,6 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, AbstractControl } from '@angular/forms';
 import { CheckboxFieldConfig } from '../../models';
+import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
+
+const defaultConfig: Partial<CheckboxFieldConfig> = {
+  labelPosition: 'after',
+  inline: false
+}
+const CheckboxFieldMixin = crisprControlMixin<CheckboxFieldConfig>(CrisprFieldComponent);
 
 @Component({
   selector: 'crispr-checkbox-field',
@@ -8,17 +14,10 @@ import { CheckboxFieldConfig } from '../../models';
   styleUrls: ['./checkbox-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CheckboxFieldComponent implements OnInit {
+export class CheckboxFieldComponent extends CheckboxFieldMixin implements OnInit {
 
-  config: CheckboxFieldConfig;
-  group: FormGroup;
-  labelPosition: 'before' | 'after';
-  inline: boolean;
-
-  constructor() { }
-
+  defaultConfig = defaultConfig;
   ngOnInit() {
-    this.labelPosition = this.config.labelPosition || 'after';
-    this.inline = this.config.inline || false;
+    super.ngOnInit();
   }
 }

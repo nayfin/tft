@@ -3,7 +3,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 import { SelectFieldConfig, SelectOption } from '../../models';
 import { observablifyOptions } from '../../form.helpers';
-import { CrisprFieldComponent, crisprControlMixin } from '../../field.component.abstract';
+import { CrisprFieldComponent, crisprControlMixin } from '../../abstracts';
 
 const SelectFieldMixin = crisprControlMixin<SelectFieldConfig>(CrisprFieldComponent);
 
@@ -14,13 +14,10 @@ const SelectFieldMixin = crisprControlMixin<SelectFieldConfig>(CrisprFieldCompon
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectFieldComponent extends SelectFieldMixin implements OnInit {
-
+  defaultConfig = {};
   options$: Observable<SelectOption[]>;
-
-  constructor() {
-    super();
-  }
   ngOnInit() {
+    super.ngOnInit();
     // options$ can be passed as an array, promise that resolves array, or observable that resolves array
     // this functions accounts for all possibilities and converts to observable that resolves array
     this.options$ = observablifyOptions(this.config.options, this.group);

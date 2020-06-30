@@ -9,7 +9,7 @@
       {{config.label}}
     </mat-label>
     <textarea
-      [rows]="rows"
+      [rows]="config.rows"
       matInput
       [placeholder]="config.placeholder"
       [formControlName]="config.controlName">
@@ -21,6 +21,5 @@
     </crispr-info>
     <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
   </mat-form-field>
-
 
 </crispr-field-container>

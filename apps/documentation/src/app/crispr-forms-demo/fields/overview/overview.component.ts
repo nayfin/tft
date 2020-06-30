@@ -33,11 +33,13 @@ export class OverviewComponent implements OnInit {
             inputType: 'text',
             controlName: 'subField',
             placeholder: 'First Name',
+            value: 'Lady'
           },
           {
             controlType: ControlType.INPUT,
             controlName: 'secondSubField',
             placeholder: 'Last Name',
+            value: 'gaga'
           },
         ]
       },
@@ -48,6 +50,16 @@ export class OverviewComponent implements OnInit {
         },
         controlName: 'groupList',
         itemLabelBuilder: ( index: number ) => `Step ${index + 1}`,
+        value: [
+          {
+            subField: 'Tom',
+            secondSubField: 'Waits'
+          },
+          {
+            subField: 'loch',
+            secondSubField: 'ness'
+          }
+        ],
         itemConfig: {
           heading: { label: 'Sub Group'},
           controlType: ControlType.GROUP,

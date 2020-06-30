@@ -43,7 +43,7 @@ export interface CrisprFieldConfig {
 export interface ControlFieldConfig extends CrisprFieldConfig {
   controlName: string;
   controlType: ControlType;
-  value?: ControlValue;
+  value?: ControlValue | any[];
   validators?: ValidatorFn[];
   fieldSuffix?: string;
   // TODO: Determine if this is necessary
@@ -86,9 +86,7 @@ export type AnyFieldConfig = SelectFieldConfig
 
 export type ControlValue = string | number | SelectOption | SelectOption[];
 
-/**
- * DEPRECATED
- */
+// export type ControlType = keyof typeof FIELD_COMPONENTS;
 export enum ControlType {
   AUTOCOMPLETE = 'autocomplete',
   AUTOCOMPLETE_CHIPLIST = 'autocompleteChiplist',

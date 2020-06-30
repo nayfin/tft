@@ -1,11 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
-import { AutocompleteChiplistFieldConfig, SelectOption } from '../../models';
-import { FormControl } from '@angular/forms';
-import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
-import { observablifyOptions } from '../../form.helpers';
-import { switchMap, map, tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { crisprControlMixin, CrisprFieldComponent } from '../../field.component.abstract';
+import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
+
+import { AutocompleteChiplistFieldConfig, SelectOption } from '../../models';
+import { AbstractAutocompleteComponent } from '../../abstracts';
 
 const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
   chipsSelectable: true,
@@ -16,15 +15,14 @@ const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
   typeDebounceTime: 500
 }
 
-const AutocompleteChiplistFieldMixin = crisprControlMixin<AutocompleteChiplistFieldConfig>(CrisprFieldComponent);
-
 @Component({
   selector: 'crispr-autocomplete-chiplist-field',
   templateUrl: './autocomplete-chiplist-field.component.html',
   styleUrls: ['./autocomplete-chiplist-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AutocompleteChiplistFieldComponent extends AutocompleteChiplistFieldMixin implements OnInit {
+export class AutocompleteChiplistFieldComponent
+  extends AbstractAutocompleteComponent<AutocompleteChiplistFieldConfig> implements OnInit {
   // This is stupid and annoying...
   // We need use ViewChild twice on the same template ref
   // - the MatAutocompleteTrigger is used to for selecting value on tab
@@ -32,8 +30,7 @@ export class AutocompleteChiplistFieldComponent extends AutocompleteChiplistFiel
   @ViewChild('autoInput', { read: MatAutocompleteTrigger }) chipInput: MatAutocompleteTrigger;
   @ViewChild('autoInput') chipInputRef: ElementRef<HTMLInputElement>;
 
-
-  options$: Observable<SelectOption[]>;
+  defaultConfig = defaultConfig;
   remainingOptions$: Observable<SelectOption[]>;
   chips$ = new BehaviorSubject<SelectOption[]>([]);
 
@@ -43,27 +40,9 @@ export class AutocompleteChiplistFieldComponent extends AutocompleteChiplistFiel
     })
   );
 
-  control: FormControl;
-  // we need a separate control for the UI because of the way the material autocomplete chiplist works
-  autocompleteInputControl = new FormControl('');
-  defaultConfig = defaultConfig;
-  constructor() {
-    super();
-  }
-
   ngOnInit() {
     super.ngOnInit();
-    this.group.addControl(this.config.controlName, new FormControl);
-
-    this.options$ = this.autocompleteInputControl.valueChanges.pipe(
-      debounceTime(this.config.typeDebounceTime),
-      distinctUntilChanged(),
-      map(searchText => searchText || ''),
-      switchMap(searchText => {
-        return observablifyOptions(this.config.options, this.group, searchText, this.config.emptyOptionsMessage)
-      })
-    );
-
+    console.log(this.config);
     this.remainingOptions$ = combineLatest([
       this.chips$,
       this.options$
@@ -87,7 +66,7 @@ export class AutocompleteChiplistFieldComponent extends AutocompleteChiplistFiel
    * To follow ARIA standards we want to select the active option on blur.
    * @param event blur event that triggers the handle blur, TODO: remove this parameter if not used by 7/4/19
    */
-  handleTab(_event: FocusEvent ) {
+  handleTab(_event: FocusEvent) {
     if (this.chipInput.activeOption) {
       this.chipInput.activeOption.select();
     }

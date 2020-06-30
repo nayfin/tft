@@ -1,12 +1,12 @@
 <crispr-field-container
   [config]="config"
   [group]="group"
-  [inlineField]="inline">
+  [inlineField]="config.inline">
   <div
     [formGroup]="group">
     <mat-checkbox
       [color]="config.color"
-      [labelPosition]="labelPosition"
+      [labelPosition]="config.labelPosition"
       [formControlName]="config.controlName">
       {{config.label}}
       <crispr-info

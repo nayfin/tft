@@ -2,10 +2,10 @@
   [config]="config"
   [group]="group">
   <ng-container
-    *ngFor="let field of config.fields;"
+    *ngFor="let fieldConfig of config.fields;"
     crisprField
-    [config]="field"
-    [group]="subGroup">
+    [config]="fieldConfig"
+    [group]="control">
   </ng-container>
 </crispr-field-container>
 
