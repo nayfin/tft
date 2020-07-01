@@ -8,7 +8,7 @@ import { OnInit, Directive } from '@angular/core';
 @Directive()
 export abstract class CrisprFieldComponent<C extends CrisprFieldConfig> implements OnInit {
   config: C;
-  protected defaultConfig?: Partial<C>
+  defaultConfig?: Partial<C>
 
   ngOnInit() {
     this.applyDefaultConfig();
