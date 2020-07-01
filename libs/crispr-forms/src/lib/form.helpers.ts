@@ -226,7 +226,7 @@ export function isControlField(fieldConfig: CrisprFieldConfig ): fieldConfig is 
  * @param group the form group to modify and build out
  */
 export function buildFormGroupFromConfig(config: FormConfig, value: any = null, group: FormGroup = new FormGroup({}) ) {
-
+  if(value) console.warn('The "value" input is DEPRECATED on the crispr-form component. Consider using the "initialValue" property of the individual field config')
   config.fields.forEach( (controlConfig: AnyFieldConfig) => {
     if (isControlField(controlConfig)) {
       // then add a control to the group using the controlName from configuration
@@ -237,7 +237,6 @@ export function buildFormGroupFromConfig(config: FormConfig, value: any = null, 
                          ? value[controlName]
                          : null;
       group.addControl(controlName, createControlForType(controlConfig, controlValue));
-
     }
   });
   return group;
