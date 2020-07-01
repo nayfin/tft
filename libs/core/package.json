@@ -2,10 +2,10 @@
   "name": "@tft/core",
   "version": "10.0.0",
   "peerDependencies": {
-    "@angular/common": "^9.0.0",
-    "@angular/core": "^9.0.0",
-    "@angular/material": "^9.0.0",
-    "@angular/flex-layout": "^9.0.0-beta.30"
+    "@angular/common": "^10.0.0",
+    "@angular/core": "^10.0.0",
+    "@angular/material": "^10.0.0",
+    "@angular/flex-layout": "^10.0.0-beta.32"
   },
   "dependencies": {
     "tslib": "^2.0.0"
