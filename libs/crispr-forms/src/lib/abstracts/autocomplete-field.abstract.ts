@@ -1,4 +1,4 @@
-import { OnInit } from '@angular/core';
+import { OnInit, Directive } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
@@ -12,6 +12,7 @@ type AutocompleteConfigTypes = AutocompleteFieldConfig | AutocompleteChiplistFie
 
 const AbstractAutocompleteFieldMixin = crisprControlMixin<AutocompleteConfigTypes>(CrisprFieldComponent);
 
+@Directive()
 export class AbstractAutocompleteComponent<C>
   extends AbstractAutocompleteFieldMixin implements OnInit {
   // we need a separate control for the UI because of the way the material autocomplete chiplist works

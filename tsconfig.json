@@ -1,31 +1,74 @@
+/*
+  This is a "Solution Style" tsconfig.json file, and is used by editors and TypeScript’s language server to improve development experience.
+  It is not intended to be used to perform a compilation.
+
+  To learn more about this file see: https://angular.io/config/solution-tsconfig.
+*/
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "rootDir": ".",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "es2015",
-    "module": "esnext",
-    "typeRoots": ["node_modules/@types"],
-    "lib": ["es2017", "dom"],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@tft/api-interfaces": ["libs/api-interfaces/src/index.ts"],
-      "@tft/interact": ["libs/interact/src/index.ts"],
-      "@tft/crispr-forms": ["libs/crispr-forms/src/index.ts"],
-      "@tft/form-validation-handler": [
-        "libs/form-validation-handler/src/index.ts"
-      ],
-      "@tft/core": ["libs/core/src/index.ts"],
-      "@tft/ui-imports": ["libs/ui-imports/src/index.ts"],
-      "@tft/mat-instantsearch": ["libs/mat-instantsearch/src/index.ts"]
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/sandbox/tsconfig.app.json"
+    },
+    {
+      "path": "./apps/sandbox/tsconfig.spec.json"
+    },
+    {
+      "path": "./apps/sandbox-e2e/tsconfig.e2e.json"
+    },
+    {
+      "path": "./apps/api/tsconfig.app.json"
+    },
+    {
+      "path": "./apps/api/tsconfig.spec.json"
+    },
+    {
+      "path": "./libs/api-interfaces/tsconfig.spec.json"
+    },
+    {
+      "path": "./apps/documentation/tsconfig.app.json"
+    },
+    {
+      "path": "./apps/documentation/tsconfig.spec.json"
+    },
+    {
+      "path": "./apps/documentation-e2e/tsconfig.e2e.json"
+    },
+    {
+      "path": "./libs/interact/tsconfig.lib.json"
+    },
+    {
+      "path": "./libs/interact/tsconfig.spec.json"
+    },
+    {
+      "path": "./libs/crispr-forms/tsconfig.lib.json"
+    },
+    {
+      "path": "./libs/crispr-forms/tsconfig.spec.json"
+    },
+    {
+      "path": "./libs/form-validation-handler/tsconfig.lib.json"
+    },
+    {
+      "path": "./libs/form-validation-handler/tsconfig.spec.json"
+    },
+    {
+      "path": "./libs/core/tsconfig.lib.json"
+    },
+    {
+      "path": "./libs/core/tsconfig.spec.json"
+    },
+    {
+      "path": "./libs/ui-imports/tsconfig.lib.json"
+    },
+    {
+      "path": "./libs/ui-imports/tsconfig.spec.json"
+    },
+    {
+      "path": "./libs/mat-instantsearch/tsconfig.lib.json"
+    },
+    {
+      "path": "./libs/mat-instantsearch/tsconfig.spec.json"
     }
-  },
-  "exclude": ["node_modules", "tmp"]
+  ]
 }

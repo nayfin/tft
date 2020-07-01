@@ -1,19 +1,11 @@
 import {
-  ControlFieldConfig,
-  ControlValue,
   CrisprFieldConfig,
-  SelectOption,
-  AutocompleteFieldConfig,
-  AutocompleteChiplistFieldConfig
 } from '../models';
-import { OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
-import { observablifyOptions } from '../form.helpers';
+import { OnInit, Directive } from '@angular/core';
 
 // export type Constructor<T> = new(...args: any[]) => T;
 
+@Directive()
 export abstract class CrisprFieldComponent<C extends CrisprFieldConfig> implements OnInit {
   config: C;
   protected defaultConfig?: Partial<C>

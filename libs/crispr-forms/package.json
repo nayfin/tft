@@ -9,5 +9,8 @@
     "@tft/form-validation-handler": "^9.0.0",
     "@angular/material-moment-adapter": "^9.0.0",
     "moment": "^2.24.0"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
   }
 }
