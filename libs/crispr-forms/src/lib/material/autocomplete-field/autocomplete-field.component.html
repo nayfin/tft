@@ -38,16 +38,9 @@
       <mat-option
         *ngFor="let option of options$ | async"
         [value]="option.value">
-        <img
-          *ngIf="option[config.imageUrlParam]"
-          [src]="option[config.imageUrlParam]"
-          style="vertical-align:middle;"
-          aria-hidden
-          height="25"/>
-        {{ option.label }}
+        <crispr-option [option]="option"></crispr-option>
       </mat-option>
 
     </mat-autocomplete>
   </mat-form-field>
-
 </crispr-field-container>

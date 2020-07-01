@@ -43,7 +43,7 @@ export interface CrisprFieldConfig {
 export interface ControlFieldConfig extends CrisprFieldConfig {
   controlName: string;
   controlType: ControlType;
-  value?: ControlValue | any[];
+  initialValue?: ControlValue | any[];
   validators?: ValidatorFn[];
   fieldSuffix?: string;
   // TODO: Determine if this is necessary
@@ -84,7 +84,7 @@ export type AnyFieldConfig = SelectFieldConfig
   | ButtonConfig
   | DividerConfig;
 
-export type ControlValue = string | number | SelectOption | SelectOption[];
+export type ControlValue = boolean | string | number | Date | SelectOption | SelectOption[];
 
 // export type ControlType = keyof typeof FIELD_COMPONENTS;
 export enum ControlType {

@@ -20,7 +20,6 @@ export class AutocompleteFieldComponent
   implements OnInit {
 
   defaultConfig = defaultConfig;
-
   @ViewChild('autoInput', { read: MatAutocompleteTrigger }) autoInput: MatAutocompleteTrigger;
   @ViewChild('autoInput') autoInputRef: ElementRef<HTMLInputElement>;
 
@@ -28,6 +27,13 @@ export class AutocompleteFieldComponent
     super.ngOnInit();
   }
 
+  setControlValue(initialValue: SelectOption) {
+    if(initialValue) {
+      // sets the initial value on the control if one is passed
+      this.control.setValue(initialValue.value) // value.value :)
+      this.autocompleteInputControl.setValue(initialValue.label);
+    }
+  }
   /**
    * The material autocomplete defaults to displaying the options value instead of its label.
    * We only have the value from the selected option to work with, so we have to pass the options
@@ -36,13 +42,18 @@ export class AutocompleteFieldComponent
    * @param options the array of options to search for option with corresponding value
    */
   displayLabel(options: SelectOption[]) {
-    return (value: any) => Array.isArray(options) ? options.find(option => option.value === value)?.label : '';
+    return (value: any) => {
+      return !!options && Array.isArray(options)
+        ? options.find(option => option.value === value)?.label
+        : value;
+    };
   }
 
   handleSelect(event: MatAutocompleteSelectedEvent) {
     this.control.setValue(event.option.value)
     this.autoInputRef.nativeElement.blur();
   }
+
   /**
    * To follow ARIA standards we want to select the active option on blur.
    * We do this by selecting the MatAutoCompleteTrigger, which triggers the select event

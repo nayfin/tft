@@ -12,5 +12,5 @@ export interface AbstractAutocompleteFieldConfig extends ControlFieldConfig {
 
 export interface AutocompleteFieldConfig extends AbstractAutocompleteFieldConfig {
   controlType: ControlType.AUTOCOMPLETE;
-  value?: SelectOption;
+  initialValue?: SelectOption;
 }

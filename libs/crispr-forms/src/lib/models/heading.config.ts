@@ -6,5 +6,5 @@ export type HeadingConfig = Omit<CrisprFieldConfig, 'placeholder' | 'controlType
   // controlType is optional here because this component can be used as a crispr field where it needs a ControlType
   // or by a crispr field where it doesn't need a ControlType
   controlType?: ControlType.HEADING;
-  typographyClass?: string
+  typographyClass?: string;
 };

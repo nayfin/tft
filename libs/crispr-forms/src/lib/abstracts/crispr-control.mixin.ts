@@ -13,7 +13,7 @@ export function crisprControlMixin<C extends ControlFieldConfig>(BaseClass: type
     ngOnInit() {
       super.ngOnInit();
       this.control = this.group.get(this.config.controlName) as FormControl;
-      this.setControlValue(this.config.value);
+      this.setControlValue(this.config.initialValue);
     }
 
     setControlValue(value: ControlValue | any[]) {

@@ -24,7 +24,7 @@ export class FormGroupListComponent extends CrisprFieldComponent<FormGroupListCo
   ngOnInit() {
     super.ngOnInit();
     this.formArray = this.getFormArray(this.group, this.config.controlName);
-    const initialValue = this.config.value;
+    const initialValue = this.config.initialValue;
     if(initialValue ) {
       initialValue.forEach(value => this.addGroup(value));
     } else if (this.config.minListLength > 0) {

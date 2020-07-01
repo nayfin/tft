@@ -42,7 +42,6 @@ export class AutocompleteChiplistFieldComponent
 
   ngOnInit() {
     super.ngOnInit();
-    console.log(this.config);
     this.remainingOptions$ = combineLatest([
       this.chips$,
       this.options$
@@ -53,6 +52,12 @@ export class AutocompleteChiplistFieldComponent
         })
       })
     )
+  }
+
+  setControlValue(initialValue: SelectOption[]) {
+    if (initialValue) {
+      this.chips$.next(initialValue);
+    }
   }
 
   handleSelect(event: MatAutocompleteSelectedEvent) {

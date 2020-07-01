@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormConfig, ControlType, SelectOption } from '@tft/crispr-forms';
 import { Validators, FormGroup } from '@angular/forms';
 import { of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Moment } from 'moment';
 
 @Component({
@@ -33,13 +33,13 @@ export class OverviewComponent implements OnInit {
             inputType: 'text',
             controlName: 'subField',
             placeholder: 'First Name',
-            value: 'Lady'
+            initialValue: 'Lady'
           },
           {
             controlType: ControlType.INPUT,
             controlName: 'secondSubField',
             placeholder: 'Last Name',
-            value: 'gaga'
+            initialValue: 'gaga'
           },
         ]
       },
@@ -50,7 +50,7 @@ export class OverviewComponent implements OnInit {
         },
         controlName: 'groupList',
         itemLabelBuilder: ( index: number ) => `Step ${index + 1}`,
-        value: [
+        initialValue: [
           {
             subField: 'Tom',
             secondSubField: 'Waits'
@@ -87,6 +87,7 @@ export class OverviewComponent implements OnInit {
         },
         controlName: 'textInput',
         controlType: ControlType.INPUT,
+        initialValue: 'initial text input value',
         label: 'I am a label on a text input',
         placeholder: 'I am a placeholder in a text input',
         info: {
@@ -108,6 +109,7 @@ export class OverviewComponent implements OnInit {
           tooltipPosition: 'left'
         },
         appearance: 'outline',
+        initialValue: 'some disabled text',
         // hideDisabled: true,
         disabledCallback: ( form, _config) => {
           // have access to the form here so we can hook into the valueChanges on the text input above
@@ -166,6 +168,7 @@ export class OverviewComponent implements OnInit {
         controlName: 'selectFieldPromise',
         placeholder: 'I am a placeholder in a select field',
         classes: [],
+        initialValue: 'blue',
         options: (): Promise<SelectOption[]> => {
           return new Promise( (resolve, reject) => {
             // make an http request here
@@ -240,6 +243,7 @@ export class OverviewComponent implements OnInit {
       {
         controlType: ControlType.SLIDER,
         controlName: 'slider',
+        initialValue: 9,
         label: 'I am a label on a slider',
         placeholder: 'I am a placeholder on a slider',
         color: 'primary',

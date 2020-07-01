@@ -8,5 +8,5 @@ export interface AutocompleteChiplistFieldConfig extends AbstractAutocompleteFie
   chipsSelectable?: boolean;
   areChipsRemovable?: boolean;
   addChipOnBlur?: boolean;
-  value?: SelectOption[];
+  initialValue?: SelectOption[];
 }
