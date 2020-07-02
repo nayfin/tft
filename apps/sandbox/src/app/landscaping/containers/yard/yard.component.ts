@@ -1,6 +1,6 @@
 import { Component, OnInit, Renderer2, ElementRef, ViewChild } from '@angular/core';
 import { TftDropEvent, DropzoneDirective } from '@tft/interact';
-import { DraggableOptions } from '@interactjs/types/types';
+import { DraggableOptions } from '@interactjs/types';
 
 @Component({
   selector: 'tft-yard',
@@ -64,5 +64,7 @@ export class YardComponent {
     dragRef.setPosition(0, 0);
   }
 
-
+  log(type:string, event: any) {
+    console.log(type, event);
+  }
 }

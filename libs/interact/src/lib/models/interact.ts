@@ -1,7 +1,6 @@
 import { DraggableDirective } from '../directives/draggable.directive';
-import { DropEvent }  from '@interactjs/actions/drop/DropEvent'
 import { DropzoneDirective } from '../directives/dropzone.directive';
-import { Point, DragEvent, ResizeEvent, Interactable } from '@interactjs/types/index';
+import { Point, DragEvent, ResizeEvent, Interactable, DropEvent } from '@interactjs/types';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export const DEFAULT_REGISTRY_ID = 'DEFAULT';
