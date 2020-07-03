@@ -215,7 +215,7 @@ export function observablifyOptions(
   ]);
 }
 
-export function isControlField(fieldConfig: CrisprFieldConfig ): fieldConfig is ControlFieldConfig {
+export function isControlField(fieldConfig: CrisprFieldConfig): fieldConfig is ControlFieldConfig {
   // determine if config is a controlConfig but not a FormConfig
   return 'controlName' in fieldConfig;
 }
