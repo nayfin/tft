@@ -70,7 +70,7 @@ export class AutocompleteChiplistFieldComponent
     this.autocompleteInputControl.setValue('');
   }
 
-    /**
+  /**
    * To follow ARIA standards we want to select the active option on blur.
    * @param event blur event that triggers the handle blur, TODO: remove this parameter if not used by 7/4/19
    */
