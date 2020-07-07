@@ -233,10 +233,14 @@ export class OverviewComponent implements OnInit {
           iconName: 'delete'
         },
         // validators: [Validators.required],
-        options: () => of([
-          {label: 'good', value: 'a'},
-          {label: 'evil', value: 'b'},
-        ])
+        typeDebounceTime: 0,
+        options: (_group, searchTerm) => {
+          console.log({searchTerm, _group})
+          return of([
+            {label: 'good', value: 'a'},
+            {label: 'evil', value: 'b'},
+          ]).pipe(map(options => options.filter(option => option.label.toLowerCase().includes(searchTerm) )))
+        }
       },
       {
         controlType: ControlType.HEADING,

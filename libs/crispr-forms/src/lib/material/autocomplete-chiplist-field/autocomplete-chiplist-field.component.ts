@@ -33,18 +33,7 @@ export class AutocompleteChiplistFieldComponent
 
   defaultConfig = defaultConfig;
   chips$ = new BehaviorSubject<SelectOption[]>([]);
-  remainingOptions$: Observable<SelectOption[]> = combineLatest([
-    this.chips$,
-    this.options$
-  ]).pipe(
-    map(([chips, options]) => {
-      return this.config.allowDuplicates
-      ? options
-      : options.filter(option => {
-        return !chips.some(chip => chip.value === option.value);
-      })
-    })
-  );
+  remainingOptions$: Observable<SelectOption[]>;
 
   controlValue$ = this.chips$.pipe(
     tap(chips => {
@@ -54,6 +43,18 @@ export class AutocompleteChiplistFieldComponent
 
   ngOnInit() {
     super.ngOnInit();
+    this.remainingOptions$ = combineLatest([
+      this.chips$,
+      this.options$
+    ]).pipe(
+      map(([chips, options]) => {
+        return this.config.allowDuplicates
+        ? options
+        : options.filter(option => {
+          return !chips.some(chip => chip.value === option.value);
+        })
+      })
+    )
   }
 
   setControlValue(value: SelectOption[]) {
