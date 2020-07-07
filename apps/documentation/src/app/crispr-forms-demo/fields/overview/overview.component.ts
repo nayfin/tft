@@ -24,10 +24,23 @@ export class OverviewComponent implements OnInit {
       {
         secondSubField: 'bowie'
       },
-   ],
-   textInput: 'I am an initial value for this field',
+    ],
+    textInput: 'I am an initial value for this field',
+    disabler: true,
+    disabledText: 'Some initial value on disabled field',
+    selectField: 'b',
+    selectFieldObservable: 'b',
+    selectFieldPromise: 'blue',
+    autocompleteObservable: { value: 'b', label: 'good'},
+    autocompleteChiplistObservable: [
+      { value: 'a', label: 'Alpha'},
+      { value: 'b', label: 'Beta'},
+      { value: 'o', label: 'Omega'},
+    ],
+    datepickerField : new Date('4/18/2019'),
+    slider: 66
+  };
 
-  }
   config: FormConfig = {
     controlType: ControlType.GROUP,
     controlName: 'myForm',
@@ -99,6 +112,17 @@ export class OverviewComponent implements OnInit {
         validators: [Validators.required, Validators.minLength(5)],
       },
       {
+        controlType: ControlType.CHECKBOX,
+        controlName: 'disabler',
+        label: 'Check to disable the below input',
+        color: 'primary',
+        labelPosition: 'after',
+        inline: true,
+        info: {
+          content: 'I am a tooltip on a checkbox'
+        }
+      },
+      {
         controlType: ControlType.INPUT,
         label: 'I am dynamically disabled text input',
         controlName: 'disabledText',
@@ -112,9 +136,7 @@ export class OverviewComponent implements OnInit {
         disabledCallback: ( form, _config) => {
           // have access to the form here so we can hook into the valueChanges on the text input above
           // to dynamically enable/disable this field
-          return form.get('textInput').valueChanges.pipe(
-            map( (inputValue: string) => (inputValue || '').trim().length === 0),
-          )
+          return form.get('disabler').valueChanges
         }
       },
       {
@@ -187,7 +209,23 @@ export class OverviewComponent implements OnInit {
       {
         controlType: ControlType.AUTOCOMPLETE,
         label: 'This autocomplete field uses an observable to resolve options',
-        controlName: 'autocompleteFieldObservable',
+        controlName: 'autocompleteObservable',
+        placeholder: 'I am a placeholder in a autocomplete field',
+        info: {
+          content: 'I am an info tooltip on an autocomplete field',
+          tooltipPosition: 'left',
+          iconName: 'delete'
+        },
+        // validators: [Validators.required],
+        options: () => of([
+          {label: 'good', value: 'a'},
+          {label: 'evil', value: 'b'},
+        ])
+      },
+      {
+        controlType: ControlType.AUTOCOMPLETE_CHIPLIST,
+        label: 'This autocomplete chiplist field uses an observable to resolve options',
+        controlName: 'autocompleteChiplistObservable',
         placeholder: 'I am a placeholder in a autocomplete field',
         info: {
           content: 'I am an info tooltip on an autocomplete field',
@@ -222,17 +260,6 @@ export class OverviewComponent implements OnInit {
         min: new Date('Apr 5 2019'),
         max: new Date('Apr 23 2019'),
         label: 'I am a label for a datepicker field',
-      },
-      {
-        controlType: ControlType.CHECKBOX,
-        controlName: 'horizontalCheckbox',
-        label: 'I am a checkbox?',
-        color: 'primary',
-        labelPosition: 'after',
-        inline: true,
-        info: {
-          content: 'I am a tooltip on a checkbox'
-        }
       },
       {
         controlType: ControlType.DIVIDER

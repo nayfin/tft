@@ -1,4 +1,4 @@
-import { FormGroup, FormControl, FormArray, AbstractControl } from '@angular/forms';
+import { FormGroup, AbstractControl } from '@angular/forms';
 import { ControlFieldConfig, ControlValue } from '../models';
 import { CrisprFieldComponent } from './crispr-field.abstract';
 
@@ -22,6 +22,10 @@ export function crisprControlMixin<C extends ControlFieldConfig>(BaseClass: type
       super.ngOnInit();
       this.control = this.group.get(this.config.controlName);
       this.setControlValue(this.value);
+      // setTimeouts are ugly but this seems to be the only way to get the computed field to compute initial values
+      setTimeout(()=> {
+        this.control.updateValueAndValidity();
+      })
     }
 
     setControlValue(value: ControlValue | any[]) {

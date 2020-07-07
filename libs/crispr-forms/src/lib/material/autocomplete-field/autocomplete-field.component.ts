@@ -29,7 +29,7 @@ export class AutocompleteFieldComponent
   }
 
   setControlValue(value: SelectOption) {
-    if(value) {
+    if(value && this.control) {
       // sets the initial value on the control if one is passed
       this.control.setValue(value.value) // value.value :)
       this.autocompleteInputControl.setValue(value.label);
