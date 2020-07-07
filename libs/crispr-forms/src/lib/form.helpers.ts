@@ -260,13 +260,6 @@ export function createControlForType(controlConfig: AnyFieldConfig, value: Contr
       (controlConfig as ControlFieldConfig).validators
     );
 
-  // if it was a GROUP_LIST and it had initial values passed in, add the values to the form array
-
-  // if (controlConfig.controlType === ControlType.GROUP_LIST && Array.isArray(value)) {
-  //   value.forEach( fieldValue => {
-  //     (control as FormArray).push( createControlForType((controlConfig as FormGroupListConfig).itemConfig, fieldValue));
-  //   });
-  // }
   return control;
 }
 
