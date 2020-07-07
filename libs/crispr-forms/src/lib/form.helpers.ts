@@ -8,7 +8,8 @@ import {
   ControlFieldConfig,
   OptionsType,
   AutocompleteOptionsCallback,
-  CrisprFieldConfig
+  CrisprFieldConfig,
+  ControlValue
 } from './models';
 import {
   from,
@@ -215,7 +216,7 @@ export function observablifyOptions(
   ]);
 }
 
-export function isControlField(fieldConfig: CrisprFieldConfig): fieldConfig is ControlFieldConfig {
+export function isControlConfig(fieldConfig: CrisprFieldConfig): fieldConfig is ControlFieldConfig {
   // determine if config is a controlConfig but not a FormConfig
   return 'controlName' in fieldConfig;
 }
@@ -225,17 +226,17 @@ export function isControlField(fieldConfig: CrisprFieldConfig): fieldConfig is C
  * @param value an object of initial values to pass in
  * @param group the form group to modify and build out
  */
-export function buildFormGroupFromConfig(config: FormConfig, value: any = null, group: FormGroup = new FormGroup({}) ) {
-  if(value) console.warn('The "value" input is DEPRECATED on the crispr-form component. Consider using the "initialValue" property of the individual field config')
+export function buildFormGroupFromConfig(config: FormConfig, value = null, group: FormGroup = new FormGroup({}) ) {
   config.fields.forEach( (controlConfig: AnyFieldConfig) => {
-    if (isControlField(controlConfig)) {
+    if (isControlConfig(controlConfig)) {
       // then add a control to the group using the controlName from configuration
       const {controlName} = controlConfig;
       // if there's a value object and it has a value for this field (including zero), use it.
       // Otherwise, default to null
+      // group.addControl(controlName, createControlForType(controlConfig));
       const controlValue = value && isRealValue(value[controlName])
-                         ? value[controlName]
-                         : null;
+      ? value[controlName]
+      : null;
       group.addControl(controlName, createControlForType(controlConfig, controlValue));
     }
   });
@@ -248,22 +249,24 @@ export function buildFormGroupFromConfig(config: FormConfig, value: any = null, 
  * @param controlConfig the configuration object for the control to build
  * @param value an initial value to use if passed in
  */
-export function createControlForType(controlConfig: AnyFieldConfig, value: any) {
+export function createControlForType(controlConfig: AnyFieldConfig, value: ControlValue = null)  {
   // build form control out based on the control type
   const control = controlConfig.controlType === ControlType.GROUP
     ? buildFormGroupFromConfig(controlConfig as FormConfig, value)
     : controlConfig.controlType === ControlType.GROUP_LIST
     ? new FormArray([], (controlConfig as FormGroupListConfig).validators)
     : new FormControl(
-      isRealValue(value) ? value : null,
-      (controlConfig as ControlFieldConfig).validators || null
+      value || null,
+      (controlConfig as ControlFieldConfig).validators
     );
+
   // if it was a GROUP_LIST and it had initial values passed in, add the values to the form array
-  if (controlConfig.controlType === ControlType.GROUP_LIST && Array.isArray(value)) {
-    value.forEach( item => {
-      (control as FormArray).push( createControlForType((controlConfig as FormGroupListConfig).itemConfig, item));
-    });
-  }
+
+  // if (controlConfig.controlType === ControlType.GROUP_LIST && Array.isArray(value)) {
+  //   value.forEach( fieldValue => {
+  //     (control as FormArray).push( createControlForType((controlConfig as FormGroupListConfig).itemConfig, fieldValue));
+  //   });
+  // }
   return control;
 }
 

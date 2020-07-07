@@ -12,7 +12,8 @@ const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
   addChipOnBlur: true,
   autoActiveFirstOption: true,
   imageUrlParam: 'image',
-  typeDebounceTime: 500
+  typeDebounceTime: 500,
+  allowDuplicates: false
 }
 
 @Component({
@@ -31,8 +32,19 @@ export class AutocompleteChiplistFieldComponent
   @ViewChild('autoInput') chipInputRef: ElementRef<HTMLInputElement>;
 
   defaultConfig = defaultConfig;
-  remainingOptions$: Observable<SelectOption[]>;
   chips$ = new BehaviorSubject<SelectOption[]>([]);
+  remainingOptions$: Observable<SelectOption[]> = combineLatest([
+    this.chips$,
+    this.options$
+  ]).pipe(
+    map(([chips, options]) => {
+      return this.config.allowDuplicates
+      ? options
+      : options.filter(option => {
+        return !chips.some(chip => chip.value === option.value);
+      })
+    })
+  );
 
   controlValue$ = this.chips$.pipe(
     tap(chips => {
@@ -42,21 +54,11 @@ export class AutocompleteChiplistFieldComponent
 
   ngOnInit() {
     super.ngOnInit();
-    this.remainingOptions$ = combineLatest([
-      this.chips$,
-      this.options$
-    ]).pipe(
-      map(([chips, options]) => {
-        return options.filter(option => {
-          return !chips.some(chip => chip.value === option.value);
-        })
-      })
-    )
   }
 
-  setControlValue(initialValue: SelectOption[]) {
-    if (initialValue) {
-      this.chips$.next(initialValue);
+  setControlValue(value: SelectOption[]) {
+    if (value) {
+      this.chips$.next(value);
     }
   }
 

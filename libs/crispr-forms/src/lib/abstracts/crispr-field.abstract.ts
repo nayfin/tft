@@ -3,8 +3,6 @@ import {
 } from '../models';
 import { OnInit, Directive } from '@angular/core';
 
-// export type Constructor<T> = new(...args: any[]) => T;
-
 @Directive()
 export abstract class CrisprFieldComponent<C extends CrisprFieldConfig> implements OnInit {
   config: C;

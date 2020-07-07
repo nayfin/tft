@@ -17,7 +17,6 @@ export class InputComponent implements OnInit {
       {
         controlType: ControlType.INPUT,
         label: 'Text Input Field',
-        initialValue: 'hey',
         inputType: 'text', // default
         controlName: 'textInput',
       },
@@ -25,7 +24,6 @@ export class InputComponent implements OnInit {
         controlType: ControlType.INPUT,
         label: 'Number Input Field',
         inputType: 'number',
-        initialValue: 55,
         controlName: 'numberInput',
       },
       {
@@ -49,7 +47,6 @@ export class InputComponent implements OnInit {
       {
         controlType: ControlType.INPUT,
         label: 'Date Input Field',
-        initialValue: '4-11-2003',
         inputType: 'date',
         controlName: 'dateInput',
       },

@@ -77,7 +77,6 @@ export class AutocompleteComponent implements OnInit {
         controlType: ControlType.AUTOCOMPLETE,
         label: 'This select field uses an observable to resolve options',
         controlName: 'selectFieldObservable',
-        initialValue:  {label: 'Default Value', value: '55'},
         options: (group, searchText) => {
           const databaseKey: string = group.get('optionsDriver').value || 'openFarm';
           return this.endpointsService.searchEndpointForOptions(searchText, databaseKey)

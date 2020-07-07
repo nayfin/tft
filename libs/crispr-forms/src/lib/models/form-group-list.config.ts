@@ -1,8 +1,7 @@
 import { ControlFieldConfig, FormConfig, ControlType, ControlValue } from './';
 
-export interface FormGroupListConfig<T = any> extends ControlFieldConfig {
+export interface FormGroupListConfig extends ControlFieldConfig {
   controlType: ControlType.GROUP_LIST;
-  initialValue?: Partial<T>[];
   itemConfig: FormConfig;
   addItemLabel?: string;
   itemLabelBuilder?: (index: number) => string;

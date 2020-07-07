@@ -12,6 +12,7 @@ import { FormGroupComponent } from './form-group/form-group.component';
 import { FormGroupListComponent } from './form-group-list/form-group-list.component';
 // directives
 import { CrisprFieldDirective } from './field.directive';
+import { InitialControlValuePipe } from './pipes/initial-control-value.pipe';
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import { CrisprFieldDirective } from './field.directive';
     CrisprFormComponent,
     FormGroupComponent,
     FormGroupListComponent,
+    InitialControlValuePipe,
   ],
   exports: [
     CrisprFormComponent,

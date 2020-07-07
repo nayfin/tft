@@ -3,45 +3,48 @@ import { FormGroup, FormArray } from '@angular/forms';
 
 import { FormGroupListConfig } from '../models';
 import { createControlForType } from '../form.helpers';
-import { CrisprFieldComponent } from '../abstracts';
+import { CrisprFieldComponent, crisprControlMixin } from '../abstracts';
 
 const defaultConfig: Partial<FormGroupListConfig> = {
   addItemLabel: 'ADD ITEM',
   minListLength: 1,
 };
 
+const FormGroupListMixin = crisprControlMixin<FormGroupListConfig>(CrisprFieldComponent);
 @Component({
   selector: 'crispr-form-group-list',
   templateUrl: './form-group-list.component.html',
   styleUrls: ['./form-group-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormGroupListComponent extends CrisprFieldComponent<FormGroupListConfig> implements OnInit {
+export class FormGroupListComponent extends FormGroupListMixin implements OnInit {
   defaultConfig = defaultConfig
   group: FormGroup;
-  formArray: FormArray;
+  control: FormArray;
+  value: any[]; // TODO: not sure how to strongly type this yet
 
   ngOnInit() {
     super.ngOnInit();
-    this.formArray = this.getFormArray(this.group, this.config.controlName);
-    const initialValue = this.config.initialValue;
-    if(initialValue ) {
-      initialValue.forEach(value => this.addGroup(value));
+  }
+
+  setControlValue(values: any[]) {
+    if(values && this.control) {
+      values.forEach(value => this.addGroup(value));
     } else if (this.config.minListLength > 0) {
       this.addGroup()
     }
   }
 
-  getFormArray(group: FormGroup, controlName: string): FormArray {
-    return group.get(controlName) as FormArray;
+  getFormArray(): FormArray {
+    return this.control as FormArray;
   }
 
   addGroup(value = null) {
-    this.formArray.push(createControlForType(this.config.itemConfig, value) );
+    this.control.push(createControlForType(this.config.itemConfig, value));
   }
 
   deleteGroup(index: number) {
-    this.formArray.removeAt(index);
+    this.control.removeAt(index);
   }
 }
 

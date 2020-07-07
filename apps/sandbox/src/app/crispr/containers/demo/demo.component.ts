@@ -12,7 +12,8 @@ import { Moment } from 'moment';
 export class DemoComponent implements OnInit {
 
   value = {
-    textInput: 'hell'
+    textInput: 'hello',
+    numberInput: 55
   }
   config: FormConfig = {
     controlType: ControlType.GROUP,
@@ -28,7 +29,6 @@ export class DemoComponent implements OnInit {
           label: 'Heading for text input',
           info: { content: 'some info'}
         },
-        buttonType: 'flat',
         controlType: ControlType.INPUT,
         label: 'I am a label on a text input',
         info: {
@@ -141,10 +141,14 @@ export class DemoComponent implements OnInit {
           iconName: 'delete'
         },
         // validators: [Validators.required],
-        options: of([
-          {label: 'good', value: 'a'},
-          {label: 'evil', value: 'b'},
-        ])
+        options: (_group, searchTerm) => {
+          return of([
+            {label: 'good', value: 'a'},
+            {label: 'evil', value: 'b'},
+          ]).pipe(
+            map(options => options.filter(option => option.label.toLowerCase().includes(searchTerm) ))
+          )
+        }
       },
       {
         controlType: ControlType.HEADING,
@@ -189,7 +193,6 @@ export class DemoComponent implements OnInit {
         label: 'I am a label on a slider',
         placeholder: 'I am a placeholder on a slider',
         color: 'primary',
-        labelPosition: 'after',
         info: {
           content: 'I am a tooltip on a slider'
         },
@@ -201,7 +204,6 @@ export class DemoComponent implements OnInit {
       {
         controlType: ControlType.BUTTON,
         disabledOnInvalidForm: true,
-        controlName: 'button',
         buttonType: 'flat',
         label: 'I AM A SUBMIT BUTTON',
         color: 'primary',
@@ -219,6 +221,5 @@ export class DemoComponent implements OnInit {
 
   handleSubmit(form: FormGroup) {
     const rawValue = form.getRawValue();
-    console.log({rawValue, form});
   }
 }

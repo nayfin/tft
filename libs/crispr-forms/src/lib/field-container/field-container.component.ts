@@ -29,9 +29,6 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
     this.disabled$ = this.connectDisabledCallback(this.group, this.config);
     // setTimeouts are ugly but this seems to be the only way to get the computed field to compute initial values
     // we tried moving this into afterViewChecked and afterContentChecked lifecycle hooks without any luck
-    setTimeout(()=> {
-      this.group.get(this.config.controlName).updateValueAndValidity();
-    })
     if (this.config.computeFieldConfig) {
       this.subs.push(
         computeValueFromFields(this.group, this.config.computeFieldConfig).pipe(

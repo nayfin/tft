@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ChangeDetectionStrategy, Pipe } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ButtonConfig } from '../../models';
 import { Observable } from 'rxjs';
@@ -14,7 +14,7 @@ import { CrisprFieldComponent } from '../../abstracts';
 })
 export class ButtonComponent extends CrisprFieldComponent<ButtonConfig> implements OnInit {
   group: FormGroup;
-  defaultConfig = {};
+  defaultConfig = {buttonType: 'raised' as const};
   formValid$: Observable<boolean>
   get matButtonClass () {
     return this.config.buttonType ? `mat-${this.config.buttonType}-button` : '';

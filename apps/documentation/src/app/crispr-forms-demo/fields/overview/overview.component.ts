@@ -13,7 +13,20 @@ import { Moment } from 'moment';
 export class OverviewComponent implements OnInit {
 
   value = {
-    textareaInput: 'I am an initial value for this field'
+    subGroup: {
+      subField: 'Initial Value in sub group',
+      secondSubField: 'Second Initial Value in sub group'
+    },
+    groupList: [
+      {
+        subField: 'david',
+      },
+      {
+        secondSubField: 'bowie'
+      },
+   ],
+   textInput: 'I am an initial value for this field',
+
   }
   config: FormConfig = {
     controlType: ControlType.GROUP,
@@ -33,13 +46,11 @@ export class OverviewComponent implements OnInit {
             inputType: 'text',
             controlName: 'subField',
             placeholder: 'First Name',
-            initialValue: 'Lady'
           },
           {
             controlType: ControlType.INPUT,
             controlName: 'secondSubField',
             placeholder: 'Last Name',
-            initialValue: 'gaga'
           },
         ]
       },
@@ -50,16 +61,6 @@ export class OverviewComponent implements OnInit {
         },
         controlName: 'groupList',
         itemLabelBuilder: ( index: number ) => `Step ${index + 1}`,
-        initialValue: [
-          {
-            subField: 'Tom',
-            secondSubField: 'Waits'
-          },
-          {
-            subField: 'loch',
-            secondSubField: 'ness'
-          }
-        ],
         itemConfig: {
           heading: { label: 'Sub Group'},
           controlType: ControlType.GROUP,
@@ -87,7 +88,6 @@ export class OverviewComponent implements OnInit {
         },
         controlName: 'textInput',
         controlType: ControlType.INPUT,
-        initialValue: 'initial text input value',
         label: 'I am a label on a text input',
         placeholder: 'I am a placeholder in a text input',
         info: {
@@ -109,8 +109,6 @@ export class OverviewComponent implements OnInit {
           tooltipPosition: 'left'
         },
         appearance: 'outline',
-        initialValue: 'some disabled text',
-        // hideDisabled: true,
         disabledCallback: ( form, _config) => {
           // have access to the form here so we can hook into the valueChanges on the text input above
           // to dynamically enable/disable this field
@@ -168,7 +166,6 @@ export class OverviewComponent implements OnInit {
         controlName: 'selectFieldPromise',
         placeholder: 'I am a placeholder in a select field',
         classes: [],
-        initialValue: 'blue',
         options: (): Promise<SelectOption[]> => {
           return new Promise( (resolve, reject) => {
             // make an http request here
@@ -243,7 +240,6 @@ export class OverviewComponent implements OnInit {
       {
         controlType: ControlType.SLIDER,
         controlName: 'slider',
-        initialValue: 9,
         label: 'I am a label on a slider',
         placeholder: 'I am a placeholder on a slider',
         color: 'primary',

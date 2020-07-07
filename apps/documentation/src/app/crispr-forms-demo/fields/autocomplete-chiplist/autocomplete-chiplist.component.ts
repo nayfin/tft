@@ -25,7 +25,6 @@ export class AutocompleteChiplistComponent implements OnInit {
     controlName: 'arraySelectDemo',
     fields: [
       {
-        initialValue: [{label: 'option a', value: 'a'}, {label: 'option d', value: 'd'},],
         controlType: ControlType.AUTOCOMPLETE_CHIPLIST,
         label: 'This autocomplete field uses a simple array of options',
         controlName: 'selectField',
@@ -90,7 +89,6 @@ export class AutocompleteChiplistComponent implements OnInit {
           content: 'some cool content'
         },
         controlName: 'selectFieldObservable',
-        initialValue: [{label: 'option a', value: 'a'}, {label: 'option b', value: 'b'}],
         options: (group, searchText) => {
           const databaseKey: string = group.get('optionsDriver').value || 'openFarm';
           return this.endpointsService.searchEndpointForOptions(searchText, databaseKey)

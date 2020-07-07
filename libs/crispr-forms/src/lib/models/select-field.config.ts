@@ -9,7 +9,6 @@ export interface SelectFieldConfig extends ControlFieldConfig {
   reactiveOptions?: boolean;
   multiple?: boolean;
   options: OptionsType;
-  initialValue?: string | number;
 }
 
 export type OptionsType = SelectOption[] | Observable<SelectOption[]> | OptionsCallback | Promise<SelectOption[]>;

@@ -4,7 +4,6 @@ import { ControlType } from './crispr-field.config';
 export interface InputFieldConfig extends ControlFieldConfig {
   controlType: ControlType.INPUT,
   inputType?: InputType;
-  initialValue?: string | number;
 }
 
 type InputType = 'color'

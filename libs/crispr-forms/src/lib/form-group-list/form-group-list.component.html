@@ -6,7 +6,7 @@
 
   <div [formArrayName]="config.controlName">
     <!-- TODO: add sortBy function -->
-    <div *ngFor="let control of this.formArray.controls; let i = index;">
+    <div *ngFor="let control of getFormArray().controls; let i = index;">
       <!-- TODO: use content projection to allow custom item label component -->
       <span class="mat-h3" *ngIf="config.itemLabelBuilder"> {{  config.itemLabelBuilder(i) }} </span>
       <button

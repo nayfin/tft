@@ -1,6 +1,6 @@
 import { Directive, Input, ComponentFactoryResolver, ViewContainerRef, OnInit, Renderer2 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { AnyFieldConfig } from './models';
+import { AnyFieldConfig, ControlValue } from './models';
 import { CrisprFieldComponent , FIELD_COMPONENTS, isControlComponent } from './field-component-map.const';
 
 @Directive({
@@ -10,7 +10,7 @@ export class CrisprFieldDirective implements OnInit {
 
   @Input() config: AnyFieldConfig;
   @Input() group: FormGroup;
-
+  @Input() value: ControlValue | any[];
   component: CrisprFieldComponent;
 
   constructor(
@@ -31,6 +31,9 @@ export class CrisprFieldDirective implements OnInit {
     this.component.config = this.config;
     if ( isControlComponent(this.component)) {
       this.component.group = this.group;
+      if ('value' in this.component) {
+        this.component.value = this.value;
+      }
     }
     // adds any config classes to the dynamically generated component
     // doing this here keeps us from having to extend a base component into each field component individually

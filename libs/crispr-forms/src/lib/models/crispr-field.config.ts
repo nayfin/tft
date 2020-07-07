@@ -43,7 +43,6 @@ export interface CrisprFieldConfig {
 export interface ControlFieldConfig extends CrisprFieldConfig {
   controlName: string;
   controlType: ControlType;
-  initialValue?: ControlValue | any[];
   validators?: ValidatorFn[];
   fieldSuffix?: string;
   // TODO: Determine if this is necessary
@@ -65,7 +64,7 @@ export interface FormConfig extends ControlFieldConfig {
   controlType: ControlType.GROUP;
   errorDictionary?: ErrorDictionary;
   autocomplete?: 'off' | 'on';
-  // TODO: this should be required, but we get an issue with AnyFieldConfig in the isControlField function
+  // TODO: this should be required, but we get an issue with AnyFieldConfig in the isControlConfig function
   // unless we make it optional
   fields?: AnyFieldConfig[];
 }
