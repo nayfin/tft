@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormConfig, SelectOption, ControlType } from '@tft/crispr-forms';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { EndpointsService } from '../../endpoints.service';
 
 @Component({
   selector: 'doc-select',
@@ -57,15 +58,25 @@ export class SelectComponent implements OnInit {
     controlName: 'observableSelectDemo',
     fields: [
       {
+        controlType: ControlType.INPUT,
+        inputType: 'text',
+        controlName: 'multiSelectDriver',
+        placeholder: 'Multi Select Options Driver',
+      },
+      {
         controlType: ControlType.SELECT,
-        label: 'This select field uses an observable to resolve options',
-        controlName: 'selectFieldObservable',
-        options: of([
-          {label: 'option a', value: 'a'},
-          {label: 'option b', value: 'b'},
-          {label: 'option c', value: 'c'},
-        ])
-      }
+        label: 'This is a multi-select field',
+        controlName: 'multiSelectField',
+        placeholder: 'I am a placeholder in a select field',
+        multiple:true,
+        options: (group) => {
+          return group.get('multiSelectDriver').valueChanges.pipe(
+            switchMap(searchText => {
+              return this.endpointsService.searchEndpointForOptions(searchText, 'openFarm')
+            })
+          )
+        },
+      },
     ]
   }
 
@@ -109,7 +120,9 @@ export class SelectComponent implements OnInit {
     ]
   }
 
-  constructor() { }
+  constructor(
+    private endpointsService: EndpointsService
+  ) { }
 
   ngOnInit() {
   }
