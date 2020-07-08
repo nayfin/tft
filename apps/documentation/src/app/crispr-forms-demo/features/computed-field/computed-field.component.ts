@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ControlType, FormConfig, computeValueFromFields } from '@tft/crispr-forms';
-import { of } from 'rxjs';
+import { ControlType, FormConfig } from '@tft/crispr-forms';
 
 @Component({
   selector: 'doc-computed-field',

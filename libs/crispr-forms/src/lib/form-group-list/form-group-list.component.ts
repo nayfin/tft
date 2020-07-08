@@ -22,9 +22,12 @@ export class FormGroupListComponent extends FormGroupListMixin implements OnInit
   group: FormGroup;
   control: FormArray;
   value: any[]; // TODO: not sure how to strongly type this yet
+  formArray: FormArray;
 
   ngOnInit() {
     super.ngOnInit();
+    // TODO: this is required to ngFor of controls in template, must be a better way
+    this.formArray = this.control as FormArray;
   }
 
   setControlValue(values: any[]) {
@@ -33,10 +36,6 @@ export class FormGroupListComponent extends FormGroupListMixin implements OnInit
     } else if (this.config.minListLength > 0) {
       this.addGroup()
     }
-  }
-
-  getFormArray(): FormArray {
-    return this.control as FormArray;
   }
 
   addGroup(value = null) {

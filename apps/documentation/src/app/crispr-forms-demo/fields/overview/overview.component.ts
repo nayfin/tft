@@ -14,7 +14,7 @@ export class OverviewComponent implements OnInit {
 
   value = {
     subGroup: {
-      subField: 'Initial Value in sub group',
+      // subField: 'Initial Value in sub group',
       secondSubField: 'Second Initial Value in sub group'
     },
     groupList: [

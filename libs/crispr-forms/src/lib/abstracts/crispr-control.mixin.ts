@@ -1,5 +1,5 @@
 import { FormGroup, AbstractControl } from '@angular/forms';
-import { ControlFieldConfig, ControlValue } from '../models';
+import { ControlFieldConfig, ControlValue, ControlType } from '../models';
 import { CrisprFieldComponent } from './crispr-field.abstract';
 
 export function crisprControlMixin<C extends ControlFieldConfig>(BaseClass: typeof CrisprFieldComponent) {
@@ -29,7 +29,8 @@ export function crisprControlMixin<C extends ControlFieldConfig>(BaseClass: type
     }
 
     setControlValue(value: ControlValue | any[]) {
-      if(value && this.control) {
+      // TODO: remove "&& this.config.controlType !== ControlType.GROUP" after decoupling setControlValue
+      if(value && this.control && this.config.controlType !== ControlType.GROUP) {
         this.control.setValue(value)
       }
     }
