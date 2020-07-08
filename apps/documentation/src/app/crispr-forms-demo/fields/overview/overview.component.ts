@@ -237,8 +237,8 @@ export class OverviewComponent implements OnInit {
         options: (_group, searchTerm) => {
           console.log({searchTerm, _group})
           return of([
-            {label: 'good', value: 'a'},
-            {label: 'evil', value: 'b'},
+            {label: 'good', value: 'good'},
+            {label: 'evil', value: 'evil'},
           ]).pipe(map(options => options.filter(option => option.label.toLowerCase().includes(searchTerm) )))
         }
       },
