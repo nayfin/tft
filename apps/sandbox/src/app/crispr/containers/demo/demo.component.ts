@@ -16,8 +16,6 @@ export class DemoComponent implements OnInit {
     numberInput: 55
   }
   config: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'myForm',
     autocomplete: 'off',
     errorDictionary: {
       required: () => `I am a custom error message on a required field`,

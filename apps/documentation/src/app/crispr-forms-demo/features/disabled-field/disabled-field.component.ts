@@ -12,8 +12,6 @@ import { map, startWith } from 'rxjs/operators';
 export class DisabledFieldComponent implements OnInit {
 
   disabledFieldConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'disabledFieldDemo',
     fields: [
       {
         controlType: ControlType.SELECT,
@@ -38,8 +36,6 @@ export class DisabledFieldComponent implements OnInit {
   };
 
   hiddenFieldConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'hiddenFieldDemo',
     fields: [
       {
         controlType: ControlType.SELECT,
@@ -64,8 +60,6 @@ export class DisabledFieldComponent implements OnInit {
   }
 
   complexHiddenFieldConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'hiddenFieldDemo',
     fields: [
       {
         controlType: ControlType.SELECT,

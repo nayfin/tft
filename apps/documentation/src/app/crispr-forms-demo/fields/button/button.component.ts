@@ -9,8 +9,6 @@ import { Validators } from '@angular/forms';
 })
 export class ButtonComponent implements OnInit {
   formConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'form',
     classes: ['form'],
     autocomplete: 'off',
     fields: [

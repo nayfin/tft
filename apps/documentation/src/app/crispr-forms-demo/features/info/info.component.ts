@@ -8,8 +8,6 @@ import { FormConfig, ControlType } from '@tft/crispr-forms';
 })
 export class InfoComponent implements OnInit {
   formConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'computedStringDemo',
     fields: [
       {
         controlType: ControlType.HEADING,

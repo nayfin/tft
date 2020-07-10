@@ -9,8 +9,6 @@ import { ControlType, FormConfig } from '@tft/crispr-forms';
 export class DividerComponent implements OnInit {
 
   formConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'form',
     fields: [
       {
         heading: {
@@ -18,9 +16,6 @@ export class DividerComponent implements OnInit {
         },
         controlType: ControlType.DATEPICKER,
         startAt: new Date('April 20 2019'),
-        info: {
-          content: 'You can use a tooltip on a datepicker'
-        },
         label: 'Datepicker Field',
         controlName: 'datepicker',
       },

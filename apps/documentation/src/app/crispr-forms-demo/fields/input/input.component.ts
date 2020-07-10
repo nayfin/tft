@@ -10,8 +10,6 @@ import { FormGroup } from '@angular/forms';
 export class InputComponent implements OnInit {
 
   formConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'form',
     autocomplete: 'off',
     fields: [
       {

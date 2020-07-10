@@ -21,8 +21,6 @@ export class AutocompleteChiplistComponent implements OnInit {
   }
 
   arraySelectConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'arraySelectDemo',
     fields: [
       {
         controlType: ControlType.AUTOCOMPLETE_CHIPLIST,
@@ -38,8 +36,6 @@ export class AutocompleteChiplistComponent implements OnInit {
   }
 
   promiseSelectConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'promiseSelectDemo',
     fields: [
       {
         controlType: ControlType.AUTOCOMPLETE_CHIPLIST,
@@ -55,8 +51,6 @@ export class AutocompleteChiplistComponent implements OnInit {
   }
 
   observableSelectConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'observableSelectDemo',
     fields: [
       {
         controlType: ControlType.AUTOCOMPLETE_CHIPLIST,
@@ -70,8 +64,6 @@ export class AutocompleteChiplistComponent implements OnInit {
   }
 
   reactiveOptionsConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'observableSelectDemo',
     fields: [
       {
         controlType: ControlType.SELECT,

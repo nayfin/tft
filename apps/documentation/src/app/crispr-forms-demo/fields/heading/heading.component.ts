@@ -9,8 +9,6 @@ import { ControlType, FormConfig } from '@tft/crispr-forms';
 export class HeadingComponent implements OnInit {
 
   formConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'form',
     classes: ['form'],
     fields: [
       {

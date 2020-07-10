@@ -12,8 +12,6 @@ import { EndpointsService } from '../../endpoints.service';
 export class SelectComponent implements OnInit {
 
   arraySelectConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'arraySelectDemo',
     fields: [
       {
         controlType: ControlType.SELECT,
@@ -29,8 +27,6 @@ export class SelectComponent implements OnInit {
   }
 
   promiseSelectConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'promiseSelectDemo',
     fields: [
       {
         controlType: ControlType.SELECT,
@@ -54,8 +50,6 @@ export class SelectComponent implements OnInit {
   }
 
   observableSelectConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'observableSelectDemo',
     fields: [
       {
         controlType: ControlType.INPUT,
@@ -67,11 +61,10 @@ export class SelectComponent implements OnInit {
         controlType: ControlType.SELECT,
         label: 'This is a multi-select field',
         controlName: 'multiSelectField',
-        placeholder: 'I am a placeholder in a select field',
         multiple:true,
         options: (group) => {
           return group.get('multiSelectDriver').valueChanges.pipe(
-            switchMap(searchText => {
+            switchMap((searchText: string) => {
               return this.endpointsService.searchEndpointForOptions(searchText, 'openFarm')
             })
           )
@@ -81,8 +74,6 @@ export class SelectComponent implements OnInit {
   }
 
   reactiveOptionsConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'observableSelectDemo',
     fields: [
       {
         controlType: ControlType.SELECT,

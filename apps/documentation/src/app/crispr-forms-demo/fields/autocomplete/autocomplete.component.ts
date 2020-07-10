@@ -12,8 +12,6 @@ import { EndpointsService, ENDPOINTS } from '../../endpoints.service';
 export class AutocompleteComponent implements OnInit {
 
   arraySelectConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'arraySelectDemo',
     fields: [
       {
         controlType: ControlType.AUTOCOMPLETE,
@@ -29,8 +27,6 @@ export class AutocompleteComponent implements OnInit {
   }
 
   promiseSelectConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'promiseSelectDemo',
     fields: [
       {
         controlType: ControlType.AUTOCOMPLETE,
@@ -46,8 +42,6 @@ export class AutocompleteComponent implements OnInit {
   }
 
   observableSelectConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'observableSelectDemo',
     fields: [
       {
         controlType: ControlType.AUTOCOMPLETE,
@@ -61,8 +55,6 @@ export class AutocompleteComponent implements OnInit {
   }
 
   reactiveOptionsConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'observableSelectDemo',
     fields: [
       {
         controlType: ControlType.SELECT,

@@ -9,8 +9,6 @@ import { FormConfig, ControlType } from '@tft/crispr-forms';
 export class CheckboxComponent implements OnInit {
 
   formConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'form',
     fields: [
       {
         controlType: ControlType.CHECKBOX,

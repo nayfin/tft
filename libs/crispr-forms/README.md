@@ -7,6 +7,11 @@
 
 [Interactive docs](https://stackblitz.com/github/nayfin/tft-documentation)
 
+## Major Breaking changes v10.0.* => v10.1.0
+
+- Using FormGroup Config for SubGroups or itemConfig property of GroupListConfig
+- ControlName and ControlType are deprecated on FormGroup Config, will be removed in v11
+
 ## WARNING:
 
 API is mostly stable, and there are no planned breaking changes. However, we are working on some new features so there is the possibility there could be minor changes to API. [Recent breaking changes](#breaking-changes).
@@ -66,8 +71,6 @@ In `some-component.ts` we define the `config` and `handleSubmit` function.
 export class DemoComponent implements OnInit {
 
   config: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'myForm',
     fields: [
       // a basic input field in the form with the following configuration
       {

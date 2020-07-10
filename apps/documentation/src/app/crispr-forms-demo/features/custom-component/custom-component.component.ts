@@ -12,8 +12,6 @@ import { FormGroup } from '@angular/forms';
 export class CustomComponentComponent {
 
   customComponentConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'customControlGroup',
     autocomplete: 'off',
     fields: [
       {

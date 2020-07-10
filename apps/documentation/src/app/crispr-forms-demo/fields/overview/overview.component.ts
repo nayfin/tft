@@ -41,9 +41,6 @@ export class OverviewComponent implements OnInit {
   };
 
   config: FormConfig = {
-    controlType: ControlType.GROUP,
-
-    controlName: 'myForm',
     autocomplete: 'off',
     errorDictionary: {
       required: () => `I am a custom error message on a required field`,
@@ -161,7 +158,6 @@ export class OverviewComponent implements OnInit {
         controlType: ControlType.SELECT,
         label: 'I am a label to a select field with an array of options',
         controlName: 'selectField',
-        placeholder: 'I am a placeholder in a select field',
         classes: [],
         options: [
           {label: 'option a', value: 'a'},
@@ -178,7 +174,6 @@ export class OverviewComponent implements OnInit {
         controlType: ControlType.SELECT,
         label: 'This select field uses an observable to resolve options',
         controlName: 'selectFieldObservable',
-        placeholder: 'I am a placeholder in a select field',
         classes: [],
         options: of([
           {label: 'good', value: 'a'},
@@ -189,7 +184,6 @@ export class OverviewComponent implements OnInit {
         controlType: ControlType.SELECT,
         label: 'This select field uses a promise to resolve options',
         controlName: 'selectFieldPromise',
-        placeholder: 'I am a placeholder in a select field',
         classes: [],
         options: (): Promise<SelectOption[]> => {
           return new Promise( (resolve, reject) => {

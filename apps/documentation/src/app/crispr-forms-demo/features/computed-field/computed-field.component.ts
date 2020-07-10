@@ -8,8 +8,6 @@ import { ControlType, FormConfig } from '@tft/crispr-forms';
 })
 export class ComputedFieldComponent implements OnInit {
   computedNumberFieldConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'computedNumberDemo',
     autocomplete: 'off',
     fields: [
       {
@@ -43,8 +41,6 @@ export class ComputedFieldComponent implements OnInit {
   }
 
   computedStringFieldConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'computedStringDemo',
     fields: [
       {
         controlType: ControlType.INPUT,

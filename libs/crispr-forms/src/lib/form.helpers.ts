@@ -5,7 +5,7 @@ import {
   FormConfig,
   ControlType,
   FormGroupListConfig,
-  ControlFieldConfig,
+  CrisprControlConfig,
   OptionsType,
   AutocompleteOptionsCallback,
   CrisprFieldConfig,
@@ -148,12 +148,12 @@ export function computeValueFromFields(group: FormGroup, computeFieldsConfig: Co
  * @param controlName the name of the control who's value we want to subscribe to
  */
 function getValueChanges(group: FormGroup, controlName: string) {
-    const control = group.get(controlName);
-    if (!control) {
-      throw new Error(`No control with controlName ${controlName}`, );
-    }
-    return control.valueChanges;
+  const control = group.get(controlName);
+  if (!control) {
+    throw new Error(`No control with controlName ${controlName}`, );
   }
+  return control.valueChanges;
+}
 /**
  *  TODO: move to utils library after library is built
  *  Allows developer to pass an array of operators into the pipe of an Observable.
@@ -216,7 +216,7 @@ export function observablifyOptions(
   ]);
 }
 
-export function isControlConfig(fieldConfig: CrisprFieldConfig): fieldConfig is ControlFieldConfig {
+export function isControlConfig(fieldConfig: CrisprFieldConfig): fieldConfig is CrisprControlConfig {
   // determine if config is a controlConfig but not a FormConfig
   return 'controlName' in fieldConfig;
 }
@@ -258,7 +258,7 @@ export function createControlForType(controlConfig: AnyFieldConfig, value: Contr
     ? new FormArray([], (controlConfig as FormGroupListConfig).validators)
     : new FormControl(
       value || null,
-      (controlConfig as ControlFieldConfig).validators
+      (controlConfig as CrisprControlConfig).validators
     );
 
   return control;

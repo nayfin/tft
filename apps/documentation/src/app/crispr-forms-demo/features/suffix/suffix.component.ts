@@ -9,8 +9,6 @@ import { FormConfig, ControlType } from '@tft/crispr-forms';
 export class SuffixComponent implements OnInit {
 
   formConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'colorDemo',
     fields: [
       {
         controlType: ControlType.INPUT,

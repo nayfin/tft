@@ -1,7 +1,8 @@
-import { ControlFieldConfig, ControlType } from '../models';
+import { CrisprControlConfig, ControlType } from '../models';
 import { AutocompleteOptionsCallback, SelectOption } from './select-field.config';
+import { FieldDescriptors } from './crispr-field.config';
 
-export interface AbstractAutocompleteFieldConfig extends ControlFieldConfig {
+export interface AbstractAutocompleteFieldConfig extends CrisprControlConfig, FieldDescriptors {
   typeToEmit?: boolean;
   typeDebounceTime?: number;
   emptyOptionsMessage?: string;

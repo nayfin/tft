@@ -11,8 +11,6 @@ import { map } from 'rxjs/operators';
 })
 export class AppearanceComponent implements OnInit {
   formConfig: FormConfig = {
-    controlType: ControlType.GROUP,
-    controlName: 'appearanceDemo',
     fields: [
       {
         controlType: ControlType.INPUT,

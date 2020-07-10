@@ -1,4 +1,4 @@
-import { FormGroup, ValidatorFn } from '@angular/forms';
+import { FormGroup, ValidatorFn, Validator } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
@@ -31,23 +31,27 @@ import { ThemePalette } from '@angular/material/core';
  */
 export interface CrisprFieldConfig {
   controlType?: ControlType;
-  component?: any; // TODO: make
-  label?: string;
-  info?: Info;
   classes?: string[];
+  component?: any; // TODO: make
 }
 
+// function isCustomConfig(config: AnyFieldConfig): config is CustomFieldConfig {
+//   return 'component' in config;
+// }
 // export interface CustomFieldConfig extends CrisprFieldConfig {
 //   controlType: ControlType.CUSTOM;
 //   component?: any; // TODO: make
 // }
 
-
+export interface FieldDescriptors {
+  label?: string;
+  info?: Info;
+}
 
 /**
  * The base interface for all control configs
  */
-export interface ControlFieldConfig extends CrisprFieldConfig {
+export interface CrisprControlConfig extends CrisprFieldConfig {
   controlName: string;
   controlType: ControlType;
   validators?: ValidatorFn[];
@@ -71,20 +75,29 @@ export interface Info {
 export interface AbstractGroupConfig {
   fields?: AnyFieldConfig[];
 }
-export interface FormConfig extends ControlFieldConfig {
-  controlType: ControlType.GROUP;
+export interface FormConfig extends AbstractGroupConfig {
+  // DEPRECATED: Remove in v11
+  controlType?: string;
+  // DEPRECATED: Remove in v11
+  controlName?: string;
+  classes?: string[];
   errorDictionary?: ErrorDictionary;
   autocomplete?: 'off' | 'on';
-  fields?: AnyFieldConfig[];
+  validators?: ValidatorFn[]
+}
 
-  // TODO: this should be required, but we get an issue with AnyFieldConfig in the isControlConfig function
-  // unless we make it optional
+export interface CrisprControlFieldConfig {
+
+}
+
+export interface SubGroupConfig extends CrisprControlConfig, AbstractGroupConfig {
+  controlType: ControlType.GROUP;
 }
 
 export type AnyFieldConfig = SelectFieldConfig
   | InputFieldConfig
   | FormGroupListConfig
-  | FormConfig
+  | SubGroupConfig
   | AutocompleteFieldConfig
   | AutocompleteChiplistFieldConfig
   | TextareaFieldConfig
