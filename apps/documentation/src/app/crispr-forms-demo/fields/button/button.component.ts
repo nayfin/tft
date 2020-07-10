@@ -26,15 +26,15 @@ export class ButtonComponent implements OnInit {
       },
       {
         controlType: ControlType.BUTTON,
-        label: 'FLAT BUTTON',
-        buttonType: 'flat'
-      },
-      {
-        controlType: ControlType.BUTTON,
         label: 'RAISED BUTTON',
         buttonType: 'raised',
         color: 'warn',
         disabledOnInvalidForm: true
+      },
+      {
+        controlType: ControlType.BUTTON,
+        label: 'FLAT BUTTON',
+        buttonType: 'flat'
       },
       {
         controlType: ControlType.BUTTON,

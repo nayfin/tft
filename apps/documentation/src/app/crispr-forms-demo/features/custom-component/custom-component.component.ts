@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomInputComponent } from './custom-input/custom-input.component';
 import { ControlType, FormConfig } from '@tft/crispr-forms';
+import { FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -8,7 +9,7 @@ import { ControlType, FormConfig } from '@tft/crispr-forms';
   templateUrl: './custom-component.component.html',
   styleUrls: ['./custom-component.component.scss']
 })
-export class CustomComponentComponent implements OnInit {
+export class CustomComponentComponent {
 
   customComponentConfig: FormConfig = {
     controlType: ControlType.GROUP,
@@ -20,12 +21,16 @@ export class CustomComponentComponent implements OnInit {
         inputType: 'number',
         controlName: 'factorA',
         label: 'This number is multiplied by the next value ',
+      },
+      {
+        controlType: ControlType.BUTTON,
+        label: 'SUBMIT'
       }
     ]
   }
-  constructor() { }
 
-  ngOnInit(): void {
+  handleSubmit(form: FormGroup) {
+    console.log(form.value);
   }
 
 }

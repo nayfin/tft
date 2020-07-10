@@ -3,6 +3,7 @@
     Example of computing a number value as the product of 2 other field values
   </h2>
   <crispr-form
-    [config]="customComponentConfig">
+    [config]="customComponentConfig"
+    (submitted)="handleSubmit($event)">
   </crispr-form>
 </mat-card>
