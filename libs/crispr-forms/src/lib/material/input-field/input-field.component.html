@@ -16,12 +16,12 @@
       autocapitalize="off"
       autocorrect="off"
       autocomplete="off">
+    <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
     <crispr-info
       matSuffix
       *ngIf="config.info"
       [info]="config.info">
     </crispr-info>
-    <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
 
   </mat-form-field>
 

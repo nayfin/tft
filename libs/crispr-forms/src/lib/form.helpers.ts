@@ -120,7 +120,7 @@ export interface ComputeFieldConfig {
   // the function we want to call on the array of watched values to compute the value of the control we
   computeCallback: (
     values: (string | number)[]
-  ) => string | number;
+  ) => string | number | {};
 }
 
 /**
@@ -240,6 +240,7 @@ export function buildFormGroupFromConfig(config: FormConfig, value = null, group
       group.addControl(controlName, createControlForType(controlConfig, controlValue));
     }
   });
+  group.setValidators(config.validators)
   return group;
 }
 

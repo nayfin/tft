@@ -23,12 +23,12 @@
 
     </mat-select>
 
+    <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
     <crispr-info
       *ngIf="config.info"
       matSuffix
       [info]="config.info">
     </crispr-info>
-    <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
   </mat-form-field>
 
 </crispr-field-container>

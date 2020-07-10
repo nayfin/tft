@@ -14,8 +14,7 @@ export class OverviewComponent implements OnInit {
 
   value = {
     subGroup: {
-      // subField: 'Initial Value in sub group',
-      secondSubField: 'Second Initial Value in sub group'
+      subField: 'Initial Value in sub group',
     },
     groupList: [
       {
@@ -29,7 +28,7 @@ export class OverviewComponent implements OnInit {
     disabler: true,
     disabledText: 'Some initial value on disabled field',
     selectField: 'b',
-    selectFieldObservable: 'b',
+    // selectFieldObservable: 'b',
     selectFieldPromise: 'blue',
     autocompleteObservable: { value: 'b', label: 'good'},
     autocompleteChiplistObservable: [
@@ -43,6 +42,7 @@ export class OverviewComponent implements OnInit {
 
   config: FormConfig = {
     controlType: ControlType.GROUP,
+
     controlName: 'myForm',
     autocomplete: 'off',
     errorDictionary: {
@@ -52,6 +52,9 @@ export class OverviewComponent implements OnInit {
       {
         controlType: ControlType.GROUP,
         controlName: 'subGroup',
+        heading: {
+          label: 'SubGroup Label'
+        },
         fields: [
           // configuration will create an input field in the form with the following configuration
           {
@@ -216,6 +219,7 @@ export class OverviewComponent implements OnInit {
           tooltipPosition: 'left',
           iconName: 'delete'
         },
+        fieldSuffix: 'meters',
         // validators: [Validators.required],
         options: () => of([
           {label: 'good', value: 'a'},
@@ -232,6 +236,7 @@ export class OverviewComponent implements OnInit {
           tooltipPosition: 'left',
           iconName: 'delete'
         },
+        fieldSuffix: '$',
         // validators: [Validators.required],
         typeDebounceTime: 0,
         options: (_group, searchTerm) => {

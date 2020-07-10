@@ -31,11 +31,16 @@ import { ThemePalette } from '@angular/material/core';
  */
 export interface CrisprFieldConfig {
   controlType?: ControlType;
-  component?: any;
+  component?: any; // TODO: make
   label?: string;
   info?: Info;
   classes?: string[];
 }
+
+// export interface CustomFieldConfig extends CrisprFieldConfig {
+//   controlType: ControlType.CUSTOM;
+//   component?: any; // TODO: make
+// }
 
 
 
@@ -88,7 +93,8 @@ export type AnyFieldConfig = SelectFieldConfig
   | SliderFieldConfig
   | HeadingConfig
   | ButtonConfig
-  | DividerConfig;
+  | DividerConfig
+  // | CustomFieldConfig;
 
 export type ControlValue = boolean | string | number | Date | SelectOption | SelectOption[];
 
@@ -106,5 +112,6 @@ export enum ControlType {
   SLIDER = 'slider',
   BUTTON = 'button',
   HEADING = 'heading',
-  DIVIDER = 'divider'
+  DIVIDER = 'divider',
+  CUSTOM = 'custom'
 };

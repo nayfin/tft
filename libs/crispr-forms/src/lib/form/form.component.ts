@@ -11,8 +11,8 @@ import { Subscription, Observable } from 'rxjs';
 })
 export class CrisprFormComponent implements OnInit {
   // if no form has been passed in by consuming component, we create an empty group to build out
-  @Input() form: FormGroup = new FormGroup({});
   @Input() config: FormConfig;
+  @Input() form: FormGroup = new FormGroup({});
   @Input() value = null;
 
   @Output() submitted = new EventEmitter<FormGroup>();

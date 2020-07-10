@@ -22,12 +22,12 @@
       spellcheck="false"
       #autoInput>
 
+    <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
     <crispr-info
       *ngIf="config.info"
       matSuffix
       [info]="config.info ">
     </crispr-info>
-    <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
 
     <mat-autocomplete
       #auto="matAutocomplete"
