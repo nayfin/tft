@@ -5,7 +5,7 @@ import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 const defaultConfig: Partial<DatepickerFieldConfig> = {
   startView: 'month',
 }
-const CheckboxFieldMixin = crisprControlMixin<DatepickerFieldConfig>(CrisprFieldComponent);
+const DatepickerFieldMixin = crisprControlMixin<DatepickerFieldConfig>(CrisprFieldComponent);
 
 @Component({
   selector: 'crispr-datepicker-field',
@@ -13,7 +13,7 @@ const CheckboxFieldMixin = crisprControlMixin<DatepickerFieldConfig>(CrisprField
   styleUrls: ['./datepicker-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DatepickerFieldComponent extends CheckboxFieldMixin implements OnInit {
+export class DatepickerFieldComponent extends DatepickerFieldMixin implements OnInit {
 
   defaultConfig = defaultConfig;
 

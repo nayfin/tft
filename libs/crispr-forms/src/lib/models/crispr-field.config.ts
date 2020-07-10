@@ -31,11 +31,13 @@ import { ThemePalette } from '@angular/material/core';
  */
 export interface CrisprFieldConfig {
   controlType?: ControlType;
+  component?: any;
   label?: string;
-  placeholder?: string;
   info?: Info;
   classes?: string[];
 }
+
+
 
 /**
  * The base interface for all control configs
@@ -45,6 +47,7 @@ export interface ControlFieldConfig extends CrisprFieldConfig {
   controlType: ControlType;
   validators?: ValidatorFn[];
   fieldSuffix?: string;
+  placeholder?: string;
   // TODO: Determine if this is necessary
   computeFieldConfig?: ComputeFieldConfig;
   disabledCallback?: (group: FormGroup, config?: any) => Observable<boolean>;
@@ -60,13 +63,17 @@ export interface Info {
   iconName?: string;
 }
 
+export interface AbstractGroupConfig {
+  fields?: AnyFieldConfig[];
+}
 export interface FormConfig extends ControlFieldConfig {
   controlType: ControlType.GROUP;
   errorDictionary?: ErrorDictionary;
   autocomplete?: 'off' | 'on';
+  fields?: AnyFieldConfig[];
+
   // TODO: this should be required, but we get an issue with AnyFieldConfig in the isControlConfig function
   // unless we make it optional
-  fields?: AnyFieldConfig[];
 }
 
 export type AnyFieldConfig = SelectFieldConfig

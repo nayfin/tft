@@ -3,6 +3,7 @@ import { FormGroup, AbstractControl } from '@angular/forms';
 import { FormConfig } from '../models';
 import { crisprControlMixin, CrisprFieldComponent } from '../abstracts';
 
+
 const FormGroupMixin = crisprControlMixin<FormConfig>(CrisprFieldComponent);
 
 @Component({
@@ -12,11 +13,7 @@ const FormGroupMixin = crisprControlMixin<FormConfig>(CrisprFieldComponent);
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormGroupComponent extends FormGroupMixin implements OnInit {
-
-  // subGroup: AbstractControl;
-
   ngOnInit() {
     super.ngOnInit();
-    // this.subGroup = this.group.get(this.config.controlName);
   }
 }

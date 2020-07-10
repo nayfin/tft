@@ -97,6 +97,11 @@ export const appNavTree: SidenavSection[] = [
             title: 'Disabled Field',
             description: `Dynamically disable fields`,
             path: 'crispr-forms-demo/features/disabled-field'
+          },
+          {
+            title: 'Custom Components',
+            description: `Pass custom components to form generator`,
+            path: 'crispr-forms-demo/features/custom-component'
           }
         ]
       },

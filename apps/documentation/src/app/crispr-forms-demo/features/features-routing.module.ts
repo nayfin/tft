@@ -5,6 +5,7 @@ import { AppearanceComponent } from './appearance/appearance.component';
 import { ColorComponent } from './color/color.component';
 import { InfoComponent } from './info/info.component';
 import { SuffixComponent } from './suffix/suffix.component';
+import { CustomComponentComponent } from './custom-component/custom-component.component';
 
 
 const routes: Routes = [
@@ -14,7 +15,7 @@ const routes: Routes = [
   { path: 'color', component: ColorComponent},
   { path: 'info', component: InfoComponent},
   { path: 'suffix', component: SuffixComponent},
-
+  { path: 'custom-component', component: CustomComponentComponent},
 ];
 
 @NgModule({
