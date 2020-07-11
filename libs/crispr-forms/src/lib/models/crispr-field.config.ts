@@ -43,11 +43,6 @@ export interface CrisprFieldConfig {
 //   component?: any; // TODO: make
 // }
 
-export interface FieldDescriptors {
-  label?: string;
-  info?: Info;
-}
-
 /**
  * The base interface for all control configs
  */
@@ -55,17 +50,29 @@ export interface CrisprControlConfig extends CrisprFieldConfig {
   controlName: string;
   controlType: ControlType;
   validators?: ValidatorFn[];
-  fieldSuffix?: string;
-  placeholder?: string;
   // TODO: Determine if this is necessary
   computeFieldConfig?: ComputeFieldConfig;
   disabledCallback?: (group: FormGroup, config?: any) => Observable<boolean>;
   disabledCallbackConfig?: CheckControlConfig | CheckControlsConfig | any; // any is required for user defined configs
   hideDisabled?: boolean; // defaults to false
   heading?: HeadingConfig;
+}
+
+/**
+ * Holds properties for control fields that describe field behavior to users
+ */
+export interface FieldDescriptors {
+  label?: string;
+  info?: Info;
+  fieldSuffix?: string;
+  placeholder?: string;
+}
+
+export interface MatFieldProperties {
   appearance?: MatFormFieldAppearance;
   color?: ThemePalette;
 }
+
 export interface Info {
   content: string;
   tooltipPosition?: TooltipPosition;

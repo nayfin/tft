@@ -1,7 +1,9 @@
 import { CrisprControlConfig } from '../models';
-import { ControlType, FieldDescriptors } from './crispr-field.config';
+import { ControlType, FieldDescriptors, MatFieldProperties } from './crispr-field.config';
 
-export interface InputFieldConfig extends CrisprControlConfig, FieldDescriptors {
+export interface InputFieldConfig extends CrisprControlConfig,
+  FieldDescriptors,
+  MatFieldProperties {
   controlType: ControlType.INPUT,
   inputType?: InputType;
 }

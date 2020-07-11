@@ -1,6 +1,10 @@
 import { CrisprControlConfig, ControlType } from '../models';
-import { FieldDescriptors } from './crispr-field.config';
-export interface SliderFieldConfig extends CrisprControlConfig, FieldDescriptors {
+import { FieldDescriptors, MatFieldProperties } from './crispr-field.config';
+export interface SliderFieldConfig extends
+  CrisprControlConfig,
+  Pick<FieldDescriptors, 'label' | 'info'>,
+  Pick<MatFieldProperties, 'color'>
+  {
   controlType: ControlType.SLIDER;
   displayWith?: (value: number) => string | number;
   invert?: boolean;

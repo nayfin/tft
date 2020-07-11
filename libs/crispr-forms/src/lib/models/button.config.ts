@@ -1,7 +1,10 @@
-import { CrisprFieldConfig, ControlType, FieldDescriptors } from './crispr-field.config';
+import { CrisprFieldConfig, ControlType, FieldDescriptors, MatFieldProperties } from './crispr-field.config';
 import { ThemePalette } from '@angular/material/core';
 
-export interface ButtonConfig extends CrisprFieldConfig, Omit<FieldDescriptors, 'info'> {
+export interface ButtonConfig extends CrisprFieldConfig,
+  Pick<FieldDescriptors, 'label'>,
+  MatFieldProperties {
+
   controlType: ControlType.BUTTON;
   buttonType?: ButtonType;
   color?: ThemePalette;

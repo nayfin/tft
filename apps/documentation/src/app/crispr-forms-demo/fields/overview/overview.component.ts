@@ -271,7 +271,6 @@ export class OverviewComponent implements OnInit {
         controlType: ControlType.SLIDER,
         controlName: 'slider',
         label: 'I am a label on a slider',
-        placeholder: 'I am a placeholder on a slider',
         color: 'primary',
         info: {
           content: 'I am a tooltip on a slider'
