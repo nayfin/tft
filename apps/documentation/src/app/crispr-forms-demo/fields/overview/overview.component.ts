@@ -47,7 +47,7 @@ export class OverviewComponent implements OnInit {
     },
     fields: [
       {
-        controlType: ControlType.GROUP,
+        controlType: ControlType.SUB_GROUP,
         controlName: 'subGroup',
         heading: {
           label: 'SubGroup Label'
@@ -76,7 +76,7 @@ export class OverviewComponent implements OnInit {
         itemLabelBuilder: ( index: number ) => `Step ${index + 1}`,
         itemConfig: {
           heading: { label: 'Sub Group'},
-          controlType: ControlType.GROUP,
+          controlType: ControlType.SUB_GROUP,
           controlName: 'subGroup',
           fields: [
             {

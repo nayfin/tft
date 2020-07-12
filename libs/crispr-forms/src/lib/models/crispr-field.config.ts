@@ -79,6 +79,7 @@ export interface Info {
   iconName?: string;
 }
 
+// TODO: having AnyFieldConfig as the default for C seems redundant and silly
 export interface AbstractGroupConfig<C extends CrisprFieldConfig = AnyFieldConfig>  {
   fields?: (AnyFieldConfig | C)[];
 }
@@ -96,7 +97,7 @@ export interface FormConfig<C = AnyFieldConfig> extends AbstractGroupConfig<C> {
  * Configuration for SubGroup components
  */
 export interface SubGroupConfig extends CrisprControlConfig, AbstractGroupConfig {
-  controlType: ControlType.GROUP;
+  controlType: ControlType.GROUP | ControlType.SUB_GROUP;
 }
 
 export type AnyFieldConfig = SelectFieldConfig
@@ -124,6 +125,8 @@ export enum ControlType {
   TEXTAREA = 'textarea',
   CHECKBOX = 'checkbox',
   SELECT = 'select',
+  SUB_GROUP = 'subGroup',
+  // DEPRECATED: GROUP, remove in v11
   GROUP = 'group',
   GROUP_LIST = 'groupList',
   DATEPICKER = 'datepicker',

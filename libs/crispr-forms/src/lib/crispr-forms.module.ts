@@ -8,11 +8,11 @@ import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
 // components
 import { CrisprFormComponent } from './form/form.component';
-import { FormGroupComponent } from './form-group/form-group.component';
 import { FormGroupListComponent } from './form-group-list/form-group-list.component';
 // directives
 import { CrisprFieldDirective } from './field.directive';
 import { InitialControlValuePipe } from './pipes/initial-control-value.pipe';
+import { SubGroupComponent } from './sub-group/sub-group.component';
 
 @NgModule({
   imports: [
@@ -24,16 +24,15 @@ import { InitialControlValuePipe } from './pipes/initial-control-value.pipe';
   declarations: [
     CrisprFieldDirective,
     CrisprFormComponent,
-    FormGroupComponent,
     FormGroupListComponent,
     InitialControlValuePipe,
+    SubGroupComponent,
   ],
   exports: [
     CrisprFormComponent,
     MaterialModule
   ],
   entryComponents: [
-    FormGroupComponent,
     FormGroupListComponent
   ],
 

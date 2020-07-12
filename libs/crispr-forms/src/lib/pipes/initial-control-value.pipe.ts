@@ -8,7 +8,7 @@ import { isControlConfig } from '../form.helpers';
 export class InitialControlValuePipe implements PipeTransform {
 
   transform(initialFormValue: {[key: string]: ControlValue | any}, fieldConfig: AnyFieldConfig): unknown {
-    return initialFormValue && isControlConfig(fieldConfig)
+    return initialFormValue && isControlConfig(fieldConfig) && initialFormValue[fieldConfig.controlName]
       ? initialFormValue[fieldConfig.controlName]
       : null;
   }

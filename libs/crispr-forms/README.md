@@ -11,7 +11,8 @@
 Apologies
 We are working toward enabling custom field controls and had to tighten up some of our models and naming conventions. Where it was possible we deprecated old names, and throw a warning but some configurations that worked in previous versions will break in v10.1.0.
 - Using FormGroup Config for SubGroups or itemConfig property of GroupListConfig
-- ControlName and ControlType are deprecated on FormGroup Config, will be removed in v11
+- ControlName and ControlType are deprecated on FormGroup Config. Please remove these properties from FormGroup configurations before v11.
+- ControlType.GROUP is deprecated and changed to ControlType.SUB_GROUP, will be removed in v11
 
 ## WARNING:
 

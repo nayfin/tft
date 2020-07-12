@@ -1,15 +1,17 @@
 // tslint:disable-next-line: max-line-length
 import { InputFieldComponent, SelectFieldComponent, AutocompleteFieldComponent, AutocompleteChiplistFieldComponent, TextareaFieldComponent, CheckboxFieldComponent, SliderFieldComponent, DatepickerFieldComponent, HeadingComponent, DividerComponent, ButtonComponent } from './material';
-import { FormGroupComponent } from './form-group/form-group.component';
 import { FormGroupListComponent } from './form-group-list/form-group-list.component';
 import { isControlConfig } from './form.helpers';
 import { ControlType } from './models';
+import { SubGroupComponent } from './sub-group/sub-group.component';
 
 export const FIELD_COMPONENTS = {
   button: ButtonComponent,
   input: InputFieldComponent,
   select: SelectFieldComponent,
-  group: FormGroupComponent,
+  subGroup: SubGroupComponent,
+  // DEPRECATED: group for subGroup, remove in v11
+  group: SubGroupComponent,
   groupList: FormGroupListComponent,
   autocomplete: AutocompleteFieldComponent,
   autocompleteChiplist: AutocompleteChiplistFieldComponent,
@@ -28,7 +30,7 @@ export function isControlComponent(component: CrisprFieldComponent): component i
 export type CrisprControlComponent = ButtonComponent|
   InputFieldComponent|
   SelectFieldComponent|
-  FormGroupComponent|
+  SubGroupComponent|
   FormGroupListComponent|
   AutocompleteFieldComponent|
   AutocompleteChiplistFieldComponent|
