@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CustomInputComponent } from './custom-input/custom-input.component';
 import { ControlType, FormConfig } from '@tft/crispr-forms';
 import { FormGroup } from '@angular/forms';
@@ -17,8 +17,8 @@ export class CustomComponentComponent {
       {
         component: CustomInputComponent,
         inputType: 'number',
-        controlName: 'factorA',
-        label: 'This number is multiplied by the next value ',
+        controlName: 'customComponent',
+        label: 'This is a label on a custom component ',
       },
       {
         controlType: ControlType.BUTTON,

@@ -35,12 +35,12 @@ export interface CrisprFieldConfig {
   component?: any; // TODO: make
 }
 
-// function isCustomConfig(config: AnyFieldConfig): config is CustomFieldConfig {
+// export function isCustomConfig(config: AnyFieldConfig): config is CustomFieldConfig {
 //   return 'component' in config;
 // }
 // export interface CustomFieldConfig extends CrisprFieldConfig {
 //   controlType: ControlType.CUSTOM;
-//   component?: any; // TODO: make
+//   component?: any; // TODO: type better
 // }
 
 /**
@@ -92,11 +92,9 @@ export interface FormConfig extends AbstractGroupConfig {
   autocomplete?: 'off' | 'on';
   validators?: ValidatorFn[]
 }
-
-export interface CrisprControlFieldConfig {
-
-}
-
+/**
+ * Configuration for SubGroup components
+ */
 export interface SubGroupConfig extends CrisprControlConfig, AbstractGroupConfig {
   controlType: ControlType.GROUP;
 }
