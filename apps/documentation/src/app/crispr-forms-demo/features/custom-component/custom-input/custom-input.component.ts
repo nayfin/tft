@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
-import { crisprControlMixin, CrisprFieldComponent, InputFieldConfig } from '@tft/crispr-forms';
+import { crisprControlMixin, CrisprFieldComponent, InputFieldConfig, ControlType } from '@tft/crispr-forms';
 
-interface CustomFieldConfig extends InputFieldConfig {
+export interface CustomInputConfig extends Omit<InputFieldConfig, 'controlType'> {
+  controlType: ControlType.CUSTOM;
   customConfigProperty?: string;
 }
 
-const customComponentMixin = crisprControlMixin<InputFieldConfig>(CrisprFieldComponent);
+const customComponentMixin = crisprControlMixin<CustomInputConfig>(CrisprFieldComponent);
 @Component({
   selector: 'doc-custom-input',
   templateUrl: './custom-input.component.html',

@@ -79,10 +79,10 @@ export interface Info {
   iconName?: string;
 }
 
-export interface AbstractGroupConfig {
-  fields?: AnyFieldConfig[];
+export interface AbstractGroupConfig<C extends CrisprFieldConfig = AnyFieldConfig>  {
+  fields?: (AnyFieldConfig | C)[];
 }
-export interface FormConfig extends AbstractGroupConfig {
+export interface FormConfig<C = AnyFieldConfig> extends AbstractGroupConfig<C> {
   // DEPRECATED: Remove in v11
   controlType?: string;
   // DEPRECATED: Remove in v11

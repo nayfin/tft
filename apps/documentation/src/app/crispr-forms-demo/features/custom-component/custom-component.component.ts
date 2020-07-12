@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { CustomInputComponent } from './custom-input/custom-input.component';
+import { CustomInputComponent, CustomInputConfig } from './custom-input/custom-input.component';
 import { ControlType, FormConfig } from '@tft/crispr-forms';
 import { FormGroup } from '@angular/forms';
+import { CustomSelectComponent, CustomSelectConfig } from './custom-select/custom-select.component';
 
 
 @Component({
@@ -11,18 +12,27 @@ import { FormGroup } from '@angular/forms';
 })
 export class CustomComponentComponent {
 
-  customComponentConfig: FormConfig = {
+  customComponentConfig: FormConfig<CustomInputConfig | CustomSelectConfig> = {
     autocomplete: 'off',
     fields: [
       {
         component: CustomInputComponent,
+        controlType: ControlType.CUSTOM,
         inputType: 'number',
         controlName: 'customComponent',
         label: 'This is a label on a custom component ',
+        customConfigProperty: `I'm a custom property. Mathmatical!`
+      },
+      {
+        component: CustomSelectComponent,
+        customSelectProperty: 'stuff',
+        controlName: 'customComponent',
+        label: 'This is a label on a custom component ',
+        customConfigProperty: `I'm a custom property. Mathmatical!`
       },
       {
         controlType: ControlType.BUTTON,
-        label: 'SUBMIT'
+        label: 'SUBMIT',
       }
     ]
   }

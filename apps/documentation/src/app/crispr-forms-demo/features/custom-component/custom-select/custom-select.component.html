@@ -1,7 +1,7 @@
 <crispr-field-container
   [config]="config"
   [group]="group">
-  I'm a super custom component
+
   <mat-form-field
     [color]="config.color"
     [appearance]="config.appearance"
@@ -9,19 +9,21 @@
     <mat-label *ngIf="config.label">
       {{config.label}}
     </mat-label>
-    <input
-      [type]="config.inputType"
-      matInput
-      [placeholder]="config.placeholder"
+    <mat-select
       [formControlName]="config.controlName"
-      autocapitalize="off"
-      autocorrect="off"
-      autocomplete="off">
+      [placeholder]="config.placeholder"
+      [multiple]="config.multiple">
+
+      <mat-option
+        *ngFor="let option of options$ | async"
+        [value]="option.value">
+        {{option.label}}
+      </mat-option>
+
+    </mat-select>
 
     <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
 
   </mat-form-field>
 
-
 </crispr-field-container>
-<h2>{{config.customConfigProperty}} </h2>

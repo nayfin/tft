@@ -12,6 +12,7 @@ import { SuffixComponent } from './suffix/suffix.component';
 import { CustomComponentComponent } from './custom-component/custom-component.component';
 import { CustomInputComponent } from './custom-component/custom-input/custom-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CustomSelectComponent } from './custom-component/custom-select/custom-select.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     SuffixComponent,
     CustomComponentComponent,
     CustomInputComponent,
+    CustomSelectComponent,
   ],
   imports: [
     UiImportsModule,
