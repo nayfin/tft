@@ -33,7 +33,8 @@ import { SubGroupComponent } from './sub-group/sub-group.component';
     MaterialModule
   ],
   entryComponents: [
-    FormGroupListComponent
+    FormGroupListComponent,
+    SubGroupComponent
   ],
 
 })
