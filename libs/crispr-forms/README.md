@@ -7,13 +7,47 @@
 
 [Interactive docs](https://stackblitz.com/github/nayfin/tft-documentation)
 
-## Major Breaking changes v10.0.* => v10.1.0
-Apologies
-We are working toward enabling custom field controls and had to tighten up some of our models and naming conventions. Where it was possible we deprecated old names, and throw a warning but some configurations that worked in previous versions will break in v10.1.0.
-- Using FormGroup Config for SubGroups or itemConfig property of GroupListConfig
-- ControlName and ControlType are deprecated on FormGroup Config. Please remove these properties from FormGroup configurations before v11.
-- ControlType.GROUP is deprecated and changed to ControlType.SUB_GROUP, will be removed in v11
-- reactiveOptions: boolean is deprecated and unused please remove from configs by v11
+## NEW FEATURE: Pass Custom Components to CRISPR
+
+Simply create a component and pass it as an argument to the `component` property.
+
+```ts
+export class CustomComponentComponent {
+
+  customComponentConfig: FormConfig<CustomInputConfig> = {
+    autocomplete: 'off',
+    fields: [
+      {
+        component: CustomInputComponent,
+        controlType: ControlType.CUSTOM,
+        controlName: 'customComponent',
+      },
+
+```
+Examples of how to extend current field behavior available [here](https://stackblitz.com/github/nayfin/tft-documentation?file=src%2Fapp%2Fcrispr-forms-demo%2Ffeatures%2Finfo%2Finfo.component.ts0)
+
+
+### Breaking changes v10.0.* => v10.1.0
+In order to enable custom fields we had to tighten up the interfaces and organize our hierarchy. Unfortunately, this caused some breaking changes.Where possible, we deprecated old names, and throw a warning but some configurations that worked in previous versions will break in v10.1.0.
+- We've tightened up the models for the field configurations. So, fields that could have been misconfigured before, will now throw an error.  e.g. before it was possible to have a `placeholder` property on a checkbox even though it wouldn't have anything to do. Just remove any properties that suddenly cause a compilation error.
+- `ControlName` and `ControlType` are deprecated on the `FormGroup` config. They were the result of some mis-extended interfaces were never used. Please remove these properties from FormGroup configurations before v11.
+```ts
+someConfig: FormConfig = {
+  controlType: ControlType.GROUP, // DEPRECATED: please remove
+  controlName: 'someControlName', // DEPRECATED: please remove
+  autocomplete: 'off',
+  fields: [...]
+}
+```
+- `ControlType.GROUP` is deprecated and has changed to `ControlType.SUB_GROUP`, will be removed in v11
+```ts
+controlType: ControlType.GROUP
+```
+should be:
+```ts
+controlType: ControlType.SUB_GROUP
+```
+- `reactiveOptions: boolean` is deprecated and unused please remove from configs by v11
 
 
 ## WARNING:
