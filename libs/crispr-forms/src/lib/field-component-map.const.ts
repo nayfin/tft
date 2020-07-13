@@ -4,11 +4,13 @@ import { FormGroupListComponent } from './form-group-list/form-group-list.compon
 import { isControlConfig } from './form.helpers';
 import { ControlType } from './models';
 import { SubGroupComponent } from './sub-group/sub-group.component';
+import { RadioFieldComponent } from './material/radio-field/radio-field.component';
 
 export const FIELD_COMPONENTS = {
   button: ButtonComponent,
   input: InputFieldComponent,
   select: SelectFieldComponent,
+  radio: RadioFieldComponent,
   subGroup: SubGroupComponent,
   // DEPRECATED: group for subGroup, remove in v11
   group: SubGroupComponent,
@@ -30,6 +32,7 @@ export function isControlComponent(component: CrisprFieldComponent): component i
 export type CrisprControlComponent = ButtonComponent|
   InputFieldComponent|
   SelectFieldComponent|
+  RadioFieldComponent|
   SubGroupComponent|
   FormGroupListComponent|
   AutocompleteFieldComponent|

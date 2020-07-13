@@ -8,9 +8,10 @@ export interface SelectFieldConfig extends Omit<CrisprControlConfig, 'placeholde
   MatFieldProperties {
   controlType: ControlType.SELECT,
   emptyOptionsMessage?: string;
-  reactiveOptions?: boolean;
   multiple?: boolean;
   options: OptionsType;
+  // DEPRECATED: remove in v11
+  reactiveOptions?: boolean;
 }
 
 export type OptionsType = SelectOption[] | Observable<SelectOption[]> | OptionsCallback | Promise<SelectOption[]>;

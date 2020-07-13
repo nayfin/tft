@@ -88,7 +88,6 @@ export class SelectComponent implements OnInit {
         controlType: ControlType.SELECT,
         label: 'This select field uses an observable to resolve options',
         controlName: 'selectFieldObservable',
-        reactiveOptions: true,
         options: (group) => {
           return group.get('optionsDriver').valueChanges.pipe(
             switchMap( valueOfWatchedControl => {

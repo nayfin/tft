@@ -36,6 +36,7 @@ import { DividerComponent } from './divider/divider.component';
 // tslint:disable-next-line: max-line-length
 import { AutocompleteChiplistFieldComponent } from './autocomplete-chiplist-field/autocomplete-chiplist-field.component';
 import { OptionComponent } from './option/option.component';
+import { RadioFieldComponent } from './radio-field/radio-field.component';
 
 // TODO: Should we import UI library?
 // Will the tree shaker shake the unused modules?
@@ -63,6 +64,7 @@ const CRISPR_FIELDS = [
   FieldContainerComponent,
   InputFieldComponent,
   SelectFieldComponent,
+  RadioFieldComponent,
   AutocompleteFieldComponent,
   AutocompleteChiplistFieldComponent,
   CheckboxFieldComponent,
@@ -76,7 +78,6 @@ const CRISPR_FIELDS = [
 @NgModule({
   imports: [
     CommonModule,
-
     ReactiveFormsModule,
     FormValidationHandlerModule,
     ...MAT_DESIGN_MODULES,

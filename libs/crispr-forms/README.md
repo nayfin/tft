@@ -13,6 +13,8 @@ We are working toward enabling custom field controls and had to tighten up some 
 - Using FormGroup Config for SubGroups or itemConfig property of GroupListConfig
 - ControlName and ControlType are deprecated on FormGroup Config. Please remove these properties from FormGroup configurations before v11.
 - ControlType.GROUP is deprecated and changed to ControlType.SUB_GROUP, will be removed in v11
+- reactiveOptions: boolean is deprecated and unused please remove from configs by v11
+
 
 ## WARNING:
 

@@ -22,7 +22,8 @@ import {
   AutocompleteChiplistFieldConfig,
   SliderFieldConfig,
   DividerConfig,
-  SelectOption
+  SelectOption,
+  RadioFieldConfig
 } from '../models';
 import { ThemePalette } from '@angular/material/core';
 
@@ -100,8 +101,9 @@ export interface SubGroupConfig extends CrisprControlConfig, AbstractGroupConfig
   controlType: ControlType.GROUP | ControlType.SUB_GROUP;
 }
 
-export type AnyFieldConfig = SelectFieldConfig
-  | InputFieldConfig
+export type AnyFieldConfig = InputFieldConfig
+  | SelectFieldConfig
+  | RadioFieldConfig
   | FormGroupListConfig
   | SubGroupConfig
   | AutocompleteFieldConfig
@@ -112,7 +114,7 @@ export type AnyFieldConfig = SelectFieldConfig
   | SliderFieldConfig
   | HeadingConfig
   | ButtonConfig
-  | DividerConfig
+  | DividerConfig;
   // | CustomFieldConfig;
 
 export type ControlValue = boolean | string | number | Date | SelectOption | SelectOption[];
@@ -125,6 +127,7 @@ export enum ControlType {
   TEXTAREA = 'textarea',
   CHECKBOX = 'checkbox',
   SELECT = 'select',
+  RADIO = 'radio',
   SUB_GROUP = 'subGroup',
   // DEPRECATED: GROUP, remove in v11
   GROUP = 'group',

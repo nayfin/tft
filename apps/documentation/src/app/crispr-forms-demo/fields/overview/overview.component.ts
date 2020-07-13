@@ -68,6 +68,22 @@ export class OverviewComponent implements OnInit {
         ]
       },
       {
+        controlType: ControlType.RADIO,
+        controlName: 'radioField',
+        options: () => {
+          return [
+            {
+              label: 'Option A',
+              value: 'a'
+            },
+            {
+              label: 'Option B',
+              value: 'b'
+            }
+          ]
+        }
+      },
+      {
         controlType: ControlType.GROUP_LIST,
         heading: {
           label: 'Group List'
