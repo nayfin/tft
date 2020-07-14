@@ -9,7 +9,7 @@ const FormGroupMixin = crisprControlMixin<SubGroupConfig>(CrisprFieldComponent);
 @Component({
   selector: 'crispr-sub-group',
   templateUrl: './sub-group.component.html',
-  styleUrls: ['./sub-group.component.css'],
+  styleUrls: ['./sub-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SubGroupComponent extends FormGroupMixin implements OnInit {

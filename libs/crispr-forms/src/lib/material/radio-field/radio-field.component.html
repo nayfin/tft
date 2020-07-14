@@ -2,35 +2,6 @@
   [config]="config"
   [group]="group">
 
-  <!-- <mat-form-field
-    [color]="config.color"
-    [appearance]="config.appearance"
-    [formGroup]="group">
-    <mat-label *ngIf="config.label">
-      {{config.label}}
-    </mat-label>
-    <mat-select
-      [formControlName]="config.controlName"
-      [placeholder]="config.placeholder"
-      [multiple]="config.multiple">
-
-      <mat-option
-        *ngFor="let option of options$ | async"
-        [value]="option.value">
-        <crispr-option [option]="option">
-        </crispr-option>
-      </mat-option>
-
-    </mat-select>
-
-    <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
-    <crispr-info
-      *ngIf="config.info"
-      matSuffix
-      [info]="config.info">
-    </crispr-info>
-  </mat-form-field> -->
-
   <mat-radio-group
     [formControl]="control"
     [color]="config.color">

@@ -11,7 +11,7 @@ const RadioFieldMixin = crisprControlMixin<RadioFieldConfig>(CrisprFieldComponen
 @Component({
   selector: 'crispr-radio-field',
   templateUrl: './radio-field.component.html',
-  styleUrls: ['./radio-field.component.css'],
+  styleUrls: ['./radio-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RadioFieldComponent extends RadioFieldMixin implements OnInit {
