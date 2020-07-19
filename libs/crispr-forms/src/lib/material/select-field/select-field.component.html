@@ -10,10 +10,18 @@
       {{config.label}}
     </mat-label>
     <mat-select
+      #selectField
       [formControlName]="config.controlName"
       [placeholder]="config.placeholder"
       [multiple]="config.multiple">
 
+      <mat-checkbox
+        [color]="config.color"
+        [checked]="allSelected"
+        *ngIf="config?.multiple && config.enableToggleAll"
+        (click)="toggleAll(allSelected)">
+        Select All
+      </mat-checkbox>
       <mat-option
         *ngFor="let option of options$ | async"
         [value]="option.value">

@@ -3,6 +3,7 @@ import { FormConfig, SelectOption, ControlType } from '@tft/crispr-forms';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { EndpointsService } from '../../endpoints.service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'doc-select',
@@ -11,7 +12,12 @@ import { EndpointsService } from '../../endpoints.service';
 })
 export class SelectComponent implements OnInit {
 
-  arraySelectConfig: FormConfig = {
+  multiSelectInitialValue = {
+    initialValueMultiSelectField: [
+      'a', 'b', 'c'
+    ]
+  }
+  selectConfig: FormConfig = {
     fields: [
       {
         controlType: ControlType.SELECT,
@@ -22,6 +28,33 @@ export class SelectComponent implements OnInit {
           {label: 'option b', value: 'b'},
           {label: 'option c', value: 'c'},
         ]
+      },
+      {
+        controlType: ControlType.SELECT,
+        label: 'This select field uses a simple array of options',
+        controlName: 'multiSelectField',
+        multiple: true,
+        options: [
+          {label: 'option a', value: 'a'},
+          {label: 'option b', value: 'b'},
+          {label: 'option c', value: 'c'},
+        ]
+      },
+      {
+        controlType: ControlType.SELECT,
+        label: 'This select field uses a simple array of options',
+        controlName: 'initialValueMultiSelectField',
+        multiple: true,
+        enableToggleAll: true,
+        options: [
+          {label: 'option a', value: 'a'},
+          {label: 'option b', value: 'b'},
+          {label: 'option c', value: 'c'},
+        ]
+      },
+      {
+        controlType: ControlType.BUTTON,
+        label: 'Submit'
       }
     ]
   }
@@ -52,16 +85,25 @@ export class SelectComponent implements OnInit {
   observableSelectConfig: FormConfig = {
     fields: [
       {
+        controlType: ControlType.HEADING,
+        label: 'Here we use an input put to search for plants that are available as options for the select field below',
+        typographyClass: 'mat-h2'
+      },
+      {
         controlType: ControlType.INPUT,
         inputType: 'text',
         controlName: 'multiSelectDriver',
-        placeholder: 'Multi Select Options Driver',
+        placeholder: 'Search for garden plants',
       },
       {
         controlType: ControlType.SELECT,
-        label: 'This is a multi-select field',
+        label: 'Results',
+        placeholder: 'Searched plants available as options here',
         controlName: 'multiSelectField',
         multiple:true,
+        info: {
+          content: 'The result of the plant search above are displayed here'
+        },
         options: (group) => {
           return group.get('multiSelectDriver').valueChanges.pipe(
             switchMap((searchText: string) => {
@@ -115,6 +157,10 @@ export class SelectComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  handleSubmit(form: FormGroup) {
+    console.log({form})
   }
 
 }

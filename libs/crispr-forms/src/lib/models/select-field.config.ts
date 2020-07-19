@@ -9,6 +9,7 @@ export interface SelectFieldConfig extends Omit<CrisprControlConfig, 'placeholde
   controlType: ControlType.SELECT,
   emptyOptionsMessage?: string;
   multiple?: boolean;
+  enableToggleAll?: boolean;
   options: OptionsType;
   // DEPRECATED: remove in v11
   reactiveOptions?: boolean;

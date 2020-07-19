@@ -3,7 +3,9 @@
     Example of using an array of select options
   </h2>
   <crispr-form
-    [config]="arraySelectConfig">
+    [value]="multiSelectInitialValue"
+    [config]="selectConfig"
+    (submitted)="handleSubmit($event)">
   </crispr-form>
 </mat-card>
 
@@ -17,9 +19,6 @@
 </mat-card>
 
 <mat-card>
-  <h2 class="mat-h2">
-    Example of using an observable of select options
-  </h2>
   <crispr-form
     [config]="observableSelectConfig">
   </crispr-form>
