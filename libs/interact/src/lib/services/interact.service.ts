@@ -1,10 +1,11 @@
 
-import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import { Injectable, Renderer2, RendererFactory2, NgZone } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { tap, map, shareReplay } from 'rxjs/operators';
 import {
   TftInteractable, Delta, Size, Position, InteractableRegistry,
-  defaultPosition, defaultSize, defaultDelta, DEFAULT_REGISTRY_ID } from '../models';
+  defaultPosition, defaultSize, defaultDelta, DEFAULT_REGISTRY_ID
+} from '../models';
 
 @Injectable({providedIn: 'root'})
 export class InteractService {
@@ -13,18 +14,12 @@ export class InteractService {
   private _dropzoneIndex = 0;
   private renderer: Renderer2;
 
-  // TODO: this should work as expected, but I don't know if we need it
-  // get interactableCount() {
-  //   // counts all the interactable systems in the registry
-  //   return Object.keys(this.dragRegistrySystem).reduce((acc, curr) => {
-  //     return acc + Object.keys(this.dragRegistrySystem[curr]).length;
-  //   }, 0);
-  // }
-
+  // TODO: consider using Map here
   readonly dragRegistrySystem: { [key: string]: InteractableRegistry } = { };
 
   constructor(
-    private rendererFactory: RendererFactory2
+    private rendererFactory: RendererFactory2,
+    private ngZone: NgZone
   ) {
     this.renderer = this.rendererFactory.createRenderer(null, null);
   }
@@ -80,7 +75,9 @@ export class InteractService {
         shareReplay(1),
         // filter(resizeEvent => !!resizeEvent.targetElement),
         tap(({deltaX, deltaY, width, height, targetElement}) => {
-          this.setElementSize(width, height, targetElement);
+          this.ngZone.runOutsideAngular(() => {
+            this.setElementSize(width, height, targetElement);
+          });
           // only reposition if necessary i.e when resizing left or up
           if(deltaX || deltaY) {
             deltas$.next({deltaX, deltaY, targetElement});
@@ -98,7 +95,9 @@ export class InteractService {
       position$.pipe(
         shareReplay(1),
         tap( position => {
-          this.setElementTransform(position.x, position.y, position.targetElement);
+          this.ngZone.runOutsideAngular(() => {
+            this.setElementTransform(position.x, position.y, position.targetElement);
+          })
         })
       )
       ]).pipe(
