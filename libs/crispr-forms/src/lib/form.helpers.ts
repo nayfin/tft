@@ -114,13 +114,13 @@ export function checkControlsForValues(group: FormGroup, config: CheckControlsCo
 /**
  * The required configuration when running the computeValue function
  */
-export interface ComputeFieldConfig {
+export interface ComputeFieldConfig<T = any, RT = any> {
   // array of control names who's values we want to watch
   controlNamesToWatch: string[];
   // the function we want to call on the array of watched values to compute the value of the control we
   computeCallback: (
-    values: (string | number)[]
-  ) => string | number | {};
+    values: (T)[]
+  ) => RT;
 }
 
 /**
