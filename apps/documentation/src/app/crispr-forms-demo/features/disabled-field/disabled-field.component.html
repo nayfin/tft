@@ -1,0 +1,26 @@
+<mat-card>
+  <h2 class="mat-h2">
+    Example of dynamically disabling a field based on other field's values
+  </h2>
+  <crispr-form
+    [config]="disabledFieldConfig">
+  </crispr-form>
+</mat-card>
+
+<mat-card>
+  <h2 class="mat-h2">
+    Example of hiding disabled field
+  </h2>
+  <crispr-form
+    [config]="hiddenFieldConfig">
+  </crispr-form>
+</mat-card>
+
+<mat-card>
+  <h2 class="mat-h2">
+    Example of enabling field if either of the other fields is set to 'enable'
+  </h2>
+  <crispr-form
+    [config]="complexHiddenFieldConfig">
+  </crispr-form>
+</mat-card>

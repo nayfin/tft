@@ -1,0 +1,18 @@
+<crispr-field-container
+  [config]="config"
+  [group]="group"
+  [inlineField]="config.inline">
+  <div
+    [formGroup]="group">
+    <mat-checkbox
+      [color]="config.color"
+      [labelPosition]="config.labelPosition"
+      [formControlName]="config.controlName">
+      {{config.label}}
+      <crispr-info
+        matSuffix *ngIf="config.info"
+        [info]="config.info">
+      </crispr-info>
+    </mat-checkbox>
+  </div>
+</crispr-field-container>

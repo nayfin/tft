@@ -1,0 +1,23 @@
+
+.drop-target {
+  width: 125px;
+  height: 100%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  border-left: 2px solid white;
+  border-right: 2px solid white;
+  justify-content: center;
+  align-items: center;
+  .points-display {
+    font-size: 30px;
+    font-weight: 700;
+  }
+  input {
+    width: 80px;
+  }
+}
+.highlight {
+  background: purple;
+}

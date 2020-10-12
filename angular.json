@@ -25,7 +25,10 @@
               "apps/documentation/src/favicon.ico",
               "apps/documentation/src/assets"
             ],
-            "styles": ["apps/documentation/src/styles.scss"],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "apps/documentation/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -186,6 +189,234 @@
             "jestConfig": "libs/api-interfaces/jest.config.js",
             "passWithNoTests": true
           }
+        }
+      }
+    },
+    "crispr-forms": {
+      "projectType": "library",
+      "root": "libs/crispr-forms",
+      "sourceRoot": "libs/crispr-forms/src",
+      "prefix": "tft",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/crispr-forms/tsconfig.lib.json",
+            "project": "libs/crispr-forms/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/crispr-forms/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/crispr-forms/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/crispr-forms/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "core": {
+      "projectType": "library",
+      "root": "libs/core",
+      "sourceRoot": "libs/core/src",
+      "prefix": "tft",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/core/tsconfig.lib.json",
+            "project": "libs/core/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/core/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/core/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "form-validation-handler": {
+      "projectType": "library",
+      "root": "libs/form-validation-handler",
+      "sourceRoot": "libs/form-validation-handler/src",
+      "prefix": "tft",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/form-validation-handler/tsconfig.lib.json",
+            "project": "libs/form-validation-handler/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/form-validation-handler/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/form-validation-handler/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/form-validation-handler/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "interact": {
+      "projectType": "library",
+      "root": "libs/interact",
+      "sourceRoot": "libs/interact/src",
+      "prefix": "tft",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/interact/tsconfig.lib.json",
+            "project": "libs/interact/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/interact/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/interact/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/interact/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "mat-instantsearch": {
+      "projectType": "library",
+      "root": "libs/mat-instantsearch",
+      "sourceRoot": "libs/mat-instantsearch/src",
+      "prefix": "tft",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/mat-instantsearch/tsconfig.lib.json",
+            "project": "libs/mat-instantsearch/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/mat-instantsearch/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/mat-instantsearch/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/mat-instantsearch/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "ui-imports": {
+      "projectType": "library",
+      "root": "libs/ui-imports",
+      "sourceRoot": "libs/ui-imports/src",
+      "prefix": "tft",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/ui-imports/tsconfig.lib.json",
+            "project": "libs/ui-imports/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/ui-imports/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/ui-imports/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/ui-imports/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
         }
       }
     }

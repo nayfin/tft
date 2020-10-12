@@ -1,0 +1,16 @@
+{
+  "name": "@tft/crispr-forms",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^10.1.5",
+    "@angular/core": "^10.1.5",
+    "@angular/material": "^10.1.5",
+    "@angular/cdk": "^10.1.5",
+    "@tft/form-validation-handler": "^10.0.0",
+    "@angular/material-moment-adapter": "^10.1.5",
+    "moment": "^2.24.0"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}

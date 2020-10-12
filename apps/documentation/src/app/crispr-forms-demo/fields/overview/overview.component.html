@@ -1,0 +1,19 @@
+<div class="container">
+  <h1 class="mat-h1">CRISPR Forms</h1>
+
+  <p>
+    Building forms like a genome builds life
+  </p>
+  <mat-card>
+    <h3 class="mat-h1">I am a form dynamically generated from a configuration object</h3>
+    <crispr-form
+      (statusChanges)="handleStatusChanges($event)"
+      (valueChanges)="handleValueChanges($event)"
+      [config]="config"
+      [value]="value"
+      (submitted)="handleSubmit($event)">
+    </crispr-form>
+
+  </mat-card>
+
+</div>

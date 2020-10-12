@@ -1,0 +1,34 @@
+<mat-card>
+  <h2 class="mat-h2">
+    Example of using an array of select options
+  </h2>
+  <crispr-form
+    [value]="multiSelectInitialValue"
+    [config]="selectConfig"
+    (submitted)="handleSubmit($event)">
+  </crispr-form>
+</mat-card>
+
+<mat-card>
+  <h2 class="mat-h2">
+    Example of using a promise of select options
+  </h2>
+  <crispr-form
+    [config]="promiseSelectConfig">
+  </crispr-form>
+</mat-card>
+
+<mat-card>
+  <crispr-form
+    [config]="observableSelectConfig">
+  </crispr-form>
+</mat-card>
+
+<mat-card>
+  <h2 class="mat-h2">
+    Example of using one field to drive the options of another field
+  </h2>
+  <crispr-form
+    [config]="reactiveOptionsConfig">
+  </crispr-form>
+</mat-card>

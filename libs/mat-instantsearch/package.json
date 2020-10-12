@@ -1,0 +1,16 @@
+{
+  "name": "@tft/mat-instantsearch",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^10.1.5",
+    "@angular/core": "^10.1.5",
+    "@angular/material": "^10.1.5",
+    "@angular/cdk": "^10.1.5",
+    "@tft/ui-imports": "^10.0.0",
+    "lodash-es": "^4.17.10",
+    "angular-instantsearch": "^2.3.0"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}

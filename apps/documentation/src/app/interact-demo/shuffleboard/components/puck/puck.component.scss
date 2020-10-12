@@ -1,0 +1,23 @@
+:host {
+  /* display: block; */
+  position: absolute;
+  display: block;
+  
+}
+.puck {
+  height: 75px;
+  width: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border: 2px solid white;
+  border-radius: 50%;
+  &.red {
+    background: red;
+  }
+  
+  &.blue {
+    background: blue;
+  }
+}

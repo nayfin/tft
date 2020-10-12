@@ -1,0 +1,17 @@
+<form
+  class="crispr-form"
+  [ngClass]="config.classes"
+  [formGroup]="form"
+  (ngSubmit)="handleSubmit()"
+  [autocomplete]="config.autocomplete || 'off'"
+  [errorDictionary]="config.errorDictionary">
+
+  <ng-container
+    *ngFor="let field of config.fields;"
+    crisprField
+    [value]="value | initialControlValue : field "
+    [config]="field"
+    [group]="form">
+  </ng-container>
+
+</form>

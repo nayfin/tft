@@ -1,0 +1,46 @@
+
+<crispr-field-container
+  [config]="config"
+  [group]="group">
+
+  <mat-form-field
+    [color]="config.color"
+    [appearance]="config.appearance">
+    <mat-label *ngIf="config.label">
+      {{config.label}}
+    </mat-label>
+    <input
+      matInput
+      [formControl]="autocompleteInputControl"
+      [placeholder]="config.placeholder"
+      [matAutocomplete]="auto"
+      (keydown.tab)="handleTab($event)"
+      role="textbox"
+      type="textbox"
+      autocapitalize="off"
+      autocorrect="off"
+      spellcheck="false"
+      #autoInput>
+
+    <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
+    <crispr-info
+      *ngIf="config.info"
+      matSuffix
+      [info]="config.info ">
+    </crispr-info>
+
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      [autoActiveFirstOption]="config.autoActiveFirstOption"
+      (optionSelected)="handleSelect($event)"
+      [displayWith]="displayLabel(options$ | async)">
+
+      <mat-option
+        *ngFor="let option of options$ | async"
+        [value]="option.value">
+        <crispr-option [option]="option"></crispr-option>
+      </mat-option>
+
+    </mat-autocomplete>
+  </mat-form-field>
+</crispr-field-container>

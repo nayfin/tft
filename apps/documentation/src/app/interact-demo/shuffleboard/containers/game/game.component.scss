@@ -1,0 +1,40 @@
+$center-offset: 200px;
+$puck-diameter: 75px;
+:host {
+  // display: block;
+  // padding: 0 35px;
+}
+tft-board {
+  display: flex;
+  height: 500px;
+  width: 90vw;
+  background: rosybrown;
+  justify-content: space-between;;
+
+  tft-player-zone {
+    display: flex;
+    flex-grow: 1;
+    height: 100%;
+    &.a {
+      margin-right: $center-offset;
+    }
+    &.b {
+      margin-left: $center-offset;
+      justify-content: flex-end;
+    }
+    tft-target, tft-tray {
+      height: 100%;
+      // outline: 2px solid white;
+    }
+   
+  }
+
+  .target-area {
+    display: flex;
+    width: 300px;
+    justify-self: flex-end;
+  }
+  tft-tray {
+    width: 100px;
+  }
+}

@@ -1,0 +1,71 @@
+<crispr-field-container
+  [config]="config"
+  [group]="group">
+
+  <mat-form-field
+    [color]="config.color"
+    [appearance]="config.appearance">
+    <mat-label *ngIf="config.label">
+      {{config.label}}
+    </mat-label>
+
+    <mat-chip-list
+      #chipList>
+      <mat-chip
+        class="refinement-chip"
+        *ngFor="let chip of controlValue$ | async"
+        [selectable]="config.chipsSelectable"
+        [removable]="config.areChipsRemovable"
+        (removed)="removeChip(chip)">
+        {{chip.label}}
+        <mat-icon
+          matChipRemove
+          *ngIf="config.areChipsRemovable">
+          cancel
+        </mat-icon>
+      </mat-chip>
+
+      <input
+        matInput
+        [formControl]="autocompleteInputControl"
+        [placeholder]="config.placeholder"
+        [matChipInputFor]="chipList"
+        [matAutocomplete]="auto"
+        (keydown.tab)="handleTab($event)"
+        role="textbox"
+        type="text"
+        autocapitalize="off"
+        autocorrect="off"
+        spellcheck="false"
+        #autoInput/>
+      <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
+      <crispr-info
+        *ngIf="config.info"
+        matSuffix
+        [info]="config.info ">
+      </crispr-info>
+
+    </mat-chip-list>
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      [autoActiveFirstOption]="this.config.autoActiveFirstOption"
+      (optionSelected)="handleSelect($event)"
+      [displayWith]="mapToLabel">
+
+      <mat-option
+        *ngFor="let option of remainingOptions$ | async"
+        [value]="option">
+
+        <img
+          *ngIf="option[config.imageUrlParam]"
+          [src]="option[config.imageUrlParam]"
+          style="vertical-align:middle;"
+          aria-hidden
+          height="25"/>
+        {{ option.label }}
+      </mat-option>
+    </mat-autocomplete>
+
+
+  </mat-form-field>
+</crispr-field-container>

@@ -16,9 +16,12 @@
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
+      "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "accessToken": "MTliMTQ5MzktMmUxZC00NzRiLWI3NDQtMmU2YTgxMTUzZWY3fHJlYWQtd3JpdGU=",
+        "cacheableOperations": ["build", "test", "lint", "e2e"],
+        "canTrackAnalytics": false,
+        "showUsageWarnings": true
       }
     }
   },
@@ -34,6 +37,24 @@
       "tags": []
     },
     "api-interfaces": {
+      "tags": []
+    },
+    "crispr-forms": {
+      "tags": []
+    },
+    "core": {
+      "tags": []
+    },
+    "form-validation-handler": {
+      "tags": []
+    },
+    "interact": {
+      "tags": []
+    },
+    "mat-instantsearch": {
+      "tags": []
+    },
+    "ui-imports": {
       "tags": []
     }
   }

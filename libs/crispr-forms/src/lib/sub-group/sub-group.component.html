@@ -1,0 +1,11 @@
+<crispr-field-container
+  [config]="config"
+  [group]="group">
+  <ng-container
+    *ngFor="let fieldConfig of config.fields;"
+    crisprField
+    [config]="fieldConfig"
+    [group]="control">
+  </ng-container>
+</crispr-field-container>
+

@@ -1,0 +1,16 @@
+<mat-card>
+  <h2 class="mat-h2">
+    Submit Button
+  </h2>
+  <p class="mat-p">
+    There are four button styles to choose from ('flat', 'raised', 'stroked', 'icon'). They also take a 'color'
+    argument ('primary', 'accent', 'warn') for aligning the button color with your Material theme.
+    Each one causes 'submitted' event to be fired, emitting the entire formGroup. If you want to disable button
+    when form is invalid simply set 'disabledOnInvalidForm' to true (see configuration for 'raised' button in this example).
+    Eventually, we will create an API to enable custom button actions, but that is late on the roadmap.
+  </p>
+  <crispr-form
+    [config]="formConfig"
+    (submitted)="onSubmitted($event)">
+  </crispr-form>
+</mat-card>

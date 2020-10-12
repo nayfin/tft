@@ -1,0 +1,29 @@
+<crispr-field-container
+  [config]="config"
+  [group]="group">
+  <mat-form-field
+    [color]="config.color"
+    [appearance]="config.appearance"
+    [formGroup]="group">
+    <mat-label *ngIf="config.label">
+      {{config.label}}
+    </mat-label>
+    <input
+      [type]="config.inputType"
+      matInput
+      [placeholder]="config.placeholder"
+      [formControlName]="config.controlName"
+      autocapitalize="off"
+      autocorrect="off"
+      autocomplete="off">
+    <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
+    <crispr-info
+      matSuffix
+      *ngIf="config.info"
+      [info]="config.info">
+    </crispr-info>
+
+  </mat-form-field>
+
+
+</crispr-field-container>

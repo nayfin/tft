@@ -1,0 +1,25 @@
+<!-- <div class="page-container-which-should-be-unnecessary">
+
+  <ais-instantsearch [config]="searchConfig">
+    <mis-autocomplete
+      [displayWithFn]="mapToDescription"
+      (selectHit)="handleSelect($event)">
+
+    </mis-autocomplete>
+
+  </ais-instantsearch>
+</div> -->
+
+<h2>Using Reactive Forms</h2>
+<form [formGroup]="form">
+
+  <ais-instantsearch [config]="searchConfig">
+    <mis-autocomplete
+      [autocompleteControl]="form.get('autocompleteEx')"
+      [mapHitsToOptions]="mapOptions"
+      (selectHit)="handleSelect($event)">
+
+    </mis-autocomplete>
+
+  </ais-instantsearch>
+</form>

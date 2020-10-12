@@ -1,8 +1,23 @@
-<div style="text-align: center;">
-  <h1>Welcome to documentation!</h1>
-  <img
-    width="450"
-    src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png"
-  />
+<div fxLayout="column" fxFill>
+  <tft-header
+    role="header"
+    (menuClicked)="sidenav.toggle()"
+    [subtitle]="'Library'">
+  </tft-header>
+
+  <mat-sidenav-container fxFlex aria-live="main content">
+
+    <mat-sidenav #sidenav>
+      <tft-sidenav-list
+        [sections]="linksToExamples"
+        (itemClicked)="onLinkSelected($event)">
+      </tft-sidenav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="main-container">
+
+      <router-outlet></router-outlet>
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>
-<div>Message: {{ hello$ | async | json }}</div>

@@ -1,0 +1,10 @@
+  <label
+    *ngIf="!!config?.label"
+    [ngClass]="config.typographyClass">
+    {{ config.label }}
+    <crispr-info
+      *ngIf="config.info"
+      matSuffix
+      [info]="config.info">
+    </crispr-info>
+  </label>

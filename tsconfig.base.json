@@ -16,7 +16,15 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@tft/api-interfaces": ["libs/api-interfaces/src/index.ts"]
+      "@tft/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@tft/crispr-forms": ["libs/crispr-forms/src/index.ts"],
+      "@tft/core": ["libs/core/src/index.ts"],
+      "@tft/form-validation-handler": [
+        "libs/form-validation-handler/src/index.ts"
+      ],
+      "@tft/interact": ["libs/interact/src/index.ts"],
+      "@tft/mat-instantsearch": ["libs/mat-instantsearch/src/index.ts"],
+      "@tft/ui-imports": ["libs/ui-imports/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
