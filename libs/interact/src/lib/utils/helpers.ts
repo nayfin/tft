@@ -1,5 +1,9 @@
 import { EmbeddedViewRef } from '@angular/core';
 
+interface IEElement extends HTMLElement {
+  msMatchesSelector: (string) => any; //
+}
+
 /** Gets the closest ancestor of an element that matches a selector. */
 export function getClosestMatchingAncestor(element: HTMLElement, selector: string) {
   let currentElement = element.parentElement as HTMLElement | null;
@@ -7,7 +11,7 @@ export function getClosestMatchingAncestor(element: HTMLElement, selector: strin
   while (currentElement) {
     // IE doesn't support `matches` so we have to fall back to `msMatchesSelector`.
     if (currentElement.matches ? currentElement.matches(selector) :
-        (currentElement as any).msMatchesSelector(selector)) {
+        (currentElement aforms IEelement).msMatchesSelector(selector)) {
       return currentElement;
     }
 

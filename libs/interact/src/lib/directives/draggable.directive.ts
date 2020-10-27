@@ -54,8 +54,7 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy, AfterVi
     private renderer: Renderer2,
     private _viewContainerRef: ViewContainerRef,
     @Optional() @SkipSelf() public dropzone_dir?: DropzoneDirective
-  ) {
-   }
+  ) { }
 
   ngOnInit() {
     this.interactable = this.initiateDragEvents(this.dragConfig, this.el.nativeElement);
