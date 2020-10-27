@@ -83,7 +83,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/documentation/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/documentation/src/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -116,7 +118,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/documentation-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/documentation-e2e/**/*.{js,ts}"
+            ]
           }
         }
       }
@@ -134,7 +138,9 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": ["apps/api/src/assets"]
+            "assets": [
+              "apps/api/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -159,7 +165,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/api/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/api/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -180,7 +188,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/api-interfaces/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/api-interfaces/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -213,7 +223,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/crispr-forms/src/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/crispr-forms/src/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -221,6 +233,36 @@
           "options": {
             "jestConfig": "libs/crispr-forms/jest.config.js",
             "passWithNoTests": true
+          }
+        },
+        "storybook": {
+          "builder": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "port": 4400,
+            "config": {
+              "configFolder": "libs/crispr-forms/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "builder": "@nrwl/storybook:build",
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "outputPath": "dist/storybook/crispr-forms",
+            "config": {
+              "configFolder": "libs/crispr-forms/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
           }
         }
       },
@@ -251,7 +293,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/core/src/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/core/src/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -289,7 +333,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/form-validation-handler/src/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/form-validation-handler/src/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -327,7 +373,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/interact/src/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/interact/src/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -365,7 +413,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/mat-instantsearch/src/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/mat-instantsearch/src/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -403,7 +453,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/ui-imports/src/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/ui-imports/src/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -417,6 +469,34 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
+        }
+      }
+    },
+    "crispr-forms-e2e": {
+      "root": "apps/crispr-forms-e2e",
+      "sourceRoot": "apps/crispr-forms-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/crispr-forms-e2e/cypress.json",
+            "tsConfig": "apps/crispr-forms-e2e/tsconfig.e2e.json",
+            "devServerTarget": "crispr-forms:storybook"
+          },
+          "configurations": {
+            "ci": {
+              "devServerTarget": "crispr-forms:storybook:ci"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/crispr-forms-e2e/**/*.{js,ts}"
+            ]
+          }
         }
       }
     }

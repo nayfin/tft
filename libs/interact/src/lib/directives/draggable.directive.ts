@@ -1,13 +1,13 @@
 import { Directive, ElementRef, Input, OnInit, Output,
-   OnDestroy, EventEmitter, Optional, SkipSelf, Renderer2, SimpleChanges, OnChanges, TemplateRef, ContentChild, AfterViewInit, ViewContainerRef } from '@angular/core';
+   OnDestroy, EventEmitter, Optional, SkipSelf, Renderer2, SimpleChanges, OnChanges, ContentChild, AfterViewInit, ViewContainerRef, ApplicationRef } from '@angular/core';
 import interact from 'interactjs';
 import { InteractService } from '../services/interact.service';
 import { DraggableOptions, Interactable } from '@interactjs/types/index';
 import { Subscription, Observable } from 'rxjs';
 import { DropzoneDirective } from './dropzone.directive';
 import { NgDragEvent, TftDragEvent, DEFAULT_REGISTRY_ID, TftInteractable } from '../models';
-import { CdkDragPreview } from '@angular/cdk/drag-drop';
-import { DragPreviewDirective, TFT_DRAG_PREVIEW } from './drag-preview.directive';
+import { DragPreviewDirective } from './drag-preview.directive';
+import { getRootNode } from '../utils';
 @Directive({
   selector: '[tftDraggable]',
   // tslint:disable-next-line: no-host-metadata-property
@@ -49,6 +49,7 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy, AfterVi
 
   constructor(
     public el: ElementRef,
+    private app: ApplicationRef,
     private interactService: InteractService,
     private renderer: Renderer2,
     private _viewContainerRef: ViewContainerRef,
@@ -77,7 +78,8 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy, AfterVi
       this.y = state.y;
       this.x = state.x;
     });
-  };
+  }
+
   // TODO: watch config here as well and update interactable
   ngOnChanges(changes: SimpleChanges) {
     // we do this here instead of using a setter on the input so that it
@@ -97,7 +99,8 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy, AfterVi
       viewContainer: this._viewContainerRef
     } : null;
     const viewRef = preview?.viewContainer.createEmbeddedView(preview.template);
-    console.log( 'preview', this._previewTemplate?.templateRef.elementRef.nativeElement, 'viewRef', viewRef)
+    const element = getRootNode(viewRef, document);
+    console.log( {element, viewRef})
   }
 
   ngOnDestroy() {

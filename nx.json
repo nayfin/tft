@@ -19,7 +19,12 @@
       "runner": "@nrwl/nx-cloud",
       "options": {
         "accessToken": "MTliMTQ5MzktMmUxZC00NzRiLWI3NDQtMmU2YTgxMTUzZWY3fHJlYWQtd3JpdGU=",
-        "cacheableOperations": ["build", "test", "lint", "e2e"],
+        "cacheableOperations": [
+          "build",
+          "test",
+          "lint",
+          "e2e"
+        ],
         "canTrackAnalytics": false,
         "showUsageWarnings": true
       }
@@ -31,7 +36,9 @@
     },
     "documentation-e2e": {
       "tags": [],
-      "implicitDependencies": ["documentation"]
+      "implicitDependencies": [
+        "documentation"
+      ]
     },
     "api": {
       "tags": []
@@ -56,6 +63,12 @@
     },
     "ui-imports": {
       "tags": []
+    },
+    "crispr-forms-e2e": {
+      "tags": [],
+      "implicitDependencies": [
+        "crispr-forms"
+      ]
     }
   }
 }
