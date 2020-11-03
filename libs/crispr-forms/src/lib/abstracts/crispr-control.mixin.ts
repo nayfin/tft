@@ -12,7 +12,7 @@ export function crisprControlMixin<C extends CrisprControlConfig>(BaseClass: typ
     set value(value: ControlValue | any[]) {
       this.setControlValue(value);
       this._value = value;
-    };
+    }
 
     get value() {
       return this._value;

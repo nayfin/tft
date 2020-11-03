@@ -12,7 +12,7 @@ export const FIELD_COMPONENTS = {
   select: SelectFieldComponent,
   radio: RadioFieldComponent,
   subGroup: SubGroupComponent,
-  // DEPRECATED: group for subGroup, remove in v11
+  // DEPRECATED: group replaced by subGroup, remove in group in v11
   group: SubGroupComponent,
   groupList: FormGroupListComponent,
   autocomplete: AutocompleteFieldComponent,
@@ -42,8 +42,8 @@ export type CrisprControlComponent = ButtonComponent|
   SliderFieldComponent|
   DatepickerFieldComponent;
 
-// export type ComponentKeys = keyof typeof FIELD_COMPONENTS;
-// export type CrisprFieldComponents = typeof FIELD_COMPONENTS[ComponentKeys];
+export type ComponentKeys = keyof typeof FIELD_COMPONENTS;
+// export type CrisprFieldComponent = FIELD_COMPONENTS[ComponentKeys];
 
 export type CrisprFieldComponent = CrisprControlComponent |
   HeadingComponent|

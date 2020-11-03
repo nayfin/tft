@@ -33,7 +33,7 @@ import { ThemePalette } from '@angular/material/core';
 export interface CrisprFieldConfig {
   controlType?: ControlType;
   classes?: string[];
-  component?: any; // TODO: make
+  component?: any; // TODO: Define this better
 }
 
 // export function isCustomConfig(config: AnyFieldConfig): config is CustomFieldConfig {
@@ -138,4 +138,4 @@ export enum ControlType {
   HEADING = 'heading',
   DIVIDER = 'divider',
   CUSTOM = 'custom'
-};
+}
