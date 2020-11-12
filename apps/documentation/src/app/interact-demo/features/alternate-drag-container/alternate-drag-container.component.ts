@@ -6,5 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./alternate-drag-container.component.scss']
 })
 export class AlternateDragContainerComponent {
-
 }
