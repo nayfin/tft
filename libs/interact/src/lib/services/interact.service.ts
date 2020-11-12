@@ -3,7 +3,7 @@ import { Injectable, Renderer2, RendererFactory2, NgZone } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { tap, map, shareReplay } from 'rxjs/operators';
 import {
-  TftInteractable, Delta, Size, Position, InteractableRegistry,
+  TftCoords, Delta, Size, Position, InteractableRegistry,
   defaultPosition, defaultSize, defaultDelta, DEFAULT_REGISTRY_ID
 } from '../models';
 
@@ -69,7 +69,7 @@ export class InteractService {
     const position$ = new BehaviorSubject(initialPosition);
 
     // All draggable data mapped together
-    const interactable$: Observable<TftInteractable> = combineLatest([
+    const interactable$: Observable<TftCoords> = combineLatest([
       size$.pipe(
         // startWith({...initialSize, ...initialDelta}),
         shareReplay(1),
@@ -102,7 +102,7 @@ export class InteractService {
       )
       ]).pipe(
       shareReplay(1),
-      map( ([size, deltas, position]): TftInteractable => {
+      map( ([size, deltas, position]): TftCoords=> {
         return {
           x: position.x,
           y: position.y,

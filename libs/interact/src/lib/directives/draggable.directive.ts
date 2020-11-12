@@ -1,11 +1,12 @@
 import { Directive, ElementRef, Input, OnInit, Output,
-   OnDestroy, EventEmitter, Optional, SkipSelf, Renderer2, SimpleChanges, OnChanges, ContentChild, AfterViewInit, ViewContainerRef, ApplicationRef } from '@angular/core';
+   OnDestroy, EventEmitter, Optional, SkipSelf, Renderer2, SimpleChanges, OnChanges, ContentChild, ViewContainerRef, Inject, AfterViewInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common'
 import interact from 'interactjs';
 import { InteractService } from '../services/interact.service';
 import { DraggableOptions, Interactable } from '@interactjs/types/index';
 import { Subscription, Observable } from 'rxjs';
 import { DropzoneDirective } from './dropzone.directive';
-import { NgDragEvent, TftDragEvent, DEFAULT_REGISTRY_ID, TftInteractable } from '../models';
+import { NgDragEvent, TftDragEvent, DEFAULT_REGISTRY_ID, TftCoords, TftDragElement} from '../models';
 import { DragPreviewDirective } from './drag-preview.directive';
 import { getRootNode } from '../utils';
 @Directive({
@@ -17,18 +18,21 @@ import { getRootNode } from '../utils';
     '[id]': 'interactableId',
   }
 })
-export class DraggableDirective implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 
 
   @Input() x: number;
   @Input() y: number;
-
+  /* zIndex while dragging*/
+  @Input() dragZIndex = 10000;
+  /** zIndex while at rest */
+  @Input() zIndex: number
   @Input() interactableId: string;
-  @Input() dragData: any;
+  @Input() dragData: D;
   @Input() enableDragDefault = true;
   @Input() disabled = false;
   @Input() dragConfig: Partial<Interact.OrBoolean<DraggableOptions>>;
-
+  @Input() showPlaceholder = false;
   // pipes all interact events to event emitters
   @Output() dragStart = new EventEmitter<TftDragEvent>();
   @Output() dragMove = new EventEmitter<TftDragEvent>();
@@ -40,19 +44,21 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy, AfterVi
    */
   @ContentChild(DragPreviewDirective) _previewTemplate: DragPreviewDirective;
 
-  dragPreview: Interact.Element;
-  interactableState: Observable<TftInteractable>;
+  // dragPreview: Interact.Element;
+  interactableState: Observable<TftCoords>;
   interactable: Interactable;
   private registryId: string;
 
   private interactableSubscription: Subscription;
-
+  // cache holding element to use as drag preview (the element the user sees being dragged around)
+  private previewRef: TftDragElement;
+  // cache holding element to use as placeholder while dragging
   constructor(
     public el: ElementRef,
-    private app: ApplicationRef,
     private interactService: InteractService,
     private renderer: Renderer2,
     private _viewContainerRef: ViewContainerRef,
+    @Inject(DOCUMENT) private _document: Document,
     @Optional() @SkipSelf() public dropzone_dir?: DropzoneDirective
   ) { }
 
@@ -60,18 +66,14 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy, AfterVi
     this.interactable = this.initiateDragEvents(this.dragConfig, this.el.nativeElement);
 
     // register with parent dropzone if it exists, otherwise use default
+    // this gives us a place on the registry to store our drag items that don't have a dropzone
     this.registryId = this.dropzone_dir?.dropzoneId || DEFAULT_REGISTRY_ID;
     // add draggable to directory and store its id
     this.interactableId = this.interactService.addDraggableToRegistry(this.registryId, this.interactableId);
+    this.alignPositionWithInputs(this.x, this.y);
     // cache subscription to interactable state so we can unsubscribe onDestroy
     this.interactableState = this.interactService
       .getInteractableState(this.interactableId, this.registryId);
-
-    // we create a property 'dragRef' on the element so that we can easily pass the class instance to the drop zone
-    // Set our target and origin to the parent zone, since we're starting here
-
-    this.addDragPropertiesToElement(this.el.nativeElement)
-    this.alignPositionWithInputs(this.x, this.y);
     // keep our cached position values in line with our drag state
     this.interactableSubscription = this.interactableState.subscribe((state) => {
       this.y = state.y;
@@ -93,17 +95,25 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy, AfterVi
   }
 
   ngAfterViewInit() {
-    const preview = this._previewTemplate ? {
-      template: this._previewTemplate.templateRef,
-      viewContainer: this._viewContainerRef
-    } : null;
-    const viewRef = preview?.viewContainer.createEmbeddedView(preview.template);
-    const element = getRootNode(viewRef, document);
-    console.log( {element, viewRef})
+    if (!this.dropzone_dir) {
+      this.previewRef = this.el.nativeElement;
+      return;
+    }
+    if (this._previewTemplate) {
+      const viewRef = this._viewContainerRef.createEmbeddedView(this._previewTemplate.templateRef);
+      this.previewRef = getRootNode(viewRef, this._document);
+    } else {
+      this.previewRef = this.cloneElement(this.el.nativeElement);
+    }
+    this._document.body.prepend(this.previewRef);
+    this.renderer.setStyle(this.previewRef, 'display', 'none');
+
+    this.addDragPropertiesToElement(this.previewRef);
   }
 
   ngOnDestroy() {
     // clean up state and subscriptions related to destroyed component
+    this._document.removeChild(this.previewRef)
     this.interactableSubscription.unsubscribe();
     this.interactService.destroyInteractable(this.interactableId, this.registryId);
   }
@@ -118,7 +128,13 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy, AfterVi
     );
   }
 
-  addDragPropertiesToElement(nativeElement: any) {
+  setDragStyles(dragElement: HTMLElement) {
+    this.renderer.setStyle(dragElement, 'touchAction', 'none')
+    this.renderer.setStyle(dragElement, 'zIndex', this.dragZIndex)
+    this.renderer.setStyle(dragElement, 'position', 'fixed')
+  }
+
+  addDragPropertiesToElement(nativeElement: TftDragElement) {
     this.renderer.setProperty(nativeElement, 'dropTarget', this.dropzone_dir || null);
     this.renderer.setProperty(nativeElement, 'dragOrigin', this.dropzone_dir || null);
     this.renderer.setProperty(nativeElement, 'dragRef', this);
@@ -130,12 +146,11 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy, AfterVi
     const positionInDropTarget = target && dropzoneElement
       ? this.interactService.calculatePositionInDropzone(dropzoneElement, target)
       : null;
-
     return {
       interactEvent: event,
       dragRef: this,
       dragOrigin: target.dragOrigin,
-      dropTarget: this.el.nativeElement.dropTarget,
+      dropTarget: this.previewRef.dropTarget,
       positionInDropTarget
     }
   }
@@ -166,39 +181,51 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy, AfterVi
   // We use use this instead of isNaN here to try and help performance
   // We should be able to reliably restrict to numbers or falsey values
   isNumeric(num: number) {
-    return typeof num === 'number' && num !== NaN;
+    return typeof num === 'number' && !isNaN(num);
   }
 
   initiateDragEvents(dragConfig: Partial<Interact.OrBoolean<DraggableOptions>>, nativeElement: HTMLElement) {
     return interact(nativeElement).draggable({ manualStart: !!this.dropzone_dir, ...dragConfig })
       .on('dragstart',  (event: NgDragEvent) => {
-          this.dragStart.emit(this.mapDragEvent(event));
+        this.dragStart.emit(this.mapDragEvent(event));
       })
+      /**
+       * If we want to append to body we need to set some things up from on move
+       */
       .on('move', (event: NgDragEvent) => {
+        // cache the interaction
         const interaction = event.interaction;
-        if (!!this.dropzone_dir && interaction.pointerIsDown && !interaction.interacting()) {
-          this.dragPreview = this.cloneElement(this.el.nativeElement);
-          this.addDragPropertiesToElement(this.dragPreview);
+        // check if we should append drag item to body
+        if ( this.enableDragDefault
+            && !!this.dropzone_dir
+            && interaction.pointerIsDown
+            && !interaction.interacting()
+        ) {
+          // show the previewRef if it was hidden i.e. there is a previewTemplate
+          this.renderer.setStyle(this.previewRef, 'display', 'initial');
+
           const elementRect = nativeElement.getBoundingClientRect();
-          const bodyRect = document.body.getBoundingClientRect();
+          const bodyRect = this._document.body.getBoundingClientRect();
           const x = elementRect.x - bodyRect.x;
           const y = elementRect.y - bodyRect.y;
-
-          document.body.prepend(this.dragPreview);
-          this.interactService.updatePosition(this.interactableId, this.registryId, {x, y}, this.dragPreview);
+          this.setDragStyles(this.previewRef)
+          this._document.body.prepend(this.previewRef);
+          this.interactService.updatePosition(this.interactableId, this.registryId, {x, y}, this.previewRef);
+          if (!this.showPlaceholder) {
+            this.renderer.setStyle(this.el.nativeElement, 'display', 'none');
+          }
           interaction.start(
             { name: 'drag' },
             event.interactable,
-            this.dragPreview
+            this.previewRef
           );
         }
       })
       .on('dragmove', (event: NgDragEvent) => {
         if (this.enableDragDefault) {
-          const dragElement = this.dropzone_dir && this.dragPreview || nativeElement
+          const dragElement = this.dropzone_dir && this.previewRef || nativeElement
           this.dragMoveListener(event, dragElement);
         }
-
         const mappedEvent = this.mapDragEvent(event);
         this.dragMove.emit(mappedEvent);
       })
@@ -206,13 +233,17 @@ export class DraggableDirective implements OnInit, OnChanges, OnDestroy, AfterVi
         this.dragInertiaStart.emit(this.mapDragEvent(event))
       })
       .on('dragend', (event: NgDragEvent) => {
-        this.dragEnd.emit(this.mapDragEvent(event))
-        if(this.dropzone_dir && this.dragPreview) {
-          setTimeout(() => {
-            document.body.removeChild(this.dragPreview);
-            this.dragPreview = null;
-          }, 0)
+        const mappedEvent = this.mapDragEvent(event)
+        this.dragEnd.emit(mappedEvent)
+        if (this.previewRef) {
+          this.renderer.setStyle(this.previewRef, 'display', 'none');
         }
+        if(this.dropzone_dir === event.target.dropTarget) {
+            const { x, y} = mappedEvent.positionInDropTarget;
+            this.setPosition(x, y);
+          }
+          this.renderer.setStyle(this.el.nativeElement, 'display', 'initial');
+
       });
   }
   // TODO: this doesn't do anything yet...

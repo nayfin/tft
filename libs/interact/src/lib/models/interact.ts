@@ -38,7 +38,7 @@ export interface InteractableSystem {
   position$: BehaviorSubject<Position>;
   size$: BehaviorSubject<Size & Delta>;
 
-  interactable$: Observable<TftInteractable>;
+  interactable$: Observable<TftCoords>;
 }
 /**
  * The key map of InteractableSystems. One for the drag components
@@ -47,6 +47,15 @@ export interface InteractableSystem {
 export interface InteractableRegistry {
   [key: string]: InteractableSystem
 }
+
+/**
+ * HTMLElement with helpful drag directives attached to facilitate moving drag data between dropzones
+ */
+export type TftDragElement = HTMLElement & {
+  dragRef?: DraggableDirective
+  dragOrigin?: DropzoneDirective
+  dropTarget?: DropzoneDirective
+}
 /**
  * Extends the interact drop events by adding reference to the dropped components drag
  * directive to the html element. This gives the dropzone access to things like data
@@ -54,12 +63,9 @@ export interface InteractableRegistry {
  */
 export type NgDropEvent = DropEvent & {
   draggable:  Interactable & {
-    target: HTMLElement & {
-      dragRef: DraggableDirective
-      dragOrigin?: DropzoneDirective
-      dropTarget?: DropzoneDirective
-    }
-  }
+    target: TftDragElement;
+  };
+  relatedTarget: TftDragElement;
 };
 /**
  * Extends the interact resize events by adding a reference to the dragRef
@@ -67,12 +73,8 @@ export type NgDropEvent = DropEvent & {
  */
 export type  NgResizeEvent = ResizeEvent & {
   draggable:  Interactable & {
-    target: HTMLElement & {
-      dragRef?: DraggableDirective
-      dragOrigin?: DropzoneDirective
-      dropTarget?: DropzoneDirective
-    }
-  }
+    target: TftDragElement;
+  };
 };
 /**
  * We extend the interact DragEvent a little here, adding to the target element references for:
@@ -84,11 +86,7 @@ export type  NgResizeEvent = ResizeEvent & {
  */
 export type NgDragEvent = DragEvent & {
   dropzone: { target: HTMLElement},
-  target: HTMLElement & {
-    dragRef: DraggableDirective
-    dragOrigin?: DropzoneDirective
-    dropTarget?: DropzoneDirective
-  }
+  target: TftDragElement
 };
 /**
  * Event emitted when resizing, dragging, dropping
@@ -118,7 +116,7 @@ export interface TftResizeEvent extends TftInteractableEvent {
   interactEvent: ResizeEvent
 }
 
-export type TftInteractable = Delta & Position & Size;
+export type TftCoords= Delta & Position & Size;
 
 export interface Delta {
   deltaX: number | null;
