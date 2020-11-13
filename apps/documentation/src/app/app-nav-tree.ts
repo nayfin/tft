@@ -128,7 +128,7 @@ export const appNavTree: SidenavSection[] = [
       {
         title: 'Features',
         links: [
-          {title: 'Alternate Drag Container', path: 'interact-demo/features'}
+          {title: 'Placeholder Template', path: 'interact-demo/features'}
         ]
       }
     ]

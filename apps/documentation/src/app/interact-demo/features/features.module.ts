@@ -2,17 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { InteractModule } from '@tft/interact'
-import { AlternateDragContainerComponent } from './alternate-drag-container/alternate-drag-container.component';
+import { PlaceholderTemplateComponent } from './placeholder-template/placeholder-template.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'alternate-drag-container'},
-  { path: 'alternate-drag-container', component: AlternateDragContainerComponent }
+  { path: '', redirectTo: 'placeholder-template'},
+  { path: 'placeholder-template', component: PlaceholderTemplateComponent }
 ];
 
 
 @NgModule({
   declarations: [
-    AlternateDragContainerComponent
+    PlaceholderTemplateComponent
   ],
   imports: [
     CommonModule,
