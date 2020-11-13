@@ -78,10 +78,9 @@ export class DropzoneDirective implements OnInit, OnChanges {
     const positionInDropTarget = zoneElement && dragElement
     ? this.interactService.calculatePositionInDropzone(zoneElement, dragElement)
     : null;
-    const dragRef = event.draggable.target.dragRef;
     return {
       interactEvent: event,
-      dragRef,
+      dragRef: dragElement.dragRef,
       dragOrigin: dragElement.dragOrigin,
       dropTarget: event.draggable.target.dropTarget,
       positionInDropTarget

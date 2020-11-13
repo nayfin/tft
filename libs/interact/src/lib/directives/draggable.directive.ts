@@ -97,6 +97,7 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   ngAfterViewInit() {
     if (!this.dropzone_dir) {
       this.previewRef = this.el.nativeElement;
+      this.addDragPropertiesToElement(this.previewRef);
       return;
     }
     if (this._previewTemplate) {
@@ -112,8 +113,13 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   }
 
   ngOnDestroy() {
+    // remove our dragPreview if it was added to body
+    // const bodyChildren = this._document.body.remove;
+    // const entries = bodyChildren.
+    if ( this.el.nativeElement !== this.previewRef) {
+      this._document.body.removeChild(this.previewRef)
+    }
     // clean up state and subscriptions related to destroyed component
-    this._document.removeChild(this.previewRef)
     this.interactableSubscription.unsubscribe();
     this.interactService.destroyInteractable(this.interactableId, this.registryId);
   }
@@ -202,7 +208,7 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
             && !interaction.interacting()
         ) {
           // show the previewRef if it was hidden i.e. there is a previewTemplate
-          this.renderer.setStyle(this.previewRef, 'display', 'initial');
+          this.renderer.setStyle(this.previewRef, 'display', '');
 
           const elementRect = nativeElement.getBoundingClientRect();
           const bodyRect = this._document.body.getBoundingClientRect();
@@ -242,7 +248,7 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
             const { x, y} = mappedEvent.positionInDropTarget;
             this.setPosition(x, y);
           }
-          this.renderer.setStyle(this.el.nativeElement, 'display', 'initial');
+          this.renderer.setStyle(this.el.nativeElement, 'display', '');
 
       });
   }
