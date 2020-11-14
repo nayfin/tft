@@ -7,8 +7,13 @@ h2 {
   background: hotpink;
 }
 .draggable, .trigger {
-  width: 30px;
-  height: 30px;
+  width: 60px;
+  height: 60px;
+  .handle {
+    background: white;
+    width: 30px;
+    height: 30px;
+  }
 }
 .trigger {
   background: aqua;
