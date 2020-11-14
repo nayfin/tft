@@ -1,6 +1,6 @@
 {
   "name": "@tft/crispr-forms",
-  "version": "0.0.1",
+  "version": "10.1.4",
   "peerDependencies": {
     "@angular/common": "^10.1.5",
     "@angular/core": "^10.1.5",

@@ -30,18 +30,27 @@ actual_version=$(grep version "libs/$package/package.json")
 echo "Current Version: ${actual_version}"
 
 # holds variable update types to check against user input
-update_options=(patch minor major)
+update_options=(patch minor major rc)
 PS3='What type of update is this? (input number)'
 select update_type in "${update_options[@]}"
 do
-  # go into the library, bump the version according to update type then get out
-  cd "libs/$package" && npm version "${update_type}" && cd ../../
-  break
+  if "${update_type}" != "rc"; then
+    echo 'Please type in custom rc version [x.x.x]-rc[rc-number]'
+    read -p rc_version;
+    cd "libs/$package" && npm version "${rc_version}" && cd ../../
+    break
+  else then
+    # go into the library, bump the version according to update type then get out
+    cd "libs/$package" && npm version "${update_type}" && cd ../../
+    break
+
+  fi
+
 done
 # build the library and prepare to publish
 ng build $package
 # package the build code in dist and publish it then go back to root
-cd "dist/libs/$package" && npm pack && npm publish --access public && cd ../../../
+cd "dist/libs/$package" && npm pack && npm publish --tag next --access public && cd ../../../
 
 # get the new version from the library's package.json
 release_version=$(grep version "libs/$package/package.json")
