@@ -18,6 +18,7 @@ import { getRootNode } from '../utils';
     '[id]': 'interactableId',
   }
 })
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 
 

@@ -43,25 +43,24 @@
       remaining: {{ item.count }}
     </div>
     <div class="drag-origin-content">
-
       <section
         *ngFor="let count of item.count | arrayOfN : 2"
         (dragEnd)="handleDrop($event)"
         tftDraggable
         [dragConfig]="dragConfig"
         [dragData]="item"
-        [doClone]="true"
         class="interact-item">
         <div
           class="handle">
           {{item.name}} {{ item.count }}
         </div>
-        <ng-template *tftDragPreview>
-          <div class="preview">
+        <ng-template tftDragPreview>
+          <div class="preview interact-item">
             {{item.name}} preview!!!
           </div>
         </ng-template>
       </section>
+
 
     </div>
 
