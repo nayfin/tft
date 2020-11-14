@@ -49,18 +49,15 @@ export class DropzoneDirective implements OnInit, OnChanges {
     return interact(nativeElement).dropzone(dropzoneConfig)
       // TODO: investigate when this fires in different scenarios
       .on('dropactivate', (event: NgDropEvent) => {
-        // console.log({dropactivate: event})
         this.dropActivate.emit(this.mapDropzoneEvent(event));
       })
       .on('dragenter', (event: NgDropEvent) => {
         this.renderer.setProperty(event.relatedTarget, 'dropTarget', this)
-        this.renderer.setProperty(event.target, 'dropTarget', this)
         this.dragEnter.emit(this.mapDropzoneEvent(event));
       })
       .on('dragleave', (event: NgDropEvent) => {
         if ( event.relatedTarget.dropTarget === this) {
           this.renderer.setProperty(event.relatedTarget, 'dropTarget', null)
-          this.renderer.setProperty(event.target, 'dropTarget', this)
         }
         this.dragLeave.emit(this.mapDropzoneEvent(event));
       })
@@ -73,8 +70,8 @@ export class DropzoneDirective implements OnInit, OnChanges {
    * @param event the drop event emitted by interact, extended with extra fields we added to
    */
   mapDropzoneEvent(event: NgDropEvent): TftDropEvent {
-    const zoneElement = event.draggable.target.dropTarget?.el?.nativeElement as HTMLElement;
-    const dragElement = event.relatedTarget as TftDragElement;
+    const zoneElement = event.target;
+    const dragElement = event.relatedTarget.dragRef.previewRef as TftDragElement;
     const positionInDropTarget = zoneElement && dragElement
     ? this.interactService.calculatePositionInElement(zoneElement, dragElement)
     : null;
@@ -82,7 +79,7 @@ export class DropzoneDirective implements OnInit, OnChanges {
       interactEvent: event,
       dragRef: dragElement.dragRef,
       dragOrigin: dragElement.dragOrigin,
-      dropTarget: event.draggable.target.dropTarget,
+      dropTarget: event.relatedTarget.dropTarget,
       positionInDropTarget
     }
   }

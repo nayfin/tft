@@ -65,15 +65,13 @@ export class YardComponent {
   handleDrop(event: TftDropEvent) {
     const {dragRef, dropTarget} = event;
     const dragData = dragRef.dragData;
-    console.log({dropTarget})
-    if (dropTarget?.dropzoneId === 'yard') {
+    if (dropTarget?.dropzoneId === 'yard' && dropTarget !== dragRef.dropzone_dir) {
       const item = {
         x: event.positionInDropTarget.x,
         y: event.positionInDropTarget.y,
         name: dragRef.dragData.name
       }
       dragData.count--;
-      console.log({item, dragData})
       this.droppedItems.push(item);
     } else {
       this.renderer.setStyle(
@@ -92,6 +90,6 @@ export class YardComponent {
   }
 
   log(type:string, event: any) {
-    // console.log(type, event);
+    console.log(type, event);
   }
 }

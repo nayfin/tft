@@ -47,7 +47,7 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   private registryId: string;
   private interactableSubscription: Subscription;
   // cache holding element to use as drag preview (the element the user sees being dragged around)
-  private previewRef: TftDragElement;
+  previewRef: TftDragElement;
   // cache holding element to use as placeholder while dragging
   constructor(
     public el: ElementRef,
@@ -91,9 +91,9 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   }
 
   ngAfterViewInit() {
+    this.addDragPropertiesToElement(this.el.nativeElement);
     if (!this.dropzone_dir) {
       this.previewRef = this.el.nativeElement;
-      this.addDragPropertiesToElement(this.previewRef);
     }
   }
 
@@ -130,13 +130,13 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
     const { target, dropzone } = event;
     const dropzoneElement = dropzone?.target || target.dropTarget?.el.nativeElement;
     const positionInDropTarget = target && dropzoneElement
-      ? this.interactService.calculatePositionInElement(dropzoneElement, target)
+      ? this.interactService.calculatePositionInElement(dropzoneElement, this.previewRef)
       : null;
     return {
       interactEvent: event,
       dragRef: this,
       dragOrigin: target.dragOrigin,
-      dropTarget: this.previewRef.dropTarget,
+      dropTarget: target.dropTarget,
       positionInDropTarget
     }
   }
@@ -171,22 +171,16 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   }
 
   initiateDragEvents(dragConfig: Partial<Interact.OrBoolean<DraggableOptions>>, nativeElement: HTMLElement) {
-    return interact(nativeElement).draggable({ manualStart: !!this.dropzone_dir, ...dragConfig })
+    return interact(nativeElement).draggable({...dragConfig })
       .on('dragstart',  (event: NgDragEvent) => {
-        this.dragStart.emit(this.mapDragEvent(event));
-      })
-      /**
-       * If we want to append to body we need to set some things up from on move
-       */
-      .on('move', (event: NgDragEvent) => {
-        // cache the interaction
         const interaction = event.interaction;
+
         // check if we should append drag element to body
         if ( this.enableDragDefault
-            && !!this.dropzone_dir
-            && interaction.pointerIsDown
-            && !interaction.interacting()
-        ) {
+          && !!this.dropzone_dir
+          && interaction.pointerIsDown
+          // && !interaction.interacting()
+          ) {
           if (this._previewTemplate) {
             const viewRef = this._viewContainerRef.createEmbeddedView(this._previewTemplate.templateRef);
             this.previewRef = getRootNode(viewRef, this._document);
@@ -201,12 +195,8 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
           if (!this.showPlaceholder) {
             this.renderer.setStyle(this.el.nativeElement, 'display', 'none');
           }
-          interaction.start(
-            { name: 'drag' },
-            event.interactable,
-            this.previewRef
-          );
         }
+        this.dragStart.emit(this.mapDragEvent(event));
       })
       .on('dragmove', (event: NgDragEvent) => {
         if (this.enableDragDefault) {
@@ -224,7 +214,7 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
         if ( this.el.nativeElement !== this.previewRef) {
           this._document.body.removeChild(this.previewRef)
         }
-        if(!!this.dropzone_dir &&this.dropzone_dir === event.target.dropTarget) {
+        if(!!this.dropzone_dir && this.dropzone_dir === event.target.dropTarget) {
           const { x, y} = mappedEvent.positionInDropTarget;
           this.setPosition(x, y);
         }

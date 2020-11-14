@@ -12,8 +12,7 @@
     tftDropzone
     tftDraggable
     tftResizable
-    (dragLeave)="log('leave', $event)"
-    (dragEnter)="log('enter', $event)"
+
     [dropzoneData]="droppedItems"
     [dropzoneId]="'yard'"
     [width]="400"
@@ -22,7 +21,7 @@
     <section
       *ngFor="let item of droppedItems"
       tftDraggable
-      [dragConfig]="dragConfig"
+      [dragConfig]="dragConfigB"
       [x]="item.x"
       [y]="item.y"
       [dragData]="item"
@@ -37,7 +36,6 @@
     *ngFor="let item of dragInventory; let i = index;"
     [dropzoneData]="item"
     [dropzoneId]="item.name + i"
-    (dragEnter)="log('enter', $event)"
     tftDropzone>
     <div class="drag-origin-header">
       remaining: {{ item.count }}
@@ -45,8 +43,8 @@
     <div class="drag-origin-content">
       <section
         *ngFor="let count of item.count | arrayOfN : 2"
-        (dragEnd)="handleDrop($event)"
         tftDraggable
+        (dragEnd)="handleDrop($event)"
         [dragConfig]="dragConfig"
         [dragData]="item"
         class="interact-item">
