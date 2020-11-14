@@ -21,7 +21,7 @@ export class YardComponent {
 
   @ViewChild(DropzoneDirective) dropzone2: DropzoneDirective;
 
-  dragConfig: DraggableOptions;
+  dragConfig: DraggableOptions = {allowFrom: '.handle'};
   dragConfigB: DraggableOptions;
 
   dragInventory: InventoryItem[] = [
