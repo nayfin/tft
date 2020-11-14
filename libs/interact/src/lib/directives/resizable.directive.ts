@@ -123,7 +123,7 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
     const relatedTarget = this.draggable_dir?.dropzone_dir?.el.nativeElement
 
     const positionInDropTarget = target && relatedTarget
-      ? this.interactService.calculatePositionInDropzone(relatedTarget, target as HTMLElement)
+      ? this.interactService.calculatePositionInElement(relatedTarget, target as HTMLElement)
       : null;
     return {
       interactEvent: event,

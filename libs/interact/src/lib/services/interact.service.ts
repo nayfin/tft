@@ -186,7 +186,7 @@ export class InteractService {
     return `translate3d(${x}px, ${y}px, 0)`
   }
 
-  calculatePositionInDropzone(zoneElement: Interact.Element, dragElement: Interact.Element) {
+  calculatePositionInElement(zoneElement: Interact.Element, dragElement: Interact.Element) {
     // TODO: this calculation may not cover a lot of scenarios, keep an eye out for possible improvements
     const zoneRect = zoneElement.getBoundingClientRect();
     const dragRect = dragElement.getBoundingClientRect();

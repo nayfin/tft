@@ -38,17 +38,12 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   @Output() dragMove = new EventEmitter<TftDragEvent>();
   @Output() dragInertiaStart = new EventEmitter<TftDragEvent>();
   @Output() dragEnd = new EventEmitter<TftDragEvent>();
-  /**
-   * Experimental!!: This API will change frequently or may be removed all together
-   * Used to pass an alternate template to drag
-   */
-  @ContentChild(DragPreviewDirective) _previewTemplate: DragPreviewDirective;
 
+  @ContentChild(DragPreviewDirective) _previewTemplate: DragPreviewDirective;
   // dragPreview: Interact.Element;
   interactableState: Observable<TftCoords>;
   interactable: Interactable;
   private registryId: string;
-
   private interactableSubscription: Subscription;
   // cache holding element to use as drag preview (the element the user sees being dragged around)
   private previewRef: TftDragElement;
@@ -134,7 +129,7 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
     const { target, dropzone } = event;
     const dropzoneElement = dropzone?.target || target.dropTarget?.el.nativeElement;
     const positionInDropTarget = target && dropzoneElement
-      ? this.interactService.calculatePositionInDropzone(dropzoneElement, target)
+      ? this.interactService.calculatePositionInElement(dropzoneElement, target)
       : null;
     return {
       interactEvent: event,
@@ -195,17 +190,12 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
             const viewRef = this._viewContainerRef.createEmbeddedView(this._previewTemplate.templateRef);
             this.previewRef = getRootNode(viewRef, this._document);
           } else {
-            this.previewRef = this.cloneElement(this.el.nativeElement);
+            this.previewRef = cloneElement(this.el.nativeElement);
           }
-          this._document.body.appendChild(this.previewRef);
-
           this.addDragPropertiesToElement(this.previewRef);
-          const elementRect = nativeElement.getBoundingClientRect();
-          const bodyRect = this._document.body.getBoundingClientRect();
-          const x = elementRect.x - bodyRect.x;
-          const y = elementRect.y - bodyRect.y;
           this.setDragStyles(this.previewRef)
           this._document.body.prepend(this.previewRef);
+          const {x, y} = this.interactService.calculatePositionInElement(this._document.body, nativeElement);
           this.interactService.updatePosition(this.interactableId, this.registryId, {x, y}, this.previewRef);
           if (!this.showPlaceholder) {
             this.renderer.setStyle(this.el.nativeElement, 'display', 'none');
@@ -235,28 +225,25 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
         }
         if(!!this.dropzone_dir &&this.dropzone_dir === event.target.dropTarget) {
           const { x, y} = mappedEvent.positionInDropTarget;
-
           this.setPosition(x, y);
         }
         this.renderer.setStyle(this.el.nativeElement, 'display', '');
         this.dragEnd.emit(mappedEvent)
       });
   }
-  // TODO: this doesn't do anything yet...
-  // eventually it should create a clone of the component passed
-  // in and add it to the root component
-  cloneElement(element: HTMLElement) {
 
-    const clone = element.cloneNode(true) as HTMLElement;
-    clone.removeAttribute('id');
-    return clone;
-  }
 
 }
 
 /**
  * Component utils
  */
+// create a clone of the component passed in and add it to the root component
+function cloneElement(element: HTMLElement) {
+  const clone = element.cloneNode(true) as HTMLElement;
+  clone.removeAttribute('id');
+  return clone;
+}
 function getPreviewInsertionPoint(documentRef: any): HTMLElement {
   // We can't use the body if the user is in fullscreen mode,
   // because the preview will render under the fullscreen element.

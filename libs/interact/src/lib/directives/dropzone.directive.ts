@@ -76,7 +76,7 @@ export class DropzoneDirective implements OnInit, OnChanges {
     const zoneElement = event.draggable.target.dropTarget?.el?.nativeElement as HTMLElement;
     const dragElement = event.relatedTarget as TftDragElement;
     const positionInDropTarget = zoneElement && dragElement
-    ? this.interactService.calculatePositionInDropzone(zoneElement, dragElement)
+    ? this.interactService.calculatePositionInElement(zoneElement, dragElement)
     : null;
     return {
       interactEvent: event,
