@@ -15,6 +15,9 @@ import { NgResizeEvent, TftResizeEvent, DEFAULT_REGISTRY_ID } from '../models';
     // default to absolute here to accommodate likely use cases
     // consuming component can easily over ride with position input
     '[style.position]': 'position',
+    // follows interactjs suggested practices
+    '[style.boxSizing]': '"border-box"',
+
   }
 })
 export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
