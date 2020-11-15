@@ -9,6 +9,8 @@ import { DropzoneDirective } from './dropzone.directive';
 import { NgDragEvent, TftDragEvent, DEFAULT_REGISTRY_ID, TftCoords, TftDragElement} from '../models';
 import { DragPreviewDirective } from './drag-preview.directive';
 import { getRootNode } from '../utils';
+
+/** @dynamic */
 @Directive({
   selector: '[tftDraggable]',
   // tslint:disable-next-line: no-host-metadata-property
