@@ -30,16 +30,14 @@ actual_version=$(grep version "libs/$package/package.json")
 echo "Current Version: ${actual_version}"
 
 # holds variable update types to check against user input
-update_options=(patch minor major rc)
+update_options=(patch minor major prerelease)
 PS3='What type of update is this? (input number)'
 select update_type in "${update_options[@]}"
 do
-  if "${update_type}" != "rc"; then
-    echo 'Please type in custom rc version [x.x.x]-rc[rc-number]'
-    read -p rc_version;
-    cd "libs/$package" && npm version "${rc_version}" && cd ../../
+  if ["${update_type}" = "prerelease"]; then
+    cd "libs/$package" && npm version prerelease --preid=rc && cd ../../
     break
-  else then
+  else
     # go into the library, bump the version according to update type then get out
     cd "libs/$package" && npm version "${update_type}" && cd ../../
     break
@@ -48,7 +46,7 @@ do
 
 done
 # build the library and prepare to publish
-ng build $package
+ng build $package --prod
 # package the build code in dist and publish it then go back to root
 cd "dist/libs/$package" && npm pack && npm publish --tag next --access public && cd ../../../
 
