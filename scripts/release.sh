@@ -35,7 +35,6 @@ PS3='What type of update is this? (input number)'
 select update_type in "${update_options[@]}"
 do
   if ["${update_type}" = "prerelease"]; then
-    echo "prerelease"
     cd "libs/$package" && npm version prerelease --preid=rc && cd ../../
     break
   else
@@ -50,7 +49,6 @@ done
 echo "running ng build ${package} --prod"
 ng build $package --prod
 # package the build code in dist and publish it then go back to root
-echo "starting packaging"
 cd "dist/libs/$package" && npm pack && npm publish --tag next --access public && cd ../../../
 
 # get the new version from the library's package.json
