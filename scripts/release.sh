@@ -35,9 +35,11 @@ PS3='What type of update is this? (input number)'
 select update_type in "${update_options[@]}"
 do
   if ["${update_type}" = "prerelease"]; then
+    release_tag="next"
     cd "libs/$package" && npm version prerelease --preid=rc && cd ../../
     break
   else
+    release_tag="latest"
     # go into the library, bump the version according to update type then get out
     cd "libs/$package" && npm version "${update_type}" && cd ../../
     break
@@ -49,7 +51,7 @@ done
 echo "running ng build ${package} --prod"
 ng build $package --prod
 # package the build code in dist and publish it then go back to root
-cd "dist/libs/$package" && npm pack && npm publish --tag next --access public && cd ../../../
+cd "dist/libs/$package" && npm pack && npm publish --tag "$release_tag" --access public && cd ../../../
 
 # get the new version from the library's package.json
 release_version=$(grep version "libs/$package/package.json")
