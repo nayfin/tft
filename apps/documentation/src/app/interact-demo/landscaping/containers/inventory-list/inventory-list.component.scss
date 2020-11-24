@@ -1,0 +1,45 @@
+
+:host {
+  display: flex;
+  flex-direction: row;
+  // position: fixed;
+  overflow-x: auto;
+  width: 100%;
+  bottom: 0;
+  background: wheat;
+  .drag-origin {
+    display: flex;
+    flex-direction: column;
+    margin: 8px;
+    .drag-origin-header {
+      background: blue;
+      color: white;
+    }
+    .drag-origin-content {
+      width: 120px;
+      height: 120px;
+      background: rgba(0, 255, 21, 0.555);
+      display: flex;
+      position: relative;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+.interact-item {
+  background: blueviolet;
+  border: 1px solid white;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 400;
+  .handle {
+    width: 40px;
+    height: 40px;
+    background: white;
+  }
+}

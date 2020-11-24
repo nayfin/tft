@@ -1,0 +1,31 @@
+<div class="drag-origin"
+    *ngFor="let item of dragInventory; let i = index;"
+    [dropzoneData]="item"
+    [dropzoneId]="item.name + i"
+    tftDropzone>
+    <div class="drag-origin-header">
+      remaining: {{ item.count }}
+    </div>
+    <div class="drag-origin-content">
+      <section
+        tftDraggable
+        [showPlaceholder]="true"
+        [dragConfig]="dragConfig"
+        [dragData]="item"
+        class="interact-item">
+        <div
+          class="handle">
+          {{item.name}} {{ item.count }}
+        </div>
+        <ng-template tftDragPreview>
+          <div class="preview interact-item">
+            {{item.name}} preview!!!
+            <!-- <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn11.bigcommerce.com%2Fs-hii7479o%2Fimages%2Fstencil%2Foriginal%2Fproducts%2F10903%2F27216%2Fflower_pot__04598.1527110163.png%3Fc%3D2&f=1&nofb=1" alt=""> -->
+          </div>
+        </ng-template>
+      </section>
+
+
+    </div>
+
+  </div>

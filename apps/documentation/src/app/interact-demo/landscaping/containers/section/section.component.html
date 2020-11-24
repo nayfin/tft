@@ -1,0 +1,19 @@
+
+<div
+  tftDropzone
+  (dragDrop)="handleDrop($event)"
+  [dropzoneData]="droppedItems"
+  [dropzoneId]="'yard'"
+  class="drop-container">
+  <h3>Drop Zone for Items</h3>
+  <section
+    *ngFor="let item of droppedItems"
+    tftDraggable
+    [dragConfig]="dragConfig"
+    [x]="item.x"
+    [y]="item.y"
+    [dragData]="item"
+    class="dropzone-item">
+    <div class="handle">{{item.name}}</div>
+  </section>
+</div>

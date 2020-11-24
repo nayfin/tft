@@ -3,6 +3,7 @@
   flex-direction: column;
   height: calc(100vh - 80px);
 }
+
 .drag-origin-container {
   display: flex;
   flex-direction: row;
@@ -11,35 +12,10 @@
   width: 100%;
   bottom: 0;
   background: wheat;
-  .drag-origin {
-    display: flex;
-    flex-direction: column;
-    margin: 8px;
-    .drag-origin-header {
-      background: blue;
-      color: white;
-    }
-    .drag-origin-content {
-      width: 120px;
-      height: 120px;
-      background: rgba(0, 255, 21, 0.555);
-      display: flex;
-      position: relative;
-      justify-content: center;
-      align-items: center;
-    }
-  }
+
 }
 
-.drop-container {
-  width: 100px;
-  height: 100px;
-  background: blue;
-  h3 {
-    position: absolute;
-  }
-  // color: white;
-}
+
 .yard {
   color: white;
   display: flex;
@@ -50,25 +26,5 @@
     position: absolute;
   }
 }
-.interact-item, .dropzone-item {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 400;
-  .handle {
-    width: 40px;
-    height: 40px;
-    background: white;
-  }
-}
-.interact-item {
-  background: blueviolet;
-  border: 1px solid white;
-}
-.dropzone-item {
-  background: green;
-  color: black;
-}
+
+

@@ -6,61 +6,18 @@
   <h2>
     Dropzone for Draggable Dropzone
   </h2>
-  <div
-    class="drop-container"
-    #dropContainer2
-    tftDropzone
+  <tft-section
     tftDraggable
     tftResizable
 
-    [dropzoneData]="droppedItems"
-    [dropzoneId]="'yard'"
     [width]="400"
     [height]="600">
-    <h3>Drop Zone for Items</h3>
-    <section
-      *ngFor="let item of droppedItems"
-      tftDraggable
-      [dragConfig]="dragConfigB"
-      [x]="item.x"
-      [y]="item.y"
-      [dragData]="item"
-      class="dropzone-item">
-      <div class="handle">{{item.name}}</div>
-    </section>
-  </div>
+
+  </tft-section>
 </div>
 
 <div class="drag-origin-container">
-  <div class="drag-origin"
-    *ngFor="let item of dragInventory; let i = index;"
-    [dropzoneData]="item"
-    [dropzoneId]="item.name + i"
-    tftDropzone>
-    <div class="drag-origin-header">
-      remaining: {{ item.count }}
-    </div>
-    <div class="drag-origin-content">
-      <section
-        *ngFor="let count of item.count | arrayOfN : 2"
-        tftDraggable
-        (dragEnd)="handleDrop($event)"
-        [dragConfig]="dragConfig"
-        [dragData]="item"
-        class="interact-item">
-        <div
-          class="handle">
-          {{item.name}} {{ item.count }}
-        </div>
-        <ng-template tftDragPreview>
-          <div class="preview interact-item">
-            {{item.name}} preview!!!
-          </div>
-        </ng-template>
-      </section>
+  <tft-inventory-list>
 
-
-    </div>
-
-  </div>
+  </tft-inventory-list>
 </div>
