@@ -213,15 +213,18 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
       })
       .on('dragend', (event: NgDragEvent) => {
         const mappedEvent = this.mapDragEvent(event)
-        if ( this.el.nativeElement !== this.previewRef) {
-          this._document.body.removeChild(this.previewRef)
-        }
         if(!!this.dropzone_dir && this.dropzone_dir === event.target.dropTarget) {
           const { x, y} = mappedEvent.positionInDropTarget;
           this.setPosition(x, y);
         }
         this.renderer.setStyle(this.el.nativeElement, 'display', '');
-        this.dragEnd.emit(mappedEvent)
+        this.dragEnd.emit(mappedEvent);
+
+        if ( this.el.nativeElement !== this.previewRef) {
+          setTimeout(() => {
+            this._document.body.removeChild(this.previewRef);
+          })
+        }
       });
   }
 
