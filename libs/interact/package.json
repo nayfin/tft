@@ -1,6 +1,6 @@
 {
   "name": "@tft/interact",
-  "version": "11.0.1-rc.4",
+  "version": "11.0.1-rc.5",
   "peerDependencies": {
     "@angular/common": "^10.1.5",
     "@angular/core": "^10.1.5",
