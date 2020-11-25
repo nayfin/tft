@@ -223,9 +223,9 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
         if ( this.el.nativeElement !== this.previewRef) {
           // we do this in a timeout, so that we don't
           // remove before the dropzone can get the boundingElementRect
-          // setTimeout(() => {
+          setTimeout(() => {
             this._document.body.removeChild(this.previewRef);
-          // })
+          })
         }
       });
   }
