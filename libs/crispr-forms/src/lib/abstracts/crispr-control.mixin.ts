@@ -29,7 +29,6 @@ export function crisprControlMixin<C extends CrisprControlConfig>(BaseClass: typ
     }
 
     setControlValue(value: ControlValue | any[]) {
-      // TODO: remove "&& this.config.controlType !== ControlType.GROUP" after decoupling setControlValue
       if(value && this.control && this.config.controlType !== ControlType.SUB_GROUP) {
         this.control.setValue(value)
       }
