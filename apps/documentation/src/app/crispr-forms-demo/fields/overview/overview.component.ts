@@ -273,8 +273,10 @@ export class OverviewComponent implements OnInit {
         startView: 'month',
         startAt: new Date('Apr 12, 2019'),
         datepickerFilter: (date: Moment) => {
-          const day = date.day();
-          return [2,4,6].includes(day);
+          if (date) {
+            const day = date.day();
+            return [2,4,6].includes(day);
+          }
         },
         min: new Date('Apr 5 2019'),
         max: new Date('Apr 23 2019'),

@@ -26,10 +26,6 @@ export class CrisprFormComponent implements OnInit {
   ngOnInit() {
     // build out the form, note that we pass in the form as the third argument and the function modifies it
     buildFormGroupFromConfig(this.config, this.value, this.form);
-    // DEPRECATED: remove in v11
-    if ('controlName' in this.config || 'controlType' in this.config) {
-      console.warn('properties controlType and controlName are DEPRECATED and no longer used for FormConfig, please remove before v11. They are still required for SubGroupConfig')
-    }
   }
 
   handleSubmit() {

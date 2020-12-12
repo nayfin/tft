@@ -85,10 +85,6 @@ export interface AbstractGroupConfig<C extends CrisprFieldConfig = AnyFieldConfi
   fields?: (AnyFieldConfig | C)[];
 }
 export interface FormConfig<C = AnyFieldConfig> extends AbstractGroupConfig<C> {
-  // DEPRECATED: Remove in v11
-  controlType?: string;
-  // DEPRECATED: Remove in v11
-  controlName?: string;
   classes?: string[];
   errorDictionary?: ErrorDictionary;
   autocomplete?: 'off' | 'on';
@@ -98,7 +94,7 @@ export interface FormConfig<C = AnyFieldConfig> extends AbstractGroupConfig<C> {
  * Configuration for SubGroup components
  */
 export interface SubGroupConfig extends CrisprControlConfig, AbstractGroupConfig {
-  controlType: ControlType.GROUP | ControlType.SUB_GROUP;
+  controlType: ControlType.SUB_GROUP;
 }
 
 export type AnyFieldConfig = InputFieldConfig
@@ -129,8 +125,6 @@ export enum ControlType {
   SELECT = 'select',
   RADIO = 'radio',
   SUB_GROUP = 'subGroup',
-  // DEPRECATED: GROUP, remove in v11
-  GROUP = 'group',
   GROUP_LIST = 'groupList',
   DATEPICKER = 'datepicker',
   SLIDER = 'slider',

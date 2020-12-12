@@ -33,8 +33,8 @@ In order to enable custom fields we had to tighten up the interfaces and organiz
 - `ControlName` and `ControlType` are deprecated on the `FormGroup` config. They were the result of some mis-extended interfaces were never used. Please remove these properties from FormGroup configurations before v11.
 ```ts
 someConfig: FormConfig = {
-  controlType: ControlType.GROUP, // DEPRECATED: please remove
-  controlName: 'someControlName', // DEPRECATED: please remove
+  controlType: ControlType.GROUP, // REMOVED: please remove
+  controlName: 'someControlName', // REMOVED: please remove
   autocomplete: 'off',
   fields: [...]
 }

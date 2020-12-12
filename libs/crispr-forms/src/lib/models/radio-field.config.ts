@@ -6,6 +6,4 @@ export interface RadioFieldConfig extends Omit<CrisprControlConfig, 'placeholder
   MatFieldProperties {
   controlType: ControlType.RADIO,
   options: OptionsType;
-  // DEPRECATED: remove in v11
-  reactiveOptions?: boolean;
 }

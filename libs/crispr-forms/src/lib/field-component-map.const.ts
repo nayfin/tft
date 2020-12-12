@@ -12,8 +12,6 @@ export const FIELD_COMPONENTS = {
   select: SelectFieldComponent,
   radio: RadioFieldComponent,
   subGroup: SubGroupComponent,
-  // DEPRECATED: group replaced by subGroup, remove in group in v11
-  group: SubGroupComponent,
   groupList: FormGroupListComponent,
   autocomplete: AutocompleteFieldComponent,
   autocompleteChiplist: AutocompleteChiplistFieldComponent,

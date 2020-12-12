@@ -11,8 +11,6 @@ export interface SelectFieldConfig extends Omit<CrisprControlConfig, 'placeholde
   multiple?: boolean;
   enableToggleAll?: boolean;
   options: OptionsType;
-  // DEPRECATED: remove in v11
-  reactiveOptions?: boolean;
 }
 
 export type OptionsType = SelectOption[] | Observable<SelectOption[]> | OptionsCallback | Promise<SelectOption[]>;

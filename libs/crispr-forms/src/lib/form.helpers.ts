@@ -252,9 +252,7 @@ export function buildFormGroupFromConfig(config: FormConfig, value = null, group
  */
 export function createControlForType(controlConfig: AnyFieldConfig, value: ControlValue = null)  {
   // build form control out based on the control type
-  const control = controlConfig.controlType === ControlType.SUB_GROUP ||
-    // DEPRECATED: remove all GROUP stuff by v11
-    controlConfig.controlType === ControlType.GROUP
+  const control = controlConfig.controlType === ControlType.SUB_GROUP
     ? buildFormGroupFromConfig(controlConfig as FormConfig, value)
     : controlConfig.controlType === ControlType.GROUP_LIST
     ? new FormArray([], (controlConfig as FormGroupListConfig).validators)
