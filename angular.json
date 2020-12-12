@@ -42,7 +42,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -70,7 +69,6 @@
               "optimization": true,
               "outputHashing": "none",
               "sourceMap": true,
-              "extractCss": true,
               "namedChunks": true,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -88,7 +86,8 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -112,7 +111,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "apps/documentation/src/**/*.ts"
+              "apps/documentation/src/**/*.ts",
+              "apps/documentation/src/**/*.html"
             ]
           }
         },
@@ -121,7 +121,8 @@
           "options": {
             "jestConfig": "apps/documentation/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/apps/documentation"]
         }
       }
     },
@@ -147,7 +148,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "apps/documentation-e2e/**/*.{js,ts}"
+              "apps/documentation-e2e/**/*.{js,ts}",
+              "apps/documentation-e2e/src/**/*.html"
             ]
           }
         }
@@ -166,9 +168,7 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": [
-              "apps/api/src/assets"
-            ]
+            "assets": ["apps/api/src/assets"]
           },
           "configurations": {
             "production": {
@@ -182,7 +182,8 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@nrwl/node:execute",
@@ -193,9 +194,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/api/**/*.ts"
-            ]
+            "lintFilePatterns": ["apps/api/**/*.ts", "apps/api/src/**/*.html"]
           }
         },
         "test": {
@@ -203,7 +202,8 @@
           "options": {
             "jestConfig": "apps/api/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/apps/api"]
         }
       }
     },
@@ -217,7 +217,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "libs/api-interfaces/**/*.ts"
+              "libs/api-interfaces/**/*.ts",
+              "libs/api-interfaces/src/**/*.html"
             ]
           }
         },
@@ -226,7 +227,8 @@
           "options": {
             "jestConfig": "libs/api-interfaces/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/api-interfaces"]
         }
       }
     },
@@ -252,7 +254,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "libs/crispr-forms/src/**/*.ts"
+              "libs/crispr-forms/src/**/*.ts",
+              "libs/crispr-forms/src/**/*.html"
             ]
           }
         },
@@ -261,7 +264,8 @@
           "options": {
             "jestConfig": "libs/crispr-forms/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/crispr-forms"]
         },
         "storybook": {
           "builder": "@nrwl/storybook:storybook",
@@ -291,7 +295,8 @@
             "ci": {
               "quiet": true
             }
-          }
+          },
+          "outputs": ["{options.outputPath}"]
         }
       },
       "schematics": {
@@ -322,7 +327,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "libs/core/src/**/*.ts"
+              "libs/core/src/**/*.ts",
+              "libs/core/src/**/*.html"
             ]
           }
         },
@@ -331,7 +337,8 @@
           "options": {
             "jestConfig": "libs/core/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/core"]
         }
       },
       "schematics": {
@@ -362,7 +369,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "libs/form-validation-handler/src/**/*.ts"
+              "libs/form-validation-handler/src/**/*.ts",
+              "libs/form-validation-handler/src/**/*.html"
             ]
           }
         },
@@ -371,7 +379,8 @@
           "options": {
             "jestConfig": "libs/form-validation-handler/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/form-validation-handler"]
         }
       },
       "schematics": {
@@ -402,7 +411,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "libs/interact/src/**/*.ts"
+              "libs/interact/src/**/*.ts",
+              "libs/interact/src/**/*.html"
             ]
           }
         },
@@ -411,7 +421,8 @@
           "options": {
             "jestConfig": "libs/interact/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/interact"]
         }
       },
       "schematics": {
@@ -442,7 +453,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "libs/mat-instantsearch/src/**/*.ts"
+              "libs/mat-instantsearch/src/**/*.ts",
+              "libs/mat-instantsearch/src/**/*.html"
             ]
           }
         },
@@ -451,7 +463,8 @@
           "options": {
             "jestConfig": "libs/mat-instantsearch/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/mat-instantsearch"]
         }
       },
       "schematics": {
@@ -482,7 +495,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "libs/ui-imports/src/**/*.ts"
+              "libs/ui-imports/src/**/*.ts",
+              "libs/ui-imports/src/**/*.html"
             ]
           }
         },
@@ -491,7 +505,8 @@
           "options": {
             "jestConfig": "libs/ui-imports/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/ui-imports"]
         }
       },
       "schematics": {
@@ -522,7 +537,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "apps/crispr-forms-e2e/**/*.{js,ts}"
+              "apps/crispr-forms-e2e/**/*.{js,ts}",
+              "apps/crispr-forms-e2e/src/**/*.html"
             ]
           }
         }

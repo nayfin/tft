@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, ExtraOptions } from '@angular/router';
 
 
 const routes: Routes = [
@@ -21,8 +21,9 @@ const routes: Routes = [
   // },
   { path: '**'  , redirectTo: 'crispr-forms-demo' },
 ];
-const routerConfig = {
-  enableTracing: false
+const routerConfig: ExtraOptions = {
+    enableTracing: false,
+    relativeLinkResolution: 'legacy'
 }
 @NgModule({
   imports: [
