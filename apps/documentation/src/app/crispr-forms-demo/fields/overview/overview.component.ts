@@ -10,7 +10,7 @@ import { Moment } from 'moment';
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss']
 })
-export class OverviewComponent implements OnInit {
+export class OverviewComponent {
 
   value = {
     subGroup: {
@@ -45,6 +45,7 @@ export class OverviewComponent implements OnInit {
     errorDictionary: {
       required: () => `I am a custom error message on a required field`,
     },
+    validators: [Validators.required],
     fields: [
       {
         controlType: ControlType.SUB_GROUP,
@@ -309,11 +310,6 @@ export class OverviewComponent implements OnInit {
       },
 
     ]
-  }
-
-  constructor() { }
-
-  ngOnInit() {
   }
 
   handleSubmit(form: FormGroup) {
