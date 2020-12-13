@@ -60,6 +60,7 @@ export class OverviewComponent {
             inputType: 'text',
             controlName: 'subField',
             placeholder: 'First Name',
+            validators: [Validators.required]
           },
           {
             controlType: ControlType.INPUT,
