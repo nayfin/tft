@@ -7,17 +7,14 @@ import { SidenavSection, SidenavLink } from './sidenav-list.model';
   templateUrl: './sidenav-list.component.html',
   styleUrls: ['./sidenav-list.component.scss']
 })
-export class SidenavListComponent implements OnInit {
+export class SidenavListComponent {
 
   @Input() sections: SidenavSection[];
-  @Output() itemClicked = new EventEmitter<any>();
+  @Output() itemClicked = new EventEmitter<SidenavLink>();
 
   constructor(
     private router: Router,
   ) { }
-
-  ngOnInit() {
-  }
 
   // want to allow any data to pass through here
   onItemClicked(item: SidenavLink) {
