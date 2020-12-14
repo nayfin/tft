@@ -13,6 +13,7 @@ type AutocompleteConfigTypes = AutocompleteFieldConfig | AutocompleteChiplistFie
 const AbstractAutocompleteFieldMixin = crisprControlMixin<AutocompleteConfigTypes>(CrisprFieldComponent);
 
 @Directive()
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class AbstractAutocompleteComponent<C>
   extends AbstractAutocompleteFieldMixin implements OnInit {
   // we need a separate control for the UI because of the way the material autocomplete chiplist works
