@@ -4,7 +4,10 @@
   [ngClass]="matButtonClass"
   [color]="config.color"
   [disabled]="config.disabledOnInvalidForm && !(formValid$ | async)"
-  type="submit">
+  [type]="config.type"
+  (click)="handleClick(group, $event)"
+  [matTooltip]="config.info?.content"
+  [matTooltipPosition]="config.info?.tooltipPosition || 'below'">
   {{ config.label }}
   <mat-icon *ngIf="config.icon">
     {{ config.icon}}

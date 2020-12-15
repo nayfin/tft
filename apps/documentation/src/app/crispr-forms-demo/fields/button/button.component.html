@@ -7,7 +7,12 @@
     argument ('primary', 'accent', 'warn') for aligning the button color with your Material theme.
     Each one causes 'submitted' event to be fired, emitting the entire formGroup. If you want to disable button
     when form is invalid simply set 'disabledOnInvalidForm' to true (see configuration for 'raised' button in this example).
-    Eventually, we will create an API to enable custom button actions, but that is late on the roadmap.
+  </p>
+  <p>
+    Buttons have a default "type" of 'submit', which will fire the 'submitted' event on the 'crispr-form' component.
+    You can change the type to 'reset' to reset the form on click or 'button' if you want to avoid calling the 'submitted' event.
+    All three "type"s can hook into the 'callback' property allowing users to pass a callback function that expects optional arguments
+    of the form group and the click event (i.e. {{'{'}}...callback: (group: FormGroup, event: MouseEvent) => unknown {{'}'}})
   </p>
   <crispr-form
     [config]="formConfig"

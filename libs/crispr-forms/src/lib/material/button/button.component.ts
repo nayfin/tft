@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ButtonConfig } from '../../models';
 import { Observable } from 'rxjs';
@@ -13,9 +13,11 @@ import { CrisprFieldComponent } from '../../abstracts';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent extends CrisprFieldComponent<ButtonConfig> implements OnInit {
+
   group: FormGroup;
-  defaultConfig = {buttonType: 'raised' as const};
+  defaultConfig: Partial<ButtonConfig> = {buttonType: 'raised', type: 'submit'};
   formValid$: Observable<boolean>
+
   get matButtonClass () {
     return this.config.buttonType ? `mat-${this.config.buttonType}-button` : '';
   }
@@ -26,5 +28,11 @@ export class ButtonComponent extends CrisprFieldComponent<ButtonConfig> implemen
       map(status => status === 'VALID'),
       startWith(this.group.valid),
     );
+  }
+
+  handleClick(group: FormGroup, event: MouseEvent) {
+    if (this.config.callback) {
+      this.config.callback(group, event);
+    }
   }
 }

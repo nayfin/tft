@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ControlType, FormConfig } from '@tft/crispr-forms';
 import { Validators } from '@angular/forms';
 
@@ -7,7 +7,7 @@ import { Validators } from '@angular/forms';
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss']
 })
-export class ButtonComponent implements OnInit {
+export class ButtonComponent {
   formConfig: FormConfig = {
     classes: ['form'],
     autocomplete: 'off',
@@ -24,36 +24,48 @@ export class ButtonComponent implements OnInit {
       },
       {
         controlType: ControlType.BUTTON,
-        label: 'RAISED BUTTON',
+        label: 'RESET FORM',
+        type: 'reset',
+        buttonType: 'flat',
+        info: {
+          content: 'Flat button',
+        },
+      },
+      {
+        controlType: ControlType.BUTTON,
+        label: 'LOG FORM',
+        color: 'primary',
+        info: {
+          content: 'Stroked button',
+        },
+        buttonType: 'stroked',
+        type: 'button',
+        callback: (group, event) => {
+          console.log({formValue: group.value, event})
+        }
+      },
+      {
+        controlType: ControlType.BUTTON,
+        label: 'SUBMIT',
         buttonType: 'raised',
         color: 'warn',
+        info: {
+          content: 'Raised button',
+        },
         disabledOnInvalidForm: true
-      },
-      {
-        controlType: ControlType.BUTTON,
-        label: 'FLAT BUTTON',
-        buttonType: 'flat'
-      },
-      {
-        controlType: ControlType.BUTTON,
-        label: 'STROKED BUTTON',
-        color: 'primary',
-        buttonType: 'stroked'
       },
       {
         controlType: ControlType.BUTTON,
         color: 'accent',
         icon: 'check',
-        buttonType: 'icon'
+        buttonType: 'icon',
+        info: {
+          content: 'Icon button',
+        },
       },
 
     ]
   };
-
-  constructor() { }
-
-  ngOnInit() {
-  }
 
   onSubmitted(event) {
     console.log(event);
