@@ -7,7 +7,17 @@
 
 [Interactive docs](https://stackblitz.com/github/nayfin/tft-documentation)
 
-## NEW FEATURE: Pass Custom Components to CRISPR
+# NEW FEATURES:
+
+## Buttons can reset form or take custom events
+
+See example [here](https://stackblitz.com/github/nayfin/tft-documentation?file=src%2Fapp%2Fcrispr-forms-demo%2Ffields%2Fbutton%2Fbutton.component.ts).
+
+## Datepicker can take a callback function to pass a class to specified fields
+
+See example [here](https://stackblitz.com/github/nayfin/tft-documentation?file=src%2Fapp%2Fcrispr-forms-demo%2Ffields%2Fdatepicker%2Fdatepicker.component.ts). Be sure to check out the corresponding .scss file to see how we pass styles down to the cell class.
+
+## Pass Custom Components to CRISPR
 
 Simply create a component and pass it as an argument to the `component` property.
 
@@ -28,6 +38,11 @@ Examples of how to extend current field behavior available [here](https://stackb
 
 
 ### Breaking changes v10.0.* => v10.1.0
+
+All fields deprecated in v10 have been removed
+
+### Breaking changes v10.0.* => v10.1.0
+
 In order to enable custom fields we had to tighten up the interfaces and organize our hierarchy. Unfortunately, this caused some breaking changes.Where possible, we deprecated old names, and throw a warning but some configurations that worked in previous versions will break in v10.1.0.
 - We've tightened up the models for the field configurations. So, fields that could have been misconfigured before, will now throw an error.  e.g. before it was possible to have a `placeholder` property on a checkbox even though it wouldn't have anything to do. Just remove any properties that suddenly cause a compilation error.
 - `ControlName` and `ControlType` are deprecated on the `FormGroup` config. They were the result of some mis-extended interfaces were never used. Please remove these properties from FormGroup configurations before v11.
