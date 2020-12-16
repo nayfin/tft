@@ -1,6 +1,7 @@
 import { CrisprControlConfig, ControlType } from '../models';
 import { Moment } from 'moment';
 import { FieldDescriptors, MatFieldProperties } from './crispr-field.config';
+import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 
 export interface DatepickerFieldConfig extends CrisprControlConfig,
   Pick<FieldDescriptors, 'label'>,
@@ -12,4 +13,5 @@ export interface DatepickerFieldConfig extends CrisprControlConfig,
   startAt?: Date | null;
   touchUi?: boolean;
   datepickerFilter?: (date: Moment) => boolean;
+  cellClassFunction?: MatCalendarCellClassFunction<Moment>;
 }

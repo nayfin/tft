@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormConfig, ControlType } from '@tft/crispr-forms';
 
 @Component({
@@ -6,7 +6,7 @@ import { FormConfig, ControlType } from '@tft/crispr-forms';
   templateUrl: './datepicker.component.html',
   styleUrls: ['./datepicker.component.scss']
 })
-export class DatepickerComponent implements OnInit {
+export class DatepickerComponent {
 
   formConfig: FormConfig = {
     fields: [
@@ -33,14 +33,27 @@ export class DatepickerComponent implements OnInit {
         },
         touchUi: true,
         label: 'Datepicker Field',
-        controlName: 'datepicker',
+        controlName: 'touchDatepicker',
+      },
+      {
+        controlType: ControlType.DATEPICKER,
+        heading: {
+          label: 'Highlight specific cells',
+          info: {
+            content: 'Programmatically add a class to certain day cells'
+          },
+        },
+        label: 'Datepicker Field',
+        controlName: 'cellClassDatepicker',
+        cellClassFunction: (date, view) => {
+          const dayOfMonth = +date.format('D')
+          if(view === 'month') {
+            console.log({date})
+            return dayOfMonth === 15 ? 'highlight-day' : ''
+          }
+          return '';
+        }
       }
     ]
   };
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }
