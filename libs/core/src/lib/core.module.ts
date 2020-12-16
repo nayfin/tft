@@ -15,8 +15,7 @@ const CORE_COMPONENTS = [
 @NgModule({
   imports: [
     CommonModule,
-    UiImportsModule,
-    RouterModule,
+    UiImportsModule
   ],
   declarations: CORE_COMPONENTS,
   exports: CORE_COMPONENTS,

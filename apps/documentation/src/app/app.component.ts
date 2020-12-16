@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Router } from '@angular/router';
 import { appNavTree } from './app-nav-tree';
+import { SidenavLink } from '@tft/core'
 
 @Component({
   selector: 'tft-root',
@@ -13,7 +15,11 @@ export class AppComponent {
 
   linksToExamples = appNavTree;
 
-  onLinkSelected(item: any) {
+  constructor(private router: Router) { }
+
+  onLinkSelected(item: SidenavLink) {
+    this.router.navigate([item.path]);
     this.sidenav.close();
+
   }
 }

@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { SidenavSection, SidenavLink } from './sidenav-list.model';
 
 @Component({
@@ -12,14 +11,11 @@ export class SidenavListComponent {
   @Input() sections: SidenavSection[];
   @Output() itemClicked = new EventEmitter<SidenavLink>();
 
-  constructor(
-    private router: Router,
-  ) { }
+  constructor() { }
 
   // want to allow any data to pass through here
   onItemClicked(item: SidenavLink) {
     this.itemClicked.emit(item);
-    this.router.navigate([item.path]);
   }
 
 }

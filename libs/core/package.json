@@ -1,6 +1,6 @@
 {
   "name": "@tft/core",
-  "version": "11.0.1",
+  "version": "11.1.0",
   "peerDependencies": {
     "@angular/common": "^10.1.5",
     "@angular/core": "^10.1.5"
