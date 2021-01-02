@@ -11,14 +11,14 @@ import { ControlErrorContainerDirective } from './control-error-container.direct
 
 @Directive({
   // we want to hook into all formControls so we use these selectors
-  // tslint:disable-next-line: directive-selector
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[formControl], [formControlName]',
 })
 export class ControlErrorsDirective implements OnInit, OnDestroy {
 
   ref: ComponentRef<ControlErrorComponent>;
   container: ViewContainerRef;
-  submit$: Observable<{}>;
+  submit$: Observable<string | never>;
   blur$ = new Subject();
   subs: Subscription[] = [];
   errors: ErrorDictionary;
@@ -30,14 +30,14 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
 
   constructor(
     @Self() private control: NgControl,
-    @Optional() private form: ControlErrorsFormDirective,
+    @Optional() form: ControlErrorsFormDirective,
     @Optional() controlErrorContainer: ControlErrorContainerDirective,
-    private vcr: ViewContainerRef,
+    vcr: ViewContainerRef,
     private resolver: ComponentFactoryResolver,
   ) {
     this.submit$ = form ? form.submit$ : EMPTY;
-    this.container = controlErrorContainer ? controlErrorContainer.vcr : vcr;
-    this.errors = form && form.errorDictionary
+    this.container = controlErrorContainer?.vcr || vcr;
+    this.errors = form?.errorDictionary
       ? { ...defaultErrors, ...form.errorDictionary}
       : defaultErrors;
   }
@@ -59,11 +59,12 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
     return merge(
       this.submit$,
       this.blur$,
-      this.control.valueChanges
+      this.control.valueChanges,
+      this.control.statusChanges
     ).pipe(
       tap( event => {
         // prevents displaying error messages before user interaction unless submitting
-        if (this.control.touched || event === 'submitted') {
+        if (this.control.touched || ['submitted', 'VALID'].includes(event)) {
           const errorMessage = this.getErrorMessage();
           this.setError(errorMessage);
         }

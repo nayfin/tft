@@ -9,7 +9,7 @@ import { FormConfig, ControlType, someControlIsValid } from '@tft/crispr-forms';
 })
 export class ValidatorsComponent {
   formConfig: FormConfig = {
-    validators: [someControlIsValid(['length', 'cost'])],
+    validators: [someControlIsValid(['length', 'cost', 'formattedName'])],
     errorDictionary: {someControlIsValid: () => 'At least one control must be valid'},
     fields: [
       {
@@ -39,6 +39,7 @@ export class ValidatorsComponent {
       },
       {
         controlType: ControlType.TEXTAREA,
+        validators: [Validators.minLength(2), Validators.required],
         controlName: 'formattedName',
         label: 'Formatted Name',
         heading: {

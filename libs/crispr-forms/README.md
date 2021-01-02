@@ -37,7 +37,7 @@ export class CustomComponentComponent {
 Examples of how to extend current field behavior available [here](https://stackblitz.com/github/nayfin/tft-documentation?file=src%2Fapp%2Fcrispr-forms-demo%2Ffeatures%2Finfo%2Finfo.component.ts0)
 
 
-### Breaking changes v10.0.* => v10.1.0
+### Breaking changes v10 => v11
 
 All fields deprecated in v10 have been removed
 
@@ -148,38 +148,10 @@ export class DemoComponent implements OnInit {
   }
 }
 ```
-
-### <a name="breaking-changes"></a> Breaking change 8.4.0 -> 9.0.0
-
-While adding the Material Autocomplete chiplist field to the library, we cleaned up the autocomplete field API and enabled dynamically switching the autocomplete options based on other field's values (e.g. a select field could control what http endpoint was called by the autocomplete field). Now with both autocomplete fields we require a callback function for the `options` field. This function always passes the parent form group and search string as arguments. We've removed the `reactiveOptionsCallback` field from select and autocomplete fields. Now when options are a callback function, we always pass the parent form group as the first argument you can use it or not as suits your needs.
-#### New API
-```typescript
-{
-  controlName: 'someControl',
-  controlType: ControlType.AUTOCOMPLETE,
-  options: (_form: FormGroup, searchTerm: string) => {
-    // filter an array using the search term
-    return ['some', 'demo', 'autocomplete', 'options']
-      .filter(option => option.includes(searchTerm))
-      .map(option => { label: option, value: option });
-    // or make an http request based on it
-    return this.http.get(`some/endpoint?query=${searchTerm}`).pipe(
-      .map((res: {id: string, name: string}[]) => {
-        return res.map(val => { label: val.name, value: val.id })
-      })
-  }
-  ...
-}
-```
-#### Old API
-
-You used to be able to just return an array of options and we would perform a basic search on them. Now you have to write the filtering logic, but this is better suited for http based searching, and custom filtering.
-
 ## Upcoming
 
 - Framework agnostic with Angular Elements
-- Static Layout for fields in forms
-- Responsive Layout for fields in forms
+- More examples of how to change field layout
 - The rest of the Angular Material fields:
   - Radio button
   - Slide toggle
