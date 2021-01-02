@@ -8,7 +8,7 @@ interface ErrorDictionary { [key: string]: ErrorFactory; }
  * Optionally takes an object as an argument from the thrown validation error,
  * which it can use to build more informative error messages
  */
-type ErrorFactory = ({}?: any) => string;
+type ErrorFactory = (errorObject: unknown) => string;
 
 /**
  * Dictionary of the default errors used by the control-errors directive to map

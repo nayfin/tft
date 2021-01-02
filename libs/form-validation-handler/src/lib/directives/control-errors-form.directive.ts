@@ -1,6 +1,7 @@
 import { Directive, Input, ElementRef } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
+import { ErrorDictionary } from '../form-errors';
 
 
 @Directive({
@@ -10,7 +11,7 @@ import { shareReplay, map } from 'rxjs/operators';
 // TODO: rename this directive as it does more than just capture button submits
 export class ControlErrorsFormDirective {
 
-  @Input() errorDictionary: any;
+  @Input() errorDictionary: ErrorDictionary;
 
   submit$ = fromEvent(this.element, 'submit').pipe(
     shareReplay(1),
