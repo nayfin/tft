@@ -102,7 +102,12 @@ export const appNavTree: SidenavSection[] = [
             title: 'Custom Components',
             description: `Pass custom components to form generator`,
             path: 'crispr-forms-demo/features/custom-component'
-          }
+          },
+          {
+            title: 'Validators',
+            description: `Helpful Validators`,
+            path: 'crispr-forms-demo/features/validators'
+          },
         ]
       },
     ]

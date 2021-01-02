@@ -15,13 +15,13 @@ export function someControlIsValid(controlNames: string[]): ValidatorFn {
         // mark all controls as valid
         control.setErrors(null);
       });
-      formGroup.setErrors({someControlIsValid: false});
+      // formGroup.setErrors({someControlIsValid: false});
       return null
     }
 
     controls.forEach(control => control.setErrors({someControlIsValid: true}))
     // add error to form so that it gets marked as valid
-    formGroup.setErrors({someControlIsValid: true});
+    // formGroup.setErrors({someControlIsValid: true});
   };
 }
 

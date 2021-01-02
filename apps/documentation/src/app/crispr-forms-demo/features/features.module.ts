@@ -13,6 +13,7 @@ import { CustomComponentComponent } from './custom-component/custom-component.co
 import { CustomInputComponent } from './custom-component/custom-input/custom-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CustomSelectComponent } from './custom-component/custom-select/custom-select.component';
+import { ValidatorsComponent } from './validators/validators.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { CustomSelectComponent } from './custom-component/custom-select/custom-s
     CustomComponentComponent,
     CustomInputComponent,
     CustomSelectComponent,
+    ValidatorsComponent,
   ],
   imports: [
     UiImportsModule,

@@ -6,6 +6,7 @@ import { ColorComponent } from './color/color.component';
 import { InfoComponent } from './info/info.component';
 import { SuffixComponent } from './suffix/suffix.component';
 import { CustomComponentComponent } from './custom-component/custom-component.component';
+import { ValidatorsComponent } from './validators/validators.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,8 @@ const routes: Routes = [
   { path: 'info', component: InfoComponent},
   { path: 'suffix', component: SuffixComponent},
   { path: 'custom-component', component: CustomComponentComponent},
+  { path: 'validators', component: ValidatorsComponent},
+
 ];
 
 @NgModule({
