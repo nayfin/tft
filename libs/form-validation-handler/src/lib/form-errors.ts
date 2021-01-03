@@ -8,7 +8,7 @@ interface ErrorDictionary { [key: string]: ErrorFactory; }
  * Optionally takes an object as an argument from the thrown validation error,
  * which it can use to build more informative error messages
  */
-type ErrorFactory = (errorObject: unknown) => string;
+type ErrorFactory = (errorObject: {[key: string]: string}) => string;
 
 /**
  * Dictionary of the default errors used by the control-errors directive to map
@@ -21,11 +21,12 @@ export const defaultErrors: ErrorDictionary = {
   // the @angular/forms team will rejected our proposal to rename key in error object
   requiredTrue: () => `The conditions must be accepted`,
   email: () => `Please enter a valid email address`,
-  minlength: ({ requiredLength, actualLength }) => `Expected ${requiredLength} characters but got ${actualLength}`,
-  maxlength: ({ requiredLength, actualLength }) => `Expected ${requiredLength} but got ${actualLength}`,
+  minlength: ({ requiredLength, actualLength }) => `Minimum of ${requiredLength} characters required, but you entered ${actualLength}`,
+  maxlength: ({ requiredLength, actualLength }) => `Maximum of ${requiredLength} characters allowed, but you entered ${actualLength}`,
   min: ({min, actual}) => `Minimum allowed value is ${min}, actual value is ${actual}`,
   max: ({max, actual}) => `Maximum allowed value is ${max}, actual value is ${actual}`,
   pattern: ({requiredPattern, actualValue}) => `${actualValue} fails to match pattern ${requiredPattern}`,
+  someControlIsValid: ({controlNames}) => `At least one of the these fields must be valid`
 };
 
 /**

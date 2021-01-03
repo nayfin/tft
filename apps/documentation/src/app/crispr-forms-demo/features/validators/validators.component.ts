@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
-import { FormConfig, ControlType, someControlIsValid } from '@tft/crispr-forms';
+import { FormConfig, ControlType } from '@tft/crispr-forms';
+import { someControlIsValid } from '@tft/form-validation-handler';
 
 @Component({
   selector: 'tft-validators',
@@ -10,7 +11,6 @@ import { FormConfig, ControlType, someControlIsValid } from '@tft/crispr-forms';
 export class ValidatorsComponent {
   formConfig: FormConfig = {
     validators: [someControlIsValid(['length', 'cost', 'formattedName'])],
-    errorDictionary: {someControlIsValid: () => 'At least one control must be valid'},
     fields: [
       {
         controlType: ControlType.INPUT,

@@ -14,7 +14,8 @@ export function someControlIsValid(controlNames: string[]): ValidatorFn {
       });
       return null
     }
-    controls.forEach(control => control.setErrors({someControlIsValid: true}))
+    controls.forEach(control => control.setErrors({someControlIsValid: {controlNames}}))
+    return { controlNames }
   };
 }
 
