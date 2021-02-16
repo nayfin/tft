@@ -1,4 +1,5 @@
 
+rm -rf ./../tft-documentation/src/app
 cp -rf ./apps/documentation/src/app ./../tft-documentation/src
 cd ../tft-documentation && git add . && git commit -m 'release to stackblitz' && git push && cd ../tft
 
