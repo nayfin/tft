@@ -79,7 +79,7 @@ const newFormConfig: FormConfig<SimpleModel> = {
 }
 ```
 
-Let me know what you think in this [survey](https://forms.gle/DNXGctcYtsgtv5eo9np). Is the breaking change worth it to get modeled configurations or would you prefer to not have to align your configurations with the new system?
+Let me know what you think in this [survey](https://docs.google.com/forms/d/e/1FAIpQLSehFV17thIy79mV63sHOJIcwG-iALr9AyltrCOAbCcaFm1syg/viewform?usp=sf_link). Is the breaking change worth it to get modeled configurations or would you prefer to not have to align your configurations with the new system?
 
 # NEW FEATURES:
 
