@@ -216,8 +216,10 @@ export function observablifyOptions(
   ]);
 }
 
+/**
+ * Determines if the field config is for a form control (not a divider, heading or other non-control field)
+ *  */
 export function isControlConfig(fieldConfig: CrisprFieldConfig): fieldConfig is CrisprControlConfig {
-  // determine if config is a controlConfig but not a FormConfig
   return 'controlName' in fieldConfig;
 }
 /**
@@ -231,12 +233,9 @@ export function buildFormGroupFromConfig(config: FormConfig, value = null, group
     if (isControlConfig(controlConfig)) {
       // then add a control to the group using the controlName from configuration
       const {controlName} = controlConfig;
-      // if there's a value object and it has a value for this field (including zero), use it.
+      // if there's a value object and it has a non-null/undefined value for this field use it.
       // Otherwise, default to null
-      // group.addControl(controlName, createControlForType(controlConfig));
-      const controlValue = value && isRealValue(value[controlName])
-      ? value[controlName]
-      : null;
+      const controlValue = (value && value[controlName]) ?? null;
       group.addControl(controlName, createControlForType(controlConfig, controlValue));
     }
   });
@@ -273,13 +272,4 @@ export function filterOptionsByLabel(options: SelectOption[], searchString: stri
   return options.filter(option => {
     return option.label && option.label.toLowerCase().includes(searchString.toLowerCase());
   });
-}
-
-/**
- * returns true for all truthy values AND zero
- * sometimes you need the value zero
- * @param value the value to evaluate
- */
-function isRealValue(value: any) {
-  return !!value || value === 0;
 }
