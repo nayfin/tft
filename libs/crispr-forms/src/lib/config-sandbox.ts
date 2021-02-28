@@ -40,25 +40,7 @@ const keyedNameExampleConfig: ModeledConfig<TestModel> = {
   }
 }
 
-const fieldsArrayExampleConfig = {
-  meta: 'name',
-  fields: [
-    {
-     name: 'a'
-    },
-    {
-      name: 'b'
-    },
-    {
-      name: 'c',
-      fields: [
-        {
-        name: 'cA'
-        }
-      ]
-    }
-  ]
-} as const;
+
 
 interface Field<M, K extends keyof M> {
   name: K;
@@ -71,9 +53,34 @@ interface SubGroupField<M, K extends keyof M> extends Omit<Field<M, K>, 'type'> 
 }
 
 interface ModeledArrayConfig<M, K extends keyof M> {
-  meta: 'string';
+  meta: string;
   fields: Field<M, K>[] | SubGroupField<M[K], keyof M[K]>[];
 }
+
+
+const fieldsArrayExampleConfig: ModeledArrayConfig<TestModel, keyof TestModel> = {
+  meta: 'name',
+  fields: [
+    {
+      type: 'text',
+      name: 'b'
+    },
+    {
+      type: 'text',
+      name: 'a'
+    },
+    // {
+    //   type: 'subGroup',
+    //   name: 'c',
+    //   fields: [
+    //     {
+    //       type: 'text',
+    //       name: 'cA'
+    //     }
+    //   ]
+    // }
+  ]
+};
 
 export type ExtractModelFromFields<T extends Field<T, keyof T>[]> = {
   [k in keyof T]: {
