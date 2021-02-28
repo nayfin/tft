@@ -26,6 +26,24 @@ import {
   RadioFieldConfig
 } from '../models';
 import { ThemePalette } from '@angular/material/core';
+// export type ControlType = keyof typeof FIELD_COMPONENTS;
+export enum ControlType {
+  AUTOCOMPLETE = 'autocomplete',
+  AUTOCOMPLETE_CHIPLIST = 'autocompleteChiplist',
+  INPUT = 'input',
+  TEXTAREA = 'textarea',
+  CHECKBOX = 'checkbox',
+  SELECT = 'select',
+  RADIO = 'radio',
+  SUB_GROUP = 'subGroup',
+  GROUP_LIST = 'groupList',
+  DATEPICKER = 'datepicker',
+  SLIDER = 'slider',
+  BUTTON = 'button',
+  HEADING = 'heading',
+  DIVIDER = 'divider',
+  CUSTOM = 'custom'
+}
 
 /**
  * The base interface for all the fields in the form's config
@@ -43,12 +61,12 @@ export interface CrisprFieldConfig {
 //   controlType: ControlType.CUSTOM;
 //   component?: any; // TODO: type better
 // }
-
+type RestrictedControlName<M> = M extends null ? string : keyof M;
 /**
  * The base interface for all control configs
  */
-export interface CrisprControlConfig extends CrisprFieldConfig {
-  controlName: string;
+export interface CrisprControlConfig<M = null> extends CrisprFieldConfig {
+  controlName: RestrictedControlName<M>
   controlType: ControlType;
   validators?: ValidatorFn[];
   // TODO: Determine if this is necessary
@@ -81,7 +99,8 @@ export interface Info {
 }
 
 // TODO: having AnyFieldConfig as the default for C seems redundant and silly
-export interface AbstractGroupConfig<C extends CrisprFieldConfig = AnyFieldConfig>  {
+export interface AbstractGroupConfig<C extends CrisprFieldConfig = AnyFieldConfig, M = any>  {
+  // this union is needed, it joins any custom config provided by users to our default config options
   fields?: (AnyFieldConfig | C)[];
 }
 export interface FormConfig<C = AnyFieldConfig> extends AbstractGroupConfig<C> {
@@ -115,21 +134,3 @@ export type AnyFieldConfig = InputFieldConfig
 
 export type ControlValue = boolean | string | number | Date | SelectOption | SelectOption[];
 
-// export type ControlType = keyof typeof FIELD_COMPONENTS;
-export enum ControlType {
-  AUTOCOMPLETE = 'autocomplete',
-  AUTOCOMPLETE_CHIPLIST = 'autocompleteChiplist',
-  INPUT = 'input',
-  TEXTAREA = 'textarea',
-  CHECKBOX = 'checkbox',
-  SELECT = 'select',
-  RADIO = 'radio',
-  SUB_GROUP = 'subGroup',
-  GROUP_LIST = 'groupList',
-  DATEPICKER = 'datepicker',
-  SLIDER = 'slider',
-  BUTTON = 'button',
-  HEADING = 'heading',
-  DIVIDER = 'divider',
-  CUSTOM = 'custom'
-}
