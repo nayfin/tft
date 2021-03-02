@@ -1,1 +1,1 @@
-export * from './someControlIsValid';
+export * from './some-control-is-valid';
