@@ -1,0 +1,40 @@
+<crispr-field-container
+  [config]="config"
+  [group]="group">
+  <button
+    mat-button
+    type="button"
+    color="accent"
+    (click)="fileInput.click()"
+    [attr.aria-label]="config.controlName">
+    {{config.selectButtonText}}
+      <input
+        #fileInput
+        type="file"
+        style="display: none"
+        [accept]="config.acceptedTypes"
+        [multiple]="config.allowMultipleFiles"
+        (change)="filesChanged($event)"/>
+
+  </button>
+  <button
+    mat-raised-button
+    type="button"
+    color="primary"
+    class="file-input-button"
+    [disabled]="!selectedFiles?.length"
+    (click)="uploadFiles()"
+    *ngIf="config.showUploadButton"
+    [attr.aria-label]="uploadButtonText">
+    {{ config.uploadButtonText }}{{config.allowMultipleFiles && 'S'}}
+  </button>
+  <span class="file-input-text">{{ selectedFileText }}</span>
+  <button
+    mat-icon-button
+    (click)="filesChanged(null)"
+    type="button"
+    aria-label="Remove Selected File(s)"
+    *ngIf="selectedFiles != null && selectedFiles.length > 0">
+      <mat-icon>close</mat-icon>
+  </button>
+</crispr-field-container>

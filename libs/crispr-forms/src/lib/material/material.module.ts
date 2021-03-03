@@ -37,6 +37,7 @@ import { DividerComponent } from './divider/divider.component';
 import { AutocompleteChiplistFieldComponent } from './autocomplete-chiplist-field/autocomplete-chiplist-field.component';
 import { OptionComponent } from './option/option.component';
 import { RadioFieldComponent } from './radio-field/radio-field.component';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 
 // TODO: Should we import UI library?
 // Will the tree shaker shake the unused modules?
@@ -74,6 +75,7 @@ const CRISPR_FIELDS = [
   ButtonComponent,
   HeadingComponent,
   DividerComponent,
+  FileUploadComponent
 ];
 @NgModule({
   imports: [

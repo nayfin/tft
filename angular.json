@@ -236,7 +236,7 @@
       "projectType": "library",
       "root": "libs/crispr-forms",
       "sourceRoot": "libs/crispr-forms/src",
-      "prefix": "tft",
+      "prefix": "crispr",
       "architect": {
         "build": {
           "builder": "@nrwl/angular:package",

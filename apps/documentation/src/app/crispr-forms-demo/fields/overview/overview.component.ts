@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormConfig, ControlType, SelectOption } from '@tft/crispr-forms';
 import { Validators, FormGroup } from '@angular/forms';
 import { of } from 'rxjs';
@@ -47,6 +47,18 @@ export class OverviewComponent {
     },
     validators: [Validators.required],
     fields: [
+      {
+        controlType: ControlType.FILE_UPLOAD,
+        controlName: 'fileUploadExample',
+        allowMultipleFiles: true,
+        heading: {
+          label: 'Upload Images'
+        },
+        uploadFile: (group, files) => {
+          console.log({group, files});
+          group.get('uploadfileUploadExampleFiles')
+        }
+      },
       {
         controlType: ControlType.SUB_GROUP,
         controlName: 'subGroup',

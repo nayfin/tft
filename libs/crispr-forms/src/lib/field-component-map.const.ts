@@ -1,10 +1,12 @@
 // tslint:disable-next-line: max-line-length
-import { InputFieldComponent, SelectFieldComponent, AutocompleteFieldComponent, AutocompleteChiplistFieldComponent, TextareaFieldComponent, CheckboxFieldComponent, SliderFieldComponent, DatepickerFieldComponent, HeadingComponent, DividerComponent, ButtonComponent } from './material';
+import { InputFieldComponent, SelectFieldComponent, AutocompleteFieldComponent,
+  AutocompleteChiplistFieldComponent, TextareaFieldComponent, CheckboxFieldComponent,
+  RadioFieldComponent, FileUploadComponent, SliderFieldComponent, DatepickerFieldComponent,
+  HeadingComponent, DividerComponent, ButtonComponent } from './material';
 import { FormGroupListComponent } from './form-group-list/form-group-list.component';
 import { isControlConfig } from './form.helpers';
 import { ControlType } from './models';
 import { SubGroupComponent } from './sub-group/sub-group.component';
-import { RadioFieldComponent } from './material/radio-field/radio-field.component';
 
 export const FIELD_COMPONENTS = {
   button: ButtonComponent,
@@ -19,6 +21,7 @@ export const FIELD_COMPONENTS = {
   checkbox: CheckboxFieldComponent,
   slider: SliderFieldComponent,
   datepicker: DatepickerFieldComponent,
+  fileUpload: FileUploadComponent,
   heading: HeadingComponent,
   divider: DividerComponent
 };
@@ -27,17 +30,18 @@ export function isControlComponent(component: CrisprFieldComponent): component i
   return isControlConfig(component.config) || component.config.controlType === ControlType.BUTTON;
 }
 
-export type CrisprControlComponent = ButtonComponent|
-  InputFieldComponent|
-  SelectFieldComponent|
-  RadioFieldComponent|
-  SubGroupComponent|
-  FormGroupListComponent|
-  AutocompleteFieldComponent|
-  AutocompleteChiplistFieldComponent|
-  TextareaFieldComponent|
-  CheckboxFieldComponent|
-  SliderFieldComponent|
+export type CrisprControlComponent = ButtonComponent |
+  InputFieldComponent |
+  SelectFieldComponent |
+  RadioFieldComponent |
+  SubGroupComponent |
+  FormGroupListComponent |
+  AutocompleteFieldComponent |
+  AutocompleteChiplistFieldComponent |
+  TextareaFieldComponent |
+  CheckboxFieldComponent |
+  SliderFieldComponent |
+  FileUploadComponent |
   DatepickerFieldComponent;
 
 export type ComponentKeys = keyof typeof FIELD_COMPONENTS;

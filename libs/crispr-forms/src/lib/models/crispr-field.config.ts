@@ -1,4 +1,4 @@
-import { FormGroup, ValidatorFn, Validator } from '@angular/forms';
+import { FormGroup, ValidatorFn } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
@@ -25,7 +25,10 @@ import {
   SelectOption,
   RadioFieldConfig
 } from '../models';
+
 import { ThemePalette } from '@angular/material/core';
+import { FileUploadFieldConfig } from './file-upload-field.config';
+
 // export type ControlType = keyof typeof FIELD_COMPONENTS;
 export enum ControlType {
   AUTOCOMPLETE = 'autocomplete',
@@ -42,6 +45,7 @@ export enum ControlType {
   BUTTON = 'button',
   HEADING = 'heading',
   DIVIDER = 'divider',
+  FILE_UPLOAD = 'fileUpload',
   CUSTOM = 'custom'
 }
 
@@ -127,6 +131,7 @@ export type AnyFieldConfig = InputFieldConfig
   | CheckboxFieldConfig
   | DatepickerFieldConfig
   | SliderFieldConfig
+  | FileUploadFieldConfig
   | HeadingConfig
   | ButtonConfig
   | DividerConfig;

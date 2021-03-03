@@ -7,5 +7,7 @@ export * from './textarea-field/textarea-field.component';
 export * from './slider-field/slider-field.component';
 export * from './button/button.component';
 export * from './datepicker-field/datepicker-field.component';
+export * from './file-upload/file-upload.component';
 export * from './heading/heading.component';
 export * from './divider/divider.component';
+export * from './radio-field/radio-field.component';

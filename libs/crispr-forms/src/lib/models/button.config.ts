@@ -9,11 +9,12 @@ export interface ButtonConfig extends CrisprFieldConfig,
   controlType: ControlType.BUTTON;
   type?: 'submit' | 'reset' | 'button';
   callback?: (group?: FormGroup, event?: MouseEvent) => unknown;
-  buttonType?: ButtonType;
+  buttonType?: MatButtonType;
   color?: ThemePalette;
   icon?: string;
   info?: Omit<Info, 'iconName'>;
   disabledOnInvalidForm?: boolean;
 }
+export type ButtonType = 'submit' | 'reset' | 'button';
 
-type ButtonType = 'raised' | 'flat' | 'stroked' | 'icon'; // TODO: 'fab' || 'mini-fab'
+type MatButtonType = 'raised' | 'flat' | 'stroked' | 'icon'; // TODO: 'fab' || 'mini-fab'
