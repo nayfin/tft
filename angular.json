@@ -87,7 +87,9 @@
               ]
             }
           },
-          "outputs": ["{options.outputPath}"]
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -122,7 +124,13 @@
             "jestConfig": "apps/documentation/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/apps/documentation"]
+          "outputs": [
+            "coverage/apps/documentation"
+          ]
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
     },
@@ -168,7 +176,9 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": ["apps/api/src/assets"]
+            "assets": [
+              "apps/api/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -183,7 +193,9 @@
               ]
             }
           },
-          "outputs": ["{options.outputPath}"]
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@nrwl/node:execute",
@@ -194,7 +206,10 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/api/**/*.ts", "apps/api/src/**/*.html"]
+            "lintFilePatterns": [
+              "apps/api/**/*.ts",
+              "apps/api/src/**/*.html"
+            ]
           }
         },
         "test": {
@@ -203,7 +218,9 @@
             "jestConfig": "apps/api/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/apps/api"]
+          "outputs": [
+            "coverage/apps/api"
+          ]
         }
       }
     },
@@ -228,7 +245,9 @@
             "jestConfig": "libs/api-interfaces/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/api-interfaces"]
+          "outputs": [
+            "coverage/libs/api-interfaces"
+          ]
         }
       }
     },
@@ -265,7 +284,9 @@
             "jestConfig": "libs/crispr-forms/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/crispr-forms"]
+          "outputs": [
+            "coverage/libs/crispr-forms"
+          ]
         },
         "storybook": {
           "builder": "@nrwl/storybook:storybook",
@@ -296,7 +317,9 @@
               "quiet": true
             }
           },
-          "outputs": ["{options.outputPath}"]
+          "outputs": [
+            "{options.outputPath}"
+          ]
         }
       },
       "schematics": {
@@ -338,7 +361,9 @@
             "jestConfig": "libs/core/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/core"]
+          "outputs": [
+            "coverage/libs/core"
+          ]
         }
       },
       "schematics": {
@@ -380,7 +405,9 @@
             "jestConfig": "libs/form-validation-handler/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/form-validation-handler"]
+          "outputs": [
+            "coverage/libs/form-validation-handler"
+          ]
         }
       },
       "schematics": {
@@ -422,7 +449,9 @@
             "jestConfig": "libs/interact/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/interact"]
+          "outputs": [
+            "coverage/libs/interact"
+          ]
         }
       },
       "schematics": {
@@ -464,7 +493,9 @@
             "jestConfig": "libs/mat-instantsearch/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/mat-instantsearch"]
+          "outputs": [
+            "coverage/libs/mat-instantsearch"
+          ]
         }
       },
       "schematics": {
@@ -506,7 +537,9 @@
             "jestConfig": "libs/ui-imports/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/ui-imports"]
+          "outputs": [
+            "coverage/libs/ui-imports"
+          ]
         }
       },
       "schematics": {

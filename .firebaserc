@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "tft-documentation-0": {
+      "hosting": {
+        "documentation": [
+          "tft-documentation-0"
+        ]
+      }
+    }
+  }
+}
