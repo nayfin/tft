@@ -23,8 +23,6 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
 
   subs: Subscription[] = [];
 
-  constructor() { }
-
   ngOnInit() {
     this.disabled$ = this.connectDisabledCallback(this.group, this.config);
     // we tried moving this into afterViewChecked and afterContentChecked lifecycle hooks without any luck
@@ -52,7 +50,7 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
     const control = group.get(config.controlName);
     // If the disabled$ function exists on the field config then call it with the disabledCallbackConfig
     // as a parameter otherwise return an observable of true.
-    return config.disabledCallback && config.disabledCallback instanceof Function
+    return config?.disabledCallback && config.disabledCallback instanceof Function
       ? config.disabledCallback(group, config.disabledCallbackConfig || null).pipe(
         // This enables/disables when callback conditions are met
         tap((shouldDisable) => shouldDisable ? control.disable() : control.enable())

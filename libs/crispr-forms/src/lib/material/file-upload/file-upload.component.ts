@@ -1,8 +1,10 @@
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   ViewChild,
 } from '@angular/core';
+import { Observable } from 'rxjs';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { FileUploadFieldConfig } from '../../models/file-upload-field.config';
 
@@ -27,8 +29,10 @@ export class FileUploadComponent extends FileUploadFieldMixin {
   }
 
   @ViewChild('fileInput') fileInputRef: ElementRef
+
   selectedFiles: FileList;
-  selectedFileText = '';
+
+  fileProgress: Observable<number>[] = [];
 
   constructor() {
     super();
@@ -38,25 +42,19 @@ export class FileUploadComponent extends FileUploadFieldMixin {
     const files: FileList = event.target.files
 
     if (files && files.length > 0 ) {
-
       this.selectedFiles = files
       this.control.patchValue(files);
-      const numSelectedFiles = files.length;
-      this.selectedFileText = numSelectedFiles === 1
-        ? files[0].name
-        : `${numSelectedFiles} files selected`;
     }
   }
 
   uploadFiles() {
     if(this.selectedFiles) {
-      this.config.uploadFile(this.group, this.selectedFiles);
+      this.config.uploadFile(this.group, this.selectedFiles, this);
     }
   }
 
   resetFileInput(): void {
     this.fileInputRef.nativeElement.value = ''
     this.control.patchValue(null);
-    this.selectedFileText = '';
   }
 }

@@ -1,6 +1,22 @@
 <crispr-field-container
   [config]="config"
   [group]="group">
+  <div *ngIf="selectedFiles?.length > 0" class="selected-files-container">
+    <h3 class="mat-h3">Selected Files</h3>
+    <crispr-selected-file
+      *ngFor="let file of selectedFiles; let i = index;" [fileName]="file.name"
+      [progress]="(fileProgress && fileProgress[i]) | async">
+    </crispr-selected-file>
+  </div>
+  <button
+    *ngIf="selectedFiles?.length > 0"
+    mat-raised-button
+    (click)="resetFileInput()"
+    type="button"
+    aria-label="Remove Selected File(s)">
+      CLEAR FILES
+      <mat-icon>delete</mat-icon>
+  </button>
   <button
     mat-button
     type="button"
@@ -25,16 +41,11 @@
     [disabled]="!selectedFiles?.length"
     (click)="uploadFiles()"
     *ngIf="config.showUploadButton"
-    [attr.aria-label]="uploadButtonText">
+    [attr.aria-label]="config.uploadButtonText">
     {{ config.uploadButtonText }}{{config.allowMultipleFiles && 'S'}}
   </button>
-  <span class="file-input-text">{{ selectedFileText }}</span>
-  <button
-    mat-icon-button
-    (click)="filesChanged(null)"
-    type="button"
-    aria-label="Remove Selected File(s)"
-    *ngIf="selectedFiles != null && selectedFiles.length > 0">
-      <mat-icon>close</mat-icon>
-  </button>
+
+
+
+
 </crispr-field-container>

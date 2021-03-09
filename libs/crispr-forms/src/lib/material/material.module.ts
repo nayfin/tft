@@ -17,6 +17,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
@@ -38,6 +39,7 @@ import { AutocompleteChiplistFieldComponent } from './autocomplete-chiplist-fiel
 import { OptionComponent } from './option/option.component';
 import { RadioFieldComponent } from './radio-field/radio-field.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
+import { SelectedFileComponent } from './selected-file/selected-file.component';
 
 // TODO: Should we import UI library?
 // Will the tree shaker shake the unused modules?
@@ -58,7 +60,8 @@ const MAT_DESIGN_MODULES = [
   MatTooltipModule,
   MatFormFieldModule,
   MatMomentDateModule,
-  MatDividerModule
+  MatDividerModule,
+  MatProgressBarModule
 ];
 
 const CRISPR_FIELDS = [
@@ -92,6 +95,7 @@ const CRISPR_FIELDS = [
     ...CRISPR_FIELDS,
     InfoComponent,
     OptionComponent,
+    SelectedFileComponent,
   ],
   entryComponents: CRISPR_FIELDS
 })
