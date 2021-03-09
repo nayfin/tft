@@ -16,6 +16,7 @@ import { HeadingComponent } from './heading/heading.component';
 import { ButtonComponent } from './button/button.component';
 import { AutocompleteChiplistComponent } from './autocomplete-chiplist/autocomplete-chiplist.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { HttpClientModule } from '@angular/common/http';
     DividerComponent,
     HeadingComponent,
     ButtonComponent,
-    AutocompleteChiplistComponent
+    AutocompleteChiplistComponent,
+    FileUploadComponent
   ],
   imports: [
     CommonModule,

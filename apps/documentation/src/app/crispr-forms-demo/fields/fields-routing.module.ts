@@ -11,7 +11,8 @@ import {
   SliderComponent,
   DividerComponent,
   HeadingComponent,
-  ButtonComponent
+  ButtonComponent,
+  FileUploadComponent
 } from '.';
 
 
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'autocomplete-chiplist', component: AutocompleteChiplistComponent},
   { path: 'input', component: InputComponent},
   { path: 'textarea', component: TextareaComponent},
+  { path: 'file-upload', component: FileUploadComponent},
   { path: 'checkbox', component: CheckboxComponent},
   { path: 'datepicker', component: DatepickerComponent},
   { path: 'slider', component: SliderComponent},
