@@ -40,6 +40,7 @@ import { OptionComponent } from './option/option.component';
 import { RadioFieldComponent } from './radio-field/radio-field.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { SelectedFileComponent } from './selected-file/selected-file.component';
+import { FileDropzoneDirective } from './file-upload/file-dropzone.directive';
 
 // TODO: Should we import UI library?
 // Will the tree shaker shake the unused modules?
@@ -96,6 +97,7 @@ const CRISPR_FIELDS = [
     InfoComponent,
     OptionComponent,
     SelectedFileComponent,
+    FileDropzoneDirective
   ],
   entryComponents: CRISPR_FIELDS
 })
