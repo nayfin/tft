@@ -55,7 +55,8 @@ export class OverviewComponent {
         heading: {
           label: 'Upload Images'
         },
-        uploadFile: (group, files) => {
+        // showUploadButton: true,
+        uploadFiles : (group, files) => {
           console.log({group, files});
 
           const uploads = [];

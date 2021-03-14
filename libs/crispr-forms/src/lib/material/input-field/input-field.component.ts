@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { InputFieldConfig } from '../../models';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 
@@ -9,10 +9,14 @@ const InputFieldMixin = crisprControlMixin<InputFieldConfig>(CrisprFieldComponen
   styleUrls: ['./input-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InputFieldComponent extends InputFieldMixin{
+export class InputFieldComponent extends InputFieldMixin implements OnInit {
 
   defaultConfig: Partial<InputFieldConfig> = {inputType: 'text'};
   constructor() {
     super();
+  }
+
+  ngOnInit() {
+    super.ngOnInit();
   }
 }

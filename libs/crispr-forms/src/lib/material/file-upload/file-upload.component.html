@@ -1,51 +1,76 @@
 <crispr-field-container
   [config]="config"
   [group]="group">
-  <div *ngIf="selectedFiles?.length > 0" class="selected-files-container">
-    <h3 class="mat-h3">Selected Files</h3>
-    <crispr-selected-file
-      *ngFor="let file of selectedFiles; let i = index;" [fileName]="file.name"
-      [progress]="(fileProgress && fileProgress[i]) | async">
-    </crispr-selected-file>
-  </div>
-  <button
-    *ngIf="selectedFiles?.length > 0"
-    mat-raised-button
-    (click)="resetFileInput()"
-    type="button"
-    aria-label="Remove Selected File(s)">
-      CLEAR FILES
-      <mat-icon>delete</mat-icon>
-  </button>
-  <button
-    mat-button
-    type="button"
-    color="accent"
-    (click)="fileInput.click()"
-    [attr.aria-label]="config.controlName">
-    {{config.selectButtonText}}
-      <input
-        #fileInput
-        type="file"
-        style="display: none"
-        [accept]="config.acceptedTypes"
-        [multiple]="config.allowMultipleFiles"
-        (change)="filesChanged($event)"/>
+  <mat-form-field floatLabel="always"
+    [color]="config.color"
+    focused="true"
+    appearance="outline"
+    [crisprFileDropzone]="!(disabled$ | async) && !(config.disableOnUpload && isUploaded)"
+    [formGroup]="group"
+    (fileDrop)="filesChanged($event)">
 
-  </button>
-  <button
-    mat-raised-button
-    type="button"
-    color="primary"
-    class="file-input-button"
-    [disabled]="!selectedFiles?.length"
-    (click)="uploadFiles()"
-    *ngIf="config.showUploadButton"
-    [attr.aria-label]="config.uploadButtonText">
-    {{ config.uploadButtonText }}{{config.allowMultipleFiles && 'S'}}
-  </button>
+    <input matInput type="text"/>
 
+    <input
+      #fileInput
+      type="file"
+      style="display: none"
+      [accept]="config.acceptedTypes"
+      [multiple]="config.allowMultipleFiles"
+      (change)="filesChanged($event.target.files)"/>
+    <mat-label>{{config.label}}</mat-label>
+    <div *ngIf="!(selectedFiles?.length > 0); else selectedFileList"  class="drop-info">
+      <mat-icon class="drop-icon" inline="true">cloud_upload</mat-icon>
+      <h2 class="mat-h2">{{config.dropZoneText}}</h2>
+      or
+      <button
+        mat-raised-button
+        type="button"
+        color="primary"
+        [disabled]="(disabled$ | async) || config.disableOnUpload && isUploaded"
+        (click)="fileInput.click()"
+        [attr.aria-label]="config.controlName">
+        {{config.selectButtonText}}
+      </button>
+    </div>
+    <ng-template #selectedFileList>
+      <div class="selected-files-container">
+        <div class="selected-files-list">
+          <crispr-selected-file
+            *ngFor="let file of selectedFiles; let i = index;"
+            [color]="config.color === 'primary' ? 'accent' : 'primary'"
+            [fileName]="file.name"
+            [showProgress]="config.showUploadProgress"
+            [progress]="fileProgress && (fileProgress[i] | async)">
+          </crispr-selected-file>
+        </div>
+        <div class="button-container">
 
+          <button
+            *ngIf="selectedFiles?.length > 0"
+            mat-button
+            (click)="resetFileInput()"
+            type="button"
+            [disabled]="(disabled$ | async) || config.disableOnUpload && isUploaded"
+            aria-label="Remove Selected File(s)">
+            CLEAR FILES
+            <mat-icon>delete</mat-icon>
+          </button>
 
+          <button
+            mat-raised-button
+            type="button"
+            color="accent"
+            class="file-input-button"
+            [disabled]="(disabled$ | async) || !selectedFiles?.length || config.disableOnUpload && isUploaded"
+            (click)="uploadFiles()"
+            *ngIf="!!config.uploadFiles"
+            [attr.aria-label]="config.uploadButtonText">
+            {{ config.uploadButtonText }}
+          </button>
+        </div>
+      </div>
+    </ng-template>
 
+  </mat-form-field>
 </crispr-field-container>

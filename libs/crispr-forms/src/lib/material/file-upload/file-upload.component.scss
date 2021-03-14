@@ -1,0 +1,35 @@
+::ng-deep .mat-form-field {
+  .mat-form-field-infix {
+    padding-top: 0;
+    display: flex;
+    justify-content: center;
+  }
+}
+.drop-info{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .drop-icon {
+    font-size: 36px;
+  }
+  .mat-h2 {
+    margin: 0;
+  }
+}
+.selected-files-container {
+  width: 100%;
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+    button {
+      margin-left: 8px;
+    }
+  }
+}
+
+[matInput] {
+  position: absolute;
+  max-height: 0;
+  visibility: hidden;
+}

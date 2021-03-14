@@ -1,2 +1,7 @@
-<span>{{ fileName }}</span>
-<mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+<h3 class="mat-h3">{{ fileName }}</h3>
+<mat-progress-bar
+  *ngIf="showProgress"
+  mode="determinate"
+  [color]="color"
+  [value]="progress">
+</mat-progress-bar>

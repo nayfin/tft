@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
 
 @Component({
   selector: 'crispr-selected-file',
@@ -9,4 +10,7 @@ export class SelectedFileComponent {
 
   @Input() fileName: string;
   @Input() progress: number;
+  @Input() showProgress: boolean;
+  @Input() color: ThemePalette;
+
 }

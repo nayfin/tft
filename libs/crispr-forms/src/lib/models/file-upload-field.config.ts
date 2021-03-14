@@ -4,12 +4,14 @@ import { CrisprControlConfig, ControlType, ButtonType, MatFieldProperties } from
 
 export type FileUploadFieldConfig = CrisprControlConfig & MatFieldProperties & {
   controlType: ControlType.FILE_UPLOAD;
+  label?: string;
   filesChanged?: (parentGroup: FormGroup, files: FileList) => void;
   allowMultipleFiles?: boolean;
   showDeleteButton?: boolean;
   acceptedTypes?: string;
-  selectButtonText?: string;
   selectFilesButtonType?: ButtonType;
+  selectButtonText?: string;
+  dropZoneText?: string;
   // isolate possible configurations regarding upload to for user to properly type configuration
 } & (EnabledUploadButtonConfig | DisabledUploadButtonConfig);
 
@@ -17,7 +19,7 @@ export type FileUploadFieldConfig = CrisprControlConfig & MatFieldProperties & {
 interface EnabledUploadButtonConfig {
   uploadFiles: (parentGroup: FormGroup, files:FileList, uploadComponent: FileUploadComponent) => Promise<unknown> | unknown;
   showUploadProgress?: boolean;
-  disableAfterUpload?: boolean;
+  disableOnUpload?: boolean;
   uploadButtonType?: ButtonType;
   uploadButtonText?: string;
 }

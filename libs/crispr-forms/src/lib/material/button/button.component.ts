@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ButtonConfig } from '../../models';
 import { Observable } from 'rxjs';
