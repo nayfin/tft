@@ -43,10 +43,9 @@ do
     # go into the library, bump the version according to update type then get out
     cd "libs/$package" && npm version "${update_type}" && cd ../../
     break
-
   fi
-
 done
+
 # build the library and prepare to publish
 echo "running ng build ${package} --prod"
 ng build $package --prod
