@@ -34,7 +34,7 @@ update_options=(patch minor major prerelease)
 PS3='What type of update is this? (input number)'
 select update_type in "${update_options[@]}"
 do
-  if ["${update_type}" = "prerelease"]; then
+  if [ "${update_type}" = "prerelease" ]; then
     release_tag="next"
     cd "libs/$package" && npm version prerelease --preid=rc && cd ../../
     break
