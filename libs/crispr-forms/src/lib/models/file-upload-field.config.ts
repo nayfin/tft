@@ -16,8 +16,8 @@ export type FileUploadFieldConfig = CrisprControlConfig & MatFieldProperties & {
   // isolate possible configurations regarding upload to for user to properly type configuration
 } & (EnabledUploadButtonConfig | DisabledUploadButtonConfig);
 
-//
-interface EnabledUploadButtonConfig {
+// The properties that are only available if we are using the uploadFiles callback
+export interface EnabledUploadButtonConfig {
   uploadFiles: (parentGroup: FormGroup, files:FileList, uploadComponent: FileUploadComponent) => Promise<unknown> | unknown;
   showUploadProgress?: boolean;
   disableOnUpload?: boolean;

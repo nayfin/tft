@@ -7,7 +7,7 @@ import {
   Optional,
   Self
 } from '@angular/core';
-import { ControlValueAccessor, NgControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { FileUploadFieldConfig } from '../../models/file-upload-field.config';
