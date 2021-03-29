@@ -3,12 +3,11 @@ import { AngularFireStorage, AngularFireStorageReference } from '@angular/fire/s
 import { UploadTaskSnapshot } from '@angular/fire/storage/interfaces';
 import { AbstractControl, FormGroup, ValidatorFn } from '@angular/forms';
 import { ControlType, FormConfig } from '@tft/crispr-forms';
-import { combineLatest, Observable, of, from, forkJoin, Subscription } from 'rxjs';
-import { filter, finalize, tap, map, switchMap, mergeMap } from 'rxjs/operators';
+import { combineLatest, Observable, Subscription } from 'rxjs';
+import { filter, tap, map, switchMap } from 'rxjs/operators';
 
 export function waitForDownload(): ValidatorFn {
   return (_control: AbstractControl) => {
-    console.log('waiting', _control);
     return {waitForDownload: true};
   };
 }
@@ -21,10 +20,8 @@ export class FileUploadComponent implements OnDestroy {
   config: FormConfig = {
     autocomplete: 'off',
     errorDictionary: {
-      // required: () => `I am a custom error message on a required field`,
-      waitForDownload: (something) => {
-        console.log('waiting', {something})
-        return 'Files must be down'
+      waitForDownload: () => {
+        return 'Files must be downloaded';
       }
     },
     fields: [
@@ -36,8 +33,6 @@ export class FileUploadComponent implements OnDestroy {
           label: 'Upload Images'
         },
         color: 'accent',
-        // showUploadButton: true,
-        showUploadProgress: true,
         validators: [waitForDownload()],
         /**
          * the upload process need to handle a lot in this scenario
@@ -93,7 +88,8 @@ export class FileUploadComponent implements OnDestroy {
           ).subscribe();
           // track subscription so we can unsubscribe
           this.subs.push(uploadSub);
-        }
+        },
+        showUploadProgress: true
       },
       {
         controlType: ControlType.BUTTON,

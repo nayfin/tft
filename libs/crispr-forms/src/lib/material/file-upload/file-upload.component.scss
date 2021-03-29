@@ -16,16 +16,16 @@
     margin: 0;
   }
 }
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -16px;
+  button {
+    margin-left: 8px;
+  }
+}
 .selected-files-container {
   width: 100%;
-  .button-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 8px;
-    button {
-      margin-left: 8px;
-    }
-  }
 }
 
 [matInput] {

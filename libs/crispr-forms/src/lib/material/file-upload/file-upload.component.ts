@@ -4,8 +4,10 @@ import {
   ViewChild,
   OnInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef
+  Optional,
+  Self
 } from '@angular/core';
+import { ControlValueAccessor, NgControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { FileUploadFieldConfig } from '../../models/file-upload-field.config';
@@ -16,20 +18,23 @@ const FileUploadFieldMixin = crisprControlMixin<FileUploadFieldConfig>(CrisprFie
   selector: 'crispr-file-upload',
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FileUploadComponent extends FileUploadFieldMixin implements OnInit {
+export class FileUploadComponent extends FileUploadFieldMixin implements OnInit, ControlValueAccessor {
+
+  onChange: () => void;
 
   defaultConfig: Partial<FileUploadFieldConfig> = {
     allowMultipleFiles: false,
-    showDeleteButton: true,
-    showUploadProgress: false,
     acceptedTypes: '*.*',
     dropZoneText: 'DROP FILE HERE',
-    selectButtonText: 'SELECT FILE',
-    uploadButtonText: 'UPLOAD FILE',
     selectFilesButtonType: 'button',
+    selectButtonText: 'SELECT FILES',
+    showClearFilesButton: true,
+    clearFilesButtonText: 'CLEAR FILES',
+    uploadButtonText: 'UPLOAD FILES',
     uploadButtonType: 'button',
+    showUploadProgress: false,
     disableOnUpload: true
   }
 
@@ -42,8 +47,17 @@ export class FileUploadComponent extends FileUploadFieldMixin implements OnInit 
   fileProgress: Observable<number>[] = [];
   disabled$: Observable<boolean>;
 
-  constructor(public cdr: ChangeDetectorRef) {
+  // ngControl: NgControl = null;
+  constructor(
+    @Optional() @Self() public ngControl: NgControl,
+  ) {
     super();
+    if (this.ngControl != null) {
+      // Setting the value accessor directly (instead of using
+      // the providers) to avoid running into a circular import.
+      ngControl.valueAccessor = this;
+      ngControl.control.valueChanges.subscribe(valueChanges => console.log({valueChanges}))
+    }
   }
 
   ngOnInit() {
@@ -52,6 +66,7 @@ export class FileUploadComponent extends FileUploadFieldMixin implements OnInit 
     ? this.config.disabledCallback(this.group, this.config)
     : of(false);
   }
+
 
   filesChanged(files: FileList): void {
     if (files && files.length > 0 ) {
@@ -70,5 +85,20 @@ export class FileUploadComponent extends FileUploadFieldMixin implements OnInit 
   resetFileInput(): void {
     this.fileInputRef.nativeElement.value = ''
     this.control.patchValue(null);
+  }
+
+  writeValue( value: null ) {
+    // clear file input
+    console.log('writing value', value)
+    // this.host.nativeElement.value = '';
+    // this.file = null;
+  }
+
+  registerOnChange( fn: () => void ) {
+    console.log({fn})
+    this.onChange = fn;
+  }
+
+  registerOnTouched( fn: () => void ) {
   }
 }
