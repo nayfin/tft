@@ -27,17 +27,4 @@ export interface EnabledUploadButtonConfig {
 
 type DisabledUploadButtonConfig = NeverProps<EnabledUploadButtonConfig>;
 
-/**
- * Maps all property types to never.
- * Useful when the presence of a field value drives requires other properties that aren't otherwise required.
- * .e.g.
- * @usage
- * type ComplexInterface = {
- *   drivingProperty: string | never;
- *
- * }
- *
- *
- * */
-type NeverProps<T> = { [P in keyof T]: never; };
-
+type NeverProps<T> = { [P in keyof T]?: never; };
