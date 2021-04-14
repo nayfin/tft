@@ -56,7 +56,6 @@ export class FileUploadComponent extends FileUploadFieldMixin implements OnInit,
       // Setting the value accessor directly (instead of using
       // the providers) to avoid running into a circular import.
       ngControl.valueAccessor = this;
-      ngControl.control.valueChanges.subscribe(valueChanges => console.log({valueChanges}))
     }
   }
 
@@ -85,17 +84,16 @@ export class FileUploadComponent extends FileUploadFieldMixin implements OnInit,
   resetFileInput(): void {
     this.fileInputRef.nativeElement.value = ''
     this.control.patchValue(null);
+    this.isUploaded = false;
   }
 
   writeValue( value: null ) {
     // clear file input
-    console.log('writing value', value)
     // this.host.nativeElement.value = '';
     // this.file = null;
   }
 
   registerOnChange( fn: () => void ) {
-    console.log({fn})
     this.onChange = fn;
   }
 

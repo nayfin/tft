@@ -9,8 +9,6 @@ export const TFT_DRAG_PREVIEW = new InjectionToken<DragPreviewDirective>('DragPr
 export class DragPreviewDirective<T = any> {
 
   @Input() dragData: T;
-  constructor(public templateRef: TemplateRef<T>) {
-    // console.log({templateRef: this.templateRef})
-  }
+  constructor(public templateRef: TemplateRef<T>) { }
 
 }

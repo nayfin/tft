@@ -13,7 +13,6 @@ export class FileDropzoneDirective {
   onDrop($event: DragEvent) {
     if(this.crisprFileDropzone) {
       $event.preventDefault();
-      console.log({drop: $event})
       this.fileDrop.emit($event.dataTransfer.files);
     }
   }
