@@ -6,11 +6,6 @@ import { ControlType, FormConfig } from '@tft/crispr-forms';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { filter, tap, map, switchMap } from 'rxjs/operators';
 
-export function waitForDownload(): ValidatorFn {
-  return (_control: AbstractControl) => {
-    return {waitForDownload: true};
-  };
-}
 @Component({
   selector: 'tft-file-upload',
   templateUrl: './file-upload.component.html',
@@ -33,7 +28,7 @@ export class FileUploadComponent implements OnDestroy {
           label: 'Upload Images'
         },
         color: 'accent',
-        validators: [waitForDownload()],
+        showUploadProgress: true,
         /**
          * the upload process need to handle a lot in this scenario
          * - start the upload process
@@ -43,53 +38,60 @@ export class FileUploadComponent implements OnDestroy {
          * - clear validators
          * - tell control when download complete
          */
-        uploadFiles: (group, files, uploadComponent) => {
+        uploadFiles: async (group, files, uploadComponent) => {
 
           // FileList isn't an array so we have to loop the old fashioned way
           // then we track the paths and uploads to use later
-          const uploads: Observable<number>[] = [];
-          const paths: string[] = [];
+          const formFieldValue: {downloadUrl: string, firebaseStoragePath: string }[] = []
           for (let i = 0; i < files.length; i++) {
             const file = files.item(i);
-            const path = `examples/${file.name}`
-            const uploadRef = this.fireStorage.ref(path);
+            const firebaseStoragePath = `examples/${file.name}`
+            const uploadRef = this.fireStorage.ref(firebaseStoragePath);
             const task = uploadRef.put(file);
             // pass percent observable to file progress
             uploadComponent.fileProgress[i] = task.percentageChanges();
-            const completed = task.snapshotChanges();
 
-            uploads.push(completed);
-            paths.push(path);
+            const downloadUrl: string = await task.then(completedTask => completedTask.ref.getDownloadURL());
+
+            formFieldValue.push({downloadUrl, firebaseStoragePath})
           }
-
+          const uploadControl = group.get('fileUploadExample');
+          // set the control value
+          uploadControl.setValue(formFieldValue);
+          // clear control validators
+          uploadControl.clearValidators();
+          // tell the component upload is finished
+          uploadComponent.isUploaded = true;
           // create subscription for all the things that need to happen during upload
-          const uploadSub = combineLatest(uploads).pipe(
-            // wait for all the uploads to finish
-            filter((tasks: UploadTaskSnapshot[]) => tasks.every(task => task.state === 'success')),
-            // firebase storage getDownloadUrl returns a promise so we unwrap the values with switchMap
-            switchMap(async(tasks) => {
-              const downloadUrlPromises = tasks.map((task) => task.ref.getDownloadURL());
-              return await Promise.all(downloadUrlPromises);
-            }),
-            map((dowloadUrls) => {
-              // we want to store the path and the downloadUrl with our data so we map them together here
-              return dowloadUrls.map((downloadUrl, i) => ({downloadUrl, gsPath: paths[i]}))
-            }),
-            tap((fieldValue) => {
-              const uploadControl = group.get('fileUploadExample');
-              // set the control value
-              uploadControl.setValue(fieldValue);
-              // clear control validators
-              uploadControl.clearValidators();
-              console.log('validators', uploadControl.hasError('waitForDownload'))
-              // tell the component upload is finished
-              uploadComponent.isUploaded = true;
-            })
-          ).subscribe();
+          // const uploadSub = combineLatest(uploads).pipe(
+          //   // wait for all the uploads to finish
+          //   filter((tasks: UploadTaskSnapshot[]) => {
+          //     console.log({tasks})
+          //     return tasks.every(task => task.state === 'success')
+          //   }),
+          //   // firebase storage getDownloadUrl returns a promise so we unwrap the values with switchMap
+          //   switchMap(async(tasks) => {
+          //     const downloadUrlPromises = tasks.map((task) => task.ref.getDownloadURL());
+          //     return await Promise.all(downloadUrlPromises);
+          //   }),
+          //   map((dowloadUrls) => {
+          //     // we want to store the path and the downloadUrl with our data so we map them together here
+          //     return dowloadUrls.map((downloadUrl, i) => ({downloadUrl, gsPath: paths[i]}))
+          //   }),
+          //   tap((fieldValue) => {
+          //     const uploadControl = group.get('fileUploadExample');
+          //     // set the control value
+          //     uploadControl.setValue(fieldValue);
+          //     // clear control validators
+          //     uploadControl.clearValidators();
+          //     console.log('validators', uploadControl.hasError('waitForDownload'))
+          //     // tell the component upload is finished
+          //     uploadComponent.isUploaded = true;
+          //   })
+          // ).subscribe();
           // track subscription so we can unsubscribe
-          this.subs.push(uploadSub);
+          // this.subs.push(uploadSub);
         },
-        showUploadProgress: true
       },
       {
         controlType: ControlType.BUTTON,
