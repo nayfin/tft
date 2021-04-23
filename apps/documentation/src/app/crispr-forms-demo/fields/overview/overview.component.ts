@@ -3,7 +3,6 @@ import { FormConfig, ControlType, SelectOption } from '@tft/crispr-forms';
 import { Validators, FormGroup } from '@angular/forms';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AngularFireStorage } from '@angular/fire/storage';
 import { Moment } from 'moment';
 
 @Component({
@@ -48,33 +47,6 @@ export class OverviewComponent {
     },
     validators: [Validators.required],
     fields: [
-      {
-        controlType: ControlType.FILE_UPLOAD,
-        controlName: 'fileUploadExample',
-        allowMultipleFiles: true,
-        heading: {
-          label: 'Upload Images'
-        },
-        // showUploadButton: true,
-        uploadFiles : (group, files) => {
-          console.log({group, files});
-
-          const uploads = [];
-          for (let i = 0; i < files.length; i++) {
-            const file = files.item(i);
-            const path = `examples/${file?.name || 'no-name-' + i}`
-            const uploadRef = this.fireStorage.ref(path);
-
-            uploads.push(uploadRef.put(file));
-          }
-          Promise.all(uploads).then((res) => {
-            console.log({res})
-            return res;
-          });
-
-          // group.get('uploadfileUploadExampleFiles')
-        }
-      },
       {
         controlType: ControlType.SUB_GROUP,
         controlName: 'subGroup',
@@ -341,18 +313,16 @@ export class OverviewComponent {
     ]
   }
 
-  constructor(private fireStorage: AngularFireStorage) { }
-
   handleSubmit(form: FormGroup) {
     const rawValue = form.getRawValue();
     console.log({rawValue, form});
   }
 
   handleValueChanges(value: any) {
-    // console.log({valueChanges: value})
+    console.log({valueChanges: value})
   }
   handleStatusChanges(status: any) {
-    // console.log({statusChanges: status})
+    console.log({statusChanges: status})
   }
 
 }

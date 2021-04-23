@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AngularFireStorageModule } from '@angular/fire/storage';
+// import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { CrisprFormsModule } from '@tft/crispr-forms';
 import { UiImportsModule } from '@tft/ui-imports';
@@ -13,8 +13,8 @@ import { OverviewComponent } from './fields/overview/overview.component';
     CommonModule,
     CrisprFormsModule,
     UiImportsModule,
-    AngularFireStorageModule,
     CrisprFormsDemoRoutingModule
+    // AngularFireStorageModule,
   ],
   declarations: [
     OverviewComponent
