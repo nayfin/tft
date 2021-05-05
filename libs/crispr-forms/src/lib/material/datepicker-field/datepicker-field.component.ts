@@ -20,11 +20,13 @@ export class DatepickerFieldComponent extends DatepickerFieldMixin implements On
 
   defaultConfig = defaultConfig;
 
-  dateClass: MatCalendarCellClassFunction<Moment> = this.config.cellClassFunction || null;
-  dateClass$: Observable<MatCalendarCellClassFunction<Moment>> = this.config?.dateClass$ || of(() => '');
+  dateClass: MatCalendarCellClassFunction<Moment>;
+  dateClass$: Observable<MatCalendarCellClassFunction<Moment>>;
 
   ngOnInit() {
     super.ngOnInit();
+    this.dateClass = this.config?.cellClassFunction || null
+    this.dateClass$ = this.config.dateClass ? this.config?.dateClass(this.group) : of(() => '');
   }
 
 }

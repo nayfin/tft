@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormConfig, ControlType } from '@tft/crispr-forms';
+import * as moment from 'moment';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'doc-datepicker',
@@ -38,9 +40,9 @@ export class DatepickerComponent {
       {
         controlType: ControlType.DATEPICKER,
         heading: {
-          label: 'Highlight specific cells',
+          label: 'Highlight specific cells with function',
           info: {
-            content: 'Programmatically add a class to certain day cells'
+            content: 'Programmatically add a class to certain day cells with function'
           },
         },
         label: 'Datepicker Field',
@@ -53,6 +55,43 @@ export class DatepickerComponent {
           }
           return '';
         }
+      },
+      {
+        controlType: ControlType.INPUT,
+        controlName: 'classChanger',
+        inputType: 'number',
+        heading: {
+          label: 'Change the day highlighted in datepicker below',
+          info: {
+            content: 'Change the number to change the date highlighted relative to today'
+          },
+        },
+      },
+      {
+        controlType: ControlType.DATEPICKER,
+        heading: {
+          label: 'Highlight specific cells with Observable',
+          info: {
+            content: 'Programmatically add a class to certain day cells with Observable'
+          },
+        },
+        label: 'Datepicker Field',
+        controlName: 'cellClassDatepicker',
+        dateClass: (group) => {
+          return group.get('classChanger').valueChanges.pipe(
+            map((relativeDay: string) => {
+              return (date, view) => {
+                if(view === 'month') {
+                    return date.dayOfYear() === (moment().dayOfYear() + + relativeDay) ? 'highlight-day' : ''
+                  }
+                  return '';
+                }
+            })
+          )
+
+        }
+
+        //
       }
     ]
   };

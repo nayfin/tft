@@ -3,6 +3,7 @@ import { Moment } from 'moment';
 import { FieldDescriptors, MatFieldProperties } from './crispr-field.config';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { Observable } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 
 export interface DatepickerFieldConfig extends CrisprControlConfig,
   Pick<FieldDescriptors, 'label'>,
@@ -15,5 +16,5 @@ export interface DatepickerFieldConfig extends CrisprControlConfig,
   touchUi?: boolean;
   datepickerFilter?: (date: Moment) => boolean;
   cellClassFunction?: MatCalendarCellClassFunction<Moment>;
-  dateClass$?: Observable<MatCalendarCellClassFunction<Moment>>;
+  dateClass?: (parentGroup: FormGroup) => Observable<MatCalendarCellClassFunction<Moment>>;
 }
