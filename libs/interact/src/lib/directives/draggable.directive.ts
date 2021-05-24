@@ -13,7 +13,7 @@ import { getRootNode } from '../utils';
 /** @dynamic */
 @Directive({
   selector: '[tftDraggable]',
-  // tslint:disable-next-line: no-host-metadata-property
+  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
     '[style.touchAction]': '"none"',
     '[style.position]': '"absolute"',
@@ -77,6 +77,7 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
       this.y = state.y;
       this.x = state.x;
     });
+    this.setDragConfig();
   }
 
   // TODO: watch config here as well and update interactable
@@ -86,12 +87,16 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
     if(changes.y || changes.x) {
       this.alignPositionWithInputs(this.x, this.y);
     }
-    if(changes.dragConfig) {
+    if(changes.dragConfig || changes.disabled) {
       if(!this.interactable) return;
-      this.interactable.draggable(this.dragConfig);
+      this.setDragConfig();
     }
   }
 
+  setDragConfig() {
+    const dragConfig = {...this.dragConfig, enabled: !this.disabled};
+    this.interactable.draggable(dragConfig);
+  }
   ngAfterViewInit() {
     this.addDragPropertiesToElement(this.el.nativeElement);
     if (!this.dropzone_dir) {
@@ -100,7 +105,6 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   }
 
   ngOnDestroy() {
-
     // clean up state and subscriptions related to destroyed component
     this.interactableSubscription.unsubscribe();
     this.interactService.destroyInteractable(this.interactableId, this.registryId);
