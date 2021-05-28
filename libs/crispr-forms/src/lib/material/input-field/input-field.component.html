@@ -13,9 +13,15 @@
       matInput
       [placeholder]="config.placeholder"
       [formControlName]="config.controlName"
-      autocapitalize="off"
-      autocorrect="off"
-      autocomplete="off">
+      [min]="config.min"
+      [max]="config.max"
+      [maxlength]="config.maxLength"
+      [step]="config.step"
+      [autofocus]="config.autofocus"
+      [pattern]="config.pattern"
+      [spellcheck]="config.spellcheck"
+      [autocomplete]="config.autoComplete"
+      [autocapitalize]="config.autoCapitalize">
     <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
     <crispr-info
       matSuffix

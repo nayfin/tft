@@ -6,6 +6,15 @@ export interface InputFieldConfig extends CrisprControlConfig,
   MatFieldProperties {
   controlType: ControlType.INPUT,
   inputType?: InputType;
+  min?: number;
+  max?: number;
+  maxLength?: number;
+  step?: number;
+  pattern?: string;
+  autofocus?: boolean;
+  spellcheck?: boolean;
+  autoComplete?: 'off' | 'on';
+  autoCapitalize?: 'off' | 'on';
 }
 
 type InputType = 'color'
