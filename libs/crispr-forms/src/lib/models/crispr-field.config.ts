@@ -1,5 +1,5 @@
 import { FormGroup, ValidatorFn } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, ObservableInput } from 'rxjs';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
 
@@ -74,7 +74,11 @@ export interface CrisprControlConfig<M = null> extends CrisprFieldConfig {
   controlType: ControlType;
   validators?: ValidatorFn[];
   // TODO: Determine if this is necessary
+  /**
+   * @deprecated please us computeValue instead
+   */
   computeFieldConfig?: ComputeFieldConfig;
+  computeValue?: (group: FormGroup) => Observable<unknown>;
   disabledCallback?: (group: FormGroup, config?: any) => Observable<boolean>;
   disabledCallbackConfig?: CheckControlConfig | CheckControlsConfig | any; // any is required for user defined configs
   hideDisabled?: boolean; // defaults to false

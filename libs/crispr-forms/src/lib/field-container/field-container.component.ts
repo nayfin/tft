@@ -26,7 +26,15 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.disabled$ = this.connectDisabledCallback(this.group, this.config);
     // we tried moving this into afterViewChecked and afterContentChecked lifecycle hooks without any luck
-    if (this.config.computeFieldConfig) {
+    if (this.config.computeValue) {
+      this.subs.push(
+        this.config.computeValue(this.group).pipe(
+          distinctUntilChanged(),
+          tap(computedValue => this.group.get(this.config.controlName).setValue(computedValue))
+        ).subscribe(),
+      );
+    } else if (this.config.computeFieldConfig) {
+      console.warn(`computeFieldConfig property is deprecated, please use computeValue. Example here: https://stackblitz.com/github/nayfin/tft-documentation?file=src%2Fapp%2Fcrispr-forms-demo%2Ffeatures%2Fcomputed-field%2Fcomputed-field.component.ts`)
       this.subs.push(
         computeValueFromFields(this.group, this.config.computeFieldConfig).pipe(
           distinctUntilChanged(),
