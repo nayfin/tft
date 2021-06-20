@@ -10,19 +10,20 @@ import { map } from 'rxjs/operators';
 })
 export class ComputedFieldComponent {
   computedNumberFieldConfig: FormConfig = {
-    autocomplete: 'off',
     fields: [
       {
         controlType: ControlType.INPUT,
         inputType: 'number',
         controlName: 'factorA',
         label: 'This number is multiplied by the next value ',
+        autoComplete: 'off',
       },
       {
         controlType: ControlType.INPUT,
         inputType: 'number',
         controlName: 'factorB',
         label: 'Change me to see the next value change',
+        autoComplete: 'off',
       },
       {
         controlType: ControlType.INPUT,
@@ -57,12 +58,17 @@ export class ComputedFieldComponent {
         inputType: 'text',
         controlName: 'firstName',
         label: 'First Name',
+        spellcheck: true,
+        autoComplete: 'off',
+        autoCapitalize: 'off',
       },
       {
         controlType: ControlType.INPUT,
         inputType: 'text',
         controlName: 'lastName',
         label: 'Last Name',
+        autoComplete: 'off',
+        autoCapitalize: 'off'
       },
       {
         controlType: ControlType.INPUT,
