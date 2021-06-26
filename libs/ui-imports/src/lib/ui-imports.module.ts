@@ -30,6 +30,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatTreeModule } from '@angular/material/tree';
 
 const UI_MODULES = [
   MatPaginatorModule,
@@ -62,7 +63,8 @@ const UI_MODULES = [
   MatExpansionModule,
   MatBadgeModule,
   MatTableModule,
-  MatStepperModule
+  MatStepperModule,
+  MatTreeModule
 ]
 
 @NgModule({
