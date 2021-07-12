@@ -5,3 +5,4 @@ export * from './form.helpers';
 export * from './material';
 export * from './crispr-forms.module';
 export * from './abstracts';
+export * from './form/form.component';
