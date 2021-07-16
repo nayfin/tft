@@ -91,7 +91,7 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
     if(changes.y || changes.x) {
       this.alignPositionWithInputs(this.x, this.y);
     }
-    if(changes.dragConfig || changes.disabled) {
+    if(changes.dragConfig || changes.disabled || this.dragDisabled) {
       if(!this.interactable) return;
       this.setDragConfig();
     }
@@ -104,7 +104,7 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   }
 
   setDragConfig() {
-    const dragConfig = {...this.dragConfig, enabled: !this.disabled};
+    const dragConfig = {...this.dragConfig, enabled:  !(this.disabled || this.dragDisabled)};
     this.interactable.draggable(dragConfig);
   }
   ngAfterViewInit() {
@@ -187,7 +187,7 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   }
 
   initiateDragEvents(dragConfig: Partial<Interact.OrBoolean<DraggableOptions>>, nativeElement: HTMLElement) {
-    return interact(nativeElement).draggable({...dragConfig })
+    return interact(nativeElement).draggable({...dragConfig, enabled:  !(this.disabled || this.dragDisabled) })
       .on('dragstart',  (event: NgDragEvent) => {
         const interaction = event.interaction;
 
