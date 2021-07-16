@@ -91,7 +91,7 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
     if(changes.y || changes.x) {
       this.alignPositionWithInputs(this.x, this.y);
     }
-    if(changes.dragConfig || changes.disabled || this.dragDisabled) {
+    if(changes.dragConfig || changes.disabled || changes.dragDisabled) {
       if(!this.interactable) return;
       this.setDragConfig();
     }
@@ -104,9 +104,11 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   }
 
   setDragConfig() {
-    const dragConfig = {...this.dragConfig, enabled:  !(this.disabled || this.dragDisabled)};
+    const enabled = !(this.disabled || this.dragDisabled)
+    const dragConfig = {...this.dragConfig, enabled};
     this.interactable.draggable(dragConfig);
   }
+
   ngAfterViewInit() {
     this.addDragPropertiesToElement(this.el.nativeElement);
     if (!this.dropzone_dir) {
