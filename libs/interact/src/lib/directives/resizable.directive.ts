@@ -8,6 +8,7 @@ import { DropzoneDirective } from './dropzone.directive';
 import { NgResizeEvent, TftResizeEvent, DEFAULT_REGISTRY_ID } from '../models';
 @Directive({
   selector: '[tftResizable]',
+  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
     // prevents touch events from colliding with with mouse events
     // on touch screen
@@ -30,6 +31,7 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
 
   @Input() width: number;
   @Input() height: number;
+  @Input() resizeDisabled = false;
 
   @Output() resizeStart = new EventEmitter<TftResizeEvent>();
   @Output() resizeMove = new EventEmitter<TftResizeEvent>();
@@ -76,8 +78,8 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.resizeConfig && this.interactable) {
-      this.interactable.resizable(this.resizeConfig);
+    if ((changes.resizeConfig || changes.resizeDisabled) && this.interactable) {
+      this.interactable.resizable({...this.resizeConfig, enabled: !this.resizeDisabled,});
     }
     if (changes.width || changes.height) {
       this.alignDimensionsWithInputs(this.width, this.height);
@@ -108,7 +110,7 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
    * @param nativeElement
    */
   initiateResizeEvents(resizeConfig: Partial<Interact.OrBoolean<ResizableOptions>>, nativeElement: any) {
-    return interact(nativeElement).resizable(resizeConfig)
+    return interact(nativeElement).resizable({...resizeConfig, enabled: !this.resizeDisabled})
       .on('resizestart', (event: NgResizeEvent) => { this.resizeStart.emit(this.mapResizeEvent(event))})
       .on('resizemove',  (event: NgResizeEvent) => {
         if (this.enableResizeDefault) {

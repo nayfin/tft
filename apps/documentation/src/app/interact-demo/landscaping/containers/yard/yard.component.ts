@@ -11,7 +11,7 @@ export class YardComponent {
 
   // @ViewChild(DropzoneDirective) dropzone2: DropzoneDirective;
 
-
+  disableBlueBox = false
 
   log(type:string, event: any) {
     console.log(type, event);

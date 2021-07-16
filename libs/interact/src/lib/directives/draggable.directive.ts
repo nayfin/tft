@@ -33,7 +33,11 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   @Input() interactableId: string;
   @Input() dragData: D;
   @Input() enableDragDefault = true;
+  /**
+   * @deprecated replaced by 'dragDisabled' property, please migrate before v13
+   */
   @Input() disabled = false;
+  @Input() dragDisabled = false;
   @Input() dragConfig: Partial<Interact.OrBoolean<DraggableOptions>>;
   @Input() showPlaceholder = false;
   // pipes all interact events to event emitters
@@ -90,6 +94,12 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
     if(changes.dragConfig || changes.disabled) {
       if(!this.interactable) return;
       this.setDragConfig();
+    }
+    /**
+     * @deprecated remove this in v13
+     */
+    if (changes.disabled) {
+      console.warn(`It looks like your using the 'disabled' input on a tftDraggable directive, it has been deprecated and is replaced with 'dragDisabled', please migrate by v13`)
     }
   }
 
