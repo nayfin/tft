@@ -15,7 +15,7 @@ import { getRootNode } from '../utils';
   selector: '[tftDraggable]',
   // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
-    '[style.touchAction]': '"none"',
+    '[style.touchAction]': 'this.dragDisabled ? "auto" : "none"',
     '[style.position]': '"absolute"',
     '[id]': 'interactableId',
   }

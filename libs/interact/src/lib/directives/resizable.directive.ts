@@ -12,7 +12,7 @@ import { NgResizeEvent, TftResizeEvent, DEFAULT_REGISTRY_ID } from '../models';
   host: {
     // prevents touch events from colliding with with mouse events
     // on touch screen
-    '[style.touchAction]': '"none"',
+    '[style.touchAction]': 'this.resizeDisabled ? "auto" : "none"',
     // default to absolute here to accommodate likely use cases
     // consuming component can easily over ride with position input
     '[style.position]': 'position',
