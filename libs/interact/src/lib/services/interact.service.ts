@@ -43,7 +43,7 @@ export class InteractService {
     // if we pass an id to createInteractableId then it is used when creating the interactable
     // and returned, otherwise a an id is created for the draggable.
     const key = this.createInteractableId(interactableId );
-    if (!this.dragRegistrySystem.hasOwnProperty(registryId)) {
+    if (!Object.prototype.hasOwnProperty.call(this.dragRegistrySystem, registryId)) {
       this.dragRegistrySystem[registryId] = {};
     }
     this.dragRegistrySystem[registryId][key] = this.createInteractableState(defaultPosition, defaultSize, defaultDelta);
