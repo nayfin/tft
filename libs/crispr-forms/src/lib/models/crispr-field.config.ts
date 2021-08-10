@@ -28,25 +28,27 @@ import {
 
 import { ThemePalette } from '@angular/material/core';
 import { FileUploadFieldConfig } from './file-upload-field.config';
+import { UnitConversionFieldConfig } from './unit-conversion-field.config';
 
 // export type ControlType = keyof typeof FIELD_COMPONENTS;
 export enum ControlType {
   AUTOCOMPLETE = 'autocomplete',
   AUTOCOMPLETE_CHIPLIST = 'autocompleteChiplist',
-  INPUT = 'input',
-  TEXTAREA = 'textarea',
-  CHECKBOX = 'checkbox',
-  SELECT = 'select',
-  RADIO = 'radio',
-  SUB_GROUP = 'subGroup',
-  GROUP_LIST = 'groupList',
-  DATEPICKER = 'datepicker',
-  SLIDER = 'slider',
   BUTTON = 'button',
-  HEADING = 'heading',
+  CHECKBOX = 'checkbox',
+  CUSTOM = 'custom',
+  DATEPICKER = 'datepicker',
   DIVIDER = 'divider',
   FILE_UPLOAD = 'fileUpload',
-  CUSTOM = 'custom'
+  HEADING = 'heading',
+  INPUT = 'input',
+  GROUP_LIST = 'groupList',
+  RADIO = 'radio',
+  SELECT = 'select',
+  SLIDER = 'slider',
+  SUB_GROUP = 'subGroup',
+  TEXTAREA = 'textarea',
+  UNIT_CONVERSION = 'unitConversion',
 }
 
 /**
@@ -138,7 +140,8 @@ export type AnyFieldConfig = InputFieldConfig
   | FileUploadFieldConfig
   | HeadingConfig
   | ButtonConfig
-  | DividerConfig;
+  | DividerConfig
+  | UnitConversionFieldConfig;
   // | CustomFieldConfig;
 
 export type ControlValue = boolean | string | number | Date | SelectOption | SelectOption[];

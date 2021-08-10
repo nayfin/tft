@@ -11,3 +11,4 @@ export * from './file-upload/file-upload.component';
 export * from './heading/heading.component';
 export * from './divider/divider.component';
 export * from './radio-field/radio-field.component';
+export * from './unit-conversion-field/unit-conversion-field.component';

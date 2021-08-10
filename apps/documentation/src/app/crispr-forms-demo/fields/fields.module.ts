@@ -17,6 +17,7 @@ import { ButtonComponent } from './button/button.component';
 import { AutocompleteChiplistComponent } from './autocomplete-chiplist/autocomplete-chiplist.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FileUploadComponent } from './file-upload/file-upload.component';
+import { UnitConversionComponent } from './unit-conversion/unit-conversion.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
     HeadingComponent,
     ButtonComponent,
     AutocompleteChiplistComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    UnitConversionComponent
   ],
   imports: [
     CommonModule,

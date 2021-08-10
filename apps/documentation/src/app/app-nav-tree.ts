@@ -42,6 +42,10 @@ export const appNavTree: SidenavSection[] = [
             path: 'crispr-forms-demo/fields/autocomplete-chiplist'
           },
           {
+            title: 'Unit Conversion Field',
+            path: 'crispr-forms-demo/fields/unit-conversion'
+          },
+          {
             title: 'Checkbox Field',
             path: 'crispr-forms-demo/fields/checkbox'
           },

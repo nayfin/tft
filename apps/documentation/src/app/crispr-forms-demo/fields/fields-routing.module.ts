@@ -14,6 +14,7 @@ import {
   ButtonComponent,
   FileUploadComponent
 } from '.';
+import { UnitConversionComponent } from './unit-conversion/unit-conversion.component';
 
 
 
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'divider', component: DividerComponent},
   { path: 'heading', component: HeadingComponent},
   { path: 'button', component: ButtonComponent},
+  { path: 'unit-conversion', component: UnitConversionComponent},
   { path: '**', redirectTo: 'select'},
 ];
 

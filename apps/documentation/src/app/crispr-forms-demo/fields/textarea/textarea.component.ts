@@ -6,7 +6,7 @@ import { ControlType, FormConfig } from '@tft/crispr-forms';
   templateUrl: './textarea.component.html',
   styleUrls: ['./textarea.component.scss']
 })
-export class TextareaComponent implements OnInit {
+export class TextareaComponent {
 
   formConfig: FormConfig = {
     autocomplete: 'off',
@@ -18,11 +18,6 @@ export class TextareaComponent implements OnInit {
         rows: 5
       },
     ]
-  }
-
-  constructor() { }
-
-  ngOnInit() {
   }
 
 }

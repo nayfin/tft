@@ -48,26 +48,11 @@ export class OverviewComponent {
     validators: [Validators.required],
     fields: [
       {
-        controlType: ControlType.SUB_GROUP,
-        controlName: 'subGroup',
-        heading: {
-          label: 'SubGroup Label'
-        },
-        fields: [
-          // configuration will create an input field in the form with the following configuration
-          {
-            controlType: ControlType.INPUT,
-            inputType: 'text',
-            controlName: 'subField',
-            placeholder: 'First Name',
-            validators: [Validators.required]
-          },
-          {
-            controlType: ControlType.INPUT,
-            controlName: 'secondSubField',
-            placeholder: 'Last Name',
-          },
-        ]
+        controlType: ControlType.INPUT,
+        inputType: 'text',
+        controlName: 'inputField',
+        placeholder: 'First Name',
+        validators: [Validators.required]
       },
       {
         controlType: ControlType.RADIO,
@@ -128,6 +113,28 @@ export class OverviewComponent {
         },
         // you can pass custom validators in here too.
         validators: [Validators.required, Validators.minLength(5)],
+      },
+      {
+        controlType: ControlType.SUB_GROUP,
+        controlName: 'subGroup',
+        heading: {
+          label: 'SubGroup Label'
+        },
+        fields: [
+          // configuration will create an input field in the form with the following configuration
+          {
+            controlType: ControlType.INPUT,
+            inputType: 'text',
+            controlName: 'subField',
+            placeholder: 'First Name',
+            validators: [Validators.required]
+          },
+          {
+            controlType: ControlType.INPUT,
+            controlName: 'secondSubField',
+            placeholder: 'Last Name',
+          },
+        ]
       },
       {
         controlType: ControlType.CHECKBOX,

@@ -1,0 +1,56 @@
+<crispr-field-container
+  [config]="config"
+  [group]="group">
+  <mat-form-field
+    [color]="config.color"
+    [appearance]="config.appearance">
+    <mat-label *ngIf="config.label">
+      {{config.label}}
+    </mat-label>
+    <input
+      type="number"
+      matInput
+      [formControl]="displayValueControl"
+      [min]="config.min"
+      [max]="config.max"
+      [step]="config.step"
+      [autofocus]="config.autofocus"
+      [autocomplete]="config.autoComplete">
+    <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
+    <crispr-info
+      matSuffix
+      *ngIf="config.info"
+      [info]="config.info">
+    </crispr-info>
+  </mat-form-field>
+
+  <mat-form-field
+    [color]="config.color"
+    [appearance]="config.appearance"
+    [formGroup]="group">
+    <mat-label *ngIf="config.label">
+      {{config.label}}
+    </mat-label>
+    <mat-select
+      #selectField
+      [formControl]="unitSelectControl">
+
+      <mat-option
+        *ngFor="let option of unitOptions$ | async"
+        [value]="option.value">
+        <crispr-option [option]="option">
+        </crispr-option>
+      </mat-option>
+
+    </mat-select>
+
+    <!-- <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span> -->
+    <!-- <crispr-info
+      *ngIf="config.info"
+      matSuffix
+      [info]="config.info">
+    </crispr-info> -->
+  </mat-form-field>
+
+
+</crispr-field-container>

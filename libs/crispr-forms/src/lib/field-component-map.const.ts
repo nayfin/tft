@@ -2,7 +2,7 @@
 import { InputFieldComponent, SelectFieldComponent, AutocompleteFieldComponent,
   AutocompleteChiplistFieldComponent, TextareaFieldComponent, CheckboxFieldComponent,
   RadioFieldComponent, FileUploadComponent, SliderFieldComponent, DatepickerFieldComponent,
-  HeadingComponent, DividerComponent, ButtonComponent } from './material';
+  HeadingComponent, DividerComponent, ButtonComponent, UnitConversionFieldComponent } from './material';
 import { FormGroupListComponent } from './form-group-list/form-group-list.component';
 import { isControlConfig } from './form.helpers';
 import { ControlType } from './models';
@@ -23,7 +23,8 @@ export const FIELD_COMPONENTS = {
   datepicker: DatepickerFieldComponent,
   fileUpload: FileUploadComponent,
   heading: HeadingComponent,
-  divider: DividerComponent
+  divider: DividerComponent,
+  unitConversion: UnitConversionFieldComponent
 };
 
 export function isControlComponent(component: CrisprFieldComponent): component is CrisprControlComponent {
@@ -42,7 +43,8 @@ export type CrisprControlComponent = ButtonComponent |
   CheckboxFieldComponent |
   SliderFieldComponent |
   FileUploadComponent |
-  DatepickerFieldComponent;
+  DatepickerFieldComponent |
+  UnitConversionFieldComponent;
 
 export type ComponentKeys = keyof typeof FIELD_COMPONENTS;
 // export type CrisprFieldComponent = FIELD_COMPONENTS[ComponentKeys];

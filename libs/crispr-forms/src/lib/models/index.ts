@@ -12,3 +12,4 @@ export * from './crispr-field.config';
 export * from './button.config';
 export * from './heading.config';
 export * from './divider.config';
+export * from './unit-conversion-field.config';
