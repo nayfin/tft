@@ -36,7 +36,6 @@ export class UnitConversionFieldComponent extends UnitConversionFieldMixin imple
     ])
     .subscribe(([displayValue, unitValue] )=> {
       const computedValue = this.config.storedValueConversion(displayValue, unitValue);
-      console.log({computedValue});
       this.control.setValue(computedValue);
     });
     this.setInitialDisplayValue();
@@ -46,7 +45,5 @@ export class UnitConversionFieldComponent extends UnitConversionFieldMixin imple
     const initialDisplayValue = this.config.initialDisplayValueConversion(this.value || null, this.config.initialDisplayedUnit);
     this.displayValueControl.setValue(initialDisplayValue);
   }
-
-
 
 }

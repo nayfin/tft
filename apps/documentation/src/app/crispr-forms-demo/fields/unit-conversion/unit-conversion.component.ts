@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ControlType, FormConfig } from '@tft/crispr-forms';
-
+import qty from 'js-quantities';
 @Component({
   selector: 'tft-unit-conversion',
   templateUrl: './unit-conversion.component.html',
@@ -26,13 +26,19 @@ export class UnitConversionComponent {
           {value: 'yd', label: 'yard'},
         ]},
         initialDisplayValueConversion: (value, displayedUnit) => {
-          console.log('initialDisplayValueConversion', value, displayedUnit);
-          return value as number * 10
+          if (value) {
+            const initialQty = qty(`${value} m`).to(displayedUnit).toString();
+            console.log('initialDisplayValueConversion', initialQty, value, displayedUnit);
+            return initialQty
+          } else {
+            return 0;
+          }
         },
         storedValueConversion: (value, displayedUnit ) => {
           const num = parseFloat(value);
-          console.log('initialDisplayValueConversion', num, displayedUnit);
-          return num / 10
+          const storedValue = qty(`${value} ${displayedUnit}`).to('m').toString();
+          console.log('initialDisplayValueConversion', num, displayedUnit, storedValue);
+          return storedValue;
         }
       },
       {
