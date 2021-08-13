@@ -15,6 +15,7 @@ export interface ButtonConfig extends CrisprFieldConfig,
   info?: Omit<Info, 'iconName'>;
   disabledOnInvalidForm?: boolean;
 }
+
 export type ButtonType = 'submit' | 'reset' | 'button';
 
 type MatButtonType = 'raised' | 'flat' | 'stroked' | 'icon'; // TODO: 'fab' || 'mini-fab'

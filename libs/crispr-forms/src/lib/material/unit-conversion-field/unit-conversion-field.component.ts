@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { combineLatest, Observable } from 'rxjs';
+import { startWith } from 'rxjs/operators';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { observablifyOptions } from '../../form.helpers';
 import { SelectOption } from '../../models';
@@ -31,10 +32,10 @@ export class UnitConversionFieldComponent extends UnitConversionFieldMixin imple
     this.unitSelectControl.setValue(this.config.initialDisplayedUnit);
     combineLatest([
       this.displayValueControl.valueChanges,
-      this.unitSelectControl.valueChanges
+      this.unitSelectControl.valueChanges.pipe(startWith(this.config.initialDisplayedUnit))
     ])
     .subscribe(([displayValue, unitValue] )=> {
-      const computedValue = this.config.storedValueConversion(+displayValue, unitValue);
+      const computedValue = this.config.storedValueConversion(displayValue, unitValue);
       console.log({computedValue});
       this.control.setValue(computedValue);
     });
@@ -42,10 +43,7 @@ export class UnitConversionFieldComponent extends UnitConversionFieldMixin imple
   }
 
   setInitialDisplayValue() {
-    const initialStoredValue: number = (this.value as number) || 0;
-    const initialDisplayValue = this.config.initialDisplayValueConversion(initialStoredValue, this.config.initialDisplayedUnit);
-    console.log({initialDisplayValue});
-
+    const initialDisplayValue = this.config.initialDisplayValueConversion(this.value || null, this.config.initialDisplayedUnit);
     this.displayValueControl.setValue(initialDisplayValue);
   }
 

@@ -27,13 +27,19 @@ export class UnitConversionComponent {
         ]},
         initialDisplayValueConversion: (value, displayedUnit) => {
           console.log('initialDisplayValueConversion', value, displayedUnit);
-          return value * 10
+          return value as number * 10
         },
         storedValueConversion: (value, displayedUnit ) => {
-          console.log('initialDisplayValueConversion', value, displayedUnit);
-          return value / 10
+          const num = parseFloat(value);
+          console.log('initialDisplayValueConversion', num, displayedUnit);
+          return num / 10
         }
       },
+      {
+        controlType: ControlType.BUTTON,
+        label: 'SUBMIT',
+        callback: (group) => { console.log({value: group.value})}
+      }
     ]
   }
 
