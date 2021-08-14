@@ -1,0 +1,9 @@
+.unit-field {
+  width: 40%;
+  margin-left: 16px;
+}
+::ng-deep {
+  .field-container {
+    display: flex;
+  }
+}

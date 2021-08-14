@@ -28,11 +28,13 @@ export class UnitConversionFieldComponent extends UnitConversionFieldMixin imple
     super.ngOnInit();
     // TODO: Fix it
     // this.displayValueControl.setValidators(this.config.validators);
-    this.unitOptions$ = observablifyOptions(this.config.selectableUnits, this.group)
-    this.unitSelectControl.setValue(this.config.initialDisplayedUnit);
+    if (this.config.showUnitSelect) {
+      this.unitOptions$ = observablifyOptions(this.config.selectableUnits, this.group)
+    }
+    this.unitSelectControl.setValue(this.config.defaultDisplayUnit);
     combineLatest([
       this.displayValueControl.valueChanges,
-      this.unitSelectControl.valueChanges.pipe(startWith(this.config.initialDisplayedUnit))
+      this.unitSelectControl.valueChanges.pipe(startWith(this.config.defaultDisplayUnit))
     ])
     .subscribe(([displayValue, unitValue] )=> {
       const computedValue = this.config.storedValueConversion(displayValue, unitValue);
@@ -42,7 +44,7 @@ export class UnitConversionFieldComponent extends UnitConversionFieldMixin imple
   }
 
   setInitialDisplayValue() {
-    const initialDisplayValue = this.config.initialDisplayValueConversion(this.value || null, this.config.initialDisplayedUnit);
+    const initialDisplayValue = this.config.initialDisplayValueConversion(this.value || null, this.config.defaultDisplayUnit);
     this.displayValueControl.setValue(initialDisplayValue);
   }
 

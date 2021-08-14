@@ -14,17 +14,38 @@ export class UnitConversionComponent {
     fields: [
       {
         controlType: ControlType.UNIT_CONVERSION,
-        label: 'Text Input Field',
-        controlName: 'textInput',
-        storedUnit: 'm',
-        initialDisplayedUnit: 'ft',
-        selectableUnits: (group) => {
-          console.log({group})
+        label: 'Unit Conversion Field with unit selection',
+        controlName: 'withUnitSelection',
+        defaultDisplayUnit: 'ft',
+        showUnitSelect: true,
+        selectableUnits: (_group) => {
           return [
           {value: 'in', label: 'inch'},
           {value: 'ft', label: 'feet'},
           {value: 'yd', label: 'yard'},
         ]},
+        initialDisplayValueConversion: (value, displayedUnit) => {
+          if (value) {
+            const initialQty = qty(`${value} m`).to(displayedUnit).toString();
+            console.log('initialDisplayValueConversion', initialQty, value, displayedUnit);
+            return initialQty
+          } else {
+            return 0;
+          }
+        },
+        storedValueConversion: (value, displayedUnit ) => {
+          const num = parseFloat(value);
+          const storedValue = qty(`${value} ${displayedUnit}`).to('m').toString();
+          console.log('initialDisplayValueConversion', num, displayedUnit, storedValue);
+          return storedValue;
+        }
+      },
+      {
+        controlType: ControlType.UNIT_CONVERSION,
+        label: 'Unit Conversion Field without unit selection field',
+        controlName: 'withoutUnitSelection',
+        defaultDisplayUnit: 'ft',
+        showUnitSelect: false,
         initialDisplayValueConversion: (value, displayedUnit) => {
           if (value) {
             const initialQty = qty(`${value} m`).to(displayedUnit).toString();

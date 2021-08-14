@@ -2,6 +2,8 @@
   [config]="config"
   [group]="group">
   <mat-form-field
+    [style.width.%]="config.showUnitSelect ? 60 : 100"
+    class="number-field"
     [color]="config.color"
     [appearance]="config.appearance">
     <mat-label *ngIf="config.label">
@@ -25,9 +27,11 @@
   </mat-form-field>
 
   <mat-form-field
+    *ngIf="config.showUnitSelect"
     [color]="config.color"
     [appearance]="config.appearance"
-    [formGroup]="group">
+    [formGroup]="group"
+    class="unit-field">
     <mat-label *ngIf="config.label">
       {{config.label}}
     </mat-label>
