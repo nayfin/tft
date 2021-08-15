@@ -30,21 +30,25 @@ export class UnitConversionFieldComponent extends UnitConversionFieldMixin imple
     // this.displayValueControl.setValidators(this.config.validators);
     if (this.config.showUnitSelect) {
       this.unitOptions$ = observablifyOptions(this.config.selectableUnits, this.group)
+      this.unitSelectControl.setValue(this.config?.initialDisplayUnit || null);
     }
-    this.unitSelectControl.setValue(this.config.defaultDisplayUnit);
-    combineLatest([
+
+    const controlValuePipeline: Observable<string>[] = [
       this.displayValueControl.valueChanges,
-      this.unitSelectControl.valueChanges.pipe(startWith(this.config.defaultDisplayUnit))
-    ])
-    .subscribe(([displayValue, unitValue] )=> {
+      ...(this.config.showUnitSelect ? [this.unitSelectControl.valueChanges.pipe(startWith(this.config.initialDisplayUnit))] : [])
+    ];
+
+    combineLatest(controlValuePipeline).subscribe(([displayValue, unitValue] )=> {
       const computedValue = this.config.storedValueConversion(displayValue, unitValue);
       this.control.setValue(computedValue);
     });
-    this.setInitialDisplayValue();
+
+    const initialUnitValue = this.config.showUnitSelect ? this.config?.initialDisplayUnit : null;
+    this.setInitialDisplayValue(initialUnitValue);
   }
 
-  setInitialDisplayValue() {
-    const initialDisplayValue = this.config.initialDisplayValueConversion(this.value || null, this.config.defaultDisplayUnit);
+  setInitialDisplayValue(unit: unknown) {
+    const initialDisplayValue = this.config.initialDisplayValueConversion(this.value || null, unit);
     this.displayValueControl.setValue(initialDisplayValue);
   }
 

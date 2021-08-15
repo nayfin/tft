@@ -16,7 +16,7 @@ export class UnitConversionComponent {
         controlType: ControlType.UNIT_CONVERSION,
         label: 'Unit Conversion Field with unit selection',
         controlName: 'withUnitSelection',
-        defaultDisplayUnit: 'ft',
+        initialDisplayUnit: 'ft',
         showUnitSelect: true,
         selectableUnits: (_group) => {
           return [
@@ -26,6 +26,7 @@ export class UnitConversionComponent {
         ]},
         initialDisplayValueConversion: (value, displayedUnit) => {
           if (value) {
+            console.log({displayedUnit})
             const initialQty = qty(`${value} m`).to(displayedUnit).toString();
             console.log('initialDisplayValueConversion', initialQty, value, displayedUnit);
             return initialQty
@@ -44,21 +45,20 @@ export class UnitConversionComponent {
         controlType: ControlType.UNIT_CONVERSION,
         label: 'Unit Conversion Field without unit selection field',
         controlName: 'withoutUnitSelection',
-        defaultDisplayUnit: 'ft',
         showUnitSelect: false,
-        initialDisplayValueConversion: (value, displayedUnit) => {
+        initialDisplayValueConversion: (value) => {
           if (value) {
-            const initialQty = qty(`${value} m`).to(displayedUnit).toString();
-            console.log('initialDisplayValueConversion', initialQty, value, displayedUnit);
+            const initialQty = qty(`${value} m`).to('ft').toString();
+            console.log('initialDisplayValueConversion', initialQty, value);
             return initialQty
           } else {
             return 0;
           }
         },
-        storedValueConversion: (value, displayedUnit ) => {
+        storedValueConversion: (value ) => {
           const num = parseFloat(value);
-          const storedValue = qty(`${value} ${displayedUnit}`).to('m').toString();
-          console.log('initialDisplayValueConversion', num, displayedUnit, storedValue);
+          const storedValue = qty(`${value} ft`).to('m').toString();
+          console.log('initialDisplayValueConversion', num, storedValue);
           return storedValue;
         }
       },

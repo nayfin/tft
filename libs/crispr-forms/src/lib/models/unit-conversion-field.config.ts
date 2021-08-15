@@ -8,10 +8,7 @@ export type UnitConversionFieldConfig<ST = unknown, UT = unknown> = CrisprContro
   MatFieldProperties & {
   controlType: ControlType.UNIT_CONVERSION;
 
-  /**
-   * Display unit to use on component initialization and when unit not user selectable i.e. showUnitSelect: false
-   */
-  defaultDisplayUnit: UT;
+
   /**
    * Used convert config value to displayed value on initialization
    */
@@ -32,6 +29,10 @@ export type UnitConversionFieldConfig<ST = unknown, UT = unknown> = CrisprContro
    * A callback function that returns the options to be used by the unit select field. Can be used just like select field options.
    */
   selectableUnits: (group: FormGroup) => OptionsType,
+  /**
+   * Display unit to use on component initialization and when unit not user selectable i.e. showUnitSelect: false
+   */
+   initialDisplayUnit: UT;
 } | {
   showUnitSelect: false;
 })
