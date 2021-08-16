@@ -45,19 +45,20 @@ export class UnitConversionFieldComponent extends UnitConversionFieldMixin imple
       const computedValue = this.config.storedValueConversion(displayValue, unitValue);
       this.control.setValue(computedValue);
     });
-
-    const initialUnitValue = this.config.showUnitSelect ? this.config?.initialDisplayUnit : null;
-    this.setInitialDisplayValue(initialUnitValue);
   }
 
   ngOnDestroy() {
     this.transformationSubscription.unsubscribe();
   }
 
-  setInitialDisplayValue(unit: unknown) {
-    const initialDisplayValue = this.config.initialDisplayValueConversion(this.value || null, unit);
-    console.log({value: this.value, initialDisplayValue})
+  setInitialDisplayValue(storedValue: any, unit: unknown) {
+    const initialDisplayValue = this.config.initialDisplayValueConversion(storedValue || null, unit);
     this.displayValueControl.setValue(initialDisplayValue);
   }
 
+  // We override the 'setControlValue' we inherited from crisprControlMixin and add our custom logic
+  setControlValue(value) {
+    const initialUnitValue = this.config.showUnitSelect ? this.config?.initialDisplayUnit : null;
+    this.setInitialDisplayValue(value, initialUnitValue);
+  }
 }
