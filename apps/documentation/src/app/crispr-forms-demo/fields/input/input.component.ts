@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ControlType, FormConfig } from '@tft/crispr-forms';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'doc-input',
@@ -23,6 +23,9 @@ export class InputComponent implements OnInit {
         label: 'Number Input Field',
         inputType: 'number',
         controlName: 'numberInput',
+        min: 0,
+        max: 4,
+        validators: [Validators.min(0), Validators.max(4)]
       },
       {
         controlType: ControlType.INPUT,

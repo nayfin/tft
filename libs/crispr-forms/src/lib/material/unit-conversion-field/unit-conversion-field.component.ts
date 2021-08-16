@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { observablifyOptions } from '../../form.helpers';
@@ -17,28 +17,31 @@ const UnitConversionFieldMixin = crisprControlMixin<UnitConversionFieldConfig>(C
   styleUrls: ['./unit-conversion-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UnitConversionFieldComponent extends UnitConversionFieldMixin implements OnInit {
+export class UnitConversionFieldComponent extends UnitConversionFieldMixin implements OnInit, OnDestroy {
   defaultConfig = defaultConfig;
 
   displayValueControl = new FormControl();
   unitSelectControl = new FormControl();
   unitOptions$: Observable<SelectOption[]>;
 
+  transformationSubscription: Subscription;
+
   ngOnInit() {
     super.ngOnInit();
     // TODO: Fix it
     // this.displayValueControl.setValidators(this.config.validators);
+    this.control.clearValidators();
+    const controlValuePipeline: Observable<string>[] = [
+      this.displayValueControl.valueChanges,
+    ];
+    // setup all required pieces when showing a field for selecting units
     if (this.config.showUnitSelect) {
       this.unitOptions$ = observablifyOptions(this.config.selectableUnits, this.group)
       this.unitSelectControl.setValue(this.config?.initialDisplayUnit || null);
+      controlValuePipeline.push(this.unitSelectControl.valueChanges.pipe(startWith(this.config.initialDisplayUnit)));
     }
 
-    const controlValuePipeline: Observable<string>[] = [
-      this.displayValueControl.valueChanges,
-      ...(this.config.showUnitSelect ? [this.unitSelectControl.valueChanges.pipe(startWith(this.config.initialDisplayUnit))] : [])
-    ];
-
-    combineLatest(controlValuePipeline).subscribe(([displayValue, unitValue] )=> {
+    this.transformationSubscription = combineLatest(controlValuePipeline).subscribe(([displayValue, unitValue] )=> {
       const computedValue = this.config.storedValueConversion(displayValue, unitValue);
       this.control.setValue(computedValue);
     });
@@ -47,8 +50,13 @@ export class UnitConversionFieldComponent extends UnitConversionFieldMixin imple
     this.setInitialDisplayValue(initialUnitValue);
   }
 
+  ngOnDestroy() {
+    this.transformationSubscription.unsubscribe();
+  }
+
   setInitialDisplayValue(unit: unknown) {
     const initialDisplayValue = this.config.initialDisplayValueConversion(this.value || null, unit);
+    console.log({value: this.value, initialDisplayValue})
     this.displayValueControl.setValue(initialDisplayValue);
   }
 

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { ControlType, FormConfig } from '@tft/crispr-forms';
 import qty from 'js-quantities';
 @Component({
@@ -7,7 +8,11 @@ import qty from 'js-quantities';
   styleUrls: ['./unit-conversion.component.scss']
 })
 export class UnitConversionComponent {
-
+  // initial stored value to pass to configuration
+  initialValue = {
+    withUnitSelection: 3.6576, // meters
+    withoutUnitSelection: 25.908 // meters
+  }
 
   formConfig: FormConfig = {
     autocomplete: 'off',
@@ -18,6 +23,7 @@ export class UnitConversionComponent {
         controlName: 'withUnitSelection',
         initialDisplayUnit: 'ft',
         showUnitSelect: true,
+        validators: [Validators.required, Validators.max(3)],
         selectableUnits: (_group) => {
           return [
           {value: 'in', label: 'inch'},
@@ -27,7 +33,7 @@ export class UnitConversionComponent {
         initialDisplayValueConversion: (value, displayedUnit) => {
           if (value) {
             console.log({displayedUnit})
-            const initialQty = qty(`${value} m`).to(displayedUnit).toString();
+            const initialQty = qty(`${value} m`).to(displayedUnit).scalar;
             console.log('initialDisplayValueConversion', initialQty, value, displayedUnit);
             return initialQty
           } else {
@@ -36,7 +42,7 @@ export class UnitConversionComponent {
         },
         storedValueConversion: (value, displayedUnit ) => {
           const num = parseFloat(value);
-          const storedValue = qty(`${value} ${displayedUnit}`).to('m').toString();
+          const storedValue = qty(`${value} ${displayedUnit}`).to('m').scalar;
           console.log('initialDisplayValueConversion', num, displayedUnit, storedValue);
           return storedValue;
         }
@@ -46,19 +52,21 @@ export class UnitConversionComponent {
         label: 'Unit Conversion Field without unit selection field',
         controlName: 'withoutUnitSelection',
         showUnitSelect: false,
+        validators: [Validators.required, Validators.max(3)],
+        fieldSuffix: 'feet',
         initialDisplayValueConversion: (value) => {
           if (value) {
-            const initialQty = qty(`${value} m`).to('ft').toString();
+            const initialQty = qty(`${value} m`).to('ft').scalar;
             console.log('initialDisplayValueConversion', initialQty, value);
-            return initialQty
+            return initialQty;
           } else {
             return 0;
           }
         },
-        storedValueConversion: (value ) => {
+        storedValueConversion: (value) => {
           const num = parseFloat(value);
-          const storedValue = qty(`${value} ft`).to('m').toString();
-          console.log('initialDisplayValueConversion', num, storedValue);
+          const storedValue = qty(`${value} ft`).to('m').scalar;
+          console.log('storedValueConversion', num, storedValue);
           return storedValue;
         }
       },
