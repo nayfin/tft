@@ -31,6 +31,7 @@ export class UnitConversionFieldComponent extends UnitConversionFieldMixin imple
     // TODO: Fix it
     // this.displayValueControl.setValidators(this.config.validators);
     this.control.clearValidators();
+
     const controlValuePipeline: Observable<string>[] = [
       this.displayValueControl.valueChanges,
     ];
@@ -58,6 +59,7 @@ export class UnitConversionFieldComponent extends UnitConversionFieldMixin imple
 
   // We override the 'setControlValue' we inherited from crisprControlMixin and add our custom logic
   setControlValue(value) {
+    console.log({ucSetControlValue: value})
     const initialUnitValue = this.config.showUnitSelect ? this.config?.initialDisplayUnit : null;
     this.setInitialDisplayValue(value, initialUnitValue);
   }

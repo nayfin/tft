@@ -10,6 +10,7 @@ export function crisprControlMixin<C extends CrisprControlConfig>(BaseClass: typ
 
     _value: ControlValue | any[];
     set value(value: ControlValue | any[]) {
+      console.log({setValue: value})
       this.setControlValue(value);
       this._value = value;
     }
