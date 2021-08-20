@@ -8,9 +8,8 @@ export function crisprControlMixin<C extends CrisprControlConfig>(BaseClass: typ
     group: FormGroup;
     control: AbstractControl;
 
-    _value: ControlValue | any[];
-    set value(value: ControlValue | any[]) {
-      console.log({setValue: value})
+    _value: ControlValue;
+    set value(value: ControlValue) {
       this.setControlValue(value);
       this._value = value;
     }
@@ -29,7 +28,7 @@ export function crisprControlMixin<C extends CrisprControlConfig>(BaseClass: typ
       })
     }
 
-    setControlValue(value: ControlValue | any[]) {
+    setControlValue(value: ControlValue) {
       if(value && this.control && this.config.controlType !== ControlType.SUB_GROUP) {
         this.control.setValue(value)
       }

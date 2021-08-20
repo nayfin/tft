@@ -144,5 +144,7 @@ export type AnyFieldConfig = InputFieldConfig
   | UnitConversionFieldConfig;
   // | CustomFieldConfig;
 
-export type ControlValue = boolean | string | number | Date | SelectOption | SelectOption[];
 
+export type ControlValue<T = any> = boolean | string | number | Date | SelectOption | SelectOption[] | ControlGroupValue | T;
+
+export type ControlGroupValue = {[key: string]: ControlValue};

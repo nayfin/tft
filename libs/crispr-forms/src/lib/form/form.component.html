@@ -9,7 +9,7 @@
   <ng-container
     *ngFor="let field of config.fields;"
     crisprField
-    [value]="value | initialControlValue : field "
+    [value]="value | initialControlValue : field"
     [config]="field"
     [group]="form">
   </ng-container>

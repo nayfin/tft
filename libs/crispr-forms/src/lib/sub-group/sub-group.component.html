@@ -4,6 +4,7 @@
   <ng-container
     *ngFor="let fieldConfig of config.fields;"
     crisprField
+    [value]="value | initialControlValue : fieldConfig"
     [config]="fieldConfig"
     [group]="control">
   </ng-container>

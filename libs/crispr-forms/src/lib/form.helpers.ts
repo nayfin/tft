@@ -239,7 +239,7 @@ export function buildFormGroupFromConfig(config: FormConfig, value = null, group
       group.addControl(controlName, createControlForType(controlConfig, controlValue));
     }
   });
-  group.setValidators(config.validators)
+  group.setValidators(config.validators);
   return group;
 }
 
