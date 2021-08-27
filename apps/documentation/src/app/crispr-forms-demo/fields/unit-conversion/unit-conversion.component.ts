@@ -25,6 +25,7 @@ export class UnitConversionComponent {
       {
         controlType: ControlType.UNIT_CONVERSION,
         label: 'Unit Conversion Field with unit selection',
+        placeholder: '8',
         controlName: 'withUnitSelection',
         initialDisplayUnit: 'ft',
         showUnitSelect: true,
