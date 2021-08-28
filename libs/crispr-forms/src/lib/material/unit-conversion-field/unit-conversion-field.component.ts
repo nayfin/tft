@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { combineLatest, Observable, Subscription } from 'rxjs';
-import { shareReplay, tap } from 'rxjs/operators';
+import { shareReplay, startWith, tap } from 'rxjs/operators';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { observablifyOptions } from '../../form.helpers';
 import { SelectOption } from '../../models';
@@ -32,12 +32,12 @@ export class UnitConversionFieldComponent extends UnitConversionFieldMixin imple
     // this.displayValueControl.setValidators(this.config.validators);
 
     const controlValuePipeline: Observable<string>[] = [
-      this.displayValueControl.valueChanges.pipe(shareReplay(1))
+      this.displayValueControl.valueChanges.pipe(startWith(this.displayValueControl.value))
     ];
     // setup all required pieces when showing a field for selecting units
     if (this.config.showUnitSelect) {
       this.unitOptions$ = observablifyOptions(this.config.selectableUnits, this.group)
-      controlValuePipeline.push(this.unitSelectControl.valueChanges.pipe(shareReplay(1)));
+      controlValuePipeline.push(this.unitSelectControl.valueChanges.pipe(startWith(this.config?.initialDisplayUnit || null)));
       this.unitSelectControl.setValue(this.config?.initialDisplayUnit || null);
     }
 
@@ -45,10 +45,6 @@ export class UnitConversionFieldComponent extends UnitConversionFieldMixin imple
       const computedValue = this.config.storedValueConversion(displayValue, unitValue);
       this.control.setValue(computedValue);
     });
-    // TODO: remove this stupid hack to get the control's valueChanges to fire even though the control is getting set several times by it's super
-    // this needs to happen or else changing the unit won't fire the controlValuePipeline until the display input changes as well
-    // should be rxjs way to fix this have tried shareReplay and startWith
-    this.displayValueControl.setValue(this.displayValueControl.value);
   }
 
   ngOnDestroy() {
