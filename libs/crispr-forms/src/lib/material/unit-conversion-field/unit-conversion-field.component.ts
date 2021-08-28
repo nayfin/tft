@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { combineLatest, Observable, Subscription } from 'rxjs';
-import { startWith } from 'rxjs/operators';
+import { shareReplay, tap } from 'rxjs/operators';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { observablifyOptions } from '../../form.helpers';
 import { SelectOption } from '../../models';
@@ -28,24 +28,27 @@ export class UnitConversionFieldComponent extends UnitConversionFieldMixin imple
 
   ngOnInit() {
     super.ngOnInit();
-    // TODO: Fix it
+    // TODO: Validators need work. validation is tricky because the input needs to be validated against but the validator will compare against the controls value
     // this.displayValueControl.setValidators(this.config.validators);
-    this.control.clearValidators();
 
     const controlValuePipeline: Observable<string>[] = [
-      this.displayValueControl.valueChanges,
+      this.displayValueControl.valueChanges.pipe(shareReplay(1))
     ];
     // setup all required pieces when showing a field for selecting units
     if (this.config.showUnitSelect) {
       this.unitOptions$ = observablifyOptions(this.config.selectableUnits, this.group)
+      controlValuePipeline.push(this.unitSelectControl.valueChanges.pipe(shareReplay(1)));
       this.unitSelectControl.setValue(this.config?.initialDisplayUnit || null);
-      controlValuePipeline.push(this.unitSelectControl.valueChanges.pipe(startWith(this.config.initialDisplayUnit)));
     }
 
     this.transformationSubscription = combineLatest(controlValuePipeline).subscribe(([displayValue, unitValue] )=> {
       const computedValue = this.config.storedValueConversion(displayValue, unitValue);
       this.control.setValue(computedValue);
     });
+    // TODO: remove this stupid hack to get the control's valueChanges to fire even though the control is getting set several times by it's super
+    // this needs to happen or else changing the unit won't fire the controlValuePipeline until the display input changes as well
+    // should be rxjs way to fix this have tried shareReplay and startWith
+    this.displayValueControl.setValue(this.displayValueControl.value);
   }
 
   ngOnDestroy() {
@@ -57,7 +60,12 @@ export class UnitConversionFieldComponent extends UnitConversionFieldMixin imple
     this.displayValueControl.setValue(initialDisplayValue);
   }
 
-  // We override the 'setControlValue' we inherited from crisprControlMixin and add our custom logic
+  /**
+   * We override the 'setControlValue' we inherited from crisprControlMixin and add our custom logic,
+   * This function gets called onInit because were object oriented. it's so great, so great that I'm
+   * typing a paragraph to explain what the hell is going on...
+   * @param value the initial value for the control passed down from the form components input
+   */
   setControlValue(value) {
     const initialUnitValue = this.config.showUnitSelect ? this.config?.initialDisplayUnit : null;
     this.setInitialDisplayValue(value, initialUnitValue);
