@@ -19,7 +19,7 @@
       <mat-datepicker
         [touchUi]="config.touchUi"
         [startView]="config.startView"
-        [startAt]="config.startAt"
+        [startAt]="startAt$ | async"
         [dateClass]="dateClass || (dateClass$ | async)"
         #picker>
       </mat-datepicker>

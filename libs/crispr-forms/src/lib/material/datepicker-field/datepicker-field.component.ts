@@ -22,9 +22,15 @@ export class DatepickerFieldComponent extends DatepickerFieldMixin implements On
 
   dateClass: MatCalendarCellClassFunction<Moment>;
   dateClass$: Observable<MatCalendarCellClassFunction<Moment>>;
+  startAt$: Observable<Date>;
 
   ngOnInit() {
     super.ngOnInit();
+    this.startAt$ = this.config.startAt instanceof Date
+      ? of(this.config.startAt)
+      : this.config.startAt instanceof Function
+      ? this.config.startAt(this.group)
+      : of(null);
     this.dateClass = this.config?.cellClassFunction || null
     this.dateClass$ = this.config.dateClass ? this.config?.dateClass(this.group) : of(() => '');
   }

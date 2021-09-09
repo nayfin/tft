@@ -27,14 +27,20 @@ export class DatepickerComponent {
       },
       {
         controlType: ControlType.DATEPICKER,
+        controlName: 'startAtController',
+        label: 'Controls startAt date of touch optimized field'
+      },
+      {
+        controlType: ControlType.DATEPICKER,
         heading: {
           label: 'With touchUI enabled for mobile',
           info: {
             content: 'This larger calender is great for mobile users'
           },
         },
+        startAt: (group) => group.get('startAtController').valueChanges,
         touchUi: true,
-        label: 'Datepicker Field',
+        label: 'Touch Optimized Datepicker Field',
         controlName: 'touchDatepicker',
       },
       {
