@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+// import { MatCalendar } from '@angular/material/datepicker';
+import { Component, /* Inject */ } from '@angular/core';
 import { FormConfig, ControlType } from '@tft/crispr-forms';
 import * as moment from 'moment';
 import { map } from 'rxjs/operators';
@@ -107,7 +108,17 @@ export class DatepickerComponent {
 @Component({
   selector: 'doc-datepicker-custom-footer',
   template: `
-    <button mat-raised-button>BUTTON</button>
+    <button mat-raised-button  (click)="focus()">FOCUS</button>
   `
 })
-export class CustomDatepickerFooterComponent { }
+export class CustomDatepickerFooterComponent<D> {
+  // TODO: this isn't working for some reason
+  constructor(
+    // @Inject({ MatCalendar}) public _calendar: MatCalendar<D>
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  ) { }
+
+  focus() {
+    // this._calendar.focusActiveCell()
+  }
+}
