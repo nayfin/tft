@@ -10,7 +10,7 @@ import { InputComponent } from './input/input.component';
 import { TextareaComponent } from './textarea/textarea.component';
 import { CheckboxComponent } from './checkbox/checkbox.component';
 import { SliderComponent } from './slider/slider.component';
-import { DatepickerComponent } from './datepicker/datepicker.component';
+import { CustomDatepickerFooterComponent, DatepickerComponent } from './datepicker/datepicker.component';
 import { DividerComponent } from './divider/divider.component';
 import { HeadingComponent } from './heading/heading.component';
 import { ButtonComponent } from './button/button.component';
@@ -34,7 +34,8 @@ import { UnitConversionComponent } from './unit-conversion/unit-conversion.compo
     ButtonComponent,
     AutocompleteChiplistComponent,
     FileUploadComponent,
-    UnitConversionComponent
+    UnitConversionComponent,
+    CustomDatepickerFooterComponent
   ],
   imports: [
     CommonModule,

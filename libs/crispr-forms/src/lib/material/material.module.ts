@@ -42,6 +42,7 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 import { SelectedFileComponent } from './selected-file/selected-file.component';
 import { FileDropzoneDirective } from './file-upload/file-dropzone.directive';
 import { UnitConversionFieldComponent } from './unit-conversion-field/unit-conversion-field.component';
+import { PortalModule } from '@angular/cdk/portal';
 
 // TODO: Should we import UI library?
 // Will the tree shaker shake the unused modules?
@@ -63,7 +64,8 @@ const MAT_DESIGN_MODULES = [
   MatFormFieldModule,
   MatMomentDateModule,
   MatDividerModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  PortalModule
 ];
 
 const CRISPR_FIELDS = [

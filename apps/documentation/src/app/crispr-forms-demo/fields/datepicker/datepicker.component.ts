@@ -14,12 +14,13 @@ export class DatepickerComponent {
     fields: [
       {
         heading: {
-          label: 'Datepicker'
+          label: 'Datepicker With Custom Footer'
         },
         controlType: ControlType.DATEPICKER,
         startAt: new Date('April 20 2019'),
         label: 'Datepicker Field',
         controlName: 'datepicker',
+        calendarFooterComponent: CustomDatepickerFooterComponent
       },
       {
         controlType: ControlType.DIVIDER,
@@ -102,3 +103,11 @@ export class DatepickerComponent {
     ]
   };
 }
+
+@Component({
+  selector: 'doc-datepicker-custom-footer',
+  template: `
+    <button mat-raised-button>BUTTON</button>
+  `
+})
+export class CustomDatepickerFooterComponent { }

@@ -1,9 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, AfterContentInit } from '@angular/core';
 import { DatepickerFieldConfig } from '../../models';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { Moment } from 'moment';
 import { Observable, of } from 'rxjs';
+import { ComponentPortal, Portal } from '@angular/cdk/portal';
 
 const defaultConfig: Partial<DatepickerFieldConfig> = {
   startView: 'month',
@@ -16,13 +17,16 @@ const DatepickerFieldMixin = crisprControlMixin<DatepickerFieldConfig>(CrisprFie
   styleUrls: ['./datepicker-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DatepickerFieldComponent extends DatepickerFieldMixin implements OnInit {
+export class DatepickerFieldComponent extends DatepickerFieldMixin implements OnInit, AfterContentInit {
 
   defaultConfig = defaultConfig;
 
   dateClass: MatCalendarCellClassFunction<Moment>;
   dateClass$: Observable<MatCalendarCellClassFunction<Moment>>;
   startAt$: Observable<Date>;
+
+  /** A portal containing the footer component type for this calendar. */
+  calendarFooterPortal: Portal<any>;
 
   ngOnInit() {
     super.ngOnInit();
@@ -35,4 +39,9 @@ export class DatepickerFieldComponent extends DatepickerFieldMixin implements On
     this.dateClass$ = this.config.dateClass ? this.config?.dateClass(this.group) : of(() => '');
   }
 
+  ngAfterContentInit() {
+    if (this.config.calendarFooterComponent) {
+      this.calendarFooterPortal = new ComponentPortal(this.config.calendarFooterComponent);
+    }
+  }
 }
