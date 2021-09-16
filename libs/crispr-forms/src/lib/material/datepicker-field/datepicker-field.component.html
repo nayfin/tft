@@ -22,7 +22,7 @@
         [startAt]="startAt$ | async"
         [dateClass]="dateClass || (dateClass$ | async)"
         #picker>
-        <mat-datepicker-actions>
+        <mat-datepicker-actions *ngIf="calendarFooterPortal">
           <ng-template [cdkPortalOutlet]="calendarFooterPortal"></ng-template>
         </mat-datepicker-actions>
       </mat-datepicker>

@@ -15,8 +15,13 @@ export interface DatepickerFieldConfig extends CrisprControlConfig,
   startView?: 'month' | 'year' | 'multi-year';
   startAt?: Date | ((group: FormGroup) => Observable<Date>) | null;
   touchUi?: boolean;
+  // TODO: trying to get this event into the mat-datepicker. uncomment if approved remove if not
+  // selectedChange?: (event, picker: MatDatepicker<unknown>) => void;
   datepickerFilter?: (date: Moment) => boolean;
   cellClassFunction?: MatCalendarCellClassFunction<Moment>;
   dateClass?: (parentGroup: FormGroup) => Observable<MatCalendarCellClassFunction<Moment>>;
-  calendarFooterComponent?: ComponentType<any>;
+  /**
+   * Pass a component into mat-datepicker-actions component see [docs](https://material.angular.io/components/datepicker/overview#confirmation-action-buttons)
+   */
+  datepickerActions?: ComponentType<any>;
 }

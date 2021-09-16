@@ -40,8 +40,15 @@ export class DatepickerFieldComponent extends DatepickerFieldMixin implements On
   }
 
   ngAfterContentInit() {
-    if (this.config.calendarFooterComponent) {
-      this.calendarFooterPortal = new ComponentPortal(this.config.calendarFooterComponent);
+    if (this.config.datepickerActions) {
+      this.calendarFooterPortal = new ComponentPortal(this.config.datepickerActions);
     }
   }
+
+  // handleSelectedChange(event, picker: MatDatepicker<unknown>) {
+  //   console.log({event, picker})
+  //   if(this.config.selectedChange) {
+  //     this.config.selectedChange(event, picker);
+  //   }
+  // }
 }
