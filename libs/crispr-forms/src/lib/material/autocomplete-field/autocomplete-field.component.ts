@@ -35,6 +35,7 @@ export class AutocompleteFieldComponent
       this.autocompleteInputControl.setValue(value.label);
     }
   }
+
   /**
    * The material autocomplete defaults to displaying the options value instead of its label.
    * We only have the value from the selected option to work with, so we have to pass the options

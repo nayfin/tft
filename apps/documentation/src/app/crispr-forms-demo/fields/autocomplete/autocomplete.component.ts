@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormConfig, ControlType, SelectOption } from '@tft/crispr-forms';
 import { FormGroup } from '@angular/forms';
 import { EndpointsService, ENDPOINTS } from '../../endpoints.service';
@@ -9,19 +9,58 @@ import { EndpointsService, ENDPOINTS } from '../../endpoints.service';
   templateUrl: './autocomplete.component.html',
   styleUrls: ['./autocomplete.component.scss']
 })
-export class AutocompleteComponent implements OnInit {
+export class AutocompleteComponent {
 
+  arraySelectInitialValue = {
+    groupList: [
+      {
+        selectField: 'a',
+        autocompleteField: {value: 'ab', label: 'option at'}
+      }
+    ]
+  };
   arraySelectConfig: FormConfig = {
     fields: [
       {
-        controlType: ControlType.AUTOCOMPLETE,
-        label: 'This autocomplete field uses a simple array of options',
-        controlName: 'selectField',
-        options: (_group, searchTerm) => [
-          {label: 'option a', value: 'a'},
-          {label: 'option b', value: 'b'},
-          {label: 'option c', value: 'c'},
-        ].filter(option => option.label.includes(searchTerm)),
+        controlType: ControlType.GROUP_LIST,
+        controlName: 'groupList',
+        minListLength: 0,
+        itemLabelBuilder: () => `item`,
+        heading: {
+          label: 'Group List'
+        },
+        addItemLabel: 'ADD ITEM',
+        itemConfig: {
+          controlName: 'groupListItem',
+          controlType: ControlType.SUB_GROUP,
+          fields: [
+            {
+              controlType: ControlType.AUTOCOMPLETE,
+              label: 'This autocomplete field uses a simple array of options',
+              controlName: 'autocompleteField',
+              options: (_group, searchTerm) => [
+                {label: 'option a', value: 'a'},
+                {label: 'option b', value: 'b'},
+                {label: 'option c', value: 'c'},
+              ].filter(option => option.label.includes(searchTerm)),
+            },
+            {
+              controlType: ControlType.SELECT,
+              label: 'This select field uses a simple array of options',
+              controlName: 'selectField',
+              options: (_group) => [
+                {label: 'option a', value: 'a'},
+                {label: 'option b', value: 'b'},
+                {label: 'option c', value: 'c'},
+              ]
+            },
+          ]
+        },
+      },
+      {
+        controlType: ControlType.BUTTON,
+        label: 'SUBMIT',
+        type: 'submit'
       }
     ]
   }
@@ -84,11 +123,6 @@ export class AutocompleteComponent implements OnInit {
   constructor(
     private endpointsService: EndpointsService
   ) { }
-
-  ngOnInit() {
-  }
-
-
 
   handleSubmit(form: FormGroup) {
     console.log({value: form.value})
