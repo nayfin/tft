@@ -11,7 +11,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
   chipsSelectable: true,
   areChipsRemovable: true,
-  addChipOnBlur: true,
+  tabToSelect: true,
   autoActiveFirstOption: false,
   imageUrlParam: 'image',
   typeDebounceTime: 500,
@@ -84,7 +84,7 @@ export class AutocompleteChiplistFieldComponent
    * @param event blur event that triggers the handle blur
    */
   handleTab(_event: FocusEvent) {
-    if (this.chipInput.activeOption && this.config.addChipOnBlur) {
+    if (this.chipInput.activeOption && (this.config.tabToSelect || this.config.addChipOnBlur)) {
       const chip = this.chipInput.activeOption.value;
       this.chips$.next([...this.chips$.value,  chip]);
     }

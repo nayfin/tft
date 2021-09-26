@@ -13,5 +13,9 @@ export interface AutocompleteChiplistFieldConfig extends AbstractAutocompleteFie
    * Pass in any key codes to use for selection
    */
   separatorKeyCodes?: number[];
+  tabToSelect?: boolean;
+  /**
+   * @deprecated replaced with tabToSelect as it is more accurate
+   */
   addChipOnBlur?: boolean;
 }
