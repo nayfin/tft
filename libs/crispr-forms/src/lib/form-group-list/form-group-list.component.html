@@ -8,12 +8,14 @@
     <!-- TODO: add sortBy function -->
     <div *ngFor="let control of formArray?.controls; let i = index;">
       <!-- TODO: use content projection to allow custom item label component -->
-      <span class="mat-h3" *ngIf="config.itemLabelBuilder"> {{  config.itemLabelBuilder(i) }} </span>
-      <button
-        mat-icon-button
-        *ngIf="i + 1 > config.minListLength">
-        <mat-icon (click)="deleteGroup(i)">delete</mat-icon>
-      </button>
+      <div class="item-header">
+        <span class="mat-h2" *ngIf="config.itemLabelBuilder"> {{  config.itemLabelBuilder(i) }} </span>
+        <button
+          mat-icon-button
+          *ngIf="i + 1 > config.minListLength">
+          <mat-icon (click)="deleteGroup(i)">delete</mat-icon>
+        </button>
+      </div>
       <div
         [formGroupName]="i">
         <ng-container
@@ -26,12 +28,15 @@
       </div>
     </div>
   </div>
-
-  <button
-    type="button"
-    mat-raised-button
-    (click)="addGroup()">
-    {{config.addItemLabel}}
-  </button>
+  <div class="group-footer">
+    <button
+      type="button"
+      class="add"
+      mat-raised-button
+      [color]="config.addButtonColor"
+      (click)="addGroup()">
+      {{config.addItemLabel}}
+    </button>
+  </div>
 
 </crispr-field-container>

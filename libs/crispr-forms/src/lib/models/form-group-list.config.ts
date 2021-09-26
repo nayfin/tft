@@ -1,3 +1,4 @@
+import { ThemePalette } from '@angular/material/core';
 import { CrisprControlConfig, ControlType } from './';
 import { SubGroupConfig } from './crispr-field.config';
 
@@ -15,4 +16,5 @@ export interface FormGroupListConfig extends CrisprControlConfig {
   addItemLabel?: string;
   itemLabelBuilder?: (index: number) => string;
   minListLength?: number;
+  addButtonColor?: ThemePalette;
 }

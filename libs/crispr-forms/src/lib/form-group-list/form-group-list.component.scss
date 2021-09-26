@@ -1,0 +1,13 @@
+.item-header {
+  display:flex;
+  justify-content: space-between;
+}
+.group-footer {
+  display: flex;
+  justify-content: flex-end;
+  button {
+    &.add {
+      margin-bottom: 16px;
+    }
+  }
+}

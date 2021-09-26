@@ -35,11 +35,13 @@ export class AutocompleteComponent {
         controlType: ControlType.GROUP_LIST,
         controlName: 'groupList',
         minListLength: 0,
-        itemLabelBuilder: () => `item`,
+        itemLabelBuilder: (i) => `${i + 1}) item`,
         heading: {
-          label: 'Group List'
+          label: 'Group List',
+          typographyClass: 'mat-h2'
         },
         addItemLabel: 'ADD ITEM',
+        addButtonColor: 'primary',
         itemConfig: {
           controlName: 'groupListItem',
           controlType: ControlType.SUB_GROUP,
