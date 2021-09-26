@@ -27,7 +27,7 @@ export class AutocompleteChiplistComponent implements OnInit {
         label: 'This autocomplete field uses a simple array of options',
         controlName: 'selectField',
         options: (_group, searchTerm) => [
-          {label: 'option a', value: 'a'},
+          {label: 'option a', value: 'a', imageUrl: 'https://i.udemycdn.com/course/480x270/1362070_b9a1_2.jpg'},
           {label: 'option b', value: 'b'},
           {label: 'option c', value: 'c'},
         ].filter(option => option.label.includes(searchTerm)),
