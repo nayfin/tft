@@ -1,6 +1,5 @@
 import { AbstractAutocompleteFieldConfig } from './index';
 import { ControlType, FieldDescriptors, MatFieldProperties } from './crispr-field.config';
-import { SelectOption } from './select-field.config';
 
 export interface AutocompleteChiplistFieldConfig extends AbstractAutocompleteFieldConfig,
   FieldDescriptors,
@@ -9,6 +8,10 @@ export interface AutocompleteChiplistFieldConfig extends AbstractAutocompleteFie
   autoActiveFirstOption?: boolean;
   chipsSelectable?: boolean;
   areChipsRemovable?: boolean;
-  addChipOnBlur?: boolean;
   allowDuplicates?: boolean;
+  /**
+   * Pass in any key codes to use for selection
+   */
+  separatorKeyCodes?: number[];
+  addChipOnBlur?: boolean;
 }

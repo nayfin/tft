@@ -2,18 +2,21 @@ import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef } fro
 import { map, tap } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
+import { ENTER } from '@angular/cdk/keycodes';
 
 import { AutocompleteChiplistFieldConfig, SelectOption } from '../../models';
 import { AbstractAutocompleteComponent } from '../../abstracts';
+import { MatChipInputEvent } from '@angular/material/chips';
 
 const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
   chipsSelectable: true,
   areChipsRemovable: true,
   addChipOnBlur: true,
-  autoActiveFirstOption: true,
+  autoActiveFirstOption: false,
   imageUrlParam: 'image',
   typeDebounceTime: 500,
-  allowDuplicates: false
+  allowDuplicates: false,
+  separatorKeyCodes: [ENTER]
 }
 
 @Component({
@@ -24,13 +27,6 @@ const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
 })
 export class AutocompleteChiplistFieldComponent
   extends AbstractAutocompleteComponent<AutocompleteChiplistFieldConfig> implements OnInit {
-  // This is stupid and annoying...
-  // We need use ViewChild twice on the same template ref
-  // - the MatAutocompleteTrigger is used to for selecting value on tab
-  // - the ElementRef<HTMLInputElement> is used to clear the value from input element on selection
-  @ViewChild('autoInput', { read: MatAutocompleteTrigger }) chipInput: MatAutocompleteTrigger;
-  @ViewChild('autoInput') chipInputRef: ElementRef<HTMLInputElement>;
-
   defaultConfig = defaultConfig;
   chips$ = new BehaviorSubject<SelectOption[]>([]);
   remainingOptions$: Observable<SelectOption[]>;
@@ -40,6 +36,14 @@ export class AutocompleteChiplistFieldComponent
       this.control.setValue(chips.map(chip => chip.value))
     })
   );
+
+
+  // We need use ViewChild twice on the same template ref to access as different types
+  // - the MatAutocompleteTrigger is used to for selecting value on tab
+  // - the ElementRef<HTMLInputElement> is used to clear the value from input element on selection
+  @ViewChild('autoInput', { read: MatAutocompleteTrigger }) chipInput: MatAutocompleteTrigger;
+  @ViewChild('autoInput') chipInputRef: ElementRef<HTMLInputElement>;
+
 
   ngOnInit() {
     super.ngOnInit();
@@ -63,21 +67,38 @@ export class AutocompleteChiplistFieldComponent
     }
   }
 
+  // handles mat selecting
   handleSelect(event: MatAutocompleteSelectedEvent) {
     const selectedOption: SelectOption = event.option.value as SelectOption;
     this.chips$.next([...this.chips$.value,  selectedOption]);
     this.chipInputRef.nativeElement.value = '';
     this.autocompleteInputControl.setValue('');
+    // setTimeout needed because the panel thinks it's still open at this point
+    setTimeout(() => this.chipInput.openPanel())
   }
 
   /**
    * To follow ARIA standards we want to select the active option on blur.
-   * @param event blur event that triggers the handle blur, TODO: remove this parameter if not used by 7/4/19
+   * matChipInputAddOnBlur should do this but it causes buggy behaviour
+   * @param event blur event that triggers the handle blur
    */
   handleTab(_event: FocusEvent) {
+    if (this.chipInput.activeOption && this.config.addChipOnBlur) {
+      const chip = this.chipInput.activeOption.value;
+      this.chips$.next([...this.chips$.value,  chip]);
+    }
+  }
+
+  /**
+   * Handles selection via key tokens passed through separatorKeyCodes propert
+   * NOTE: If TAB is used focus does not move on to next component
+   * @param event
+   */
+  handleTokenEnd(event: MatChipInputEvent) {
     if (this.chipInput.activeOption) {
       this.chipInput.activeOption.select();
     }
+    event.chipInput?.clear();
   }
 
   mapToLabel(option: SelectOption) {
@@ -87,9 +108,5 @@ export class AutocompleteChiplistFieldComponent
   removeChip(removedChip: SelectOption) {
     const remainingChips: SelectOption[] = this.chips$.value.filter(chip => chip !== removedChip);
     this.chips$.next(remainingChips);
-  }
-
-  inputFilter(stringToCheck: string, searchString: string) {
-    return stringToCheck.toLowerCase().includes(searchString.trim().toLowerCase());
   }
 }

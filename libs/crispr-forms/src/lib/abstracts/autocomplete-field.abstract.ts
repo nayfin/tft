@@ -1,7 +1,7 @@
 import { OnInit, Directive } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, map, startWith, switchMap, tap } from 'rxjs/operators';
 
 import { crisprControlMixin } from './crispr-control.mixin';
 import { AutocompleteFieldConfig, AutocompleteChiplistFieldConfig, SelectOption } from '../models';
@@ -26,12 +26,12 @@ export class AbstractAutocompleteComponent<C>
     this.group.addControl(this.config.controlName, new FormControl());
     // filter options by the search string using either the default filter function or one passed in through config
     this.options$ = this.autocompleteInputControl.valueChanges.pipe(
+      // this is needed to have the options panel to open on focus
+      startWith(''),
       debounceTime(this.config.typeDebounceTime),
       distinctUntilChanged(),
       map(searchText => searchText || ''),
-      switchMap((searchText: string) => {
-        return observablifyOptions(this.config.options, this.group, searchText, this.config.emptyOptionsMessage)
-      }),
+      switchMap((searchText: string) => observablifyOptions(this.config.options, this.group, searchText, this.config.emptyOptionsMessage))
     );
   }
 }

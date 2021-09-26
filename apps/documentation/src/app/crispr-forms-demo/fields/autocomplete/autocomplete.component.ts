@@ -22,6 +22,16 @@ export class AutocompleteComponent {
   arraySelectConfig: FormConfig = {
     fields: [
       {
+        controlType: ControlType.AUTOCOMPLETE,
+        label: 'This autocomplete field uses a simple array of options',
+        controlName: 'autocompleteField',
+        options: (_group, searchTerm) => [
+          {label: 'option a', value: 'a'},
+          {label: 'option b', value: 'b'},
+          {label: 'option c', value: 'c'},
+        ].filter(option => option.label.includes(searchTerm)),
+      },
+      {
         controlType: ControlType.GROUP_LIST,
         controlName: 'groupList',
         minListLength: 0,
@@ -36,24 +46,14 @@ export class AutocompleteComponent {
           fields: [
             {
               controlType: ControlType.AUTOCOMPLETE,
-              label: 'This autocomplete field uses a simple array of options',
               controlName: 'autocompleteField',
+              label: 'This autocomplete field is part of a group list',
               options: (_group, searchTerm) => [
                 {label: 'option a', value: 'a'},
                 {label: 'option b', value: 'b'},
                 {label: 'option c', value: 'c'},
               ].filter(option => option.label.includes(searchTerm)),
-            },
-            {
-              controlType: ControlType.SELECT,
-              label: 'This select field uses a simple array of options',
-              controlName: 'selectField',
-              options: (_group) => [
-                {label: 'option a', value: 'a'},
-                {label: 'option b', value: 'b'},
-                {label: 'option c', value: 'c'},
-              ]
-            },
+            }
           ]
         },
       },

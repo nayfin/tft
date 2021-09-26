@@ -25,14 +25,13 @@ export class AutocompleteFieldComponent
 
   ngOnInit() {
     super.ngOnInit();
-    this.setControlValue(this.value as SelectOption);
   }
 
   setControlValue(value: SelectOption) {
-    if(value && this.control) {
+    if(this.control && value) {
       // sets the initial value on the control if one is passed
-      this.control.setValue(value.value); // value.value :)
-      this.autocompleteInputControl.setValue(value.label);
+      this.control.setValue(value.value || '');
+      this.autocompleteInputControl.setValue(value.label || '');
     }
   }
 
@@ -67,6 +66,5 @@ export class AutocompleteFieldComponent
       this.control.setValue(this.autoInput.activeOption.value);
     }
   }
-
 }
 
