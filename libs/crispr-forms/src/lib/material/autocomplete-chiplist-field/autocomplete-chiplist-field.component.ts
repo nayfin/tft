@@ -4,7 +4,7 @@ import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/m
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { ENTER } from '@angular/cdk/keycodes';
 
-import { AutocompleteChiplistFieldConfig, SelectOption } from '../../models';
+import { AutocompleteChiplistFieldConfig, DEFAULT_EMPTY_OPTIONS_MESSAGE, SelectOption } from '../../models';
 import { AbstractAutocompleteComponent } from '../../abstracts';
 import { MatChipInputEvent } from '@angular/material/chips';
 
@@ -16,7 +16,8 @@ const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
   imageUrlParam: 'image',
   typeDebounceTime: 500,
   allowDuplicates: false,
-  separatorKeyCodes: [ENTER]
+  separatorKeyCodes: [ENTER],
+  emptyOptionsMessage: DEFAULT_EMPTY_OPTIONS_MESSAGE,
 }
 
 @Component({
@@ -54,7 +55,7 @@ export class AutocompleteChiplistFieldComponent
       map(([chips, options]) => {
         return this.config.allowDuplicates
         ? options
-        : options.filter(option => {
+        : options?.filter(option => {
           return !chips.some(chip => chip.value === option.value);
         })
       })

@@ -31,7 +31,7 @@ export class AbstractAutocompleteComponent<C>
       debounceTime(this.config.typeDebounceTime),
       distinctUntilChanged(),
       map(searchText => searchText || ''),
-      switchMap((searchText: string) => observablifyOptions(this.config.options, this.group, searchText, this.config.emptyOptionsMessage))
+      switchMap((searchText: string) => observablifyOptions(this.config.options, this.group, searchText))
     );
   }
 }

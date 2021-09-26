@@ -1,6 +1,5 @@
 import {
   SelectOption,
-  DEFAULT_EMPTY_OPTIONS_MESSAGE,
   AnyFieldConfig,
   FormConfig,
   ControlType,
@@ -192,7 +191,6 @@ export function observablifyOptions(
   options: OptionsType,
   parentGroup: FormGroup,
   searchString?: string,
-  emptyOptionsMessage?: string,
 ): Observable<SelectOption[]> {
   const calledOptions = callOptionsIfFunction(options, parentGroup, searchString);
   // if options are a promise
@@ -207,13 +205,8 @@ export function observablifyOptions(
   : isObservable(calledOptions)
   // return it
   ? calledOptions
-  // else return empty option
-  : of([
-    {
-      label: emptyOptionsMessage || DEFAULT_EMPTY_OPTIONS_MESSAGE,
-      value: null
-    }
-  ]);
+  // else an empty array
+  : of([]);
 }
 
 /**

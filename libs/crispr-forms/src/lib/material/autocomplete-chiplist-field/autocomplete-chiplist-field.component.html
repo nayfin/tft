@@ -53,19 +53,21 @@
       [autoActiveFirstOption]="this.config.autoActiveFirstOption"
       (optionSelected)="handleSelect($event)"
       [displayWith]="mapToLabel">
+      <ng-container *ngIf="remainingOptions$ | async as remainingOptions; else emptyOption">
+        <ng-container *ngIf="remainingOptions.length > 0; else emptyOption">
+           <mat-option
+            *ngFor="let option of remainingOptions$ | async"
+            [value]="option">
+            <crispr-option [option]="option"></crispr-option>
+          </mat-option>
+        </ng-container>
 
-      <mat-option
-        *ngFor="let option of remainingOptions$ | async"
-        [value]="option">
-
-        <img
-          *ngIf="option[config.imageUrlParam]"
-          [src]="option[config.imageUrlParam]"
-          style="vertical-align:middle;"
-          aria-hidden
-          height="25"/>
-        {{ option.label }}
-      </mat-option>
+      </ng-container>
+      <ng-template #emptyOption>
+        <mat-option disabled="true">
+          {{config.emptyOptionsMessage}}
+        </mat-option>
+      </ng-template>
     </mat-autocomplete>
 
 

@@ -14,7 +14,6 @@
       [formControl]="autocompleteInputControl"
       [placeholder]="config.placeholder"
       [matAutocomplete]="auto"
-      (keydown.tab)="handleTab($event)"
       role="textbox"
       type="textbox"
       autocapitalize="off"
@@ -35,11 +34,21 @@
       (optionSelected)="handleSelect($event)"
       [displayWith]="displayLabel(options$ | async)">
 
-      <mat-option
-        *ngFor="let option of options$ | async"
-        [value]="option.value">
-        <crispr-option [option]="option"></crispr-option>
-      </mat-option>
+      <ng-container *ngIf="options$ | async as options; else emptyOption">
+        <ng-container *ngIf="options.length > 0; else emptyOption">
+          <mat-option
+            *ngFor="let option of options$ | async"
+            [value]="option.value">
+            <crispr-option [option]="option"></crispr-option>
+          </mat-option>
+        </ng-container>
+
+      </ng-container>
+      <ng-template #emptyOption>
+        <mat-option disabled="true">
+          {{config.emptyOptionsMessage}}
+        </mat-option>
+      </ng-template>
 
     </mat-autocomplete>
   </mat-form-field>
