@@ -26,6 +26,10 @@ export class AutocompleteChiplistComponent implements OnInit {
         controlType: ControlType.AUTOCOMPLETE_CHIPLIST,
         label: 'This autocomplete field uses a simple array of options',
         controlName: 'selectField',
+        duplicateCompareFunction: (chip, option) => {
+          console.log({chip, option});
+          return chip.value === option.value;
+        },
         options: (_group, searchTerm) => [
           {label: 'option a', value: 'a', imageUrl: 'https://i.udemycdn.com/course/480x270/1362070_b9a1_2.jpg'},
           {label: 'option b', value: 'b'},

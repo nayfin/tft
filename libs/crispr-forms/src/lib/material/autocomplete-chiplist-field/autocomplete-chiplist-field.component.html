@@ -18,7 +18,7 @@
         [removable]="config.areChipsRemovable"
         (removed)="removeChip(chip)">
         <span *ngIf="chip.imageUrl as imageUrl" class="image-container">
-          <img [src]="imageUrl" alt="">
+          <img [src]="imageUrl" alt="image of {{chip.label}}">
         </span>
         {{chip.label}}
         <mat-icon

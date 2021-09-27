@@ -12,10 +12,11 @@ const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
   chipsSelectable: true,
   areChipsRemovable: true,
   tabToSelect: true,
-  autoActiveFirstOption: false,
+  autoActiveFirstOption: true,
   imageUrlParam: 'image',
   typeDebounceTime: 500,
   allowDuplicates: false,
+  duplicateCompareFunction: (chip, option) => chip.value === option.value,
   separatorKeyCodes: [ENTER],
   emptyOptionsMessage: DEFAULT_EMPTY_OPTIONS_MESSAGE,
 }
@@ -54,10 +55,10 @@ export class AutocompleteChiplistFieldComponent
     ]).pipe(
       map(([chips, options]) => {
         return this.config.allowDuplicates
-        ? options
-        : options?.filter(option => {
-          return !chips.some(chip => chip.value === option.value);
-        })
+          ? options
+          : options?.filter(option => {
+            return !chips.some(chip => this.config.duplicateCompareFunction(chip, option));
+          });
       })
     )
   }
