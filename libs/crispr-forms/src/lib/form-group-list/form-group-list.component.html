@@ -22,7 +22,7 @@
           *ngFor="let field of config.itemConfig.fields;"
           crisprField
           [config]="field"
-          [value]="value[i] | initialControlValue : field"
+          [value]="value && value[i] | initialControlValue : field"
           [group]="control">
         </ng-container>
       </div>
