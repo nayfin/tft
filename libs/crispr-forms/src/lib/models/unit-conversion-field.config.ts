@@ -20,7 +20,6 @@ export type UnitConversionFieldConfig<ST = unknown, UT = unknown> = CrisprContro
   min?: number;
   max?: number;
   autofocus?: boolean;
-  autoComplete?: 'off' | 'on';
   step?: number;
 
 } & ({

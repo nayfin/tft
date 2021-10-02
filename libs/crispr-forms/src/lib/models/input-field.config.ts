@@ -13,7 +13,7 @@ export interface InputFieldConfig extends CrisprControlConfig,
   pattern?: string;
   autofocus?: boolean;
   spellcheck?: boolean;
-  autoComplete?: 'off' | 'on';
+  autoComplete?: string;
   autoCapitalize?: 'off' | 'on';
 }
 
