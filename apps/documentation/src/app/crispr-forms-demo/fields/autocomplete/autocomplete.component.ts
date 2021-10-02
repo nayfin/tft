@@ -34,7 +34,7 @@ export class AutocompleteComponent {
       {
         controlType: ControlType.GROUP_LIST,
         controlName: 'groupList',
-        minListLength: 0,
+        minListLength: 1,
         itemLabelBuilder: (i) => `${i + 1}) item`,
         heading: {
           label: 'Group List',

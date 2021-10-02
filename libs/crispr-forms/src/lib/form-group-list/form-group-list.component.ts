@@ -32,10 +32,12 @@ export class FormGroupListComponent extends FormGroupListMixin implements OnInit
   }
 
   setControlValue(values: any[]) {
-    if(values && this.control) {
-      values.forEach(value => this.addGroup(value));
-    } else if (this.config.minListLength > 0) {
-      this.addGroup()
+    if(this.control) {
+      if(values) {
+        values.forEach(value => this.addGroup(value));
+      } else if (this.config.displayInitialItem) {
+        this.addGroup()
+      }
     }
   }
 

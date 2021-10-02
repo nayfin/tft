@@ -16,5 +16,6 @@ export interface FormGroupListConfig extends CrisprControlConfig {
   addItemLabel?: string;
   itemLabelBuilder?: (index: number) => string;
   minListLength?: number;
+  displayInitialItem?: boolean;
   addButtonColor?: ThemePalette;
 }
