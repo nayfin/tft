@@ -13,9 +13,15 @@ import { SubGroupConfig } from './crispr-field.config';
 export interface FormGroupListConfig extends CrisprControlConfig {
   controlType: ControlType.GROUP_LIST;
   itemConfig: SubGroupConfig; // TODO: should be GroupListItemConfig but having issues working it out
-  addItemLabel?: string;
   itemLabelBuilder?: (index: number) => string;
+  /** The number of list items that a user can delete */
   minListLength?: number;
+  /** If no items are passed as an initial value, should an initial empty item be created */
   displayInitialItem?: boolean;
   addButtonColor?: ThemePalette;
+  addButtonLabel?: string;
+  /**
+   * @deprecated Please use addButtonLabel, addItemLabel will be removed in the next major release
+   */
+  addItemLabel?: string;
 }

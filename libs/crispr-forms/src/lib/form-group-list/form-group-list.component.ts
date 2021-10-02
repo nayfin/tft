@@ -6,7 +6,7 @@ import { createControlForType } from '../form.helpers';
 import { CrisprFieldComponent, crisprControlMixin } from '../abstracts';
 
 const defaultConfig: Partial<FormGroupListConfig> = {
-  addItemLabel: 'ADD ITEM',
+  addButtonLabel: 'ADD ITEM',
   minListLength: 1,
 };
 
@@ -33,7 +33,7 @@ export class FormGroupListComponent extends FormGroupListMixin implements OnInit
 
   setControlValue(values: any[]) {
     if(this.control) {
-      if(values) {
+      if(values?.length > 0) {
         values.forEach(value => this.addGroup(value));
       } else if (this.config.displayInitialItem) {
         this.addGroup()

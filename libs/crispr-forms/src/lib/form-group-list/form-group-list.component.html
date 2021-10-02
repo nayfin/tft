@@ -35,7 +35,7 @@
       mat-raised-button
       [color]="config.addButtonColor"
       (click)="addGroup()">
-      {{config.addItemLabel}}
+      {{config.addItemLabel || config.addButtonLabel}}
     </button>
   </div>
 
