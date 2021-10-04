@@ -11,7 +11,7 @@ import { ControlType, FormConfig } from '@tft/crispr-forms';
 })
 export class FileUploadComponent {
   config: FormConfig = {
-    autocomplete: 'off',
+    autoComplete: 'off',
     errorDictionary: {
       waitForDownload: () => {
         return 'Files must be downloaded';

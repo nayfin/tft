@@ -116,7 +116,9 @@ export interface AbstractGroupConfig<C extends CrisprFieldConfig = AnyFieldConfi
 export interface FormConfig<C = AnyFieldConfig> extends AbstractGroupConfig<C> {
   classes?: string[];
   errorDictionary?: ErrorDictionary;
-  autocomplete?: 'off' | 'on';
+  autoComplete?: string;
+  /** @deprecated use autoComplete */
+  autocomplete?: string;
   validators?: ValidatorFn[]
 }
 /**

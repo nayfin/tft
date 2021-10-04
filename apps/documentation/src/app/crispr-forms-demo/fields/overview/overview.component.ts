@@ -41,7 +41,7 @@ export class OverviewComponent {
   };
 
   config: FormConfig = {
-    autocomplete: 'off',
+    autoComplete: 'off',
     errorDictionary: {
       required: () => `I am a custom error message on a required field`,
     },

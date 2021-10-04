@@ -9,7 +9,7 @@ import { ControlType, FormConfig } from '@tft/crispr-forms';
 export class TextareaComponent {
 
   formConfig: FormConfig = {
-    autocomplete: 'off',
+    autoComplete: 'off',
     fields: [
       {
         controlType: ControlType.TEXTAREA,

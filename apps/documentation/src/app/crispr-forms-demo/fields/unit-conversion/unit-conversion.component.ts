@@ -20,7 +20,7 @@ export class UnitConversionComponent {
   }
 
   formConfig: FormConfig = {
-    autocomplete: 'off',
+    autoComplete: 'off',
     fields: [
       {
         controlType: ControlType.UNIT_CONVERSION,

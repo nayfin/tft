@@ -10,7 +10,7 @@ import { Validators } from '@angular/forms';
 export class ButtonComponent {
   formConfig: FormConfig = {
     classes: ['form'],
-    autocomplete: 'off',
+    autoComplete: 'off',
     fields: [
       {
         controlType: ControlType.INPUT,

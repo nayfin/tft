@@ -10,7 +10,7 @@ import { FormGroup, Validators } from '@angular/forms';
 export class InputComponent implements OnInit {
 
   formConfig: FormConfig = {
-    autocomplete: 'off',
+    autoComplete: 'off',
     fields: [
       {
         controlType: ControlType.INPUT,

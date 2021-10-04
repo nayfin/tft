@@ -13,7 +13,7 @@ import { CustomSelectComponent, CustomSelectConfig } from './custom-select/custo
 export class CustomComponentComponent {
 
   customComponentConfig: FormConfig<CustomInputConfig | CustomSelectConfig> = {
-    autocomplete: 'off',
+    autoComplete: 'off',
     fields: [
       {
         component: CustomInputComponent,
