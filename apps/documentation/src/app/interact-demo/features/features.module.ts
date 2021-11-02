@@ -1,22 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { InteractModule } from '@tft/interact'
-import { PlaceholderTemplateComponent } from './placeholder-template/placeholder-template.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'placeholder-template'},
-  { path: 'placeholder-template', component: PlaceholderTemplateComponent }
+  { path: '', pathMatch: 'full', redirectTo: 'drag'},
+  {
+    path: 'drag',
+    loadChildren: () => import('./drag/drag.module').then(m => m.DragModule)
+  },
+  {
+    path: 'gestures',
+    loadChildren: () => import('./gestures/gestures.module').then(m => m.GesturesModule)
+  },
 ];
 
 
 @NgModule({
-  declarations: [
-    PlaceholderTemplateComponent
-  ],
   imports: [
     CommonModule,
-    InteractModule,
     RouterModule.forChild(routes)
   ]
 })

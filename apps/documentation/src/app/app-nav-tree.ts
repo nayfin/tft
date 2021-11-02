@@ -140,8 +140,19 @@ export const appNavTree: SidenavSection[] = [
       },
       {
         title: 'Features',
-        links: [
-          {title: 'Placeholder Template', path: 'interact-demo/features'}
+        subsections: [
+          {
+            title: 'Drag',
+            links: [
+              { title: 'Placeholder Template', path: 'interact-demo/features/drag/placeholder-template' }
+            ]
+          },
+          {
+            title: 'Gestures',
+            links: [
+              { title: 'Pinch To Zoom', path: 'interact-demo/features/gestures/pinch-to-zoom' }
+            ]
+          }
         ]
       }
     ]

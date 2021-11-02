@@ -21,5 +21,8 @@
     "statusBarItem.remoteBackground": "#85a6e2",
     "statusBarItem.remoteForeground": "#15202b"
   },
-  "peacock.color": "#85a6e2"
+  "peacock.color": "#85a6e2",
+  "cSpell.words": [
+    "gesturable"
+  ]
 }

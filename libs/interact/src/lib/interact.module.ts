@@ -1,15 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DraggableDirective } from './directives/draggable.directive';
-import { ResizableDirective } from './directives/resizable.directive';
-import { DropzoneDirective } from './directives/dropzone.directive';
 import { ArrayOfNPipe } from './pipes/array-of-n.pipe';
-import { DragPreviewDirective } from './directives/drag-preview.directive';
+import { GesturableDirective, DraggableDirective, ResizableDirective, DropzoneDirective, DragPreviewDirective } from './directives';
 
 const EXPORTS = [
   DraggableDirective,
   ResizableDirective,
   DropzoneDirective,
+  GesturableDirective,
   ArrayOfNPipe,
   DragPreviewDirective
 ];
