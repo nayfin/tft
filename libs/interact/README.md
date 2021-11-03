@@ -1,11 +1,9 @@
 
 # tft/interact
 
-## WARNING: THIS LIBRARY IS IN BETA
-Our API is stabilizing but changes could happen at any time
+## An Angular plugin for the interactjs library
 
-## Description
-This is an angular wrapper for the interactjs library. We aim to build a versatile API that exposes all the features of interactjs, but also simplifies implementing common behaviors.
+We aim to build a versatile API that exposes all the features of interactjs, but also simplifies implementing common behaviors.
 
 ## Installation
 
@@ -13,6 +11,9 @@ This is an angular wrapper for the interactjs library. We aim to build a versati
 
 ## Usage
 
+Interactive documentation can be found on [Stackblitz](https://stackblitz.com/github/nayfin/tft-documentation?file=src%2Fapp%2Finteract-demo%2Flandscaping%2Fcontainers%2Fyard%2Fyard.component.html).
+
+Here are some basic examples
 ### Draggables
 
 ```html
@@ -36,9 +37,6 @@ dragConfig = {
 <div tftResizable></div>
 ```
 
-Interactive documentation can be found on Stackblitz [here](https://stackblitz.com/github/nayfin/tft-documentation).
-
-### COMING SOON!
-- interact gesture support
+### News
+- gesture support in beta
 - Stackblitz Examples
-- Docs

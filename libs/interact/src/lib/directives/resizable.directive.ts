@@ -57,13 +57,9 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
     // we check for a dropzone, we use its id as the registry id if there is on
     // otherwise, we use DEFAULT_REGISTRY_ID as a registry id. This allows us to keep our interactable
     // drag state organized by dropzones.
-    this.registryId = this.dropzone_dir && this.dropzone_dir.dropzoneId
-      ? this.dropzone_dir.dropzoneId
-      : DEFAULT_REGISTRY_ID;
+    this.registryId = this.dropzone_dir?.dropzoneId || DEFAULT_REGISTRY_ID;
 
-    this.interactableId = this.draggable_dir && this.draggable_dir.interactableId
-      ? this.draggable_dir.interactableId
-      : this.interactService.addDraggableToRegistry(this.registryId, this.interactableId);
+    this.interactableId = this.draggable_dir?.interactableId || this.interactService.addDraggableToRegistry(this.registryId, this.interactableId);
 
     this.interactable = this.initiateResizeEvents(
       {...this.defaultConfig, ...this.resizeConfig },

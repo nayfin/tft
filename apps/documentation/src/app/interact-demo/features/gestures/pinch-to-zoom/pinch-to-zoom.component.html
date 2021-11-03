@@ -1,13 +1,13 @@
 <div class="page">
   <section class="drag-canvas" tftDropzone>
-    <h2>Alternate Root</h2>
-    <div class="gesturable" tftGesturable tftDraggable>
+    <h2>Pinch to zoom</h2>
+    <div class="gesturable"
+      [style.transform]="transform"
+      tftGesturable
+      (gestureMove)="onGestureMove($event)"
+      (gestureStart)="onGestureStart($event)"
+      (gestureEnd)="onGestureEnd($event)">
       Gesturable
-      <!-- <ng-template tftDragPreview>
-        <div class="draggable" >
-          Gesturable template
-        </div>
-      </ng-template> -->
     </div>
   </section>
 

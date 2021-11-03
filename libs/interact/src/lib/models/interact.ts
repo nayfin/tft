@@ -1,6 +1,6 @@
-import { DraggableDirective } from '../directives/draggable.directive';
-import { DropzoneDirective } from '../directives/dropzone.directive';
-import { Point, DragEvent, ResizeEvent, Interactable, DropEvent } from '@interactjs/types';
+import {  } from '../directives/draggable.directive';
+import { DropzoneDirective, DraggableDirective, GesturableDirective } from '../directives';
+import { Point, DragEvent, ResizeEvent, Interactable, DropEvent, GestureEvent } from '@interactjs/types';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export const DEFAULT_REGISTRY_ID = 'DEFAULT';
@@ -134,4 +134,9 @@ export interface Size {
   width: number | null;
   height: number | null;
   targetElement: any;
+}
+
+export interface TftGestureEvent {
+  gestureRef: GesturableDirective;
+  interactEvent: GestureEvent;
 }
