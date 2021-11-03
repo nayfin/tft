@@ -4,7 +4,7 @@ import interact from 'interactjs';
 import { DraggableOptions, GesturableOptions, Interactable, GestureEvent } from '@interactjs/types/index';
 import { Observable } from 'rxjs';
 import { TftCoords, TftGestureEvent } from '../models';
-import { DraggableDirective } from '@tft/interact';
+import { DraggableDirective } from '../directives';
 
 /** @dynamic */
 @Directive({
