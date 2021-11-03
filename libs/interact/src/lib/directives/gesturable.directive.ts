@@ -11,7 +11,7 @@ import { DraggableDirective } from '../directives';
   selector: '[tftGesturable]',
   // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
-    '[style.touchAction]': 'this.gestureDisabled ? "auto" : "none"',
+    // '[style.touchAction]': 'this.gestureDisabled ? "auto" : "none"',
     '[id]': 'gesturableId',
   }
 })
