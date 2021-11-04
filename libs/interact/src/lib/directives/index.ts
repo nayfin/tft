@@ -3,3 +3,4 @@ export * from './dropzone.directive';
 export * from './resizable.directive';
 export * from './drag-preview.directive';
 export * from './gesturable.directive';
+export * from './drag-root.directive';

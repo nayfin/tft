@@ -9,6 +9,7 @@ import { DropzoneDirective } from './dropzone.directive';
 import { NgDragEvent, TftDragEvent, DEFAULT_REGISTRY_ID, TftCoords, TftDragElement} from '../models';
 import { DragPreviewDirective } from './drag-preview.directive';
 import { getRootNode } from '../utils';
+import { DragRootDirective } from './drag-root.directive';
 
 /** @dynamic */
 @Directive({
@@ -40,6 +41,13 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   @Input() dragDisabled = false;
   @Input() dragConfig: Partial<Interact.OrBoolean<DraggableOptions>>;
   @Input() showPlaceholder = false;
+  /**
+   * The element we want to prepend the drag element to.
+   * Use `tftDragRoot` directive on a parent to element to set custom root element
+   *  @default document.body
+   */
+  dragRoot: HTMLElement;
+
   // pipes all interact events to event emitters
   @Output() dragStart = new EventEmitter<TftDragEvent>();
   @Output() dragMove = new EventEmitter<TftDragEvent>();
@@ -61,8 +69,11 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
     private renderer: Renderer2,
     private _viewContainerRef: ViewContainerRef,
     @Inject(DOCUMENT) private _document: Document,
-    @Optional() @SkipSelf() public dropzone_dir?: DropzoneDirective
-  ) { }
+    @Optional() @SkipSelf() public dropzone_dir?: DropzoneDirective,
+    @Optional() @SkipSelf() public drag_root_dir?: DragRootDirective
+  ) {
+    this.dragRoot = (drag_root_dir?.el?.nativeElement as HTMLElement) || this._document.body;
+  }
 
   ngOnInit() {
     this.interactable = this.initiateDragEvents(this.dragConfig, this.el.nativeElement);
@@ -207,8 +218,10 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
           }
           this.addDragPropertiesToElement(this.previewRef);
           this.setDragStyles(this.previewRef)
-          this._document.body.prepend(this.previewRef);
-          const {x, y} = this.interactService.calculatePositionInElement(this._document.body, nativeElement);
+
+          this.dragRoot.prepend(this.previewRef);
+
+          const {x, y} = this.interactService.calculatePositionInElement(this.dragRoot, nativeElement);
           this.interactService.updatePosition(this.interactableId, this.registryId, {x, y}, this.previewRef);
           if (!this.showPlaceholder) {
             this.renderer.setStyle(this.el.nativeElement, 'display', 'none');
@@ -240,7 +253,7 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
           // we do this in a timeout, so that we don't
           // remove before the dropzone can get the boundingElementRect
           setTimeout(() => {
-            this._document.body.removeChild(this.previewRef);
+            this.dragRoot.removeChild(this.previewRef);
           })
         }
       });

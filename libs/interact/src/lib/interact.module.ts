@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ArrayOfNPipe } from './pipes/array-of-n.pipe';
-import { GesturableDirective, DraggableDirective, ResizableDirective, DropzoneDirective, DragPreviewDirective } from './directives';
+import { DragRootDirective, GesturableDirective, DraggableDirective, ResizableDirective, DropzoneDirective, DragPreviewDirective } from './directives';
 
 const EXPORTS = [
   DraggableDirective,
@@ -9,7 +9,8 @@ const EXPORTS = [
   DropzoneDirective,
   GesturableDirective,
   ArrayOfNPipe,
-  DragPreviewDirective
+  DragPreviewDirective,
+  DragRootDirective
 ];
 
 
