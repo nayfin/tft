@@ -71,7 +71,7 @@ export class DropzoneDirective implements OnInit, OnChanges {
    */
   mapDropzoneEvent(event: NgDropEvent): TftDropEvent {
     const zoneElement = event.target;
-    const dragElement = event.relatedTarget.dragRef.previewRef as TftDragElement;
+    const dragElement = event.relatedTarget?.dragRef?.previewRef as TftDragElement;
     const positionInDropTarget = zoneElement && dragElement
     ? this.interactService.calculatePositionInElement(zoneElement, dragElement)
     : null;

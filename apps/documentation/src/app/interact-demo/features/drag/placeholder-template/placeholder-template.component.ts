@@ -8,6 +8,4 @@ import { DraggableOptions } from '@interactjs/types/index';
 })
 export class PlaceholderTemplateComponent {
 
-  dragConfig: DraggableOptions = {allowFrom: '.handle'}
-
 }

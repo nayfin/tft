@@ -10,6 +10,7 @@ import { NgDragEvent, TftDragEvent, DEFAULT_REGISTRY_ID, TftCoords, TftDragEleme
 import { DragPreviewDirective } from './drag-preview.directive';
 import { getRootNode } from '../utils';
 import { DragRootDirective } from './drag-root.directive';
+import { AccountForScaleDirective } from './account-for-scale.directive';
 
 /** @dynamic */
 @Directive({
@@ -41,9 +42,10 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   @Input() dragDisabled = false;
   @Input() dragConfig: Partial<Interact.OrBoolean<DraggableOptions>>;
   @Input() showPlaceholder = false;
+
   /**
    * The element we want to prepend the drag element to.
-   * Use `tftDragRoot` directive on a parent to element to set custom root element
+   * Use `tftDragRoot` directive on a parent element to set custom root element
    *  @default document.body
    */
   dragRoot: HTMLElement;
@@ -69,10 +71,11 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
     private renderer: Renderer2,
     private _viewContainerRef: ViewContainerRef,
     @Inject(DOCUMENT) private _document: Document,
+    @Optional() @SkipSelf() public account_for_scale_dir?: AccountForScaleDirective,
     @Optional() @SkipSelf() public dropzone_dir?: DropzoneDirective,
     @Optional() @SkipSelf() public drag_root_dir?: DragRootDirective
-  ) {
-    this.dragRoot = (drag_root_dir?.el?.nativeElement as HTMLElement) || this._document.body;
+    ) {
+      this.dragRoot = (drag_root_dir?.el?.nativeElement as HTMLElement) || this._document.body;
   }
 
   ngOnInit() {

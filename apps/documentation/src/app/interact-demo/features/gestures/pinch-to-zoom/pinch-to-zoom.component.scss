@@ -1,19 +1,21 @@
 h2 {
   position: absolute;
 }
-.drag-canvas {
-  width: 1500px;
-  height: 1500px;
-  background: hotpink;
-}
 .gesturable {
-  margin: 60px;
-  width: 600px;
-  height: 600px;
+  width: 1600px;
+  height: 1600px;
   background: burlywood;
-  .handle {
-    background: white;
-    width: 30px;
-    height: 30px;
+  .drag-canvas {
+    width: 500px;
+    height: 500px;
+    background: hotpink;
   }
+}
+// avoid nesting the styles of the drag element,
+// the element will be appended to dragRoot when dragging
+// and this can cause nested styles to not be applied
+.draggable {
+  background: white;
+  width: 80px;
+  height: 80px;
 }

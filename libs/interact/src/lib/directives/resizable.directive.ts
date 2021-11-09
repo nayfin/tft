@@ -1,11 +1,16 @@
-import { Directive, OnInit, OnDestroy, ElementRef, Input, Optional, SkipSelf, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
+import { Directive, OnInit, OnDestroy, ElementRef, Input, Optional, SkipSelf, Output, EventEmitter, OnChanges, SimpleChanges, Renderer2, Inject} from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import interact from 'interactjs';
 import { InteractService } from '../services/interact.service';
 import { ResizableOptions, ResizeEvent, Interactable } from '@interactjs/types/index';
 import { Subscription } from 'rxjs';
 import { DraggableDirective } from './draggable.directive';
 import { DropzoneDirective } from './dropzone.directive';
-import { NgResizeEvent, TftResizeEvent, DEFAULT_REGISTRY_ID } from '../models';
+import { DragRootDirective } from './drag-root.directive';
+import { AccountForScaleDirective } from './account-for-scale.directive';
+import { NgResizeEvent, TftResizeEvent, DEFAULT_REGISTRY_ID, TftDragElement } from '../models';
+
+/** @dynamic */
 @Directive({
   selector: '[tftResizable]',
   // eslint-disable-next-line @angular-eslint/no-host-metadata-property
@@ -43,17 +48,27 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
   };
   registryId: string;
   interactable: Interactable;
+  // The
+  dragRoot: HTMLElement;
 
   private interactableSubscription: Subscription;
 
   constructor(
-    private el: ElementRef,
+    public el: ElementRef,
+    @Inject(DOCUMENT) private _document: Document,
     private interactService: InteractService,
+    private renderer: Renderer2,
+    @Optional() drag_root_dir?: DragRootDirective,
+    @Optional() public account_for_scale_dir?: AccountForScaleDirective,
     @Optional() private draggable_dir?: DraggableDirective,
     @Optional() @SkipSelf() private dropzone_dir?: DropzoneDirective
-  ) { }
+  ) {
+    this.dragRoot = (drag_root_dir?.el?.nativeElement as HTMLElement) || this._document.body;
+  }
 
   ngOnInit() {
+    this.addResizePropertiesToElement(this.el.nativeElement);
+
     // we check for a dropzone, we use its id as the registry id if there is on
     // otherwise, we use DEFAULT_REGISTRY_ID as a registry id. This allows us to keep our interactable
     // drag state organized by dropzones.
@@ -106,7 +121,9 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
    * @param nativeElement
    */
   initiateResizeEvents(resizeConfig: Partial<Interact.OrBoolean<ResizableOptions>>, nativeElement: any) {
-    return interact(nativeElement).resizable({...resizeConfig, enabled: !this.resizeDisabled})
+    // TODO: This should try and get interactable from tft_draggable if it exists
+    const interactable = this.draggable_dir?.interactable || interact(nativeElement);
+    return interactable.resizable({...resizeConfig, enabled: !this.resizeDisabled})
       .on('resizestart', (event: NgResizeEvent) => { this.resizeStart.emit(this.mapResizeEvent(event))})
       .on('resizemove',  (event: NgResizeEvent) => {
         if (this.enableResizeDefault) {
@@ -128,6 +145,8 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
       : null;
     return {
       interactEvent: event,
+      resizeRef: this,
+      // should I remove this?
       dragRef: this.draggable_dir,
       dragOrigin: this.dropzone_dir,
       dropTarget: this.el.nativeElement.dropTarget,
@@ -142,5 +161,9 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
       {deltaX: 0, deltaY: 0, width, height},
       this.el.nativeElement
     );
+  }
+
+  addResizePropertiesToElement(nativeElement: TftDragElement) {
+    this.renderer.setProperty(nativeElement, 'resizeRef', this);
   }
 }

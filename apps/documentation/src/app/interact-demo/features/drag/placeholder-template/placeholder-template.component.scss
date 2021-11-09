@@ -1,23 +1,28 @@
-h2 {
+.heading {
   position: absolute;
+}
+.page {
+  background-color: red;
+  width: 900px;
+  height: 900px;
 }
 .drag-canvas {
   width: 500px;
   height: 500px;
   background: hotpink;
 }
-.draggable, .trigger {
+
+.trigger {
   width: 60px;
   height: 60px;
-  .handle {
-    background: white;
-    width: 30px;
-    height: 30px;
-  }
-}
-.trigger {
   background: aqua;
 }
-.draggable {
+.drag-preview {
   background: burlywood;
+  width: 160px;
+  height: 160px;
+  img {
+    height: 100%;
+    width: 100%;
+  };
 }
