@@ -9,7 +9,7 @@ import { Directive, ElementRef, HostBinding, Input, OnChanges, SimpleChanges } f
 @Directive({
   selector: '[tftAccountForScale]'
 })
-export class AccountForScaleDirective implements OnChanges {
+export class AccountForScaleDirective {
   // this setup allows consumers to set x, y scale independently or just set them both with scale
   @Input() set scale(val: number){
     this.scaleY = val;
@@ -19,14 +19,7 @@ export class AccountForScaleDirective implements OnChanges {
   @Input() scaleX = 1;
   @Input() scaleY = 1;
 
-  @HostBinding('style.transform') transform: string;
-
   constructor(
     public el: ElementRef
   ) { }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  ngOnChanges(_changes: SimpleChanges) {
-    this.transform = `scaleX(${this.scaleX}) scaleY(${this.scaleY})`;
-  }
 }

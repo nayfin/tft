@@ -48,7 +48,7 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
    * Use `tftDragRoot` directive on a parent element to set custom root element
    *  @default document.body
    */
-  dragRoot: HTMLElement;
+  @Input() dragRoot: HTMLElement;
 
   // pipes all interact events to event emitters
   @Output() dragStart = new EventEmitter<TftDragEvent>();
@@ -71,16 +71,14 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
     private renderer: Renderer2,
     private _viewContainerRef: ViewContainerRef,
     @Inject(DOCUMENT) private _document: Document,
-    @Optional() @SkipSelf() public account_for_scale_dir?: AccountForScaleDirective,
+    @Optional() public account_for_scale_dir?: AccountForScaleDirective,
     @Optional() @SkipSelf() public dropzone_dir?: DropzoneDirective,
     @Optional() @SkipSelf() public drag_root_dir?: DragRootDirective
-    ) {
-      this.dragRoot = (drag_root_dir?.el?.nativeElement as HTMLElement) || this._document.body;
-  }
+  ) { }
 
   ngOnInit() {
     this.interactable = this.initiateDragEvents(this.dragConfig, this.el.nativeElement);
-
+    this.dragRoot = this.dragRoot || this.drag_root_dir?.el?.nativeElement as HTMLElement || this._document.body;
     // register with parent dropzone if it exists, otherwise use default
     // this gives us a place on the registry to store our drag items that don't have a dropzone
     this.registryId = this.dropzone_dir?.dropzoneId || DEFAULT_REGISTRY_ID;
@@ -209,8 +207,9 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
 
         // check if we should append drag element to body
         if ( this.enableDragDefault
-          && !!this.dropzone_dir
           && interaction.pointerIsDown
+          // TODO: probably don't need following condition checks anymore remove by 2022
+          // && !!this.dropzone_dir
           // && !interaction.interacting()
           ) {
           if (this._previewTemplate) {
