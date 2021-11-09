@@ -164,6 +164,7 @@ export class InteractService {
     if(!target) return;
 
     const accountForScaleDirective = target.resizeRef?.account_for_scale_dir
+    console.log({resize: target.resizeRef})
     if (accountForScaleDirective) {
       const { scaleX, scaleY } = accountForScaleDirective
       const scaledWidth = width / scaleX;
@@ -182,9 +183,10 @@ export class InteractService {
    */
   setElementTransform(x: number, y: number, position: Position ) {
     if(!position?.targetElement) return;
-
-    if (position.targetElement?.dragRef?.account_for_scale_dir) {
-      const {scaleX, scaleY} = position.targetElement?.dragRef?.account_for_scale_dir;
+    const accountForScaleDirective = position.targetElement?.dragRef?.account_for_scale_dir
+    console.log({dragRef: position?.targetElement?.dragRef})
+    if (accountForScaleDirective) {
+      const {scaleX, scaleY} = accountForScaleDirective;
       this.renderer.setStyle(position.targetElement, 'left', `${x / scaleX}px`);
       this.renderer.setStyle(position.targetElement, 'top', `${y / scaleY}px`);
     } else {
