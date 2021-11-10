@@ -164,16 +164,16 @@ export class InteractService {
     if(!target) return;
 
     const accountForScaleDirective = target.resizeRef?.account_for_scale_dir
-    console.log({resize: target.resizeRef})
     if (accountForScaleDirective) {
       const { scaleX, scaleY } = accountForScaleDirective
       const scaledWidth = width / scaleX;
       const scaledHeight = height / scaleY;
       this.renderer.setStyle(target, 'width', `${scaledWidth}px`);
       this.renderer.setStyle(target, 'height', `${scaledHeight}px`);
+    } else {
+      this.renderer.setStyle(target, 'width', `${width}px`);
+      this.renderer.setStyle(target, 'height', `${height}px`);
     }
-    this.renderer.setStyle(target, 'width', `${width}px`);
-    this.renderer.setStyle(target, 'height', `${height}px`);
   }
   /**
    * Uses renderer to set position of angular component
@@ -184,7 +184,6 @@ export class InteractService {
   setElementTransform(x: number, y: number, position: Position ) {
     if(!position?.targetElement) return;
     const accountForScaleDirective = position.targetElement?.dragRef?.account_for_scale_dir
-    console.log({dragRef: position?.targetElement?.dragRef})
     if (accountForScaleDirective) {
       const {scaleX, scaleY} = accountForScaleDirective;
       this.renderer.setStyle(position.targetElement, 'left', `${x / scaleX}px`);
@@ -204,13 +203,18 @@ export class InteractService {
     return `translate3d(${x}px, ${y}px, 0)`
   }
 
-  calculatePositionInElement(zoneElement: Interact.Element, dragElement: TftDragElement) {
+  calculatePositionInElement(zoneElement: Interact.Element, dragElement: TftDragElement, scale?: {x: number, y: number}) {
     // TODO: this calculation may not cover a lot of scenarios, keep an eye out for possible improvements
     const zoneRect = zoneElement.getBoundingClientRect();
     const dragRect = dragElement.getBoundingClientRect();
-    return {
-      x: dragRect.left - zoneRect.left,
-      y: dragRect.top - zoneRect.top
-    }
+    const position = scale
+      ? {
+      x: (dragRect.left - zoneRect.left) / scale.x  || 1,
+      y: (dragRect.top - zoneRect.top) / scale.y || 1
+      } : {
+        x: dragRect.left - zoneRect.left,
+        y: dragRect.top - zoneRect.top
+    };
+    return position;
   }
 }
