@@ -139,13 +139,8 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
   mapResizeEvent(event: NgResizeEvent ): TftResizeEvent {
     const target  = event.target as TftDragElement;
     const relatedTarget = this.draggable_dir?.dropzone_dir?.el.nativeElement
-
-    const scale = this.account_for_scale_dir ? {
-      x: this.account_for_scale_dir.scaleX,
-      y: this.account_for_scale_dir.scaleY
-    } : null;
     const positionInDropTarget = target && relatedTarget
-      ? this.interactService.calculatePositionInElement(relatedTarget, target, scale)
+      ? this.interactService.calculatePositionInElement(relatedTarget, target)
       : null;
     return {
       interactEvent: event,
