@@ -1,7 +1,9 @@
 <div class="page"
   tftDragRoot
-  tftAccountForScale
   [style.touchAction]="'pan-x pan-y'"
+  [style.fontSize]="scale + 'px'"
+  tftDropzone
+  tftAccountForScale
   [scale]="scale"
   [style.transformOrigin]="transformOrigin"
   tftGesturable
@@ -11,14 +13,14 @@
   <section
     class="drag-canvas">
     <div class="gesturable">
-      <section class="drag-canvas" tftResizable tftDraggable tftDropzone>
+      <section class="drag-canvas" tftResizable tftDraggable>
         <h2>Pinch To Zoom</h2>
-        <div class="draggable"
+        <!-- <div class="draggable"
           tftDraggable
           [x]="150"
           [y]="150">
 
-        </div>
+        </div> -->
       </section>
     </div>
   </section>

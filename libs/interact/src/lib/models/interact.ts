@@ -1,6 +1,15 @@
 import { DropzoneDirective, DraggableDirective, GesturableDirective, ResizableDirective } from '../directives';
 import { Point, DragEvent, ResizeEvent, Interactable, DropEvent, GestureEvent } from '@interactjs/types';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { InjectionToken } from '@angular/core';
+
+
+
+export type CssDimensionUnit = 'px' | 'em';
+export interface InteractRootConfig {
+  cssDimensionUnit: CssDimensionUnit;
+}
+export const INTERACT_ROOT_CONFIG = new InjectionToken<InteractRootConfig>('INTERACT_ROOT_CONFIG_PARAMS');
 
 export const DEFAULT_REGISTRY_ID = 'DEFAULT';
 /**

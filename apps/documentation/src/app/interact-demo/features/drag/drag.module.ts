@@ -13,7 +13,7 @@ import { InteractModule } from '@tft/interact'
   imports: [
     CommonModule,
     DragRoutingModule,
-    InteractModule,
+    InteractModule ///.forRoot({cssDimensionUnit: 'em'})
   ]
 })
 export class DragModule { }

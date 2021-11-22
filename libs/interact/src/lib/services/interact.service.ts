@@ -1,11 +1,13 @@
 
-import { Injectable, Renderer2, RendererFactory2, NgZone } from '@angular/core';
+import { Injectable, Renderer2, RendererFactory2, NgZone, Inject, InjectionToken, Optional, AfterViewInit } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { tap, map, shareReplay } from 'rxjs/operators';
 import {
   TftCoords, Delta, Size, Position, InteractableRegistry,
-  defaultPosition, defaultSize, defaultDelta, DEFAULT_REGISTRY_ID, TftDragElement, TftResizeElement
+  defaultPosition, defaultSize, defaultDelta, DEFAULT_REGISTRY_ID, TftDragElement, TftResizeElement, INTERACT_ROOT_CONFIG, InteractRootConfig
 } from '../models';
+
+
 
 @Injectable({providedIn: 'root'})
 export class InteractService {
@@ -16,12 +18,14 @@ export class InteractService {
 
   // TODO: consider using Map here
   readonly dragRegistrySystem: { [key: string]: InteractableRegistry } = { };
-
+  private cssUnit = 'px'
   constructor(
     private rendererFactory: RendererFactory2,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    @Optional() @Inject(INTERACT_ROOT_CONFIG) public rootConfig
   ) {
     this.renderer = this.rendererFactory.createRenderer(null, null);
+    this.cssUnit = rootConfig?.cssDimensionUnit || 'px';
   }
 
   addDeltaToPosition(delta: Delta, position: Position) {
@@ -151,8 +155,8 @@ export class InteractService {
   }
 
   interactableExistOnRegistry(interactId: string, registryId = DEFAULT_REGISTRY_ID) {
-    return this.dragRegistrySystem.hasOwnProperty(registryId)
-      && this.dragRegistrySystem[registryId].hasOwnProperty(interactId);
+    // eslint-disable-next-line no-prototype-builtins
+    return this.dragRegistrySystem.hasOwnProperty(registryId) && this.dragRegistrySystem[registryId].hasOwnProperty(interactId);
   }
   /**
    * Uses renderer to set width and height of angular component
@@ -168,11 +172,11 @@ export class InteractService {
       const { scaleX, scaleY } = accountForScaleDirective
       const scaledWidth = width / scaleX;
       const scaledHeight = height / scaleY;
-      this.renderer.setStyle(target, 'width', `${scaledWidth}px`);
-      this.renderer.setStyle(target, 'height', `${scaledHeight}px`);
+      this.renderer.setStyle(target, 'width', `${scaledWidth}${this.cssUnit}`);
+      this.renderer.setStyle(target, 'height', `${scaledHeight}${this.cssUnit}`);
     } else {
-      this.renderer.setStyle(target, 'width', `${width}px`);
-      this.renderer.setStyle(target, 'height', `${height}px`);
+      this.renderer.setStyle(target, 'width', `${width}${this.cssUnit}`);
+      this.renderer.setStyle(target, 'height', `${height}${this.cssUnit}`);
     }
   }
   /**
@@ -186,11 +190,12 @@ export class InteractService {
     const accountForScaleDirective = position.targetElement?.dragRef?.account_for_scale_dir
     if (accountForScaleDirective) {
       const {scaleX, scaleY} = accountForScaleDirective;
-      this.renderer.setStyle(position.targetElement, 'left', `${x / scaleX}px`);
-      this.renderer.setStyle(position.targetElement, 'top', `${y / scaleY}px`);
+      console.log({scaleX, scaleY})
+      this.renderer.setStyle(position.targetElement, 'left', `${x / scaleX}${this.cssUnit}`);
+      this.renderer.setStyle(position.targetElement, 'top', `${y / scaleY}${this.cssUnit}`);
     } else {
-      this.renderer.setStyle(position.targetElement, 'left', `${x}px`);
-      this.renderer.setStyle(position.targetElement, 'top', `${y}px`);
+      this.renderer.setStyle(position.targetElement, 'left', `${x}${this.cssUnit}`);
+      this.renderer.setStyle(position.targetElement, 'top', `${y}${this.cssUnit}`);
     }
   }
   /**
@@ -200,7 +205,7 @@ export class InteractService {
    * @param y the position along the y axis
    */
   createTransformString(x: number, y: number) {
-    return `translate3d(${x}px, ${y}px, 0)`
+    return `translate3d(${x}${this.cssUnit}, ${y}${this.cssUnit}, 0)`
   }
 
   calculatePositionInElement(zoneElement: Interact.Element, dragElement: TftDragElement, scale?: {x: number, y: number}) {

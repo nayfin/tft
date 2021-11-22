@@ -21,7 +21,7 @@ export class PinchToZoomComponent {
     const interactEvent = event?.interactEvent;
     const {x0, y0} = event.interactEvent
     this.scale += interactEvent?.ds || 0;
-    this.transformOrigin = `${x0}px ${y0}px`
+    this.transformOrigin = `${x0}em ${y0}em`
   }
 
   onGestureEnd(event: TftGestureEvent) {

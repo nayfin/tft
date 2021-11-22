@@ -1,6 +1,9 @@
 .heading {
   position: absolute;
 }
+:host {
+  font-size: 1px;
+}
 .page {
   background-color: red;
   width: 900px;
