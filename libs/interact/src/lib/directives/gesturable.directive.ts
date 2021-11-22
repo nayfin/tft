@@ -35,7 +35,7 @@ export class GesturableDirective<D = any> implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-    this.gesturableId = this.draggable_dir?.interactableId || 'something';
+    this.gesturableId = this.draggable_dir?.interactableId || 'id';
     this.interactable = this.initiateGestureEvents(this.gestureConfig, this.el.nativeElement);
     this.setGestureConfig();
   }
@@ -61,8 +61,9 @@ export class GesturableDirective<D = any> implements OnInit, OnChanges {
     const defaultConfig: GesturableOptions = {
       enabled:  !this.gestureDisabled,
     };
+    const interactable = this.draggable_dir?.interactable || interact(nativeElement);
 
-    return interact(nativeElement).gesturable({...defaultConfig, ...gestureConfig})
+    return interactable.gesturable({...defaultConfig, ...gestureConfig})
       .on('gesturestart', (event: GestureEvent) => {
         this.gestureStart.emit({gestureRef: this, interactEvent: event})
       })

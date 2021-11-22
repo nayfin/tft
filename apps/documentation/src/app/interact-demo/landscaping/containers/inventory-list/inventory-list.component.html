@@ -8,6 +8,9 @@
     </div>
     <div class="drag-origin-content">
       <section
+        [dragRoot]="dragRoot"
+        tftAccountForScale
+        [scale]="1.5"
         tftDraggable
         [showPlaceholder]="true"
         [dragConfig]="dragConfig"

@@ -10,6 +10,7 @@ import { NgDragEvent, TftDragEvent, DEFAULT_REGISTRY_ID, TftCoords, TftDragEleme
 import { DragPreviewDirective } from './drag-preview.directive';
 import { getRootNode } from '../utils';
 import { DragRootDirective } from './drag-root.directive';
+import { AccountForScaleDirective } from './account-for-scale.directive';
 
 /** @dynamic */
 @Directive({
@@ -70,6 +71,7 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
     private renderer: Renderer2,
     private _viewContainerRef: ViewContainerRef,
     @Inject(DOCUMENT) private _document: Document,
+    @Optional() public account_for_scale_dir?: AccountForScaleDirective,
     @Optional() @SkipSelf() public dropzone_dir?: DropzoneDirective,
     @Optional() @SkipSelf() public drag_root_dir?: DragRootDirective
   ) { }
@@ -206,6 +208,8 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
         // check if we should append drag element to body
         if ( this.enableDragDefault
           && interaction.pointerIsDown
+          // TODO: probably don't need following condition checks anymore remove by 2022
+          // && !!this.dropzone_dir
           // && !interaction.interacting()
           ) {
           if (this._previewTemplate) {

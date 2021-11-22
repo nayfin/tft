@@ -1,5 +1,4 @@
-import {  } from '../directives/draggable.directive';
-import { DropzoneDirective, DraggableDirective, GesturableDirective } from '../directives';
+import { DropzoneDirective, DraggableDirective, GesturableDirective, ResizableDirective } from '../directives';
 import { Point, DragEvent, ResizeEvent, Interactable, DropEvent, GestureEvent } from '@interactjs/types';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -56,6 +55,14 @@ export type TftDragElement = HTMLElement & {
   dragOrigin?: DropzoneDirective
   dropTarget?: DropzoneDirective
 }
+
+/**
+ * HTMLElement with helpful drag directives attached to facilitate moving drag data between dropzones
+ */
+ export type TftResizeElement = HTMLElement & {
+  resizeRef?: ResizableDirective
+}
+
 /**
  * Extends the interact drop events by adding reference to the dropped components drag
  * directive to the html element. This gives the dropzone access to things like data
@@ -113,7 +120,8 @@ export interface TftDragEvent extends TftInteractableEvent {
  * Event emitted on resize
  */
 export interface TftResizeEvent extends TftInteractableEvent {
-  interactEvent: ResizeEvent
+  interactEvent: ResizeEvent,
+  resizeRef: ResizableDirective
 }
 
 export type TftCoords= Delta & Position & Size;
@@ -121,19 +129,19 @@ export type TftCoords= Delta & Position & Size;
 export interface Delta {
   deltaX: number | null;
   deltaY: number | null;
-  targetElement: any | null;
+  targetElement: TftDragElement | null;
 }
 
 export interface Position {
   x: number | null;
   y: number | null;
-  targetElement: any | null;
+  targetElement: TftDragElement | null;
 }
 
 export interface Size {
   width: number | null;
   height: number | null;
-  targetElement: any;
+  targetElement: TftResizeElement | null;
 }
 
 export interface TftGestureEvent {

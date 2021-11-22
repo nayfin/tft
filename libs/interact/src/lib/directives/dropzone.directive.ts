@@ -1,8 +1,9 @@
-import { Directive, ElementRef, Input, OnInit, Output, EventEmitter, SimpleChanges, OnChanges, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, Output, EventEmitter, SimpleChanges, OnChanges, Renderer2, Optional } from '@angular/core';
 import interact from 'interactjs';
 import { DropzoneOptions, Interactable } from '@interactjs/types/index';
 import { InteractService } from '../services/interact.service';
 import { NgDropEvent, TftDragElement, TftDropEvent } from '../models';
+import { AccountForScaleDirective } from './account-for-scale.directive';
 @Directive({
   selector: '[tftDropzone]',
   host: {
@@ -25,7 +26,8 @@ export class DropzoneDirective implements OnInit, OnChanges {
   constructor(
     public el: ElementRef,
     private renderer: Renderer2,
-    private interactService: InteractService
+    private interactService: InteractService,
+    @Optional() private account_for_scale_dir?: AccountForScaleDirective
   ) { }
 
   ngOnInit() {
@@ -71,9 +73,13 @@ export class DropzoneDirective implements OnInit, OnChanges {
    */
   mapDropzoneEvent(event: NgDropEvent): TftDropEvent {
     const zoneElement = event.target;
-    const dragElement = event.relatedTarget.dragRef.previewRef as TftDragElement;
+    const dragElement = event.relatedTarget?.dragRef?.previewRef as TftDragElement;
+    const scale = this.account_for_scale_dir ? {
+        x: this.account_for_scale_dir.scaleX,
+        y: this.account_for_scale_dir.scaleY
+      } : null;
     const positionInDropTarget = zoneElement && dragElement
-    ? this.interactService.calculatePositionInElement(zoneElement, dragElement)
+    ? this.interactService.calculatePositionInElement(zoneElement, dragElement, scale)
     : null;
     return {
       interactEvent: event,

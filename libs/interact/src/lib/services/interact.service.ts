@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { tap, map, shareReplay } from 'rxjs/operators';
 import {
   TftCoords, Delta, Size, Position, InteractableRegistry,
-  defaultPosition, defaultSize, defaultDelta, DEFAULT_REGISTRY_ID
+  defaultPosition, defaultSize, defaultDelta, DEFAULT_REGISTRY_ID, TftDragElement, TftResizeElement
 } from '../models';
 
 @Injectable({providedIn: 'root'})
@@ -96,7 +96,7 @@ export class InteractService {
         shareReplay(1),
         tap( position => {
           this.ngZone.runOutsideAngular(() => {
-            this.setElementTransform(position.x, position.y, position.targetElement);
+            this.setElementTransform(position.x, position.y, position);
           })
         })
       )
@@ -160,10 +160,20 @@ export class InteractService {
    * @param height the desired height of component
    * @param target the element to transform
    */
-  setElementSize(width: number, height: number, target: HTMLElement) {
+  setElementSize(width: number, height: number, target: TftResizeElement) {
     if(!target) return;
-    this.renderer.setStyle(target, 'width', `${width}px`);
-    this.renderer.setStyle(target, 'height', `${height}px`);
+
+    const accountForScaleDirective = target.resizeRef?.account_for_scale_dir
+    if (accountForScaleDirective) {
+      const { scaleX, scaleY } = accountForScaleDirective
+      const scaledWidth = width / scaleX;
+      const scaledHeight = height / scaleY;
+      this.renderer.setStyle(target, 'width', `${scaledWidth}px`);
+      this.renderer.setStyle(target, 'height', `${scaledHeight}px`);
+    } else {
+      this.renderer.setStyle(target, 'width', `${width}px`);
+      this.renderer.setStyle(target, 'height', `${height}px`);
+    }
   }
   /**
    * Uses renderer to set position of angular component
@@ -171,10 +181,17 @@ export class InteractService {
    * @param y position on y axis
    * @param target the element to transform
    */
-  setElementTransform(x: number, y: number, target: any) {
-    if(!target) return;
-    const transformString = this.createTransformString(x, y);
-    this.renderer.setStyle(target, 'transform', transformString );
+  setElementTransform(x: number, y: number, position: Position ) {
+    if(!position?.targetElement) return;
+    const accountForScaleDirective = position.targetElement?.dragRef?.account_for_scale_dir
+    if (accountForScaleDirective) {
+      const {scaleX, scaleY} = accountForScaleDirective;
+      this.renderer.setStyle(position.targetElement, 'left', `${x / scaleX}px`);
+      this.renderer.setStyle(position.targetElement, 'top', `${y / scaleY}px`);
+    } else {
+      this.renderer.setStyle(position.targetElement, 'left', `${x}px`);
+      this.renderer.setStyle(position.targetElement, 'top', `${y}px`);
+    }
   }
   /**
    * Generates a translate string for the x and y arguments passed to
@@ -186,13 +203,18 @@ export class InteractService {
     return `translate3d(${x}px, ${y}px, 0)`
   }
 
-  calculatePositionInElement(zoneElement: Interact.Element, dragElement: Interact.Element) {
+  calculatePositionInElement(zoneElement: Interact.Element, dragElement: TftDragElement, scale?: {x: number, y: number}) {
     // TODO: this calculation may not cover a lot of scenarios, keep an eye out for possible improvements
     const zoneRect = zoneElement.getBoundingClientRect();
     const dragRect = dragElement.getBoundingClientRect();
-    return {
-      x: dragRect.left - zoneRect.left,
-      y: dragRect.top - zoneRect.top
-    }
+    const position = scale
+      ? {
+      x: (dragRect.left - zoneRect.left) / scale.x  || 1,
+      y: (dragRect.top - zoneRect.top) / scale.y || 1
+      } : {
+        x: dragRect.left - zoneRect.left,
+        y: dragRect.top - zoneRect.top
+    };
+    return position;
   }
 }

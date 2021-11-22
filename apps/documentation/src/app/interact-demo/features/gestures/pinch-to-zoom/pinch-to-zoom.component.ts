@@ -9,23 +9,19 @@ import { TftGestureEvent } from '@tft/interact';
 export class PinchToZoomComponent {
 
   scale = 1;
-  angle = 0;
-  transform = '';
+  transformOrigin = '0 0'
 
   onGestureMove(event: TftGestureEvent) {
     const interactEvent = event?.interactEvent;
-
     this.scale += (interactEvent?.ds || 0);
-    this.angle += (interactEvent?.da || 0);
-    this.transform = `rotate(${this.angle}deg) scale(${this.scale})`;
   }
 
+  // Use initial touch point as the transformOrigin so that component scales relative to users fingertips
   onGestureStart(event: TftGestureEvent) {
     const interactEvent = event?.interactEvent;
-
+    const {x0, y0} = event.interactEvent
     this.scale += interactEvent?.ds || 0;
-    this.angle += (interactEvent?.da || 0);
-    this.transform = 'scale(' + this.scale + ')';
+    this.transformOrigin = `${x0}px ${y0}px`
   }
 
   onGestureEnd(event: TftGestureEvent) {

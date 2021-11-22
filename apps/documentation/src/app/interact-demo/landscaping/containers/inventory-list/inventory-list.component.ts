@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DraggableOptions } from '@interactjs/types';
 
 interface InventoryItem {
@@ -12,6 +12,7 @@ interface InventoryItem {
   styleUrls: ['./inventory-list.component.scss']
 })
 export class InventoryListComponent {
+  @Input() dragRoot: HTMLElement;
 
   dragConfig: DraggableOptions = {allowFrom: '.handle'};
 

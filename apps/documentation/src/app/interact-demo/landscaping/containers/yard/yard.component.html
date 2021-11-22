@@ -1,6 +1,11 @@
 
 
 <div
+  tftDragRoot
+  tftApplyScale
+  [scale]="1.5"
+  tftAccountForScale
+  #dragRoot
   tftDropzone
   class="yard">
   <h2>
@@ -12,12 +17,22 @@
     tftResizable
     [dragDisabled]="disableBlueBox"
     [resizeDisabled]="disableBlueBox"
+    [width]="200"
+    [height]="300">
+  </tft-section>
+
+  <!-- <tft-section
+    tftDraggable
+    tftDropzone
+    tftResizable
+    [dragDisabled]="disableBlueBox"
+    [resizeDisabled]="disableBlueBox"
     [width]="400"
     [height]="600">
-  </tft-section>
+  </tft-section> -->
 </div>
 
 <div class="drag-origin-container">
-  <tft-inventory-list>
+  <tft-inventory-list [dragRoot]="dragRoot">
   </tft-inventory-list>
 </div>
