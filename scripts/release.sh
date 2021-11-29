@@ -2,11 +2,11 @@
 #!/bin/bash
 # exit when error
 set -e
-# check that we are on master
+# check that we are on main
 branch=$(git rev-parse --abbrev-ref HEAD)
-if [ "$branch" != "master" ]
+if [ "$branch" != "main" ]
   then
-    echo "Not on master branch, exiting"
+    echo "Not on main branch, exiting"
     exit 1
 fi
 # grab all the library names (except api-interfaces, we don't use this yet)
