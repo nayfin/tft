@@ -166,12 +166,11 @@ export class InteractService {
    */
   setElementSize(width: number, height: number, target: TftResizeElement) {
     if(!target) return;
-
     const accountForScaleDirective = target.resizeRef?.account_for_scale_dir
     if (accountForScaleDirective) {
-      const { scaleX, scaleY } = accountForScaleDirective
-      const scaledWidth = width / scaleX;
-      const scaledHeight = height / scaleY;
+      const { scale } = accountForScaleDirective
+      const scaledWidth = width / scale;
+      const scaledHeight = height / scale;
       this.renderer.setStyle(target, 'width', `${scaledWidth}${this.cssUnit}`);
       this.renderer.setStyle(target, 'height', `${scaledHeight}${this.cssUnit}`);
     } else {
@@ -187,12 +186,12 @@ export class InteractService {
    */
   setElementTransform(x: number, y: number, position: Position ) {
     if(!position?.targetElement) return;
-    const accountForScaleDirective = position.targetElement?.dragRef?.account_for_scale_dir
+    const dragRef = position.targetElement?.dragRef;
+    const accountForScaleDirective = dragRef?.account_for_scale_dir || dragRef?.dragRoot?.account_for_scale_dir
     if (accountForScaleDirective) {
-      const {scaleX, scaleY} = accountForScaleDirective;
-      console.log({scaleX, scaleY})
-      this.renderer.setStyle(position.targetElement, 'left', `${x / scaleX}${this.cssUnit}`);
-      this.renderer.setStyle(position.targetElement, 'top', `${y / scaleY}${this.cssUnit}`);
+      const {scale} = accountForScaleDirective;
+      this.renderer.setStyle(position.targetElement, 'left', `${x / scale}${this.cssUnit}`);
+      this.renderer.setStyle(position.targetElement, 'top', `${y / scale}${this.cssUnit}`);
     } else {
       this.renderer.setStyle(position.targetElement, 'left', `${x}${this.cssUnit}`);
       this.renderer.setStyle(position.targetElement, 'top', `${y}${this.cssUnit}`);
@@ -208,18 +207,19 @@ export class InteractService {
     return `translate3d(${x}${this.cssUnit}, ${y}${this.cssUnit}, 0)`
   }
 
-  calculatePositionInElement(zoneElement: Interact.Element, dragElement: TftDragElement, scale?: {x: number, y: number}) {
+  calculatePositionInElement(zoneElement: Interact.Element, dragElement: TftDragElement, scale?: number) {
     // TODO: this calculation may not cover a lot of scenarios, keep an eye out for possible improvements
     const zoneRect = zoneElement.getBoundingClientRect();
     const dragRect = dragElement.getBoundingClientRect();
     const position = scale
       ? {
-      x: (dragRect.left - zoneRect.left) / scale.x  || 1,
-      y: (dragRect.top - zoneRect.top) / scale.y || 1
+      x: (dragRect.left - zoneRect.left) / scale  || 1,
+      y: (dragRect.top - zoneRect.top) / scale || 1
       } : {
         x: dragRect.left - zoneRect.left,
         y: dragRect.top - zoneRect.top
     };
+    // console.log({ y:position.y, drt:dragRect.top, zrt: zoneRect.top})
     return position;
   }
 }

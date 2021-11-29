@@ -48,8 +48,9 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
    * Use `tftDragRoot` directive on a parent element to set custom root element
    *  @default document.body
    */
-  @Input() dragRoot: HTMLElement;
+  @Input() dragRoot: DragRootDirective; // HTMLElement;
 
+  private dragRootEl: HTMLElement;
   // pipes all interact events to event emitters
   @Output() dragStart = new EventEmitter<TftDragEvent>();
   @Output() dragMove = new EventEmitter<TftDragEvent>();
@@ -78,7 +79,7 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
 
   ngOnInit() {
     this.interactable = this.initiateDragEvents(this.dragConfig, this.el.nativeElement);
-    this.dragRoot = this.dragRoot || this.drag_root_dir?.el?.nativeElement as HTMLElement || this._document.body;
+    this.dragRootEl = (this.dragRoot?.el?.nativeElement || this.drag_root_dir?.el?.nativeElement) as HTMLElement || this._document.body;
     // register with parent dropzone if it exists, otherwise use default
     // this gives us a place on the registry to store our drag items that don't have a dropzone
     this.registryId = this.dropzone_dir?.dropzoneId || DEFAULT_REGISTRY_ID;
@@ -147,7 +148,7 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   setDragStyles(dragElement: HTMLElement) {
     this.renderer.setStyle(dragElement, 'touchAction', 'none')
     this.renderer.setStyle(dragElement, 'zIndex', this.dragZIndex)
-    this.renderer.setStyle(dragElement, 'position', 'fixed')
+    this.renderer.setStyle(dragElement, 'position', 'absolute')
   }
 
   addDragPropertiesToElement(nativeElement: TftDragElement) {
@@ -204,7 +205,6 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
     return interact(nativeElement).draggable({...dragConfig, enabled:  !(this.disabled || this.dragDisabled) })
       .on('dragstart',  (event: NgDragEvent) => {
         const interaction = event.interaction;
-
         // check if we should append drag element to body
         if ( this.enableDragDefault
           && interaction.pointerIsDown
@@ -221,9 +221,9 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
           this.addDragPropertiesToElement(this.previewRef);
           this.setDragStyles(this.previewRef)
 
-          this.dragRoot.prepend(this.previewRef);
+          this.dragRootEl.prepend(this.previewRef);
 
-          const {x, y} = this.interactService.calculatePositionInElement(this.dragRoot, nativeElement);
+          const {x, y} = this.interactService.calculatePositionInElement(this.dragRootEl, nativeElement);
           this.interactService.updatePosition(this.interactableId, this.registryId, {x, y}, this.previewRef);
           if (!this.showPlaceholder) {
             this.renderer.setStyle(this.el.nativeElement, 'display', 'none');
@@ -252,10 +252,9 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
         this.dragEnd.emit(mappedEvent);
 
         if ( this.el.nativeElement !== this.previewRef) {
-          // we do this in a timeout, so that we don't
-          // remove before the dropzone can get the boundingElementRect
+          // we do this in a timeout, so that we don't remove before the dropzone can get the boundingElementRect
           setTimeout(() => {
-            this.dragRoot.removeChild(this.previewRef);
+            this.dragRootEl.removeChild(this.previewRef);
           })
         }
       });

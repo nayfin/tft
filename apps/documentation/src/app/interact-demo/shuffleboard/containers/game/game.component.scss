@@ -1,12 +1,15 @@
-$center-offset: 200px;
-$puck-diameter: 75px;
+$center-offset: 200em;
+$puck-diameter: 75em;
 :host {
   // display: block;
-  // padding: 0 35px;
+  // padding: 0 35em;
+  * {
+    font-size: 1px;
+  }
 }
 tft-board {
   display: flex;
-  height: 500px;
+  height: 500em;
   width: 90vw;
   background: rosybrown;
   justify-content: space-between;;
@@ -24,17 +27,15 @@ tft-board {
     }
     tft-target, tft-tray {
       height: 100%;
-      // outline: 2px solid white;
     }
-   
   }
 
   .target-area {
     display: flex;
-    width: 300px;
+    width: 300em;
     justify-self: flex-end;
   }
   tft-tray {
-    width: 100px;
+    width: 100em;
   }
 }

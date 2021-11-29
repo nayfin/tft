@@ -1,5 +1,10 @@
 
 :host {
+  font-size: 1px;
+  * {
+    font-size: 1px;
+  }
+
   display: flex;
   flex-direction: row;
   // position: fixed;
@@ -28,18 +33,19 @@
 }
 
 .interact-item {
+
   background: blueviolet;
   border: 1px solid white;
-  width: 80px;
-  height: 80px;
+  width: 80em;
+  height: 80em;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 400;
   .handle {
-    width: 40px;
-    height: 40px;
+    width: 40em;
+    height: 40em;
     background: white;
   }
 }

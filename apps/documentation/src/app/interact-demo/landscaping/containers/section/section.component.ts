@@ -24,12 +24,12 @@ export class SectionComponent {
 
   handleDrop(event: TftDropEvent) {
     const {dragRef, dropTarget} = event;
-    const dragData = dragRef.dragData;
+    const dragData = dragRef.dragData || { count: 0, name: 'No name'};
     if (dropTarget?.dropzoneId === 'yard' && dropTarget !== dragRef.dropzone_dir) {
       const item = {
         x: event.positionInDropTarget.x,
         y: event.positionInDropTarget.y,
-        name: dragRef.dragData.name
+        name: dragRef.dragData?.name
       }
 
       dragData.count--;

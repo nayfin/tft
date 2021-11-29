@@ -1,29 +1,30 @@
 .heading {
   position: absolute;
 }
-:host {
-  font-size: 1px;
+h2 {
+  font-size: 16px;
 }
 .page {
   background-color: red;
-  width: 900px;
-  height: 900px;
+  width: 900em;
+  height: 900em;
 }
 .drag-canvas {
-  width: 500px;
-  height: 500px;
+  width: 500em;
+  height: 500em;
   background: hotpink;
 }
 
 .trigger {
-  width: 60px;
-  height: 60px;
+  width: 60em;
+  height: 60em;
   background: aqua;
 }
 .drag-preview {
+  font-size: inherit;
   background: burlywood;
-  width: 160px;
-  height: 160px;
+  width: 160em;
+  height: 160em;
   img {
     height: 100%;
     width: 100%;

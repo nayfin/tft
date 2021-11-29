@@ -11,13 +11,7 @@ import { Directive, ElementRef, HostBinding, Input, OnChanges, SimpleChanges } f
 })
 export class AccountForScaleDirective {
   // this setup allows consumers to set x, y scale independently or just set them both with scale
-  @Input() set scale(val: number){
-    this.scaleY = val;
-    this.scaleX = val;
-  };
-
-  @Input() scaleX = 1;
-  @Input() scaleY = 1;
+  @Input() scale = 1;
 
   constructor(
     public el: ElementRef

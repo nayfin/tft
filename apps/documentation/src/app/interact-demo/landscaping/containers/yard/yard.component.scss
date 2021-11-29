@@ -2,12 +2,15 @@
   display: flex;
   flex-direction: column;
   height: calc(100vh - 80px);
+  [tftGesturable] {
+    touch-action: pan-x pan-y;
+  }
 }
 
 .drag-origin-container {
   display: flex;
   flex-direction: row;
-  // position: fixed;
+  position: fixed;
   overflow-x: auto;
   width: 100%;
   bottom: 0;
@@ -19,8 +22,8 @@
 .yard {
   color: white;
   display: flex;
-  width: 100%;
-  height: 1000px;
+  width: 500em;
+  height: 500em;
   background: rosybrown;
   h2 {
     position: absolute;

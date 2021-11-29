@@ -14,13 +14,13 @@ export class DropzoneDirective implements OnInit, OnChanges {
 
   @Input() dropzoneId: string;
   @Input() dropzoneConfig: DropzoneOptions = {};
-  // tslint:disable-next-line: no-input-rename
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() dropzoneData: any;
   // proxies to pass interact events through to consumer of directive
-  @Output() dropActivate = new EventEmitter();
-  @Output() dragEnter = new EventEmitter();
-  @Output() dragLeave = new EventEmitter();
-  @Output() dragDrop = new EventEmitter();
+  @Output() dropActivate = new EventEmitter<TftDropEvent>();
+  @Output() dragEnter = new EventEmitter<TftDropEvent>();
+  @Output() dragLeave = new EventEmitter<TftDropEvent>();
+  @Output() dragDrop = new EventEmitter<TftDropEvent>();
 
   dropzone: Interactable;
   constructor(
@@ -74,10 +74,7 @@ export class DropzoneDirective implements OnInit, OnChanges {
   mapDropzoneEvent(event: NgDropEvent): TftDropEvent {
     const zoneElement = event.target;
     const dragElement = event.relatedTarget?.dragRef?.previewRef as TftDragElement;
-    const scale = this.account_for_scale_dir ? {
-        x: this.account_for_scale_dir.scaleX,
-        y: this.account_for_scale_dir.scaleY
-      } : null;
+    const scale = this.account_for_scale_dir?.scale || null;
     const positionInDropTarget = zoneElement && dragElement
     ? this.interactService.calculatePositionInElement(zoneElement, dragElement, scale)
     : null;

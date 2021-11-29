@@ -1,11 +1,10 @@
-<div class="page" #dragRoot tftAccountForScale tftApplyScale [scale]="1.5">
+<div class="page" tftDragRoot tftAccountForScale tftApplyScale [scale]="1.5">
   <section class="drag-canvas" tftResizable tftDropzone>
     <div class="heading">
       <h2>Drag Preview</h2>
       <p>Use tftDragPreview directive to drag an alternate element</p>
     </div>
     <div
-      [dragRoot]="dragRoot"
       tftDraggable
       [x]="200"
       [y]="100"
@@ -13,24 +12,11 @@
       class="trigger">
       Drag Item
       <div
-      *tftDragPreview class="drag-preview">
+        *tftDragPreview
+        class="drag-preview">
         <img src="https://capricorncity.com/wp-content/uploads/2014/01/Hank-Venture.png" alt="">
       </div>
     </div>
   </section>
 </div>
-<div
-  [dragRoot]="dragRoot"
-  tftDraggable
-  [x]="100"
-  [y]="100"
 
-  tftAccountForScale
-  [scale]="1.5"
-  class="trigger">
-  Drag Item
-  <div
-  *tftDragPreview class="drag-preview">
-    <img src="https://capricorncity.com/wp-content/uploads/2014/01/Hank-Venture.png" alt="">
-  </div>
-</div>

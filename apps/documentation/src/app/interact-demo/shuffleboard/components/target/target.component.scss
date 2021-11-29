@@ -1,21 +1,21 @@
 
 .drop-target {
-  width: 125px;
+  width: 125em;
   height: 100%;
   color: white;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  border-left: 2px solid white;
-  border-right: 2px solid white;
+  border-left: 2em solid white;
+  border-right: 2em solid white;
   justify-content: center;
   align-items: center;
   .points-display {
-    font-size: 30px;
+    font-size: 30em;
     font-weight: 700;
   }
   input {
-    width: 80px;
+    width: 80em;
   }
 }
 .highlight {
