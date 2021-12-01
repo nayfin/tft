@@ -21,8 +21,9 @@
     tftResizable
     [dragDisabled]="disableBlueBox"
     [resizeDisabled]="disableBlueBox"
-    [width]="200"
-    [height]="300">
+    [width]="dropZoneWidth"
+    [height]="dropZoneHeight"
+    (resizeEnd)="updateSize($event)">
   </tft-section>
 
 </div>

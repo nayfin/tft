@@ -52,8 +52,8 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
   dragRootEl: HTMLElement;
 
   private interactableSubscription: Subscription;
-  get scale() {
-    return this.account_for_scale_dir?.scale || this.drag_root_dir?.account_for_scale_dir.scale;
+  get scale(): number {
+    return this.account_for_scale_dir?.scale || this.drag_root_dir?.account_for_scale_dir?.scale;
   }
 
   constructor(
@@ -112,10 +112,10 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
     let height: number;
     let width: number;
     if (scale) {
-       deltaX = event.deltaRect.left/scale;
-       deltaY = event.deltaRect.top/scale;
-       height = event.rect.height/scale;
-       width = event.rect.width/scale;
+      deltaX = event.deltaRect.left/scale;
+      deltaY = event.deltaRect.top/scale;
+      height = event.rect.height/scale;
+      width = event.rect.width/scale;
     } else {
        deltaX = event.deltaRect.left;
        deltaY = event.deltaRect.top;
@@ -156,7 +156,7 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
   mapResizeEvent(event: NgResizeEvent ): TftResizeEvent {
     const target  = event.target as TftDragElement;
     const relatedTarget = this.draggable_dir?.dropzone_dir?.el.nativeElement;
-    const scale = this.account_for_scale_dir?.scale || this.drag_root_dir?.account_for_scale_dir?.scale || 1;
+    const scale = this.scale;
     const positionInDropTarget = target && relatedTarget
       ? this.interactService.calculatePositionInElement(relatedTarget, target, scale)
       : null;
@@ -166,7 +166,11 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
       dragRef: this.draggable_dir,
       dragOrigin: this.dropzone_dir,
       dropTarget: this.el.nativeElement.dropTarget,
-      positionInDropTarget
+      positionInDropTarget,
+      size: {
+        width: target.clientWidth / scale,
+        height: target.clientHeight / scale
+      }
     }
   }
 

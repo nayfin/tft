@@ -131,6 +131,10 @@ export interface TftDragEvent extends TftInteractableEvent {
 export interface TftResizeEvent extends TftInteractableEvent {
   interactEvent: ResizeEvent,
   resizeRef: ResizableDirective
+  size: {
+    width: number;
+    height: number;
+  }
 }
 
 export type TftCoords= Delta & Position & Size;

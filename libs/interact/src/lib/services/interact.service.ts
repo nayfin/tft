@@ -55,11 +55,14 @@ export class InteractService {
   }
 
   destroyInteractable(interactableId: string, registryId = DEFAULT_REGISTRY_ID) {
-    if(this.dragRegistrySystem[registryId][interactableId]) {
+    const interactableSystem =this.dragRegistrySystem[registryId][interactableId];
+    if(interactableSystem) {
       // unsubscribe from all the subscriptions if they're subscriptions
-      for (const propName in this.dragRegistrySystem[registryId][interactableId])  {
-        const prop = this.dragRegistrySystem[registryId][interactableId][propName];
-        prop?.unsubscribe();
+      for (const propName in interactableSystem)  {
+        const prop = interactableSystem[propName];
+        if (prop.unsubscribe && typeof prop.unsubscribe === 'function' ) {
+          prop.unsubscribe();
+        };
       }
       delete this.dragRegistrySystem[registryId][interactableId];
     }

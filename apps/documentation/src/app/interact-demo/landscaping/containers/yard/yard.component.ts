@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TftGestureEvent } from '@tft/interact';
+import { TftGestureEvent, TftResizeEvent } from '@tft/interact';
 
 
 
@@ -12,6 +12,8 @@ export class YardComponent {
 
   // @ViewChild(DropzoneDirective) dropzone2: DropzoneDirective;
 
+  dropZoneWidth = 200;
+  dropZoneHeight = 300;
   disableBlueBox = false
 
   scale = 1;
@@ -19,6 +21,11 @@ export class YardComponent {
   log(type:string, event: any) {
     console.log(type, event);
   }
+  updateSize(event: TftResizeEvent) {
+    this.dropZoneHeight = event.size.height;
+    this.dropZoneWidth = event.size.width;
+  }
+
   onGestureMove(event: TftGestureEvent) {
     const interactEvent = event?.interactEvent;
     this.scale += (interactEvent?.ds || 0);
