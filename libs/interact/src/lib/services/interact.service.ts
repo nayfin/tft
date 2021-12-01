@@ -1,5 +1,5 @@
 
-import { Injectable, Renderer2, RendererFactory2, NgZone, Inject, InjectionToken, Optional, AfterViewInit } from '@angular/core';
+import { Injectable, Renderer2, RendererFactory2, NgZone, Inject, Optional } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { tap, map, shareReplay } from 'rxjs/operators';
 import {
@@ -45,7 +45,7 @@ export class InteractService {
   addDraggableToRegistry(customRegistryId = null, interactableId: string | null = null ) {
     const registryId = customRegistryId || DEFAULT_REGISTRY_ID;
     // if we pass an id to createInteractableId then it is used when creating the interactable
-    // and returned, otherwise a an id is created for the draggable.
+    // and returned, otherwise a new id is created for the draggable.
     const key = this.createInteractableId(interactableId );
     if (!Object.prototype.hasOwnProperty.call(this.dragRegistrySystem, registryId)) {
       this.dragRegistrySystem[registryId] = {};
@@ -56,6 +56,11 @@ export class InteractService {
 
   destroyInteractable(interactableId: string, registryId = DEFAULT_REGISTRY_ID) {
     if(this.dragRegistrySystem[registryId][interactableId]) {
+      // unsubscribe from all the subscriptions if they're subscriptions
+      for (const propName in this.dragRegistrySystem[registryId][interactableId])  {
+        const prop = this.dragRegistrySystem[registryId][interactableId][propName];
+        prop?.unsubscribe();
+      }
       delete this.dragRegistrySystem[registryId][interactableId];
     }
   }
@@ -144,7 +149,7 @@ export class InteractService {
     this.dragRegistrySystem[registryId][interactId].deltas$.next({ deltaX, deltaY, targetElement })
   }
 
-  updatePosition(interactId: string, registryId: string, { x, y }, targetElement) {
+  updatePosition(interactId: string, registryId: string, { x, y }: {x: number; y: number;}, targetElement) {
     if (!this.interactableExistOnRegistry(interactId, registryId)) return;
     this.dragRegistrySystem[registryId][interactId].position$.next({ x, y, targetElement })
   }
@@ -166,17 +171,8 @@ export class InteractService {
    */
   setElementSize(width: number, height: number, target: TftResizeElement) {
     if(!target) return;
-    const accountForScaleDirective = target.resizeRef?.account_for_scale_dir
-    if (accountForScaleDirective) {
-      const { scale } = accountForScaleDirective
-      const scaledWidth = width / scale;
-      const scaledHeight = height / scale;
-      this.renderer.setStyle(target, 'width', `${scaledWidth}${this.cssUnit}`);
-      this.renderer.setStyle(target, 'height', `${scaledHeight}${this.cssUnit}`);
-    } else {
-      this.renderer.setStyle(target, 'width', `${width}${this.cssUnit}`);
-      this.renderer.setStyle(target, 'height', `${height}${this.cssUnit}`);
-    }
+    this.renderer.setStyle(target, 'width', `${width}${this.cssUnit}`);
+    this.renderer.setStyle(target, 'height', `${height}${this.cssUnit}`);
   }
   /**
    * Uses renderer to set position of angular component
@@ -186,16 +182,8 @@ export class InteractService {
    */
   setElementTransform(x: number, y: number, position: Position ) {
     if(!position?.targetElement) return;
-    const dragRef = position.targetElement?.dragRef;
-    const accountForScaleDirective = dragRef?.account_for_scale_dir || dragRef?.dragRoot?.account_for_scale_dir
-    if (accountForScaleDirective) {
-      const {scale} = accountForScaleDirective;
-      this.renderer.setStyle(position.targetElement, 'left', `${x / scale}${this.cssUnit}`);
-      this.renderer.setStyle(position.targetElement, 'top', `${y / scale}${this.cssUnit}`);
-    } else {
-      this.renderer.setStyle(position.targetElement, 'left', `${x}${this.cssUnit}`);
-      this.renderer.setStyle(position.targetElement, 'top', `${y}${this.cssUnit}`);
-    }
+    this.renderer.setStyle(position.targetElement, 'left', `${x}${this.cssUnit}`);
+    this.renderer.setStyle(position.targetElement, 'top', `${y}${this.cssUnit}`);
   }
   /**
    * Generates a translate string for the x and y arguments passed to

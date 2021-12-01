@@ -49,21 +49,24 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
   registryId: string;
   interactable: Interactable;
   // The
-  dragRoot: HTMLElement;
+  dragRootEl: HTMLElement;
 
   private interactableSubscription: Subscription;
+  get scale() {
+    return this.account_for_scale_dir?.scale || this.drag_root_dir?.account_for_scale_dir.scale;
+  }
 
   constructor(
     public el: ElementRef,
     @Inject(DOCUMENT) private _document: Document,
     private interactService: InteractService,
     private renderer: Renderer2,
-    @Optional() drag_root_dir?: DragRootDirective,
+    @Optional() private drag_root_dir?: DragRootDirective,
     @Optional() public account_for_scale_dir?: AccountForScaleDirective,
     @Optional() private draggable_dir?: DraggableDirective,
     @Optional() @SkipSelf() private dropzone_dir?: DropzoneDirective
   ) {
-    this.dragRoot = (drag_root_dir?.el?.nativeElement as HTMLElement) || this._document.body;
+    this.dragRootEl = (drag_root_dir?.el?.nativeElement as HTMLElement) || this._document.body;
   }
 
   ngOnInit() {
@@ -103,9 +106,23 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
   }
 
   resizeListener(event: ResizeEvent) {
-    const deltaX = event.deltaRect.left;
-    const deltaY = event.deltaRect.top;
-    const { width, height } = event.rect;
+    const scale = this.scale;
+    let deltaX: number;
+    let deltaY: number;
+    let height: number;
+    let width: number;
+    if (scale) {
+       deltaX = event.deltaRect.left/scale;
+       deltaY = event.deltaRect.top/scale;
+       height = event.rect.height/scale;
+       width = event.rect.width/scale;
+    } else {
+       deltaX = event.deltaRect.left;
+       deltaY = event.deltaRect.top;
+       width = event.rect.width;
+       height = event.rect.height;
+    }
+
     this.interactService.updateSize(
       this.interactableId,
       this.registryId,
@@ -138,14 +155,14 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
 
   mapResizeEvent(event: NgResizeEvent ): TftResizeEvent {
     const target  = event.target as TftDragElement;
-    const relatedTarget = this.draggable_dir?.dropzone_dir?.el.nativeElement
+    const relatedTarget = this.draggable_dir?.dropzone_dir?.el.nativeElement;
+    const scale = this.account_for_scale_dir?.scale || this.drag_root_dir?.account_for_scale_dir?.scale || 1;
     const positionInDropTarget = target && relatedTarget
-      ? this.interactService.calculatePositionInElement(relatedTarget, target)
+      ? this.interactService.calculatePositionInElement(relatedTarget, target, scale)
       : null;
     return {
       interactEvent: event,
       resizeRef: this,
-      // should I remove this?
       dragRef: this.draggable_dir,
       dragOrigin: this.dropzone_dir,
       dropTarget: this.el.nativeElement.dropTarget,

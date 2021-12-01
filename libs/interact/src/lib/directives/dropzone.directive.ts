@@ -23,6 +23,10 @@ export class DropzoneDirective implements OnInit, OnChanges {
   @Output() dragDrop = new EventEmitter<TftDropEvent>();
 
   dropzone: Interactable;
+
+  get scale(): number {
+    return this.account_for_scale_dir?.scale;
+  }
   constructor(
     public el: ElementRef,
     private renderer: Renderer2,
@@ -74,7 +78,7 @@ export class DropzoneDirective implements OnInit, OnChanges {
   mapDropzoneEvent(event: NgDropEvent): TftDropEvent {
     const zoneElement = event.target;
     const dragElement = event.relatedTarget?.dragRef?.previewRef as TftDragElement;
-    const scale = this.account_for_scale_dir?.scale || null;
+    const scale = this.scale;
     const positionInDropTarget = zoneElement && dragElement
     ? this.interactService.calculatePositionInElement(zoneElement, dragElement, scale)
     : null;

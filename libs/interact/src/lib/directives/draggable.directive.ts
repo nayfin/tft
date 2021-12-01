@@ -65,7 +65,10 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   private interactableSubscription: Subscription;
   // cache holding element to use as drag preview (the element the user sees being dragged around)
   previewRef: TftDragElement;
-  // cache holding element to use as placeholder while dragging
+  // check all the different places for scale
+  get scale(): number {
+    return this.account_for_scale_dir?.scale || this.drag_root_dir?.account_for_scale_dir.scale || this.dragRoot?.account_for_scale_dir?.scale;
+  }
   constructor(
     public el: ElementRef,
     private interactService: InteractService,
@@ -137,10 +140,14 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
 
   dragMoveListener(event: NgDragEvent, element: Interact.Element) {
     const { dx, dy } = event;
+    const scale = this.scale;
+    const deltaX = scale ? dx / scale : dx;
+    const deltaY = scale ? dy / scale : dy;
+
     this.interactService.updateDeltas(
       this.interactableId,
       this.registryId,
-      {deltaX: dx, deltaY: dy},
+      {deltaX, deltaY},
       element
     );
   }
@@ -160,8 +167,9 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   mapDragEvent(event: NgDragEvent): TftDragEvent {
     const { target, dropzone } = event;
     const dropzoneElement = dropzone?.target || target.dropTarget?.el.nativeElement;
+    const scale = this.scale;
     const positionInDropTarget = target && dropzoneElement
-      ? this.interactService.calculatePositionInElement(dropzoneElement, this.previewRef)
+      ? this.interactService.calculatePositionInElement(dropzoneElement, this.previewRef, scale)
       : null;
     return {
       interactEvent: event,
@@ -222,8 +230,8 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
           this.setDragStyles(this.previewRef)
 
           this.dragRootEl.prepend(this.previewRef);
-
-          const {x, y} = this.interactService.calculatePositionInElement(this.dragRootEl, nativeElement);
+          const scale = this.account_for_scale_dir?.scale || this.dragRoot?.account_for_scale_dir?.scale || 1;
+          const {x, y} = this.interactService.calculatePositionInElement(this.dragRootEl, nativeElement, scale);
           this.interactService.updatePosition(this.interactableId, this.registryId, {x, y}, this.previewRef);
           if (!this.showPlaceholder) {
             this.renderer.setStyle(this.el.nativeElement, 'display', 'none');
