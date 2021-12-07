@@ -15,7 +15,7 @@ export class AutocompleteComponent {
     groupList: [
       {
         selectField: 'a',
-        autocompleteField: {value: 'ab', label: 'option at'}
+        autocompleteField: {label: 'option a', value: {id:'a', description: 'some things a'}},
       }
     ]
   };
@@ -52,11 +52,11 @@ export class AutocompleteComponent {
               controlName: 'autocompleteField',
               label: 'This autocomplete field is part of a group list',
               options: (_group, searchTerm) => [
-                {label: 'option a', value: 'a'},
-                {label: 'option b', value: 'b'},
-                {label: 'option c', value: 'c'},
+                {label: 'option a', value: {id:'a', description: 'some things a'}},
+                {label: 'option b', value: {id:'b', description: 'some things b'}},
+                {label: 'option c', value: {id:'c', description: 'some things c'}},
               ].filter(option => option.label.includes(searchTerm)),
-            }
+            },
           ]
         },
       },

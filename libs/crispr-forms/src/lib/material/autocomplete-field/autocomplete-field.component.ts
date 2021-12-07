@@ -44,10 +44,13 @@ export class AutocompleteFieldComponent
    * @param options the array of options to search for option with corresponding value
    */
   displayLabel(options: SelectOption[]) {
+    if (this.config.displayWith) {
+      return this.config.displayWith(options);
+    }
     return (value: any) => {
-      return !!options && Array.isArray(options)
-        ? options.find(option => option.value === value)?.label
-        : value;
+      const label: string = !!options && Array.isArray(options)
+      ? options.find((option) => JSON.stringify(option.value) === JSON.stringify(value))?.label: value;
+      return label
     };
   }
 
