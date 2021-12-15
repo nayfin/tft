@@ -1,4 +1,4 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component, Input, Renderer2 } from '@angular/core';
 import { TftDropEvent } from '@tft/interact';
 import { DraggableOptions } from '@interactjs/types';
 
@@ -17,6 +17,7 @@ export class SectionComponent {
   droppedItems: DroppedItem[] = [];
   dragConfig: DraggableOptions = {};
 
+  @Input() scale: number;
   constructor(
     private renderer: Renderer2
   ) { }

@@ -5,7 +5,9 @@
   [dropzoneData]="droppedItems"
   [dropzoneId]="'yard'"
   class="drop-container">
-  <h3>Drop Zone for Items</h3>
+  <h3>
+    {{scale}}
+  </h3>
   <section
     *ngFor="let item of droppedItems"
     tftDraggable

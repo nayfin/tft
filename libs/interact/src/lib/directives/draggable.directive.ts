@@ -11,6 +11,7 @@ import { DragPreviewDirective } from './drag-preview.directive';
 import { getRootNode } from '../utils';
 import { DragRootDirective } from './drag-root.directive';
 import { AccountForScaleDirective } from './account-for-scale.directive';
+import { AutoScrollDirective } from './auto-scroll.directive';
 
 /** @dynamic */
 @Directive({
@@ -63,12 +64,15 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   interactable: Interactable;
   private registryId: string;
   private interactableSubscription: Subscription;
+  private scrollEventsSubscription: Subscription;
+
   // cache holding element to use as drag preview (the element the user sees being dragged around)
   previewRef: TftDragElement;
   // check all the different places for scale
   get scale(): number {
     return this.account_for_scale_dir?.scale || this.drag_root_dir?.account_for_scale_dir.scale || this.dragRoot?.account_for_scale_dir?.scale;
   }
+
   constructor(
     public el: ElementRef,
     private interactService: InteractService,
@@ -77,7 +81,8 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
     @Inject(DOCUMENT) private _document: Document,
     @Optional() public account_for_scale_dir?: AccountForScaleDirective,
     @Optional() @SkipSelf() public dropzone_dir?: DropzoneDirective,
-    @Optional() @SkipSelf() public drag_root_dir?: DragRootDirective
+    @Optional() @SkipSelf() public drag_root_dir?: DragRootDirective,
+    @Optional() @SkipSelf() public auto_scroll_dir?: AutoScrollDirective
   ) { }
 
   ngOnInit() {
@@ -210,7 +215,19 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   }
 
   initiateDragEvents(dragConfig: Partial<Interact.OrBoolean<DraggableOptions>>, nativeElement: HTMLElement) {
-    return interact(nativeElement).draggable({...dragConfig, enabled:  !(this.disabled || this.dragDisabled) })
+    const defaultDragConfig = {
+      ...dragConfig,
+      enabled:  !(this.disabled || this.dragDisabled),
+      ...(this.auto_scroll_dir && {
+        autoScroll:
+          {
+            ...this.auto_scroll_dir.autoScrollConfig,
+            container: this.auto_scroll_dir.el.nativeElement as HTMLElement
+          }
+        }
+      )
+    };
+    return interact(nativeElement).draggable(defaultDragConfig)
       .on('dragstart',  (event: NgDragEvent) => {
         const interaction = event.interaction;
         // check if we should append drag element to body
@@ -237,6 +254,10 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
             this.renderer.setStyle(this.el.nativeElement, 'display', 'none');
           }
         }
+        // subscribe to scroll events if they are there, by only subscribing on dragstart we avoid wasting subscriptions on interactables that aren't be dragged
+        if (this.auto_scroll_dir) {
+          this.subscribeToScrollEvents();
+        }
         this.dragStart.emit(this.mapDragEvent(event));
       })
       .on('dragmove', (event: NgDragEvent) => {
@@ -258,7 +279,10 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
         }
         this.renderer.setStyle(this.el.nativeElement, 'display', '');
         this.dragEnd.emit(mappedEvent);
-
+        // unsubscribe from scroll events if subscribed
+        if (this.auto_scroll_dir) {
+          this.scrollEventsSubscription.unsubscribe();
+        }
         if ( this.el.nativeElement !== this.previewRef) {
           // we do this in a timeout, so that we don't remove before the dropzone can get the boundingElementRect
           setTimeout(() => {
@@ -268,7 +292,20 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
       });
   }
 
+  subscribeToScrollEvents() {
+    this.scrollEventsSubscription = this.auto_scroll_dir.scrollDeltaObserver.subscribe(({scrollLeft, scrollTop}) => {
+      const deltaX = this.scale ? scrollLeft / this.scale : scrollLeft;
+      const deltaY = this.scale ? scrollTop / this.scale : scrollTop;
 
+      this.interactService.updateDeltas(
+        this.interactableId,
+        this.registryId,
+        {deltaX, deltaY},
+        this.previewRef
+      );
+    });
+
+  }
 }
 
 /**

@@ -1,31 +1,33 @@
 
+<div class="view-window" tftAutoScroll>
 
-<div
-  tftDragRoot
-  tftApplyScale
-  tftAccountForScale
-  tftGesturable
-  [scale]="scale"
-  #dragRoot="tftDragRoot"
-  tftDropzone
-  class="yard"
-  (gestureMove)="onGestureMove($event)"
-  (gestureStart)="onGestureStart($event)"
-  (gestureEnd)="onGestureEnd($event)">
-  <h2>
-    Dropzone for Draggable Dropzone
-  </h2>
-  <button (click)="disableBlueBox = !disableBlueBox" >{{disableBlueBox ? 'enable' : 'disable'}}</button>
-  <tft-section
-    tftDraggable
-    tftResizable
-    [dragDisabled]="disableBlueBox"
-    [resizeDisabled]="disableBlueBox"
-    [width]="dropZoneWidth"
-    [height]="dropZoneHeight"
-    (resizeEnd)="updateSize($event)">
-  </tft-section>
-
+  <div
+    tftDragRoot
+    tftApplyScale
+    tftAccountForScale
+    tftGesturable
+    [scale]="scale"
+    #dragRoot="tftDragRoot"
+    tftDropzone
+    class="yard"
+    (gestureMove)="onGestureMove($event)"
+    (gestureStart)="onGestureStart($event)"
+    (gestureEnd)="onGestureEnd($event)">
+    <h2>
+      Dropzone for Draggable Dropzone
+    </h2>
+    <button (click)="disableBlueBox = !disableBlueBox" >{{disableBlueBox ? 'enable' : 'disable'}}</button>
+    <tft-section
+      tftDraggable
+      tftResizable
+      [dragDisabled]="disableBlueBox"
+      [resizeDisabled]="disableBlueBox"
+      [scale]="scale"
+      [width]="dropZoneWidth"
+      [height]="dropZoneHeight"
+      (resizeEnd)="updateSize($event)">
+    </tft-section>
+  </div>
 </div>
 
 <div class="drag-origin-container">

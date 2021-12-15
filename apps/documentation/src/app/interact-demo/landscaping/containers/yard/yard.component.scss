@@ -1,7 +1,8 @@
-:host {
+.view-window {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 220px);
+  overflow: auto;
   [tftGesturable] {
     touch-action: pan-x pan-y;
   }
@@ -22,8 +23,8 @@
 .yard {
   color: white;
   display: flex;
-  width: 500em;
-  height: 500em;
+  min-width: 1500em;
+  min-height: 1500em;
   background: rosybrown;
   h2 {
     position: absolute;

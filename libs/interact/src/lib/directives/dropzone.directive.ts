@@ -1,13 +1,15 @@
-import { Directive, ElementRef, Input, OnInit, Output, EventEmitter, SimpleChanges, OnChanges, Renderer2, Optional } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, Output, EventEmitter, SimpleChanges, OnChanges, Renderer2, Optional, HostBinding } from '@angular/core';
 import interact from 'interactjs';
 import { DropzoneOptions, Interactable } from '@interactjs/types/index';
 import { InteractService } from '../services/interact.service';
 import { NgDropEvent, TftDragElement, TftDropEvent } from '../models';
 import { AccountForScaleDirective } from './account-for-scale.directive';
+
+export type PositionOption = 'relative' | 'absolute' | 'fixed' | 'static' | 'sticky' | 'unset' | 'inherit' | 'initial' | 'revert'
 @Directive({
   selector: '[tftDropzone]',
   host: {
-    '[id]': 'dropzoneId',
+    '[id]': 'dropzoneId'
   }
 })
 export class DropzoneDirective implements OnInit, OnChanges {
@@ -16,6 +18,9 @@ export class DropzoneDirective implements OnInit, OnChanges {
   @Input() dropzoneConfig: DropzoneOptions = {};
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() dropzoneData: any;
+
+  @Input()
+  @HostBinding('style.position') position: PositionOption = 'relative';
   // proxies to pass interact events through to consumer of directive
   @Output() dropActivate = new EventEmitter<TftDropEvent>();
   @Output() dragEnter = new EventEmitter<TftDropEvent>();

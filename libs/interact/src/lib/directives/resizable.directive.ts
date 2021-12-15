@@ -9,7 +9,14 @@ import { DropzoneDirective } from './dropzone.directive';
 import { DragRootDirective } from './drag-root.directive';
 import { AccountForScaleDirective } from './account-for-scale.directive';
 import { NgResizeEvent, TftResizeEvent, DEFAULT_REGISTRY_ID, TftDragElement } from '../models';
+import { AutoScrollDirective } from './auto-scroll.directive';
 
+interface ActiveEdges {
+  top: boolean;
+  bottom: boolean;
+  left: boolean;
+  right: boolean;
+}
 /** @dynamic */
 @Directive({
   selector: '[tftResizable]',
@@ -51,7 +58,10 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
   // The
   dragRootEl: HTMLElement;
 
+  private activeEdges: ActiveEdges = {left: false, right: false, top: false, bottom: false}
   private interactableSubscription: Subscription;
+  private scrollEventsSubscription: Subscription;
+
   get scale(): number {
     return this.account_for_scale_dir?.scale || this.drag_root_dir?.account_for_scale_dir?.scale;
   }
@@ -64,7 +74,10 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
     @Optional() private drag_root_dir?: DragRootDirective,
     @Optional() public account_for_scale_dir?: AccountForScaleDirective,
     @Optional() private draggable_dir?: DraggableDirective,
-    @Optional() @SkipSelf() private dropzone_dir?: DropzoneDirective
+    @Optional() @SkipSelf() private dropzone_dir?: DropzoneDirective,
+    @Optional() @SkipSelf() public auto_scroll_dir?: AutoScrollDirective
+
+
   ) {
     this.dragRootEl = (drag_root_dir?.el?.nativeElement as HTMLElement) || this._document.body;
   }
@@ -106,22 +119,16 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
   }
 
   resizeListener(event: ResizeEvent) {
+    const element: TftDragElement = this.el.nativeElement;
     const scale = this.scale;
-    let deltaX: number;
-    let deltaY: number;
-    let height: number;
-    let width: number;
-    if (scale) {
-      deltaX = event.deltaRect.left/scale;
-      deltaY = event.deltaRect.top/scale;
-      height = event.rect.height/scale;
-      width = event.rect.width/scale;
-    } else {
-       deltaX = event.deltaRect.left;
-       deltaY = event.deltaRect.top;
-       width = event.rect.width;
-       height = event.rect.height;
-    }
+    const {deltaRect} = event;
+    const deltaX = deltaRect.left/scale;
+    const deltaY = deltaRect.top/scale;
+    // We get the width and height directly from the native element because
+    // the event dimension can get out of sync when resizing with autoScroll
+    const rect = element.getBoundingClientRect();
+    const width = (rect.width + deltaRect.width)/scale;
+    const height = (rect.height + deltaRect.height)/scale;
 
     this.interactService.updateSize(
       this.interactableId,
@@ -137,11 +144,27 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
    * @param resizeConfig
    * @param nativeElement
    */
-  initiateResizeEvents(resizeConfig: Partial<Interact.OrBoolean<ResizableOptions>>, nativeElement: any) {
+  initiateResizeEvents(resizeConfig: Partial<Interact.OrBoolean<ResizableOptions>>, nativeElement: TftDragElement) {
     // TODO: This should try and get interactable from tft_draggable if it exists
+    const defaultResizeConfig = {
+      ...resizeConfig,
+      enabled: !this.resizeDisabled,
+      ...(this.auto_scroll_dir && {
+        autoScroll: {
+          ...this.auto_scroll_dir.autoScrollConfig,
+          container: this.auto_scroll_dir.el.nativeElement as HTMLElement
+        }
+      })
+    };
     const interactable = this.draggable_dir?.interactable || interact(nativeElement);
-    return interactable.resizable({...resizeConfig, enabled: !this.resizeDisabled})
-      .on('resizestart', (event: NgResizeEvent) => { this.resizeStart.emit(this.mapResizeEvent(event))})
+    return interactable.resizable(defaultResizeConfig)
+      .on('resizestart', (event: NgResizeEvent) => {
+        this.activeEdges = event.edges as ActiveEdges;
+        if (this.auto_scroll_dir) {
+          this.subscribeToScrollEvents();
+        }
+        this.resizeStart.emit(this.mapResizeEvent(event))
+      })
       .on('resizemove',  (event: NgResizeEvent) => {
         if (this.enableResizeDefault) {
           this.resizeListener(event)
@@ -150,11 +173,18 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
         this.resizeMove.emit(mappedEvent)
       })
       .on('resizeinertiastart', (event: NgResizeEvent) => this.resizeInertiaStart.emit(this.mapResizeEvent(event)))
-      .on('resizeend', (event: NgResizeEvent) => this.resizeEnd.emit(this.mapResizeEvent(event)));
+      .on('resizeend', (event: NgResizeEvent) => {
+        if (this.auto_scroll_dir) {
+          this.scrollEventsSubscription.unsubscribe();
+        }
+        this.activeEdges = {left: false, right: false, top: false, bottom: false}
+
+        this.resizeEnd.emit(this.mapResizeEvent(event));
+      });
   }
 
   mapResizeEvent(event: NgResizeEvent ): TftResizeEvent {
-    const target  = event.target as TftDragElement;
+    const target  = this.el.nativeElement as TftDragElement;
     const relatedTarget = this.draggable_dir?.dropzone_dir?.el.nativeElement;
     const scale = this.scale;
     const positionInDropTarget = target && relatedTarget
@@ -185,5 +215,27 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
 
   addResizePropertiesToElement(nativeElement: TftDragElement) {
     this.renderer.setProperty(nativeElement, 'resizeRef', this);
+  }
+
+  subscribeToScrollEvents() {
+    this.scrollEventsSubscription = this.auto_scroll_dir.scrollDeltaObserver.subscribe(({scrollLeft, scrollTop}) => {
+      const scale = this.scale;
+      const target = this.el.nativeElement as HTMLElement;
+      const {width: prevWidth, height: prevHeight} = target.getBoundingClientRect();
+
+      const deltaHeight = scrollTop * (this.activeEdges.top ? -1 : this.activeEdges.bottom ? 1 : 0);
+      const deltaWidth = scrollLeft * (this.activeEdges.left ? -1 : this.activeEdges.right ? 1 : 0);
+
+      const height = (prevHeight + deltaHeight) / scale;
+      const width = (prevWidth + deltaWidth) / scale;
+      const deltaX = this.activeEdges.left ? (scrollLeft / scale) : 0;
+      const deltaY = this.activeEdges.top ? (scrollTop / scale) : 0;
+      this.interactService.updateSize(
+        this.interactableId,
+        this.registryId,
+        {deltaX, deltaY, width, height},
+        this.el.nativeElement as HTMLElement
+      );
+    });
   }
 }
