@@ -8,6 +8,8 @@ export * from './select/select.component';
 export * from './heading/heading.component';
 export * from './input/input.component';
 export * from './file-upload/file-upload.component';
+export * from './image-upload/image-upload.component';
 export * from './slider/slider.component';
 export * from './textarea/textarea.component';
 export * from './button/button.component';
+export * from './unit-conversion/unit-conversion.component';

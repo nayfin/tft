@@ -30,6 +30,10 @@ export const appNavTree: SidenavSection[] = [
             path: 'crispr-forms-demo/fields/file-upload'
           },
           {
+            title: 'Image Upload Field',
+            path: 'crispr-forms-demo/fields/image-upload'
+          },
+          {
             title: 'Select Field',
             path: 'crispr-forms-demo/fields/select'
           },

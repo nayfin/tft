@@ -18,6 +18,7 @@ import { AutocompleteChiplistComponent } from './autocomplete-chiplist/autocompl
 import { HttpClientModule } from '@angular/common/http';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { UnitConversionComponent } from './unit-conversion/unit-conversion.component';
+import { ImageUploadComponent } from './image-upload/image-upload.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { UnitConversionComponent } from './unit-conversion/unit-conversion.compo
     AutocompleteChiplistComponent,
     FileUploadComponent,
     UnitConversionComponent,
-    CustomDatepickerFooterComponent
+    CustomDatepickerFooterComponent,
+    ImageUploadComponent
   ],
   imports: [
     CommonModule,
