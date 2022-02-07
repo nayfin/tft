@@ -51,6 +51,7 @@
     "@nrwl/angular": "12.3.4",
     "algoliasearch-helper": "^3.1.1",
     "angular-instantsearch": "^2.3.0",
+    "ngx-image-compress": "^13.0.0",
     "firebase": "8.0.1",
     "interactjs": "~1.9.19",
     "js-quantities": "^1.7.6",
