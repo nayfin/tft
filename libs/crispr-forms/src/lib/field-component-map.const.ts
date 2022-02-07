@@ -1,7 +1,7 @@
 // tslint:disable-next-line: max-line-length
 import { InputFieldComponent, SelectFieldComponent, AutocompleteFieldComponent,
   AutocompleteChiplistFieldComponent, TextareaFieldComponent, CheckboxFieldComponent,
-  RadioFieldComponent, FileUploadComponent, SliderFieldComponent, DatepickerFieldComponent,
+  RadioFieldComponent, FileUploadFieldComponent, SliderFieldComponent, DatepickerFieldComponent,
   HeadingComponent, DividerComponent, ButtonComponent, UnitConversionFieldComponent, ImageUploadFieldComponent } from './material';
 import { FormGroupListComponent } from './form-group-list/form-group-list.component';
 import { isControlConfig } from './form.helpers';
@@ -21,7 +21,7 @@ export const FIELD_COMPONENTS = {
   checkbox: CheckboxFieldComponent,
   slider: SliderFieldComponent,
   datepicker: DatepickerFieldComponent,
-  fileUpload: FileUploadComponent,
+  fileUpload: FileUploadFieldComponent,
   imageUpload: ImageUploadFieldComponent,
   heading: HeadingComponent,
   divider: DividerComponent,
@@ -43,7 +43,8 @@ export type CrisprControlComponent = ButtonComponent |
   TextareaFieldComponent |
   CheckboxFieldComponent |
   SliderFieldComponent |
-  FileUploadComponent |
+  FileUploadFieldComponent |
+  ImageUploadFieldComponent|
   DatepickerFieldComponent |
   UnitConversionFieldComponent;
 

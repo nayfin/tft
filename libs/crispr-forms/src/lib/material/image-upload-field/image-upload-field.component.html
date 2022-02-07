@@ -1,4 +1,4 @@
-2<crispr-field-container
+<crispr-field-container
   [config]="config"
   [group]="group">
   <mat-form-field floatLabel="always"
@@ -10,45 +10,59 @@
 
     <input [formControlName]="config.controlName" matInput type="text"/>
 
+    <input #captureImage (change)="filesChanged($event.target.files)" type="file" capture="user" accept="image/*">
+
     <input
       #fileInput
       type="file"
-      style="display: none"
-      [accept]="config.acceptedTypes"
-      [multiple]="config.allowMultipleFiles"
+      accept="image/*"
+      multiple="false"
       (change)="filesChanged($event.target.files)"/>
     <mat-label>{{config.label}}</mat-label>
 
-    <div *ngIf="!(selectedFiles?.length > 0); else selectedFileList"  class="drop-info">
+    <div *ngIf="!(selectedFiles?.length > 0); else imageDisplay"  class="drop-info">
       <mat-icon class="drop-icon" inline="true">cloud_upload</mat-icon>
       <h2 class="mat-h2">{{config.dropZoneText}}</h2>
       or
-      <button
-        mat-raised-button
-        type="button"
-        color="primary"
-        [disabled]="(disabled$ | async) || config.disableOnUpload && isUploaded"
-        (click)="fileInput.click()"
-        [attr.aria-label]="config.controlName">
-        {{config.selectButtonText}}
-      </button>
-    </div>
-    <ng-template #selectedFileList>
-      <div class="selected-files-container">
-        <div class="selected-files-list">
-          <crispr-selected-file
-            *ngFor="let file of selectedFiles; let i = index;"
-            [color]="config.color === 'primary' ? 'accent' : 'primary'"
-            [fileName]="file.name"
-            [showProgress]="config.showUploadProgress"
-            [progress]="fileProgress && (fileProgress[i] | async)">
-          </crispr-selected-file>
-        </div>
+      <div>
 
+        <button
+          mat-button
+          type="button"
+          color="accent"
+          [disabled]="(disabled$ | async) || config.disableOnUpload && isUploaded"
+          (click)="fileInput.click()"
+          [attr.aria-label]="config.controlName">
+          <mat-icon>
+            file_present
+          </mat-icon>
+          {{config.selectButtonText}}
+        </button>
+
+        <button
+          mat-button
+          type="button"
+          color="primary"
+          [disabled]="(disabled$ | async) || config.disableOnUpload && isUploaded"
+          (click)="captureImage.click()"
+          [attr.aria-label]="config.controlName">
+          <mat-icon>
+            camera
+          </mat-icon>
+          CAPTURE
+        </button>
+
+      </div>
+    </div>
+    <ng-template #imageDisplay>
+      <div class="image-container">
+        <img [src]="_imageSource || ''" alt="">
+        <!-- <svg [src]="imageSource || ''" alt=""></svg> -->
       </div>
     </ng-template>
 
   </mat-form-field>
+
   <div class="button-container" *ngIf="selectedFiles?.length > 0">
 
     <button

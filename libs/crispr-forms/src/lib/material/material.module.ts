@@ -21,7 +21,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
-import { FieldContainerComponent } from '../field-container/field-container.component';
+import { FieldContainerModule } from '../field-container/field-container.component';
 import { InputFieldComponent } from './input-field/input-field.component';
 import { SelectFieldComponent } from './select-field/select-field.component';
 import { AutocompleteFieldComponent } from './autocomplete-field/autocomplete-field.component';
@@ -30,20 +30,17 @@ import { TextareaFieldComponent } from './textarea-field/textarea-field.componen
 import { ButtonComponent } from './button/button.component';
 import { DatepickerFieldComponent } from './datepicker-field/datepicker-field.component';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { HeadingComponent } from './heading/heading.component';
-import { InfoComponent } from './info/info.component';
+import { HeadingModule } from './heading/heading.component';
+import { InfoModule } from './info/info.component';
 import { SliderFieldComponent } from './slider-field/slider-field.component';
 import { DividerComponent } from './divider/divider.component';
 // tslint:disable-next-line: max-line-length
 import { AutocompleteChiplistFieldComponent } from './autocomplete-chiplist-field/autocomplete-chiplist-field.component';
 import { OptionComponent } from './option/option.component';
 import { RadioFieldComponent } from './radio-field/radio-field.component';
-import { FileUploadComponent } from './file-upload/file-upload.component';
-import { SelectedFileComponent } from './selected-file/selected-file.component';
-import { FileDropzoneDirective } from './file-upload/file-dropzone.directive';
 import { UnitConversionFieldComponent } from './unit-conversion-field/unit-conversion-field.component';
 import { PortalModule } from '@angular/cdk/portal';
-import { ImageUploadFieldComponent } from './image-upload-field/image-upload-field.component';
+import { FileUploadFieldModule } from '.';
 
 // TODO: Should we import UI library?
 // Will the tree shaker shake the unused modules?
@@ -70,7 +67,6 @@ const MAT_DESIGN_MODULES = [
 ];
 
 const CRISPR_FIELDS = [
-  FieldContainerComponent,
   InputFieldComponent,
   SelectFieldComponent,
   RadioFieldComponent,
@@ -81,10 +77,7 @@ const CRISPR_FIELDS = [
   DatepickerFieldComponent,
   SliderFieldComponent,
   ButtonComponent,
-  HeadingComponent,
   DividerComponent,
-  FileUploadComponent,
-  ImageUploadFieldComponent,
   UnitConversionFieldComponent
 ];
 @NgModule({
@@ -92,6 +85,10 @@ const CRISPR_FIELDS = [
     CommonModule,
     ReactiveFormsModule,
     FormValidationHandlerModule,
+    InfoModule,
+    FileUploadFieldModule,
+    HeadingModule,
+    FieldContainerModule,
     ...MAT_DESIGN_MODULES,
   ],
   exports: [
@@ -100,10 +97,7 @@ const CRISPR_FIELDS = [
   ],
   declarations: [
     ...CRISPR_FIELDS,
-    InfoComponent,
     OptionComponent,
-    SelectedFileComponent,
-    FileDropzoneDirective,
   ],
   entryComponents: CRISPR_FIELDS
 })

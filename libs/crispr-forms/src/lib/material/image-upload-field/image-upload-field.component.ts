@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -5,11 +6,20 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   Optional,
-  Self
+  Self,
+  ChangeDetectorRef,
+  NgModule
 } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
+import { FileUploadFieldModule } from '..';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
+import { FieldContainerModule } from '../../field-container/field-container.component';
 import { ImageUploadFieldConfig } from '../../models/image-upload-field.config';
 
 const ImageUploadFieldMixin = crisprControlMixin<ImageUploadFieldConfig>(CrisprFieldComponent);
@@ -25,8 +35,8 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
   onChange: () => void;
 
   defaultConfig: Partial<ImageUploadFieldConfig> = {
-    allowMultipleFiles: false,
-    acceptedTypes: '*.*',
+    // allowMultipleFiles: false,
+    acceptedTypes: 'image/*',
     dropZoneText: 'DROP FILE HERE',
     selectFilesButtonType: 'button',
     selectButtonText: 'SELECT',
@@ -36,6 +46,13 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
     uploadButtonType: 'button',
     showUploadProgress: false,
     disableOnUpload: true
+  }
+
+  _imageSource: string;
+  set imageSource(imageSource: ArrayBuffer | string) {
+    // this.imageIsSvg = imageSource;
+    console.log(typeof imageSource);
+    this._imageSource = this.domSanitizer.bypassSecurityTrustUrl(imageSource as unknown as string) as string;
   }
 
   @ViewChild('fileInput') fileInputRef: ElementRef
@@ -50,6 +67,8 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
   // ngControl: NgControl = null;
   constructor(
     @Optional() @Self() public ngControl: NgControl,
+    private domSanitizer: DomSanitizer,
+    private cdr: ChangeDetectorRef
   ) {
     super();
     if (this.ngControl != null) {
@@ -66,11 +85,22 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
     : of(false);
   }
 
-
   filesChanged(files: FileList): void {
     if (files && files.length > 0 ) {
-      this.selectedFiles = files
-      this.control.patchValue(files);
+      const imageFile = files[0];
+
+      console.log({imageFile})
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        console.log({result: fileReader.result})
+        this.imageSource = fileReader.result;
+        this.cdr.detectChanges();
+        return this.imageSource;
+
+      }
+      this.selectedFiles = files;
+      fileReader.readAsDataURL(imageFile)
+      this.control.patchValue(imageFile);
     }
   }
 
@@ -83,7 +113,9 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
 
   resetFileInput(): void {
     this.fileInputRef.nativeElement.value = ''
+    this.selectedFiles = null;
     this.control.patchValue(null);
+    this.imageSource = null;
     this.isUploaded = false;
   }
 
@@ -97,6 +129,29 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
     this.onChange = fn;
   }
 
-  registerOnTouched( fn: () => void ) {
-  }
+  registerOnTouched( fn: () => void ) { }
 }
+@NgModule({
+  imports: [
+    CommonModule,
+    FieldContainerModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FileUploadFieldModule
+  ],
+  exports: [
+    ImageUploadFieldComponent
+  ],
+  declarations: [
+    ImageUploadFieldComponent
+  ],
+  entryComponents: [
+    ImageUploadFieldComponent
+  ]
+})
+export class ImageUploadFieldModule {
+}
+

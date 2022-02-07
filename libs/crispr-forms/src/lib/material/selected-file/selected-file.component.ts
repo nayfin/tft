@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Input, NgModule } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'crispr-selected-file',
@@ -13,4 +15,21 @@ export class SelectedFileComponent {
   @Input() showProgress: boolean;
   @Input() color: ThemePalette;
 
+}
+@NgModule({
+  imports: [
+    CommonModule,
+    MatProgressBarModule
+  ],
+  exports: [
+    SelectedFileComponent
+  ],
+  declarations: [
+    SelectedFileComponent
+  ],
+  entryComponents: [
+    SelectedFileComponent
+  ]
+})
+export class SelectedFileModule {
 }

@@ -6,6 +6,7 @@
       justify-content: center;
     }
   }
+
   .drop-info{
     display: flex;
     flex-direction: column;
@@ -17,6 +18,7 @@
       margin: 0;
     }
   }
+
   .button-container {
     display: flex;
     justify-content: flex-end;
@@ -25,11 +27,14 @@
       margin-left: 8px;
     }
   }
-  .selected-files-container {
+  .image-container {
     width: 100%;
+    img {
+      width: inherit;
+    }
   }
 
-  [matInput] {
+  input {
     position: absolute;
     max-height: 0;
     visibility: hidden;

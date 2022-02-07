@@ -2,12 +2,19 @@ import { FormGroup } from '@angular/forms';
 import { CrisprControlConfig, ControlType, ButtonType, MatFieldProperties, EnabledUploadButtonConfig } from '../models';
 
 export type ImageUploadFieldConfig = CrisprControlConfig & MatFieldProperties & {
-  controlType: ControlType.FILE_UPLOAD;
+  controlType: ControlType.IMAGE_UPLOAD;
   label?: string;
   filesChanged?: (parentGroup: FormGroup, files: FileList) => void;
-  allowMultipleFiles?: boolean;
+  acceptedTypes?: `image/${string}`;
+  /**
+   * The maximum allowed size in bytes of image
+   */
+  maximumFileSizeBytes?: number;
+  /**
+   * The minimum size in bytes of a file to trigger image compression
+   */
+  minimumCompressionSizeBytes?: number;
   showClearFilesButton?: boolean;
-  acceptedTypes?: string;
   selectFilesButtonType?: ButtonType;
   selectButtonText?: string;
   clearFilesButtonText?: string;

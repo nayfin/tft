@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -5,22 +6,30 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   Optional,
-  Self
+  Self,
+  NgModule
 } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { Observable, of } from 'rxjs';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
+import { FieldContainerModule } from '../../field-container/field-container.component';
 import { FileUploadFieldConfig } from '../../models/file-upload-field.config';
+import { SelectedFileModule } from '../selected-file/selected-file.component';
+import { FileDropzoneDirective } from './file-dropzone.directive';
 
 const FileUploadFieldMixin = crisprControlMixin<FileUploadFieldConfig>(CrisprFieldComponent);
 
 @Component({
-  selector: 'crispr-file-upload',
+  selector: 'crispr-file-upload-field',
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FileUploadComponent extends FileUploadFieldMixin implements OnInit, ControlValueAccessor {
+export class FileUploadFieldComponent extends FileUploadFieldMixin implements OnInit, ControlValueAccessor {
 
   onChange: () => void;
 
@@ -52,7 +61,6 @@ export class FileUploadComponent extends FileUploadFieldMixin implements OnInit,
     @Optional() @Self() public ngControl: NgControl,
   ) {
     super();
-    console.log('farts a lot')
     if (this.ngControl != null) {
       // Setting the value accessor directly (instead of using
       // the providers) to avoid running into a circular import.
@@ -100,4 +108,29 @@ export class FileUploadComponent extends FileUploadFieldMixin implements OnInit,
 
   registerOnTouched( fn: () => void ) {
   }
+}
+@NgModule({
+  imports: [
+    CommonModule,
+    FieldContainerModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    SelectedFileModule
+  ],
+  exports: [
+    FileUploadFieldComponent,
+    FileDropzoneDirective
+  ],
+  declarations: [
+    FileUploadFieldComponent,
+    FileDropzoneDirective
+  ],
+  entryComponents: [
+    FileUploadFieldComponent
+  ]
+})
+export class FileUploadFieldModule {
 }

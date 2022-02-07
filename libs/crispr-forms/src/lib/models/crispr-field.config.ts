@@ -111,7 +111,7 @@ export interface Info {
 }
 
 // TODO: having AnyFieldConfig as the default for C seems redundant and silly
-export interface AbstractGroupConfig<C extends CrisprFieldConfig = AnyFieldConfig, M = any>  {
+export interface AbstractGroupConfig<C extends CrisprFieldConfig = AnyFieldConfig>  {
   // this union is needed, it joins any custom config provided by users to our default config options
   fields?: (AnyFieldConfig | C)[];
 }

@@ -1,9 +1,11 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy, NgModule } from '@angular/core';
 import { CrisprControlConfig } from '../models';
 import { Observable, of, Subscription } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { tap, distinctUntilChanged } from 'rxjs/operators';
 import { computeValueFromFields } from '../form.helpers';
+import { CommonModule } from '@angular/common';
+import { HeadingModule } from '../material/heading/heading.component';
 
 @Component({
   selector: 'crispr-field-container',
@@ -65,4 +67,22 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
       )
       : of(false);
   }
+}
+@NgModule({
+  imports: [
+    CommonModule,
+    HeadingModule
+  ],
+  exports: [
+    FieldContainerComponent
+  ],
+  declarations: [
+    FieldContainerComponent
+  ],
+  entryComponents: [
+    FieldContainerComponent
+  ]
+})
+
+export class FieldContainerModule {
 }

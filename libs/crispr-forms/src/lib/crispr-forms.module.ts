@@ -13,12 +13,14 @@ import { FormGroupListComponent } from './form-group-list/form-group-list.compon
 import { CrisprFieldDirective } from './field.directive';
 import { InitialControlValuePipe } from './pipes/initial-control-value.pipe';
 import { SubGroupComponent } from './sub-group/sub-group.component';
+import { FieldContainerModule } from './field-container/field-container.component';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormValidationHandlerModule,
+    FieldContainerModule,
     MaterialModule
   ],
   declarations: [
@@ -30,6 +32,7 @@ import { SubGroupComponent } from './sub-group/sub-group.component';
   ],
   exports: [
     CrisprFormComponent,
+    FieldContainerModule,
     MaterialModule
   ],
   entryComponents: [
