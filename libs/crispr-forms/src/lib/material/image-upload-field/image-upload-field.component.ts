@@ -10,21 +10,21 @@ import {
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
-import { FileUploadFieldConfig } from '../../models/file-upload-field.config';
+import { ImageUploadFieldConfig } from '../../models/image-upload-field.config';
 
-const FileUploadFieldMixin = crisprControlMixin<FileUploadFieldConfig>(CrisprFieldComponent);
+const ImageUploadFieldMixin = crisprControlMixin<ImageUploadFieldConfig>(CrisprFieldComponent);
 
 @Component({
-  selector: 'crispr-file-upload',
-  templateUrl: './file-upload.component.html',
-  styleUrls: ['./file-upload.component.scss'],
+  selector: 'crispr-image-upload-field',
+  templateUrl: './image-upload-field.component.html',
+  styleUrls: ['./image-upload-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FileUploadComponent extends FileUploadFieldMixin implements OnInit, ControlValueAccessor {
+export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements OnInit, ControlValueAccessor {
 
   onChange: () => void;
 
-  defaultConfig: Partial<FileUploadFieldConfig> = {
+  defaultConfig: Partial<ImageUploadFieldConfig> = {
     allowMultipleFiles: false,
     acceptedTypes: '*.*',
     dropZoneText: 'DROP FILE HERE',
@@ -52,7 +52,6 @@ export class FileUploadComponent extends FileUploadFieldMixin implements OnInit,
     @Optional() @Self() public ngControl: NgControl,
   ) {
     super();
-    console.log('farts a lot')
     if (this.ngControl != null) {
       // Setting the value accessor directly (instead of using
       // the providers) to avoid running into a circular import.

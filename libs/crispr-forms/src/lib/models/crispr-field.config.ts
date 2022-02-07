@@ -1,5 +1,5 @@
 import { FormGroup, ValidatorFn } from '@angular/forms';
-import { Observable, ObservableInput } from 'rxjs';
+import { Observable } from 'rxjs';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
 
@@ -23,7 +23,8 @@ import {
   SliderFieldConfig,
   DividerConfig,
   SelectOption,
-  RadioFieldConfig
+  RadioFieldConfig,
+  ImageUploadFieldConfig
 } from '../models';
 
 import { ThemePalette } from '@angular/material/core';
@@ -42,6 +43,7 @@ export enum ControlType {
   FILE_UPLOAD = 'fileUpload',
   HEADING = 'heading',
   INPUT = 'input',
+  IMAGE_UPLOAD = 'imageUpload',
   GROUP_LIST = 'groupList',
   RADIO = 'radio',
   SELECT = 'select',
@@ -140,6 +142,7 @@ export type AnyFieldConfig = InputFieldConfig
   | DatepickerFieldConfig
   | SliderFieldConfig
   | FileUploadFieldConfig
+  | ImageUploadFieldConfig
   | HeadingConfig
   | ButtonConfig
   | DividerConfig

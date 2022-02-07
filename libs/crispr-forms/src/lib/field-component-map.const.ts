@@ -2,7 +2,7 @@
 import { InputFieldComponent, SelectFieldComponent, AutocompleteFieldComponent,
   AutocompleteChiplistFieldComponent, TextareaFieldComponent, CheckboxFieldComponent,
   RadioFieldComponent, FileUploadComponent, SliderFieldComponent, DatepickerFieldComponent,
-  HeadingComponent, DividerComponent, ButtonComponent, UnitConversionFieldComponent } from './material';
+  HeadingComponent, DividerComponent, ButtonComponent, UnitConversionFieldComponent, ImageUploadFieldComponent } from './material';
 import { FormGroupListComponent } from './form-group-list/form-group-list.component';
 import { isControlConfig } from './form.helpers';
 import { ControlType } from './models';
@@ -22,6 +22,7 @@ export const FIELD_COMPONENTS = {
   slider: SliderFieldComponent,
   datepicker: DatepickerFieldComponent,
   fileUpload: FileUploadComponent,
+  imageUpload: ImageUploadFieldComponent,
   heading: HeadingComponent,
   divider: DividerComponent,
   unitConversion: UnitConversionFieldComponent

@@ -1,7 +1,6 @@
-<crispr-field-container
+2<crispr-field-container
   [config]="config"
   [group]="group">
-  farts
   <mat-form-field floatLabel="always"
     [color]="config.color"
     appearance="outline"
@@ -10,6 +9,7 @@
     (fileDrop)="filesChanged($event)">
 
     <input [formControlName]="config.controlName" matInput type="text"/>
+
     <input
       #fileInput
       type="file"
