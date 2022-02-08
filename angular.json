@@ -1,6 +1,235 @@
 {
   "version": 1,
   "projects": {
+    "api": {
+      "root": "apps/api",
+      "sourceRoot": "apps/api/src",
+      "projectType": "application",
+      "prefix": "api",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/api",
+            "main": "apps/api/src/main.ts",
+            "tsConfig": "apps/api/tsconfig.app.json",
+            "assets": ["apps/api/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/api/src/environments/environment.ts",
+                  "with": "apps/api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          },
+          "outputs": ["{options.outputPath}"]
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "api:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/api/**/*.ts", "apps/api/src/**/*.html"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/api/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/apps/api"]
+        }
+      },
+      "tags": []
+    },
+    "api-interfaces": {
+      "root": "libs/api-interfaces",
+      "sourceRoot": "libs/api-interfaces/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/api-interfaces/**/*.ts",
+              "libs/api-interfaces/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/api-interfaces/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/api-interfaces"]
+        }
+      },
+      "tags": []
+    },
+    "core": {
+      "projectType": "library",
+      "root": "libs/core",
+      "sourceRoot": "libs/core/src",
+      "prefix": "tft",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/core/tsconfig.lib.json",
+            "project": "libs/core/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/core/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/core/src/**/*.ts",
+              "libs/core/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/core/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/core"]
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "tags": []
+    },
+    "crispr-forms": {
+      "projectType": "library",
+      "root": "libs/crispr-forms",
+      "sourceRoot": "libs/crispr-forms/src",
+      "prefix": "crispr",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/crispr-forms/tsconfig.lib.json",
+            "project": "libs/crispr-forms/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/crispr-forms/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/crispr-forms/src/**/*.ts",
+              "libs/crispr-forms/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/crispr-forms/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/crispr-forms"]
+        },
+        "storybook": {
+          "builder": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "port": 4400,
+            "config": {
+              "configFolder": "libs/crispr-forms/.storybook"
+            },
+            "projectBuildConfig": "crispr-forms:build-storybook"
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "builder": "@nrwl/storybook:build",
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "outputPath": "dist/storybook/crispr-forms",
+            "config": {
+              "configFolder": "libs/crispr-forms/.storybook"
+            },
+            "projectBuildConfig": "crispr-forms:build-storybook"
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          },
+          "outputs": ["{options.outputPath}"]
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "tags": []
+    },
+    "crispr-forms-e2e": {
+      "root": "apps/crispr-forms-e2e",
+      "sourceRoot": "apps/crispr-forms-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/crispr-forms-e2e/cypress.json",
+            "tsConfig": "apps/crispr-forms-e2e/tsconfig.e2e.json",
+            "devServerTarget": "crispr-forms:storybook"
+          },
+          "configurations": {
+            "ci": {
+              "devServerTarget": "crispr-forms:storybook:ci"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/crispr-forms-e2e/**/*.{js,ts}",
+              "apps/crispr-forms-e2e/src/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": [],
+      "implicitDependencies": ["crispr-forms"]
+    },
     "documentation": {
       "projectType": "application",
       "schematics": {
@@ -95,9 +324,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -136,15 +363,14 @@
             "jestConfig": "apps/documentation/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/apps/documentation"
-          ]
+          "outputs": ["coverage/apps/documentation"]
         },
         "deploy": {
           "builder": "@angular/fire:deploy",
           "options": {}
         }
-      }
+      },
+      "tags": []
     },
     "documentation-e2e": {
       "root": "apps/documentation-e2e",
@@ -173,216 +399,9 @@
             ]
           }
         }
-      }
-    },
-    "api": {
-      "root": "apps/api",
-      "sourceRoot": "apps/api/src",
-      "projectType": "application",
-      "prefix": "api",
-      "schematics": {},
-      "architect": {
-        "build": {
-          "builder": "@nrwl/node:build",
-          "options": {
-            "outputPath": "dist/apps/api",
-            "main": "apps/api/src/main.ts",
-            "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": [
-              "apps/api/src/assets"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/api/src/environments/environment.ts",
-                  "with": "apps/api/src/environments/environment.prod.ts"
-                }
-              ]
-            }
-          },
-          "outputs": [
-            "{options.outputPath}"
-          ]
-        },
-        "serve": {
-          "builder": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "api:build"
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "apps/api/**/*.ts",
-              "apps/api/src/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/api/jest.config.js",
-            "passWithNoTests": true
-          },
-          "outputs": [
-            "coverage/apps/api"
-          ]
-        }
-      }
-    },
-    "api-interfaces": {
-      "root": "libs/api-interfaces",
-      "sourceRoot": "libs/api-interfaces/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/api-interfaces/**/*.ts",
-              "libs/api-interfaces/src/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/api-interfaces/jest.config.js",
-            "passWithNoTests": true
-          },
-          "outputs": [
-            "coverage/libs/api-interfaces"
-          ]
-        }
-      }
-    },
-    "crispr-forms": {
-      "projectType": "library",
-      "root": "libs/crispr-forms",
-      "sourceRoot": "libs/crispr-forms/src",
-      "prefix": "crispr",
-      "architect": {
-        "build": {
-          "builder": "@nrwl/angular:package",
-          "options": {
-            "tsConfig": "libs/crispr-forms/tsconfig.lib.json",
-            "project": "libs/crispr-forms/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/crispr-forms/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/crispr-forms/src/**/*.ts",
-              "libs/crispr-forms/src/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/crispr-forms/jest.config.js",
-            "passWithNoTests": true
-          },
-          "outputs": [
-            "coverage/libs/crispr-forms"
-          ]
-        },
-        "storybook": {
-          "builder": "@nrwl/storybook:storybook",
-          "options": {
-            "uiFramework": "@storybook/angular",
-            "port": 4400,
-            "config": {
-              "configFolder": "libs/crispr-forms/.storybook"
-            }
-          },
-          "configurations": {
-            "ci": {
-              "quiet": true
-            }
-          }
-        },
-        "build-storybook": {
-          "builder": "@nrwl/storybook:build",
-          "options": {
-            "uiFramework": "@storybook/angular",
-            "outputPath": "dist/storybook/crispr-forms",
-            "config": {
-              "configFolder": "libs/crispr-forms/.storybook"
-            }
-          },
-          "configurations": {
-            "ci": {
-              "quiet": true
-            }
-          },
-          "outputs": [
-            "{options.outputPath}"
-          ]
-        }
       },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "core": {
-      "projectType": "library",
-      "root": "libs/core",
-      "sourceRoot": "libs/core/src",
-      "prefix": "tft",
-      "architect": {
-        "build": {
-          "builder": "@nrwl/angular:package",
-          "options": {
-            "tsConfig": "libs/core/tsconfig.lib.json",
-            "project": "libs/core/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/core/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/core/src/**/*.ts",
-              "libs/core/src/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/core/jest.config.js",
-            "passWithNoTests": true
-          },
-          "outputs": [
-            "coverage/libs/core"
-          ]
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
+      "tags": [],
+      "implicitDependencies": ["documentation"]
     },
     "form-validation-handler": {
       "projectType": "library",
@@ -417,16 +436,15 @@
             "jestConfig": "libs/form-validation-handler/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/libs/form-validation-handler"
-          ]
+          "outputs": ["coverage/libs/form-validation-handler"]
         }
       },
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
-      }
+      },
+      "tags": []
     },
     "interact": {
       "projectType": "library",
@@ -461,16 +479,15 @@
             "jestConfig": "libs/interact/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/libs/interact"
-          ]
+          "outputs": ["coverage/libs/interact"]
         }
       },
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
-      }
+      },
+      "tags": []
     },
     "mat-instantsearch": {
       "projectType": "library",
@@ -505,16 +522,15 @@
             "jestConfig": "libs/mat-instantsearch/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/libs/mat-instantsearch"
-          ]
+          "outputs": ["coverage/libs/mat-instantsearch"]
         }
       },
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
-      }
+      },
+      "tags": []
     },
     "ui-imports": {
       "projectType": "library",
@@ -549,69 +565,15 @@
             "jestConfig": "libs/ui-imports/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/libs/ui-imports"
-          ]
+          "outputs": ["coverage/libs/ui-imports"]
         }
       },
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
-      }
-    },
-    "crispr-forms-e2e": {
-      "root": "apps/crispr-forms-e2e",
-      "sourceRoot": "apps/crispr-forms-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/crispr-forms-e2e/cypress.json",
-            "tsConfig": "apps/crispr-forms-e2e/tsconfig.e2e.json",
-            "devServerTarget": "crispr-forms:storybook"
-          },
-          "configurations": {
-            "ci": {
-              "devServerTarget": "crispr-forms:storybook:ci"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "apps/crispr-forms-e2e/**/*.{js,ts}",
-              "apps/crispr-forms-e2e/src/**/*.html"
-            ]
-          }
-        }
-      }
-    }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/angular"
-  },
-  "schematics": {
-    "@nrwl/angular": {
-      "application": {
-        "linter": "eslint"
       },
-      "library": {
-        "linter": "eslint"
-      },
-      "storybook-configuration": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/angular:application": {
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "unitTestRunner": "jest"
+      "tags": []
     }
-  },
-  "defaultProject": "documentation"
+  }
 }

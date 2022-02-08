@@ -132,25 +132,22 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
   registerOnTouched( fn: () => void ) { }
 }
 @NgModule({
-  imports: [
-    CommonModule,
-    FieldContainerModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FileUploadFieldModule
-  ],
-  exports: [
-    ImageUploadFieldComponent
-  ],
-  declarations: [
-    ImageUploadFieldComponent
-  ],
-  entryComponents: [
-    ImageUploadFieldComponent
-  ]
+    imports: [
+        CommonModule,
+        FieldContainerModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FileUploadFieldModule
+    ],
+    exports: [
+        ImageUploadFieldComponent
+    ],
+    declarations: [
+        ImageUploadFieldComponent
+    ]
 })
 export class ImageUploadFieldModule {
 }

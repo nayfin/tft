@@ -16,20 +16,17 @@ export class InfoComponent {
 
 }
 @NgModule({
-  imports: [
-    CommonModule,
-    MatIconModule,
-    MatTooltipModule
-  ],
-  exports: [
-    InfoComponent
-  ],
-  declarations: [
-    InfoComponent
-  ],
-  entryComponents: [
-    InfoComponent
-  ]
+    imports: [
+        CommonModule,
+        MatIconModule,
+        MatTooltipModule
+    ],
+    exports: [
+        InfoComponent
+    ],
+    declarations: [
+        InfoComponent
+    ]
 })
 
 export class InfoModule {

@@ -69,19 +69,16 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
   }
 }
 @NgModule({
-  imports: [
-    CommonModule,
-    HeadingModule
-  ],
-  exports: [
-    FieldContainerComponent
-  ],
-  declarations: [
-    FieldContainerComponent
-  ],
-  entryComponents: [
-    FieldContainerComponent
-  ]
+    imports: [
+        CommonModule,
+        HeadingModule
+    ],
+    exports: [
+        FieldContainerComponent
+    ],
+    declarations: [
+        FieldContainerComponent
+    ]
 })
 
 export class FieldContainerModule {

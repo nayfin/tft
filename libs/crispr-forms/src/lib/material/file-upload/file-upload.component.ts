@@ -110,27 +110,24 @@ export class FileUploadFieldComponent extends FileUploadFieldMixin implements On
   }
 }
 @NgModule({
-  imports: [
-    CommonModule,
-    FieldContainerModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    SelectedFileModule
-  ],
-  exports: [
-    FileUploadFieldComponent,
-    FileDropzoneDirective
-  ],
-  declarations: [
-    FileUploadFieldComponent,
-    FileDropzoneDirective
-  ],
-  entryComponents: [
-    FileUploadFieldComponent
-  ]
+    imports: [
+        CommonModule,
+        FieldContainerModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        SelectedFileModule
+    ],
+    exports: [
+        FileUploadFieldComponent,
+        FileDropzoneDirective
+    ],
+    declarations: [
+        FileUploadFieldComponent,
+        FileDropzoneDirective
+    ]
 })
 export class FileUploadFieldModule {
 }

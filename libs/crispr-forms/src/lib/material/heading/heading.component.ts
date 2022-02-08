@@ -19,20 +19,17 @@ export class HeadingComponent extends CrisprFieldComponent<HeadingConfig>{
   defaultConfig = defaultConfig;
 }
 @NgModule({
-  imports: [
-    CommonModule,
-    MatFormFieldModule,
-    InfoModule
-  ],
-  exports: [
-    HeadingComponent
-  ],
-  declarations: [
-    HeadingComponent
-  ],
-  entryComponents: [
-    HeadingComponent
-  ]
+    imports: [
+        CommonModule,
+        MatFormFieldModule,
+        InfoModule
+    ],
+    exports: [
+        HeadingComponent
+    ],
+    declarations: [
+        HeadingComponent
+    ]
 })
 
 export class HeadingModule {

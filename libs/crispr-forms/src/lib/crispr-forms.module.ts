@@ -16,29 +16,24 @@ import { SubGroupComponent } from './sub-group/sub-group.component';
 import { FieldContainerModule } from './field-container/field-container.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormValidationHandlerModule,
-    FieldContainerModule,
-    MaterialModule
-  ],
-  declarations: [
-    CrisprFieldDirective,
-    CrisprFormComponent,
-    FormGroupListComponent,
-    InitialControlValuePipe,
-    SubGroupComponent,
-  ],
-  exports: [
-    CrisprFormComponent,
-    FieldContainerModule,
-    MaterialModule
-  ],
-  entryComponents: [
-    FormGroupListComponent,
-    SubGroupComponent
-  ],
-
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormValidationHandlerModule,
+        FieldContainerModule,
+        MaterialModule
+    ],
+    declarations: [
+        CrisprFieldDirective,
+        CrisprFormComponent,
+        FormGroupListComponent,
+        InitialControlValuePipe,
+        SubGroupComponent,
+    ],
+    exports: [
+        CrisprFormComponent,
+        FieldContainerModule,
+        MaterialModule
+    ]
 })
 export class CrisprFormsModule { }

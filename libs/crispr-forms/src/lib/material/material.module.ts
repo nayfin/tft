@@ -81,25 +81,24 @@ const CRISPR_FIELDS = [
   UnitConversionFieldComponent
 ];
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormValidationHandlerModule,
-    InfoModule,
-    FileUploadFieldModule,
-    HeadingModule,
-    FieldContainerModule,
-    ...MAT_DESIGN_MODULES,
-  ],
-  exports: [
-    ...MAT_DESIGN_MODULES,
-    ...CRISPR_FIELDS
-  ],
-  declarations: [
-    ...CRISPR_FIELDS,
-    OptionComponent,
-  ],
-  entryComponents: CRISPR_FIELDS
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormValidationHandlerModule,
+        InfoModule,
+        FileUploadFieldModule,
+        HeadingModule,
+        FieldContainerModule,
+        ...MAT_DESIGN_MODULES,
+    ],
+    exports: [
+        ...MAT_DESIGN_MODULES,
+        ...CRISPR_FIELDS
+    ],
+    declarations: [
+        ...CRISPR_FIELDS,
+        OptionComponent,
+    ]
 })
 
 export class MaterialModule {

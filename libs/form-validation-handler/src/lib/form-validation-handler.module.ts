@@ -7,23 +7,20 @@ import { ControlErrorContainerDirective } from './directives/control-error-conta
 import { ControlErrorComponent } from './components/control-error/control-error.component';
 
 @NgModule({
-  declarations: [
-    ControlErrorsDirective,
-    ControlErrorComponent,
-    ControlErrorsFormDirective,
-    ControlErrorContainerDirective,
-  ],
-  imports: [
-    CommonModule
-  ],
-  exports: [
-    ControlErrorsDirective,
-    ControlErrorComponent,
-    ControlErrorsFormDirective,
-    ControlErrorContainerDirective,
-  ],
-  entryComponents: [
-    ControlErrorComponent
-  ]
+    declarations: [
+        ControlErrorsDirective,
+        ControlErrorComponent,
+        ControlErrorsFormDirective,
+        ControlErrorContainerDirective,
+    ],
+    imports: [
+        CommonModule
+    ],
+    exports: [
+        ControlErrorsDirective,
+        ControlErrorComponent,
+        ControlErrorsFormDirective,
+        ControlErrorContainerDirective,
+    ]
 })
 export class FormValidationHandlerModule { }

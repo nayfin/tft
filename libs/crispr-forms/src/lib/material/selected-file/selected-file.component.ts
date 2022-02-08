@@ -17,19 +17,16 @@ export class SelectedFileComponent {
 
 }
 @NgModule({
-  imports: [
-    CommonModule,
-    MatProgressBarModule
-  ],
-  exports: [
-    SelectedFileComponent
-  ],
-  declarations: [
-    SelectedFileComponent
-  ],
-  entryComponents: [
-    SelectedFileComponent
-  ]
+    imports: [
+        CommonModule,
+        MatProgressBarModule
+    ],
+    exports: [
+        SelectedFileComponent
+    ],
+    declarations: [
+        SelectedFileComponent
+    ]
 })
 export class SelectedFileModule {
 }
