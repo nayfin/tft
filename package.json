@@ -51,7 +51,7 @@
     "@nrwl/angular": "13.7.3",
     "@storybook/builder-webpack5": "~6.4.5",
     "@storybook/manager-webpack5": "~6.4.5",
-    "algoliasearch-helper": "^3.1.1",
+    "algoliasearch-helper": "^3.6.2",
     "angular-instantsearch": "^2.3.0",
     "firebase": "8.0.1",
     "interactjs": "~1.9.19",
