@@ -5,10 +5,12 @@ import { ControlType, FormConfig } from '@tft/crispr-forms';
 @Component({
   selector: 'tft-image-upload',
   templateUrl: './image-upload.component.html',
-  styleUrls: ['./image-upload.component.css']
+  styleUrls: ['./image-upload.component.scss']
 })
 export class ImageUploadComponent {
-
+  value = {
+    fileUploadExample: 'https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg'
+  }
   config: FormConfig = {
     autoComplete: 'off',
     errorDictionary: {
@@ -21,10 +23,14 @@ export class ImageUploadComponent {
         controlType: ControlType.IMAGE_UPLOAD,
         controlName: 'fileUploadExample',
         allowMultipleFiles: true,
+        label: 'A Really good label',
         heading: {
           label: 'Upload Files'
         },
         color: 'accent',
+        compressImage: true,
+        acceptedTypes: 'image/*',
+        targetImageFileSizeMb: .5,
         // showUploadProgress: true,
         // uploadFiles: async (group, files, uploadComponent) => {
 

@@ -16,11 +16,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Observable, of } from 'rxjs';
+import {
+  DOC_ORIENTATION,
+  NgxImageCompressService,
+} from 'ngx-image-compress';
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
+import { filter, map, shareReplay, switchMap } from 'rxjs/operators';
 import { FileUploadFieldModule } from '..';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { FieldContainerModule } from '../../field-container/field-container.component';
 import { ImageUploadFieldConfig } from '../../models/image-upload-field.config';
+import { convertBytesToMb, fileToDataURL, dataUrlToFile } from './image-compression.helpers';
 
 const ImageUploadFieldMixin = crisprControlMixin<ImageUploadFieldConfig>(CrisprFieldComponent);
 
@@ -42,18 +48,64 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
     selectButtonText: 'SELECT',
     showClearFilesButton: true,
     clearFilesButtonText: 'CLEAR',
+    resetFilesButtonText: 'RESET',
     uploadButtonText: 'UPLOAD',
     uploadButtonType: 'button',
-    showUploadProgress: false,
-    disableOnUpload: true
+    imageHeight: '250px',
+    showUploadProgress: true,
+    compressImage: false,
+    targetImageFileSizeMb: .3,
+    orientation: DOC_ORIENTATION.Default,
+    ratio: 50,
+    quality: 50
   }
 
-  _imageSource: string;
-  set imageSource(imageSource: ArrayBuffer | string) {
-    // this.imageIsSvg = imageSource;
-    console.log(typeof imageSource);
-    this._imageSource = this.domSanitizer.bypassSecurityTrustUrl(imageSource as unknown as string) as string;
-  }
+  private inputImageFileSubject = new BehaviorSubject<File | null>(null);
+
+  inputImageFile$ = this.inputImageFileSubject.asObservable();
+
+  imageUrlString$: Observable<string | null> = this.inputImageFile$.pipe(
+    switchMap(async (file) => {
+      if(!file) return null;
+      console.log(file);
+      const { compressImage, targetImageFileSizeMb, maxFileSizeMb, orientation, quality, ratio, maxHeight, maxWidth} = this.config;
+      const fileSizeMb = convertBytesToMb(file.size);
+      if(maxFileSizeMb && fileSizeMb > maxFileSizeMb) throw `file size too large`
+      const stringImage: string = await fileToDataURL(file);
+      console.log(fileSizeMb);
+      let compressedStringImage: string;
+      if (compressImage && (targetImageFileSizeMb < fileSizeMb)) {
+        console.log('compressing')
+        compressedStringImage = await this.compressImage(stringImage, targetImageFileSizeMb, fileSizeMb, orientation, maxWidth, maxHeight );
+
+      } else {
+        console.log('not compressing')
+
+        compressedStringImage = stringImage;
+      }
+      return file.type.includes('svg')
+        ? this.domSanitizer.bypassSecurityTrustResourceUrl(compressedStringImage) as string
+        : compressedStringImage;
+    }),
+    shareReplay(1),
+
+
+  )
+
+  compressedFile$: Observable<File> = combineLatest([
+    this.inputImageFile$,
+    this.imageUrlString$
+  ]).pipe(
+    filter(([inputImageFile, imageUrlString]) => (!!inputImageFile && !!imageUrlString) ),
+    switchMap(async ([inputImageFile, imageUrlString]) => {
+      const compressedFile = await dataUrlToFile(imageUrlString, inputImageFile.name);
+      const initialSize = inputImageFile.size;
+      const compressedFileSize = compressedFile.size;
+
+      console.log({initialSize, compressedFileSize, ratio: compressedFileSize/initialSize});
+      return compressedFile;
+    })
+  )
 
   @ViewChild('fileInput') fileInputRef: ElementRef
 
@@ -68,7 +120,8 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
   constructor(
     @Optional() @Self() public ngControl: NgControl,
     private domSanitizer: DomSanitizer,
-    private cdr: ChangeDetectorRef
+    private imageCompress: NgxImageCompressService,
+    private cdr: ChangeDetectorRef,
   ) {
     super();
     if (this.ngControl != null) {
@@ -83,24 +136,14 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
     this.disabled$ = this.config.disabledCallback
     ? this.config.disabledCallback(this.group, this.config)
     : of(false);
+    console.log(this.value)
   }
 
   filesChanged(files: FileList): void {
     if (files && files.length > 0 ) {
       const imageFile = files[0];
-
-      console.log({imageFile})
-      const fileReader = new FileReader();
-      fileReader.onload = () => {
-        console.log({result: fileReader.result})
-        this.imageSource = fileReader.result;
-        this.cdr.detectChanges();
-        return this.imageSource;
-
-      }
       this.selectedFiles = files;
-      fileReader.readAsDataURL(imageFile)
-      this.control.patchValue(imageFile);
+      this.inputImageFileSubject.next(imageFile);
     }
   }
 
@@ -111,18 +154,31 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
     }
   }
 
-  resetFileInput(): void {
+  clearFileInput(): void {
+    this.inputImageFileSubject.next(null);
     this.fileInputRef.nativeElement.value = ''
     this.selectedFiles = null;
     this.control.patchValue(null);
-    this.imageSource = null;
     this.isUploaded = false;
   }
 
+  resetToInitialValue(initialValue: string): void {
+    this.inputImageFileSubject.next(null);
+    // this.fileInputRef.nativeElement.value = initialValue
+    this.control.patchValue(initialValue);
+    this.isUploaded = false;
+  }
+
+  async compressImage(stringImage: string, targetImageFileSizeMb: number, initialFileSizeMb: number, orientation: DOC_ORIENTATION, maxWidth: number, maxHeight) {
+    const compressionRatio = targetImageFileSizeMb / initialFileSizeMb;
+    console.log({compressionRatio})
+    const ratio = 99;
+    const quality = 99;
+    return await this.imageCompress.compressFile(stringImage, orientation, ratio, quality, maxWidth, maxHeight)
+  }
+
   writeValue( value: null ) {
-    // clear file input
-    // this.host.nativeElement.value = '';
-    // this.file = null;
+    console.log('writingValue', value)
   }
 
   registerOnChange( fn: () => void ) {
@@ -133,14 +189,14 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
 }
 @NgModule({
     imports: [
-        CommonModule,
-        FieldContainerModule,
-        ReactiveFormsModule,
-        MatIconModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        FileUploadFieldModule
+      CommonModule,
+      FieldContainerModule,
+      ReactiveFormsModule,
+      MatIconModule,
+      MatButtonModule,
+      MatFormFieldModule,
+      MatInputModule,
+      FileUploadFieldModule
     ],
     exports: [
         ImageUploadFieldComponent
@@ -149,6 +205,4 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
         ImageUploadFieldComponent
     ]
 })
-export class ImageUploadFieldModule {
-}
-
+export class ImageUploadFieldModule { }

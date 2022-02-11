@@ -1,42 +1,71 @@
 <crispr-field-container
   [config]="config"
   [group]="group">
+
   <mat-form-field floatLabel="always"
     [color]="config.color"
     appearance="outline"
-    [crisprFileDropzone]="!(disabled$ | async) && !(config.disableOnUpload && isUploaded)"
-    [formGroup]="group"
-    (fileDrop)="filesChanged($event)">
-
+    [formGroup]="group">
+    <mat-label>{{config.label}}</mat-label>
     <input [formControlName]="config.controlName" matInput type="text"/>
-
-    <input #captureImage (change)="filesChanged($event.target.files)" type="file" capture="user" accept="image/*">
-
     <input
       #fileInput
       type="file"
-      accept="image/*"
+      capture="user" accept="audio/*"
+      [accept]="config.acceptedTypes"
       multiple="false"
       (change)="filesChanged($event.target.files)"/>
-    <mat-label>{{config.label}}</mat-label>
+    <div class="ui-container">
 
-    <div *ngIf="!(selectedFiles?.length > 0); else imageDisplay"  class="drop-info">
-      <mat-icon class="drop-icon" inline="true">cloud_upload</mat-icon>
-      <h2 class="mat-h2">{{config.dropZoneText}}</h2>
-      or
-      <div>
+      <div class="image-preview" [style.height]="config.imageHeight">
+        <img *ngIf="(imageUrlString$ | async) || ((control.valueChanges | async) && value) as srcUrl; else noImage" [src]="srcUrl" alt="">
+        <ng-template #noImage>
+          <div class="drop-container"
+            [crisprFileDropzone]="!(disabled$ | async) && !(config.disableOnUpload && isUploaded)"
+            (fileDrop)="filesChanged($event)">
+            <mat-icon class="drop-icon" inline="true">cloud_upload</mat-icon>
+            <h2 class="mat-h2">{{config.dropZoneText}}</h2>
+          </div>
+
+        </ng-template>
+      </div>
+
+
+
+      <!-- </ng-template> -->
+      <div class="button-container" *ngIf="true">
 
         <button
           mat-button
+          (click)="clearFileInput()"
+          type="button"
+          [disabled]="(disabled$ | async) || (config.disableOnUpload && isUploaded)"
+          aria-label="Remove Selected File(s)">
+          <mat-icon>delete</mat-icon>
+          {{config.clearFilesButtonText}}
+        </button>
+
+        <button
+          mat-button
+          (click)="resetToInitialValue(value)"
+          type="button"
+          [disabled]="(disabled$ | async) || (config.disableOnUpload && isUploaded)"
+          aria-label="Remove Selected File(s)">
+          <mat-icon>replay</mat-icon>
+          {{config.resetFilesButtonText}}
+        </button>
+
+        <button
+          *ngIf="!!config.uploadFiles"
+          mat-button
           type="button"
           color="accent"
-          [disabled]="(disabled$ | async) || config.disableOnUpload && isUploaded"
-          (click)="fileInput.click()"
-          [attr.aria-label]="config.controlName">
-          <mat-icon>
-            file_present
-          </mat-icon>
-          {{config.selectButtonText}}
+          class="file-input-button"
+          [disabled]="(disabled$ | async) || (config.disableOnUpload && isUploaded)"
+          (click)="uploadFiles()"
+          [attr.aria-label]="config.uploadButtonText">
+          <mat-icon>file_upload</mat-icon>
+          {{ config.uploadButtonText }}
         </button>
 
         <button
@@ -44,48 +73,17 @@
           type="button"
           color="primary"
           [disabled]="(disabled$ | async) || config.disableOnUpload && isUploaded"
-          (click)="captureImage.click()"
+          (click)="fileInput.click()"
           [attr.aria-label]="config.controlName">
           <mat-icon>
             camera
           </mat-icon>
-          CAPTURE
+          SELECT
         </button>
-
       </div>
     </div>
-    <ng-template #imageDisplay>
-      <div class="image-container">
-        <img [src]="_imageSource || ''" alt="">
-        <!-- <svg [src]="imageSource || ''" alt=""></svg> -->
-      </div>
-    </ng-template>
 
   </mat-form-field>
 
-  <div class="button-container" *ngIf="selectedFiles?.length > 0">
-
-    <button
-      mat-button
-      (click)="resetFileInput()"
-      type="button"
-      [disabled]="(disabled$ | async) || (config.disableOnUpload && isUploaded)"
-      aria-label="Remove Selected File(s)">
-      {{config.clearFilesButtonText}}
-      <mat-icon>delete</mat-icon>
-    </button>
-
-    <button
-      *ngIf="!!config.uploadFiles"
-      mat-raised-button
-      type="button"
-      color="accent"
-      class="file-input-button"
-      [disabled]="(disabled$ | async) || (config.disableOnUpload && isUploaded)"
-      (click)="uploadFiles()"
-      [attr.aria-label]="config.uploadButtonText">
-      {{ config.uploadButtonText }}
-    </button>
-
-  </div>
 </crispr-field-container>
+<ng-container *ngIf="compressedFile$ | async"></ng-container>
