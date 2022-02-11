@@ -8,32 +8,32 @@ import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
 // components
 import { CrisprFormComponent } from './form/form.component';
-import { FormGroupListComponent } from './form-group-list/form-group-list.component';
+import { FormGroupListModule } from './form-group-list';
 // directives
-import { CrisprFieldDirective } from './field.directive';
-import { InitialControlValuePipe } from './pipes/initial-control-value.pipe';
-import { SubGroupComponent } from './sub-group/sub-group.component';
-import { FieldContainerModule } from './field-container/field-container.component';
+import { CrisprFieldModule } from './field.directive';
+import { SubGroupModule } from './sub-group';
+import { CrisprPipesModule } from './pipes/crispr-pipes.module';
+import { FieldContainerModule } from './field-container';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        FormValidationHandlerModule,
-        FieldContainerModule,
-        MaterialModule
-    ],
-    declarations: [
-        CrisprFieldDirective,
-        CrisprFormComponent,
-        FormGroupListComponent,
-        InitialControlValuePipe,
-        SubGroupComponent,
-    ],
-    exports: [
-        CrisprFormComponent,
-        FieldContainerModule,
-        MaterialModule
-    ]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormValidationHandlerModule,
+    FormGroupListModule,
+    FieldContainerModule,
+    CrisprFieldModule,
+    SubGroupModule,
+    MaterialModule,
+    CrisprPipesModule,
+  ],
+  declarations: [
+    CrisprFormComponent,
+  ],
+  exports: [
+    CrisprFormComponent,
+    FieldContainerModule,
+    MaterialModule
+  ]
 })
 export class CrisprFormsModule { }

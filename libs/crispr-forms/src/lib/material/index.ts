@@ -7,9 +7,11 @@ export * from './textarea-field/textarea-field.component';
 export * from './slider-field/slider-field.component';
 export * from './button/button.component';
 export * from './datepicker-field/datepicker-field.component';
-export * from './file-upload/file-upload.component';
 export * from './heading/heading.component';
 export * from './divider/divider.component';
 export * from './radio-field/radio-field.component';
 export * from './unit-conversion-field/unit-conversion-field.component';
-export * from './image-upload-field/image-upload-field.component'
+export * from './image-upload-field'
+export * from './file-upload';
+export * from './material.module';
+export * from './option';

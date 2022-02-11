@@ -1,7 +1,8 @@
-import { Directive, Input, ViewContainerRef, OnInit, Renderer2 } from '@angular/core';
+import { Directive, Input, ViewContainerRef, OnInit, Renderer2, NgModule } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { AnyFieldConfig, ControlValue } from './models';
-import { CrisprFieldComponent , FIELD_COMPONENTS, isControlComponent } from './field-component-map.const';
+import { CrisprFieldComponent, FIELD_COMPONENTS, isControlComponent } from './field-component-map.const';
+import { CommonModule } from '@angular/common';
 
 @Directive({
   selector: '[crisprField]'
@@ -45,4 +46,17 @@ export class CrisprFieldDirective implements OnInit {
       }
     });
   }
+}
+@NgModule({
+  imports: [
+    CommonModule,
+  ],
+  exports: [
+    CrisprFieldDirective
+  ],
+  declarations: [
+    CrisprFieldDirective
+  ]
+})
+export class CrisprFieldModule {
 }

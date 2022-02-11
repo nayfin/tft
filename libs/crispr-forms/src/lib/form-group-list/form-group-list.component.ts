@@ -49,5 +49,3 @@ export class FormGroupListComponent extends FormGroupListMixin implements OnInit
     this.control.removeAt(index);
   }
 }
-
-

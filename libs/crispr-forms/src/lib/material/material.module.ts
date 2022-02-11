@@ -40,7 +40,7 @@ import { OptionComponent } from './option/option.component';
 import { RadioFieldComponent } from './radio-field/radio-field.component';
 import { UnitConversionFieldComponent } from './unit-conversion-field/unit-conversion-field.component';
 import { PortalModule } from '@angular/cdk/portal';
-import { FileUploadFieldModule } from '.';
+import { FileUploadFieldModule } from './file-upload';
 
 // TODO: Should we import UI library?
 // Will the tree shaker shake the unused modules?
@@ -78,7 +78,8 @@ const CRISPR_FIELDS = [
   SliderFieldComponent,
   ButtonComponent,
   DividerComponent,
-  UnitConversionFieldComponent
+  UnitConversionFieldComponent,
+  OptionComponent,
 ];
 @NgModule({
     imports: [
@@ -97,7 +98,7 @@ const CRISPR_FIELDS = [
     ],
     declarations: [
         ...CRISPR_FIELDS,
-        OptionComponent,
+
     ]
 })
 
