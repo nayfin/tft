@@ -1,6 +1,6 @@
 import {
   Directive, Self, OnInit, OnDestroy, Optional, ComponentRef,
-  ComponentFactoryResolver, ViewContainerRef, HostListener } from '@angular/core';
+  ViewContainerRef, HostListener } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { Subscription, EMPTY, Observable, merge, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -33,7 +33,6 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
     @Optional() form: ControlErrorsFormDirective,
     @Optional() controlErrorContainer: ControlErrorContainerDirective,
     vcr: ViewContainerRef,
-    private resolver: ComponentFactoryResolver,
   ) {
     this.submit$ = form ? form.submit$ : EMPTY;
     this.container = controlErrorContainer?.vcr || vcr;
@@ -74,8 +73,7 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
 
   setError(text: string) {
     if (!this.ref) {
-      const factory = this.resolver.resolveComponentFactory(ControlErrorComponent);
-      this.ref = this.container.createComponent(factory);
+      this.ref = this.container.createComponent(ControlErrorComponent);
     }
     this.ref.instance.text = text;
   }

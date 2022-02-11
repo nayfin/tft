@@ -1,4 +1,4 @@
-import { Directive, Input, ComponentFactoryResolver, ViewContainerRef, OnInit, Renderer2 } from '@angular/core';
+import { Directive, Input, ViewContainerRef, OnInit, Renderer2 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { AnyFieldConfig, ControlValue } from './models';
 import { CrisprFieldComponent , FIELD_COMPONENTS, isControlComponent } from './field-component-map.const';
@@ -14,7 +14,6 @@ export class CrisprFieldDirective implements OnInit {
   component: CrisprFieldComponent;
 
   constructor(
-    private resolver: ComponentFactoryResolver,
     private container: ViewContainerRef,
     private renderer: Renderer2
   ) {}
@@ -24,8 +23,7 @@ export class CrisprFieldDirective implements OnInit {
      * create component and set values from config on its instance
      */
     const component = this.config.component || FIELD_COMPONENTS[this.config.controlType];
-    const factory = this.resolver.resolveComponentFactory<CrisprFieldComponent>(component);
-    const componentRef = this.container.createComponent(factory);
+    const componentRef = this.container.createComponent<CrisprFieldComponent>(component);
 
     this.component = componentRef.instance;
     this.component.config = this.config;

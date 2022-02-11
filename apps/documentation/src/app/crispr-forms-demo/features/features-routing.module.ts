@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ComputedFieldComponent, DisabledFieldComponent } from '.';
+import { ComputedFieldComponent } from './computed-field/computed-field.component';
+import { DisabledFieldComponent } from './disabled-field/disabled-field.component';
 import { AppearanceComponent } from './appearance/appearance.component';
 import { ColorComponent } from './color/color.component';
 import { InfoComponent } from './info/info.component';
