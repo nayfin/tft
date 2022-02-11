@@ -297,19 +297,20 @@
               ]
             },
             "sme": {
+              "optimization": true,
+              "outputHashing": "none",
+              "sourceMap": true,
+              "namedChunks": true,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "apps/documentation/src/environments/environment.ts",
                   "with": "apps/documentation/src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "none",
-              "sourceMap": true,
-              "namedChunks": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
