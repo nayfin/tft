@@ -3,7 +3,6 @@ import { FormGroup } from '@angular/forms';
 import { SubGroupConfig } from '../models';
 import { crisprControlMixin, CrisprFieldComponent } from '../abstracts';
 
-
 const FormGroupMixin = crisprControlMixin<SubGroupConfig>(CrisprFieldComponent);
 
 @Component({

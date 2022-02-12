@@ -1,6 +1,5 @@
 import { FormGroup, ValidatorFn } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { TooltipPosition } from '@angular/material/tooltip';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
 
 import { ErrorDictionary } from '@tft/form-validation-handler';
@@ -30,6 +29,7 @@ import {
 import { ThemePalette } from '@angular/material/core';
 import { FileUploadFieldConfig } from './file-upload-field.config';
 import { UnitConversionFieldConfig } from './unit-conversion-field.config';
+import { Info } from './info.config';
 
 // export type ControlType = keyof typeof FIELD_COMPONENTS;
 export enum ControlType {
@@ -104,11 +104,7 @@ export interface MatFieldProperties {
   color?: ThemePalette;
 }
 
-export interface Info {
-  content: string;
-  tooltipPosition?: TooltipPosition;
-  iconName?: string;
-}
+
 
 // TODO: having AnyFieldConfig as the default for C seems redundant and silly
 export interface AbstractGroupConfig<C extends CrisprFieldConfig = AnyFieldConfig>  {

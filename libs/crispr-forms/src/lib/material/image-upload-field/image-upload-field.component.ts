@@ -21,8 +21,8 @@ import {
   NgxImageCompressService,
 } from 'ngx-image-compress';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
-import { filter, map, shareReplay, switchMap } from 'rxjs/operators';
-import { FileUploadFieldModule } from '..';
+import { filter, shareReplay, switchMap } from 'rxjs/operators';
+import { FileUploadFieldModule } from '../file-upload';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { FieldContainerModule } from '../../field-container/field-container.component';
 import { ImageUploadFieldConfig } from '../../models/image-upload-field.config';

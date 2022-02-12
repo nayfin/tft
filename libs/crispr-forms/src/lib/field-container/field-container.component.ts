@@ -4,8 +4,8 @@ import { Observable, of, Subscription } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { tap, distinctUntilChanged } from 'rxjs/operators';
 import { computeValueFromFields } from '../form.helpers';
-import { CommonModule } from '@angular/common';
-import { HeadingModule } from '../material/heading/heading.component';
+// import { CommonModule } from '@angular/common';
+// import { HeadingModule } from '../material/heading/heading.component';
 
 @Component({
   selector: 'crispr-field-container',
@@ -68,18 +68,18 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
       : of(false);
   }
 }
-@NgModule({
-    imports: [
-        CommonModule,
-        HeadingModule
-    ],
-    exports: [
-        FieldContainerComponent
-    ],
-    declarations: [
-        FieldContainerComponent
-    ]
-})
+// @NgModule({
+//     imports: [
+//         CommonModule,
+//         HeadingModule
+//     ],
+//     exports: [
+//         FieldContainerComponent
+//     ],
+//     declarations: [
+//         FieldContainerComponent
+//     ]
+// })
 
-export class FieldContainerModule {
-}
+// export class FieldContainerModule {
+// }

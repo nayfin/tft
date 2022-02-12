@@ -19,7 +19,7 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
   ref: ComponentRef<ControlErrorComponent>;
   container: ViewContainerRef;
   submit$: Observable<string | never>;
-  blur$ = new Subject();
+  blur$ = new Subject<void>();
   subs: Subscription[] = [];
   errors: ErrorDictionary;
   // we need to make our own Observable of the blur event as it's not provided by the formControl

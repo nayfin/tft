@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, ChangeDetectionStrategy, NgModule } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Info } from '../../models';
+import { Info } from '../../models/info.config';
 
 @Component({
   selector: 'crispr-info',

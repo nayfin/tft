@@ -1,6 +1,7 @@
-import { CrisprFieldConfig, ControlType, FieldDescriptors, MatFieldProperties, Info } from './crispr-field.config';
+import { CrisprFieldConfig, ControlType, FieldDescriptors, MatFieldProperties } from './crispr-field.config';
 import { ThemePalette } from '@angular/material/core';
 import { FormGroup } from '@angular/forms';
+import { Info } from './info.config';
 
 export interface ButtonConfig extends CrisprFieldConfig,
   Pick<FieldDescriptors, 'label'>,
