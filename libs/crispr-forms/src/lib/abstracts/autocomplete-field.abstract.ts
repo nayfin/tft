@@ -1,10 +1,10 @@
 import { OnInit, Directive } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable, of } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, map, startWith, switchMap, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 
 import { crisprControlMixin } from './crispr-control.mixin';
-import { AutocompleteFieldConfig, AutocompleteChiplistFieldConfig, SelectOption } from '../models';
+import type { AutocompleteFieldConfig, AutocompleteChiplistFieldConfig, SelectOption } from '../models';
 import { CrisprFieldComponent } from './crispr-field.abstract';
 import { observablifyOptions } from '../form.helpers';
 

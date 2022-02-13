@@ -17,7 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { Observable, of } from 'rxjs';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { FieldContainerModule } from '../../field-container/field-container.component';
-import { FileUploadFieldConfig } from '../../models/file-upload-field.config';
+import type { FileUploadFieldConfig } from '../../models/file-upload-field.config';
 import { SelectedFileModule } from '../selected-file/selected-file.component';
 import { FileDropzoneDirective } from './file-dropzone.directive';
 

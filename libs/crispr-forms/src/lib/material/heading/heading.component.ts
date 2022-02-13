@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy, NgModule } from '@angular/core';
-import { HeadingConfig } from '../../models';
+import type { HeadingConfig } from '../../models/heading.config';
 import { CrisprFieldComponent } from '../../abstracts';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';

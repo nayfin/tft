@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy, NgModule } from '@angular/core';
-import { CrisprControlConfig } from '../models';
+import type { CrisprControlConfig } from '../models';
 import { Observable, of, Subscription } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { tap, distinctUntilChanged } from 'rxjs/operators';

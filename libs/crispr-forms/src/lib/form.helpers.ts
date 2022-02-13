@@ -1,8 +1,7 @@
-import {
+import type {
   SelectOption,
   AnyFieldConfig,
   FormConfig,
-  ControlType,
   FormGroupListConfig,
   CrisprControlConfig,
   OptionsType,
@@ -10,6 +9,9 @@ import {
   CrisprFieldConfig,
   ControlValue
 } from './models';
+import {
+  ControlType,
+} from './models/crispr-field.config'
 import {
   from,
   Observable,

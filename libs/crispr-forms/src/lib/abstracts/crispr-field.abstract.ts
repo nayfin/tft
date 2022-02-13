@@ -1,4 +1,4 @@
-import {
+import type {
   CrisprFieldConfig,
 } from '../models';
 import { OnInit, Directive } from '@angular/core';

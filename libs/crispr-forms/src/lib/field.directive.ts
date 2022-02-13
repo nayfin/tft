@@ -1,6 +1,6 @@
-import { Directive, Input, ViewContainerRef, OnInit, Renderer2, NgModule } from '@angular/core';
+import { Directive, Input, ViewContainerRef, OnInit, Renderer2, NgModule, ChangeDetectorRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { AnyFieldConfig, ControlValue } from './models';
+import type { AnyFieldConfig, ControlValue } from './models';
 import { CrisprFieldComponent, FIELD_COMPONENTS, isControlComponent } from './field-component-map.const';
 import { CommonModule } from '@angular/common';
 
@@ -16,14 +16,15 @@ export class CrisprFieldDirective implements OnInit {
 
   constructor(
     private container: ViewContainerRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private cdr: ChangeDetectorRef,
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     /**
      * create component and set values from config on its instance
      */
-    const component = this.config.component || FIELD_COMPONENTS[this.config.controlType];
+    const component = this.config.component || await FIELD_COMPONENTS[this.config.controlType];
     const componentRef = this.container.createComponent<CrisprFieldComponent>(component);
 
     this.component = componentRef.instance;
@@ -34,6 +35,7 @@ export class CrisprFieldDirective implements OnInit {
         this.component.value = this.value;
       }
     }
+    this.cdr.detectChanges();
     // adds any config classes to the dynamically generated component
     // doing this here keeps us from having to extend a base component into each field component individually
     if(!this.config.classes) return;

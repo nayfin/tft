@@ -9,7 +9,7 @@ import {
   CheckControlConfig,
   CheckControlsConfig,
 } from '../form.helpers';
-import {
+import type {
   SelectFieldConfig,
   HeadingConfig,
   ButtonConfig,
@@ -24,12 +24,12 @@ import {
   DividerConfig,
   SelectOption,
   RadioFieldConfig,
-  ImageUploadFieldConfig
+  ImageUploadFieldConfig,
+  FileUploadFieldConfig,
+  UnitConversionFieldConfig
 } from '../models';
 
 import { ThemePalette } from '@angular/material/core';
-import { FileUploadFieldConfig } from './file-upload-field.config';
-import { UnitConversionFieldConfig } from './unit-conversion-field.config';
 
 // export type ControlType = keyof typeof FIELD_COMPONENTS;
 export enum ControlType {

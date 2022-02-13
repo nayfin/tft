@@ -1,5 +1,5 @@
 import { FormGroup, AbstractControl } from '@angular/forms';
-import { CrisprControlConfig, ControlValue, ControlType } from '../models';
+import { CrisprControlConfig, ControlValue, ControlType } from '../models/crispr-field.config';
 import { CrisprFieldComponent } from './crispr-field.abstract';
 
 export function crisprControlMixin<C extends CrisprControlConfig>(BaseClass: typeof CrisprFieldComponent) {

@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormArray } from '@angular/forms';
 
-import { FormGroupListConfig } from '../models';
+import type { FormGroupListConfig } from '../models';
 import { createControlForType } from '../form.helpers';
 import { CrisprFieldComponent, crisprControlMixin } from '../abstracts';
 

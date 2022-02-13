@@ -25,7 +25,7 @@ import { filter, shareReplay, switchMap } from 'rxjs/operators';
 import { FileUploadFieldModule } from '../file-upload';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { FieldContainerModule } from '../../field-container/field-container.component';
-import { ImageUploadFieldConfig } from '../../models/image-upload-field.config';
+import type { ImageUploadFieldConfig } from '../../models/image-upload-field.config';
 import { convertBytesToMb, fileToDataURL, dataUrlToFile } from './image-compression.helpers';
 
 const ImageUploadFieldMixin = crisprControlMixin<ImageUploadFieldConfig>(CrisprFieldComponent);
