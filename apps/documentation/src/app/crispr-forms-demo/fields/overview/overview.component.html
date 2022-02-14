@@ -11,8 +11,12 @@
       (valueChanges)="handleValueChanges($event)"
       [config]="config"
       [value]="value"
-      (submitted)="handleSubmit($event)">
+      (submitted)="handleSubmit($event)"
+      #crisprForm>
     </crispr-form>
+    <mat-card-actions>
+        <button mat-button (click)="triggerSubmitFromOutsideForm()">TRIGGER SUBMIT FROM OUTSIDE FORM</button>
+    </mat-card-actions>
 
   </mat-card>
 

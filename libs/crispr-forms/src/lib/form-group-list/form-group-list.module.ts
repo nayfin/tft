@@ -6,9 +6,11 @@ import { CrisprPipesModule } from '../pipes/crispr-pipes.module';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormGroupListComponent } from './form-group-list.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   imports: [
+    CommonModule,
     MatButtonModule,
     MatIconModule,
     FieldContainerModule,

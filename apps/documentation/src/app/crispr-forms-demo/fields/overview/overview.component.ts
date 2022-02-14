@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormConfig, ControlType, SelectOption } from '@tft/crispr-forms';
+import { Component, ViewChild } from '@angular/core';
+import { FormConfig, ControlType, SelectOption, CrisprFormComponent } from '@tft/crispr-forms';
 import { Validators, FormGroup } from '@angular/forms';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -320,6 +320,8 @@ export class OverviewComponent {
     ]
   }
 
+  @ViewChild('crisprForm') crisprForm: CrisprFormComponent;
+
   handleSubmit(form: FormGroup) {
     const rawValue = form.getRawValue();
     console.log({rawValue, form});
@@ -332,4 +334,7 @@ export class OverviewComponent {
     console.log({statusChanges: status})
   }
 
+  triggerSubmitFromOutsideForm() {
+    this.crisprForm.triggerSubmit();
+  }
 }

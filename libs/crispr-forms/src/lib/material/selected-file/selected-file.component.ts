@@ -18,14 +18,14 @@ export class SelectedFileComponent {
 }
 @NgModule({
     imports: [
-        CommonModule,
-        MatProgressBarModule
+      CommonModule,
+      MatProgressBarModule
     ],
     exports: [
-        SelectedFileComponent
+      SelectedFileComponent
     ],
     declarations: [
-        SelectedFileComponent
+      SelectedFileComponent
     ]
 })
 export class SelectedFileModule {
