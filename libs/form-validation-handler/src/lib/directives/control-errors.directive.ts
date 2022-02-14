@@ -66,6 +66,10 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
         if (this.control.touched || ['submitted', 'VALID'].includes(event)) {
           const errorMessage = this.getErrorMessage();
           this.setError(errorMessage);
+          // Trigger warning colors in UI of invalid fields
+          if (event === 'submitted') {
+            this.control?.control.updateValueAndValidity();
+          }
         }
       })
     );

@@ -5,6 +5,7 @@ p {
   // This pulls the error up into the field so that it doesn't cause the field to bounce
   // jump when errors are shown and hidden
   // @David ideas on how to do this better?
-  margin: -14.5px 0 0 0;
+  margin: -20px 5px 6px 0;
+  padding-left: 12px;
   position: relative;
 }
