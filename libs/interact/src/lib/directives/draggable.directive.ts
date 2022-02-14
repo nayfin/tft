@@ -70,7 +70,7 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   previewRef: TftDragElement;
   // check all the different places for scale
   get scale(): number {
-    return this.account_for_scale_dir?.scale || this.drag_root_dir?.account_for_scale_dir.scale || this.dragRoot?.account_for_scale_dir?.scale;
+    return this.account_for_scale_dir?.scale || this.drag_root_dir?.account_for_scale_dir?.scale || this.dragRoot?.account_for_scale_dir?.scale || 1;
   }
 
   constructor(
