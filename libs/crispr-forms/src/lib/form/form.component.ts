@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { FormGroup, NgForm } from '@angular/forms';
 import { ControlGroupValue, ControlValue, FormConfig } from '../models';
 import { buildFormGroupFromConfig } from '../form.helpers';
 import { Subscription, Observable } from 'rxjs';
@@ -22,6 +22,8 @@ export class CrisprFormComponent implements OnInit {
 
   subs: Subscription[] = [];
 
+  @ViewChild('submitTrigger') submitTrigger: ElementRef<HTMLButtonElement>;
+
   ngOnInit() {
     // build out the form, note that we pass in the form as the third argument and the function modifies it
     buildFormGroupFromConfig(this.config, this.value, this.form);
@@ -30,5 +32,9 @@ export class CrisprFormComponent implements OnInit {
   handleSubmit() {
     this.form.markAllAsTouched();
     this.submitted.emit(this.form);
+  }
+
+  triggerSubmit() {
+    this.submitTrigger.nativeElement.click();
   }
 }
