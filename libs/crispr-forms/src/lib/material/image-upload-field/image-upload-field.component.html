@@ -4,28 +4,37 @@
 
   <mat-form-field floatLabel="always"
     [color]="config.color"
-    appearance="outline"
+    [appearance]="config.appearance"
     [formGroup]="group">
     <mat-label>{{config.label}}</mat-label>
     <input [formControlName]="config.controlName" matInput type="text"/>
     <input
       #fileInput
       type="file"
-      capture="user" accept="audio/*"
       [accept]="config.acceptedTypes"
-      multiple="false"
       (change)="filesChanged($event.target.files)"/>
     <div class="ui-container">
 
-      <div class="image-preview" [style.height]="config.imageHeight">
-        <img *ngIf="(imageUrlString$ | async) || ((control.valueChanges | async) && value) as srcUrl; else noImage" [src]="srcUrl" alt="">
-        <ng-template #noImage>
-          <div class="drop-container"
-            [crisprFileDropzone]="!(disabled$ | async) && !(config.disableOnUpload && isUploaded)"
-            (fileDrop)="filesChanged($event)">
-            <mat-icon class="drop-icon" inline="true">cloud_upload</mat-icon>
-            <h2 class="mat-h2">{{config.dropZoneText}}</h2>
-          </div>
+      <div class="image-preview" [style.height]="config.imagePreviewHeight">
+        <crispr-selected-file
+          *ngIf="(progress < 100) && inputImageFile$ | async as file; else dropzoneOrPreview"
+          [color]="config.color === 'primary' ? 'accent' : 'primary'"
+          [fileName]="'Compressing: ' + file.name"
+          [showProgress]="true"
+          [progress]="progress">
+        </crispr-selected-file>
+
+        <ng-template #dropzoneOrPreview>
+          <!-- <img *ngIf="(initialUrlString$ | async) as initialUrlString;" [src]="initialUrlString" alt=""> -->
+          <img *ngIf="imageSrcUrl$ | async as srcUrl; else noImage" [src]="srcUrl" alt="">
+          <ng-template #noImage>
+            <div class="drop-container"
+              [crisprFileDropzone]="!(disabled$ | async)"
+              (fileDrop)="filesChanged($event)">
+              <mat-icon class="drop-icon" inline="true">cloud_upload</mat-icon>
+              <h2 class="mat-h2">{{config.dropZoneText}}</h2>
+            </div>
+          </ng-template>
 
         </ng-template>
       </div>
@@ -39,40 +48,28 @@
           mat-button
           (click)="clearFileInput()"
           type="button"
-          [disabled]="(disabled$ | async) || (config.disableOnUpload && isUploaded)"
+          [disabled]="(disabled$ | async)"
           aria-label="Remove Selected File(s)">
           <mat-icon>delete</mat-icon>
           {{config.clearFilesButtonText}}
         </button>
 
         <button
+          *ngIf="value"
           mat-button
           (click)="resetToInitialValue(value)"
           type="button"
-          [disabled]="(disabled$ | async) || (config.disableOnUpload && isUploaded)"
+          [disabled]="(disabled$ | async)"
           aria-label="Remove Selected File(s)">
           <mat-icon>replay</mat-icon>
           {{config.resetFilesButtonText}}
         </button>
 
         <button
-          *ngIf="!!config.uploadFiles"
-          mat-button
-          type="button"
-          color="accent"
-          class="file-input-button"
-          [disabled]="(disabled$ | async) || (config.disableOnUpload && isUploaded)"
-          (click)="uploadFiles()"
-          [attr.aria-label]="config.uploadButtonText">
-          <mat-icon>file_upload</mat-icon>
-          {{ config.uploadButtonText }}
-        </button>
-
-        <button
           mat-button
           type="button"
           color="primary"
-          [disabled]="(disabled$ | async) || config.disableOnUpload && isUploaded"
+          [disabled]="(disabled$ | async)"
           (click)="fileInput.click()"
           [attr.aria-label]="config.controlName">
           <mat-icon>
@@ -86,4 +83,3 @@
   </mat-form-field>
 
 </crispr-field-container>
-<ng-container *ngIf="compressedFile$ | async"></ng-container>

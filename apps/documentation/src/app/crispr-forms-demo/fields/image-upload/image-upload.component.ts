@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { ControlType, FormConfig } from '@tft/crispr-forms';
+import { FormGroup, Validators } from '@angular/forms';
+import { ControlType, FormConfig, maxFileSizeValidator } from '@tft/crispr-forms';
 
 @Component({
   selector: 'tft-image-upload',
@@ -22,23 +22,18 @@ export class ImageUploadComponent {
       {
         controlType: ControlType.IMAGE_UPLOAD,
         controlName: 'fileUploadExample',
-        allowMultipleFiles: true,
         label: 'A Really good label',
         heading: {
           label: 'Upload Files'
         },
+        appearance: 'standard',
         color: 'accent',
         compressImage: true,
         acceptedTypes: 'image/*',
-        targetImageFileSizeMb: .5,
-        // showUploadProgress: true,
-        // uploadFiles: async (group, files, uploadComponent) => {
-
-        //   console.log({group, files, uploadComponent})
-        //   // eslint-disable-next-line max-len
-        //   // this.snackbar.open('FAKE UPLOAD. Add firebase config and uncomment all firebase imports and usage to upload the files for realsies')
-
-        // },
+        targetCompressedImageFileSizeMb: .1,
+        // maxWidthOrHeight: 1050,
+        minCompressionThresholdMb: .3,
+        validators: [maxFileSizeValidator(.32), Validators.required]
       },
       {
         controlType: ControlType.BUTTON,

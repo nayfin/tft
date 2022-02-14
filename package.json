@@ -59,13 +59,14 @@
     "js-quantities": "^1.7.6",
     "lodash-es": "^4.17.15",
     "ngx-image-compress": "^13.0.0",
+    "browser-image-compression": "~1.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.0.0",
     "tslib": "^2.0.0",
     "zone.js": "0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/architect": "~0.1200.1",
+    "@angular-devkit/architect": "~0.1302.3",
     "@angular-devkit/build-angular": "13.2.2",
     "@angular-eslint/eslint-plugin": "13.0.1",
     "@angular-eslint/eslint-plugin-template": "13.0.1",

@@ -10,23 +10,22 @@ import {
   ChangeDetectorRef,
   NgModule
 } from '@angular/core';
-import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NgControl, ReactiveFormsModule, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { DomSanitizer } from '@angular/platform-browser';
-import {
-  DOC_ORIENTATION,
-  NgxImageCompressService,
-} from 'ngx-image-compress';
-import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
-import { filter, shareReplay, switchMap } from 'rxjs/operators';
+import imageCompression from 'browser-image-compression';
+import { combineLatest, Observable, of, Subject } from 'rxjs';
+import { map, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
 import { FileUploadFieldModule } from '../file-upload';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { FieldContainerModule } from '../../field-container/field-container.component';
 import type { ImageUploadFieldConfig } from '../../models/image-upload-field.config';
-import { convertBytesToMb, fileToDataURL, dataUrlToFile } from './image-compression.helpers';
+import { convertBytesToMb } from './image-compression.helpers';
+import { SelectedFileModule } from '../selected-file/selected-file.component';
+import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
 const ImageUploadFieldMixin = crisprControlMixin<ImageUploadFieldConfig>(CrisprFieldComponent);
 
@@ -49,63 +48,68 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
     showClearFilesButton: true,
     clearFilesButtonText: 'CLEAR',
     resetFilesButtonText: 'RESET',
-    uploadButtonText: 'UPLOAD',
-    uploadButtonType: 'button',
-    imageHeight: '250px',
-    showUploadProgress: true,
+    imagePreviewHeight: '250px',
     compressImage: false,
-    targetImageFileSizeMb: .3,
-    orientation: DOC_ORIENTATION.Default,
-    ratio: 50,
-    quality: 50
+    targetCompressedImageFileSizeMb: .4,
+    minCompressionThresholdMb: .6,
+    useWebWorker: true,
   }
 
-  private inputImageFileSubject = new BehaviorSubject<File | null>(null);
+  progress: number | undefined;
+  private inputImageFileSubject = new Subject<File | string | null>();
 
-  inputImageFile$ = this.inputImageFileSubject.asObservable();
+  inputImageFile$ = this.inputImageFileSubject.asObservable().pipe(
+    shareReplay(1),
+  );
 
-  imageUrlString$: Observable<string | null> = this.inputImageFile$.pipe(
+  compressedFile$: Observable<File> = this.inputImageFile$.pipe(
+    switchMap(async (file) => {
+      if (!file) return null;
+      if (typeof file === 'string') return file
+      const { compressImage, targetCompressedImageFileSizeMb, minCompressionThresholdMb, maxWidthOrHeight, useWebWorker } = this.config;
+      const fileSizeMb = convertBytesToMb(file.size);
+      const shouldCompress = compressImage && targetCompressedImageFileSizeMb < fileSizeMb && minCompressionThresholdMb < fileSizeMb
+      if (shouldCompress) {
+        const options = {
+          // Use maxWidthOrHeight if it was provided, else use target compressed size
+          ...(maxWidthOrHeight ? {maxWidthOrHeight} : { maxSizeMB: targetCompressedImageFileSizeMb}),
+          useWebWorker,
+          maxIterations: 30,
+          onProgress: (p: number) => {
+            this.progress = p;
+            this.cdr.detectChanges();
+          }
+        }
+        const compressedFile = await imageCompression(file, options)
+        return compressedFile;
+      } else return file;
+    }),
+    tap(file => {
+      this.control.setValue(file);
+      if (file || this.value) {
+        this.control.markAsTouched();
+        setTimeout(() => {
+          this.cdr.detectChanges();
+        }, 100)
+      }
+    }),
+    map(file => typeof file === 'string' ? null : file),
+    shareReplay(1)
+  )
+
+  compressedImageUrlString$: Observable<string | null> = this.compressedFile$.pipe(
     switchMap(async (file) => {
       if(!file) return null;
-      console.log(file);
-      const { compressImage, targetImageFileSizeMb, maxFileSizeMb, orientation, quality, ratio, maxHeight, maxWidth} = this.config;
-      const fileSizeMb = convertBytesToMb(file.size);
-      if(maxFileSizeMb && fileSizeMb > maxFileSizeMb) throw `file size too large`
-      const stringImage: string = await fileToDataURL(file);
-      console.log(fileSizeMb);
-      let compressedStringImage: string;
-      if (compressImage && (targetImageFileSizeMb < fileSizeMb)) {
-        console.log('compressing')
-        compressedStringImage = await this.compressImage(stringImage, targetImageFileSizeMb, fileSizeMb, orientation, maxWidth, maxHeight );
-
-      } else {
-        console.log('not compressing')
-
-        compressedStringImage = stringImage;
-      }
+      const compressedStringImage = await imageCompression.getDataUrlFromFile(file);
       return file.type.includes('svg')
         ? this.domSanitizer.bypassSecurityTrustResourceUrl(compressedStringImage) as string
         : compressedStringImage;
     }),
     shareReplay(1),
-
-
   )
 
-  compressedFile$: Observable<File> = combineLatest([
-    this.inputImageFile$,
-    this.imageUrlString$
-  ]).pipe(
-    filter(([inputImageFile, imageUrlString]) => (!!inputImageFile && !!imageUrlString) ),
-    switchMap(async ([inputImageFile, imageUrlString]) => {
-      const compressedFile = await dataUrlToFile(imageUrlString, inputImageFile.name);
-      const initialSize = inputImageFile.size;
-      const compressedFileSize = compressedFile.size;
-
-      console.log({initialSize, compressedFileSize, ratio: compressedFileSize/initialSize});
-      return compressedFile;
-    })
-  )
+  // This is what is displayed by the image preview
+  imageSrcUrl$: Observable<string | null>;
 
   @ViewChild('fileInput') fileInputRef: ElementRef
 
@@ -113,14 +117,12 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
 
   isUploaded = false;
 
-  fileProgress: Observable<number>[] = [];
   disabled$: Observable<boolean>;
 
   // ngControl: NgControl = null;
   constructor(
     @Optional() @Self() public ngControl: NgControl,
     private domSanitizer: DomSanitizer,
-    private imageCompress: NgxImageCompressService,
     private cdr: ChangeDetectorRef,
   ) {
     super();
@@ -133,53 +135,42 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
 
   ngOnInit() {
     super.ngOnInit();
+    this.imageSrcUrl$ = combineLatest([
+      this.compressedImageUrlString$.pipe(startWith(null)),
+      this.control.valueChanges.pipe(startWith(this.value))
+    ]).pipe(
+      map(([compressedImageUrlString, controlUrl]) => {
+        return compressedImageUrlString || typeof controlUrl === 'string' && controlUrl || null;
+      })
+    )
     this.disabled$ = this.config.disabledCallback
     ? this.config.disabledCallback(this.group, this.config)
     : of(false);
-    console.log(this.value)
   }
 
   filesChanged(files: FileList): void {
     if (files && files.length > 0 ) {
       const imageFile = files[0];
-      this.selectedFiles = files;
+      this.control.markAsTouched();
       this.inputImageFileSubject.next(imageFile);
-    }
-  }
-
-  uploadFiles() {
-    if(this.selectedFiles && this.config.uploadFiles) {
-      this.isUploaded = true;
-      this.config.uploadFiles(this.group, this.selectedFiles, this);
     }
   }
 
   clearFileInput(): void {
     this.inputImageFileSubject.next(null);
     this.fileInputRef.nativeElement.value = ''
-    this.selectedFiles = null;
     this.control.patchValue(null);
+    this.control.markAsTouched();
     this.isUploaded = false;
   }
 
   resetToInitialValue(initialValue: string): void {
-    this.inputImageFileSubject.next(null);
+    this.inputImageFileSubject.next(initialValue);
     // this.fileInputRef.nativeElement.value = initialValue
-    this.control.patchValue(initialValue);
     this.isUploaded = false;
   }
 
-  async compressImage(stringImage: string, targetImageFileSizeMb: number, initialFileSizeMb: number, orientation: DOC_ORIENTATION, maxWidth: number, maxHeight) {
-    const compressionRatio = targetImageFileSizeMb / initialFileSizeMb;
-    console.log({compressionRatio})
-    const ratio = 99;
-    const quality = 99;
-    return await this.imageCompress.compressFile(stringImage, orientation, ratio, quality, maxWidth, maxHeight)
-  }
-
-  writeValue( value: null ) {
-    console.log('writingValue', value)
-  }
+  writeValue( value: null ) { }
 
   registerOnChange( fn: () => void ) {
     this.onChange = fn;
@@ -188,21 +179,34 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
   registerOnTouched( fn: () => void ) { }
 }
 @NgModule({
-    imports: [
-      CommonModule,
-      FieldContainerModule,
-      ReactiveFormsModule,
-      MatIconModule,
-      MatButtonModule,
-      MatFormFieldModule,
-      MatInputModule,
-      FileUploadFieldModule
-    ],
-    exports: [
-        ImageUploadFieldComponent
-    ],
-    declarations: [
-        ImageUploadFieldComponent
-    ]
+  imports: [
+    CommonModule,
+    FieldContainerModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    SelectedFileModule,
+    FileUploadFieldModule,
+    FormValidationHandlerModule
+  ],
+  exports: [
+      ImageUploadFieldComponent
+  ],
+  declarations: [
+      ImageUploadFieldComponent
+  ]
 })
 export class ImageUploadFieldModule { }
+
+export function maxFileSizeValidator(maxFileSize: number): ValidatorFn {
+  return (control: FormControl): ValidationErrors | null => {
+    const controlValue = control.value;
+    if (!(controlValue instanceof Blob)) return null;
+    const actualFileSize = +convertBytesToMb(controlValue.size).toPrecision(3);
+    if (maxFileSize > actualFileSize) return null;
+    control.setErrors({maxFileSize: { maxFileSize, actualFileSize }} )
+    return {maxFileSize: { maxFileSize, actualFileSize }};
+  }
+}

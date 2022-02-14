@@ -20,7 +20,7 @@ export const defaultErrors: ErrorDictionary<string | string[]> = {
   // the 'requiredTrue' error won't called unless using a custom validator
   // the @angular/forms team rejected our proposal to rename key in error object
   requiredTrue: () => `The conditions must be accepted`,
-  maxFileSize: ({actualFileSize, maxFileSize} ) => `Maximum allowed file size is ${maxFileSize} MB, actual file size is ${actualFileSize.slice(0, 4)} MB`,
+  maxFileSize: ({actualFileSize, maxFileSize} ) => `Maximum allowed file size is ${maxFileSize} MB, actual file size is ${actualFileSize} MB`,
   email: () => `Please enter a valid email address`,
   minlength: ({ requiredLength, actualLength }) => `Minimum of ${requiredLength} characters required, but you entered ${actualLength}`,
   maxlength: ({ requiredLength, actualLength }) => `Maximum of ${requiredLength} characters allowed, but you entered ${actualLength}`,

@@ -83,15 +83,15 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
   }
 
   getErrorMessage() {
-      const controlErrors = this.control.errors;
-      if (controlErrors) {
-        const firstKey = Object.keys(controlErrors)[0];
-        const getError = this.errors[firstKey] || this.errors['default'];
-        const text = getError(controlErrors[firstKey]);
-        return text;
-      } else {
-        return null;
-      }
+    const controlErrors = this.control.errors;
+    if (controlErrors) {
+      const firstKey = Object.keys(controlErrors)[0];
+      const getError = this.errors[firstKey] || this.errors['default'];
+      const text = getError(controlErrors[firstKey]);
+      return text;
+    } else {
+      return null;
+    }
   }
 }
 

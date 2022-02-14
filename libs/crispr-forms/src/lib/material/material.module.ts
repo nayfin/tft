@@ -82,24 +82,23 @@ const CRISPR_FIELDS = [
   OptionComponent,
 ];
 @NgModule({
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        FormValidationHandlerModule,
-        InfoModule,
-        FileUploadFieldModule,
-        HeadingModule,
-        FieldContainerModule,
-        ...MAT_DESIGN_MODULES,
-    ],
-    exports: [
-        ...MAT_DESIGN_MODULES,
-        ...CRISPR_FIELDS
-    ],
-    declarations: [
-        ...CRISPR_FIELDS,
-
-    ]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormValidationHandlerModule,
+    InfoModule,
+    FileUploadFieldModule,
+    HeadingModule,
+    FieldContainerModule,
+    ...MAT_DESIGN_MODULES,
+  ],
+  exports: [
+    ...MAT_DESIGN_MODULES,
+    ...CRISPR_FIELDS
+  ],
+  declarations: [
+    ...CRISPR_FIELDS,
+  ]
 })
 
 export class MaterialModule {

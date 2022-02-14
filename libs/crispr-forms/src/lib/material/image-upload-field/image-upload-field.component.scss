@@ -23,6 +23,9 @@
       align-items: center;
       margin: 8px 0;
       flex-grow: 1;
+      crispr-selected-file {
+        width: 100%;
+      }
       .drop-container{
         display: flex;
         flex-direction: column;

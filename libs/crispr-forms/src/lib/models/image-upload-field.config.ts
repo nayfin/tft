@@ -1,5 +1,4 @@
 import { FormGroup } from '@angular/forms';
-import { DOC_ORIENTATION } from 'ngx-image-compress';
 import { CrisprControlConfig, ControlType, ButtonType, MatFieldProperties, EnabledUploadButtonConfig } from '../models';
 
 export type ImageUploadFieldConfig = CrisprControlConfig & MatFieldProperties & {
@@ -21,27 +20,32 @@ export type ImageUploadFieldConfig = CrisprControlConfig & MatFieldProperties & 
 
   dropZoneText?: string;
   /**
-   * The maximum allowed size in bytes of image
+   * Should the field compress the image after loading it
+   * @default false
    */
-  maxFileSizeMb?: number;
-  /**
-   * The targe size of the compressed image
-   */
-  targetImageFileSizeMb?: number;
-  // isolate possible configurations regarding upload to for user to properly type configuration
   compressImage?: boolean;
   /**
-   * The hight of the image display container
+   * The target size of the compressed image
    */
-  imageHeight?: string;
-  orientation?: DOC_ORIENTATION;
-  ratio?: number;
-  quality?: number;
-  maxWidth?: number;
-  maxHeight?: number
-} & (EnabledUploadButtonConfig | DisabledUploadButtonConfig);
+  targetCompressedImageFileSizeMb?: number;
+  /**
+   * The minimum file size in MB required to trigger compression. Useful for preventing compression on files near the target compression size.
+   * @default .7
+   */
+  minCompressionThresholdMb?: number;
+  /**
+   * The maximum height or width of the compressed image
+   * @default undefined
+   */
+  maxWidthOrHeight?: number;
+  /**
+   * When true runs compression using a web worker, otherwise compression happens on the main thread.
+   * @default true
+   */
+  useWebWorker?: boolean;
 
-
-type DisabledUploadButtonConfig = NeverProps<EnabledUploadButtonConfig>;
-
-type NeverProps<T> = { [P in keyof T]?: never; };
+  /**
+   * The height of the image preview container
+   */
+   imagePreviewHeight?: string;
+}

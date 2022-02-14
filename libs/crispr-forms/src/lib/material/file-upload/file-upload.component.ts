@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { Observable, of } from 'rxjs';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { FieldContainerModule } from '../../field-container/field-container.component';
@@ -110,24 +111,25 @@ export class FileUploadFieldComponent extends FileUploadFieldMixin implements On
   }
 }
 @NgModule({
-    imports: [
-        CommonModule,
-        FieldContainerModule,
-        ReactiveFormsModule,
-        MatIconModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        SelectedFileModule
-    ],
-    exports: [
-        FileUploadFieldComponent,
-        FileDropzoneDirective
-    ],
-    declarations: [
-        FileUploadFieldComponent,
-        FileDropzoneDirective
-    ]
+  imports: [
+    CommonModule,
+    FieldContainerModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    SelectedFileModule,
+    FormValidationHandlerModule,
+  ],
+  exports: [
+    FileUploadFieldComponent,
+    FileDropzoneDirective
+  ],
+  declarations: [
+    FileUploadFieldComponent,
+    FileDropzoneDirective
+  ]
 })
 export class FileUploadFieldModule {
 }
