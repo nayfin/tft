@@ -66,6 +66,7 @@ export class DatepickerComponent {
       {
         controlType: ControlType.INPUT,
         controlName: 'classChanger',
+        label: 'Change classes',
         inputType: 'number',
         heading: {
           label: 'Change the day highlighted in datepicker below',

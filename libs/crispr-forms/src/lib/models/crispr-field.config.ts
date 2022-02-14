@@ -93,7 +93,7 @@ export interface CrisprControlConfig<M = null> extends CrisprFieldConfig {
  * Holds properties for control fields that describe field behavior to users
  */
 export interface FieldDescriptors {
-  label?: string;
+  label: string;
   info?: Info;
   fieldSuffix?: string;
   placeholder?: string;

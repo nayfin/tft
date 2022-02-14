@@ -93,6 +93,7 @@ export class SelectComponent implements OnInit {
         controlType: ControlType.INPUT,
         inputType: 'text',
         controlName: 'multiSelectDriver',
+        label: 'Search for garden plants',
         placeholder: 'Search for garden plants',
       },
       {

@@ -51,8 +51,10 @@ export class OverviewComponent {
         controlType: ControlType.INPUT,
         inputType: 'text',
         controlName: 'inputField',
-        placeholder: 'First Name',
-        validators: [Validators.required]
+        label: 'First Name',
+        placeholder: 'Bill Murray',
+        validators: [Validators.required],
+        appearance: 'outline'
       },
       {
         controlType: ControlType.RADIO,
@@ -87,12 +89,14 @@ export class OverviewComponent {
               controlType: ControlType.INPUT,
               inputType: 'text',
               controlName: 'subField',
-              placeholder: 'First Name',
+              label: 'First Name',
+              placeholder: 'BB'
             },
             {
               controlType: ControlType.INPUT,
               controlName: 'secondSubField',
-              placeholder: 'Last Name',
+              label: 'Last Name',
+              placeholder: 'King'
             },
           ]
         }
@@ -126,13 +130,15 @@ export class OverviewComponent {
             controlType: ControlType.INPUT,
             inputType: 'text',
             controlName: 'subField',
-            placeholder: 'First Name',
+            label: 'First Name',
+            placeholder: 'Wyatt',
             validators: [Validators.required]
           },
           {
             controlType: ControlType.INPUT,
             controlName: 'secondSubField',
-            placeholder: 'Last Name',
+            label: 'Last Name',
+            placeholder: 'Earp'
           },
         ]
       },

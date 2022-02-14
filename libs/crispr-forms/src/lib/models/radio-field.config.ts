@@ -2,7 +2,7 @@ import { CrisprControlConfig, FieldDescriptors, MatFieldProperties, ControlType 
 import { OptionsType } from './select-field.config';
 
 export interface RadioFieldConfig extends Omit<CrisprControlConfig, 'placeholder'>,
-  FieldDescriptors,
+  Omit<FieldDescriptors, 'label'>,
   MatFieldProperties {
   controlType: ControlType.RADIO,
   options: OptionsType;

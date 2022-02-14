@@ -56,6 +56,7 @@ export class ButtonComponent {
       },
       {
         controlType: ControlType.BUTTON,
+        label: 'CHECK',
         color: 'accent',
         icon: 'check',
         buttonType: 'icon',

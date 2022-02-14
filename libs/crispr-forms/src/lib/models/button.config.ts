@@ -3,9 +3,8 @@ import { ThemePalette } from '@angular/material/core';
 import { FormGroup } from '@angular/forms';
 
 export interface ButtonConfig extends CrisprFieldConfig,
-  Pick<FieldDescriptors, 'label'>,
   MatFieldProperties {
-
+  label?: string;
   controlType: ControlType.BUTTON;
   type?: 'submit' | 'reset' | 'button';
   callback?: (group?: FormGroup, event?: MouseEvent) => unknown;
