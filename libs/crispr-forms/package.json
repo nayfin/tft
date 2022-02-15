@@ -9,7 +9,7 @@
     "@angular/cdk": "^13.0.0",
     "@tft/form-validation-handler": "^13.0.0",
     "@angular/material-moment-adapter": "^13.0.0",
-    "ngx-image-compress": "^13.0.0",
+    "browser-image-compression": "^1.0.0",
     "moment": "^2.24.0"
   },
   "dependencies": {

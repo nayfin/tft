@@ -7,81 +7,22 @@
 
 [Interactive docs](https://stackblitz.com/github/nayfin/tft-documentation)
 
-## VOTE ON POSSIBLE BREAKING CHANGE
 
-I'd like to implement modeled form configurations, which would allow users to get compilation errors when a form configuration will create a form value that is outside of the desired model.
+### Breaking changes v11 => v13
 
-For instance, let's say we want to create a form configuration that would generate a form who's value matches a simple model:
+We have a few breaking changes in this release, and probably a few more on the way. We'll make it worth it in upcoming releases though.
 
-```ts
-interface SimpleModel {
-  a: string;
-  b: string;
-}
-```
+- `FileUploadComponent` is now `FileUploadFieldComponent` to align with naming convention of the rest of the form field. If you're using this class directly you'll have to update usage.
+- Most control configurations now require a `label` property. This is to align with the changes to the Angular Material template API for form fields.
+- New dependency on 'browser-image-compression'. It's a little heavy, we're working on making it only required if you use the `ImageUploadFieldComponent` and we may switch to a smaller library if we find a better one and more time.
 
-The form config would look something like this:
+#### Upcoming / In Progress
 
-```ts
-const formConfig: FormConfig = {
-  ...
-  fields: [
-    {
-      controlName: 'a',
-      controlType: ControlType.INPUT,
-    },
-    {
-      controlName: 'b',
-      controlType: ControlType.INPUT
-    },
-  ]
-}
-```
+- Creating modules for each component so that you can avoid importing unused components
+- Switch from MomentDateAdaptor to FnsDateAdapter
 
-Ideally, I would like to enable passing the model to the config as a generic to enforce `controlName`s alignment with property key names.
 
-```ts
-
-const formConfig: FormConfig<SimpleModel> = {
-  ...
-  fields: [
-    {
-      controlName: 'a',
-      controlType: ControlType.INPUT,
-    },
-    {
-      controlName: 'b',
-      controlType: ControlType.INPUT,
-    },
-    {
-      controlName: 'invalidControlName',  // <-- this would throw a compilation error
-      controlType: ControlType.INPUT,
-    },
-  ]
-}
-```
-
-This change would be very easy if I had initially made the `fields` property a mapped object of fields instead of an array, but it may be impossible to accomplish in the current architecture. So if you have ideas on how this can be accomplished without the massive breaking change of converting the `fields` property to a mapped object, take a look at the open [stackoverflow question](https://stackoverflow.com/questions/66359127/strongly-type-form-generator-config-array).
-
-If we can't get the desired behavior without changing the `fields` property, we will have to change the `fields` property from an array to an object, with the `controlName` as the key to each field config. The previous example would look like this:
-
-```ts
-const newFormConfig: FormConfig<SimpleModel> = {
-  ...
-  fields: {
-    a: {
-      controlType: ControlType.INPUT,
-    },
-    b: {
-      controlType: ControlType.INPUT,
-    }
-  }
-}
-```
-
-Let me know what you think in this [survey](https://docs.google.com/forms/d/e/1FAIpQLSehFV17thIy79mV63sHOJIcwG-iALr9AyltrCOAbCcaFm1syg/viewform?usp=sf_link). Is the breaking change worth it to get modeled configurations or would you prefer to not have to align your configurations with the new system?
-
-# NEW FEATURES:
+# NEW FEATURES v11:
 
 ## Buttons can reset form or take custom events
 
@@ -109,7 +50,6 @@ export class CustomComponentComponent {
 
 ```
 Examples of how to extend current field behavior available [here](https://stackblitz.com/github/nayfin/tft-documentation?file=src%2Fapp%2Fcrispr-forms-demo%2Ffeatures%2Finfo%2Finfo.component.ts0)
-
 
 ### Breaking changes v10 => v11
 
