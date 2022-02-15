@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
-import { ControlType, FormConfig, maxFileSizeValidator } from '@tft/crispr-forms';
+import { allowedFileExtValidator, ControlType, FormConfig, maxFileSizeValidator } from '@tft/crispr-forms';
 
 @Component({
   selector: 'tft-image-upload',
@@ -32,8 +32,11 @@ export class ImageUploadComponent {
         acceptedTypes: 'image/*',
         targetCompressedImageFileSizeMb: .1,
         // maxWidthOrHeight: 1050,
-        minCompressionThresholdMb: .3,
-        validators: [maxFileSizeValidator(.32), Validators.required]
+        minCompressionThresholdMb: .4,
+        validators: [
+          maxFileSizeValidator(.4),
+          allowedFileExtValidator(['svg', 'jpeg'], false),
+          Validators.required]
       },
       {
         controlType: ControlType.BUTTON,

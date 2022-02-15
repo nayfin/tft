@@ -5,7 +5,7 @@ import { CrisprControlConfig, ControlType, ButtonType, MatFieldProperties } from
 
 export type FileUploadFieldConfig = CrisprControlConfig & MatFieldProperties & {
   controlType: ControlType.FILE_UPLOAD;
-  label?: string;
+  label: string;
   filesChanged?: (parentGroup: FormGroup, files: FileList) => void;
   allowMultipleFiles?: boolean;
   showClearFilesButton?: boolean;

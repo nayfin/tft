@@ -87,16 +87,21 @@ export class OverviewComponent {
             {
               // a basic input field in the form with the following configuration
               controlType: ControlType.INPUT,
+              appearance: 'fill',
               inputType: 'text',
               controlName: 'subField',
               label: 'First Name',
-              placeholder: 'BB'
+              placeholder: 'BB',
+              validators: [Validators.required],
+
             },
             {
               controlType: ControlType.INPUT,
               controlName: 'secondSubField',
+              appearance: 'legacy',
               label: 'Last Name',
-              placeholder: 'King'
+              placeholder: 'King',
+              validators: [Validators.required],
             },
           ]
         }

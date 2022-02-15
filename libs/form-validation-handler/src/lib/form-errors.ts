@@ -20,13 +20,15 @@ export const defaultErrors: ErrorDictionary<string | string[]> = {
   // the 'requiredTrue' error won't called unless using a custom validator
   // the @angular/forms team rejected our proposal to rename key in error object
   requiredTrue: () => `The conditions must be accepted`,
-  maxFileSize: ({actualFileSize, maxFileSize} ) => `Maximum allowed file size is ${maxFileSize} MB, actual file size is ${actualFileSize} MB`,
   email: () => `Please enter a valid email address`,
   minlength: ({ requiredLength, actualLength }) => `Minimum of ${requiredLength} characters required, but you entered ${actualLength}`,
   maxlength: ({ requiredLength, actualLength }) => `Maximum of ${requiredLength} characters allowed, but you entered ${actualLength}`,
-  min: ({min, actual}) => `Minimum allowed value is ${min}, actual value is ${actual}`,
-  max: ({max, actual}) => `Maximum allowed value is ${max}, actual value is ${actual}`,
+  min: ({min, actual}) => `The minimum allowed value is ${min}, actual value is ${actual}`,
+  max: ({max, actual}) => `The maximum allowed value is ${max}, actual value is ${actual}`,
   pattern: ({requiredPattern, actualValue}) => `${actualValue} fails to match pattern ${requiredPattern}`,
+  maxFileSize: ({actualFileSize, maxFileSize} ) => `The maximum allowed file size is ${maxFileSize} MB, actual file size is ${actualFileSize} MB`,
+  allowedExtension: ({ allowedFileExtensions, actualExtension }: { allowedFileExtensions: string[], actualExtension: string }) =>
+    `The allowed file extensions are: ${allowedFileExtensions.join(', ')}, actual extension is ${actualExtension}`,
   someControlIsValid: ({controlNames}: {controlNames: string[]}) => `At least one of the the following fields must be valid: ${controlNames.join(', ')}`
 };
 

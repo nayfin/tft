@@ -80,9 +80,16 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
             this.cdr.detectChanges();
           }
         }
-        const compressedFile = await imageCompression(file, options)
-        return compressedFile;
-      } else return file;
+        return await imageCompression(file, options);
+      } else return  file;
+    }),
+    map((compressedFileOrString: File | string) => {
+      if(!compressedFileOrString || typeof compressedFileOrString === 'string') return compressedFileOrString;
+      const { type, name, lastModified } = compressedFileOrString
+      return new File([compressedFileOrString], this.config.fileName || name, {
+        type,
+        lastModified
+      });
     }),
     tap(file => {
       this.control.setValue(file);
@@ -101,9 +108,7 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
     switchMap(async (file) => {
       if(!file) return null;
       const compressedStringImage = await imageCompression.getDataUrlFromFile(file);
-      return file.type.includes('svg')
-        ? this.domSanitizer.bypassSecurityTrustResourceUrl(compressedStringImage) as string
-        : compressedStringImage;
+      return this.domSanitizer.bypassSecurityTrustResourceUrl(compressedStringImage) as string
     }),
     shareReplay(1),
   )
@@ -203,10 +208,26 @@ export class ImageUploadFieldModule { }
 export function maxFileSizeValidator(maxFileSize: number): ValidatorFn {
   return (control: FormControl): ValidationErrors | null => {
     const controlValue = control.value;
-    if (!(controlValue instanceof Blob)) return null;
+    if (!(controlValue instanceof File)) {
+      return null;
+    }
     const actualFileSize = +convertBytesToMb(controlValue.size).toPrecision(3);
     if (maxFileSize > actualFileSize) return null;
-    control.setErrors({maxFileSize: { maxFileSize, actualFileSize }} )
+    // control.setErrors({maxFileSize: { maxFileSize, actualFileSize }} )
     return {maxFileSize: { maxFileSize, actualFileSize }};
+  }
+}
+
+export function allowedFileExtValidator(allowedFileExtensions: string[], onlyAllowFiles = true): ValidatorFn {
+  return (control: FormControl): ValidationErrors | null => {
+    const controlValue = control.value;
+    const isFile = controlValue instanceof File;
+    if (!onlyAllowFiles && !isFile) return null;
+    const actualExtension = isFile ? controlValue.name.split('.').pop() : 'Not a file';
+    const isAllowedExtension = allowedFileExtensions.includes(actualExtension);
+    if(isAllowedExtension) {
+      return null;
+    }
+    return {allowedExtension: { allowedFileExtensions, actualExtension }};
   }
 }

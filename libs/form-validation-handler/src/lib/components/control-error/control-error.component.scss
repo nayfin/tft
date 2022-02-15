@@ -1,11 +1,11 @@
 p {
   font-family: Roboto,"Helvetica Neue",sans-serif;
-  font-size: .75em;
+  font-size: .8em;
   color: #f44336;
   // This pulls the error up into the field so that it doesn't cause the field to bounce
   // jump when errors are shown and hidden
   // @David ideas on how to do this better?
-  margin: -20px 5px 6px 0;
+  margin: -16px 0 1px 0;
   padding-left: 12px;
   position: relative;
 }

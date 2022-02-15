@@ -3,7 +3,7 @@ import { CrisprControlConfig, ControlType, ButtonType, MatFieldProperties, Enabl
 
 export type ImageUploadFieldConfig = CrisprControlConfig & MatFieldProperties & {
   controlType: ControlType.IMAGE_UPLOAD;
-  label?: string;
+  label: string;
   filesChanged?: (parentGroup: FormGroup, file: File) => void;
   /**
    * The file types to accept. The onus is on the consuming developer to limit these to file types compatible with usage.

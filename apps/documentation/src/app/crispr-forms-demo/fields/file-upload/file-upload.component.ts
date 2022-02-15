@@ -22,6 +22,7 @@ export class FileUploadComponent {
         controlType: ControlType.FILE_UPLOAD,
         controlName: 'fileUploadExample',
         allowMultipleFiles: true,
+        label: 'File Upload Example',
         heading: {
           label: 'Upload Images'
         },
