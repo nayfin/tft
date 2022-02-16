@@ -223,7 +223,7 @@ export function allowedFileExtValidator(allowedFileExtensions: string[], onlyAll
     const controlValue = control.value;
     const isFile = controlValue instanceof File;
     if (!onlyAllowFiles && !isFile) return null;
-    const actualExtension = isFile ? controlValue.name.split('.').pop() : 'Not a file';
+    const actualExtension = isFile ? controlValue.name.split('.').pop().toLocaleLowerCase() : 'Not a file';
     const isAllowedExtension = allowedFileExtensions.includes(actualExtension);
     if(isAllowedExtension) {
       return null;
