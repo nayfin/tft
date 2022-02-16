@@ -17,8 +17,13 @@ export type ImageUploadFieldConfig = CrisprControlConfig & MatFieldProperties & 
   selectButtonText?: string;
   clearFilesButtonText?: string;
   resetFilesButtonText?: string;
-
   dropZoneText?: string;
+  /**
+   * If the input value of the control is not a string of the src
+   * url to the image, this function allows consumers to map their
+   * input value into one
+   */
+  mapInputValueToUrl?: (inputValue: unknown) => string;
   /**
    * Should the field compress the image after loading it
    * @default false

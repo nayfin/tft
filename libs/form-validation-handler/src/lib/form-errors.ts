@@ -28,7 +28,7 @@ export const defaultErrors: ErrorDictionary<string | string[]> = {
   pattern: ({requiredPattern, actualValue}) => `${actualValue} fails to match pattern ${requiredPattern}`,
   maxFileSize: ({actualFileSize, maxFileSize} ) => `The maximum allowed file size is ${maxFileSize} MB, actual file size is ${actualFileSize} MB`,
   allowedExtension: ({ allowedFileExtensions, actualExtension }: { allowedFileExtensions: string[], actualExtension: string }) =>
-    `The allowed file extensions are: ${allowedFileExtensions.join(', ')}, actual extension is ${actualExtension}`,
+    `The allowed file extensions are: ${allowedFileExtensions.join(', ')}. Actual file extension is ${actualExtension}`,
   someControlIsValid: ({controlNames}: {controlNames: string[]}) => `At least one of the the following fields must be valid: ${controlNames.join(', ')}`
 };
 
