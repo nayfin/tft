@@ -29,7 +29,10 @@ export const defaultErrors: ErrorDictionary<string | string[]> = {
   maxFileSize: ({actualFileSize, maxFileSize} ) => `The maximum allowed file size is ${maxFileSize} MB, actual file size is ${actualFileSize} MB`,
   allowedExtension: ({ allowedFileExtensions, actualExtension }: { allowedFileExtensions: string[], actualExtension: string }) =>
     `The allowed file extensions are: ${allowedFileExtensions.join(', ')}. Actual file extension is ${actualExtension}`,
-  someControlIsValid: ({controlNames}: {controlNames: string[]}) => `At least one of the the following fields must be valid: ${controlNames.join(', ')}`
+  someControlIsValid: ({controlNames}: {controlNames: string[]}) => `At least one of the the following fields must be valid: ${controlNames.join(', ')}`,
+  minArrayLength:({ requiredMinArrayLength, actualArrayLength }) => {
+    return `You need at least ${requiredMinArrayLength} item${(+requiredMinArrayLength > 1) ? 's' : ''}, but you've only selected ${actualArrayLength}`
+  }
 };
 
 /**
