@@ -41,7 +41,7 @@
       <ng-container *ngIf="options$ | async as options; else emptyOption">
         <ng-container *ngIf="options.length > 0; else emptyOption">
           <mat-option
-            *ngFor="let option of options$ | async"
+            *ngFor="let option of options"
             [value]="option.value">
             <crispr-option [option]="option"></crispr-option>
           </mat-option>
