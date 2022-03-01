@@ -22,7 +22,7 @@ import {
 } from 'rxjs';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
 import { valueIn } from './form.operators';
-import { map, startWith } from 'rxjs/operators';
+import { map, shareReplay, startWith } from 'rxjs/operators';
 
 /**
  * DYNAMIC FORM UTILS: a collection of pure/mostly pure functions that are useful both internally and for
@@ -196,7 +196,7 @@ export function observablifyOptions(
 ): Observable<SelectOption[]> {
   const calledOptions = callOptionsIfFunction(options, parentGroup, searchString);
   // if options are a promise
-  return calledOptions instanceof Promise
+  const observableOptions = calledOptions instanceof Promise
   // convert to observable
   ? from(calledOptions)
   // if array that isn't empty
@@ -209,6 +209,9 @@ export function observablifyOptions(
   ? calledOptions
   // else an empty array
   : of([]);
+  return observableOptions.pipe(
+    shareReplay(1),
+  )
 }
 
 /**

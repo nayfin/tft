@@ -1,7 +1,7 @@
 import { OnInit, Directive } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, shareReplay, startWith, switchMap } from 'rxjs/operators';
 
 import { crisprControlMixin } from './crispr-control.mixin';
 import type { AutocompleteFieldConfig, AutocompleteChiplistFieldConfig, SelectOption } from '../models';
@@ -29,9 +29,10 @@ export class AbstractAutocompleteComponent<C>
       // this is needed to have the options panel to open on focus
       startWith(''),
       debounceTime(this.config.typeDebounceTime),
-      distinctUntilChanged(),
       map(searchText => searchText || ''),
-      switchMap((searchText: string) => observablifyOptions(this.config.options, this.group, searchText))
+      distinctUntilChanged(),
+      switchMap((searchText: string) => observablifyOptions(this.config.options, this.group, searchText)),
+      shareReplay(1),
     );
   }
 }
