@@ -43,7 +43,10 @@ export class OverviewComponent {
   config: FormConfig = {
     autoComplete: 'off',
     errorDictionary: {
-      required: () => `I am a custom error message on a required field`,
+      required: () => {
+        console.log('required')
+        return `I am a custom error message on a required field`
+      },
     },
     validators: [Validators.required],
     fields: [

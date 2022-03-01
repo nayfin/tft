@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ControlType, FormConfig, SelectOption } from '@tft/crispr-forms';
 import { EndpointsService, ENDPOINTS } from '../../endpoints.service';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
+import { minArrayLength } from '@tft/form-validation-handler';
+
 
 @Component({
   selector: 'doc-autocomplete-chiplist',
   templateUrl: './autocomplete-chiplist.component.html',
   styleUrls: ['./autocomplete-chiplist.component.scss']
 })
-export class AutocompleteChiplistComponent implements OnInit {
+export class AutocompleteChiplistComponent {
 
   value = {
     optionsDriver: 'openFarm',
@@ -21,13 +23,20 @@ export class AutocompleteChiplistComponent implements OnInit {
   }
 
   arraySelectConfig: FormConfig = {
+    errorDictionary: {
+      required: () => {
+        console.log('required')
+
+        return `I am a custom error message on a required field`
+      },
+    },
     fields: [
       {
         controlType: ControlType.AUTOCOMPLETE_CHIPLIST,
         label: 'This autocomplete field uses a simple array of options',
         controlName: 'selectField',
         duplicateCompareFunction: (chip, option) => {
-          console.log({chip, option});
+          // console.log({chip, option});
           return chip.value === option.value;
         },
         options: (_group, searchTerm) => [
@@ -35,6 +44,12 @@ export class AutocompleteChiplistComponent implements OnInit {
           {label: 'option b', value: 'b'},
           {label: 'option c', value: 'c'},
         ].filter(option => option.label.includes(searchTerm)),
+        validators: [minArrayLength(2), Validators.required]
+      },
+      {
+        controlType: ControlType.BUTTON,
+        label: 'SUBMIT',
+        buttonType: 'flat'
       }
     ]
   }
@@ -101,10 +116,7 @@ export class AutocompleteChiplistComponent implements OnInit {
     private endpointsService: EndpointsService
   ) { }
 
-  ngOnInit() {
-  }
-
   handleSubmit(form: FormGroup) {
-    console.log({value: form.value});
+    console.log({form});
   }
 }

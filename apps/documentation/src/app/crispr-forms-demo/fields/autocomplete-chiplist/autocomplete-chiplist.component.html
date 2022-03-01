@@ -3,7 +3,8 @@
     Example of using an array of autocomplete options
   </h2>
   <crispr-form
-    [config]="arraySelectConfig">
+    [config]="arraySelectConfig"
+    (submitted)="handleSubmit($event)">
   </crispr-form>
 </mat-card>
 

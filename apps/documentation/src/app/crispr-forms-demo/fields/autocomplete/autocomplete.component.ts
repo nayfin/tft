@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormConfig, ControlType, SelectOption } from '@tft/crispr-forms';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { EndpointsService, ENDPOINTS } from '../../endpoints.service';
 
 
@@ -30,6 +30,7 @@ export class AutocompleteComponent {
           {label: 'option b', value: 'b'},
           {label: 'option c', value: 'c'},
         ].filter(option => option.label.includes(searchTerm)),
+        validators: [Validators.required]
       },
       {
         controlType: ControlType.GROUP_LIST,
@@ -76,8 +77,8 @@ export class AutocompleteComponent {
         controlName: 'selectFieldPromise',
         options: async (_group, searchString): Promise<SelectOption[]> => {
           const res = await fetch(`${ENDPOINTS['reddit'].url}${searchString}`);
-          const dbPlants = await res.json();
-          return ENDPOINTS['reddit'].mappingCallback(dbPlants);
+          const redditRes = await res.json();
+          return ENDPOINTS['reddit'].mappingCallback(redditRes);
         },
       },
     ]
