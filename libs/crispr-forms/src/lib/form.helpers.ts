@@ -209,9 +209,7 @@ export function observablifyOptions(
   ? calledOptions
   // else an empty array
   : of([]);
-  return observableOptions.pipe(
-    shareReplay(1),
-  )
+  return observableOptions;
 }
 
 /**
