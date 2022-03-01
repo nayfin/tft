@@ -29,7 +29,7 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
   }
 
   constructor(
-    @Self() private control: NgControl,
+    @Self() private ngControl: NgControl,
     @Optional() form: ControlErrorsFormDirective,
     @Optional() controlErrorContainer: ControlErrorContainerDirective,
     vcr: ViewContainerRef,
@@ -43,9 +43,11 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
 
   ngOnInit() {
     // build array of subscriptions
-    this.subs.push(
-      this.getInteractionHandler().subscribe(),
-    );
+    if (this.ngControl) {
+      this.subs.push(
+        this.getInteractionHandler().subscribe(),
+      );
+    }
   }
 
   ngOnDestroy() {
@@ -58,17 +60,17 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
     return merge(
       this.submit$,
       this.blur$,
-      this.control.valueChanges,
-      this.control.statusChanges
+      this.ngControl.valueChanges,
+      this.ngControl.statusChanges
     ).pipe(
       tap( event => {
         // prevents displaying error messages before user interaction unless submitting
-        if (this.control.touched || ['submitted', 'VALID'].includes(event)) {
+        if (this.ngControl.touched || ['submitted', 'VALID'].includes(event)) {
           const errorMessage = this.getErrorMessage();
           this.setError(errorMessage);
           // Trigger warning colors in UI of invalid fields
           if (event === 'submitted') {
-            this.control?.control.updateValueAndValidity();
+            this.ngControl?.control.updateValueAndValidity();
           }
         }
       })
@@ -83,7 +85,7 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
   }
 
   getErrorMessage() {
-    const controlErrors = this.control.errors;
+    const controlErrors = this.ngControl.errors;
     if (controlErrors) {
       const firstKey = Object.keys(controlErrors)[0];
       const getError = this.errors[firstKey] || this.errors['default'];

@@ -4,7 +4,8 @@
 
   <mat-form-field
     [color]="config.color"
-    [appearance]="config.appearance">
+    [appearance]="config.appearance"
+    [formGroup]="group">
     <mat-label *ngIf="config.label">
       {{config.label}}
     </mat-label>
@@ -27,6 +28,7 @@
           cancel
         </mat-icon>
       </mat-chip>
+      <input class="hidden-error-directive-anchor" [formControlName]="config.controlName" type="text"/>
 
       <input
         matInput
