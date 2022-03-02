@@ -30,7 +30,7 @@ export class AutocompleteFieldComponent
   ngOnInit() {
     super.ngOnInit();
     this.clearFieldSubscription = this.autocompleteInputControl.valueChanges.subscribe((text: string) => {
-      if (text.trim() === '') {
+      if (typeof text === 'string' && text?.trim() === '') {
         this.control.setValue(null);
       }
     })
