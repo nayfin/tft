@@ -29,7 +29,7 @@ export class AbstractAutocompleteComponent<C>
       // this is needed to have the options panel to open on focus
       startWith(''),
       debounceTime(this.config.typeDebounceTime),
-      map((searchText: string) => searchText?.trim()),
+      map((searchText: string) => typeof searchText === 'string' ? searchText?.trim() : ''),
       distinctUntilChanged(),
       switchMap((searchText: string) => observablifyOptions(this.config.options, this.group, searchText)),
       shareReplay(1),
