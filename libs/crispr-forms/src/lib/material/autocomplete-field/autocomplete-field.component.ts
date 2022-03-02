@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild, ChangeDetectionStrategy, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy, ElementRef, OnDestroy } from '@angular/core';
 import { MatAutocompleteTrigger, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 import { SelectOption, AutocompleteFieldConfig, DEFAULT_EMPTY_OPTIONS_MESSAGE } from '../../models';
 import { AbstractAutocompleteComponent } from '../../abstracts';
+import { Subscription } from 'rxjs';
 
 const defaultConfig: Partial<AutocompleteFieldConfig> = {
   autoActiveFirstOption: true,
@@ -18,14 +19,25 @@ const defaultConfig: Partial<AutocompleteFieldConfig> = {
 })
 export class AutocompleteFieldComponent
   extends AbstractAutocompleteComponent<AutocompleteFieldConfig>
-  implements OnInit {
+  implements OnInit, OnDestroy {
 
   defaultConfig = defaultConfig;
   @ViewChild('autoInput', { read: MatAutocompleteTrigger }) autoInput: MatAutocompleteTrigger;
   @ViewChild('autoInput') autoInputRef: ElementRef<HTMLInputElement>;
 
+  clearFieldSubscription: Subscription;
+
   ngOnInit() {
     super.ngOnInit();
+    this.clearFieldSubscription = this.autocompleteInputControl.valueChanges.subscribe((text: string) => {
+      if (text.trim() === '') {
+        this.control.setValue(null);
+      }
+    })
+  }
+
+  ngOnDestroy() {
+    this.clearFieldSubscription.unsubscribe();
   }
 
   setControlValue(value: SelectOption) {
