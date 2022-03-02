@@ -8,24 +8,26 @@
     <mat-label *ngIf="config.label">
       {{config.label}}
     </mat-label>
-      <input
-        matInput
-        [formControlName]="config.controlName"
-        [min]="config.min"
-        [max]="config.max"
-        [matDatepicker]="picker"
-        [matDatepickerFilter]="config.datepickerFilter">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker
-        [touchUi]="config.touchUi"
-        [startView]="config.startView"
-        [startAt]="startAt$ | async"
-        [dateClass]="dateClass || (dateClass$ | async)"
-        #picker>
-        <mat-datepicker-actions *ngIf="calendarFooterPortal">
-          <ng-template [cdkPortalOutlet]="calendarFooterPortal"></ng-template>
-        </mat-datepicker-actions>
-      </mat-datepicker>
+    <input
+      matInput
+      [formControlName]="config.controlName"
+      [min]="config.min"
+      [max]="config.max"
+      [matDatepicker]="picker"
+      [matDatepickerFilter]="config.datepickerFilter">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker
+      [touchUi]="config.touchUi"
+      [startView]="config.startView"
+      [startAt]="startAt$ | async"
+      [dateClass]="dateClass || (dateClass$ | async)"
+      #picker>
+      <mat-datepicker-actions *ngIf="calendarFooterPortal">
+        <ng-template [cdkPortalOutlet]="calendarFooterPortal"></ng-template>
+      </mat-datepicker-actions>
+    </mat-datepicker>
+
+    <mat-hint *ngIf="config.hint && (control.valid || !control.touched)">{{config.hint}}</mat-hint>
 
   </mat-form-field>
 </crispr-field-container>

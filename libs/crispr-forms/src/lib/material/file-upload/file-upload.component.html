@@ -46,7 +46,7 @@
 
       </div>
     </ng-template>
-
+    <mat-hint *ngIf="config.hint && (control.valid || !control.touched)">{{config.hint}}</mat-hint>
   </mat-form-field>
   <div class="button-container" *ngIf="selectedFiles?.length > 0">
 

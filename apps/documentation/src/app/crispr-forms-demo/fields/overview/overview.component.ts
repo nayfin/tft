@@ -57,7 +57,8 @@ export class OverviewComponent {
         label: 'First Name',
         placeholder: 'Bill Murray',
         validators: [Validators.required],
-        appearance: 'outline'
+        appearance: 'outline',
+        hint: 'Type in here this is a really really really really really really really really really really really long hint'
       },
       {
         controlType: ControlType.RADIO,
@@ -192,6 +193,7 @@ export class OverviewComponent {
         appearance: 'outline',
         color: 'accent',
         validators: [Validators.required],
+        hint: 'Textarea hint'
       },
       {
         controlType: ControlType.SELECT,
@@ -207,7 +209,9 @@ export class OverviewComponent {
           content: 'I am an info tooltip on a select field',
           tooltipPosition: 'above',
           iconName: 'delete'
-        }
+        },
+        hint: 'Select hint'
+
       },
       {
         controlType: ControlType.SELECT,
@@ -240,7 +244,8 @@ export class OverviewComponent {
           content: 'This select field gets its options from a function that returns a promise of select options',
         },
         appearance: 'outline',
-        color: 'accent'
+        color: 'accent',
+        hint: 'Select Field hint'
       },
       {
         controlType: ControlType.AUTOCOMPLETE,
@@ -253,11 +258,12 @@ export class OverviewComponent {
           iconName: 'delete'
         },
         fieldSuffix: 'meters',
-        // validators: [Validators.required],
         options: () => of([
           {label: 'good', value: 'a'},
           {label: 'evil', value: 'b'},
-        ])
+        ]),
+        validators: [Validators.required],
+        hint: 'Autocomplete hint'
       },
       {
         controlType: ControlType.AUTOCOMPLETE_CHIPLIST,
@@ -272,13 +278,15 @@ export class OverviewComponent {
         fieldSuffix: '$',
         // validators: [Validators.required],
         typeDebounceTime: 0,
+        validators: [Validators.required],
         options: (_group, searchTerm) => {
           console.log({searchTerm, _group})
           return of([
             {label: 'good', value: 'good'},
             {label: 'evil', value: 'evil'},
           ]).pipe(map(options => options.filter(option => option.label.toLowerCase().includes(searchTerm) )))
-        }
+        },
+        hint: 'Autocomplete Chiplist hint'
       },
       {
         controlType: ControlType.HEADING,
@@ -304,6 +312,7 @@ export class OverviewComponent {
         min: new Date('Apr 5 2019'),
         max: new Date('Apr 23 2019'),
         label: 'I am a label for a datepicker field',
+        hint: 'A datepicker hint'
       },
       {
         controlType: ControlType.DIVIDER

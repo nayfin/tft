@@ -20,6 +20,9 @@
       matSuffix
       [info]="config.info">
     </crispr-info>
+
+    <mat-hint *ngIf="config.hint && control.valid">{{config.hint}}</mat-hint>
+
   </mat-form-field>
 
 </crispr-field-container>

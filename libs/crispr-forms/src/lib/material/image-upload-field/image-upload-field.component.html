@@ -80,6 +80,8 @@
       </div>
     </div>
 
+    <mat-hint *ngIf="config.hint && (control.valid || !control.touched)">{{config.hint}}</mat-hint>
+
   </mat-form-field>
 
 </crispr-field-container>

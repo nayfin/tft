@@ -87,6 +87,7 @@ export interface CrisprControlConfig<M = null> extends CrisprFieldConfig {
   disabledCallbackConfig?: CheckControlConfig | CheckControlsConfig | any; // any is required for user defined configs
   hideDisabled?: boolean; // defaults to false
   heading?: HeadingConfig;
+  hint?: string;
 }
 
 /**

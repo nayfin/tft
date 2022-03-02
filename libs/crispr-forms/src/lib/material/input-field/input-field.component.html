@@ -29,6 +29,8 @@
       [info]="config.info">
     </crispr-info>
 
+    <mat-hint *ngIf="config.hint && (control.valid || !control.touched)">{{config.hint}}</mat-hint>
+
   </mat-form-field>
 
 

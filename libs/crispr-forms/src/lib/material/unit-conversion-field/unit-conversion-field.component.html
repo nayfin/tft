@@ -48,13 +48,8 @@
 
     </mat-select>
 
-    <!-- <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span> -->
-    <!-- <crispr-info
-      *ngIf="config.info"
-      matSuffix
-      [info]="config.info">
-    </crispr-info> -->
-  </mat-form-field>
+    <mat-hint *ngIf="config.hint && (control.valid || !control.touched)">{{config.hint}}</mat-hint>
 
+  </mat-form-field>
 
 </crispr-field-container>
