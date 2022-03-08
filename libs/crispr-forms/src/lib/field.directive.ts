@@ -1,4 +1,4 @@
-import { Directive, Input, ViewContainerRef, OnInit, Renderer2, NgModule, ChangeDetectorRef } from '@angular/core';
+import { Directive, Input, ViewContainerRef, Renderer2, NgModule, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import type { AnyFieldConfig, ControlValue } from './models';
 import { CrisprFieldComponent, FIELD_COMPONENTS, isControlComponent } from './field-component-map.const';
@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 @Directive({
   selector: '[crisprField]'
 })
-export class CrisprFieldDirective implements OnInit {
+export class CrisprFieldDirective implements OnChanges {
 
   @Input() config: AnyFieldConfig;
   @Input() group: FormGroup;
@@ -20,7 +20,7 @@ export class CrisprFieldDirective implements OnInit {
     private cdr: ChangeDetectorRef,
   ) {}
 
-  async ngOnInit() {
+  async ngOnChanges() {
     /**
      * create component and set values from config on its instance
      */
