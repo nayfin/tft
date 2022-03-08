@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormConfig, ControlType, SelectOption, CrisprFormComponent } from '@tft/crispr-forms';
 import { Validators, FormGroup } from '@angular/forms';
 import { of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, delay } from 'rxjs/operators';
 import { Moment } from 'moment';
 
 @Component({
@@ -12,7 +12,8 @@ import { Moment } from 'moment';
 })
 export class OverviewComponent {
 
-  value = {
+  value$ = of({
+    inputField: 'Hello',
     subGroup: {
       subField: 'Initial Value in sub group',
     },
@@ -38,13 +39,14 @@ export class OverviewComponent {
     ],
     datepickerField : new Date('4/18/2019'),
     slider: 66
-  };
+  }).pipe(
+    delay(10)
+  );
 
   config: FormConfig = {
     autoComplete: 'off',
     errorDictionary: {
       required: () => {
-        console.log('required')
         return `I am a custom error message on a required field`
       },
     },
@@ -351,10 +353,10 @@ export class OverviewComponent {
   }
 
   handleValueChanges(value: any) {
-    console.log({valueChanges: value})
+    // console.log({valueChanges: value})
   }
   handleStatusChanges(status: any) {
-    console.log({statusChanges: status})
+    // console.log({statusChanges: status})
   }
 
   triggerSubmitFromOutsideForm() {

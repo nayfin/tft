@@ -10,7 +10,7 @@
       (statusChanges)="handleStatusChanges($event)"
       (valueChanges)="handleValueChanges($event)"
       [config]="config"
-      [value]="value"
+      [value]="value$ | async"
       (submitted)="handleSubmit($event)"
       #crisprForm>
     </crispr-form>

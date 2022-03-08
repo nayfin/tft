@@ -229,10 +229,14 @@ export function buildFormGroupFromConfig(config: FormConfig, value = null, group
     if (isControlConfig(controlConfig)) {
       // then add a control to the group using the controlName from configuration
       const {controlName} = controlConfig;
+      if (group.get(controlName)) {
+        group.removeControl(controlName);
+      }
       // if there's a value object and it has a non-null/undefined value for this field use it.
       // Otherwise, default to null
       const controlValue = (value && value[controlName]) ?? null;
-      group.addControl(controlName, createControlForType(controlConfig, controlValue));
+      const control = createControlForType(controlConfig, controlValue)
+      group.addControl(controlName, control);
     }
   });
   group.setValidators(config.validators);
