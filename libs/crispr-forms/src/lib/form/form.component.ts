@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, NgForm } from '@angular/forms';
-import { ControlGroupValue, ControlValue, FormConfig } from '../models';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewChild, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { ControlGroupValue, FormConfig } from '../models';
 import { buildFormGroupFromConfig } from '../form.helpers';
 import { Subscription, Observable } from 'rxjs';
 @Component({
@@ -9,7 +9,7 @@ import { Subscription, Observable } from 'rxjs';
   templateUrl: 'form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CrisprFormComponent implements OnInit {
+export class CrisprFormComponent implements OnChanges {
   // if no form has been passed in by consuming component, we create an empty group to build out
   @Input() config: FormConfig;
   @Input() form: FormGroup = new FormGroup({});
@@ -24,9 +24,11 @@ export class CrisprFormComponent implements OnInit {
 
   @ViewChild('submitTrigger') submitTrigger: ElementRef<HTMLButtonElement>;
 
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges) {
     // build out the form, note that we pass in the form as the third argument and the function modifies it
-    buildFormGroupFromConfig(this.config, this.value, this.form);
+    if(changes.config || changes.value || changes.form) {
+      buildFormGroupFromConfig(this.config, this.value, this.form);
+    }
   }
 
   handleSubmit() {
