@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormArray } from '@angular/forms';
 
 import type { FormGroupListConfig } from '../models';
@@ -21,9 +21,11 @@ export class FormGroupListComponent extends FormGroupListMixin implements OnInit
   defaultConfig = defaultConfig
   group: FormGroup;
   control: FormArray;
-  _value: any[]
-  // value: any[]; // TODO: not sure how to strongly type this yet
   formArray: FormArray;
+
+  constructor(private cdr: ChangeDetectorRef) {
+    super();
+  }
 
   ngOnInit() {
     super.ngOnInit();
@@ -35,6 +37,10 @@ export class FormGroupListComponent extends FormGroupListMixin implements OnInit
     if(this.control) {
       if(values?.length > 0) {
         values.forEach(value => this.addGroup(value));
+        setTimeout(() => {
+          this.cdr.detectChanges();
+        })
+
       } else if (this.config.displayInitialItem) {
         this.addGroup()
       }
