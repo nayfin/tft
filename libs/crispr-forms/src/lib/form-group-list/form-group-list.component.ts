@@ -36,10 +36,12 @@ export class FormGroupListComponent extends FormGroupListMixin implements OnInit
   setControlValue(values: any[]) {
     if(this.control) {
       if(values?.length > 0) {
+        // clear any existing values so that new values don't concatenate onto the old
+        const currentValues:[] = this.control.value;
+        if(currentValues.length) {
+          this.control.clear();
+        }
         values.forEach(value => this.addGroup(value));
-        setTimeout(() => {
-          this.cdr.detectChanges();
-        })
 
       } else if (this.config.displayInitialItem) {
         this.addGroup()
@@ -49,6 +51,10 @@ export class FormGroupListComponent extends FormGroupListMixin implements OnInit
 
   addGroup(value = null) {
     this.control.push(createControlForType(this.config.itemConfig, value));
+    // needed to ensure new array items render
+    setTimeout(() => {
+      this.cdr.detectChanges();
+    })
   }
 
   deleteGroup(index: number) {

@@ -5,13 +5,14 @@
   [formGroup]="group">
 
   <div [formArrayName]="config.controlName">
-    <!-- TODO: add sortBy function -->
-    <div *ngFor="let control of formArray?.controls; let i = index;">
+    <!-- Don't add trackBy function, it confuses the state of the array -->
+    <div *ngFor="let control of formArray?.controls; let i = index">
       <!-- TODO: use content projection to allow custom item label component -->
       <div class="item-header">
         <span class="mat-h2" *ngIf="config.itemLabelBuilder"> {{  config.itemLabelBuilder(i) }} </span>
         <button
           mat-icon-button
+          type="button"
           *ngIf="i + 1 > config.minListLength">
           <mat-icon (click)="deleteGroup(i)">delete</mat-icon>
         </button>
@@ -22,7 +23,7 @@
           *ngFor="let field of config.itemConfig.fields;"
           crisprField
           [config]="field"
-          [value]="value && value[i] | initialControlValue : field"
+          [value]="control.value | initialControlValue : field"
           [group]="control">
         </ng-container>
       </div>

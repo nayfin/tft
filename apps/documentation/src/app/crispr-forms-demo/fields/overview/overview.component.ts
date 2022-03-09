@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormConfig, ControlType, SelectOption, CrisprFormComponent } from '@tft/crispr-forms';
 import { Validators, FormGroup } from '@angular/forms';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { map, delay } from 'rxjs/operators';
 import { Moment } from 'moment';
 
@@ -12,7 +12,7 @@ import { Moment } from 'moment';
 })
 export class OverviewComponent {
 
-  value$ = of({
+  valueSubject = new BehaviorSubject({
     inputField: 'Hello',
     subGroup: {
       subField: 'Initial Value in sub group',
@@ -31,16 +31,23 @@ export class OverviewComponent {
     selectField: 'b',
     // selectFieldObservable: 'b',
     selectFieldPromise: 'blue',
-    autocompleteObservable: { value: 'b', label: 'good'},
-    autocompleteChiplistObservable: [
-      { value: 'a', label: 'Alpha'},
-      { value: 'b', label: 'Beta'},
-      { value: 'o', label: 'Omega'},
-    ],
+    autocompleteObservable: 'b',
+    autocompleteChiplistObservable: ['a', 'b', 'o' ],
     datepickerField : new Date('4/18/2019'),
     slider: 66
-  }).pipe(
-    delay(10)
+  });
+
+  value$ = this.valueSubject.pipe(
+    map(unmappedValue => {
+      // Since we are feeding the submitted values back into the form value we need to map the labels back onto the autocomplete fields
+      return {
+        ...unmappedValue,
+        autocompleteObservable: { value: unmappedValue.autocompleteObservable, label: unmappedValue.autocompleteObservable},
+        autocompleteChiplistObservable: unmappedValue.autocompleteChiplistObservable.map(el => ({label: el, value: el })),
+
+      }
+    }),
+    delay(101)
   );
 
   config: FormConfig = {
@@ -84,6 +91,7 @@ export class OverviewComponent {
           label: 'Group List'
         },
         controlName: 'groupList',
+        minListLength: 0,
         itemLabelBuilder: ( index: number ) => `Step ${index + 1}`,
         itemConfig: {
           heading: { label: 'Sub Group'},
@@ -349,7 +357,7 @@ export class OverviewComponent {
 
   handleSubmit(form: FormGroup) {
     const rawValue = form.getRawValue();
-    console.log({rawValue, form});
+    this.valueSubject.next(rawValue);
   }
 
   handleValueChanges(value: any) {
