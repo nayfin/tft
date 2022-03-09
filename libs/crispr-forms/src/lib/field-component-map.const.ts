@@ -29,11 +29,16 @@ export const FIELD_COMPONENTS = {
 };
 
 export function isControlComponent(component: CrisprFieldComponent): component is CrisprControlComponent {
-  return isControlConfig(component.config) || component.config.controlType === ControlType.BUTTON;
+  return isControlConfig(component.config) && 'value' in component // || component.config.controlType === ControlType.BUTTON;
 }
 
-export type CrisprControlComponent = ButtonComponent |
-  InputFieldComponent |
+export function isControlOrButtonComponent(component: CrisprFieldComponent): component is CrisprControlOrButton {
+  return isControlComponent(component) || component.config.controlType === ControlType.BUTTON;
+}
+
+export type CrisprControlOrButton = CrisprControlComponent | ButtonComponent;
+
+export type CrisprControlComponent = InputFieldComponent |
   SelectFieldComponent |
   RadioFieldComponent |
   SubGroupComponent |
@@ -52,6 +57,7 @@ export type ComponentKeys = keyof typeof FIELD_COMPONENTS;
 // export type CrisprFieldComponent = FIELD_COMPONENTS[ComponentKeys];
 
 export type CrisprFieldComponent = CrisprControlComponent |
-  HeadingComponent|
-  DividerComponent;
+  HeadingComponent |
+  DividerComponent |
+  ButtonComponent;
 

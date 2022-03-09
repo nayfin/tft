@@ -1,17 +1,30 @@
-import { Directive, Input, ViewContainerRef, Renderer2, NgModule, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
+import { Directive, Input, ViewContainerRef, Renderer2, NgModule, ChangeDetectorRef, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import type { AnyFieldConfig, ControlValue } from './models';
-import { CrisprFieldComponent, FIELD_COMPONENTS, isControlComponent } from './field-component-map.const';
+import { CrisprFieldComponent, FIELD_COMPONENTS, isControlComponent, isControlOrButtonComponent } from './field-component-map.const';
 import { CommonModule } from '@angular/common';
 
 @Directive({
   selector: '[crisprField]'
 })
-export class CrisprFieldDirective implements OnChanges {
+export class CrisprFieldDirective implements OnInit {
 
   @Input() config: AnyFieldConfig;
   @Input() group: FormGroup;
-  @Input() value: ControlValue | any[];
+
+  /**
+   * value setter updates the control's value as well
+   */
+  _value: ControlValue | any[]
+  @Input() set value(value: ControlValue | any[]) {
+    this._value = value;
+    if(this.component && isControlComponent(this.component)) {
+      this.component.value = value;
+    }
+  };
+  get value() {
+    return this._value;
+  }
   component: CrisprFieldComponent;
 
   constructor(
@@ -20,7 +33,7 @@ export class CrisprFieldDirective implements OnChanges {
     private cdr: ChangeDetectorRef,
   ) {}
 
-  async ngOnChanges() {
+  async ngOnInit() {
     /**
      * create component and set values from config on its instance
      */
@@ -29,11 +42,11 @@ export class CrisprFieldDirective implements OnChanges {
 
     this.component = componentRef.instance;
     this.component.config = this.config;
-    if ( isControlComponent(this.component)) {
+    if (isControlOrButtonComponent(this.component)) {
       this.component.group = this.group;
-      if ('value' in this.component) {
-        this.component.value = this.value;
-      }
+    }
+    if (isControlComponent(this.component)) {
+      this.component.value = this.value;
     }
     this.cdr.detectChanges();
     // adds any config classes to the dynamically generated component
