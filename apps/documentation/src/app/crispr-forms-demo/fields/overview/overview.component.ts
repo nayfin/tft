@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormConfig, ControlType, SelectOption, CrisprFormComponent } from '@tft/crispr-forms';
 import { Validators, FormGroup } from '@angular/forms';
 import { BehaviorSubject, of } from 'rxjs';
@@ -10,7 +10,7 @@ import { Moment } from 'moment';
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss']
 })
-export class OverviewComponent {
+export class OverviewComponent implements OnInit{
 
   valueSubject = new BehaviorSubject({
     inputField: 'Hello',
@@ -44,7 +44,6 @@ export class OverviewComponent {
         ...unmappedValue,
         autocompleteObservable: { value: unmappedValue.autocompleteObservable, label: unmappedValue.autocompleteObservable},
         autocompleteChiplistObservable: unmappedValue.autocompleteChiplistObservable.map(el => ({label: el, value: el })),
-
       }
     }),
     delay(101)
@@ -354,6 +353,11 @@ export class OverviewComponent {
   }
 
   @ViewChild('crisprForm') crisprForm: CrisprFormComponent;
+
+  ngOnInit(): void {
+    const currentFormValue = this.valueSubject.getValue()
+    // this.valueSubject.next(currentFormValue);
+  }
 
   handleSubmit(form: FormGroup) {
     const rawValue = form.getRawValue();

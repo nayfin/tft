@@ -21,7 +21,6 @@ export class FormGroupListComponent extends FormGroupListMixin implements OnInit
   defaultConfig = defaultConfig
   group: FormGroup;
   control: FormArray;
-  formArray: FormArray;
 
   constructor(private cdr: ChangeDetectorRef) {
     super();
@@ -30,7 +29,6 @@ export class FormGroupListComponent extends FormGroupListMixin implements OnInit
   ngOnInit() {
     super.ngOnInit();
     // TODO: this is required to ngFor of controls in template, must be a better way
-    this.formArray = this.control as FormArray;
   }
 
   setControlValue(values: any[]) {
@@ -46,6 +44,10 @@ export class FormGroupListComponent extends FormGroupListMixin implements OnInit
       } else if (this.config.displayInitialItem) {
         this.addGroup()
       }
+      // needed to ensure new array items render
+      setTimeout(() => {
+        this.cdr.detectChanges();
+      })
     }
   }
 

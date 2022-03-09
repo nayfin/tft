@@ -18,9 +18,7 @@ export class CrisprFieldDirective implements OnInit {
   _value: ControlValue | any[]
   @Input() set value(value: ControlValue | any[]) {
     this._value = value;
-    if(this.component && isControlComponent(this.component)) {
-      this.component.value = value;
-    }
+    this.updateComponentValue(value);
   };
   get value() {
     return this._value;
@@ -44,7 +42,7 @@ export class CrisprFieldDirective implements OnInit {
     if (isControlOrButtonComponent(this.component)) {
       this.component.group = this.group;
     }
-
+    this.updateComponentValue(this.value);
     // adds any config classes to the dynamically generated component
     // doing this here keeps us from having to extend a base component into each field component individually
     if(!this.config.classes) return;
@@ -56,6 +54,12 @@ export class CrisprFieldDirective implements OnInit {
         this.renderer.addClass(componentRef.location.nativeElement, klass);
       }
     });
+  }
+
+  updateComponentValue(value: ControlValue | any[]) {
+    if(this.component && isControlComponent(this.component)) {
+      this.component.value = value;
+    }
   }
 }
 @NgModule({

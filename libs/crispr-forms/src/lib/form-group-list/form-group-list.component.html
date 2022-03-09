@@ -6,10 +6,10 @@
 
   <div [formArrayName]="config.controlName">
     <!-- Don't add trackBy function, it confuses the state of the array -->
-    <div *ngFor="let control of formArray?.controls; let i = index">
+    <div *ngFor="let control of control?.controls; let i = index">
       <!-- TODO: use content projection to allow custom item label component -->
       <div class="item-header">
-        <span class="mat-h2" *ngIf="config.itemLabelBuilder"> {{  config.itemLabelBuilder(i) }} </span>
+        <span class="mat-h2"> {{ config.itemLabelBuilder ? config.itemLabelBuilder(i) : 'Item ' + (i + 1) }} </span>
         <button
           mat-icon-button
           type="button"

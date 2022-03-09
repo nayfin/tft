@@ -7,7 +7,7 @@ import { Subscription, Observable } from 'rxjs';
   selector: 'crispr-form',
   styleUrls: ['form.component.scss'],
   templateUrl: 'form.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CrisprFormComponent implements OnInit {
   // if no form has been passed in by consuming component, we create an empty group to build out
@@ -19,8 +19,6 @@ export class CrisprFormComponent implements OnInit {
   // proxy value and status change events through to consuming component
   @Output() valueChanges: Observable<any> = this.form.valueChanges;
   @Output() statusChanges: Observable<string> = this.form.statusChanges;
-
-  subs: Subscription[] = [];
 
   @ViewChild('submitTrigger') submitTrigger: ElementRef<HTMLButtonElement>;
 
