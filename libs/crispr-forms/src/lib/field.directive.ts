@@ -1,4 +1,4 @@
-import { Directive, Input, ViewContainerRef, Renderer2, NgModule, OnInit } from '@angular/core';
+import { Directive, Input, ViewContainerRef, Renderer2, NgModule, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import type { AnyFieldConfig, ControlValue } from './models';
 import { CrisprFieldComponent, FIELD_COMPONENTS, isControlComponent, isControlOrButtonComponent } from './field-component-map.const';
@@ -27,7 +27,8 @@ export class CrisprFieldDirective implements OnInit {
 
   constructor(
     private container: ViewContainerRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
@@ -59,6 +60,8 @@ export class CrisprFieldDirective implements OnInit {
   updateComponentValue(value: ControlValue | any[]) {
     if(this.component && isControlComponent(this.component)) {
       this.component.value = value;
+      // SubGroups won't populate without this
+      this.cdr.detectChanges();
     }
   }
 }
