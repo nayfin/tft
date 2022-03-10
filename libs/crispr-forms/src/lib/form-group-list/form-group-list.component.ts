@@ -18,9 +18,15 @@ const FormGroupListMixin = crisprControlMixin<FormGroupListConfig>(CrisprFieldCo
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormGroupListComponent extends FormGroupListMixin implements OnInit {
+
   defaultConfig = defaultConfig
   group: FormGroup;
   control: FormArray;
+  /**
+   * By setting this to true when adding/removing items from array,
+   * we can block original values from overwriting form values
+   * */
+  blockValue = false;
 
   constructor(private cdr: ChangeDetectorRef) {
     super();
@@ -49,6 +55,16 @@ export class FormGroupListComponent extends FormGroupListMixin implements OnInit
         this.cdr.detectChanges();
       })
     }
+  }
+
+  clickDelete(index: number) {
+    this.blockValue = true;
+    this.deleteGroup(index);
+  }
+
+  clickAdd() {
+    this.blockValue = true;
+    this.addGroup();
   }
 
   addGroup(value = null) {

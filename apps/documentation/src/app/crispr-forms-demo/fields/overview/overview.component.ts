@@ -19,9 +19,11 @@ export class OverviewComponent implements OnInit{
     },
     groupList: [
       {
+        autocompleteChiplistObservable: ['a', 'b' ],
         subField: 'david',
       },
       {
+        autocompleteChiplistObservable: [ 'o' ],
         secondSubField: 'bowie'
       },
     ],
@@ -44,6 +46,7 @@ export class OverviewComponent implements OnInit{
         ...unmappedValue,
         autocompleteObservable: { value: unmappedValue.autocompleteObservable, label: unmappedValue.autocompleteObservable},
         autocompleteChiplistObservable: unmappedValue.autocompleteChiplistObservable.map(el => ({label: el, value: el })),
+        groupList:unmappedValue.groupList.map(el => ({...el, autocompleteChiplistObservable: el.autocompleteChiplistObservable.map(chip => ({label: chip, value: chip }))}))
       }
     }),
     delay(101)
@@ -97,6 +100,29 @@ export class OverviewComponent implements OnInit{
           controlType: ControlType.SUB_GROUP,
           controlName: 'subGroup',
           fields: [
+            {
+              controlType: ControlType.AUTOCOMPLETE_CHIPLIST,
+              label: 'This autocomplete chiplist field uses an observable to resolve options',
+              controlName: 'autocompleteChiplistObservable',
+              placeholder: 'I am a placeholder in a autocomplete field',
+              info: {
+                content: 'I am an info tooltip on an autocomplete field',
+                tooltipPosition: 'left',
+                iconName: 'delete'
+              },
+              fieldSuffix: '$',
+              // validators: [Validators.required],
+              typeDebounceTime: 0,
+              validators: [Validators.required],
+              options: (_group, searchTerm) => {
+                console.log({searchTerm, _group})
+                return of([
+                  {label: 'good', value: 'good'},
+                  {label: 'evil', value: 'evil'},
+                ]).pipe(map(options => options.filter(option => option.label.toLowerCase().includes(searchTerm) )))
+              },
+              hint: 'Autocomplete Chiplist hint'
+            },
             {
               // a basic input field in the form with the following configuration
               controlType: ControlType.INPUT,

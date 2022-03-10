@@ -6,7 +6,7 @@
 
   <div [formArrayName]="config.controlName">
     <!-- Don't add trackBy function, it confuses the state of the array -->
-    <div *ngFor="let control of control?.controls; let i = index">
+    <div *ngFor="let con of control?.controls; let i = index;">
       <!-- TODO: use content projection to allow custom item label component -->
       <div class="item-header">
         <span class="mat-h2"> {{ config.itemLabelBuilder ? config.itemLabelBuilder(i) : 'Item ' + (i + 1) }} </span>
@@ -14,17 +14,18 @@
           mat-icon-button
           type="button"
           *ngIf="i + 1 > config.minListLength">
-          <mat-icon (click)="deleteGroup(i)">delete</mat-icon>
+          <mat-icon (click)="clickDelete(i)">delete</mat-icon>
         </button>
       </div>
       <div
-        [formGroupName]="i">
+        [formGroup]="con">
+        <!-- TODO: if chiplists didn't need to have labels mixed in with their values we could use [value]="control.value" below -->
         <ng-container
           *ngFor="let field of config.itemConfig.fields;"
           crisprField
+          [value]="blockValue ? null : value && value[i] | initialControlValue : field"
           [config]="field"
-          [value]="control.value | initialControlValue : field"
-          [group]="control">
+          [group]="con">
         </ng-container>
       </div>
     </div>
@@ -35,7 +36,7 @@
       class="add"
       mat-raised-button
       [color]="config.addButtonColor"
-      (click)="addGroup()">
+      (click)="clickAdd()">
       {{config.addItemLabel || config.addButtonLabel}}
     </button>
   </div>
