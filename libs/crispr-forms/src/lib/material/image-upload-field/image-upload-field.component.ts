@@ -55,11 +55,6 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
     useWebWorker: true,
   }
 
-  /**
-   * The url mapped from initial input value, consumers can us mapInputValueToUrl in config to transform their input value into a src url for the image element
-   */
-  // inputValueUrl: string | undefined;
-
   private inputImageFileSubject = new Subject<File | null>();
   inputImageFile$ = this.inputImageFileSubject.asObservable().pipe(
     shareReplay(1),
@@ -150,7 +145,6 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
 
   ngOnInit() {
     super.ngOnInit();
-    // this.inputValueUrl = this.value && this.config.mapInputValueToUrl?.(this.value) || this.value;
     this.imageSrcUrl$ = combineLatest([
       this.compressedImageUrlString$.pipe(startWith(null)),
       this.control.valueChanges.pipe(

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { allowedFileExtValidator, ControlType, FormConfig, maxFileSizeValidator } from '@tft/crispr-forms';
+import { delay, of, startWith } from 'rxjs';
 
 @Component({
   selector: 'tft-image-upload',
@@ -8,11 +9,28 @@ import { allowedFileExtValidator, ControlType, FormConfig, maxFileSizeValidator 
   styleUrls: ['./image-upload.component.scss']
 })
 export class ImageUploadComponent {
-  value = {
+  value = of({
     fileUploadExample: {
       downloadUrl :'https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg'
+    },
+    image: {
+      location: {
+        downloadUrl :'https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg'
+      }
     }
-  }
+  }).pipe(
+    delay(2000),
+    startWith({
+      fileUploadExample: {
+        downloadUrl : ''
+      },
+      image: {
+        location: {
+          downloadUrl : ''
+        }
+      }
+    })
+  )
   config: FormConfig = {
     autoComplete: 'off',
     errorDictionary: {
@@ -26,7 +44,7 @@ export class ImageUploadComponent {
         controlName: 'fileUploadExample',
         label: 'A Really good label',
         mapInputValueToUrl: ((inputValue: {downloadUrl: string}) => {
-          // console.log({inputValue})
+          console.log({inputValue})
           return inputValue.downloadUrl
         }),
         heading: {
@@ -43,6 +61,26 @@ export class ImageUploadComponent {
           maxFileSizeValidator(.4),
           allowedFileExtValidator(['svg', 'jpeg', 'jpg', 'png'], false),
           Validators.required]
+      },
+      {
+        controlType: ControlType.SUB_GROUP,
+        controlName: 'image',
+        fields: [
+          {
+            controlType: ControlType.IMAGE_UPLOAD,
+            controlName: 'location',
+            label: 'Image of feature',
+            acceptedTypes: 'image/jpeg, image/bmp, image/png, image/gif',
+            mapInputValueToUrl: (value: {downloadUrl: string, path: string}) => {
+              console.log({value})
+              return value.downloadUrl;
+            },
+            validators: [
+              maxFileSizeValidator(8),
+              allowedFileExtValidator(['svg', 'jpeg', 'jpg', 'png'], false),
+            ]
+          },
+        ]
       },
       {
         controlType: ControlType.BUTTON,
