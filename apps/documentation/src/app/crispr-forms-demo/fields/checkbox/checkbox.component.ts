@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { FormConfig, ControlType } from '@tft/crispr-forms';
 
 @Component({
@@ -17,7 +18,8 @@ export class CheckboxComponent implements OnInit {
         },
         label: 'Checkbox Field',
         controlName: 'checkbox',
-      }
+        validators: [Validators.requiredTrue],
+      },
     ]
   }
   constructor() { }
