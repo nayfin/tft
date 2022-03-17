@@ -246,3 +246,22 @@ export function allowedFileExtValidator(allowedFileExtensions: string[], onlyAll
     return {allowedExtension: { allowedFileExtensions, actualExtension }};
   }
 }
+
+export function allowedFileType(matchExp: string | RegExp): ValidatorFn {
+  return (formControl) => {
+    const value = (formControl as FormControl).value;
+    if (!(value instanceof File)) return null
+    const type = value.type;
+    const matches = type.match(matchExp)
+    if (!type || !matches?.length) {
+      return {
+        allowedFileType: {
+          actualType: type,
+          allowedTypeExp: matchExp
+        }
+      }
+    } else {
+      return null
+    }
+  };
+}
