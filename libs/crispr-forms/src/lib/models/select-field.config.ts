@@ -1,7 +1,7 @@
 import { CrisprControlConfig } from '../models';
 import { Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
-import { ControlType, FieldDescriptors, MatFieldProperties } from './crispr-field.config';
+import { ControlType, FieldDescriptors, Info, MatFieldProperties } from './crispr-field.config';
 
 export interface SelectFieldConfig extends Omit<CrisprControlConfig, 'placeholder'>,
   FieldDescriptors,
@@ -23,6 +23,7 @@ export interface SelectOption {
   label: string;
   value: any;
   imageUrl?: string;
+  info?: Info;
 }
 
 export const DEFAULT_EMPTY_OPTIONS_MESSAGE = 'No Items';

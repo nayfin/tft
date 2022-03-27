@@ -236,7 +236,7 @@ export class OverviewComponent implements OnInit{
         controlName: 'selectField',
         classes: [],
         options: [
-          {label: 'option a', value: 'a'},
+          {label: 'option a', value: 'a', info: {content: 'Some info about the option'}},
           {label: 'option b', value: 'b'},
           {label: 'option c', value: 'c'},
         ],
@@ -254,7 +254,7 @@ export class OverviewComponent implements OnInit{
         controlName: 'selectFieldObservable',
         classes: [],
         options: of([
-          {label: 'good', value: 'a'},
+          {label: 'good', value: 'a', info: {content: 'some info about the option'}},
           {label: 'evil', value: 'b'},
         ])
       },
