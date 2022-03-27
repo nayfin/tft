@@ -236,7 +236,7 @@ export class OverviewComponent implements OnInit{
         controlName: 'selectField',
         classes: [],
         options: [
-          {label: 'option a', value: 'a', info: {content: 'Some info about the option'}},
+          {label: 'option a', value: 'a', info: {content: 'Some info about the option'}, imageUrl: 'https://firebasestorage.googleapis.com/v0/b/abigharvest-dev.appspot.com/o/icons%2Fapp%2Fa-big-harvest.svg?alt=media&token=3d1956e4-0447-4dc1-84d1-15163749ed89'},
           {label: 'option b', value: 'b'},
           {label: 'option c', value: 'c'},
         ],
