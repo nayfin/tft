@@ -1,8 +1,8 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewChild, ElementRef, OnChanges, SimpleChanges, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ControlGroupValue, FormConfig } from '../models';
 import { buildFormGroupFromConfig } from '../form.helpers';
-import { Subscription, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'crispr-form',
   styleUrls: ['form.component.scss'],
