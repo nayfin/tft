@@ -2,6 +2,7 @@
   "version": 1,
   "projects": {
     "api": {
+      "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
       "root": "apps/api",
       "sourceRoot": "apps/api/src",
       "projectType": "application",
@@ -9,7 +10,7 @@
       "schematics": {},
       "architect": {
         "build": {
-          "builder": "@nrwl/node:build",
+          "builder": "@nrwl/node:webpack",
           "options": {
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
@@ -32,7 +33,7 @@
           "outputs": ["{options.outputPath}"]
         },
         "serve": {
-          "builder": "@nrwl/node:execute",
+          "builder": "@nrwl/node:node",
           "options": {
             "buildTarget": "api:build"
           }
@@ -46,7 +47,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/api/jest.config.js",
+            "jestConfig": "apps/api/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/apps/api"]
@@ -55,6 +56,7 @@
       "tags": []
     },
     "api-interfaces": {
+      "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
       "root": "libs/api-interfaces",
       "sourceRoot": "libs/api-interfaces/src",
       "projectType": "library",
@@ -72,7 +74,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/api-interfaces/jest.config.js",
+            "jestConfig": "libs/api-interfaces/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/api-interfaces"]
@@ -81,6 +83,7 @@
       "tags": []
     },
     "core": {
+      "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
       "projectType": "library",
       "root": "libs/core",
       "sourceRoot": "libs/core/src",
@@ -110,7 +113,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/core/jest.config.js",
+            "jestConfig": "libs/core/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/core"]
@@ -124,6 +127,7 @@
       "tags": []
     },
     "crispr-forms": {
+      "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
       "projectType": "library",
       "root": "libs/crispr-forms",
       "sourceRoot": "libs/crispr-forms/src",
@@ -153,20 +157,18 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/crispr-forms/jest.config.js",
+            "jestConfig": "libs/crispr-forms/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/crispr-forms"]
         },
         "storybook": {
-          "builder": "@nrwl/storybook:storybook",
+          "builder": "@storybook/angular:start-storybook",
           "options": {
-            "uiFramework": "@storybook/angular",
             "port": 4400,
-            "config": {
-              "configFolder": "libs/crispr-forms/.storybook"
-            },
-            "projectBuildConfig": "crispr-forms:build-storybook"
+            "configDir": "libs/crispr-forms/.storybook",
+            "browserTarget": "crispr-forms:build-storybook",
+            "compodoc": false
           },
           "configurations": {
             "ci": {
@@ -175,21 +177,19 @@
           }
         },
         "build-storybook": {
-          "builder": "@nrwl/storybook:build",
+          "builder": "@storybook/angular:build-storybook",
+          "outputs": ["{options.outputPath}"],
           "options": {
-            "uiFramework": "@storybook/angular",
-            "outputPath": "dist/storybook/crispr-forms",
-            "config": {
-              "configFolder": "libs/crispr-forms/.storybook"
-            },
-            "projectBuildConfig": "crispr-forms:build-storybook"
+            "outputDir": "dist/storybook/crispr-forms",
+            "configDir": "libs/crispr-forms/.storybook",
+            "browserTarget": "crispr-forms:build-storybook",
+            "compodoc": false
           },
           "configurations": {
             "ci": {
               "quiet": true
             }
-          },
-          "outputs": ["{options.outputPath}"]
+          }
         }
       },
       "schematics": {
@@ -200,6 +200,7 @@
       "tags": []
     },
     "crispr-forms-e2e": {
+      "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
       "root": "apps/crispr-forms-e2e",
       "sourceRoot": "apps/crispr-forms-e2e/src",
       "projectType": "application",
@@ -231,6 +232,7 @@
       "implicitDependencies": ["crispr-forms"]
     },
     "documentation": {
+      "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -361,7 +363,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/documentation/jest.config.js",
+            "jestConfig": "apps/documentation/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/apps/documentation"]
@@ -374,6 +376,7 @@
       "tags": []
     },
     "documentation-e2e": {
+      "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
       "root": "apps/documentation-e2e",
       "sourceRoot": "apps/documentation-e2e/src",
       "projectType": "application",
@@ -405,6 +408,7 @@
       "implicitDependencies": ["documentation"]
     },
     "form-validation-handler": {
+      "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
       "projectType": "library",
       "root": "libs/form-validation-handler",
       "sourceRoot": "libs/form-validation-handler/src",
@@ -434,7 +438,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/form-validation-handler/jest.config.js",
+            "jestConfig": "libs/form-validation-handler/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/form-validation-handler"]
@@ -448,6 +452,7 @@
       "tags": []
     },
     "interact": {
+      "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
       "projectType": "library",
       "root": "libs/interact",
       "sourceRoot": "libs/interact/src",
@@ -477,7 +482,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/interact/jest.config.js",
+            "jestConfig": "libs/interact/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/interact"]
@@ -491,6 +496,7 @@
       "tags": []
     },
     "mat-instantsearch": {
+      "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
       "projectType": "library",
       "root": "libs/mat-instantsearch",
       "sourceRoot": "libs/mat-instantsearch/src",
@@ -520,7 +526,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/mat-instantsearch/jest.config.js",
+            "jestConfig": "libs/mat-instantsearch/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/mat-instantsearch"]
@@ -534,6 +540,7 @@
       "tags": []
     },
     "ui-imports": {
+      "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
       "projectType": "library",
       "root": "libs/ui-imports",
       "sourceRoot": "libs/ui-imports/src",
@@ -563,7 +570,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/ui-imports/jest.config.js",
+            "jestConfig": "libs/ui-imports/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/ui-imports"]

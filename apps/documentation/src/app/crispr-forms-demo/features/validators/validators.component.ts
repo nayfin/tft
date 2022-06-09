@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { FormConfig, ControlType } from '@tft/crispr-forms';
 import { someControlIsValid } from '@tft/form-validation-handler';
 import { map } from 'rxjs';
@@ -40,7 +40,7 @@ export class ValidatorsComponent {
         color: 'primary',
         hideDisabled: true,
         disabledCallback: (group) => {
-          const lengthControl = group.get('length') as FormControl;
+          const lengthControl = group.get('length') as UntypedFormControl;
           return lengthControl.valueChanges.pipe(
             map((lengthVal: number) => {
               const invalid = !(lengthVal && lengthVal > 1)
@@ -80,7 +80,7 @@ export class ValidatorsComponent {
     ]
   }
 
-  handleSubmit(form: FormGroup) {
+  handleSubmit(form: UntypedFormGroup) {
     console.log({isValid: form.valid, form})
   }
 }

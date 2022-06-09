@@ -1,7 +1,7 @@
-import { FormGroup, ValidatorFn } from '@angular/forms';
+import { UntypedFormGroup, ValidatorFn } from '@angular/forms';
 
 export function someControlIsValid(controlNames: string[]): ValidatorFn {
-  return (formGroup: FormGroup) => {
+  return (formGroup: UntypedFormGroup) => {
     const controls = controlNames.map(controlName => formGroup.get(controlName));
     const someControlIsValid = controls.some((control) => control.valid);
     if (someControlIsValid) {

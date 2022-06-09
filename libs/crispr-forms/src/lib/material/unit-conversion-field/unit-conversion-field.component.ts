@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { shareReplay, startWith, tap } from 'rxjs/operators';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
@@ -20,8 +20,8 @@ const UnitConversionFieldMixin = crisprControlMixin<UnitConversionFieldConfig>(C
 export class UnitConversionFieldComponent extends UnitConversionFieldMixin implements OnInit, OnDestroy {
   defaultConfig = defaultConfig;
 
-  displayValueControl = new FormControl();
-  unitSelectControl = new FormControl();
+  displayValueControl = new UntypedFormControl();
+  unitSelectControl = new UntypedFormControl();
   unitOptions$: Observable<SelectOption[]>;
 
   transformationSubscription: Subscription;

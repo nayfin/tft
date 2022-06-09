@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 // import { AngularFireStorage } from '@angular/fire/storage';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ControlType, FormConfig } from '@tft/crispr-forms';
 
@@ -78,7 +78,7 @@ export class FileUploadComponent {
     private snackbar: MatSnackBar
   ) { }
 
-  handleSubmit(form: FormGroup) {
+  handleSubmit(form: UntypedFormGroup) {
     console.log({form})
   }
 }
