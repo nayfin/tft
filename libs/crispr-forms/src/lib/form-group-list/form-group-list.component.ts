@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { FormGroup, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormArray } from '@angular/forms';
 
 import type { FormGroupListConfig } from '../models';
 import { createControlForType } from '../form.helpers';
@@ -20,8 +20,8 @@ const FormGroupListMixin = crisprControlMixin<FormGroupListConfig>(CrisprFieldCo
 export class FormGroupListComponent extends FormGroupListMixin implements OnInit {
 
   defaultConfig = defaultConfig
-  group: FormGroup;
-  control: FormArray;
+  group: UntypedFormGroup;
+  control: UntypedFormArray;
   /**
    * By setting this to true when adding/removing items from array,
    * we can block original values from overwriting form values

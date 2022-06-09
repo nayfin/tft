@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormConfig, ControlType, SelectOption } from '@tft/crispr-forms';
-import { FormGroup, Validators } from '@angular/forms';
+import { UntypedFormGroup, Validators } from '@angular/forms';
 import { EndpointsService, ENDPOINTS } from '../../endpoints.service';
 
 
@@ -128,7 +128,7 @@ export class AutocompleteComponent {
     private endpointsService: EndpointsService
   ) { }
 
-  handleSubmit(form: FormGroup) {
+  handleSubmit(form: UntypedFormGroup) {
     console.log({value: form.value})
   }
 

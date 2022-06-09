@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormConfig, ControlType, SelectOption, CrisprFormComponent } from '@tft/crispr-forms';
-import { Validators, FormGroup } from '@angular/forms';
+import { Validators, UntypedFormGroup } from '@angular/forms';
 import { BehaviorSubject, of } from 'rxjs';
 import { map, delay } from 'rxjs/operators';
 import { Moment } from 'moment';
@@ -385,7 +385,7 @@ export class OverviewComponent implements OnInit{
     // this.valueSubject.next(currentFormValue);
   }
 
-  handleSubmit(form: FormGroup) {
+  handleSubmit(form: UntypedFormGroup) {
     const rawValue = form.getRawValue();
     this.valueSubject.next(rawValue);
   }

@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'documentation',
+/* eslint-disable */
+export default {
+  displayName: 'crispr-forms',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -8,7 +9,7 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/apps/documentation',
+  coverageDirectory: '../../coverage/libs/crispr-forms',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
     'jest-preset-angular/build/AngularSnapshotSerializer.js',

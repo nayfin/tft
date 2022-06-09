@@ -1,4 +1,4 @@
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import type { FileUploadFieldComponent } from '../material/file-upload/file-upload.component';
 import type { ImageUploadFieldComponent } from '../material/image-upload-field';
 import { CrisprControlConfig, ControlType, ButtonType, MatFieldProperties } from '../models';
@@ -6,7 +6,7 @@ import { CrisprControlConfig, ControlType, ButtonType, MatFieldProperties } from
 export type FileUploadFieldConfig = CrisprControlConfig & MatFieldProperties & {
   controlType: ControlType.FILE_UPLOAD;
   label: string;
-  filesChanged?: (parentGroup: FormGroup, files: FileList) => void;
+  filesChanged?: (parentGroup: UntypedFormGroup, files: FileList) => void;
   allowMultipleFiles?: boolean;
   showClearFilesButton?: boolean;
   acceptedTypes?: string;
@@ -19,7 +19,7 @@ export type FileUploadFieldConfig = CrisprControlConfig & MatFieldProperties & {
 
 // The properties that are only available if we are using the uploadFiles callback
 export interface EnabledUploadButtonConfig {
-  uploadFiles: (parentGroup: FormGroup, files:FileList, uploadComponent: FileUploadFieldComponent | ImageUploadFieldComponent ) => Promise<unknown> | unknown;
+  uploadFiles: (parentGroup: UntypedFormGroup, files:FileList, uploadComponent: FileUploadFieldComponent | ImageUploadFieldComponent ) => Promise<unknown> | unknown;
   showUploadProgress?: boolean;
   disableOnUpload?: boolean;
   uploadButtonType?: ButtonType;

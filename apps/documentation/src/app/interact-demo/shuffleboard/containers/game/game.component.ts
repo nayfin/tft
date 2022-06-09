@@ -3,7 +3,7 @@ import { TftDragEvent, TftDropEvent } from '@tft/interact';
 import { initialGameState } from './consts';
 import { Team } from '../../models/shuffleboard.model'
 import { TargetComponent } from '../../components/target/target.component';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 // import { RestrictOptions } from '@interactjs/modifiers/restrict/pointer';
 
@@ -39,7 +39,7 @@ export class GameComponent implements OnInit {
     },
   ];
   resistance = 2;
-  inertiaResistanceControl = new FormControl(this.resistance);
+  inertiaResistanceControl = new UntypedFormControl(this.resistance);
   ircSubscription: Subscription;
   constructor(
     // private cdr: ChangeDetectorRef,

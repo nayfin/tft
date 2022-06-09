@@ -1,5 +1,5 @@
 import { OnInit, Directive } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, shareReplay, startWith, switchMap } from 'rxjs/operators';
 
@@ -17,13 +17,13 @@ const AbstractAutocompleteFieldMixin = crisprControlMixin<AutocompleteConfigType
 export class AbstractAutocompleteComponent<C>
   extends AbstractAutocompleteFieldMixin implements OnInit {
   // we need a separate control for the UI because of the way the material autocomplete chiplist works
-  autocompleteInputControl = new FormControl('');
+  autocompleteInputControl = new UntypedFormControl('');
   options$: Observable<SelectOption[]>
   config: AutocompleteConfigTypes & C;
   ngOnInit() {
     super.ngOnInit();
 
-    this.group.addControl(this.config.controlName, new FormControl());
+    this.group.addControl(this.config.controlName, new UntypedFormControl());
     // filter options by the search string using either the default filter function or one passed in through config
     this.options$ = this.autocompleteInputControl.valueChanges.pipe(
       // this is needed to have the options panel to open on focus

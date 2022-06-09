@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { ControlGroupValue, FormConfig } from '../models';
 import { buildFormGroupFromConfig } from '../form.helpers';
 import { Observable } from 'rxjs';
@@ -12,10 +12,10 @@ import { Observable } from 'rxjs';
 export class CrisprFormComponent implements OnInit {
   // if no form has been passed in by consuming component, we create an empty group to build out
   @Input() config: FormConfig;
-  @Input() form: FormGroup = new FormGroup({});
+  @Input() form: UntypedFormGroup = new UntypedFormGroup({});
   @Input() value: ControlGroupValue = null;
 
-  @Output() submitted = new EventEmitter<FormGroup>();
+  @Output() submitted = new EventEmitter<UntypedFormGroup>();
   // proxy value and status change events through to consuming component
   @Output() valueChanges: Observable<any> = this.form.valueChanges;
   @Output() statusChanges: Observable<string> = this.form.statusChanges;

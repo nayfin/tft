@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ControlType, FormConfig } from '@tft/crispr-forms';
-import { FormGroup, Validators } from '@angular/forms';
+import { UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'doc-input',
@@ -64,7 +64,7 @@ export class InputComponent implements OnInit {
   ngOnInit() {
   }
 
-  handleSubmit(form: FormGroup) {
+  handleSubmit(form: UntypedFormGroup) {
     console.log({form})
   }
 

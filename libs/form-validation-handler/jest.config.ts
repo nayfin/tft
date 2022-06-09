@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'core',
+/* eslint-disable */
+export default {
+  displayName: 'form-validation-handler',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -8,7 +9,7 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/libs/core',
+  coverageDirectory: '../../coverage/libs/form-validation-handler',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
     'jest-preset-angular/build/AngularSnapshotSerializer.js',

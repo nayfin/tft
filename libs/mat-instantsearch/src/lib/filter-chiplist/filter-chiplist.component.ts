@@ -1,5 +1,5 @@
 import { Component, Inject, forwardRef, OnInit, Input } from '@angular/core';
-import { Validators, FormControl } from '@angular/forms';
+import { Validators, UntypedFormControl } from '@angular/forms';
 import { BaseWidget, NgAisInstantSearch } from 'angular-instantsearch';
 import { connectRefinementList } from 'instantsearch.js/es/connectors';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -48,7 +48,7 @@ export class FilterChiplistComponent extends BaseWidget implements OnInit {
   @Input() searchQuery = '';
   chips = [];
 
-  autocompleteControl = new FormControl(null, ...this.validators);
+  autocompleteControl = new UntypedFormControl(null, ...this.validators);
   chips$ = new BehaviorSubject<RefinementListItem[]>([])
   remainingItems$: Observable<any[]>;
 

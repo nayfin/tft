@@ -1,5 +1,5 @@
 import { Component, Inject, forwardRef, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { Validators, FormControl, FormBuilder } from '@angular/forms';
+import { Validators, UntypedFormControl, FormBuilder } from '@angular/forms';
 import { BaseWidget, NgAisInstantSearch } from 'angular-instantsearch';
 import { connectAutocomplete } from 'instantsearch.js/es/connectors';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -62,7 +62,7 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
   // Resets state of instantSearch's autocomplete mechanisms on submission of selected item
   @Input() clearOnSubmit = false;
   @Input() validators: Validators[] = [];
-  @Input() autocompleteControl = new FormControl(null, ...this.validators);
+  @Input() autocompleteControl = new UntypedFormControl(null, ...this.validators);
 
 
   @Output() selectHit = new EventEmitter();

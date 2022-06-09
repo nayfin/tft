@@ -1,5 +1,5 @@
 import { Directive, Input, ViewContainerRef, Renderer2, NgModule, OnInit, ChangeDetectorRef } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { AnyFieldConfig, ControlValue } from './models';
 import { CrisprFieldComponent, FIELD_COMPONENTS, isControlComponent, isControlOrButtonComponent } from './field-component-map.const';
 import { CommonModule } from '@angular/common';
@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 export class CrisprFieldDirective implements OnInit {
 
   @Input() config: AnyFieldConfig;
-  @Input() group: FormGroup;
+  @Input() group: UntypedFormGroup;
   /**
    * value setter updates the control's value as well
    */

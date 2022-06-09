@@ -20,7 +20,7 @@ import {
   combineLatest,
   OperatorFunction
 } from 'rxjs';
-import { FormGroup, FormArray, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormArray, UntypedFormControl } from '@angular/forms';
 import { valueIn } from './form.operators';
 import { map, shareReplay, startWith } from 'rxjs/operators';
 
@@ -50,7 +50,7 @@ export interface CheckControlConfig {
 * @param group the direct parent of the field we want to watch
 * @param config
 */
-export function checkControlForValues(group: FormGroup, config: CheckControlConfig): Observable<boolean> {
+export function checkControlForValues(group: UntypedFormGroup, config: CheckControlConfig): Observable<boolean> {
   // check that all the pieces we need are available
   if (config && config.controlName && Array.isArray(config.values)) {
     return getValueChanges(group, config.controlName).pipe(
@@ -87,7 +87,7 @@ export interface CheckControlsConfig {
  * @param group the form group that has the fields to watch as direct descendants
  * @param config the configuration to use when calling the function
  */
-export function checkControlsForValues(group: FormGroup, config: CheckControlsConfig): Observable<any> {
+export function checkControlsForValues(group: UntypedFormGroup, config: CheckControlsConfig): Observable<any> {
   // if no config is passed we just want to show the field, so we return an observable of true
   if (!config || !config.watchConfigs) { return of(true); }
   // we run checkControlForValues on every control in the list of WatchConfigs creating
@@ -130,7 +130,7 @@ export interface ComputeFieldConfig<T = any, RT = any> {
  * @param computeFieldsConfig the configuration that drives the computation, holds the names to watch and the
  * computation function that get called against the array of values
  */
-export function computeValueFromFields(group: FormGroup, computeFieldsConfig: ComputeFieldConfig): Observable<any> {
+export function computeValueFromFields(group: UntypedFormGroup, computeFieldsConfig: ComputeFieldConfig): Observable<any> {
   // TODO: better checking
   const { controlNamesToWatch } = computeFieldsConfig;
   //creates an observable listener for each control in the controlNamesToWatch array
@@ -148,7 +148,7 @@ export function computeValueFromFields(group: FormGroup, computeFieldsConfig: Co
  * @param group the form group we want to pull the observable from
  * @param controlName the name of the control who's value we want to subscribe to
  */
-function getValueChanges(group: FormGroup, controlName: string) {
+function getValueChanges(group: UntypedFormGroup, controlName: string) {
   const control = group.get(controlName);
   if (!control) {
     throw new Error(`No control with controlName ${controlName}`, );
@@ -176,7 +176,7 @@ function pipeOperatorsIntoObservable(observable: Observable<any>, operators: Ope
 
 export function callOptionsIfFunction(
   options: OptionsType | AutocompleteOptionsCallback,
-  parentGroup?: FormGroup,
+  parentGroup?: UntypedFormGroup,
   searchString?: string
 ): OptionsType {
   return options instanceof Function ? options(parentGroup, searchString) : options;
@@ -191,7 +191,7 @@ export function callOptionsIfFunction(
  */
 export function observablifyOptions(
   options: OptionsType,
-  parentGroup: FormGroup,
+  parentGroup: UntypedFormGroup,
   searchString?: string,
 ): Observable<SelectOption[]> {
   const calledOptions = callOptionsIfFunction(options, parentGroup, searchString);
@@ -224,7 +224,7 @@ export function isControlConfig(fieldConfig: CrisprFieldConfig): fieldConfig is 
  * @param value an object of initial values to pass in
  * @param group the form group to modify and build out
  */
-export function buildFormGroupFromConfig(config: FormConfig, value = null, group: FormGroup = new FormGroup({}) ) {
+export function buildFormGroupFromConfig(config: FormConfig, value = null, group: UntypedFormGroup = new UntypedFormGroup({}) ) {
   config.fields.forEach( (controlConfig: AnyFieldConfig) => {
     if (isControlConfig(controlConfig)) {
       // then add a control to the group using the controlName from configuration
@@ -254,8 +254,8 @@ export function createControlForType(controlConfig: AnyFieldConfig, value: Contr
   const control = controlConfig.controlType === ControlType.SUB_GROUP
     ? buildFormGroupFromConfig(controlConfig as FormConfig, value)
     : controlConfig.controlType === ControlType.GROUP_LIST
-    ? new FormArray([], (controlConfig as FormGroupListConfig).validators)
-    : new FormControl(
+    ? new UntypedFormArray([], (controlConfig as FormGroupListConfig).validators)
+    : new UntypedFormControl(
       value || null,
       (controlConfig as CrisprControlConfig).validators
     );
