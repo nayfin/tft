@@ -3,7 +3,8 @@ import { FormConfig, ControlType, SelectOption, CrisprFormComponent } from '@tft
 import { Validators, UntypedFormGroup } from '@angular/forms';
 import { BehaviorSubject, of } from 'rxjs';
 import { map, delay } from 'rxjs/operators';
-import { Moment } from 'moment';
+// import {  } from 'date-fns';
+// import { Moment } from 'moment';
 
 @Component({
   selector: 'doc-overview',
@@ -338,9 +339,9 @@ export class OverviewComponent implements OnInit{
         touchUi: true,
         startView: 'month',
         startAt: new Date('Apr 12, 2019'),
-        datepickerFilter: (date: Moment) => {
+        datepickerFilter: (date: Date) => {
           if (date) {
-            const day = date.day();
+            const day = date.getDay(); // date.day();
             return [2,4,6].includes(day);
           }
         },

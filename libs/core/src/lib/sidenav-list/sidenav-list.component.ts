@@ -15,6 +15,7 @@ export class SidenavListComponent {
 
   // want to allow any data to pass through here
   onItemClicked(item: SidenavLink) {
+    console.log({item});
     this.itemClicked.emit(item);
   }
 

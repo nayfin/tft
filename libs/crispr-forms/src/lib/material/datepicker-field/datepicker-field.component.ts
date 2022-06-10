@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, AfterContentInit } from '@a
 import { DatepickerFieldConfig } from '../../models';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
-import { Moment } from 'moment';
+// import { Moment } from 'moment';
 import { Observable, of } from 'rxjs';
 import { ComponentPortal, Portal } from '@angular/cdk/portal';
 
@@ -21,8 +21,8 @@ export class DatepickerFieldComponent extends DatepickerFieldMixin implements On
 
   defaultConfig = defaultConfig;
 
-  dateClass: MatCalendarCellClassFunction<Moment>;
-  dateClass$: Observable<MatCalendarCellClassFunction<Moment>>;
+  dateClass: MatCalendarCellClassFunction<Date>;
+  dateClass$: Observable<MatCalendarCellClassFunction<Date>>;
   startAt$: Observable<Date>;
 
   /** A portal containing the footer component type for this calendar. */
