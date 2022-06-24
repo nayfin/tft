@@ -2,7 +2,6 @@ import { Component, OnInit, ChangeDetectionStrategy, AfterContentInit } from '@a
 import { DatepickerFieldConfig } from '../../models';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
-// import { Moment } from 'moment';
 import { Observable, of } from 'rxjs';
 import { ComponentPortal, Portal } from '@angular/cdk/portal';
 

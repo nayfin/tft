@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormConfig, ControlType } from '@tft/crispr-forms';
-// import * as moment from 'moment';
 import { map } from 'rxjs/operators';
 import { getDayOfYear } from 'date-fns';
 
@@ -91,8 +90,6 @@ export class DatepickerComponent {
             map((relativeDay: string) => {
               return (date, view) => {
                 if(view === 'month') {
-                  //return date.dayOfYear() === (moment().dayOfYear() + + relativeDay) ? 'highlight-day' : ''
-
                   return getDayOfYear(date) === (getDayOfYear(new Date()) + + relativeDay) ? 'highlight-day' : ''
                 }
                 return '';

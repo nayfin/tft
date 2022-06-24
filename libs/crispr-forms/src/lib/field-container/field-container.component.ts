@@ -51,7 +51,7 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
   }
   /**
    * Connects user defined disabledCallback function to the the view, so that the control is enabled/disabled
-   * appropriately. It also keeps the form will hide disabled fields in the UI unless `hideDisabled` is set to
+   * appropriately. It also will hide disabled fields in the UI unless `hideDisabled` is set to
    * false in the controls config
    * @param group used to get valueChanges from control
    * @param config configuration object used to

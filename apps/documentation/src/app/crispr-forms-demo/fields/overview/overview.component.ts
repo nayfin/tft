@@ -3,8 +3,6 @@ import { FormConfig, ControlType, SelectOption, CrisprFormComponent } from '@tft
 import { Validators, UntypedFormGroup } from '@angular/forms';
 import { BehaviorSubject, of } from 'rxjs';
 import { map, delay } from 'rxjs/operators';
-// import {  } from 'date-fns';
-// import { Moment } from 'moment';
 
 @Component({
   selector: 'doc-overview',

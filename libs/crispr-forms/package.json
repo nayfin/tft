@@ -2,15 +2,15 @@
   "name": "@tft/crispr-forms",
   "version": "13.0.23",
   "peerDependencies": {
-    "@angular/common": "^13.0.0",
-    "@angular/forms": "^13.0.0",
-    "@angular/core": "^13.0.0",
-    "@angular/material": "^13.0.0",
-    "@angular/cdk": "^13.0.0",
-    "@tft/form-validation-handler": "^13.0.0",
-    "@angular/material-moment-adapter": "^13.0.0",
+    "@angular/common": "^14.0.0",
+    "@angular/forms": "^14.0.0",
+    "@angular/core": "^14.0.0",
+    "@angular/material": "^14.0.0",
+    "@angular/cdk": "^14.0.0",
+    "@tft/form-validation-handler": "^14.0.0",
+    "@angular/material-date-fns-adapter": "14.0.1",
     "browser-image-compression": "^1.0.0",
-    "moment": "^2.24.0"
+    "date-fns": "^2.28.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"
