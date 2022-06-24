@@ -1,11 +1,18 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, NgModule } from '@angular/core';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { MatOptionModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { shareReplay, startWith, tap } from 'rxjs/operators';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
+import { FieldContainerModule } from '../../field-container';
 import { observablifyOptions } from '../../form.helpers';
 import { SelectOption } from '../../models';
 import { UnitConversionFieldConfig } from '../../models/unit-conversion-field.config';
+import { InfoModule } from '../info/info.component';
+import { OptionModule } from '../option';
 
 const defaultConfig: Partial<UnitConversionFieldConfig> = {};
 const UnitConversionFieldMixin = crisprControlMixin<UnitConversionFieldConfig>(CrisprFieldComponent);
@@ -66,4 +73,24 @@ export class UnitConversionFieldComponent extends UnitConversionFieldMixin imple
     const initialUnitValue = this.config.showUnitSelect ? this.config?.initialDisplayUnit : null;
     this.setInitialDisplayValue(value, initialUnitValue);
   }
+}
+@NgModule({
+  imports: [
+    CommonModule,
+    InfoModule,
+    OptionModule,
+    ReactiveFormsModule,
+    FieldContainerModule,
+    MatInputModule,
+    MatSelectModule,
+    MatOptionModule,
+  ],
+  exports: [
+    UnitConversionFieldComponent
+  ],
+  declarations: [
+    UnitConversionFieldComponent
+  ]
+})
+export class UnitConversionFieldModule {
 }
