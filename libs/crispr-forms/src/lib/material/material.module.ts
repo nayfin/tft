@@ -5,7 +5,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -23,9 +22,9 @@ import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
 import { FieldContainerModule } from '../field-container/field-container.component';
 import { InputFieldComponent } from './input-field/input-field.component';
-import { SelectFieldComponent } from './select-field/select-field.component';
+import { SelectFieldModule } from './select-field/select-field.component';
 import { AutocompleteFieldComponent } from './autocomplete-field/autocomplete-field.component';
-import { CheckboxFieldComponent } from './checkbox-field/checkbox-field.component';
+import { CheckboxFieldModule } from './checkbox-field/checkbox-field.component';
 import { TextareaFieldComponent } from './textarea-field/textarea-field.component';
 import { ButtonComponent } from './button/button.component';
 import { DatepickerFieldComponent } from './datepicker-field/datepicker-field.component';
@@ -38,7 +37,7 @@ import { SliderFieldComponent } from './slider-field/slider-field.component';
 import { DividerComponent } from './divider/divider.component';
 // tslint:disable-next-line: max-line-length
 import { AutocompleteChiplistFieldComponent } from './autocomplete-chiplist-field/autocomplete-chiplist-field.component';
-import { OptionComponent } from './option/option.component';
+import { OptionModule } from './option/option.component';
 import { RadioFieldComponent } from './radio-field/radio-field.component';
 import { UnitConversionFieldComponent } from './unit-conversion-field/unit-conversion-field.component';
 import { PortalModule } from '@angular/cdk/portal';
@@ -53,7 +52,6 @@ const MAT_DESIGN_MODULES = [
   MatInputModule,
   MatRadioModule,
   MatSelectModule,
-  MatCheckboxModule,
   MatChipsModule,
   MatSliderModule,
   MatSlideToggleModule,
@@ -70,18 +68,15 @@ const MAT_DESIGN_MODULES = [
 
 const CRISPR_FIELDS = [
   InputFieldComponent,
-  SelectFieldComponent,
   RadioFieldComponent,
   AutocompleteFieldComponent,
   AutocompleteChiplistFieldComponent,
-  CheckboxFieldComponent,
   TextareaFieldComponent,
   DatepickerFieldComponent,
   SliderFieldComponent,
   ButtonComponent,
   DividerComponent,
   UnitConversionFieldComponent,
-  OptionComponent,
 ];
 @NgModule({
   imports: [
@@ -89,9 +84,12 @@ const CRISPR_FIELDS = [
     ReactiveFormsModule,
     FormValidationHandlerModule,
     InfoModule,
+    CheckboxFieldModule,
+    SelectFieldModule,
     FileUploadFieldModule,
     HeadingModule,
     FieldContainerModule,
+    OptionModule,
     ...MAT_DESIGN_MODULES,
   ],
   exports: [
