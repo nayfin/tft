@@ -1,10 +1,14 @@
 
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
+import { Component, OnInit, ChangeDetectionStrategy, NgModule } from '@angular/core';
+import { ReactiveFormsModule, UntypedFormGroup } from '@angular/forms';
 import { ButtonConfig } from '../../models';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { CrisprFieldComponent } from '../../abstracts';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'crispr-button',
@@ -35,4 +39,21 @@ export class ButtonComponent extends CrisprFieldComponent<ButtonConfig> implemen
       this.config.callback(group, event);
     }
   }
+}
+@NgModule({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    ReactiveFormsModule,
+  ],
+  exports: [
+    ButtonComponent
+  ],
+  declarations: [
+    ButtonComponent
+  ]
+})
+export class ButtonModule {
 }

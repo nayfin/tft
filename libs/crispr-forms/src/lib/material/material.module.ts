@@ -23,7 +23,7 @@ import { SelectFieldModule } from './select-field/select-field.component';
 import { AutocompleteFieldModule } from './autocomplete-field/autocomplete-field.component';
 import { CheckboxFieldModule } from './checkbox-field/checkbox-field.component';
 import { TextareaFieldComponent } from './textarea-field/textarea-field.component';
-import { ButtonComponent } from './button/button.component';
+import { ButtonModule } from './button/button.component';
 import { DatepickerFieldComponent } from './datepicker-field/datepicker-field.component';
 import { MatDateFnsModule } from '@angular/material-date-fns-adapter';
 
@@ -39,7 +39,6 @@ import { RadioFieldComponent } from './radio-field/radio-field.component';
 import { UnitConversionFieldModule } from './unit-conversion-field/unit-conversion-field.component';
 import { PortalModule } from '@angular/cdk/portal';
 import { FileUploadFieldModule } from './file-upload';
-import { MatOptionModule } from '@angular/material/core';
 
 // TODO: Should we import UI library?
 // Will the tree shaker shake the unused modules?
@@ -66,7 +65,6 @@ const CRISPR_FIELDS = [
   TextareaFieldComponent,
   DatepickerFieldComponent,
   SliderFieldComponent,
-  ButtonComponent,
   DividerComponent,
 ];
 @NgModule({
@@ -81,6 +79,7 @@ const CRISPR_FIELDS = [
     AutocompleteChiplistFieldModule,
     FileUploadFieldModule,
     UnitConversionFieldModule,
+    ButtonModule,
     HeadingModule,
     FieldContainerModule,
     OptionModule,
