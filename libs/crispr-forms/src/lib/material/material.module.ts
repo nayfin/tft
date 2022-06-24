@@ -29,9 +29,7 @@ import { CheckboxFieldComponent } from './checkbox-field/checkbox-field.componen
 import { TextareaFieldComponent } from './textarea-field/textarea-field.component';
 import { ButtonComponent } from './button/button.component';
 import { DatepickerFieldComponent } from './datepicker-field/datepicker-field.component';
-// import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatDateFnsModule } from '@angular/material-date-fns-adapter';
-import { enUS } from 'date-fns/locale';
 
 
 import { HeadingModule } from './heading/heading.component';
@@ -45,7 +43,6 @@ import { RadioFieldComponent } from './radio-field/radio-field.component';
 import { UnitConversionFieldComponent } from './unit-conversion-field/unit-conversion-field.component';
 import { PortalModule } from '@angular/cdk/portal';
 import { FileUploadFieldModule } from './file-upload';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 // TODO: Should we import UI library?
 // Will the tree shaker shake the unused modules?
@@ -65,7 +62,6 @@ const MAT_DESIGN_MODULES = [
   MatChipsModule,
   MatTooltipModule,
   MatFormFieldModule,
-  // MatMomentDateModule,
   MatDateFnsModule,
   MatDividerModule,
   MatProgressBarModule,
@@ -105,12 +101,6 @@ const CRISPR_FIELDS = [
   declarations: [
     ...CRISPR_FIELDS,
   ],
-  providers: [
-    {
-        provide: MAT_DATE_LOCALE,
-        useValue: enUS,
-    },
-],
 })
 
 export class MaterialModule {

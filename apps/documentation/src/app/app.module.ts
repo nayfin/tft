@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { InjectionToken, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { AngularFireModule } from '@angular/fire';
 
@@ -10,6 +10,9 @@ import { AppComponent } from './app.component';
 import { UiImportsModule } from '@tft/ui-imports';
 import { CoreModule } from '@tft/core';
 import { HttpClientModule } from '@angular/common/http';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { enUS } from 'date-fns/locale';
+
 
 @NgModule({
   declarations: [
@@ -25,6 +28,12 @@ import { HttpClientModule } from '@angular/common/http';
     // AngularFireModule.initializeApp(environment.firebase)
   ],
   bootstrap: [AppComponent],
-  exports: []
+  exports: [],
+  providers: [
+    {
+        provide: MAT_DATE_LOCALE,
+        useValue: enUS,
+    },
+  ],
 })
 export class AppModule { }
