@@ -23,7 +23,7 @@ import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { FieldContainerModule } from '../field-container/field-container.component';
 import { InputFieldComponent } from './input-field/input-field.component';
 import { SelectFieldModule } from './select-field/select-field.component';
-import { AutocompleteFieldComponent } from './autocomplete-field/autocomplete-field.component';
+import { AutocompleteFieldModule } from './autocomplete-field/autocomplete-field.component';
 import { CheckboxFieldModule } from './checkbox-field/checkbox-field.component';
 import { TextareaFieldComponent } from './textarea-field/textarea-field.component';
 import { ButtonComponent } from './button/button.component';
@@ -36,22 +36,22 @@ import { InfoModule } from './info/info.component';
 import { SliderFieldComponent } from './slider-field/slider-field.component';
 import { DividerComponent } from './divider/divider.component';
 // tslint:disable-next-line: max-line-length
-import { AutocompleteChiplistFieldComponent } from './autocomplete-chiplist-field/autocomplete-chiplist-field.component';
+import { AutocompleteChiplistFieldModule } from './autocomplete-chiplist-field/autocomplete-chiplist-field.component';
 import { OptionModule } from './option/option.component';
 import { RadioFieldComponent } from './radio-field/radio-field.component';
 import { UnitConversionFieldComponent } from './unit-conversion-field/unit-conversion-field.component';
 import { PortalModule } from '@angular/cdk/portal';
 import { FileUploadFieldModule } from './file-upload';
+import { MatOptionModule } from '@angular/material/core';
 
 // TODO: Should we import UI library?
 // Will the tree shaker shake the unused modules?
 const MAT_DESIGN_MODULES = [
   MatIconModule,
-  MatAutocompleteModule,
   MatDatepickerModule,
   MatInputModule,
   MatRadioModule,
-  MatSelectModule,
+  MatOptionModule,
   MatChipsModule,
   MatSliderModule,
   MatSlideToggleModule,
@@ -69,8 +69,6 @@ const MAT_DESIGN_MODULES = [
 const CRISPR_FIELDS = [
   InputFieldComponent,
   RadioFieldComponent,
-  AutocompleteFieldComponent,
-  AutocompleteChiplistFieldComponent,
   TextareaFieldComponent,
   DatepickerFieldComponent,
   SliderFieldComponent,
@@ -86,6 +84,8 @@ const CRISPR_FIELDS = [
     InfoModule,
     CheckboxFieldModule,
     SelectFieldModule,
+    AutocompleteFieldModule,
+    AutocompleteChiplistFieldModule,
     FileUploadFieldModule,
     HeadingModule,
     FieldContainerModule,
