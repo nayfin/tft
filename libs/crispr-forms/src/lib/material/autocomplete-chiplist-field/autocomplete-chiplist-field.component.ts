@@ -15,6 +15,7 @@ import { FieldContainerModule } from '../../field-container';
 import { AutocompleteFieldComponent } from '../autocomplete-field/autocomplete-field.component';
 import { InfoModule } from '../info/info.component';
 import { OptionModule } from '../option';
+import { MatIconModule } from '@angular/material/icon';
 
 const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
   chipsSelectable: true,
@@ -130,7 +131,8 @@ export class AutocompleteChiplistFieldComponent
     MatAutocompleteModule,
     MatInputModule,
     MatOptionModule,
-    MatChipsModule
+    MatChipsModule,
+    MatIconModule
   ],
   exports: [
     AutocompleteChiplistFieldComponent
