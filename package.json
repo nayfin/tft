@@ -29,7 +29,7 @@
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "sme:documentation": "nx build -c=sme && source-map-explorer dist/apps/documentation/*.js --html local-sme-results/`date +%Y-%m-%d_%s`.html"
+    "sme:documentation": "bash ./scripts/sme.sh"
   },
   "private": true,
   "dependencies": {
