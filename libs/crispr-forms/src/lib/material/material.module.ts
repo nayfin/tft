@@ -17,7 +17,7 @@ import { InputFieldModule } from './input-field/input-field.component';
 import { SelectFieldModule } from './select-field/select-field.component';
 import { AutocompleteFieldModule } from './autocomplete-field/autocomplete-field.component';
 import { CheckboxFieldModule } from './checkbox-field/checkbox-field.component';
-import { TextareaFieldComponent } from './textarea-field/textarea-field.component';
+import { TextareaFieldModule } from './textarea-field/textarea-field.component';
 import { ButtonModule } from './button/button.component';
 import { DatepickerFieldModule } from './datepicker-field/datepicker-field.component';
 
@@ -47,7 +47,6 @@ const MAT_DESIGN_MODULES = [
 
 const CRISPR_FIELDS = [
   RadioFieldComponent,
-  TextareaFieldComponent,
 ];
 @NgModule({
   imports: [
@@ -63,6 +62,7 @@ const CRISPR_FIELDS = [
     InputFieldModule,
     FileUploadFieldModule,
     SliderFieldModule,
+    TextareaFieldModule,
     UnitConversionFieldModule,
     ButtonModule,
     DividerModule,
