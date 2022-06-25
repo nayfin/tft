@@ -30,7 +30,7 @@ import { MatDateFnsModule } from '@angular/material-date-fns-adapter';
 
 import { HeadingModule } from './heading/heading.component';
 import { InfoModule } from './info/info.component';
-import { SliderFieldComponent } from './slider-field/slider-field.component';
+import { SliderFieldModule} from './slider-field/slider-field.component';
 import { DividerModule } from './divider/divider.component';
 // tslint:disable-next-line: max-line-length
 import { AutocompleteChiplistFieldModule } from './autocomplete-chiplist-field/autocomplete-chiplist-field.component';
@@ -47,7 +47,6 @@ const MAT_DESIGN_MODULES = [
   MatDatepickerModule,
   MatInputModule,
   MatRadioModule,
-  MatSliderModule,
   MatSlideToggleModule,
   MatButtonModule,
   MatButtonToggleModule,
@@ -64,7 +63,6 @@ const CRISPR_FIELDS = [
   RadioFieldComponent,
   TextareaFieldComponent,
   DatepickerFieldComponent,
-  SliderFieldComponent,
 ];
 @NgModule({
   imports: [
@@ -77,6 +75,7 @@ const CRISPR_FIELDS = [
     AutocompleteFieldModule,
     AutocompleteChiplistFieldModule,
     FileUploadFieldModule,
+    SliderFieldModule,
     UnitConversionFieldModule,
     ButtonModule,
     DividerModule,
