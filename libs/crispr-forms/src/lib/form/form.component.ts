@@ -1,8 +1,12 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit, NgModule } from '@angular/core';
+import { ReactiveFormsModule, UntypedFormGroup } from '@angular/forms';
 import { ControlGroupValue, FormConfig } from '../models';
 import { buildFormGroupFromConfig } from '../form.helpers';
 import { Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { CrisprFieldModule } from '../field.directive';
+import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { CrisprPipesModule } from '../pipes/crispr-pipes.module';
 @Component({
   selector: 'crispr-form',
   styleUrls: ['form.component.scss'],
@@ -35,4 +39,21 @@ export class CrisprFormComponent implements OnInit {
   triggerSubmit() {
     this.submitTrigger.nativeElement.click();
   }
+}
+@NgModule({
+  imports: [
+    CommonModule,
+    CrisprFieldModule,
+    ReactiveFormsModule,
+    FormValidationHandlerModule,
+    CrisprPipesModule
+  ],
+  exports: [
+    CrisprFormComponent
+  ],
+  declarations: [
+    CrisprFormComponent
+  ]
+})
+export class CrisprFormModule {
 }
