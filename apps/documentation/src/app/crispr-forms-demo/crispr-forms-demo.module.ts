@@ -3,21 +3,31 @@ import { CommonModule } from '@angular/common';
 // import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { CrisprFormsModule } from '@tft/crispr-forms';
-import { UiImportsModule } from '@tft/ui-imports';
 
 import { CrisprFormsDemoRoutingModule } from './crispr-forms-demo-routing.module';
 import { OverviewComponent } from './fields/overview/overview.component';
+import { MatCardModule } from '@angular/material/card';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { enUS } from 'date-fns/locale';
 
 @NgModule({
   imports: [
     CommonModule,
     CrisprFormsModule,
-    UiImportsModule,
+    MatCardModule,
     CrisprFormsDemoRoutingModule
     // AngularFireStorageModule,
+
   ],
   declarations: [
     OverviewComponent
   ],
+  providers: [
+    {
+        provide: MAT_DATE_LOCALE,
+        useValue: enUS,
+    },
+  ],
+
 })
 export class CrisprFormsDemoModule { }
