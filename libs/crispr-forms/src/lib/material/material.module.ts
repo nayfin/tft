@@ -6,7 +6,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -14,7 +13,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
 import { FieldContainerModule } from '../field-container/field-container.component';
-import { InputFieldComponent } from './input-field/input-field.component';
+import { InputFieldModule } from './input-field/input-field.component';
 import { SelectFieldModule } from './select-field/select-field.component';
 import { AutocompleteFieldModule } from './autocomplete-field/autocomplete-field.component';
 import { CheckboxFieldModule } from './checkbox-field/checkbox-field.component';
@@ -38,7 +37,6 @@ import { FileUploadFieldModule } from './file-upload';
 // Will the tree shaker shake the unused modules?
 const MAT_DESIGN_MODULES = [
   MatIconModule,
-  MatInputModule,
   MatRadioModule,
   MatButtonModule,
   MatButtonToggleModule,
@@ -48,7 +46,6 @@ const MAT_DESIGN_MODULES = [
 ];
 
 const CRISPR_FIELDS = [
-  InputFieldComponent,
   RadioFieldComponent,
   TextareaFieldComponent,
 ];
@@ -63,6 +60,7 @@ const CRISPR_FIELDS = [
     AutocompleteFieldModule,
     AutocompleteChiplistFieldModule,
     DatepickerFieldModule,
+    InputFieldModule,
     FileUploadFieldModule,
     SliderFieldModule,
     UnitConversionFieldModule,

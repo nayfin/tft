@@ -1,6 +1,12 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, NgModule } from '@angular/core';
 import { InputFieldConfig } from '../../models';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
+import { MatInputModule } from '@angular/material/input';
+import { CommonModule } from '@angular/common';
+import { FieldContainerModule } from '../../field-container';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { InfoModule } from '../info/info.component';
 
 const InputFieldMixin = crisprControlMixin<InputFieldConfig>(CrisprFieldComponent);
 @Component({
@@ -19,4 +25,22 @@ export class InputFieldComponent extends InputFieldMixin implements OnInit {
   ngOnInit() {
     super.ngOnInit();
   }
+}
+@NgModule({
+  imports: [
+    CommonModule,
+    InfoModule,
+    ReactiveFormsModule,
+    FieldContainerModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
+  exports: [
+    InputFieldComponent
+  ],
+  declarations: [
+    InputFieldComponent
+  ]
+})
+export class InputFieldModule {
 }
