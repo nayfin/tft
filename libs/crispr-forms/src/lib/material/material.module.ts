@@ -4,15 +4,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatSliderModule } from '@angular/material/slider';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
@@ -24,8 +20,7 @@ import { AutocompleteFieldModule } from './autocomplete-field/autocomplete-field
 import { CheckboxFieldModule } from './checkbox-field/checkbox-field.component';
 import { TextareaFieldComponent } from './textarea-field/textarea-field.component';
 import { ButtonModule } from './button/button.component';
-import { DatepickerFieldComponent } from './datepicker-field/datepicker-field.component';
-import { MatDateFnsModule } from '@angular/material-date-fns-adapter';
+import { DatepickerFieldModule } from './datepicker-field/datepicker-field.component';
 
 
 import { HeadingModule } from './heading/heading.component';
@@ -37,32 +32,25 @@ import { AutocompleteChiplistFieldModule } from './autocomplete-chiplist-field/a
 import { OptionModule } from './option/option.component';
 import { RadioFieldComponent } from './radio-field/radio-field.component';
 import { UnitConversionFieldModule } from './unit-conversion-field/unit-conversion-field.component';
-import { PortalModule } from '@angular/cdk/portal';
 import { FileUploadFieldModule } from './file-upload';
 
 // TODO: Should we import UI library?
 // Will the tree shaker shake the unused modules?
 const MAT_DESIGN_MODULES = [
   MatIconModule,
-  MatDatepickerModule,
   MatInputModule,
   MatRadioModule,
-  MatSlideToggleModule,
   MatButtonModule,
   MatButtonToggleModule,
   MatTooltipModule,
   MatFormFieldModule,
-  MatDateFnsModule,
-  MatDividerModule,
   MatProgressBarModule,
-  PortalModule
 ];
 
 const CRISPR_FIELDS = [
   InputFieldComponent,
   RadioFieldComponent,
   TextareaFieldComponent,
-  DatepickerFieldComponent,
 ];
 @NgModule({
   imports: [
@@ -74,6 +62,7 @@ const CRISPR_FIELDS = [
     SelectFieldModule,
     AutocompleteFieldModule,
     AutocompleteChiplistFieldModule,
+    DatepickerFieldModule,
     FileUploadFieldModule,
     SliderFieldModule,
     UnitConversionFieldModule,
