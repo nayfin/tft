@@ -1,23 +1,23 @@
-<div fxLayout="column" fxFill>
-  <tft-header
-    role="header"
-    (menuClicked)="sidenav.toggle()"
-    [subtitle]="'Library'">
-  </tft-header>
 
-  <mat-sidenav-container fxFlex aria-live="main content">
+<tft-header
+  role="header"
+  (menuClicked)="sidenav.toggle()"
+  [subtitle]="'Library'">
+</tft-header>
 
-    <mat-sidenav #sidenav>
-      <tft-sidenav-list
-        [sections]="linksToExamples"
-        (itemClicked)="onLinkSelected($event)">
-      </tft-sidenav-list>
-    </mat-sidenav>
+<mat-sidenav-container aria-live="main content">
 
-    <mat-sidenav-content class="main-container">
+  <mat-sidenav #sidenav>
+    <tft-sidenav-list
+      [sections]="linksToExamples"
+      (itemClicked)="onLinkSelected($event)">
+    </tft-sidenav-list>
+  </mat-sidenav>
 
-      <router-outlet></router-outlet>
+  <mat-sidenav-content class="main-container">
 
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
+    <router-outlet></router-outlet>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
