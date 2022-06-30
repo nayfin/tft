@@ -1,12 +1,11 @@
 import { Component, Inject, forwardRef, OnInit, Input } from '@angular/core';
-import { Validators, UntypedFormControl } from '@angular/forms';
+import { Validators, FormControl } from '@angular/forms';
 import { BaseWidget, NgAisInstantSearch } from 'angular-instantsearch';
 import { connectRefinementList } from 'instantsearch.js/es/connectors';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { RefinementListItem, RefinementListState } from '../models';
-// import { MatAutocompleteSelectedEvent } from '@angular/material';
 
 @Component({
   selector: 'mis-filter-chiplist',
@@ -48,7 +47,7 @@ export class FilterChiplistComponent extends BaseWidget implements OnInit {
   @Input() searchQuery = '';
   chips = [];
 
-  autocompleteControl = new UntypedFormControl(null, ...this.validators);
+  autocompleteControl = new FormControl(null, ...this.validators);
   chips$ = new BehaviorSubject<RefinementListItem[]>([])
   remainingItems$: Observable<any[]>;
 

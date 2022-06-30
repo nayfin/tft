@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CustomInputComponent, CustomInputConfig } from './custom-input/custom-input.component';
 import { ControlType, FormConfig } from '@tft/crispr-forms';
-import { UntypedFormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { CustomSelectComponent, CustomSelectConfig } from './custom-select/custom-select.component';
 
 
@@ -37,7 +37,7 @@ export class CustomComponentComponent {
     ]
   }
 
-  handleSubmit(form: UntypedFormGroup) {
+  handleSubmit(form: FormGroup) {
     console.log(form.value);
   }
 

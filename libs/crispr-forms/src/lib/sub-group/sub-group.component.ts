@@ -1,5 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { SubGroupConfig } from '../models';
 import { crisprControlMixin, CrisprFieldComponent } from '../abstracts';
 
@@ -14,7 +14,7 @@ const FormGroupMixin = crisprControlMixin<SubGroupConfig>(CrisprFieldComponent);
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SubGroupComponent extends FormGroupMixin implements OnInit {
-  group: UntypedFormGroup;
+  group: FormGroup;
 
   ngOnInit() {
     super.ngOnInit();

@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatListModule } from '@angular/material/list';
+import { MatButtonModule } from '@angular/material/button';
 
 const CORE_COMPONENTS = [
   HeaderComponent,
@@ -23,7 +24,8 @@ const CORE_COMPONENTS = [
     MatIconModule,
     MatExpansionModule,
     MatTooltipModule,
-    MatListModule
+    MatListModule,
+    MatButtonModule
   ],
   declarations: CORE_COMPONENTS,
   exports: CORE_COMPONENTS,

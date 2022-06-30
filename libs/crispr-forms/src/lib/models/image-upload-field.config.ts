@@ -1,10 +1,10 @@
-import { UntypedFormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { CrisprControlConfig, ControlType, ButtonType, MatFieldProperties, EnabledUploadButtonConfig } from '../models';
 
 export type ImageUploadFieldConfig = CrisprControlConfig & MatFieldProperties & {
   controlType: ControlType.IMAGE_UPLOAD;
   label: string;
-  filesChanged?: (parentGroup: UntypedFormGroup, file: File) => void;
+  filesChanged?: (parentGroup: FormGroup, file: File) => void;
   /**
    * The file types to accept. The onus is on the consuming developer to limit these to file types compatible with usage.
    * See https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/accept

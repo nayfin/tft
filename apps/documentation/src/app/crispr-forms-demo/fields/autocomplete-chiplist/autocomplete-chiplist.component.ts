@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ControlType, FormConfig, SelectOption } from '@tft/crispr-forms';
 import { EndpointsService, ENDPOINTS } from '../../endpoints.service';
-import { UntypedFormGroup, Validators } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { minArrayLength } from '@tft/form-validation-handler';
 
 
@@ -116,7 +116,7 @@ export class AutocompleteChiplistComponent {
     private endpointsService: EndpointsService
   ) { }
 
-  handleSubmit(form: UntypedFormGroup) {
+  handleSubmit(form: FormGroup) {
     console.log({form});
   }
 }

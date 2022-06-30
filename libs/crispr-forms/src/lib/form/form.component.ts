@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit, NgModule } from '@angular/core';
-import { ReactiveFormsModule, UntypedFormGroup } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { ControlGroupValue, FormConfig } from '../models';
 import { buildFormGroupFromConfig } from '../form.helpers';
 import { Observable } from 'rxjs';
@@ -16,10 +16,11 @@ import { CrisprPipesModule } from '../pipes/crispr-pipes.module';
 export class CrisprFormComponent implements OnInit {
   // if no form has been passed in by consuming component, we create an empty group to build out
   @Input() config: FormConfig;
-  @Input() form: UntypedFormGroup = new UntypedFormGroup({});
+  @Input() form: FormGroup = new FormGroup({});
   @Input() value: ControlGroupValue = null;
 
-  @Output() submitted = new EventEmitter<UntypedFormGroup>();
+
+  @Output() submitted = new EventEmitter<FormGroup>();
   // proxy value and status change events through to consuming component
   @Output() valueChanges: Observable<any> = this.form.valueChanges;
   @Output() statusChanges: Observable<string> = this.form.statusChanges;

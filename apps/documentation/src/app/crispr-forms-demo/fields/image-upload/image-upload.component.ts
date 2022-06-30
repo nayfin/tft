@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UntypedFormGroup, Validators } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { allowedFileExtValidator, ControlType, FormConfig, maxFileSizeValidator } from '@tft/crispr-forms';
 import { delay, of, startWith } from 'rxjs';
 
@@ -91,7 +91,7 @@ export class ImageUploadComponent {
 
   constructor() { }
 
-  handleSubmit(form: UntypedFormGroup) {
+  handleSubmit(form: FormGroup) {
     console.log({fieldValue: form.value.fileUploadExample})
   }
 }

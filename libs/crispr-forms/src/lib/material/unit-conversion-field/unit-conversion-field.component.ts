@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, NgModule } from '@angular/core';
-import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { combineLatest, Observable, Subscription } from 'rxjs';
-import { shareReplay, startWith, tap } from 'rxjs/operators';
+import { startWith } from 'rxjs/operators';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { FieldContainerModule } from '../../field-container';
 import { observablifyOptions } from '../../form.helpers';
@@ -27,8 +27,8 @@ const UnitConversionFieldMixin = crisprControlMixin<UnitConversionFieldConfig>(C
 export class UnitConversionFieldComponent extends UnitConversionFieldMixin implements OnInit, OnDestroy {
   defaultConfig = defaultConfig;
 
-  displayValueControl = new UntypedFormControl();
-  unitSelectControl = new UntypedFormControl();
+  displayValueControl = new FormControl();
+  unitSelectControl = new FormControl();
   unitOptions$: Observable<SelectOption[]>;
 
   transformationSubscription: Subscription;

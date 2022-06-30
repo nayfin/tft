@@ -1,4 +1,4 @@
-import { UntypedFormGroup, ValidatorFn } from '@angular/forms';
+import { FormGroup, ValidatorFn } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
@@ -82,10 +82,17 @@ export interface CrisprControlConfig<M = null> extends CrisprFieldConfig {
    * @deprecated please us computeValue instead
    */
   computeFieldConfig?: ComputeFieldConfig;
-  computeValue?: (group: UntypedFormGroup) => Observable<unknown>;
-  disabledCallback?: (group: UntypedFormGroup, config?: any) => Observable<boolean>;
+  computeValue?: (group: FormGroup) => Observable<unknown>;
+  disabledCallback?: (group: FormGroup, config?: any) => Observable<boolean>;
+  /**
+ * @deprecated this configuration isn't needed as all situations can be handled using `disabledCallback`
+ */
   disabledCallbackConfig?: CheckControlConfig | CheckControlsConfig | any; // any is required for user defined configs
-  hideDisabled?: boolean; // defaults to false
+  /**
+   * Hide the control when disabled
+   * @default false
+   */
+  hideDisabled?: boolean;
   heading?: HeadingConfig;
   hint?: string;
 }
@@ -122,12 +129,12 @@ export interface FormConfig<C = AnyFieldConfig> extends AbstractGroupConfig<C> {
   autoComplete?: string;
   /** @deprecated use autoComplete */
   autocomplete?: string;
-  validators?: ValidatorFn[]
+  validators?: ValidatorFn[];
 }
 /**
  * Configuration for SubGroup components
  */
-export interface SubGroupConfig extends CrisprControlConfig, AbstractGroupConfig {
+export interface SubGroupConfig extends CrisprControlConfig, AbstractGroupConfig<any> {
   controlType: ControlType.SUB_GROUP;
 }
 

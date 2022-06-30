@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ControlType, FormConfig, filterOptionsByLabel } from '@tft/crispr-forms';
 import { of } from 'rxjs';
-import { UntypedFormGroup } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -83,7 +83,7 @@ export class AppearanceComponent implements OnInit {
   ngOnInit() {
   }
 
-  handleSubmit(form: UntypedFormGroup) {
+  handleSubmit(form: FormGroup) {
     console.log({value: form.value});
   }
 }

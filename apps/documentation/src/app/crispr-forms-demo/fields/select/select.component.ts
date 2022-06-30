@@ -3,7 +3,7 @@ import { FormConfig, SelectOption, ControlType } from '@tft/crispr-forms';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { EndpointsService } from '../../endpoints.service';
-import { UntypedFormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'doc-select',
@@ -160,7 +160,7 @@ export class SelectComponent implements OnInit {
   ngOnInit() {
   }
 
-  handleSubmit(form: UntypedFormGroup) {
+  handleSubmit(form: FormGroup) {
     console.log({form})
   }
 

@@ -1,10 +1,10 @@
-import { Component, Inject, forwardRef, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { Validators, UntypedFormControl, FormBuilder } from '@angular/forms';
+import { Component, Inject, forwardRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Validators, FormControl } from '@angular/forms';
 import { BaseWidget, NgAisInstantSearch } from 'angular-instantsearch';
 import { connectAutocomplete } from 'instantsearch.js/es/connectors';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { Observable, Subject } from 'rxjs';
-import { map, debounceTime, startWith } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, debounceTime } from 'rxjs/operators';
 import { AlgoliaSearchHelper } from 'algoliasearch-helper';
 
 @Component({
@@ -62,7 +62,7 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
   // Resets state of instantSearch's autocomplete mechanisms on submission of selected item
   @Input() clearOnSubmit = false;
   @Input() validators: Validators[] = [];
-  @Input() autocompleteControl = new UntypedFormControl(null, ...this.validators);
+  @Input() autocompleteControl = new FormControl(null, ...this.validators);
 
 
   @Output() selectHit = new EventEmitter();

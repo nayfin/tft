@@ -147,14 +147,14 @@ With momentjs shifting into maintenance mode, it no longer makes sense to use th
 ```ts
   datepickerFilter?: (date: Moment) => boolean;
   cellClassFunction?: MatCalendarCellClassFunction<Moment>;
-  dateClass?: (parentGroup: UntypedFormGroup) => Observable<MatCalendarCellClassFunction<Moment>>;
+  dateClass?: (parentGroup: FormGroup) => Observable<MatCalendarCellClassFunction<Moment>>;
 ```
 
 #### v14
 ```ts
   datepickerFilter?: (date: Date) => boolean;
   cellClassFunction?: MatCalendarCellClassFunction<Date>;
-  dateClass?: (parentGroup: UntypedFormGroup) => Observable<MatCalendarCellClassFunction<Date>>;
+  dateClass?: (parentGroup: FormGroup) => Observable<MatCalendarCellClassFunction<Date>>;
 ```
 
 You'll also have to set up a date locale in your root module. See [installation](#installation) for details on how to set up the new adaptor.
