@@ -1,4 +1,4 @@
-import { CrisprFieldConfig, ControlType, FieldDescriptors, MatFieldProperties, Info } from './crispr-field.config';
+import { CrisprFieldConfig, ControlType, MatFieldProperties, Info } from './crispr-field.config';
 import { ThemePalette } from '@angular/material/core';
 import { FormGroup } from '@angular/forms';
 

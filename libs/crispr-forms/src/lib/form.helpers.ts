@@ -22,7 +22,7 @@ import {
 } from 'rxjs';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
 import { valueIn } from './form.operators';
-import { map, shareReplay, startWith } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 
 /**
  * DYNAMIC FORM UTILS: a collection of pure/mostly pure functions that are useful both internally and for

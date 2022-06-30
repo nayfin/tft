@@ -84,8 +84,15 @@ export interface CrisprControlConfig<M = null> extends CrisprFieldConfig {
   computeFieldConfig?: ComputeFieldConfig;
   computeValue?: (group: FormGroup) => Observable<unknown>;
   disabledCallback?: (group: FormGroup, config?: any) => Observable<boolean>;
+  /**
+ * @deprecated this configuration isn't needed as all situations can be handled using `disabledCallback`
+ */
   disabledCallbackConfig?: CheckControlConfig | CheckControlsConfig | any; // any is required for user defined configs
-  hideDisabled?: boolean; // defaults to false
+  /**
+   * Hide the control when disabled
+   * @default false
+   */
+  hideDisabled?: boolean;
   heading?: HeadingConfig;
   hint?: string;
 }
@@ -122,12 +129,12 @@ export interface FormConfig<C = AnyFieldConfig> extends AbstractGroupConfig<C> {
   autoComplete?: string;
   /** @deprecated use autoComplete */
   autocomplete?: string;
-  validators?: ValidatorFn[]
+  validators?: ValidatorFn[];
 }
 /**
  * Configuration for SubGroup components
  */
-export interface SubGroupConfig extends CrisprControlConfig, AbstractGroupConfig {
+export interface SubGroupConfig extends CrisprControlConfig, AbstractGroupConfig<any> {
   controlType: ControlType.SUB_GROUP;
 }
 

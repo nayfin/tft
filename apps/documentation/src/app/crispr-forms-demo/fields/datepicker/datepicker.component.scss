@@ -1,6 +1,7 @@
-::ng-deep.highlight-day {
-  background-color: rgba(0, 0, 255, 0.719);
-  // This is needed
+// Need strong css specificity, to override .mat-calendar-body-cell { background: none:}
+::ng-deep.highlight-day.mat-calendar-body-cell {
+  background-color: rgba(0, 0, 255, 0.719) ;
+  // Make the font white to contrast the blue background
   .mat-calendar-body-cell-content {
     color: white;
   }

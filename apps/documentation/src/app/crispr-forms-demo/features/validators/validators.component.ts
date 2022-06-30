@@ -47,7 +47,6 @@ export class ValidatorsComponent {
               return invalid;
             })
           )
-
         }
       },
       {

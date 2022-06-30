@@ -1,11 +1,19 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, AfterViewInit, NgModule } from '@angular/core';
  import { Observable } from 'rxjs';
 
 import { SelectFieldConfig, SelectOption } from '../../models';
 import { observablifyOptions } from '../../form.helpers';
 import { CrisprFieldComponent, crisprControlMixin } from '../../abstracts';
-import { MatSelect } from '@angular/material/select';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { ThemePalette } from '@angular/material/core';
+import { CommonModule } from '@angular/common';
+import { InfoModule } from '../info/info.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CrisprFieldModule } from '../../field.directive';
+import { FieldContainerModule } from '../../field-container';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { OptionModule } from '../option';
 
 const SelectFieldMixin = crisprControlMixin<SelectFieldConfig>(CrisprFieldComponent);
 
@@ -50,4 +58,26 @@ export class SelectFieldComponent extends SelectFieldMixin implements OnInit, Af
     }
     this.allSelected = !this.allSelected;
   }
+}
+@NgModule({
+  imports: [
+    CommonModule,
+    InfoModule,
+    OptionModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    CrisprFieldModule,
+    FieldContainerModule,
+    MatFormFieldModule,
+  ],
+  exports: [
+    SelectFieldComponent
+  ],
+  declarations: [
+    SelectFieldComponent
+  ]
+})
+
+export class SelectFieldModule {
 }

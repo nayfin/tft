@@ -1,10 +1,15 @@
-import { Component, OnInit, ChangeDetectionStrategy, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, AfterContentInit, NgModule } from '@angular/core';
 import { DatepickerFieldConfig } from '../../models';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
-import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
-import { Moment } from 'moment';
+import { MatCalendarCellClassFunction, MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDateFnsModule } from '@angular/material-date-fns-adapter';
 import { Observable, of } from 'rxjs';
-import { ComponentPortal, Portal } from '@angular/cdk/portal';
+import { ComponentPortal, Portal, PortalModule } from '@angular/cdk/portal';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FieldContainerModule } from '../../field-container';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 const defaultConfig: Partial<DatepickerFieldConfig> = {
   startView: 'month',
@@ -21,8 +26,8 @@ export class DatepickerFieldComponent extends DatepickerFieldMixin implements On
 
   defaultConfig = defaultConfig;
 
-  dateClass: MatCalendarCellClassFunction<Moment>;
-  dateClass$: Observable<MatCalendarCellClassFunction<Moment>>;
+  dateClass: MatCalendarCellClassFunction<Date>;
+  dateClass$: Observable<MatCalendarCellClassFunction<Date>>;
   startAt$: Observable<Date>;
 
   /** A portal containing the footer component type for this calendar. */
@@ -51,4 +56,24 @@ export class DatepickerFieldComponent extends DatepickerFieldMixin implements On
   //     this.config.selectedChange(event, picker);
   //   }
   // }
+}
+@NgModule({
+  imports: [
+    CommonModule,
+    FieldContainerModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatDateFnsModule,
+    PortalModule
+  ],
+  exports: [
+    DatepickerFieldComponent
+  ],
+  declarations: [
+    DatepickerFieldComponent
+  ]
+})
+export class DatepickerFieldModule {
 }

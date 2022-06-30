@@ -1,12 +1,21 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef, NgModule } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
-import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatAutocompleteModule, MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { ENTER } from '@angular/cdk/keycodes';
 
 import { AutocompleteChiplistFieldConfig, DEFAULT_EMPTY_OPTIONS_MESSAGE, SelectOption } from '../../models';
 import { AbstractAutocompleteComponent } from '../../abstracts';
-import { MatChipInputEvent } from '@angular/material/chips';
+import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatOptionModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { FieldContainerModule } from '../../field-container';
+import { AutocompleteFieldComponent } from '../autocomplete-field/autocomplete-field.component';
+import { InfoModule } from '../info/info.component';
+import { OptionModule } from '../option';
+import { MatIconModule } from '@angular/material/icon';
 
 const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
   chipsSelectable: true,
@@ -111,4 +120,26 @@ export class AutocompleteChiplistFieldComponent
     const remainingChips: SelectOption[] = this.chips$.value.filter(chip => chip !== removedChip);
     this.chips$.next(remainingChips);
   }
+}
+@NgModule({
+  imports: [
+    CommonModule,
+    InfoModule,
+    OptionModule,
+    ReactiveFormsModule,
+    FieldContainerModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatOptionModule,
+    MatChipsModule,
+    MatIconModule
+  ],
+  exports: [
+    AutocompleteChiplistFieldComponent
+  ],
+  declarations: [
+    AutocompleteChiplistFieldComponent
+  ]
+})
+export class AutocompleteChiplistFieldModule {
 }

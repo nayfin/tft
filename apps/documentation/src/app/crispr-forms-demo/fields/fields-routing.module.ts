@@ -18,7 +18,7 @@ import {
 } from '.';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'select'},
+  { path: '', redirectTo: 'select', pathMatch: 'full'},
   { path: 'select', component: SelectComponent},
   { path: 'autocomplete', component: AutocompleteComponent},
   { path: 'autocomplete-chiplist', component: AutocompleteChiplistComponent},

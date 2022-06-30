@@ -1,10 +1,14 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, NgModule } from '@angular/core';
  import { Observable } from 'rxjs';
 
 import { SelectOption } from '../../models';
 import { observablifyOptions } from '../../form.helpers';
 import { CrisprFieldComponent, crisprControlMixin } from '../../abstracts';
 import { RadioFieldConfig } from '../../models/radio-field.config';
+import { MatRadioModule } from '@angular/material/radio';
+import { FieldContainerModule } from '../../field-container';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 const RadioFieldMixin = crisprControlMixin<RadioFieldConfig>(CrisprFieldComponent);
 
@@ -23,4 +27,20 @@ export class RadioFieldComponent extends RadioFieldMixin implements OnInit {
     // this functions accounts for all possibilities and converts to observable that resolves array
     this.options$ = observablifyOptions(this.config.options, this.group);
   }
+}
+@NgModule({
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FieldContainerModule,
+    MatRadioModule,
+  ],
+  exports: [
+    RadioFieldComponent
+  ],
+  declarations: [
+    RadioFieldComponent
+  ]
+})
+export class RadioFieldModule {
 }

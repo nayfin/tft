@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { SubGroupConfig } from '../models';
 import { crisprControlMixin, CrisprFieldComponent } from '../abstracts';

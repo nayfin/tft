@@ -1,6 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, NgModule } from '@angular/core';
 import { CheckboxFieldConfig } from '../../models';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
+import { CommonModule } from '@angular/common';
+import { InfoModule } from '../info/info.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CrisprFieldModule } from '../../field.directive';
+import { FieldContainerModule } from '../../field-container';
 
 const defaultConfig: Partial<CheckboxFieldConfig> = {
   labelPosition: 'after',
@@ -20,4 +26,23 @@ export class CheckboxFieldComponent extends CheckboxFieldMixin implements OnInit
   ngOnInit() {
     super.ngOnInit();
   }
+}
+@NgModule({
+  imports: [
+    CommonModule,
+    InfoModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    CrisprFieldModule,
+    FieldContainerModule
+  ],
+  exports: [
+    CheckboxFieldComponent
+  ],
+  declarations: [
+    CheckboxFieldComponent
+  ]
+})
+
+export class CheckboxFieldModule {
 }

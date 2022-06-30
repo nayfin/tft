@@ -7,9 +7,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UiImportsModule } from '@tft/ui-imports';
 import { CoreModule } from '@tft/core';
 import { HttpClientModule } from '@angular/common/http';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 @NgModule({
   declarations: [
@@ -18,13 +20,14 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    UiImportsModule,
+    MatSidenavModule,
     CoreModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MatSnackBarModule,
     // AngularFireModule.initializeApp(environment.firebase)
   ],
   bootstrap: [AppComponent],
-  exports: []
+  exports: [],
 })
 export class AppModule { }

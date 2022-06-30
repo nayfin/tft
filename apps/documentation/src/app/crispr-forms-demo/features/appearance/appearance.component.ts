@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ControlType, FormConfig, filterOptionsByLabel } from '@tft/crispr-forms';
 import { of } from 'rxjs';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { map } from 'rxjs/operators';
 
 @Component({

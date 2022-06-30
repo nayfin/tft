@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'mat-instantsearch',
+/* eslint-disable */
+export default {
+  displayName: 'interact',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -8,7 +9,7 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/libs/mat-instantsearch',
+  coverageDirectory: '../../coverage/libs/interact',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
     'jest-preset-angular/build/AngularSnapshotSerializer.js',

@@ -7,7 +7,7 @@ import { MaterialModule } from './material/material.module'
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
 // components
-import { CrisprFormComponent } from './form/form.component';
+import { CrisprFormModule } from './form/form.component';
 import { FormGroupListModule } from './form-group-list';
 // directives
 import { CrisprFieldModule } from './field.directive';
@@ -26,12 +26,10 @@ import { FieldContainerModule } from './field-container';
     SubGroupModule,
     MaterialModule,
     CrisprPipesModule,
-  ],
-  declarations: [
-    CrisprFormComponent,
+    CrisprFormModule
   ],
   exports: [
-    CrisprFormComponent,
+    CrisprFormModule,
     FieldContainerModule,
     MaterialModule
   ]

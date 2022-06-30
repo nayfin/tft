@@ -1,8 +1,7 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { TftDragEvent, TftDropEvent } from '@tft/interact';
+import { Component, OnInit } from '@angular/core';
+import { TftDropEvent } from '@tft/interact';
 import { initialGameState } from './consts';
 import { Team } from '../../models/shuffleboard.model'
-import { TargetComponent } from '../../components/target/target.component';
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 // import { RestrictOptions } from '@interactjs/modifiers/restrict/pointer';

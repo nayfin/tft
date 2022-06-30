@@ -6,7 +6,6 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { RefinementListItem, RefinementListState } from '../models';
-// import { MatAutocompleteSelectedEvent } from '@angular/material';
 
 @Component({
   selector: 'mis-filter-chiplist',
