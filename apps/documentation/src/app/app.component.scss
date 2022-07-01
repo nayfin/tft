@@ -1,7 +1,12 @@
-mat-sidenav-container.mat-sidenav-container {
-  overflow: auto;
-}
+:host {
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  mat-sidenav-container.mat-sidenav-container {
+    overflow: auto;
+  }
 
-.main-container {
-  width: 100vw;
+  .main-container {
+    width: 100vw;
+  }
 }
