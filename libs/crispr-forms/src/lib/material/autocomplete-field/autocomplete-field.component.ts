@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectionStrategy, ElementRef, OnDestroy, NgModule } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy, ElementRef, OnDestroy } from '@angular/core';
 import { MatAutocompleteTrigger, MatAutocompleteSelectedEvent, MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { SelectOption, AutocompleteFieldConfig, DEFAULT_EMPTY_OPTIONS_MESSAGE } from '../../models';
@@ -6,12 +6,11 @@ import { AbstractAutocompleteComponent } from '../../abstracts';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CrisprFieldModule } from '../../field.directive';
-import { FieldContainerModule } from '../../field-container';
-import { InfoModule } from '../info/info.component';
+import { FieldContainerComponent } from '../../field-container';
+import { InfoComponent } from '../info/info.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
-import { OptionModule } from '../option';
+import { OptionComponent } from '../option';
 
 const defaultConfig: Partial<AutocompleteFieldConfig> = {
   autoActiveFirstOption: true,
@@ -23,7 +22,18 @@ const defaultConfig: Partial<AutocompleteFieldConfig> = {
   selector: 'crispr-autocomplete-field',
   templateUrl: './autocomplete-field.component.html',
   styleUrls: ['./autocomplete-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    InfoComponent,
+    OptionComponent,
+    ReactiveFormsModule,
+    FieldContainerComponent,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatOptionModule,
+  ],
 })
 export class AutocompleteFieldComponent
   extends AbstractAutocompleteComponent<AutocompleteFieldConfig>
@@ -78,24 +88,4 @@ export class AutocompleteFieldComponent
     this.control.setValue(event.option.value)
     this.autoInputRef.nativeElement.blur();
   }
-}
-@NgModule({
-  imports: [
-    CommonModule,
-    InfoModule,
-    OptionModule,
-    ReactiveFormsModule,
-    FieldContainerModule,
-    MatAutocompleteModule,
-    MatInputModule,
-    MatOptionModule,
-  ],
-  exports: [
-    AutocompleteFieldComponent
-  ],
-  declarations: [
-    AutocompleteFieldComponent
-  ]
-})
-export class AutocompleteFieldModule {
 }

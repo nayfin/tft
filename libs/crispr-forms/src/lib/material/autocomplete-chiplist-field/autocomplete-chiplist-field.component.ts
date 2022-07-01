@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef, NgModule } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
@@ -11,10 +11,9 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
-import { FieldContainerModule } from '../../field-container';
-import { AutocompleteFieldComponent } from '../autocomplete-field/autocomplete-field.component';
-import { InfoModule } from '../info/info.component';
-import { OptionModule } from '../option';
+import { FieldContainerComponent } from '../../field-container';
+import { InfoComponent } from '../info/info.component';
+import { OptionComponent } from '../option';
 import { MatIconModule } from '@angular/material/icon';
 
 const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
@@ -34,7 +33,20 @@ const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
   selector: 'crispr-autocomplete-chiplist-field',
   templateUrl: './autocomplete-chiplist-field.component.html',
   styleUrls: ['./autocomplete-chiplist-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    InfoComponent,
+    OptionComponent,
+    ReactiveFormsModule,
+    FieldContainerComponent,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatOptionModule,
+    MatChipsModule,
+    MatIconModule
+  ],
 })
 export class AutocompleteChiplistFieldComponent
   extends AbstractAutocompleteComponent<AutocompleteChiplistFieldConfig> implements OnInit {
@@ -121,25 +133,4 @@ export class AutocompleteChiplistFieldComponent
     this.chips$.next(remainingChips);
   }
 }
-@NgModule({
-  imports: [
-    CommonModule,
-    InfoModule,
-    OptionModule,
-    ReactiveFormsModule,
-    FieldContainerModule,
-    MatAutocompleteModule,
-    MatInputModule,
-    MatOptionModule,
-    MatChipsModule,
-    MatIconModule
-  ],
-  exports: [
-    AutocompleteChiplistFieldComponent
-  ],
-  declarations: [
-    AutocompleteChiplistFieldComponent
-  ]
-})
-export class AutocompleteChiplistFieldModule {
-}
+

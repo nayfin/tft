@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, AfterContentInit, NgModule } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, AfterContentInit } from '@angular/core';
 import { DatepickerFieldConfig } from '../../models';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { MatCalendarCellClassFunction, MatDatepickerModule } from '@angular/material/datepicker';
@@ -6,7 +6,7 @@ import { MatDateFnsModule } from '@angular/material-date-fns-adapter';
 import { Observable, of } from 'rxjs';
 import { ComponentPortal, Portal, PortalModule } from '@angular/cdk/portal';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FieldContainerModule } from '../../field-container';
+import { FieldContainerComponent } from '../../field-container';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -20,7 +20,18 @@ const DatepickerFieldMixin = crisprControlMixin<DatepickerFieldConfig>(CrisprFie
   selector: 'crispr-datepicker-field',
   templateUrl: './datepicker-field.component.html',
   styleUrls: ['./datepicker-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FieldContainerComponent,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatDateFnsModule,
+    PortalModule
+  ],
 })
 export class DatepickerFieldComponent extends DatepickerFieldMixin implements OnInit, AfterContentInit {
 
@@ -56,24 +67,4 @@ export class DatepickerFieldComponent extends DatepickerFieldMixin implements On
   //     this.config.selectedChange(event, picker);
   //   }
   // }
-}
-@NgModule({
-  imports: [
-    CommonModule,
-    FieldContainerModule,
-    MatDatepickerModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatDateFnsModule,
-    PortalModule
-  ],
-  exports: [
-    DatepickerFieldComponent
-  ],
-  declarations: [
-    DatepickerFieldComponent
-  ]
-})
-export class DatepickerFieldModule {
 }

@@ -1,4 +1,4 @@
-import { Component, NgModule, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DividerConfig } from '../../models';
 import { CrisprFieldComponent } from '../../abstracts';
 import { MatDividerModule } from '@angular/material/divider';
@@ -7,7 +7,12 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'crispr-divider',
   templateUrl: './divider.component.html',
-  styleUrls: ['./divider.component.scss']
+  styleUrls: ['./divider.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatDividerModule
+  ],
 })
 export class DividerComponent extends CrisprFieldComponent<DividerConfig> implements OnInit {
   // TODO: pull in type after configs are better organized
@@ -16,18 +21,4 @@ export class DividerComponent extends CrisprFieldComponent<DividerConfig> implem
     super.ngOnInit();
   }
 
-}
-@NgModule({
-  imports: [
-    CommonModule,
-    MatDividerModule
-  ],
-  exports: [
-    DividerComponent
-  ],
-  declarations: [
-    DividerComponent
-  ]
-})
-export class DividerModule {
 }

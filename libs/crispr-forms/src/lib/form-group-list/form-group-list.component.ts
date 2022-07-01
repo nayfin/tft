@@ -4,6 +4,14 @@ import { FormGroup, FormArray } from '@angular/forms';
 import type { FormGroupListConfig } from '../models';
 import { createControlForType } from '../form.helpers';
 import { CrisprFieldComponent, crisprControlMixin } from '../abstracts';
+import { MatButtonModule } from '@angular/material/button';
+import { FieldContainerComponent } from '../field-container';
+import { MatIconModule } from '@angular/material/icon';
+import { CrisprFieldDirective } from '../field.directive';
+import { CrisprPipesModule } from '../pipes/crispr-pipes.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
 const defaultConfig: Partial<FormGroupListConfig> = {
   addButtonLabel: 'ADD ITEM',
@@ -15,7 +23,18 @@ const FormGroupListMixin = crisprControlMixin<FormGroupListConfig>(CrisprFieldCo
   selector: 'crispr-form-group-list',
   templateUrl: './form-group-list.component.html',
   styleUrls: ['./form-group-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    FieldContainerComponent,
+    ReactiveFormsModule,
+    CrisprFieldDirective,
+    CrisprPipesModule,
+    FormValidationHandlerModule
+  ],
 })
 export class FormGroupListComponent extends FormGroupListMixin implements OnInit {
 

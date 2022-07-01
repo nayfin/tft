@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, NgModule } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
@@ -7,12 +7,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
-import { FieldContainerModule } from '../../field-container';
+import { FieldContainerComponent } from '../../field-container';
 import { observablifyOptions } from '../../form.helpers';
 import { SelectOption } from '../../models';
 import { UnitConversionFieldConfig } from '../../models/unit-conversion-field.config';
-import { InfoModule } from '../info/info.component';
-import { OptionModule } from '../option';
+import { InfoComponent } from '../info/info.component';
+import { OptionComponent } from '../option';
 
 const defaultConfig: Partial<UnitConversionFieldConfig> = {};
 const UnitConversionFieldMixin = crisprControlMixin<UnitConversionFieldConfig>(CrisprFieldComponent);
@@ -22,7 +22,18 @@ const UnitConversionFieldMixin = crisprControlMixin<UnitConversionFieldConfig>(C
   selector: 'crispr-unit-conversion-field',
   templateUrl: './unit-conversion-field.component.html',
   styleUrls: ['./unit-conversion-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    InfoComponent,
+    OptionComponent,
+    ReactiveFormsModule,
+    FieldContainerComponent,
+    MatInputModule,
+    MatSelectModule,
+    MatOptionModule,
+  ],
 })
 export class UnitConversionFieldComponent extends UnitConversionFieldMixin implements OnInit, OnDestroy {
   defaultConfig = defaultConfig;
@@ -73,24 +84,4 @@ export class UnitConversionFieldComponent extends UnitConversionFieldMixin imple
     const initialUnitValue = this.config.showUnitSelect ? this.config?.initialDisplayUnit : null;
     this.setInitialDisplayValue(value, initialUnitValue);
   }
-}
-@NgModule({
-  imports: [
-    CommonModule,
-    InfoModule,
-    OptionModule,
-    ReactiveFormsModule,
-    FieldContainerModule,
-    MatInputModule,
-    MatSelectModule,
-    MatOptionModule,
-  ],
-  exports: [
-    UnitConversionFieldComponent
-  ],
-  declarations: [
-    UnitConversionFieldComponent
-  ]
-})
-export class UnitConversionFieldModule {
 }

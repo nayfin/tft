@@ -13,5 +13,4 @@ export * from './radio-field/radio-field.component';
 export * from './unit-conversion-field/unit-conversion-field.component';
 export * from './image-upload-field'
 export * from './file-upload';
-export * from './material.module';
 export * from './option';

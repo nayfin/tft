@@ -7,7 +7,6 @@ import {
   ChangeDetectionStrategy,
   Optional,
   Self,
-  NgModule
 } from '@angular/core';
 import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,9 +16,9 @@ import { MatInputModule } from '@angular/material/input';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { Observable, of } from 'rxjs';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
-import { FieldContainerModule } from '../../field-container/field-container.component';
+import { FieldContainerComponent } from '../../field-container/field-container.component';
 import type { FileUploadFieldConfig } from '../../models/file-upload-field.config';
-import { SelectedFileModule } from '../selected-file/selected-file.component';
+import { SelectedFileComponent } from '../selected-file/selected-file.component';
 import { FileDropzoneDirective } from './file-dropzone.directive';
 
 const FileUploadFieldMixin = crisprControlMixin<FileUploadFieldConfig>(CrisprFieldComponent);
@@ -29,6 +28,19 @@ const FileUploadFieldMixin = crisprControlMixin<FileUploadFieldConfig>(CrisprFie
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FieldContainerComponent,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    SelectedFileComponent,
+    FormValidationHandlerModule,
+    FileDropzoneDirective
+  ],
 })
 export class FileUploadFieldComponent extends FileUploadFieldMixin implements OnInit, ControlValueAccessor {
 
@@ -109,27 +121,4 @@ export class FileUploadFieldComponent extends FileUploadFieldMixin implements On
 
   registerOnTouched( fn: () => void ) {
   }
-}
-@NgModule({
-  imports: [
-    CommonModule,
-    FieldContainerModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    SelectedFileModule,
-    FormValidationHandlerModule,
-  ],
-  exports: [
-    FileUploadFieldComponent,
-    FileDropzoneDirective
-  ],
-  declarations: [
-    FileUploadFieldComponent,
-    FileDropzoneDirective
-  ]
-})
-export class FileUploadFieldModule {
 }

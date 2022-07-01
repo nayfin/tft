@@ -1,9 +1,9 @@
-import { Component, Input, ChangeDetectionStrategy, NgModule } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import type { HeadingConfig } from '../../models/heading.config';
 import { CrisprFieldComponent } from '../../abstracts';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { InfoModule } from '../info/info.component';
+import { InfoComponent } from '../info/info.component';
 
 const defaultConfig: Partial<HeadingConfig> = {
   typographyClass: 'mat-h3'
@@ -12,25 +12,15 @@ const defaultConfig: Partial<HeadingConfig> = {
   selector: 'crispr-heading',
   templateUrl: './heading.component.html',
   styleUrls: ['./heading.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    InfoComponent
+  ],
 })
 export class HeadingComponent extends CrisprFieldComponent<HeadingConfig>{
   @Input() config: HeadingConfig;
   defaultConfig = defaultConfig;
-}
-@NgModule({
-    imports: [
-        CommonModule,
-        MatFormFieldModule,
-        InfoModule
-    ],
-    exports: [
-        HeadingComponent
-    ],
-    declarations: [
-        HeadingComponent
-    ]
-})
-
-export class HeadingModule {
 }

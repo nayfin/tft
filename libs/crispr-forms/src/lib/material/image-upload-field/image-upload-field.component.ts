@@ -8,7 +8,6 @@ import {
   Optional,
   Self,
   ChangeDetectorRef,
-  NgModule
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NgControl, ReactiveFormsModule, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,12 +18,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 import imageCompression from 'browser-image-compression';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
 import { map, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
-import { FileUploadFieldModule } from '../file-upload';
+import { FileDropzoneDirective } from '../file-upload';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
-import { FieldContainerModule } from '../../field-container/field-container.component';
+import { FieldContainerComponent } from '../../field-container/field-container.component';
 import type { ImageUploadFieldConfig } from '../../models/image-upload-field.config';
 import { convertBytesToMb } from './image-compression.helpers';
-import { SelectedFileModule } from '../selected-file/selected-file.component';
+import { SelectedFileComponent } from '../selected-file/selected-file.component';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
 const ImageUploadFieldMixin = crisprControlMixin<ImageUploadFieldConfig>(CrisprFieldComponent);
@@ -34,6 +33,19 @@ const ImageUploadFieldMixin = crisprControlMixin<ImageUploadFieldConfig>(CrisprF
   templateUrl: './image-upload-field.component.html',
   styleUrls: ['./image-upload-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FieldContainerComponent,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    SelectedFileComponent,
+    FileDropzoneDirective,
+    FormValidationHandlerModule
+  ],
 })
 export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements OnInit, ControlValueAccessor {
 
@@ -199,27 +211,7 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
 
   registerOnTouched( fn: () => void ) { }
 }
-@NgModule({
-  imports: [
-    CommonModule,
-    FieldContainerModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    SelectedFileModule,
-    FileUploadFieldModule,
-    FormValidationHandlerModule
-  ],
-  exports: [
-      ImageUploadFieldComponent
-  ],
-  declarations: [
-      ImageUploadFieldComponent
-  ]
-})
-export class ImageUploadFieldModule { }
+
 
 export function maxFileSizeValidator(maxFileSize: number): ValidatorFn {
   return (control: FormControl): ValidationErrors | null => {

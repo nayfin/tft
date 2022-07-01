@@ -1,12 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy, NgModule } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SliderFieldConfig } from '../../models';
 import { CrisprFieldComponent, crisprControlMixin } from '../../abstracts';
 import { MatSliderModule } from '@angular/material/slider';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FieldContainerModule } from '../../field-container';
-import { InfoModule } from '../info/info.component';
-import { OptionModule } from '../option';
+import { FieldContainerComponent } from '../../field-container';
+import { InfoComponent } from '../info/info.component';
+import { OptionComponent } from '../option';
 
 const defaultConfig = {displayLimits: true};
 const SliderFieldMixin = crisprControlMixin<SliderFieldConfig>(CrisprFieldComponent);
@@ -15,7 +15,16 @@ const SliderFieldMixin = crisprControlMixin<SliderFieldConfig>(CrisprFieldCompon
   selector: 'crispr-slider-field',
   templateUrl: './slider-field.component.html',
   styleUrls: ['./slider-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    InfoComponent,
+    OptionComponent,
+    FieldContainerComponent,
+    ReactiveFormsModule,
+    MatSliderModule
+  ],
 })
 export class SliderFieldComponent extends SliderFieldMixin implements OnInit {
 
@@ -32,22 +41,4 @@ export class SliderFieldComponent extends SliderFieldMixin implements OnInit {
     super.ngOnInit();
   }
 
-}
-@NgModule({
-  imports: [
-    CommonModule,
-    InfoModule,
-    OptionModule,
-    FieldContainerModule,
-    ReactiveFormsModule,
-    MatSliderModule
-  ],
-  exports: [
-    SliderFieldComponent
-  ],
-  declarations: [
-    SliderFieldComponent
-  ]
-})
-export class SliderFieldModule {
 }

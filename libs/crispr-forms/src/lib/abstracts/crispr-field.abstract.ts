@@ -3,7 +3,9 @@ import type {
 } from '../models';
 import { OnInit, Directive } from '@angular/core';
 
-@Directive()
+@Directive({
+  standalone: true
+})
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class CrisprFieldComponent<C extends CrisprFieldConfig> implements OnInit {
   config: C;

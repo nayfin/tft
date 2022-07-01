@@ -1,7 +1,8 @@
 import { Directive, HostListener, Output, EventEmitter, Input } from '@angular/core';
 
 @Directive({
-  selector: '[crisprFileDropzone]'
+  selector: '[crisprFileDropzone]',
+  standalone: true,
 })
 export class FileDropzoneDirective {
 

@@ -2,10 +2,10 @@ import { Directive, Input, ViewContainerRef, Renderer2, NgModule, OnInit, Change
 import { FormGroup } from '@angular/forms';
 import { AnyFieldConfig, ControlValue } from './models';
 import { CrisprFieldComponent, FIELD_COMPONENTS, isControlComponent, isControlOrButtonComponent } from './field-component-map.const';
-import { CommonModule } from '@angular/common';
 
 @Directive({
-  selector: '[crisprField]'
+  selector: '[crisprField]',
+  standalone: true
 })
 export class CrisprFieldDirective implements OnInit {
 
@@ -64,17 +64,4 @@ export class CrisprFieldDirective implements OnInit {
       this.cdr.detectChanges();
     }
   }
-}
-@NgModule({
-  imports: [
-    CommonModule,
-  ],
-  exports: [
-    CrisprFieldDirective
-  ],
-  declarations: [
-    CrisprFieldDirective
-  ]
-})
-export class CrisprFieldModule {
 }

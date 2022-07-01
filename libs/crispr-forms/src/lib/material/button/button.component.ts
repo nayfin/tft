@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ChangeDetectionStrategy, NgModule } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { ButtonConfig } from '../../models';
 import { Observable } from 'rxjs';
@@ -15,6 +15,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    ReactiveFormsModule,
+  ],
 })
 export class ButtonComponent extends CrisprFieldComponent<ButtonConfig> implements OnInit {
 
@@ -39,21 +47,4 @@ export class ButtonComponent extends CrisprFieldComponent<ButtonConfig> implemen
       this.config.callback(group, event);
     }
   }
-}
-@NgModule({
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTooltipModule,
-    ReactiveFormsModule,
-  ],
-  exports: [
-    ButtonComponent
-  ],
-  declarations: [
-    ButtonComponent
-  ]
-})
-export class ButtonModule {
 }
