@@ -2,7 +2,9 @@
 import type { InputFieldComponent, SelectFieldComponent, AutocompleteFieldComponent,
   AutocompleteChiplistFieldComponent, TextareaFieldComponent, CheckboxFieldComponent,
   RadioFieldComponent, FileUploadFieldComponent, SliderFieldComponent, DatepickerFieldComponent,
-  HeadingComponent, DividerComponent, ButtonComponent, UnitConversionFieldComponent, ImageUploadFieldComponent } from './material';
+  HeadingComponent, DividerComponent, ButtonComponent, UnitConversionFieldComponent } from './material';
+import { ImageUploadFieldComponent } from '@tft/crispr-forms/image-upload-field';
+
 import type { FormGroupListComponent } from './form-group-list/form-group-list.component';
 import type { SubGroupComponent } from './sub-group/sub-group.component';
 import { isControlConfig } from './form.helpers';
@@ -22,7 +24,7 @@ export const FIELD_COMPONENTS = {
   slider: import('./material').then(({ SliderFieldComponent}) =>  SliderFieldComponent),
   datepicker: import('./material').then(({ DatepickerFieldComponent}) =>  DatepickerFieldComponent),
   fileUpload: import('./material').then(({ FileUploadFieldComponent}) =>  FileUploadFieldComponent),
-  imageUpload: import('./material').then(({ ImageUploadFieldComponent}) =>  ImageUploadFieldComponent),
+  imageUpload: import('@tft/crispr-forms/image-upload-field').then(({ ImageUploadFieldComponent}) =>  ImageUploadFieldComponent),
   heading: import('./material').then(({ HeadingComponent}) =>  HeadingComponent),
   divider: import('./material').then(({ DividerComponent}) =>  DividerComponent),
   unitConversion: import('./material').then(({ UnitConversionFieldComponent}) =>  UnitConversionFieldComponent)

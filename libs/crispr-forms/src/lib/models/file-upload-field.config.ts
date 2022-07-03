@@ -1,6 +1,6 @@
 import { FormGroup } from '@angular/forms';
 import type { FileUploadFieldComponent } from '../material/file-upload/file-upload.component';
-import type { ImageUploadFieldComponent } from '../material/image-upload-field';
+import { ImageUploadFieldComponent } from '@tft/crispr-forms/image-upload-field';
 import { CrisprControlConfig, ControlType, ButtonType, MatFieldProperties } from '../models';
 
 export type FileUploadFieldConfig = CrisprControlConfig & MatFieldProperties & {

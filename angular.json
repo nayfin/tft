@@ -150,7 +150,9 @@
           "options": {
             "lintFilePatterns": [
               "libs/crispr-forms/src/**/*.ts",
-              "libs/crispr-forms/src/**/*.html"
+              "libs/crispr-forms/src/**/*.html",
+              "libs/crispr-forms/image-upload-field/**/*.ts",
+              "libs/crispr-forms/image-upload-field/**/*.html"
             ]
           }
         },

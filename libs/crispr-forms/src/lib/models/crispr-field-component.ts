@@ -1,7 +1,7 @@
 import { FormGroupListComponent } from "../form-group-list";
 import { SubGroupComponent } from "../sub-group";
-import { ButtonComponent, InputFieldComponent, SelectFieldComponent, RadioFieldComponent, AutocompleteFieldComponent, AutocompleteChiplistFieldComponent, TextareaFieldComponent, CheckboxFieldComponent, SliderFieldComponent, FileUploadFieldComponent, ImageUploadFieldComponent, DatepickerFieldComponent, UnitConversionFieldComponent, HeadingComponent, DividerComponent } from "../material";
-
+import { ButtonComponent, InputFieldComponent, SelectFieldComponent, RadioFieldComponent, AutocompleteFieldComponent, AutocompleteChiplistFieldComponent, TextareaFieldComponent, CheckboxFieldComponent, SliderFieldComponent, FileUploadFieldComponent, DatepickerFieldComponent, UnitConversionFieldComponent, HeadingComponent, DividerComponent } from "../material";
+import { ImageUploadFieldComponent } from '@tft/crispr-forms/image-upload-field';
 export type CrisprControlComponent = ButtonComponent |
   InputFieldComponent |
   SelectFieldComponent |

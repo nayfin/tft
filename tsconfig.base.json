@@ -19,6 +19,9 @@
       "@tft/api-interfaces": ["libs/api-interfaces/src/index.ts"],
       "@tft/core": ["libs/core/src/index.ts"],
       "@tft/crispr-forms": ["libs/crispr-forms/src/index.ts"],
+      "@tft/crispr-forms/image-upload-field": [
+        "libs/crispr-forms/image-upload-field/src/index.ts"
+      ],
       "@tft/form-validation-handler": [
         "libs/form-validation-handler/src/index.ts"
       ],

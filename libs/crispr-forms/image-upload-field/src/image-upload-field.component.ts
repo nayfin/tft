@@ -18,13 +18,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import imageCompression from 'browser-image-compression';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
 import { map, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
-import { FileDropzoneDirective } from '../file-upload';
-import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
-import { FieldContainerComponent } from '../../field-container/field-container.component';
-import type { ImageUploadFieldConfig } from '../../models/image-upload-field.config';
-import { convertBytesToMb } from './image-compression.helpers';
-import { SelectedFileComponent } from '../selected-file/selected-file.component';
+import { FileDropzoneDirective, crisprControlMixin, CrisprFieldComponent, FieldContainerComponent, SelectedFileComponent } from '@tft/crispr-forms';
+import type { ImageUploadFieldConfig } from '@tft/crispr-forms';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { convertBytesToMb } from './image-compression.helpers';
 
 const ImageUploadFieldMixin = crisprControlMixin<ImageUploadFieldConfig>(CrisprFieldComponent);
 

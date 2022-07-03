@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
-import { allowedFileExtValidator, ControlType, FormConfig, maxFileSizeValidator } from '@tft/crispr-forms';
+import { ControlType, FormConfig } from '@tft/crispr-forms';
 import { delay, of, startWith } from 'rxjs';
+import { maxFileSizeValidator, allowedFileExtValidator } from '@tft/crispr-forms/image-upload-field';
 
 @Component({
   selector: 'tft-image-upload',
