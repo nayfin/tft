@@ -28,17 +28,17 @@ export const FIELD_COMPONENTS = {
   unitConversion: import('./material').then(({ UnitConversionFieldComponent}) =>  UnitConversionFieldComponent)
 };
 
-export function isControlComponent(component: CrisprFieldComponent): component is CrisprControlComponent {
+export function isControlComponent(component: CrisprFieldComponentType): component is CrisprControlComponentType {
   return component && isControlConfig(component.config) && 'value' in component // || component.config.controlType === ControlType.BUTTON;
 }
 
-export function isControlOrButtonComponent(component: CrisprFieldComponent): component is CrisprControlOrButton {
+export function isControlOrButtonComponent(component: CrisprFieldComponentType): component is CrisprControlOrButton {
   return isControlComponent(component) || component.config.controlType === ControlType.BUTTON;
 }
 
-export type CrisprControlOrButton = CrisprControlComponent | ButtonComponent;
+export type CrisprControlOrButton = CrisprControlComponentType | ButtonComponent;
 
-export type CrisprControlComponent = InputFieldComponent |
+export type CrisprControlComponentType = InputFieldComponent |
   SelectFieldComponent |
   RadioFieldComponent |
   SubGroupComponent |
@@ -56,7 +56,7 @@ export type CrisprControlComponent = InputFieldComponent |
 export type ComponentKeys = keyof typeof FIELD_COMPONENTS;
 // export type CrisprFieldComponent = FIELD_COMPONENTS[ComponentKeys];
 
-export type CrisprFieldComponent = CrisprControlComponent |
+export type CrisprFieldComponentType = CrisprControlComponentType |
   HeadingComponent |
   DividerComponent |
   ButtonComponent;
