@@ -21,8 +21,10 @@ import {
   OperatorFunction
 } from 'rxjs';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
-import { valueIn } from './form.operators';
 import { map, startWith } from 'rxjs/operators';
+// import utils from entry-point
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { valueIn } from '@tft/crispr-forms/utils';
 
 /**
  * DYNAMIC FORM UTILS: a collection of pure/mostly pure functions that are useful both internally and for
