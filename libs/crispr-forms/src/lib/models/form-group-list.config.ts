@@ -1,6 +1,5 @@
 import { ThemePalette } from '@angular/material/core';
-import { CrisprControlConfig, ControlType } from './';
-import { SubGroupConfig } from './crispr-field.config';
+import { CrisprControlConfig, ControlType, SubGroupConfig } from './crispr-field.config';
 
 // TODO: Below type would be ideal type to use for itemConfig, but there were some issues getting it to work
 // export type GroupListItemConfig = Omit<SubGroupConfig, 'controlName'> & {

@@ -1,6 +1,5 @@
 import { FormGroup } from '@angular/forms';
-import { CrisprControlConfig, ControlType } from '../models';
-import { FieldDescriptors, MatFieldProperties } from './crispr-field.config';
+import { FieldDescriptors, MatFieldProperties, CrisprControlConfig, ControlType } from './crispr-field.config';
 import { OptionsType } from './select-field.config';
 
 export type UnitConversionFieldConfig<ST = unknown, UT = unknown> = CrisprControlConfig &

@@ -1,5 +1,4 @@
-import { CrisprControlConfig, ControlType } from '../models';
-import { FieldDescriptors, MatFieldProperties } from './crispr-field.config';
+import { FieldDescriptors, MatFieldProperties,CrisprControlConfig, ControlType } from './crispr-field.config';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';

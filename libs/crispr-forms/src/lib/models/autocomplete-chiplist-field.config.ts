@@ -1,4 +1,6 @@
-import { AbstractAutocompleteFieldConfig, SelectOption } from './index';
+import { AbstractAutocompleteFieldConfig } from './autocomplete-field.config';
+import { SelectOption } from './select-field.config';
+
 import { ControlType, FieldDescriptors, MatFieldProperties } from './crispr-field.config';
 
 export interface AutocompleteChiplistFieldConfig extends AbstractAutocompleteFieldConfig,

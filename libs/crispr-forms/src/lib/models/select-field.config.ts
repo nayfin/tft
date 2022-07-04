@@ -1,7 +1,6 @@
-import { CrisprControlConfig } from '../models';
 import { Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
-import { ControlType, FieldDescriptors, Info, MatFieldProperties } from './crispr-field.config';
+import { ControlType, FieldDescriptors, Info, MatFieldProperties, CrisprControlConfig } from './crispr-field.config';
 
 export interface SelectFieldConfig extends Omit<CrisprControlConfig, 'placeholder'>,
   FieldDescriptors,

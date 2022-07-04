@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit, NgModule } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { InputFieldConfig } from '../../models';
 import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { MatInputModule } from '@angular/material/input';

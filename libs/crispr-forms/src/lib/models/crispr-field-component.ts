@@ -1,6 +1,6 @@
-import { FormGroupListComponent } from "../form-group-list";
-import { SubGroupComponent } from "../sub-group";
-import { ButtonComponent, InputFieldComponent, SelectFieldComponent, RadioFieldComponent, AutocompleteFieldComponent, AutocompleteChiplistFieldComponent, TextareaFieldComponent, CheckboxFieldComponent, SliderFieldComponent, FileUploadFieldComponent, ImageUploadFieldComponent, DatepickerFieldComponent, UnitConversionFieldComponent, HeadingComponent, DividerComponent } from "../material";
+import type { FormGroupListComponent } from "../form-group-list";
+import type { SubGroupComponent } from "../sub-group";
+import type { ImageUploadFieldComponent, ButtonComponent, InputFieldComponent, SelectFieldComponent, RadioFieldComponent, AutocompleteFieldComponent, AutocompleteChiplistFieldComponent, TextareaFieldComponent, CheckboxFieldComponent, SliderFieldComponent, FileUploadFieldComponent, DatepickerFieldComponent, UnitConversionFieldComponent, HeadingComponent, DividerComponent } from "../material";
 
 export type CrisprControlComponent = ButtonComponent |
   InputFieldComponent |

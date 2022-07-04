@@ -1,6 +1,6 @@
 import { FormGroup } from '@angular/forms';
-import { CrisprControlConfig, ControlType, ButtonType, MatFieldProperties, EnabledUploadButtonConfig } from '../models';
-
+import { CrisprControlConfig, ControlType, MatFieldProperties } from './crispr-field.config';
+import { ButtonType } from './button.config';
 export type ImageUploadFieldConfig = CrisprControlConfig & MatFieldProperties & {
   controlType: ControlType.IMAGE_UPLOAD;
   label: string;

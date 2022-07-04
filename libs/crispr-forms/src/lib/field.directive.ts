@@ -1,4 +1,4 @@
-import { Directive, Input, ViewContainerRef, Renderer2, NgModule, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Directive, Input, ViewContainerRef, Renderer2, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { AnyFieldConfig, ControlValue } from './models';
 import { CrisprFieldComponent, FIELD_COMPONENTS, isControlComponent, isControlOrButtonComponent } from './field-component-map.const';
