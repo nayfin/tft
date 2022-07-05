@@ -3,7 +3,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 
  import { MatRadioModule } from '@angular/material/radio';
- import { FieldContainerComponent } from '../field-container';
+ import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
  import { ReactiveFormsModule } from '@angular/forms';
  import { CommonModule } from '@angular/common';
  // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries

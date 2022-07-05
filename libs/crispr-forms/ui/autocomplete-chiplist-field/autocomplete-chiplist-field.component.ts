@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
-import { FieldContainerComponent } from '../field-container';
+import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
 import { OptionComponent } from '../option';
 import { MatIconModule } from '@angular/material/icon';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries

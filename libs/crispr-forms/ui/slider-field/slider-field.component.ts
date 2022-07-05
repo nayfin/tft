@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatSliderModule } from '@angular/material/slider';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FieldContainerComponent } from '../field-container';
+import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
 import { InfoComponent } from '@tft/crispr-forms/ui/info';
 import { OptionComponent } from '../option';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries

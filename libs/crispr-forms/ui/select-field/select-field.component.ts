@@ -8,7 +8,7 @@ import { InfoComponent } from '@tft/crispr-forms/ui/info';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
 // import { CrisprFieldDirective } from '../../field.directive';
-import { FieldContainerComponent } from '../field-container';
+import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { OptionComponent } from '../option';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries

@@ -4,7 +4,7 @@ import { MatDateFnsModule } from '@angular/material-date-fns-adapter';
 import { Observable, of } from 'rxjs';
 import { ComponentPortal, Portal, PortalModule } from '@angular/cdk/portal';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FieldContainerComponent } from '../field-container';
+import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';

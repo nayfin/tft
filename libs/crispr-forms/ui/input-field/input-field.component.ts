@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
-import { FieldContainerComponent } from '../field-container';
+import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { InfoComponent } from '@tft/crispr-forms/ui/info';

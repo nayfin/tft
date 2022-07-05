@@ -18,11 +18,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 import imageCompression from 'browser-image-compression';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
 import { map, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
-import { FileDropzoneDirective } from '../file-upload';
-import { FieldContainerComponent } from '../field-container/field-container.component';
 import { convertBytesToMb } from './image-compression.helpers';
-import { SelectedFileComponent } from '../selected-file/selected-file.component';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { SelectedFileComponent } from '../selected-file/selected-file.component';
+import { FileDropzoneDirective } from '../file-upload';
+import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { crisprControlMixin, CrisprFieldComponent, ImageUploadFieldConfig } from '@tft/crispr-forms/utils';
 
