@@ -152,7 +152,9 @@
               "libs/crispr-forms/src/**/*.ts",
               "libs/crispr-forms/src/**/*.html",
               "libs/crispr-forms/utils/**/*.ts",
-              "libs/crispr-forms/utils/**/*.html"
+              "libs/crispr-forms/utils/**/*.html",
+              "libs/crispr-forms/ui/**/*.ts",
+              "libs/crispr-forms/ui/**/*.html"
             ]
           }
         },

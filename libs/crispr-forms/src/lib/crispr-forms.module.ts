@@ -11,7 +11,7 @@ import { FormGroupListComponent } from './form-group-list';
 import { CrisprFieldDirective } from './field.directive';
 import { SubGroupModule } from './sub-group';
 import { CrisprPipesModule } from './pipes/crispr-pipes.module';
-import { FieldContainerComponent } from './field-container';
+import { FieldContainerComponent } from '@tft/crispr-forms/ui';
 
 @NgModule({
   imports: [
