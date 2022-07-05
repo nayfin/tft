@@ -1,9 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, AfterViewInit } from '@angular/core';
  import { Observable } from 'rxjs';
 
-import { SelectFieldConfig, SelectOption } from '../../models';
-import { observablifyOptions } from '../../form.helpers';
-import { CrisprFieldComponent, crisprControlMixin } from '../../abstracts';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { ThemePalette } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
@@ -14,6 +11,8 @@ import { CrisprFieldDirective } from '../../field.directive';
 import { FieldContainerComponent } from '../../field-container';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { OptionComponent } from '../option';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { observablifyOptions, CrisprFieldComponent, crisprControlMixin, SelectFieldConfig, SelectOption } from '@tft/crispr-forms/utils';
 
 const SelectFieldMixin = crisprControlMixin<SelectFieldConfig>(CrisprFieldComponent);
 

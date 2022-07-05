@@ -1,12 +1,12 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { InputFieldConfig } from '../../models';
-import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { FieldContainerComponent } from '../../field-container';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { InfoComponent } from '../info/info.component';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { InputFieldConfig, crisprControlMixin, CrisprFieldComponent } from '@tft/crispr-forms/utils';
 
 const InputFieldMixin = crisprControlMixin<InputFieldConfig>(CrisprFieldComponent);
 @Component({

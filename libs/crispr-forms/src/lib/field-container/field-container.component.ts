@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import type { CrisprControlConfig } from '../models';
 import { Observable, of, Subscription } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { tap, distinctUntilChanged } from 'rxjs/operators';
-import { computeValueFromFields } from '../form.helpers';
 import { CommonModule } from '@angular/common';
 import { HeadingComponent } from '../material/heading/heading.component';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import type { CrisprControlConfig } from '@tft/crispr-forms/utils';
 
 @Component({
   selector: 'crispr-field-container',
@@ -40,14 +40,6 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
           tap(computedValue => this.group.get(this.config.controlName).setValue(computedValue))
         ).subscribe(),
       );
-    } else if (this.config.computeFieldConfig) {
-      console.warn(`computeFieldConfig property is deprecated, please use computeValue. Example here: https://stackblitz.com/github/nayfin/tft-documentation?file=src%2Fapp%2Fcrispr-forms-demo%2Ffeatures%2Fcomputed-field%2Fcomputed-field.component.ts`)
-      this.subs.push(
-        computeValueFromFields(this.group, this.config.computeFieldConfig).pipe(
-          distinctUntilChanged(),
-          tap(computedValue => this.group.get(this.config.controlName).setValue(computedValue))
-        ).subscribe(),
-      );
     }
   }
 
@@ -66,7 +58,7 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
     // If the disabled$ function exists on the field config then call it with the disabledCallbackConfig
     // as a parameter otherwise return an observable of true.
     return config?.disabledCallback && config.disabledCallback instanceof Function
-      ? config.disabledCallback(group, config.disabledCallbackConfig || null).pipe(
+      ? config.disabledCallback(group).pipe(
         // This enables/disables when callback conditions are met
         tap((shouldDisable) => shouldDisable ? control.disable() : control.enable())
       )

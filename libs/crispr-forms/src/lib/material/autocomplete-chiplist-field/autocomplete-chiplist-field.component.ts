@@ -4,8 +4,6 @@ import { MatAutocompleteModule, MatAutocompleteSelectedEvent, MatAutocompleteTri
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { ENTER } from '@angular/cdk/keycodes';
 
-import { AutocompleteChiplistFieldConfig, DEFAULT_EMPTY_OPTIONS_MESSAGE, SelectOption } from '../../models';
-import { AbstractAutocompleteComponent } from '../../abstracts';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +13,8 @@ import { FieldContainerComponent } from '../../field-container';
 import { InfoComponent } from '../info/info.component';
 import { OptionComponent } from '../option';
 import { MatIconModule } from '@angular/material/icon';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { AutocompleteChiplistFieldConfig, AbstractAutocompleteComponent, DEFAULT_EMPTY_OPTIONS_MESSAGE, SelectOption } from '@tft/crispr-forms/utils';
 
 const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
   chipsSelectable: true,

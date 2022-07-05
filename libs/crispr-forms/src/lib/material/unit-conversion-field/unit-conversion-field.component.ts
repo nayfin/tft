@@ -6,13 +6,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { startWith } from 'rxjs/operators';
-import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { FieldContainerComponent } from '../../field-container';
-import { observablifyOptions } from '../../form.helpers';
-import { SelectOption } from '../../models';
-import { UnitConversionFieldConfig } from '../../models/unit-conversion-field.config';
 import { InfoComponent } from '../info/info.component';
 import { OptionComponent } from '../option';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { crisprControlMixin, CrisprFieldComponent, observablifyOptions, SelectOption, UnitConversionFieldConfig } from '@tft/crispr-forms/utils';
 
 const defaultConfig: Partial<UnitConversionFieldConfig> = {};
 const UnitConversionFieldMixin = crisprControlMixin<UnitConversionFieldConfig>(CrisprFieldComponent);

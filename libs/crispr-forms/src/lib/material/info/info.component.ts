@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import type { Info } from '../../models';
+import type { Info } from '@tft/crispr-forms/utils';
 
 @Component({
   selector: 'crispr-info',

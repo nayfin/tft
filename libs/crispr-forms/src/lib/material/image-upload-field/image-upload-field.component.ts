@@ -19,12 +19,12 @@ import imageCompression from 'browser-image-compression';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
 import { map, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
 import { FileDropzoneDirective } from '../file-upload';
-import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { FieldContainerComponent } from '../../field-container/field-container.component';
-import type { ImageUploadFieldConfig } from '../../models/image-upload-field.config';
 import { convertBytesToMb } from './image-compression.helpers';
 import { SelectedFileComponent } from '../selected-file/selected-file.component';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { crisprControlMixin, CrisprFieldComponent, ImageUploadFieldConfig } from '@tft/crispr-forms/utils';
 
 const ImageUploadFieldMixin = crisprControlMixin<ImageUploadFieldConfig>(CrisprFieldComponent);
 
@@ -173,7 +173,7 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
       })
     )
     this.disabled$ = this.config.disabledCallback
-    ? this.config.disabledCallback(this.group, this.config)
+    ? this.config.disabledCallback(this.group)
     : of(false);
   }
 

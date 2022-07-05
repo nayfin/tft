@@ -1,9 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormArray } from '@angular/forms';
-
-import type { FormGroupListConfig } from '../models';
-import { createControlForType } from '../form.helpers';
-import { CrisprFieldComponent, crisprControlMixin } from '../abstracts';
 import { MatButtonModule } from '@angular/material/button';
 import { FieldContainerComponent } from '../field-container';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,6 +8,8 @@ import { CrisprPipesModule } from '../pipes/crispr-pipes.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { CrisprFieldComponent, crisprControlMixin, createControlForType, FormGroupListConfig } from '@tft/crispr-forms/utils';
 
 const defaultConfig: Partial<FormGroupListConfig> = {
   addButtonLabel: 'ADD ITEM',

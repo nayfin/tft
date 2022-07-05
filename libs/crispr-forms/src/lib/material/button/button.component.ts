@@ -1,14 +1,14 @@
 
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
-import { ButtonConfig } from '../../models';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { CrisprFieldComponent } from '../../abstracts';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { CrisprFieldComponent, ButtonConfig } from '@tft/crispr-forms/utils';
 
 @Component({
   selector: 'crispr-button',

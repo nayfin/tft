@@ -5,8 +5,8 @@ import type { InputFieldComponent, SelectFieldComponent, AutocompleteFieldCompon
   HeadingComponent, DividerComponent, ButtonComponent, UnitConversionFieldComponent, ImageUploadFieldComponent } from './material';
 import type { FormGroupListComponent } from './form-group-list/form-group-list.component';
 import type { SubGroupComponent } from './sub-group/sub-group.component';
-import { isControlConfig } from './form.helpers';
-import { ControlType } from './models';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { isControlConfig, ControlType } from '@tft/crispr-forms/utils';
 
 export const FIELD_COMPONENTS = {
   groupList: import('./form-group-list').then (({FormGroupListComponent}) => FormGroupListComponent),

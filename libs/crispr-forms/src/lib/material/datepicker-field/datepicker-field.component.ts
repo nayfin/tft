@@ -1,6 +1,4 @@
 import { Component, OnInit, ChangeDetectionStrategy, AfterContentInit } from '@angular/core';
-import { DatepickerFieldConfig } from '../../models';
-import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { MatCalendarCellClassFunction, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDateFnsModule } from '@angular/material-date-fns-adapter';
 import { Observable, of } from 'rxjs';
@@ -10,6 +8,8 @@ import { FieldContainerComponent } from '../../field-container';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { crisprControlMixin, CrisprFieldComponent, DatepickerFieldConfig } from '@tft/crispr-forms/utils';
 
 const defaultConfig: Partial<DatepickerFieldConfig> = {
   startView: 'month',

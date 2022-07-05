@@ -1,6 +1,6 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import type { HeadingConfig } from '../../models/heading.config';
-import { CrisprFieldComponent } from '../../abstracts';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { CrisprFieldComponent, HeadingConfig } from '@tft/crispr-forms/utils';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { InfoComponent } from '../info/info.component';

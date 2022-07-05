@@ -4,11 +4,7 @@ import { TooltipPosition } from '@angular/material/tooltip';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
 
 import { ErrorDictionary } from '@tft/form-validation-handler';
-import {
-  ComputeFieldConfig,
-  CheckControlConfig,
-  CheckControlsConfig,
-} from '../form.helpers';
+
 import type {
   SelectFieldConfig,
   HeadingConfig,
@@ -62,13 +58,6 @@ export interface CrisprFieldConfig {
   component?: any; // TODO: Define this better
 }
 
-// export function isCustomConfig(config: AnyFieldConfig): config is CustomFieldConfig {
-//   return 'component' in config;
-// }
-// export interface CustomFieldConfig extends CrisprFieldConfig {
-//   controlType: ControlType.CUSTOM;
-//   component?: any; // TODO: type better
-// }
 type RestrictedControlName<M> = M extends null ? string : keyof M;
 /**
  * The base interface for all control configs
@@ -77,17 +66,8 @@ export interface CrisprControlConfig<M = null> extends CrisprFieldConfig {
   controlName: RestrictedControlName<M>
   controlType: ControlType;
   validators?: ValidatorFn[];
-  // TODO: Determine if this is necessary
-  /**
-   * @deprecated please us computeValue instead
-   */
-  computeFieldConfig?: ComputeFieldConfig;
   computeValue?: (group: FormGroup) => Observable<unknown>;
-  disabledCallback?: (group: FormGroup, config?: any) => Observable<boolean>;
-  /**
- * @deprecated this configuration isn't needed as all situations can be handled using `disabledCallback`
- */
-  disabledCallbackConfig?: CheckControlConfig | CheckControlsConfig | any; // any is required for user defined configs
+  disabledCallback?: (group: FormGroup) => Observable<boolean>;
   /**
    * Hide the control when disabled
    * @default false

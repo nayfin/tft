@@ -1,10 +1,8 @@
 import { AutocompleteOptionsCallback, SelectOption } from './select-field.config';
 import { FieldDescriptors, MatFieldProperties, CrisprControlConfig, ControlType } from './crispr-field.config';
 
-export interface AbstractAutocompleteFieldConfig extends CrisprControlConfig,
-  FieldDescriptors,
-  MatFieldProperties
-  {
+export interface AbstractAutocompleteFieldConfig
+  extends CrisprControlConfig, FieldDescriptors, MatFieldProperties {
   typeToEmit?: boolean;
   typeDebounceTime?: number;
   emptyOptionsMessage?: string;

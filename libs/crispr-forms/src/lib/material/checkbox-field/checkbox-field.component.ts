@@ -1,12 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { CheckboxFieldConfig } from '../../models';
-import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { CommonModule } from '@angular/common';
 import { InfoComponent } from '../info/info.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CrisprFieldDirective } from '../../field.directive';
 import { FieldContainerComponent } from '../../field-container';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { crisprControlMixin, CrisprFieldComponent, CheckboxFieldConfig } from '@tft/crispr-forms/utils';
 
 const defaultConfig: Partial<CheckboxFieldConfig> = {
   labelPosition: 'after',

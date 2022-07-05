@@ -1,7 +1,8 @@
 import { Directive, Input, ViewContainerRef, Renderer2, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { AnyFieldConfig, ControlValue } from './models';
 import { CrisprFieldComponentType, FIELD_COMPONENTS, isControlComponent, isControlOrButtonComponent } from './field-component-map.const';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { AnyFieldConfig, ControlValue } from '@tft/crispr-forms/utils';
 
 @Directive({
   selector: '[crisprField]',

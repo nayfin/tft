@@ -15,11 +15,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { Observable, of } from 'rxjs';
-import { crisprControlMixin, CrisprFieldComponent } from '../../abstracts';
 import { FieldContainerComponent } from '../../field-container/field-container.component';
-import type { FileUploadFieldConfig } from '../../models/file-upload-field.config';
 import { SelectedFileComponent } from '../selected-file/selected-file.component';
 import { FileDropzoneDirective } from './file-dropzone.directive';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { crisprControlMixin, CrisprFieldComponent, FileUploadFieldConfig } from '@tft/crispr-forms/utils';
 
 const FileUploadFieldMixin = crisprControlMixin<FileUploadFieldConfig>(CrisprFieldComponent);
 
@@ -84,7 +84,7 @@ export class FileUploadFieldComponent extends FileUploadFieldMixin implements On
   ngOnInit() {
     super.ngOnInit();
     this.disabled$ = this.config.disabledCallback
-    ? this.config.disabledCallback(this.group, this.config)
+    ? this.config.disabledCallback(this.group)
     : of(false);
   }
 

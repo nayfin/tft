@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { DividerConfig } from '../../models';
-import { CrisprFieldComponent } from '../../abstracts';
 import { MatDividerModule } from '@angular/material/divider';
 import { CommonModule } from '@angular/common';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { CrisprFieldComponent, DividerConfig } from '@tft/crispr-forms/utils';
 
 @Component({
   selector: 'crispr-divider',

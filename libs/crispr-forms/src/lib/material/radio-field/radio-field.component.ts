@@ -1,14 +1,13 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
  import { Observable } from 'rxjs';
 
-import { SelectOption } from '../../models';
-import { observablifyOptions } from '../../form.helpers';
-import { CrisprFieldComponent, crisprControlMixin } from '../../abstracts';
-import { RadioFieldConfig } from '../../models/radio-field.config';
-import { MatRadioModule } from '@angular/material/radio';
-import { FieldContainerComponent } from '../../field-container';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
+ import { MatRadioModule } from '@angular/material/radio';
+ import { FieldContainerComponent } from '../../field-container';
+ import { ReactiveFormsModule } from '@angular/forms';
+ import { CommonModule } from '@angular/common';
+ // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+ import { CrisprFieldComponent, crisprControlMixin, RadioFieldConfig, SelectOption, observablifyOptions } from '@tft/crispr-forms/utils';
 
 const RadioFieldMixin = crisprControlMixin<RadioFieldConfig>(CrisprFieldComponent);
 
