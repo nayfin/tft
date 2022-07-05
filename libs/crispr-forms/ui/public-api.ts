@@ -1,5 +1,4 @@
 export * from './heading';
-export * from './info';
 export * from './input-field';
 export * from './select-field';
 export * from './autocomplete-field';
@@ -16,3 +15,4 @@ export * from './image-upload-field'
 export * from './file-upload';
 export * from './option';
 export * from './field-container';
+export * from '@tft/crispr-forms/ui/info';

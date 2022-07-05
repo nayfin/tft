@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { InfoComponent } from '../info';
+import { InfoComponent } from '@tft/crispr-forms/ui/info';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { SelectOption } from '@tft/crispr-forms/utils';
 

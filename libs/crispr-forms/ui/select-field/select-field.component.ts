@@ -4,7 +4,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ViewChild, AfterViewInit } 
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { ThemePalette } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
-import { InfoComponent } from '../info';
+import { InfoComponent } from '@tft/crispr-forms/ui/info';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
 // import { CrisprFieldDirective } from '../../field.directive';

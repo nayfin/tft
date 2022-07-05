@@ -1,1 +1,1 @@
-export * from './info.component';
+export * from './public-api';

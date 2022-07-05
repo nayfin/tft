@@ -5,12 +5,12 @@ import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FieldContainerComponent } from '../field-container';
-import { InfoComponent } from '../info';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { OptionComponent } from '../option';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { SelectOption, AbstractAutocompleteComponent, AutocompleteFieldConfig, DEFAULT_EMPTY_OPTIONS_MESSAGE } from '@tft/crispr-forms/utils';
+import { InfoComponent } from '@tft/crispr-forms/ui/info';
 
 const defaultConfig: Partial<AutocompleteFieldConfig> = {
   autoActiveFirstOption: true,

@@ -10,11 +10,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { FieldContainerComponent } from '../field-container';
-import { InfoComponent } from '../info';
 import { OptionComponent } from '../option';
 import { MatIconModule } from '@angular/material/icon';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { AutocompleteChiplistFieldConfig, AbstractAutocompleteComponent, DEFAULT_EMPTY_OPTIONS_MESSAGE, SelectOption } from '@tft/crispr-forms/utils';
+import { InfoComponent } from '@tft/crispr-forms/ui/info';
 
 const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
   chipsSelectable: true,

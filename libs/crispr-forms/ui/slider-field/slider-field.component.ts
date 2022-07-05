@@ -3,7 +3,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FieldContainerComponent } from '../field-container';
-import { InfoComponent } from '../info';
+import { InfoComponent } from '@tft/crispr-forms/ui/info';
 import { OptionComponent } from '../option';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { SliderFieldConfig, CrisprFieldComponent, crisprControlMixin } from '@tft/crispr-forms/utils';

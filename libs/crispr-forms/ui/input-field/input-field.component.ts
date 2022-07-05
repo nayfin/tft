@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FieldContainerComponent } from '../field-container';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { InfoComponent } from '../info';
+import { InfoComponent } from '@tft/crispr-forms/ui/info';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { InputFieldConfig, crisprControlMixin, CrisprFieldComponent } from '@tft/crispr-forms/utils';
 

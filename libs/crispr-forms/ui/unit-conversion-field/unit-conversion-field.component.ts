@@ -7,7 +7,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 import { FieldContainerComponent } from '../field-container';
-import { InfoComponent } from '../info';
+import { InfoComponent } from '@tft/crispr-forms/ui/info';
 import { OptionComponent } from '../option';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { crisprControlMixin, CrisprFieldComponent, observablifyOptions, SelectOption, UnitConversionFieldConfig } from '@tft/crispr-forms/utils';

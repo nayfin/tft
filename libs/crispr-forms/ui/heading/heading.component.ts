@@ -3,7 +3,7 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CrisprFieldComponent, HeadingConfig } from '@tft/crispr-forms/utils';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { InfoComponent } from '../info/info.component';
+import { InfoComponent } from '@tft/crispr-forms/ui/info';
 
 const defaultConfig: Partial<HeadingConfig> = {
   typographyClass: 'mat-h3'
