@@ -3,7 +3,7 @@ import { Observable, of, Subscription } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { tap, distinctUntilChanged } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
-import { HeadingComponent } from '../heading';
+import { HeadingComponent } from '@tft/crispr-forms/ui/heading';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import type { CrisprControlConfig } from '@tft/crispr-forms/utils';
 

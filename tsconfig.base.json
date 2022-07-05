@@ -21,6 +21,7 @@
       "@tft/crispr-forms": ["libs/crispr-forms/public-api.ts"],
       "@tft/crispr-forms/ui": ["libs/crispr-forms/ui/index.ts"],
       "@tft/crispr-forms/ui/info": ["libs/crispr-forms/ui/info/index.ts"],
+      "@tft/crispr-forms/ui/heading": ["libs/crispr-forms/ui/heading/index.ts"],
       "@tft/crispr-forms/utils": ["libs/crispr-forms/utils/index.ts"],
       "@tft/form-validation-handler": [
         "libs/form-validation-handler/src/index.ts"
