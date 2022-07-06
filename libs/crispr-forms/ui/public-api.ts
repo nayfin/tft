@@ -15,6 +15,7 @@ export * from './image-upload-field'
 export * from './file-upload';
 export * from './option';
 
+export * from '@tft/crispr-forms/ui/file-dropzone';
 export * from '@tft/crispr-forms/ui/selected-file';
 export * from '@tft/crispr-forms/ui/field-container';
 export * from '@tft/crispr-forms/ui/heading';
