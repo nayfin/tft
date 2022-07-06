@@ -1,3 +1,4 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { CommonModule } from '@angular/common';
 import {
   Component,
@@ -15,11 +16,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { Observable, of } from 'rxjs';
-import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
-import { SelectedFileComponent } from '../selected-file/selected-file.component';
 import { FileDropzoneDirective } from './file-dropzone.directive';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+
 import { crisprControlMixin, CrisprFieldComponent, FileUploadFieldConfig } from '@tft/crispr-forms/utils';
+import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
+import { SelectedFileComponent } from '@tft/crispr-forms/ui/selected-file';
 
 const FileUploadFieldMixin = crisprControlMixin<FileUploadFieldConfig>(CrisprFieldComponent);
 

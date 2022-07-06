@@ -1,3 +1,4 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { CommonModule } from '@angular/common';
 import {
   Component,
@@ -20,10 +21,10 @@ import { combineLatest, Observable, of, Subject } from 'rxjs';
 import { map, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
 import { convertBytesToMb } from './image-compression.helpers';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
-import { SelectedFileComponent } from '../selected-file/selected-file.component';
 import { FileDropzoneDirective } from '../file-upload';
+
+import { SelectedFileComponent } from '@tft/crispr-forms/ui/selected-file';
 import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { crisprControlMixin, CrisprFieldComponent, ImageUploadFieldConfig } from '@tft/crispr-forms/utils';
 
 const ImageUploadFieldMixin = crisprControlMixin<ImageUploadFieldConfig>(CrisprFieldComponent);
