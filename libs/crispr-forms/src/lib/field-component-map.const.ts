@@ -1,11 +1,12 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 // tslint:disable-next-line: max-line-length
 import type { FormGroupListComponent } from './form-group-list/form-group-list.component';
 import type { SubGroupComponent } from './sub-group/sub-group.component';
-import { HeadingComponent, InputFieldComponent, SelectFieldComponent, AutocompleteFieldComponent,
+import type { HeadingComponent, InputFieldComponent, SelectFieldComponent, AutocompleteFieldComponent,
   AutocompleteChiplistFieldComponent, TextareaFieldComponent, CheckboxFieldComponent,
   RadioFieldComponent, FileUploadFieldComponent, SliderFieldComponent, DatepickerFieldComponent,
-  DividerComponent, ButtonComponent, UnitConversionFieldComponent, ImageUploadFieldComponent } from '@tft/crispr-forms/ui';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+  DividerComponent, ButtonComponent, UnitConversionFieldComponent } from '@tft/crispr-forms/ui';
+import type {ImageUploadFieldComponent } from '@tft/crispr-forms/ui/image-upload-field';
 import { isControlConfig, ControlType } from '@tft/crispr-forms/utils';
 
 export const FIELD_COMPONENTS = {
@@ -22,7 +23,7 @@ export const FIELD_COMPONENTS = {
   slider: import('@tft/crispr-forms/ui').then(({ SliderFieldComponent}) =>  SliderFieldComponent),
   datepicker: import('@tft/crispr-forms/ui').then(({ DatepickerFieldComponent}) =>  DatepickerFieldComponent),
   fileUpload: import('@tft/crispr-forms/ui').then(({ FileUploadFieldComponent}) =>  FileUploadFieldComponent),
-  imageUpload: import('@tft/crispr-forms/ui').then(({ ImageUploadFieldComponent}) =>  ImageUploadFieldComponent),
+  imageUpload: import('@tft/crispr-forms/ui/image-upload-field').then(({ ImageUploadFieldComponent}) =>  ImageUploadFieldComponent),
   heading: import('@tft/crispr-forms/ui').then(({ HeadingComponent}) =>  HeadingComponent),
   divider: import('@tft/crispr-forms/ui').then(({ DividerComponent}) =>  DividerComponent),
   unitConversion: import('@tft/crispr-forms/ui').then(({ UnitConversionFieldComponent}) =>  UnitConversionFieldComponent)
