@@ -29,7 +29,7 @@
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "sme:documentation": "bash ./scripts/sme.sh"
+    "sme": "bash ./scripts/sme.sh"
   },
   "private": true,
   "dependencies": {

@@ -207,7 +207,7 @@ export class OverviewComponent implements OnInit{
           tooltipPosition: 'left'
         },
         appearance: 'outline',
-        disabledCallback: ( form, _config) => {
+        disabledCallback: (form) => {
           // have access to the form here so we can hook into the valueChanges on the text input above
           // to dynamically enable/disable this field
           return form.get('disabler').valueChanges

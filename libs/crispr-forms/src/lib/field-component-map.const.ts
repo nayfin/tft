@@ -1,44 +1,45 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 // tslint:disable-next-line: max-line-length
-import type { InputFieldComponent, SelectFieldComponent, AutocompleteFieldComponent,
-  AutocompleteChiplistFieldComponent, TextareaFieldComponent, CheckboxFieldComponent,
-  RadioFieldComponent, FileUploadFieldComponent, SliderFieldComponent, DatepickerFieldComponent,
-  HeadingComponent, DividerComponent, ButtonComponent, UnitConversionFieldComponent, ImageUploadFieldComponent } from './material';
 import type { FormGroupListComponent } from './form-group-list/form-group-list.component';
 import type { SubGroupComponent } from './sub-group/sub-group.component';
-import { isControlConfig } from './form.helpers';
-import { ControlType } from './models';
+import type { HeadingComponent, InputFieldComponent, SelectFieldComponent, AutocompleteFieldComponent,
+  AutocompleteChiplistFieldComponent, TextareaFieldComponent, CheckboxFieldComponent,
+  RadioFieldComponent, FileUploadFieldComponent, SliderFieldComponent, DatepickerFieldComponent,
+  DividerComponent, ButtonComponent, UnitConversionFieldComponent } from '@tft/crispr-forms/ui';
+import type {ImageUploadFieldComponent } from '@tft/crispr-forms/ui/image-upload-field';
+import { isControlConfig, ControlType } from '@tft/crispr-forms/utils';
 
 export const FIELD_COMPONENTS = {
   groupList: import('./form-group-list').then (({FormGroupListComponent}) => FormGroupListComponent),
   subGroup: import('./sub-group').then(({ SubGroupComponent}) =>  SubGroupComponent),
-  button: import('./material').then(({ ButtonComponent}) =>  ButtonComponent),
-  input: import('./material').then(({ InputFieldComponent}) =>  InputFieldComponent),
-  select: import('./material').then(({ SelectFieldComponent}) =>  SelectFieldComponent),
-  radio: import('./material').then(({ RadioFieldComponent}) =>  RadioFieldComponent),
-  autocomplete: import('./material').then(({ AutocompleteFieldComponent}) =>  AutocompleteFieldComponent),
-  autocompleteChiplist: import('./material').then(({ AutocompleteChiplistFieldComponent}) =>  AutocompleteChiplistFieldComponent),
-  textarea: import('./material').then(({ TextareaFieldComponent}) =>  TextareaFieldComponent),
-  checkbox: import('./material').then(({ CheckboxFieldComponent}) =>  CheckboxFieldComponent),
-  slider: import('./material').then(({ SliderFieldComponent}) =>  SliderFieldComponent),
-  datepicker: import('./material').then(({ DatepickerFieldComponent}) =>  DatepickerFieldComponent),
-  fileUpload: import('./material').then(({ FileUploadFieldComponent}) =>  FileUploadFieldComponent),
-  imageUpload: import('./material').then(({ ImageUploadFieldComponent}) =>  ImageUploadFieldComponent),
-  heading: import('./material').then(({ HeadingComponent}) =>  HeadingComponent),
-  divider: import('./material').then(({ DividerComponent}) =>  DividerComponent),
-  unitConversion: import('./material').then(({ UnitConversionFieldComponent}) =>  UnitConversionFieldComponent)
+  button: import('@tft/crispr-forms/ui').then(({ ButtonComponent}) =>  ButtonComponent),
+  input: import('@tft/crispr-forms/ui').then(({ InputFieldComponent}) =>  InputFieldComponent),
+  select: import('@tft/crispr-forms/ui').then(({ SelectFieldComponent}) =>  SelectFieldComponent),
+  radio: import('@tft/crispr-forms/ui').then(({ RadioFieldComponent}) =>  RadioFieldComponent),
+  autocomplete: import('@tft/crispr-forms/ui').then(({ AutocompleteFieldComponent}) =>  AutocompleteFieldComponent),
+  autocompleteChiplist: import('@tft/crispr-forms/ui').then(({ AutocompleteChiplistFieldComponent}) =>  AutocompleteChiplistFieldComponent),
+  textarea: import('@tft/crispr-forms/ui').then(({ TextareaFieldComponent}) =>  TextareaFieldComponent),
+  checkbox: import('@tft/crispr-forms/ui').then(({ CheckboxFieldComponent}) =>  CheckboxFieldComponent),
+  slider: import('@tft/crispr-forms/ui').then(({ SliderFieldComponent}) =>  SliderFieldComponent),
+  datepicker: import('@tft/crispr-forms/ui').then(({ DatepickerFieldComponent}) =>  DatepickerFieldComponent),
+  fileUpload: import('@tft/crispr-forms/ui').then(({ FileUploadFieldComponent}) =>  FileUploadFieldComponent),
+  imageUpload: import('@tft/crispr-forms/ui/image-upload-field').then(({ ImageUploadFieldComponent}) =>  ImageUploadFieldComponent),
+  heading: import('@tft/crispr-forms/ui').then(({ HeadingComponent}) =>  HeadingComponent),
+  divider: import('@tft/crispr-forms/ui').then(({ DividerComponent}) =>  DividerComponent),
+  unitConversion: import('@tft/crispr-forms/ui').then(({ UnitConversionFieldComponent}) =>  UnitConversionFieldComponent)
 };
 
-export function isControlComponent(component: CrisprFieldComponent): component is CrisprControlComponent {
+export function isControlComponent(component: CrisprFieldComponentType): component is CrisprControlComponentType {
   return component && isControlConfig(component.config) && 'value' in component // || component.config.controlType === ControlType.BUTTON;
 }
 
-export function isControlOrButtonComponent(component: CrisprFieldComponent): component is CrisprControlOrButton {
+export function isControlOrButtonComponent(component: CrisprFieldComponentType): component is CrisprControlOrButton {
   return isControlComponent(component) || component.config.controlType === ControlType.BUTTON;
 }
 
-export type CrisprControlOrButton = CrisprControlComponent | ButtonComponent;
+export type CrisprControlOrButton = CrisprControlComponentType | ButtonComponent;
 
-export type CrisprControlComponent = InputFieldComponent |
+export type CrisprControlComponentType = InputFieldComponent |
   SelectFieldComponent |
   RadioFieldComponent |
   SubGroupComponent |
@@ -56,7 +57,7 @@ export type CrisprControlComponent = InputFieldComponent |
 export type ComponentKeys = keyof typeof FIELD_COMPONENTS;
 // export type CrisprFieldComponent = FIELD_COMPONENTS[ComponentKeys];
 
-export type CrisprFieldComponent = CrisprControlComponent |
+export type CrisprFieldComponentType = CrisprControlComponentType |
   HeadingComponent |
   DividerComponent |
   ButtonComponent;

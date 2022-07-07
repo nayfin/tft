@@ -1,12 +1,13 @@
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
-import { ControlGroupValue, FormConfig } from '../models';
-import { buildFormGroupFromConfig } from '../form.helpers';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { CrisprFieldDirective } from '../field.directive';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { CrisprPipesModule } from '../pipes/crispr-pipes.module';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { ControlGroupValue, FormConfig, buildFormGroupFromConfig } from '@tft/crispr-forms/utils';
+
 @Component({
   selector: 'crispr-form',
   styleUrls: ['form.component.scss'],

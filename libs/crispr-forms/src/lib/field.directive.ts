@@ -1,7 +1,8 @@
-import { Directive, Input, ViewContainerRef, Renderer2, NgModule, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Directive, Input, ViewContainerRef, Renderer2, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { AnyFieldConfig, ControlValue } from './models';
-import { CrisprFieldComponent, FIELD_COMPONENTS, isControlComponent, isControlOrButtonComponent } from './field-component-map.const';
+import { CrisprFieldComponentType, FIELD_COMPONENTS, isControlComponent, isControlOrButtonComponent } from './field-component-map.const';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { AnyFieldConfig, ControlValue } from '@tft/crispr-forms/utils';
 
 @Directive({
   selector: '[crisprField]',
@@ -23,7 +24,7 @@ export class CrisprFieldDirective implements OnInit {
   get value() {
     return this._value;
   }
-  component: CrisprFieldComponent;
+  component: CrisprFieldComponentType;
 
   constructor(
     private container: ViewContainerRef,
@@ -36,7 +37,7 @@ export class CrisprFieldDirective implements OnInit {
      * create component and set values from config on its instance
      */
     const component = this.config.component || await FIELD_COMPONENTS[this.config.controlType];
-    const componentRef = this.container.createComponent<CrisprFieldComponent>(component);
+    const componentRef = this.container.createComponent<CrisprFieldComponentType>(component);
 
     this.component = componentRef.instance;
     this.component.config = this.config;

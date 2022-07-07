@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ControlValue, AnyFieldConfig } from '../models';
-import { isControlConfig } from '../form.helpers';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { ControlValue, AnyFieldConfig, isControlConfig } from '@tft/crispr-forms/utils';
 
 @Pipe({
   name: 'initialControlValue'
