@@ -14,7 +14,6 @@ export * from './unit-conversion-field';
 export * from './option';
 export * from './file-upload';
 
-export * from '@tft/crispr-forms/ui/image-upload-field';
 export * from '@tft/crispr-forms/ui/file-dropzone';
 export * from '@tft/crispr-forms/ui/selected-file';
 export * from '@tft/crispr-forms/ui/field-container';
