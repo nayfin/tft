@@ -1,1 +1,1 @@
-export * from './textarea-field.component';
+export * from './public-api';

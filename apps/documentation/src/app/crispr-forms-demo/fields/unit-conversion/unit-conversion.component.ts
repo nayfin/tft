@@ -30,12 +30,11 @@ export class UnitConversionComponent {
         initialDisplayUnit: 'ft',
         showUnitSelect: true,
         validators: [Validators.required, Validators.max(3)],
-        selectableUnits: (_group) => {
-          return [
+        selectableUnits: (_group) => ([
           {value: 'in', label: 'inch'},
           {value: 'ft', label: 'feet'},
           {value: 'yd', label: 'yard'},
-        ]},
+        ]),
         initialDisplayValueConversion: (value, displayedUnit) => {
           if (value) {
             console.log({displayedUnit})

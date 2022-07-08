@@ -1,1 +1,1 @@
-export * from './radio-field.component';
+export * from './public-api';
