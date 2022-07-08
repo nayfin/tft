@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { CrisprFieldComponent, ButtonConfig } from '@tft/crispr-forms/utils';
 
@@ -22,6 +23,7 @@ import { CrisprFieldComponent, ButtonConfig } from '@tft/crispr-forms/utils';
     MatIconModule,
     MatTooltipModule,
     ReactiveFormsModule,
+    FormValidationHandlerModule
   ],
 })
 export class ButtonComponent extends CrisprFieldComponent<ButtonConfig> implements OnInit {

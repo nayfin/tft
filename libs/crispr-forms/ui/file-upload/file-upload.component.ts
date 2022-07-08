@@ -14,9 +14,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { Observable, of } from 'rxjs';
 import { FileDropzoneDirective } from '@tft/crispr-forms/ui/file-dropzone';
+import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
 import { crisprControlMixin, CrisprFieldComponent, FileUploadFieldConfig } from '@tft/crispr-forms/utils';
 import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
@@ -40,7 +40,7 @@ const FileUploadFieldMixin = crisprControlMixin<FileUploadFieldConfig>(CrisprFie
     MatInputModule,
     SelectedFileComponent,
     FormValidationHandlerModule,
-    FileDropzoneDirective
+    FileDropzoneDirective,
   ],
 })
 export class FileUploadFieldComponent extends FileUploadFieldMixin implements OnInit, ControlValueAccessor {

@@ -1,3 +1,4 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
@@ -6,10 +7,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { startWith } from 'rxjs/operators';
+import { OptionComponent } from '../option';
+import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
 import { InfoComponent } from '@tft/crispr-forms/ui/info';
-import { OptionComponent } from '../option';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { crisprControlMixin, CrisprFieldComponent, observablifyOptions, SelectOption, UnitConversionFieldConfig } from '@tft/crispr-forms/utils';
 
 const defaultConfig: Partial<UnitConversionFieldConfig> = {};
@@ -31,6 +32,7 @@ const UnitConversionFieldMixin = crisprControlMixin<UnitConversionFieldConfig>(C
     MatInputModule,
     MatSelectModule,
     MatOptionModule,
+    FormValidationHandlerModule,
   ],
 })
 export class UnitConversionFieldComponent extends UnitConversionFieldMixin implements OnInit, OnDestroy {

@@ -1,17 +1,17 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, AfterViewInit } from '@angular/core';
  import { Observable } from 'rxjs';
 
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { ThemePalette } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
-import { InfoComponent } from '@tft/crispr-forms/ui/info';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
-// import { CrisprFieldDirective } from '../../field.directive';
-import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { OptionComponent } from '../option';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { InfoComponent } from '@tft/crispr-forms/ui/info';
+import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
 import { observablifyOptions, CrisprFieldComponent, crisprControlMixin, SelectFieldConfig, SelectOption } from '@tft/crispr-forms/utils';
 
 const SelectFieldMixin = crisprControlMixin<SelectFieldConfig>(CrisprFieldComponent);
@@ -29,7 +29,7 @@ const SelectFieldMixin = crisprControlMixin<SelectFieldConfig>(CrisprFieldCompon
     MatCheckboxModule,
     MatSelectModule,
     ReactiveFormsModule,
-    // CrisprFieldDirective,
+    FormValidationHandlerModule,
     FieldContainerComponent,
     MatFormFieldModule,
   ]

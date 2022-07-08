@@ -1,11 +1,12 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatSliderModule } from '@angular/material/slider';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { OptionComponent } from '../option';
+import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
 import { InfoComponent } from '@tft/crispr-forms/ui/info';
-import { OptionComponent } from '../option';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { SliderFieldConfig, CrisprFieldComponent, crisprControlMixin } from '@tft/crispr-forms/utils';
 
 const defaultConfig = {displayLimits: true};
@@ -23,7 +24,8 @@ const SliderFieldMixin = crisprControlMixin<SliderFieldConfig>(CrisprFieldCompon
     OptionComponent,
     FieldContainerComponent,
     ReactiveFormsModule,
-    MatSliderModule
+    MatSliderModule,
+    FormValidationHandlerModule,
   ],
 })
 export class SliderFieldComponent extends SliderFieldMixin implements OnInit {

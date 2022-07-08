@@ -73,6 +73,7 @@ export class OverviewComponent implements OnInit{
       {
         controlType: ControlType.RADIO,
         controlName: 'radioField',
+        validators: [Validators.required],
         options: () => {
           return [
             {
@@ -110,7 +111,6 @@ export class OverviewComponent implements OnInit{
                 iconName: 'delete'
               },
               fieldSuffix: '$',
-              // validators: [Validators.required],
               typeDebounceTime: 0,
               validators: [Validators.required],
               options: (_group, searchTerm) => {

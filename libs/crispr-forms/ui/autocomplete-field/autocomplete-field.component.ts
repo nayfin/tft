@@ -1,14 +1,16 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy, ElementRef, OnDestroy } from '@angular/core';
 import { MatAutocompleteTrigger, MatAutocompleteSelectedEvent, MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { OptionComponent } from '../option';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+
+import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
 import { SelectOption, AbstractAutocompleteComponent, AutocompleteFieldConfig, DEFAULT_EMPTY_OPTIONS_MESSAGE } from '@tft/crispr-forms/utils';
 import { InfoComponent } from '@tft/crispr-forms/ui/info';
 
@@ -33,6 +35,7 @@ const defaultConfig: Partial<AutocompleteFieldConfig> = {
     MatAutocompleteModule,
     MatInputModule,
     MatOptionModule,
+    FormValidationHandlerModule,
   ],
 })
 export class AutocompleteFieldComponent

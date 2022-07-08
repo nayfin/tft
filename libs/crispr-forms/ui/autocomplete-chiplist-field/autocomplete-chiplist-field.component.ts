@@ -1,3 +1,4 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
@@ -9,12 +10,12 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
-import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
 import { OptionComponent } from '../option';
 import { MatIconModule } from '@angular/material/icon';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { AutocompleteChiplistFieldConfig, AbstractAutocompleteComponent, DEFAULT_EMPTY_OPTIONS_MESSAGE, SelectOption } from '@tft/crispr-forms/utils';
+import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
 import { InfoComponent } from '@tft/crispr-forms/ui/info';
+import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
 const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
   chipsSelectable: true,
@@ -45,7 +46,8 @@ const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
     MatInputModule,
     MatOptionModule,
     MatChipsModule,
-    MatIconModule
+    MatIconModule,
+    FormValidationHandlerModule
   ],
 })
 export class AutocompleteChiplistFieldComponent

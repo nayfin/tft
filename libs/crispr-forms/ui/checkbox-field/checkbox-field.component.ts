@@ -1,9 +1,10 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { crisprControlMixin, CrisprFieldComponent, CheckboxFieldConfig } from '@tft/crispr-forms/utils';
 import { InfoComponent } from '@tft/crispr-forms/ui/info';
 
@@ -24,8 +25,8 @@ const CheckboxFieldMixin = crisprControlMixin<CheckboxFieldConfig>(CrisprFieldCo
     InfoComponent,
     MatCheckboxModule,
     ReactiveFormsModule,
-    // CrisprFieldDirective,
-    FieldContainerComponent
+    FieldContainerComponent,
+    FormValidationHandlerModule
   ],
 })
 export class CheckboxFieldComponent extends CheckboxFieldMixin implements OnInit {
