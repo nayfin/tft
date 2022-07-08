@@ -3,11 +3,12 @@
 import type { FormGroupListComponent } from './form-group-list/form-group-list.component';
 import type { SubGroupComponent } from './sub-group/sub-group.component';
 import type { HeadingComponent, InputFieldComponent, SelectFieldComponent, AutocompleteFieldComponent,
-  AutocompleteChiplistFieldComponent, TextareaFieldComponent, CheckboxFieldComponent,
+  TextareaFieldComponent, CheckboxFieldComponent,
   RadioFieldComponent, FileUploadFieldComponent, SliderFieldComponent,
   DividerComponent, ButtonComponent, UnitConversionFieldComponent } from '@tft/crispr-forms/ui';
 import type { ImageUploadFieldComponent } from '@tft/crispr-forms/ui/image-upload-field';
 import type { DatepickerFieldComponent } from '@tft/crispr-forms/ui/datepicker-field';
+import type { AutocompleteChiplistFieldComponent } from '@tft/crispr-forms/ui/autocomplete-chiplist-field';
 
 import { isControlConfig, ControlType } from '@tft/crispr-forms/utils';
 
@@ -19,7 +20,7 @@ export const FIELD_COMPONENTS = {
   select: import('@tft/crispr-forms/ui').then(({ SelectFieldComponent}) =>  SelectFieldComponent),
   radio: import('@tft/crispr-forms/ui').then(({ RadioFieldComponent}) =>  RadioFieldComponent),
   autocomplete: import('@tft/crispr-forms/ui').then(({ AutocompleteFieldComponent}) =>  AutocompleteFieldComponent),
-  autocompleteChiplist: import('@tft/crispr-forms/ui').then(({ AutocompleteChiplistFieldComponent}) =>  AutocompleteChiplistFieldComponent),
+  autocompleteChiplist: import('@tft/crispr-forms/ui/autocomplete-chiplist-field').then(({ AutocompleteChiplistFieldComponent}) =>  AutocompleteChiplistFieldComponent),
   textarea: import('@tft/crispr-forms/ui').then(({ TextareaFieldComponent}) =>  TextareaFieldComponent),
   checkbox: import('@tft/crispr-forms/ui').then(({ CheckboxFieldComponent}) =>  CheckboxFieldComponent),
   slider: import('@tft/crispr-forms/ui').then(({ SliderFieldComponent}) =>  SliderFieldComponent),

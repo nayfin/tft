@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { OptionComponent } from '../option';
+import { OptionComponent } from '@tft/crispr-forms/ui/option';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { InfoComponent } from '@tft/crispr-forms/ui/info';
 import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
