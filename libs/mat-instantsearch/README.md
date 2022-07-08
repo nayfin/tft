@@ -1,6 +1,6 @@
 # mat-instantsearch
 
-This library was generated with [Nx](https://nx.dev).
+We just upgraded to latest angular-instantsearch. This is our least used library and the least tested. Please let us know if you find any breaking changes and we'll fix ASAP.
 
 ## Running unit tests
 
