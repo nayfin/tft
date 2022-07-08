@@ -1,6 +1,6 @@
-import { Component, Inject, forwardRef, OnInit, Input } from '@angular/core';
-import { BaseWidget, NgAisInstantSearch } from 'angular-instantsearch';
-import { connectRefinementList } from 'instantsearch.js/es/connectors';
+import { Component, Inject, forwardRef, OnInit, Input, Optional } from '@angular/core';
+import { NgAisIndex, NgAisInstantSearch, TypedBaseWidget } from 'angular-instantsearch';
+import connectRefinementList, { RefinementListWidgetDescription, RefinementListConnectorParams  } from 'instantsearch.js/es/connectors/refinement-list/connectRefinementList';
 import { FilterListState, RefinementListItem } from '../models';
 
 @Component({
@@ -8,23 +8,39 @@ import { FilterListState, RefinementListItem } from '../models';
   templateUrl: './filter-select.component.html',
   styleUrls: ['./filter-select.component.scss']
 })
-export class FilterSelectComponent extends BaseWidget implements OnInit {
+export class FilterSelectComponent extends TypedBaseWidget<RefinementListWidgetDescription, RefinementListConnectorParams> implements OnInit {
 
   @Input() title: string | null = 'Filter results';
   @Input() multiple = true;
   @Input() attributeName: string;
 
-  state: FilterListState
+  state: RefinementListWidgetDescription['renderState'] = {
+    canRefine: false,
+    // canToggleShowMore: boolean;
+    createURL: () => undefined,
+    // isShowingMore: boolean;
+    items: [],
+    refine: () => {},
+    searchForItems: () => {},
+    isFromSearch: false,
+    hasExhaustiveItems: true,
+    isShowingMore: false,
+    sendEvent: () => {},
+    canToggleShowMore: false,
+    toggleShowMore: () => {}
+  };
 
   constructor(
+    @Inject(forwardRef(() => NgAisIndex))
+    @Optional() public parentIndex: NgAisIndex,
     @Inject(forwardRef(() => NgAisInstantSearch))
-    public instantSearchParent
+    public instantSearchInstance: NgAisInstantSearch
   ) {
     super('RefinementList');
   }
 
   public ngOnInit() {
-    super.createWidget(connectRefinementList, { attributeName: this.attributeName });
+    super.createWidget(connectRefinementList, { attribute: this.attributeName });
     super.ngOnInit();
   }
 

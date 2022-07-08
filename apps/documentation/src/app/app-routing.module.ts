@@ -14,11 +14,11 @@ const routes: Routes = [
     loadChildren: () => import('./interact-demo/interact-demo.module')
       .then(m => m.InteractDemoModule)
   },
-  // {
-  //   path: 'mat-instantsearch-demo',
-  //   loadChildren: () => import('./mat-instantsearch-demo/mat-instantsearch-demo.module')
-  //     .then(m => m.MatInstantsearchDemoModule)
-  // },
+  {
+    path: 'mat-instantsearch-demo',
+    loadChildren: () => import('./mat-instantsearch-demo/mat-instantsearch-demo.module')
+      .then(m => m.MatInstantsearchDemoModule)
+  },
   { path: '**'  , redirectTo: 'crispr-forms-demo' },
 ];
 const routerConfig: ExtraOptions = {

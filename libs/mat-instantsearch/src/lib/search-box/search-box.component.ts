@@ -1,5 +1,5 @@
-import { Component, Inject, forwardRef, OnInit, Input } from '@angular/core';
-import { BaseWidget, NgAisInstantSearch } from 'angular-instantsearch';
+import { Component, Inject, forwardRef, OnInit, Input, Optional } from '@angular/core';
+import { BaseWidget, NgAisIndex, NgAisInstantSearch } from 'angular-instantsearch';
 import { connectSearchBox } from 'instantsearch.js/es/connectors';
 
 @Component({
@@ -22,8 +22,10 @@ export class SearchBoxComponent extends BaseWidget implements OnInit {
   };
 
   constructor(
-    @Inject(forwardRef(() => NgAisInstantSearch)) public instantSearchParent: NgAisInstantSearch
-  ) {
+    @Inject(forwardRef(() => NgAisIndex))
+    @Optional() public parentIndex: NgAisIndex,
+    @Inject(forwardRef(() => NgAisInstantSearch))
+    public instantSearchInstance: NgAisInstantSearch  ) {
     super('SearchBox');
   }
 

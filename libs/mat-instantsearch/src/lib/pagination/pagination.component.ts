@@ -1,11 +1,8 @@
-import { Component, Input, Inject, OnInit, OnChanges, forwardRef } from '@angular/core';
+import { Component, Input, Inject, OnInit, forwardRef, Optional } from '@angular/core';
 import { connectPagination } from 'instantsearch.js/es/connectors';
 import { noop } from 'lodash-es';
-// import { NgAisHitsPerPage } from 'angular-instantsearch/hits-per-page/hits-per-page';
-import { BaseWidget, NgAisModule, NgAisInstantSearch } from 'angular-instantsearch';
-// import { TftInstantSearchInstance } from '../instantsearch/instantsearch-instance';
-// import { parseNumberInput } from '../utils';
-// import { TftResultsPerPageComponent } from '../results-per-page/results-per-page.component';
+import { BaseWidget, NgAisInstantSearch, NgAisIndex } from 'angular-instantsearch';
+
 
 @Component({
   selector: 'mis-pagination',
@@ -40,7 +37,10 @@ export class PaginationComponent extends BaseWidget implements OnInit {
     refine: noop
   };
   constructor(
-    @Inject(forwardRef(() => NgAisInstantSearch)) public instantSearchParent,
+    @Inject(forwardRef(() => NgAisIndex))
+    @Optional() public parentIndex: NgAisIndex,
+    @Inject(forwardRef(() => NgAisInstantSearch))
+    public instantSearchInstance: NgAisInstantSearch
   ) {
     super('Pagination');
   }

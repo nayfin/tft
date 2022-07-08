@@ -1,19 +1,19 @@
-import { Component, Inject, forwardRef, OnInit, Input } from '@angular/core';
+import { Component, Inject, forwardRef, OnInit, Input, Optional } from '@angular/core';
 import { Validators, FormControl } from '@angular/forms';
-import { BaseWidget, NgAisInstantSearch } from 'angular-instantsearch';
-import { connectRefinementList } from 'instantsearch.js/es/connectors';
+import { NgAisIndex, NgAisInstantSearch, TypedBaseWidget } from 'angular-instantsearch';
+import connectRefinementList, { RefinementListWidgetDescription, RefinementListConnectorParams  } from 'instantsearch.js/es/connectors/refinement-list/connectRefinementList';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { RefinementListItem, RefinementListState } from '../models';
+import { RefinementListItem } from '../models';
+import { SortBy } from 'instantsearch.js/es/types';
 
 @Component({
   selector: 'mis-filter-chiplist',
   templateUrl: './filter-chiplist.component.html',
   styleUrls: ['./filter-chiplist.component.scss']
 })
-export class FilterChiplistComponent extends BaseWidget implements OnInit {
-
+export class FilterChiplistComponent extends TypedBaseWidget<RefinementListWidgetDescription, RefinementListConnectorParams> implements OnInit {
 
   // attribute of search index to search and filter on
   @Input() attributeName: string;
@@ -42,7 +42,7 @@ export class FilterChiplistComponent extends BaseWidget implements OnInit {
   @Input() limitMin: number | string = 10;
   @Input() limitMax: number | string;
   // TODO: what options do we get with sortBy?
-  @Input() sortBy: string[] | ((item: object) => number);
+  @Input() sortBy: SortBy<any>;
 
   @Input() searchQuery = '';
   chips = [];
@@ -51,21 +51,28 @@ export class FilterChiplistComponent extends BaseWidget implements OnInit {
   chips$ = new BehaviorSubject<RefinementListItem[]>([])
   remainingItems$: Observable<any[]>;
 
-  state: RefinementListState = {
+  state: RefinementListWidgetDescription['renderState'] = {
     canRefine: false,
     // canToggleShowMore: boolean;
     createURL: () => undefined,
     // isShowingMore: boolean;
     items: [],
-    refine: () => undefined,
-    searchForItems: () => undefined,
-    isFormSearch: false,
+    refine: () => {},
+    searchForItems: () => {},
+    isFromSearch: false,
+    hasExhaustiveItems: true,
+    isShowingMore: false,
+    sendEvent: () => {},
+    canToggleShowMore: false,
+    toggleShowMore: () => {}
   };
 
   constructor (
+    @Inject(forwardRef(() => NgAisIndex))
+    @Optional() public parentIndex: NgAisIndex,
     @Inject(forwardRef(() => NgAisInstantSearch))
-    public instantSearchParent,
-    ) {
+    public instantSearchInstance: NgAisInstantSearch
+  ) {
     super('RefinementList');
   }
 
@@ -74,9 +81,9 @@ export class FilterChiplistComponent extends BaseWidget implements OnInit {
     super.createWidget(connectRefinementList, {
       limit: this.parseNumberInput(this.limitMin),
       showMoreLimit: this.parseNumberInput(this.limitMax),
-      attributeName: this.attributeName,
+      attribute: this.attributeName,
       sortBy: this.sortBy,
-      escapeFacetValues: true
+      escapeFacetValues: true,
     });
     super.ngOnInit();
 

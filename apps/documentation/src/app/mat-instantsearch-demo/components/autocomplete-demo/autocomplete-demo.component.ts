@@ -33,6 +33,7 @@ export class AutocompleteDemoComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 
   handleSelect(event) {

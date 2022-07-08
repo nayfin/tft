@@ -1,9 +1,16 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { FormGroup } from '@angular/forms';
 // TODO: use below imports after creating entry points for fields
-// import type { FileUploadFieldComponent } from '../material/file-upload/file-upload.component';
-// import type { ImageUploadFieldComponent } from '../material/image-upload-field';
+
 import { CrisprControlConfig, ControlType, MatFieldProperties } from './crispr-field.config';
 import { ButtonType } from './button.config';
+import { Observable } from 'rxjs';
+
+export interface AbstractUploadComponent {
+  isUploaded: boolean;
+  fileProgress: Observable<number>[];
+  disabled$: Observable<boolean>;
+}
 
 export type FileUploadFieldConfig = CrisprControlConfig & MatFieldProperties & {
   controlType: ControlType.FILE_UPLOAD;
@@ -21,7 +28,7 @@ export type FileUploadFieldConfig = CrisprControlConfig & MatFieldProperties & {
 
 // The properties that are only available if we are using the uploadFiles callback
 export interface EnabledUploadButtonConfig {
-  uploadFiles: (parentGroup: FormGroup, files:FileList, uploadComponent: any /** FileUploadFieldComponent | ImageUploadFieldComponent */) => Promise<unknown> | unknown;
+  uploadFiles: (parentGroup: FormGroup, files:FileList, uploadComponent: AbstractUploadComponent ) => Promise<unknown> | unknown;
   showUploadProgress?: boolean;
   disableOnUpload?: boolean;
   uploadButtonType?: ButtonType;
