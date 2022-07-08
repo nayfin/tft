@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { startWith } from 'rxjs/operators';
-import { OptionComponent } from '../option';
+import { OptionComponent } from '@tft/crispr-forms/ui/option';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
 import { InfoComponent } from '@tft/crispr-forms/ui/info';

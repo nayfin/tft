@@ -1,1 +1,1 @@
-export * from './select-field.component';
+export * from './public-api';

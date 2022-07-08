@@ -1,1 +1,1 @@
-export * from './slider-field.component';
+export * from './public-api';

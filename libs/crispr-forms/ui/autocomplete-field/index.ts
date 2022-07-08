@@ -1,1 +1,1 @@
-export * from './autocomplete-field.component';
+export * from './public-api';

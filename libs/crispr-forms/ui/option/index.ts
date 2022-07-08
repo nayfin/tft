@@ -1,1 +1,1 @@
-export * from './option.component';
+export * from './public-api';

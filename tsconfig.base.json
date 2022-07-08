@@ -20,12 +20,7 @@
       "@tft/core": ["libs/core/src/index.ts"],
       "@tft/crispr-forms": ["libs/crispr-forms/public-api.ts"],
       "@tft/crispr-forms/ui": ["libs/crispr-forms/ui/index.ts"],
-      "@tft/crispr-forms/ui/info": ["libs/crispr-forms/ui/info/index.ts"],
-      "@tft/crispr-forms/ui/heading": ["libs/crispr-forms/ui/heading/index.ts"],
-      "@tft/crispr-forms/ui/field-container": ["libs/crispr-forms/ui/field-container/index.ts"],
-      "@tft/crispr-forms/ui/selected-file": ["libs/crispr-forms/ui/selected-file/index.ts"],
-      "@tft/crispr-forms/ui/file-dropzone": ["libs/crispr-forms/ui/file-dropzone/index.ts"],
-      "@tft/crispr-forms/ui/image-upload-field": ["libs/crispr-forms/ui/image-upload-field/index.ts"],
+      "@tft/crispr-forms/ui/*": ["libs/crispr-forms/ui/*"],
       "@tft/crispr-forms/utils": ["libs/crispr-forms/utils/index.ts"],
       "@tft/form-validation-handler": [
         "libs/form-validation-handler/src/index.ts"

@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
-import { OptionComponent } from '../option';
+import { OptionComponent } from '@tft/crispr-forms/ui/option';
 import { MatIconModule } from '@angular/material/icon';
 import { AutocompleteChiplistFieldConfig, AbstractAutocompleteComponent, DEFAULT_EMPTY_OPTIONS_MESSAGE, SelectOption } from '@tft/crispr-forms/utils';
 import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
