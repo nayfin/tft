@@ -7,7 +7,6 @@ export * from './checkbox-field';
 export * from './textarea-field';
 export * from './slider-field';
 export * from './button';
-export * from './datepicker-field';
 export * from './divider';
 export * from './radio-field';
 export * from './unit-conversion-field';

@@ -1,13 +1,13 @@
 {
-  "name": "@tft/crispr-forms",
-  "version": "14.0.1-rc.2",
+  "version": "14.0.1-rc.1",
   "peerDependencies": {
     "@angular/common": "^14.0.0",
     "@angular/forms": "^14.0.0",
     "@angular/core": "^14.0.0",
     "@angular/material": "^14.0.0",
     "@angular/cdk": "^14.0.0",
-    "@tft/form-validation-handler": "^14.0.0"
+    "@angular/material-date-fns-adapter": "14.0.1",
+    "date-fns": "^2.28.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"

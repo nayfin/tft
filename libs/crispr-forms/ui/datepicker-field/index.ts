@@ -1,1 +1,1 @@
-export * from './datepicker-field.component';
+export * from './public-api';
