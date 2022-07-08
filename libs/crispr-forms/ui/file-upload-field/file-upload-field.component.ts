@@ -26,8 +26,8 @@ const FileUploadFieldMixin = crisprControlMixin<FileUploadFieldConfig>(CrisprFie
 
 @Component({
   selector: 'crispr-file-upload-field',
-  templateUrl: './file-upload.component.html',
-  styleUrls: ['./file-upload.component.scss'],
+  templateUrl: './file-upload-field.component.html',
+  styleUrls: ['./file-upload-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
