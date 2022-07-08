@@ -1,8 +1,10 @@
  /* puts some space between name and count chip */
-
-/* tft-highlight {
-  padding-left: 8px;
-} */
+ :host {
+  display: flex;
+  mat-form-field {
+    width: 100%;
+  }
+}
 
 // default margin of -4px causes input to overflow
 // TODO: input is still wider than it should be though...
