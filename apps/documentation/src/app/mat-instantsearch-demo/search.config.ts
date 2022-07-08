@@ -1,5 +1,11 @@
+import algoliasearch from 'algoliasearch/lite';
+
+const searchClient = algoliasearch(
+  'B1G2GM9NG0',
+  'aadef574be1f9252bb48d4ea09b5cfe5'
+);
+
 export const SEARCH_CONFIG = {
-  apiKey: '6be0576ff61c053d5f9a3225e2a90f76',
-  appId: 'latency',
-  indexName: 'instant_search'
+  indexName: 'demo_ecommerce',
+  searchClient
 };

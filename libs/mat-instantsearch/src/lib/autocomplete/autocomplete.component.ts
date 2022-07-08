@@ -1,6 +1,6 @@
-import { Component, Inject, forwardRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Inject, forwardRef, OnInit, Input, Output, EventEmitter, Optional } from '@angular/core';
 import { Validators, FormControl } from '@angular/forms';
-import { BaseWidget, NgAisInstantSearch } from 'angular-instantsearch';
+import { BaseWidget, NgAisIndex, NgAisInstantSearch } from 'angular-instantsearch';
 import { connectAutocomplete } from 'instantsearch.js/es/connectors';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
@@ -41,13 +41,14 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
   *
   */
   // will listen for changes on formControl then fire refine off with the controls value
-  hits: Observable<any>;
+  // hits: Observable<any>;
 
   state: {
-    query: '';
+    query: string;
     refine: (value: string) => AlgoliaSearchHelper;
     indices: { hits: any[], index: string, label: string }[];
   };
+
   @Input() imageUrlParam = 'image';
   @Input() placeholder = 'Type to search';
   @Input() algoliaAttribution = true;
@@ -65,21 +66,23 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
   @Input() autocompleteControl = new FormControl(null, ...this.validators);
 
 
-  @Output() selectHit = new EventEmitter();
+  @Output() selectHit = new EventEmitter<{ query: string }>();
 
   constructor (
-    @Inject(forwardRef(() => NgAisInstantSearch)) public instantSearchParent: NgAisInstantSearch,
+    @Optional() public parentIndex: NgAisIndex,
+    @Inject(forwardRef(() => NgAisInstantSearch))
+    public instantSearchInstance: NgAisInstantSearch
   ) {
-    super('Autocomplete');
+    super('AutocompleteComponent');
   }
 
   ngOnInit() {
-    super.createWidget(connectAutocomplete);
+    super.createWidget(connectAutocomplete, {});
     super.ngOnInit();
-    this.hits = this.autocompleteControl.valueChanges.pipe(
-      debounceTime(this.debounceTime),
-      map(val => this.handleChange(val))
-    );
+    // this.hits = this.autocompleteControl.valueChanges.pipe(
+    //   debounceTime(this.debounceTime),
+    //   map(val => this.handleChange(val))
+    // );
   }
 
   @Input() displayWithFn: (val: any) => string  = (val) => {
@@ -98,8 +101,8 @@ export class AutocompleteComponent extends BaseWidget implements OnInit {
   }
 
   handleSelect( event: MatAutocompleteSelectedEvent ) {
-    const item = event.option.value;
-    this.selectHit.emit({ item } );
+    const item = event.option.value as {name: string};
+    this.selectHit.emit({ query: item.name } );
     // if ( this.selectToSubmit) {
     //   this.handleSubmit();
     // }
