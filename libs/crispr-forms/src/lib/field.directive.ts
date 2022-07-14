@@ -36,7 +36,7 @@ export class CrisprFieldDirective implements OnInit {
     /**
      * create component and set values from config on its instance
      */
-    const component = this.config.component || await FIELD_COMPONENTS[this.config.controlType];
+    const component = this.config.component || await FIELD_COMPONENTS[this.config.controlType]();
     const componentRef = this.container.createComponent<CrisprFieldComponentType>(component);
 
     this.component = componentRef.instance;
