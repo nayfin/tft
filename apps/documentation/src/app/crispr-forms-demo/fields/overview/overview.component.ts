@@ -1,8 +1,25 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormConfig, ControlType, SelectOption, CrisprFormComponent } from '@tft/crispr-forms';
 import { Validators, FormGroup } from '@angular/forms';
 import { BehaviorSubject, of } from 'rxjs';
 import { map, delay } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+
+
+@Component({
+  selector: 'doc-display-item',
+  template: `<div>
+    <span>
+      Test display item {{value | json}}
+    </span>
+  </div> `,
+  styleUrls: ['./overview.component.scss'],
+  standalone: true,
+  imports: [CommonModule]
+})
+export class DisplayItemComponent {
+  @Input() value: any;
+}
 
 @Component({
   selector: 'doc-overview',
@@ -92,6 +109,7 @@ export class OverviewComponent implements OnInit{
         heading: {
           label: 'Group List'
         },
+        displayItemComponent: DisplayItemComponent,
         controlName: 'groupList',
         minListLength: 0,
         itemLabelBuilder: ( index: number ) => `Step ${index + 1}`,

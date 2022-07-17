@@ -5,30 +5,41 @@
   [formGroup]="group">
 
   <div [formArrayName]="config.controlName">
+
     <!-- Don't add trackBy function, it confuses the state of the array -->
-    <div *ngFor="let con of control?.controls; let i = index;">
-      <!-- TODO: use content projection to allow custom item label component -->
-      <div class="item-header">
-        <span class="mat-h2"> {{ config.itemLabelBuilder ? config.itemLabelBuilder(i) : 'Item ' + (i + 1) }} </span>
-        <button
-          mat-icon-button
-          type="button"
-          *ngIf="i + 1 > config.minListLength">
-          <mat-icon (click)="clickDelete(i)">delete</mat-icon>
-        </button>
-      </div>
-      <div
-        [formGroup]="con">
-        <!-- TODO: if chiplists didn't need to have labels mixed in with their values we could use [value]="control.value" below -->
+    <ng-container *ngFor="let control of control?.controls; let i = index; let last = last">
+      <ng-container *ngIf="!config.displayItemComponent || last; else display">
+
+        <!-- TODO: use content projection to allow custom item label component -->
+        <div  class="item-header">
+          <span class="mat-h2"> {{ config.itemLabelBuilder ? config.itemLabelBuilder(i) : 'Item ' + (i + 1) }} </span>
+          <button
+            mat-icon-button
+            type="button"
+            *ngIf="i + 1 > config.minListLength">
+            <mat-icon (click)="clickDelete(i)">delete</mat-icon>
+          </button>
+        </div>
+        <div
+          [formGroup]="control">
+          <!-- TODO: if chiplists didn't need to have labels mixed in with their values we could use [value]="control.value" below -->
+          <ng-container
+            *ngFor="let field of config.itemConfig.fields;"
+            crisprField
+            [value]="blockValue ? null : value && value[i] | initialControlValue : field"
+            [config]="field"
+            [group]="control">
+          </ng-container>
+        </div>
+      </ng-container>
+      <ng-template #display [ngComponentOutlet]="config.displayItemComponent" [ngOutletContext]="{value: 'some value'}">
         <ng-container
-          *ngFor="let field of config.itemConfig.fields;"
           crisprField
-          [value]="blockValue ? null : value && value[i] | initialControlValue : field"
-          [config]="field"
-          [group]="con">
-        </ng-container>
-      </div>
-    </div>
+          [value]="value"
+          [config]="config"
+          [group]="control"></ng-container>
+      </ng-template>
+    </ng-container>
   </div>
   <div class="group-footer">
     <button

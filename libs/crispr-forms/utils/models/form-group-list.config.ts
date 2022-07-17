@@ -19,6 +19,7 @@ export interface FormGroupListConfig extends CrisprControlConfig {
   displayInitialItem?: boolean;
   addButtonColor?: ThemePalette;
   addButtonLabel?: string;
+  displayItemComponent?: any; // TODO: this should be a component type
   /**
    * @deprecated Please use addButtonLabel, addItemLabel will be removed in the next major release
    */
