@@ -7,9 +7,8 @@
   <div [formArrayName]="config.controlName">
 
     <!-- Don't add trackBy function, it confuses the state of the array -->
-    <ng-container *ngFor="let control of control?.controls; let i = index; let last = last">
-      <ng-container *ngIf="!config.displayItemComponent || last; else display">
-
+    <ng-container *ngFor="let itemControl of control?.controls; let i = index; let last = last">
+      <ng-container *ngIf="!config.displayItemComponent || i === selectedIndex || (last && selectedIndex ?? true); else display">
         <!-- TODO: use content projection to allow custom item label component -->
         <div  class="item-header">
           <span class="mat-h2"> {{ config.itemLabelBuilder ? config.itemLabelBuilder(i) : 'Item ' + (i + 1) }} </span>
@@ -21,23 +20,28 @@
           </button>
         </div>
         <div
-          [formGroup]="control">
+          [formGroup]="itemControl">
           <!-- TODO: if chiplists didn't need to have labels mixed in with their values we could use [value]="control.value" below -->
           <ng-container
             *ngFor="let field of config.itemConfig.fields;"
             crisprField
             [value]="blockValue ? null : value && value[i] | initialControlValue : field"
             [config]="field"
-            [group]="control">
+            [group]="itemControl">
           </ng-container>
         </div>
       </ng-container>
-      <ng-template #display [ngComponentOutlet]="config.displayItemComponent" [ngOutletContext]="{value: 'some value'}">
-        <ng-container
-          crisprField
-          [value]="value"
-          [config]="config"
-          [group]="control"></ng-container>
+      <ng-template #display>
+        <div
+          class="display-field-container"
+          crisprDisplayField
+          [component]="config.displayItemComponent"
+          [value]="itemControl.value"
+          [index]="i">
+          <button mat-icon-button (click)="clickEditItem(i)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
       </ng-template>
     </ng-container>
   </div>

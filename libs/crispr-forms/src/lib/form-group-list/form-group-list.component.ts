@@ -11,6 +11,7 @@ import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { CrisprFieldComponent, crisprControlMixin, createControlForType, FormGroupListConfig } from '@tft/crispr-forms/utils';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { FieldContainerComponent } from '@tft/crispr-forms/ui';
+import { CrisprDisplayFieldDirective } from '../display-field.directive';
 
 const defaultConfig: Partial<FormGroupListConfig> = {
   addButtonLabel: 'ADD ITEM',
@@ -31,6 +32,7 @@ const FormGroupListMixin = crisprControlMixin<FormGroupListConfig>(CrisprFieldCo
     FieldContainerComponent,
     ReactiveFormsModule,
     CrisprFieldDirective,
+    CrisprDisplayFieldDirective,
     CrisprPipesModule,
     FormValidationHandlerModule
   ],
@@ -45,6 +47,8 @@ export class FormGroupListComponent extends FormGroupListMixin implements OnInit
    * we can block original values from overwriting form values
    * */
   blockValue = false;
+
+  selectedIndex: number = null;
 
   constructor(private cdr: ChangeDetectorRef) {
     super();
@@ -95,5 +99,9 @@ export class FormGroupListComponent extends FormGroupListMixin implements OnInit
 
   deleteGroup(index: number) {
     this.control.removeAt(index);
+  }
+
+  clickEditItem(index: number) {
+    this.selectedIndex = index;
   }
 }
