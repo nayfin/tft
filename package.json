@@ -47,7 +47,7 @@
     "@angular/router": "14.0.1",
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
-    "@nestjs/platform-express": "^8.0.0",
+    "@nestjs/platform-express": "^8.4.7",
     "@nrwl/angular": "14.2.4",
     "@storybook/builder-webpack5": "6.5.9",
     "@storybook/core-server": "^6.5.9",
