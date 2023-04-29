@@ -6,7 +6,7 @@
     "@angular/core": "^14.0.0",
     "@angular/material": "^14.0.0",
     "@angular/cdk": "^14.0.0",
-    "@angular/material-date-fns-adapter": "14.0.1",
+    "@angular/material-date-fns-adapter": "^14.0.1",
     "date-fns": "^2.28.0"
   },
   "dependencies": {
