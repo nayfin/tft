@@ -1,23 +1,23 @@
 import type { FormGroupListComponent } from './form-group-list/form-group-list.component';
 import type { SubGroupComponent } from './sub-group/sub-group.component';
-import type { HeadingComponent } from '@tft/crispr-forms/ui';
-import type { ImageUploadFieldComponent } from '@tft/crispr-forms/ui/image-upload-field';
-import type { DatepickerFieldComponent } from '@tft/crispr-forms/ui/datepicker-field';
-import type { CheckboxFieldComponent } from '@tft/crispr-forms/ui/checkbox-field';
-import type { TextareaFieldComponent } from '@tft/crispr-forms/ui/textarea-field';
-import type { AutocompleteFieldComponent } from '@tft/crispr-forms/ui/autocomplete-field';
-import type { SelectFieldComponent } from '@tft/crispr-forms/ui/select-field';
-import type { InputFieldComponent } from '@tft/crispr-forms/ui/input-field';
-import type { RadioFieldComponent } from '@tft/crispr-forms/ui/radio-field';
-import type { FileUploadFieldComponent } from '@tft/crispr-forms/ui/file-upload-field';
-import type { SliderFieldComponent } from '@tft/crispr-forms/ui/slider-field';
-import type { DividerComponent } from '@tft/crispr-forms/ui/divider';
-import type { ButtonComponent } from '@tft/crispr-forms/ui/button';
-import type { UnitConversionFieldComponent } from '@tft/crispr-forms/ui/unit-conversion-field';
+import type { HeadingComponent } from '../../ui';
+import type { ImageUploadFieldComponent } from '../../ui/image-upload-field';
+import type { DatepickerFieldComponent } from '../../ui/datepicker-field';
+import type { CheckboxFieldComponent } from '../../ui/checkbox-field';
+import type { TextareaFieldComponent } from '../../ui/textarea-field';
+import type { AutocompleteFieldComponent } from '../../ui/autocomplete-field';
+import type { SelectFieldComponent } from '../../ui/select-field';
+import type { InputFieldComponent } from '../../ui/input-field';
+import type { RadioFieldComponent } from '../../ui/radio-field';
+import type { FileUploadFieldComponent } from '../../ui/file-upload-field';
+import type { SliderFieldComponent } from '../../ui/slider-field';
+import type { DividerComponent } from '../../ui/divider';
+import type { ButtonComponent } from '../../ui/button';
+import type { UnitConversionFieldComponent } from '../../ui/unit-conversion-field';
 
-import type { AutocompleteChiplistFieldComponent } from '@tft/crispr-forms/ui/autocomplete-chiplist-field';
+import type { AutocompleteChiplistFieldComponent } from '../../ui/autocomplete-chiplist-field';
 
-import { isControlConfig, ControlType } from '@tft/crispr-forms/utils';
+import { isControlConfig, ControlType } from '../../utils';
 
 export const FIELD_COMPONENTS = {
   groupList: () =>
@@ -27,64 +27,64 @@ export const FIELD_COMPONENTS = {
   subGroup: () =>
     import('./sub-group').then(({ SubGroupComponent }) => SubGroupComponent),
   button: () =>
-    import('@tft/crispr-forms/ui/button').then(
+    import('../../ui/button').then(
       ({ ButtonComponent }) => ButtonComponent
     ),
   input: () =>
-    import('@tft/crispr-forms/ui/input-field').then(
+    import('../../ui/input-field').then(
       ({ InputFieldComponent }) => InputFieldComponent
     ),
   select: () =>
-    import('@tft/crispr-forms/ui/select-field').then(
+    import('../../ui/select-field').then(
       ({ SelectFieldComponent }) => SelectFieldComponent
     ),
   radio: () =>
-    import('@tft/crispr-forms/ui/radio-field').then(
+    import('../../ui/radio-field').then(
       ({ RadioFieldComponent }) => RadioFieldComponent
     ),
   autocomplete: () =>
-    import('@tft/crispr-forms/ui/autocomplete-field').then(
+    import('../../ui/autocomplete-field').then(
       ({ AutocompleteFieldComponent }) => AutocompleteFieldComponent
     ),
   autocompleteChiplist: () =>
-    import('@tft/crispr-forms/ui/autocomplete-chiplist-field').then(
+    import('../../ui/autocomplete-chiplist-field').then(
       ({ AutocompleteChiplistFieldComponent }) =>
         AutocompleteChiplistFieldComponent
     ),
   textarea: () =>
-    import('@tft/crispr-forms/ui/textarea-field').then(
+    import('../../ui/textarea-field').then(
       ({ TextareaFieldComponent }) => TextareaFieldComponent
     ),
   checkbox: () =>
-    import('@tft/crispr-forms/ui/checkbox-field').then(
+    import('../../ui/checkbox-field').then(
       ({ CheckboxFieldComponent }) => CheckboxFieldComponent
     ),
   slider: () =>
-    import('@tft/crispr-forms/ui/slider-field').then(
+    import('../../ui/slider-field').then(
       ({ SliderFieldComponent }) => SliderFieldComponent
     ),
   datepicker: () =>
-    import('@tft/crispr-forms/ui/datepicker-field').then(
+    import('../../ui/datepicker-field').then(
       ({ DatepickerFieldComponent }) => DatepickerFieldComponent
     ),
   fileUpload: () =>
-    import('@tft/crispr-forms/ui/file-upload-field').then(
+    import('../../ui/file-upload-field').then(
       ({ FileUploadFieldComponent }) => FileUploadFieldComponent
     ),
   imageUpload: () =>
-    import('@tft/crispr-forms/ui/image-upload-field').then(
+    import('../../ui/image-upload-field').then(
       ({ ImageUploadFieldComponent }) => ImageUploadFieldComponent
     ),
   heading: () =>
-    import('@tft/crispr-forms/ui').then(
+    import('../../ui').then(
       ({ HeadingComponent }) => HeadingComponent
     ),
   divider: () =>
-    import('@tft/crispr-forms/ui/divider').then(
+    import('../../ui/divider').then(
       ({ DividerComponent }) => DividerComponent
     ),
   unitConversion: () =>
-    import('@tft/crispr-forms/ui/unit-conversion-field').then(
+    import('../../ui/unit-conversion-field').then(
       ({ UnitConversionFieldComponent }) => UnitConversionFieldComponent
     ),
 };

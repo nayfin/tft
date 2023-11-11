@@ -10,7 +10,7 @@ import { FormGroup } from '@angular/forms';
 import {
   ControlValue,
   CrisprDisplayFieldComponent,
-} from '@tft/crispr-forms/utils';
+} from '../../utils';
 
 @Directive({
   selector: '[crisprDisplayField]',
