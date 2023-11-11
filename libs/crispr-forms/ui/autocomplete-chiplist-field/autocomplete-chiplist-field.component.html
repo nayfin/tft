@@ -10,13 +10,15 @@
       {{config.label}}
     </mat-label>
 
-    <mat-chip-list
+    <mat-chip-grid
       #chipList>
-      <mat-chip
+      <!-- [selectable]="config.chipsSelectable" -->
+      <mat-chip-row
         class="refinement-chip"
-        *ngFor="let chip of controlValue$ | async"
-        [selectable]="config.chipsSelectable"
+        *ngFor="let chip of controlValue$ | async; let i = index"
         [removable]="config.areChipsRemovable"
+        [highlighted]="chip?.value === selectedChip?.value"
+        (click)="highlightChip(chip)"
         (removed)="removeChip(chip)">
         <span *ngIf="chip.imageUrl as imageUrl" class="image-container">
           <img [src]="imageUrl" alt="image of {{chip.label}}">
@@ -27,8 +29,9 @@
           *ngIf="config.areChipsRemovable">
           cancel
         </mat-icon>
-      </mat-chip>
-      <input class="hidden-error-directive-anchor" [formControlName]="config.controlName" type="text"/>
+      </mat-chip-row>
+      <input class="hidden-error-directive-anchor" (blur)="blurField()"
+      [formControlName]="config.controlName" type="text"/>
 
       <input
         matInput
@@ -44,6 +47,7 @@
         autocapitalize="off"
         autocorrect="off"
         spellcheck="false"
+        (blur)="blurField()"
         #autoInput/>
       <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
       <crispr-info
@@ -52,7 +56,7 @@
         [info]="config.info ">
       </crispr-info>
 
-    </mat-chip-list>
+    </mat-chip-grid>
     <mat-autocomplete
       #auto="matAutocomplete"
       [autoActiveFirstOption]="this.config.autoActiveFirstOption"

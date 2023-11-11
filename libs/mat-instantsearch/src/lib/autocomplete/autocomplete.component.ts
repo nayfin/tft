@@ -1,18 +1,29 @@
 import { Component, Inject, forwardRef, OnInit, Input, Output, EventEmitter, Optional } from '@angular/core';
-import { Validators, FormControl } from '@angular/forms';
+import { Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { BaseWidget, NgAisIndex, NgAisInstantSearch } from 'angular-instantsearch';
 import { connectAutocomplete } from 'instantsearch.js/es/connectors';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
 import { AlgoliaSearchHelper } from 'algoliasearch-helper';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { AlgoliaAttributionComponent } from '../algolia-attribution/algolia-attribution.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'mis-autocomplete',
   templateUrl: './autocomplete.component.html',
   styleUrls: ['./autocomplete.component.scss'],
+  standalone: true,
+  imports: [
+    MatFormFieldModule,
+    MatAutocompleteModule,
+    MatIconModule,
+    AlgoliaAttributionComponent,
+    ReactiveFormsModule
+  ]
 })
-export class AutocompleteComponent extends BaseWidget implements OnInit {
+export class MisAutocompleteComponent extends BaseWidget implements OnInit {
 
 
 

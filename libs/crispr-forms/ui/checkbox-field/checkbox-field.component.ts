@@ -1,18 +1,23 @@
-/* eslint-disable @nrwl/nx/enforce-module-boundaries */
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
-import { crisprControlMixin, CrisprFieldComponent, CheckboxFieldConfig } from '@tft/crispr-forms/utils';
+import {
+  crisprControlMixin,
+  CrisprFieldComponent,
+  CheckboxFieldConfig,
+} from '@tft/crispr-forms/utils';
 import { InfoComponent } from '@tft/crispr-forms/ui/info';
 
 const defaultConfig: Partial<CheckboxFieldConfig> = {
   labelPosition: 'after',
-  inline: false
-}
-const CheckboxFieldMixin = crisprControlMixin<CheckboxFieldConfig>(CrisprFieldComponent);
+  inline: false,
+};
+const CheckboxFieldMixin =
+  crisprControlMixin<CheckboxFieldConfig>(CrisprFieldComponent);
 
 @Component({
   selector: 'crispr-checkbox-field',
@@ -26,14 +31,15 @@ const CheckboxFieldMixin = crisprControlMixin<CheckboxFieldConfig>(CrisprFieldCo
     MatCheckboxModule,
     ReactiveFormsModule,
     FieldContainerComponent,
-    FormValidationHandlerModule
+    FormValidationHandlerModule,
   ],
 })
-export class CheckboxFieldComponent extends CheckboxFieldMixin implements OnInit {
-
+export class CheckboxFieldComponent
+  extends CheckboxFieldMixin
+  implements OnInit
+{
   defaultConfig = defaultConfig;
   ngOnInit() {
     super.ngOnInit();
   }
 }
-

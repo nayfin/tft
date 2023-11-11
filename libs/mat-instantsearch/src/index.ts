@@ -1,4 +1,4 @@
-export * from './lib/mat-instantsearch.module';
+// export * from './lib/mat-instantsearch.module';
 export * from './lib/algolia-attribution/algolia-attribution.component';
 export * from './lib/autocomplete/autocomplete.component';
 export * from './lib/filter-chiplist/filter-chiplist.component';

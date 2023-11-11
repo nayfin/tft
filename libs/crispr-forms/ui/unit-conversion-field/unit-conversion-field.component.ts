@@ -1,6 +1,11 @@
-/* eslint-disable @nrwl/nx/enforce-module-boundaries */
+/* eslint-disable @nx/enforce-module-boundaries */
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  OnDestroy,
+} from '@angular/core';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
@@ -11,10 +16,17 @@ import { OptionComponent } from '@tft/crispr-forms/ui/option';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
 import { InfoComponent } from '@tft/crispr-forms/ui/info';
-import { crisprControlMixin, CrisprFieldComponent, observablifyOptions, SelectOption, UnitConversionFieldConfig } from '@tft/crispr-forms/utils';
+import {
+  crisprControlMixin,
+  CrisprFieldComponent,
+  observablifyOptions,
+  SelectOption,
+  UnitConversionFieldConfig,
+} from '@tft/crispr-forms/utils';
 
 const defaultConfig: Partial<UnitConversionFieldConfig> = {};
-const UnitConversionFieldMixin = crisprControlMixin<UnitConversionFieldConfig>(CrisprFieldComponent);
+const UnitConversionFieldMixin =
+  crisprControlMixin<UnitConversionFieldConfig>(CrisprFieldComponent);
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -35,7 +47,10 @@ const UnitConversionFieldMixin = crisprControlMixin<UnitConversionFieldConfig>(C
     FormValidationHandlerModule,
   ],
 })
-export class UnitConversionFieldComponent extends UnitConversionFieldMixin implements OnInit, OnDestroy {
+export class UnitConversionFieldComponent
+  extends UnitConversionFieldMixin
+  implements OnInit, OnDestroy
+{
   defaultConfig = defaultConfig;
 
   displayValueControl = new FormControl();
@@ -50,17 +65,31 @@ export class UnitConversionFieldComponent extends UnitConversionFieldMixin imple
     // this.displayValueControl.setValidators(this.config.validators);
 
     const controlValuePipeline: Observable<string>[] = [
-      this.displayValueControl.valueChanges.pipe(startWith(this.displayValueControl.value))
+      this.displayValueControl.valueChanges.pipe(
+        startWith(this.displayValueControl.value)
+      ),
     ];
     // setup all required pieces when showing a field for selecting units
     if (this.config.showUnitSelect) {
-      this.unitOptions$ = observablifyOptions(this.config.selectableUnits, this.group)
-      controlValuePipeline.push(this.unitSelectControl.valueChanges.pipe(startWith(this.config?.initialDisplayUnit || null)));
+      this.unitOptions$ = observablifyOptions(
+        this.config.selectableUnits,
+        this.group
+      );
+      controlValuePipeline.push(
+        this.unitSelectControl.valueChanges.pipe(
+          startWith(this.config?.initialDisplayUnit || null)
+        )
+      );
       this.unitSelectControl.setValue(this.config?.initialDisplayUnit || null);
     }
 
-    this.transformationSubscription = combineLatest(controlValuePipeline).subscribe(([displayValue, unitValue] )=> {
-      const computedValue = this.config.storedValueConversion(displayValue, unitValue);
+    this.transformationSubscription = combineLatest(
+      controlValuePipeline
+    ).subscribe(([displayValue, unitValue]) => {
+      const computedValue = this.config.storedValueConversion(
+        displayValue,
+        unitValue
+      );
       this.control.setValue(computedValue);
     });
   }
@@ -70,7 +99,10 @@ export class UnitConversionFieldComponent extends UnitConversionFieldMixin imple
   }
 
   setInitialDisplayValue(storedValue: any, unit: unknown) {
-    const initialDisplayValue = this.config.initialDisplayValueConversion(storedValue || null, unit);
+    const initialDisplayValue = this.config.initialDisplayValueConversion(
+      storedValue || null,
+      unit
+    );
     this.displayValueControl.setValue(initialDisplayValue);
   }
 
@@ -81,7 +113,9 @@ export class UnitConversionFieldComponent extends UnitConversionFieldMixin imple
    * @param value the initial value for the control passed down from the form components input
    */
   setControlValue(value) {
-    const initialUnitValue = this.config.showUnitSelect ? this.config?.initialDisplayUnit : null;
+    const initialUnitValue = this.config.showUnitSelect
+      ? this.config?.initialDisplayUnit
+      : null;
     this.setInitialDisplayValue(value, initialUnitValue);
   }
 }

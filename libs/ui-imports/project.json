@@ -1,0 +1,45 @@
+{
+  "name": "ui-imports",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/ui-imports/src",
+  "prefix": "tft",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "options": {
+        "tsConfig": "libs/ui-imports/tsconfig.lib.json",
+        "project": "libs/ui-imports/ng-package.json",
+        "updateBuildableProjectDepsInPackageJson": true
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/ui-imports/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/ui-imports/src/**/*.ts",
+          "libs/ui-imports/src/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "libs/ui-imports/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/libs/ui-imports"]
+    }
+  },
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
+  "tags": []
+}

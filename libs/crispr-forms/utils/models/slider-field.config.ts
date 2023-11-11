@@ -6,12 +6,12 @@ export interface SliderFieldConfig extends
   {
   controlType: ControlType.SLIDER;
   displayWith?: (value: number) => string | number;
-  invert?: boolean;
-  displayLimits?: boolean;
   max?: number;
   min?: number;
   step?: number;
-  thumbLabel?: boolean;
+  discrete?: boolean;
   tickInterval?: number | 'auto';
+  displayLimits?: boolean;
   vertical?: boolean;
+  // invert?: boolean;
 }

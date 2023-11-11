@@ -1,4 +1,4 @@
-/* eslint-disable @nrwl/nx/enforce-module-boundaries */
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatSliderModule } from '@angular/material/slider';
 import { CommonModule } from '@angular/common';
@@ -7,10 +7,18 @@ import { OptionComponent } from '@tft/crispr-forms/ui/option';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
 import { InfoComponent } from '@tft/crispr-forms/ui/info';
-import { SliderFieldConfig, CrisprFieldComponent, crisprControlMixin } from '@tft/crispr-forms/utils';
+import {
+  SliderFieldConfig,
+  CrisprFieldComponent,
+  crisprControlMixin,
+} from '@tft/crispr-forms/utils';
 
-const defaultConfig = {displayLimits: true};
-const SliderFieldMixin = crisprControlMixin<SliderFieldConfig>(CrisprFieldComponent);
+const defaultConfig: Partial<SliderFieldConfig> = { 
+  displayLimits: true,
+  displayWith: (val) => val,
+};
+const SliderFieldMixin =
+  crisprControlMixin<SliderFieldConfig>(CrisprFieldComponent);
 
 @Component({
   selector: 'crispr-slider-field',
@@ -29,7 +37,6 @@ const SliderFieldMixin = crisprControlMixin<SliderFieldConfig>(CrisprFieldCompon
   ],
 })
 export class SliderFieldComponent extends SliderFieldMixin implements OnInit {
-
   defaultConfig = defaultConfig;
   constructor() {
     super();
@@ -42,5 +49,4 @@ export class SliderFieldComponent extends SliderFieldMixin implements OnInit {
   ngOnInit() {
     super.ngOnInit();
   }
-
 }

@@ -7,7 +7,8 @@ const ALGOLIA_LOGO_URL = 'https://firebasestorage.googleapis.com/v0/b/bigharvest
 @Component({
   selector: 'mis-algolia-attribution',
   templateUrl: './algolia-attribution.component.html',
-  styleUrls: ['./algolia-attribution.component.scss']
+  styleUrls: ['./algolia-attribution.component.scss'],
+  standalone: true,
 })
 
 

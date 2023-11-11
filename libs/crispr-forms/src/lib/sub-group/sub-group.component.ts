@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { crisprControlMixin, CrisprFieldComponent, SubGroupConfig } from '@tft/crispr-forms/utils';
+import {
+  crisprControlMixin,
+  CrisprFieldComponent,
+  SubGroupConfig,
+} from '@tft/crispr-forms/utils';
 
 const FormGroupMixin = crisprControlMixin<SubGroupConfig>(CrisprFieldComponent);
 

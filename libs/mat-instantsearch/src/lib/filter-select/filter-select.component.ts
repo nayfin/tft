@@ -2,13 +2,22 @@ import { Component, Inject, forwardRef, OnInit, Input, Optional } from '@angular
 import { NgAisIndex, NgAisInstantSearch, TypedBaseWidget } from 'angular-instantsearch';
 import connectRefinementList, { RefinementListWidgetDescription, RefinementListConnectorParams  } from 'instantsearch.js/es/connectors/refinement-list/connectRefinementList';
 import { FilterListState, RefinementListItem } from '../models';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'mis-filter-select',
   templateUrl: './filter-select.component.html',
-  styleUrls: ['./filter-select.component.scss']
+  styleUrls: ['./filter-select.component.scss'],
+  standalone: true,
+  imports: [
+    MatFormFieldModule,
+    MatSelectModule,
+    CommonModule
+  ]
 })
-export class FilterSelectComponent extends TypedBaseWidget<RefinementListWidgetDescription, RefinementListConnectorParams> implements OnInit {
+export class MisFilterSelectComponent extends TypedBaseWidget<RefinementListWidgetDescription, RefinementListConnectorParams> implements OnInit {
 
   @Input() title: string | null = 'Filter results';
   @Input() multiple = true;

@@ -50,7 +50,7 @@ export class ImageUploadComponent {
         heading: {
           label: 'Upload Files'
         },
-        appearance: 'standard',
+        appearance: 'outline',
         color: 'accent',
         compressImage: true,
         acceptedTypes: 'image/*',

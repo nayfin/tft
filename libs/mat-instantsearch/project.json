@@ -1,0 +1,45 @@
+{
+  "name": "mat-instantsearch",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/mat-instantsearch/src",
+  "prefix": "tft",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "options": {
+        "tsConfig": "libs/mat-instantsearch/tsconfig.lib.json",
+        "project": "libs/mat-instantsearch/ng-package.json",
+        "updateBuildableProjectDepsInPackageJson": true
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/mat-instantsearch/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/mat-instantsearch/src/**/*.ts",
+          "libs/mat-instantsearch/src/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "libs/mat-instantsearch/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/libs/mat-instantsearch"]
+    }
+  },
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
+  "tags": []
+}

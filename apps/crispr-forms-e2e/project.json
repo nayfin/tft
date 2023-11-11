@@ -1,0 +1,32 @@
+{
+  "name": "crispr-forms-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/crispr-forms-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/crispr-forms-e2e/cypress.json",
+        "tsConfig": "apps/crispr-forms-e2e/tsconfig.e2e.json",
+        "devServerTarget": "crispr-forms:storybook"
+      },
+      "configurations": {
+        "ci": {
+          "devServerTarget": "crispr-forms:storybook:ci"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/crispr-forms-e2e/**/*.{js,ts}",
+          "apps/crispr-forms-e2e/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["crispr-forms"]
+}

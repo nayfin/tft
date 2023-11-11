@@ -1,4 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { FormGroup, FormArray } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,9 +12,12 @@ import { CrisprPipesModule } from '../pipes/crispr-pipes.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { CrisprFieldComponent, crisprControlMixin, createControlForType, FormGroupListConfig } from '@tft/crispr-forms/utils';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import {
+  CrisprFieldComponent,
+  crisprControlMixin,
+  createControlForType,
+  FormGroupListConfig,
+} from '@tft/crispr-forms/utils';
 import { FieldContainerComponent } from '@tft/crispr-forms/ui';
 import { CrisprDisplayFieldDirective } from '../display-field.directive';
 
@@ -18,7 +26,8 @@ const defaultConfig: Partial<FormGroupListConfig> = {
   minListLength: 1,
 };
 
-const FormGroupListMixin = crisprControlMixin<FormGroupListConfig>(CrisprFieldComponent);
+const FormGroupListMixin =
+  crisprControlMixin<FormGroupListConfig>(CrisprFieldComponent);
 @Component({
   selector: 'crispr-form-group-list',
   templateUrl: './form-group-list.component.html',
@@ -34,12 +43,14 @@ const FormGroupListMixin = crisprControlMixin<FormGroupListConfig>(CrisprFieldCo
     CrisprFieldDirective,
     CrisprDisplayFieldDirective,
     CrisprPipesModule,
-    FormValidationHandlerModule
+    FormValidationHandlerModule,
   ],
 })
-export class FormGroupListComponent extends FormGroupListMixin implements OnInit {
-
-  defaultConfig = defaultConfig
+export class FormGroupListComponent
+  extends FormGroupListMixin
+  implements OnInit
+{
+  defaultConfig = defaultConfig;
   group: FormGroup;
   control: FormArray;
   /**
@@ -60,22 +71,21 @@ export class FormGroupListComponent extends FormGroupListMixin implements OnInit
   }
 
   setControlValue(values: any[]) {
-    if(this.control) {
-      if(values?.length > 0) {
+    if (this.control) {
+      if (values?.length > 0) {
         // clear any existing values so that new values don't concatenate onto the old
-        const currentValues:[] = this.control.value;
-        if(currentValues.length) {
+        const currentValues: [] = this.control.value;
+        if (currentValues.length) {
           this.control.clear();
         }
-        values.forEach(value => this.addGroup(value));
-
+        values.forEach((value) => this.addGroup(value));
       } else if (this.config.displayInitialItem) {
-        this.addGroup()
+        this.addGroup();
       }
       // needed to ensure new array items render
       setTimeout(() => {
         this.cdr.detectChanges();
-      })
+      });
     }
   }
 
@@ -94,7 +104,7 @@ export class FormGroupListComponent extends FormGroupListMixin implements OnInit
     // needed to ensure new array items render
     setTimeout(() => {
       this.cdr.detectChanges();
-    })
+    });
   }
 
   deleteGroup(index: number) {

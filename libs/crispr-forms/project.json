@@ -1,0 +1,78 @@
+{
+  "name": "crispr-forms",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/crispr-forms/src",
+  "prefix": "crispr",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "options": {
+        "tsConfig": "libs/crispr-forms/tsconfig.lib.json",
+        "project": "libs/crispr-forms/ng-package.json",
+        "updateBuildableProjectDepsInPackageJson": true
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/crispr-forms/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/crispr-forms/src/**/*.ts",
+          "libs/crispr-forms/src/**/*.html",
+          "libs/crispr-forms/utils/**/*.ts",
+          "libs/crispr-forms/utils/**/*.html",
+          "libs/crispr-forms/ui/**/*.ts",
+          "libs/crispr-forms/ui/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "libs/crispr-forms/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/libs/crispr-forms"]
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "port": 4400,
+        "configDir": "libs/crispr-forms/.storybook",
+        "browserTarget": "crispr-forms:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputDir": "dist/storybook/crispr-forms",
+        "configDir": "libs/crispr-forms/.storybook",
+        "browserTarget": "crispr-forms:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    }
+  },
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
+  "tags": []
+}

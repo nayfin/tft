@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { InfoComponent } from '@tft/crispr-forms/ui/info';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { SelectOption } from '@tft/crispr-forms/utils';
 
 @Component({
@@ -10,13 +10,8 @@ import { SelectOption } from '@tft/crispr-forms/utils';
   styleUrls: ['./option.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    InfoComponent,
-  ],
+  imports: [CommonModule, InfoComponent],
 })
 export class OptionComponent {
-
-  @Input() option: SelectOption
-
+  @Input() option: SelectOption;
 }

@@ -1,15 +1,23 @@
 import { Component, Input, Inject, OnInit, forwardRef, Optional } from '@angular/core';
 import { connectPagination } from 'instantsearch.js/es/connectors';
 import { noop } from 'lodash-es';
-import { BaseWidget, NgAisInstantSearch, NgAisIndex } from 'angular-instantsearch';
+import { BaseWidget, NgAisInstantSearch, NgAisIndex, NgAisHitsPerPageModule } from 'angular-instantsearch';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @Component({
   selector: 'mis-pagination',
   templateUrl: 'pagination.component.html',
-  styleUrls: ['pagination.component.scss']
+  styleUrls: ['pagination.component.scss'],
+  standalone: true,
+  imports: [
+    MatFormFieldModule,
+    MatPaginatorModule,
+    NgAisHitsPerPageModule
+  ]
 })
-export class PaginationComponent extends BaseWidget implements OnInit {
+export class MisPaginationComponent extends BaseWidget implements OnInit {
   // render options
   @Input() public showFirst = true;
   @Input() public showLast = false;

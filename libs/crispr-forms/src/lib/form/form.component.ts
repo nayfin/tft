@@ -1,12 +1,23 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+  OnInit,
+} from '@angular/core';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { CrisprFieldDirective } from '../field.directive';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { CrisprPipesModule } from '../pipes/crispr-pipes.module';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { ControlGroupValue, FormConfig, buildFormGroupFromConfig } from '@tft/crispr-forms/utils';
+import {
+  ControlGroupValue,
+  FormConfig,
+  buildFormGroupFromConfig,
+} from '@tft/crispr-forms/utils';
 
 @Component({
   selector: 'crispr-form',
@@ -19,7 +30,7 @@ import { ControlGroupValue, FormConfig, buildFormGroupFromConfig } from '@tft/cr
     CrisprFieldDirective,
     ReactiveFormsModule,
     FormValidationHandlerModule,
-    CrisprPipesModule
+    CrisprPipesModule,
   ],
 })
 export class CrisprFormComponent implements OnInit {
@@ -27,7 +38,6 @@ export class CrisprFormComponent implements OnInit {
   @Input() config: FormConfig;
   @Input() form: FormGroup = new FormGroup({});
   @Input() value: ControlGroupValue = null;
-
 
   @Output() submitted = new EventEmitter<FormGroup>();
   // proxy value and status change events through to consuming component

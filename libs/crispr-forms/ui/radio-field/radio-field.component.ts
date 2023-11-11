@@ -1,16 +1,22 @@
-/* eslint-disable @nrwl/nx/enforce-module-boundaries */
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
- import { Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
+import { MatRadioModule } from '@angular/material/radio';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
+import {
+  CrisprFieldComponent,
+  crisprControlMixin,
+  RadioFieldConfig,
+  SelectOption,
+  observablifyOptions,
+} from '@tft/crispr-forms/utils';
 
- import { MatRadioModule } from '@angular/material/radio';
- import { ReactiveFormsModule } from '@angular/forms';
- import { CommonModule } from '@angular/common';
- import { FormValidationHandlerModule } from '@tft/form-validation-handler';
- import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
- import { CrisprFieldComponent, crisprControlMixin, RadioFieldConfig, SelectOption, observablifyOptions } from '@tft/crispr-forms/utils';
-
-const RadioFieldMixin = crisprControlMixin<RadioFieldConfig>(CrisprFieldComponent);
+const RadioFieldMixin =
+  crisprControlMixin<RadioFieldConfig>(CrisprFieldComponent);
 
 @Component({
   selector: 'crispr-radio-field',

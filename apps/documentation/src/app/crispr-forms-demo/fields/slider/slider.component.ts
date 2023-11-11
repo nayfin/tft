@@ -21,7 +21,7 @@ export class SliderComponent implements OnInit {
         max: 80,
         min: 20,
         step: 1.5,
-        thumbLabel: true // default: false
+        discrete: true // default: false
       },
       {
         controlType: ControlType.SLIDER,

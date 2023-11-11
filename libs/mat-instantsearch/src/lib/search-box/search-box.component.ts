@@ -1,13 +1,22 @@
 import { Component, Inject, forwardRef, OnInit, Input, Optional } from '@angular/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { BaseWidget, NgAisIndex, NgAisInstantSearch } from 'angular-instantsearch';
 import { connectSearchBox } from 'instantsearch.js/es/connectors';
+import { AlgoliaAttributionComponent } from '../algolia-attribution/algolia-attribution.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'mis-search-box',
   templateUrl: './search-box.component.html',
-  styleUrls: ['./search-box.component.scss']
+  styleUrls: ['./search-box.component.scss'],
+  standalone: true,
+  imports: [
+    MatFormFieldModule,
+    AlgoliaAttributionComponent,
+    MatIconModule
+  ]
 })
-export class SearchBoxComponent extends BaseWidget implements OnInit {
+export class MisSearchBoxComponent extends BaseWidget implements OnInit {
 
   @Input() public placeholder = 'Search';
   @Input() public submitTitle = 'Submit';

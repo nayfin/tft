@@ -1,7 +1,17 @@
-/* eslint-disable @nrwl/nx/enforce-module-boundaries */
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
+/* eslint-disable @nx/enforce-module-boundaries */
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { map, tap } from 'rxjs/operators';
-import { MatAutocompleteModule, MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import {
+  MatAutocompleteModule,
+  MatAutocompleteSelectedEvent,
+  MatAutocompleteTrigger,
+} from '@angular/material/autocomplete';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { ENTER } from '@angular/cdk/keycodes';
 
@@ -12,7 +22,12 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { OptionComponent } from '@tft/crispr-forms/ui/option';
 import { MatIconModule } from '@angular/material/icon';
-import { AutocompleteChiplistFieldConfig, AbstractAutocompleteComponent, DEFAULT_EMPTY_OPTIONS_MESSAGE, SelectOption } from '@tft/crispr-forms/utils';
+import {
+  AutocompleteChiplistFieldConfig,
+  AbstractAutocompleteComponent,
+  DEFAULT_EMPTY_OPTIONS_MESSAGE,
+  SelectOption,
+} from '@tft/crispr-forms/utils';
 import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
 import { InfoComponent } from '@tft/crispr-forms/ui/info';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
@@ -28,7 +43,7 @@ const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
   duplicateCompareFunction: (chip, option) => chip.value === option.value,
   separatorKeyCodes: [ENTER],
   emptyOptionsMessage: DEFAULT_EMPTY_OPTIONS_MESSAGE,
-}
+};
 
 @Component({
   selector: 'crispr-autocomplete-chiplist-field',
@@ -47,43 +62,43 @@ const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
     MatOptionModule,
     MatChipsModule,
     MatIconModule,
-    FormValidationHandlerModule
+    FormValidationHandlerModule,
   ],
 })
 export class AutocompleteChiplistFieldComponent
-  extends AbstractAutocompleteComponent<AutocompleteChiplistFieldConfig> implements OnInit {
+  extends AbstractAutocompleteComponent<AutocompleteChiplistFieldConfig>
+  implements OnInit
+{
   defaultConfig = defaultConfig;
   chips$ = new BehaviorSubject<SelectOption[]>([]);
   remainingOptions$: Observable<SelectOption[]>;
-
+  selectedChip: SelectOption = null;
   controlValue$ = this.chips$.pipe(
-    tap(chips => {
-      this.control.setValue(chips.map(chip => chip.value))
+    tap((chips) => {
+      this.control.setValue(chips.map((chip) => chip.value));
     })
   );
-
 
   // We need use ViewChild twice on the same template ref to access as different types
   // - the MatAutocompleteTrigger is used to for selecting value on tab
   // - the ElementRef<HTMLInputElement> is used to clear the value from input element on selection
-  @ViewChild('autoInput', { read: MatAutocompleteTrigger }) chipInput: MatAutocompleteTrigger;
+  @ViewChild('autoInput', { read: MatAutocompleteTrigger })
+  chipInput: MatAutocompleteTrigger;
   @ViewChild('autoInput') chipInputRef: ElementRef<HTMLInputElement>;
-
 
   ngOnInit() {
     super.ngOnInit();
-    this.remainingOptions$ = combineLatest([
-      this.chips$,
-      this.options$
-    ]).pipe(
+    this.remainingOptions$ = combineLatest([this.chips$, this.options$]).pipe(
       map(([chips, options]) => {
         return this.config.allowDuplicates
           ? options
-          : options?.filter(option => {
-            return !chips.some(chip => this.config.duplicateCompareFunction(chip, option));
-          });
+          : options?.filter((option) => {
+              return !chips.some((chip) =>
+                this.config.duplicateCompareFunction(chip, option)
+              );
+            });
       })
-    )
+    );
   }
 
   setControlValue(value: SelectOption[]) {
@@ -95,11 +110,11 @@ export class AutocompleteChiplistFieldComponent
   // handles mat selecting
   handleSelect(event: MatAutocompleteSelectedEvent) {
     const selectedOption: SelectOption = event.option.value as SelectOption;
-    this.chips$.next([...this.chips$.value,  selectedOption]);
+    this.chips$.next([...this.chips$.value, selectedOption]);
     this.chipInputRef.nativeElement.value = '';
     this.autocompleteInputControl.setValue('');
     // setTimeout needed because the panel thinks it's still open at this point
-    setTimeout(() => this.chipInput.openPanel())
+    setTimeout(() => this.chipInput.openPanel());
   }
 
   /**
@@ -108,14 +123,17 @@ export class AutocompleteChiplistFieldComponent
    * @param event blur event that triggers the handle blur
    */
   handleTab(_event: FocusEvent) {
-    if (this.chipInput.activeOption && (this.config.tabToSelect || this.config.addChipOnBlur)) {
+    if (
+      this.chipInput.activeOption &&
+      (this.config.tabToSelect || this.config.addChipOnBlur)
+    ) {
       const chip = this.chipInput.activeOption.value;
-      this.chips$.next([...this.chips$.value,  chip]);
+      this.chips$.next([...this.chips$.value, chip]);
     }
   }
 
   /**
-   * Handles selection via key tokens passed through separatorKeyCodes propert
+   * Handles selection via key tokens passed through separatorKeyCodes property
    * NOTE: If TAB is used focus does not move on to next component
    * @param event
    */
@@ -131,8 +149,20 @@ export class AutocompleteChiplistFieldComponent
   }
 
   removeChip(removedChip: SelectOption) {
-    const remainingChips: SelectOption[] = this.chips$.value.filter(chip => chip !== removedChip);
+    const remainingChips: SelectOption[] = this.chips$.value.filter(
+      (chip) => chip !== removedChip
+    );
     this.chips$.next(remainingChips);
   }
-}
 
+  highlightChip(chip: SelectOption) {
+    if(this.config.chipsSelectable) {
+      this.selectedChip = chip
+    }
+  }
+  
+  blurField() {
+    console.log('blur')
+    this.selectedChip = null;
+  }
+}

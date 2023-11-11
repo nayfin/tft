@@ -1,4 +1,4 @@
-/* eslint-disable @nrwl/nx/enforce-module-boundaries */
+/* eslint-disable @nx/enforce-module-boundaries */
 import { CommonModule } from '@angular/common';
 import {
   Component,
@@ -10,7 +10,11 @@ import {
   Self,
   ChangeDetectorRef,
 } from '@angular/core';
-import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  NgControl,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,9 +27,15 @@ import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { FileDropzoneDirective } from '@tft/crispr-forms/ui/file-dropzone';
 import { SelectedFileComponent } from '@tft/crispr-forms/ui/selected-file';
 import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
-import { crisprControlMixin, CrisprFieldComponent, convertBytesToMb, ImageUploadFieldConfig } from '@tft/crispr-forms/utils';
+import {
+  crisprControlMixin,
+  CrisprFieldComponent,
+  convertBytesToMb,
+  ImageUploadFieldConfig,
+} from '@tft/crispr-forms/utils';
 
-const ImageUploadFieldMixin = crisprControlMixin<ImageUploadFieldConfig>(CrisprFieldComponent);
+const ImageUploadFieldMixin =
+  crisprControlMixin<ImageUploadFieldConfig>(CrisprFieldComponent);
 
 @Component({
   selector: 'crispr-image-upload-field',
@@ -43,11 +53,13 @@ const ImageUploadFieldMixin = crisprControlMixin<ImageUploadFieldConfig>(CrisprF
     MatInputModule,
     SelectedFileComponent,
     FileDropzoneDirective,
-    FormValidationHandlerModule
+    FormValidationHandlerModule,
   ],
 })
-export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements OnInit, ControlValueAccessor {
-
+export class ImageUploadFieldComponent
+  extends ImageUploadFieldMixin
+  implements OnInit, ControlValueAccessor
+{
   onChange: () => void;
 
   defaultConfig: Partial<ImageUploadFieldConfig> = {
@@ -61,15 +73,15 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
     resetFilesButtonText: 'RESET',
     imagePreviewHeight: '250px',
     compressImage: false,
-    targetCompressedImageFileSizeMb: .4,
-    minCompressionThresholdMb: .6,
+    targetCompressedImageFileSizeMb: 0.4,
+    minCompressionThresholdMb: 0.6,
     useWebWorker: true,
-  }
+  };
 
   private inputImageFileSubject = new Subject<File | null>();
-  inputImageFile$ = this.inputImageFileSubject.asObservable().pipe(
-    shareReplay(1),
-  );
+  inputImageFile$ = this.inputImageFileSubject
+    .asObservable()
+    .pipe(shareReplay(1));
   /**
    * the compression progress
    */
@@ -78,34 +90,43 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
   compressedFile$: Observable<File> = this.inputImageFile$.pipe(
     switchMap(async (file) => {
       if (!file || !(file instanceof File)) return null;
-      const { compressImage, targetCompressedImageFileSizeMb, minCompressionThresholdMb, maxWidthOrHeight, useWebWorker } = this.config;
+      const {
+        compressImage,
+        targetCompressedImageFileSizeMb,
+        minCompressionThresholdMb,
+        maxWidthOrHeight,
+        useWebWorker,
+      } = this.config;
       const fileSizeMb = convertBytesToMb(file.size);
-      const shouldCompress = compressImage
-        && targetCompressedImageFileSizeMb < fileSizeMb
-        && minCompressionThresholdMb < fileSizeMb
+      const shouldCompress =
+        compressImage &&
+        targetCompressedImageFileSizeMb < fileSizeMb &&
+        minCompressionThresholdMb < fileSizeMb;
       if (shouldCompress) {
         const options = {
           // Use maxWidthOrHeight if it was provided, else use target compressed size
-          ...(maxWidthOrHeight ? {maxWidthOrHeight} : { maxSizeMB: targetCompressedImageFileSizeMb}),
+          ...(maxWidthOrHeight
+            ? { maxWidthOrHeight }
+            : { maxSizeMB: targetCompressedImageFileSizeMb }),
           useWebWorker,
           maxIterations: 30,
           onProgress: (progress: number) => {
             this.progress = progress;
             this.cdr.detectChanges();
-          }
-        }
+          },
+        };
         return await imageCompression(file, options);
-      } else return  file;
+      } else return file;
     }),
     map((compressedFile: File) => {
-      if(!compressedFile) return compressedFile;
-      const { type, name, lastModified } = compressedFile
+      if (!compressedFile) return compressedFile;
+      const { type, name, lastModified } = compressedFile;
       return new File([compressedFile], this.config.fileName || name, {
         type,
-        lastModified
+        lastModified,
       });
     }),
-    tap(file => {
+    tap((file) => {
       // only set the value if there is a file because resetToInitialValue sets the control value
       // to initial value and clears the compressed image, so setting it to null here would undo that
       if (file) {
@@ -115,25 +136,30 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
         this.control.markAsTouched();
         setTimeout(() => {
           this.cdr.detectChanges();
-        }, 100)
+        }, 100);
       }
     }),
     shareReplay(1)
-  )
+  );
 
-  compressedImageUrlString$: Observable<string | null> = this.compressedFile$.pipe(
-    switchMap(async (file) => {
-      if(!file) return null;
-      const compressedStringImage = await imageCompression.getDataUrlFromFile(file);
-      return this.domSanitizer.bypassSecurityTrustResourceUrl(compressedStringImage) as string
-    }),
-    shareReplay(1),
-  )
+  compressedImageUrlString$: Observable<string | null> =
+    this.compressedFile$.pipe(
+      switchMap(async (file) => {
+        if (!file) return null;
+        const compressedStringImage = await imageCompression.getDataUrlFromFile(
+          file
+        );
+        return this.domSanitizer.bypassSecurityTrustResourceUrl(
+          compressedStringImage
+        ) as string;
+      }),
+      shareReplay(1)
+    );
 
   // This is what is displayed by the image preview
   imageSrcUrl$: Observable<string | null>;
 
-  @ViewChild('fileInput') fileInputRef: ElementRef
+  @ViewChild('fileInput') fileInputRef: ElementRef;
 
   selectedFiles: FileList;
 
@@ -144,7 +170,7 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
   constructor(
     @Optional() @Self() public ngControl: NgControl,
     private domSanitizer: DomSanitizer,
-    private cdr: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef
   ) {
     super();
     if (this.ngControl != null) {
@@ -161,23 +187,26 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
       this.control.valueChanges.pipe(
         startWith(this.value),
         map((controlValue): string => {
-          if(!controlValue) return null;
-          if(controlValue instanceof File) return null;
-          return this.config.mapInputValueToUrl?.(controlValue) || controlValue as string
+          if (!controlValue) return null;
+          if (controlValue instanceof File) return null;
+          return (
+            this.config.mapInputValueToUrl?.(controlValue) ||
+            (controlValue as string)
+          );
         })
-      )
+      ),
     ]).pipe(
       map(([compressedImageUrlString, controlUrl]) => {
         return compressedImageUrlString || controlUrl || null;
       })
-    )
+    );
     this.disabled$ = this.config.disabledCallback
-    ? this.config.disabledCallback(this.group)
-    : of(false);
+      ? this.config.disabledCallback(this.group)
+      : of(false);
   }
 
   filesChanged(files: FileList): void {
-    if (files && files.length > 0 ) {
+    if (files && files.length > 0) {
       const imageFile = files[0];
       // We clear the control here so that it is invalid while compressing
       // the input pipeline will take care of resetting it
@@ -190,7 +219,7 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
 
   clearFileInput(): void {
     this.inputImageFileSubject.next(null);
-    this.fileInputRef.nativeElement.value = ''
+    this.fileInputRef.nativeElement.value = '';
     this.control.patchValue(null);
     this.control.markAsTouched();
     this.isUploaded = false;
@@ -198,17 +227,15 @@ export class ImageUploadFieldComponent extends ImageUploadFieldMixin implements 
 
   resetToInitialValue(initialValue: string): void {
     this.inputImageFileSubject.next(null);
-    this.control.patchValue(initialValue)
+    this.control.patchValue(initialValue);
     this.isUploaded = false;
   }
 
-  writeValue( value: null ) { }
+  writeValue(value: null) {}
 
-  registerOnChange( fn: () => void ) {
+  registerOnChange(fn: () => void) {
     this.onChange = fn;
   }
 
-  registerOnTouched( fn: () => void ) { }
+  registerOnTouched(fn: () => void) {}
 }
-
-

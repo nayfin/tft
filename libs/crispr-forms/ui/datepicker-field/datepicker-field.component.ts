@@ -1,6 +1,14 @@
-/* eslint-disable @nrwl/nx/enforce-module-boundaries */
-import { Component, OnInit, ChangeDetectionStrategy, AfterContentInit } from '@angular/core';
-import { MatCalendarCellClassFunction, MatDatepickerModule } from '@angular/material/datepicker';
+/* eslint-disable @nx/enforce-module-boundaries */
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  AfterContentInit,
+} from '@angular/core';
+import {
+  MatCalendarCellClassFunction,
+  MatDatepickerModule,
+} from '@angular/material/datepicker';
 import { MatDateFnsModule } from '@angular/material-date-fns-adapter';
 import { Observable, of } from 'rxjs';
 import { ComponentPortal, Portal, PortalModule } from '@angular/cdk/portal';
@@ -10,12 +18,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
-import { crisprControlMixin, CrisprFieldComponent, DatepickerFieldConfig } from '@tft/crispr-forms/utils';
+import {
+  crisprControlMixin,
+  CrisprFieldComponent,
+  DatepickerFieldConfig,
+} from '@tft/crispr-forms/utils';
 
 const defaultConfig: Partial<DatepickerFieldConfig> = {
   startView: 'month',
-}
-const DatepickerFieldMixin = crisprControlMixin<DatepickerFieldConfig>(CrisprFieldComponent);
+};
+const DatepickerFieldMixin =
+  crisprControlMixin<DatepickerFieldConfig>(CrisprFieldComponent);
 
 @Component({
   selector: 'crispr-datepicker-field',
@@ -35,8 +48,10 @@ const DatepickerFieldMixin = crisprControlMixin<DatepickerFieldConfig>(CrisprFie
     FormValidationHandlerModule,
   ],
 })
-export class DatepickerFieldComponent extends DatepickerFieldMixin implements OnInit, AfterContentInit {
-
+export class DatepickerFieldComponent
+  extends DatepickerFieldMixin
+  implements OnInit, AfterContentInit
+{
   defaultConfig = defaultConfig;
 
   dateClass: MatCalendarCellClassFunction<Date>;
@@ -48,18 +63,23 @@ export class DatepickerFieldComponent extends DatepickerFieldMixin implements On
 
   ngOnInit() {
     super.ngOnInit();
-    this.startAt$ = this.config.startAt instanceof Date
-      ? of(this.config.startAt)
-      : this.config.startAt instanceof Function
-      ? this.config.startAt(this.group)
-      : of(null);
-    this.dateClass = this.config?.cellClassFunction || null
-    this.dateClass$ = this.config.dateClass ? this.config?.dateClass(this.group) : of(() => '');
+    this.startAt$ =
+      this.config.startAt instanceof Date
+        ? of(this.config.startAt)
+        : this.config.startAt instanceof Function
+        ? this.config.startAt(this.group)
+        : of(null);
+    this.dateClass = this.config?.cellClassFunction || null;
+    this.dateClass$ = this.config.dateClass
+      ? this.config?.dateClass(this.group)
+      : of(() => '');
   }
 
   ngAfterContentInit() {
     if (this.config.datepickerActions) {
-      this.calendarFooterPortal = new ComponentPortal(this.config.datepickerActions);
+      this.calendarFooterPortal = new ComponentPortal(
+        this.config.datepickerActions
+      );
     }
   }
 

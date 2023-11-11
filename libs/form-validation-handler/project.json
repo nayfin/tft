@@ -1,0 +1,45 @@
+{
+  "name": "form-validation-handler",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/form-validation-handler/src",
+  "prefix": "tft",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "options": {
+        "tsConfig": "libs/form-validation-handler/tsconfig.lib.json",
+        "project": "libs/form-validation-handler/ng-package.json",
+        "updateBuildableProjectDepsInPackageJson": true
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/form-validation-handler/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/form-validation-handler/src/**/*.ts",
+          "libs/form-validation-handler/src/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "libs/form-validation-handler/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/libs/form-validation-handler"]
+    }
+  },
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
+  "tags": []
+}

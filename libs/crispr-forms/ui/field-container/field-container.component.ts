@@ -1,10 +1,16 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ChangeDetectionStrategy,
+  OnDestroy,
+} from '@angular/core';
 import { Observable, of, Subscription } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { tap, distinctUntilChanged } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { HeadingComponent } from '@tft/crispr-forms/ui/heading';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import type { CrisprControlConfig } from '@tft/crispr-forms/utils';
 
 @Component({
@@ -13,10 +19,7 @@ import type { CrisprControlConfig } from '@tft/crispr-forms/utils';
   styleUrls: ['./field-container.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    HeadingComponent,
-  ],
+  imports: [CommonModule, HeadingComponent],
 })
 export class FieldContainerComponent implements OnInit, OnDestroy {
   // the configuration object for the field
@@ -35,16 +38,21 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
     // we tried moving this into afterViewChecked and afterContentChecked lifecycle hooks without any luck
     if (this.config.computeValue) {
       this.subs.push(
-        this.config.computeValue(this.group).pipe(
-          distinctUntilChanged(),
-          tap(computedValue => this.group.get(this.config.controlName).setValue(computedValue))
-        ).subscribe(),
+        this.config
+          .computeValue(this.group)
+          .pipe(
+            distinctUntilChanged(),
+            tap((computedValue) =>
+              this.group.get(this.config.controlName).setValue(computedValue)
+            )
+          )
+          .subscribe()
       );
     }
   }
 
   ngOnDestroy(): void {
-    this.subs.forEach(sub => sub.unsubscribe);
+    this.subs.forEach((sub) => sub.unsubscribe);
   }
   /**
    * Connects user defined disabledCallback function to the the view, so that the control is enabled/disabled
@@ -53,15 +61,21 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
    * @param group used to get valueChanges from control
    * @param config configuration object used to
    */
-  connectDisabledCallback(group: FormGroup, config: CrisprControlConfig = null) {
+  connectDisabledCallback(
+    group: FormGroup,
+    config: CrisprControlConfig = null
+  ) {
     const control = group.get(config.controlName);
     // If the disabled$ function exists on the field config then call it with the disabledCallbackConfig
     // as a parameter otherwise return an observable of true.
-    return config?.disabledCallback && config.disabledCallback instanceof Function
+    return config?.disabledCallback &&
+      config.disabledCallback instanceof Function
       ? config.disabledCallback(group).pipe(
-        // This enables/disables when callback conditions are met
-        tap((shouldDisable) => shouldDisable ? control.disable() : control.enable())
-      )
+          // This enables/disables when callback conditions are met
+          tap((shouldDisable) =>
+            shouldDisable ? control.disable() : control.enable()
+          )
+        )
       : of(false);
   }
 }

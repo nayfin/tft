@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { CrisprFormsModule } from '@tft/crispr-forms';
 
 import { CrisprFormsDemoRoutingModule } from './crispr-forms-demo-routing.module';
-import { OverviewComponent } from './fields/overview/overview.component';
 import { MatCardModule } from '@angular/material/card';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { enUS } from 'date-fns/locale';
@@ -16,11 +14,6 @@ import { enUS } from 'date-fns/locale';
     CrisprFormsModule,
     MatCardModule,
     CrisprFormsDemoRoutingModule
-    // AngularFireStorageModule,
-
-  ],
-  declarations: [
-    OverviewComponent
   ],
   providers: [
     {

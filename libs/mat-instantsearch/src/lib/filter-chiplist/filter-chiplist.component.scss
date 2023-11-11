@@ -8,6 +8,7 @@
 
 // default margin of -4px causes input to overflow
 // TODO: input is still wider than it should be though...
+// Check this before committing 
 ::ng-deep div.mat-chip-list-wrapper {
   margin: 0;
 }
@@ -15,6 +16,6 @@
   margin: 0 0 8px 8px;
 }
 
-mat-form-field.mat-form-field {
+mat-form-field.mat-mdc-form-field {
   margin: 0 8px 0 0;
 }

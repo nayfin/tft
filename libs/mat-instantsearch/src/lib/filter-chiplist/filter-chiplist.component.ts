@@ -1,19 +1,30 @@
 import { Component, Inject, forwardRef, OnInit, Input, Optional } from '@angular/core';
-import { Validators, FormControl } from '@angular/forms';
+import { Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NgAisIndex, NgAisInstantSearch, TypedBaseWidget } from 'angular-instantsearch';
 import connectRefinementList, { RefinementListWidgetDescription, RefinementListConnectorParams  } from 'instantsearch.js/es/connectors/refinement-list/connectRefinementList';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { RefinementListItem } from '../models';
 import { SortBy } from 'instantsearch.js/es/types';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'mis-filter-chiplist',
   templateUrl: './filter-chiplist.component.html',
-  styleUrls: ['./filter-chiplist.component.scss']
+  styleUrls: ['./filter-chiplist.component.scss'],
+  standalone: true,
+  imports: [
+    MatChipsModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule
+  ]
 })
-export class FilterChiplistComponent extends TypedBaseWidget<RefinementListWidgetDescription, RefinementListConnectorParams> implements OnInit {
+export class MisFilterChiplistComponent extends TypedBaseWidget<RefinementListWidgetDescription, RefinementListConnectorParams> implements OnInit {
 
   // attribute of search index to search and filter on
   @Input() attributeName: string;

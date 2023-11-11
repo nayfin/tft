@@ -56,7 +56,6 @@ export class OverviewComponent implements OnInit{
     disabler: true,
     disabledText: 'Some initial value on disabled field',
     selectField: 'b',
-    // selectFieldObservable: 'b',
     selectFieldPromise: 'blue',
     autocompleteObservable: 'b',
     autocompleteChiplistObservable: ['a', 'b', 'o' ],
@@ -163,7 +162,7 @@ export class OverviewComponent implements OnInit{
             {
               controlType: ControlType.INPUT,
               controlName: 'secondSubField',
-              appearance: 'legacy',
+              appearance: 'fill',
               label: 'Last Name',
               placeholder: 'King',
               validators: [Validators.required],
@@ -387,7 +386,7 @@ export class OverviewComponent implements OnInit{
           content: 'I am a tooltip on a slider'
         },
         vertical: false,
-        thumbLabel: true,
+        discrete: true,
         min: 2,
         max: 88
       },
@@ -413,6 +412,7 @@ export class OverviewComponent implements OnInit{
 
   handleSubmit(form: FormGroup) {
     const rawValue = form.getRawValue();
+    console.log({rawValue})
     this.valueSubject.next(rawValue);
   }
 

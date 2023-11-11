@@ -1,20 +1,27 @@
 import {
   Directive, Self, OnInit, OnDestroy, Optional, ComponentRef,
-  ViewContainerRef, HostListener } from '@angular/core';
+  ViewContainerRef, HostListener, DestroyRef, inject } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { Subscription, EMPTY, Observable, merge, Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 import { defaultErrors, ErrorDictionary } from '../form-errors';
 import { ControlErrorsFormDirective } from './control-errors-form.directive';
 import { ControlErrorComponent } from '../components';
 import { ControlErrorContainerDirective } from './control-error-container.directive';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
   // we want to hook into all formControls so we use these selectors
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[formControl], [formControlName]',
 })
-export class ControlErrorsDirective implements OnInit, OnDestroy {
+export class ControlErrorsDirective implements OnInit {
+
+  destroyRef = inject(DestroyRef)
+  @Self() ngControl = inject(NgControl);
+  @Optional() form = inject(ControlErrorsFormDirective);
+  @Optional() controlErrorContainer = inject(ControlErrorContainerDirective);
+  private vcr = inject(ViewContainerRef);
 
   ref: ComponentRef<ControlErrorComponent>;
   container: ViewContainerRef;
@@ -29,34 +36,35 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
   }
 
   constructor(
-    @Self() private ngControl: NgControl,
-    @Optional() form: ControlErrorsFormDirective,
-    @Optional() controlErrorContainer: ControlErrorContainerDirective,
-    vcr: ViewContainerRef,
+    
   ) {
-    this.submit$ = form ? form.submit$ : EMPTY;
-    this.container = controlErrorContainer?.vcr || vcr;
-    this.errors = form?.errorDictionary
-      ? { ...defaultErrors, ...form.errorDictionary}
+    this.submit$ = this.form ? this.form.submit$ : EMPTY;
+    this.container = this.controlErrorContainer?.vcr || this.vcr;
+    this.errors = this.form?.errorDictionary
+      ? { ...defaultErrors, ...this.form.errorDictionary}
       : defaultErrors;
   }
 
   ngOnInit() {
     // build array of subscriptions
+    if(!this.ngControl) console.log('onInit', this.ngControl);
     if (this.ngControl) {
-      this.subs.push(
-        this.getInteractionHandler().subscribe(),
-      );
+      this.getInteractionHandler().pipe(
+        takeUntilDestroyed(this.destroyRef)
+      ).subscribe()
     }
   }
 
-  ngOnDestroy() {
-    // close subscriptions
-    this.subs.forEach(sub => sub.unsubscribe);
-  }
+
 
   // merges ui events into a single stream and handles events displaying errors when appropriate
   getInteractionHandler() {
+    if( !this.ngControl.statusChanges) {
+      console.log('broke', {ngControl: this.ngControl})
+    } else {
+      console.log({ngControl: this.ngControl})
+    }
+
     return merge(
       this.submit$,
       this.blur$,

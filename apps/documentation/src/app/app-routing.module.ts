@@ -23,7 +23,6 @@ const routes: Routes = [
 ];
 const routerConfig: ExtraOptions = {
     enableTracing: false,
-    relativeLinkResolution: 'legacy'
 }
 @NgModule({
   imports: [

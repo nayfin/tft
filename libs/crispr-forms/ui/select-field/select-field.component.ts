@@ -1,6 +1,12 @@
-/* eslint-disable @nrwl/nx/enforce-module-boundaries */
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, AfterViewInit } from '@angular/core';
- import { Observable } from 'rxjs';
+/* eslint-disable @nx/enforce-module-boundaries */
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { ThemePalette } from '@angular/material/core';
@@ -12,9 +18,16 @@ import { OptionComponent } from '@tft/crispr-forms/ui/option';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { InfoComponent } from '@tft/crispr-forms/ui/info';
 import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
-import { observablifyOptions, CrisprFieldComponent, crisprControlMixin, SelectFieldConfig, SelectOption } from '@tft/crispr-forms/utils';
+import {
+  observablifyOptions,
+  CrisprFieldComponent,
+  crisprControlMixin,
+  SelectFieldConfig,
+  SelectOption,
+} from '@tft/crispr-forms/utils';
 
-const SelectFieldMixin = crisprControlMixin<SelectFieldConfig>(CrisprFieldComponent);
+const SelectFieldMixin =
+  crisprControlMixin<SelectFieldConfig>(CrisprFieldComponent);
 
 @Component({
   selector: 'crispr-select-field',
@@ -32,12 +45,15 @@ const SelectFieldMixin = crisprControlMixin<SelectFieldConfig>(CrisprFieldCompon
     FormValidationHandlerModule,
     FieldContainerComponent,
     MatFormFieldModule,
-  ]
+  ],
 })
-export class SelectFieldComponent extends SelectFieldMixin implements OnInit, AfterViewInit {
+export class SelectFieldComponent
+  extends SelectFieldMixin
+  implements OnInit, AfterViewInit
+{
   defaultConfig = {
     enableToggleAll: false,
-    color: 'primary' as ThemePalette
+    color: 'primary' as ThemePalette,
   };
   options$: Observable<SelectOption[]>;
   allSelected = false;
@@ -53,19 +69,19 @@ export class SelectFieldComponent extends SelectFieldMixin implements OnInit, Af
 
   ngAfterViewInit() {
     if (
-      this.config.multiple
-      && this.config.enableToggleAll
-      && this.selectField.options?.length === (this.value as any[])?.length
+      this.config.multiple &&
+      this.config.enableToggleAll &&
+      this.selectField.options?.length === (this.value as any[])?.length
     ) {
       this.allSelected = true;
     }
   }
 
   toggleAll(isSelected: boolean) {
-    if ( isSelected ) {
-      this.selectField.options.forEach(option => option.deselect());
+    if (isSelected) {
+      this.selectField.options.forEach((option) => option.deselect());
     } else {
-      this.selectField.options.forEach(option => option.select());
+      this.selectField.options.forEach((option) => option.select());
     }
     this.allSelected = !this.allSelected;
   }

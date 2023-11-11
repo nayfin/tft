@@ -1,4 +1,3 @@
-/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -12,7 +11,7 @@ import { FormGroupListComponent } from './form-group-list';
 import { CrisprFieldDirective } from './field.directive';
 import { SubGroupModule } from './sub-group';
 import { CrisprPipesModule } from './pipes/crispr-pipes.module';
-import { FieldContainerComponent } from '@tft/crispr-forms/ui';
+import { FieldContainerComponent } from '../../ui';
 import { CrisprDisplayFieldDirective } from './display-field.directive';
 
 @NgModule({
@@ -26,11 +25,8 @@ import { CrisprDisplayFieldDirective } from './display-field.directive';
     CrisprDisplayFieldDirective,
     SubGroupModule,
     CrisprPipesModule,
-    CrisprFormComponent
-  ],
-  exports: [
     CrisprFormComponent,
-    FieldContainerComponent,
-  ]
+  ],
+  exports: [CrisprFormComponent, FieldContainerComponent],
 })
-export class CrisprFormsModule { }
+export class CrisprFormsModule {}

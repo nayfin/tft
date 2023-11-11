@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SEARCH_CONFIG } from '../../search.config';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { NgAisInstantSearchModule } from 'angular-instantsearch';
+import { MisAutocompleteComponent } from '@tft/mat-instantsearch';
 
 const initialValue = {
   name: "Amazon - Fire TV Stick with Alexa Voice Remote - Black",
@@ -21,7 +23,13 @@ const initialValue = {
 @Component({
   selector: 'doc-autocomplete-demo',
   templateUrl: './autocomplete-demo.component.html',
-  styleUrls: ['./autocomplete-demo.component.scss']
+  styleUrls: ['./autocomplete-demo.component.scss'],
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    NgAisInstantSearchModule,
+    MisAutocompleteComponent
+  ]
 })
 export class AutocompleteDemoComponent implements OnInit {
 

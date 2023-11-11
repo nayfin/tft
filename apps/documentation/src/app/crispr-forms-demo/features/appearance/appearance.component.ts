@@ -18,10 +18,10 @@ export class AppearanceComponent implements OnInit {
         controlName: 'firstName',
         label: 'First Name',
         heading: {
-          label: `'standard'`,
+          label: `'fill'`,
           typographyClass: 'mat-h2'
         },
-        appearance: 'standard',
+        appearance: 'fill',
       },
       {
         controlType: ControlType.INPUT,
@@ -49,10 +49,10 @@ export class AppearanceComponent implements OnInit {
         controlName: 'formattedName',
         label: 'Formatted Name',
         heading: {
-          label: `'legacy'`,
+          label: `'fill'`,
           typographyClass: 'mat-h2'
         },
-        appearance: 'legacy',
+        appearance: 'fill',
       },
       {
         controlType: ControlType.AUTOCOMPLETE_CHIPLIST,

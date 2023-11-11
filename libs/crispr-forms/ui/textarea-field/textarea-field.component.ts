@@ -1,4 +1,4 @@
-/* eslint-disable @nrwl/nx/enforce-module-boundaries */
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -7,10 +7,15 @@ import { MatInputModule } from '@angular/material/input';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
 import { InfoComponent } from '@tft/crispr-forms/ui/info';
-import { crisprControlMixin, CrisprFieldComponent, TextareaFieldConfig } from '@tft/crispr-forms/utils';
+import {
+  crisprControlMixin,
+  CrisprFieldComponent,
+  TextareaFieldConfig,
+} from '@tft/crispr-forms/utils';
 
-const defaultConfig: Partial<TextareaFieldConfig> = {rows: 5};
-const TextareaFieldMixin = crisprControlMixin<TextareaFieldConfig>(CrisprFieldComponent);
+const defaultConfig: Partial<TextareaFieldConfig> = { rows: 5 };
+const TextareaFieldMixin =
+  crisprControlMixin<TextareaFieldConfig>(CrisprFieldComponent);
 
 @Component({
   selector: 'crispr-textarea-field',
@@ -28,10 +33,13 @@ const TextareaFieldMixin = crisprControlMixin<TextareaFieldConfig>(CrisprFieldCo
     FormValidationHandlerModule,
   ],
 })
-export class TextareaFieldComponent extends TextareaFieldMixin implements OnInit {
+export class TextareaFieldComponent
+  extends TextareaFieldMixin
+  implements OnInit
+{
   defaultConfig = defaultConfig;
 
   ngOnInit() {
-    super.ngOnInit()
+    super.ngOnInit();
   }
 }

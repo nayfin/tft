@@ -5,7 +5,7 @@
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/nx-cloud",
+      "runner": "nx-cloud",
       "options": {
         "accessToken": "MTliMTQ5MzktMmUxZC00NzRiLWI3NDQtMmU2YTgxMTUzZWY3fHJlYWQtd3JpdGU=",
         "cacheableOperations": ["build", "test", "lint", "e2e"],
@@ -17,7 +17,14 @@
   },
   "defaultProject": "documentation",
   "generators": {
-    "@nrwl/angular": {
+    "@nx/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nx/angular:library": {
+      "unitTestRunner": "jest"
+    },
+    "@nx/angular": {
       "application": {
         "linter": "eslint"
       },
@@ -27,13 +34,6 @@
       "storybook-configuration": {
         "linter": "eslint"
       }
-    },
-    "@nrwl/angular:application": {
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "unitTestRunner": "jest"
     }
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
@@ -43,7 +43,13 @@
       "inputs": ["production", "^production"]
     },
     "build-storybook": {
-      "inputs": ["default", "^production", "{workspaceRoot}/.storybook/**/*"]
+      "inputs": [
+        "default",
+        "^production",
+        "{workspaceRoot}/.storybook/**/*",
+        "{projectRoot}/.storybook/**/*",
+        "{projectRoot}/tsconfig.storybook.json"
+      ]
     },
     "test": {
       "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
@@ -66,7 +72,9 @@
       "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)",
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
       "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/jest.config.[jt]s"
+      "!{projectRoot}/jest.config.[jt]s",
+      "!{projectRoot}/tsconfig.storybook.json",
+      "!{projectRoot}/src/test-setup.[jt]s"
     ]
   }
 }

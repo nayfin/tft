@@ -58,6 +58,9 @@ export interface CrisprFieldConfig {
   component?: any; // TODO: Define this better
 }
 
+/**
+ * A utility type that returns the keys of a type if one is passed otherwise return string type
+ */
 type RestrictedControlName<M> = M extends null ? string : keyof M;
 /**
  * The base interface for all control configs

@@ -19,6 +19,8 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 import { UnitConversionComponent } from './unit-conversion/unit-conversion.component';
 import { ImageUploadComponent } from './image-upload/image-upload.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { OverviewComponent } from './overview/overview.component';
 
 
 @NgModule({
@@ -37,7 +39,8 @@ import { MatCardModule } from '@angular/material/card';
     FileUploadComponent,
     UnitConversionComponent,
     CustomDatepickerFooterComponent,
-    ImageUploadComponent
+    ImageUploadComponent,
+    OverviewComponent
   ],
   imports: [
     CommonModule,
@@ -45,6 +48,7 @@ import { MatCardModule } from '@angular/material/card';
     CrisprFormsModule,
     HttpClientModule,
     MatCardModule,
+    MatButtonModule
   ]
 })
 export class FieldsModule { }
