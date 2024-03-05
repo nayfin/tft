@@ -3,7 +3,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatSliderModule } from '@angular/material/slider';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+// import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
 import { InfoComponent } from '@tft/crispr-forms/ui/info';
 import {
@@ -31,7 +31,11 @@ const SliderFieldMixin =
     FieldContainerComponent,
     ReactiveFormsModule,
     MatSliderModule,
-    // TODO: Understand validation issue
+    /**
+     * TODO: Adding validation module causes error
+     * TypeError: You provided 'null' where a stream was expected. You can provide an Observable,
+     * Promise, ReadableStream, Array, AsyncIterable, or Iterable.
+     */
     // FormValidationHandlerModule,
   ],
 })
