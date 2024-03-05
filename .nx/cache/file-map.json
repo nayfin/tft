@@ -124,42 +124,129 @@
   },
   "nxJsonPlugins": [],
   "projectFileMap": {
-    "api-interfaces": [
+    "core": [
       {
-        "file": "libs/api-interfaces/.eslintrc.json",
-        "hash": "15906139037180937465"
+        "file": "libs/core/.eslintrc.json",
+        "hash": "15819155094303401248"
       },
       {
-        "file": "libs/api-interfaces/README.md",
-        "hash": "7851769050412724331"
+        "file": "libs/core/README.md",
+        "hash": "9810432091555253122"
       },
       {
-        "file": "libs/api-interfaces/jest.config.ts",
-        "hash": "7434817463029703023"
+        "file": "libs/core/jest.config.ts",
+        "hash": "9542076156786659937"
       },
       {
-        "file": "libs/api-interfaces/project.json",
-        "hash": "12753874154189451376"
+        "file": "libs/core/ng-package.json",
+        "hash": "5522862130090520074"
       },
       {
-        "file": "libs/api-interfaces/src/index.ts",
-        "hash": "973041686362827649"
+        "file": "libs/core/package.json",
+        "hash": "8468881603545586071",
+        "deps": [
+          "npm:tslib",
+          "npm:@angular/common",
+          "npm:@angular/core"
+        ]
       },
       {
-        "file": "libs/api-interfaces/src/lib/api-interfaces.ts",
-        "hash": "12660932326032859285"
+        "file": "libs/core/project.json",
+        "hash": "6409562104890806507"
       },
       {
-        "file": "libs/api-interfaces/tsconfig.json",
-        "hash": "12834038490315927699"
+        "file": "libs/core/src/index.ts",
+        "hash": "16733577379686221077"
       },
       {
-        "file": "libs/api-interfaces/tsconfig.lib.json",
-        "hash": "4769714135255015745"
+        "file": "libs/core/src/lib/core.module.spec.ts",
+        "hash": "15291256481485951195"
       },
       {
-        "file": "libs/api-interfaces/tsconfig.spec.json",
-        "hash": "11467507841791326307"
+        "file": "libs/core/src/lib/core.module.ts",
+        "hash": "5873317669125298890",
+        "deps": [
+          "npm:@angular/core",
+          "npm:@angular/common",
+          "npm:@angular/material"
+        ]
+      },
+      {
+        "file": "libs/core/src/lib/header/header.component.html",
+        "hash": "10728664745528393234"
+      },
+      {
+        "file": "libs/core/src/lib/header/header.component.scss",
+        "hash": "1615037423952331374"
+      },
+      {
+        "file": "libs/core/src/lib/header/header.component.spec.ts",
+        "hash": "12368643671067967549",
+        "deps": [
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/core/src/lib/header/header.component.ts",
+        "hash": "2210202942126352302",
+        "deps": [
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/core/src/lib/public_api.ts",
+        "hash": "18182584565378092460"
+      },
+      {
+        "file": "libs/core/src/lib/sidenav-list/sidenav-list.component.html",
+        "hash": "9779522875037931279"
+      },
+      {
+        "file": "libs/core/src/lib/sidenav-list/sidenav-list.component.scss",
+        "hash": "17235534469476861514"
+      },
+      {
+        "file": "libs/core/src/lib/sidenav-list/sidenav-list.component.spec.ts",
+        "hash": "9901390228990492319",
+        "deps": [
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/core/src/lib/sidenav-list/sidenav-list.component.ts",
+        "hash": "8880449026099318091",
+        "deps": [
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/core/src/lib/sidenav-list/sidenav-list.model.ts",
+        "hash": "9971455458041687723"
+      },
+      {
+        "file": "libs/core/src/test-setup.ts",
+        "hash": "4514677456379744950",
+        "deps": [
+          "npm:jest-preset-angular",
+          "npm:@angular/core",
+          "npm:@angular/platform-browser-dynamic"
+        ]
+      },
+      {
+        "file": "libs/core/tsconfig.json",
+        "hash": "9062807726820100599"
+      },
+      {
+        "file": "libs/core/tsconfig.lib.json",
+        "hash": "6963026330675052086"
+      },
+      {
+        "file": "libs/core/tsconfig.lib.prod.json",
+        "hash": "13458759196402815015"
+      },
+      {
+        "file": "libs/core/tsconfig.spec.json",
+        "hash": "9419262254794573494"
       }
     ],
     "ui-imports": [
@@ -239,6 +326,203 @@
       {
         "file": "libs/ui-imports/tsconfig.spec.json",
         "hash": "9419262254794573494"
+      }
+    ],
+    "documentation-e2e": [
+      {
+        "file": "apps/documentation-e2e/.eslintrc.json",
+        "hash": "9420694035316535925"
+      },
+      {
+        "file": "apps/documentation-e2e/cypress.json",
+        "hash": "5619671903429368421"
+      },
+      {
+        "file": "apps/documentation-e2e/project.json",
+        "hash": "17567756726456447800"
+      },
+      {
+        "file": "apps/documentation-e2e/src/fixtures/example.json",
+        "hash": "11614668686582597233"
+      },
+      {
+        "file": "apps/documentation-e2e/src/integration/app.spec.ts",
+        "hash": "10726714171281671477"
+      },
+      {
+        "file": "apps/documentation-e2e/src/plugins/index.js",
+        "hash": "1870053236038166983",
+        "deps": [
+          "npm:@nx/cypress"
+        ]
+      },
+      {
+        "file": "apps/documentation-e2e/src/support/app.po.ts",
+        "hash": "11157016311132186162"
+      },
+      {
+        "file": "apps/documentation-e2e/src/support/commands.ts",
+        "hash": "7314691991044890572"
+      },
+      {
+        "file": "apps/documentation-e2e/src/support/index.ts",
+        "hash": "3666078656922506009"
+      },
+      {
+        "file": "apps/documentation-e2e/tsconfig.e2e.json",
+        "hash": "3552469080385459243"
+      },
+      {
+        "file": "apps/documentation-e2e/tsconfig.json",
+        "hash": "4500232260948002331"
+      }
+    ],
+    "api": [
+      {
+        "file": "apps/api/.eslintrc.json",
+        "hash": "1269107630527170287"
+      },
+      {
+        "file": "apps/api/jest.config.ts",
+        "hash": "118004331586460236"
+      },
+      {
+        "file": "apps/api/project.json",
+        "hash": "5234407917814653524"
+      },
+      {
+        "file": "apps/api/src/app/.gitkeep",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": "apps/api/src/app/app.controller.spec.ts",
+        "hash": "15859953346642325947",
+        "deps": [
+          "npm:@nestjs/testing"
+        ]
+      },
+      {
+        "file": "apps/api/src/app/app.controller.ts",
+        "hash": "5033114787953606939",
+        "deps": [
+          "npm:@nestjs/common",
+          "api-interfaces"
+        ]
+      },
+      {
+        "file": "apps/api/src/app/app.module.ts",
+        "hash": "3163250445227373966",
+        "deps": [
+          "npm:@nestjs/common"
+        ]
+      },
+      {
+        "file": "apps/api/src/app/app.service.spec.ts",
+        "hash": "6332748756781370420",
+        "deps": [
+          "npm:@nestjs/testing"
+        ]
+      },
+      {
+        "file": "apps/api/src/app/app.service.ts",
+        "hash": "2841882803965758377",
+        "deps": [
+          "npm:@nestjs/common",
+          "api-interfaces"
+        ]
+      },
+      {
+        "file": "apps/api/src/assets/.gitkeep",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": "apps/api/src/environments/environment.prod.ts",
+        "hash": "10220522844224226756"
+      },
+      {
+        "file": "apps/api/src/environments/environment.ts",
+        "hash": "1135292433917692033"
+      },
+      {
+        "file": "apps/api/src/main.ts",
+        "hash": "11883250761250071265",
+        "deps": [
+          "npm:@nestjs/common",
+          "npm:@nestjs/core"
+        ]
+      },
+      {
+        "file": "apps/api/tsconfig.app.json",
+        "hash": "15003195462866527624"
+      },
+      {
+        "file": "apps/api/tsconfig.json",
+        "hash": "9214820933160915425"
+      },
+      {
+        "file": "apps/api/tsconfig.spec.json",
+        "hash": "18372778781523217062"
+      }
+    ],
+    "crispr-forms-e2e": [
+      {
+        "file": "apps/crispr-forms-e2e/.eslintrc.json",
+        "hash": "13236339327153123486"
+      },
+      {
+        "file": "apps/crispr-forms-e2e/cypress.json",
+        "hash": "9037906587003889641"
+      },
+      {
+        "file": "apps/crispr-forms-e2e/project.json",
+        "hash": "18009728954533460956"
+      },
+      {
+        "file": "apps/crispr-forms-e2e/src/fixtures/example.json",
+        "hash": "11614668686582597233"
+      },
+      {
+        "file": "apps/crispr-forms-e2e/src/integration/form-group-list/form-group-list.component.spec.ts",
+        "hash": "17196758535284891666"
+      },
+      {
+        "file": "apps/crispr-forms-e2e/src/integration/form/form.component.spec.ts",
+        "hash": "12083859530661770825"
+      },
+      {
+        "file": "apps/crispr-forms-e2e/src/integration/info/info.component.spec.ts",
+        "hash": "2232005876939417418"
+      },
+      {
+        "file": "apps/crispr-forms-e2e/src/integration/option/option.component.spec.ts",
+        "hash": "8779640051844612979"
+      },
+      {
+        "file": "apps/crispr-forms-e2e/src/integration/sub-group/sub-group.component.spec.ts",
+        "hash": "16061016282432407504"
+      },
+      {
+        "file": "apps/crispr-forms-e2e/src/plugins/index.js",
+        "hash": "1870053236038166983",
+        "deps": [
+          "npm:@nx/cypress"
+        ]
+      },
+      {
+        "file": "apps/crispr-forms-e2e/src/support/commands.ts",
+        "hash": "7314691991044890572"
+      },
+      {
+        "file": "apps/crispr-forms-e2e/src/support/index.ts",
+        "hash": "3666078656922506009"
+      },
+      {
+        "file": "apps/crispr-forms-e2e/tsconfig.e2e.json",
+        "hash": "3552469080385459243"
+      },
+      {
+        "file": "apps/crispr-forms-e2e/tsconfig.json",
+        "hash": "4500232260948002331"
       }
     ],
     "documentation": [
@@ -1670,529 +1954,6 @@
         "hash": "9419262254794573494"
       }
     ],
-    "core": [
-      {
-        "file": "libs/core/.eslintrc.json",
-        "hash": "15819155094303401248"
-      },
-      {
-        "file": "libs/core/README.md",
-        "hash": "9810432091555253122"
-      },
-      {
-        "file": "libs/core/jest.config.ts",
-        "hash": "9542076156786659937"
-      },
-      {
-        "file": "libs/core/ng-package.json",
-        "hash": "5522862130090520074"
-      },
-      {
-        "file": "libs/core/package.json",
-        "hash": "1911354052973341749",
-        "deps": [
-          "npm:tslib",
-          "npm:@angular/common",
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/core/project.json",
-        "hash": "6409562104890806507"
-      },
-      {
-        "file": "libs/core/src/index.ts",
-        "hash": "16733577379686221077"
-      },
-      {
-        "file": "libs/core/src/lib/core.module.spec.ts",
-        "hash": "15291256481485951195"
-      },
-      {
-        "file": "libs/core/src/lib/core.module.ts",
-        "hash": "5873317669125298890",
-        "deps": [
-          "npm:@angular/core",
-          "npm:@angular/common",
-          "npm:@angular/material"
-        ]
-      },
-      {
-        "file": "libs/core/src/lib/header/header.component.html",
-        "hash": "10728664745528393234"
-      },
-      {
-        "file": "libs/core/src/lib/header/header.component.scss",
-        "hash": "1615037423952331374"
-      },
-      {
-        "file": "libs/core/src/lib/header/header.component.spec.ts",
-        "hash": "12368643671067967549",
-        "deps": [
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/core/src/lib/header/header.component.ts",
-        "hash": "2210202942126352302",
-        "deps": [
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/core/src/lib/public_api.ts",
-        "hash": "18182584565378092460"
-      },
-      {
-        "file": "libs/core/src/lib/sidenav-list/sidenav-list.component.html",
-        "hash": "9779522875037931279"
-      },
-      {
-        "file": "libs/core/src/lib/sidenav-list/sidenav-list.component.scss",
-        "hash": "17235534469476861514"
-      },
-      {
-        "file": "libs/core/src/lib/sidenav-list/sidenav-list.component.spec.ts",
-        "hash": "9901390228990492319",
-        "deps": [
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/core/src/lib/sidenav-list/sidenav-list.component.ts",
-        "hash": "8880449026099318091",
-        "deps": [
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/core/src/lib/sidenav-list/sidenav-list.model.ts",
-        "hash": "9971455458041687723"
-      },
-      {
-        "file": "libs/core/src/test-setup.ts",
-        "hash": "4514677456379744950",
-        "deps": [
-          "npm:jest-preset-angular",
-          "npm:@angular/core",
-          "npm:@angular/platform-browser-dynamic"
-        ]
-      },
-      {
-        "file": "libs/core/tsconfig.json",
-        "hash": "9062807726820100599"
-      },
-      {
-        "file": "libs/core/tsconfig.lib.json",
-        "hash": "6963026330675052086"
-      },
-      {
-        "file": "libs/core/tsconfig.lib.prod.json",
-        "hash": "13458759196402815015"
-      },
-      {
-        "file": "libs/core/tsconfig.spec.json",
-        "hash": "9419262254794573494"
-      }
-    ],
-    "api": [
-      {
-        "file": "apps/api/.eslintrc.json",
-        "hash": "1269107630527170287"
-      },
-      {
-        "file": "apps/api/jest.config.ts",
-        "hash": "118004331586460236"
-      },
-      {
-        "file": "apps/api/project.json",
-        "hash": "5234407917814653524"
-      },
-      {
-        "file": "apps/api/src/app/.gitkeep",
-        "hash": "3244421341483603138"
-      },
-      {
-        "file": "apps/api/src/app/app.controller.spec.ts",
-        "hash": "15859953346642325947",
-        "deps": [
-          "npm:@nestjs/testing"
-        ]
-      },
-      {
-        "file": "apps/api/src/app/app.controller.ts",
-        "hash": "5033114787953606939",
-        "deps": [
-          "npm:@nestjs/common",
-          "api-interfaces"
-        ]
-      },
-      {
-        "file": "apps/api/src/app/app.module.ts",
-        "hash": "3163250445227373966",
-        "deps": [
-          "npm:@nestjs/common"
-        ]
-      },
-      {
-        "file": "apps/api/src/app/app.service.spec.ts",
-        "hash": "6332748756781370420",
-        "deps": [
-          "npm:@nestjs/testing"
-        ]
-      },
-      {
-        "file": "apps/api/src/app/app.service.ts",
-        "hash": "2841882803965758377",
-        "deps": [
-          "npm:@nestjs/common",
-          "api-interfaces"
-        ]
-      },
-      {
-        "file": "apps/api/src/assets/.gitkeep",
-        "hash": "3244421341483603138"
-      },
-      {
-        "file": "apps/api/src/environments/environment.prod.ts",
-        "hash": "10220522844224226756"
-      },
-      {
-        "file": "apps/api/src/environments/environment.ts",
-        "hash": "1135292433917692033"
-      },
-      {
-        "file": "apps/api/src/main.ts",
-        "hash": "11883250761250071265",
-        "deps": [
-          "npm:@nestjs/common",
-          "npm:@nestjs/core"
-        ]
-      },
-      {
-        "file": "apps/api/tsconfig.app.json",
-        "hash": "15003195462866527624"
-      },
-      {
-        "file": "apps/api/tsconfig.json",
-        "hash": "9214820933160915425"
-      },
-      {
-        "file": "apps/api/tsconfig.spec.json",
-        "hash": "18372778781523217062"
-      }
-    ],
-    "interact": [
-      {
-        "file": "libs/interact/.eslintrc.json",
-        "hash": "9787372952382709327"
-      },
-      {
-        "file": "libs/interact/README.md",
-        "hash": "9472625272899982244"
-      },
-      {
-        "file": "libs/interact/jest.config.ts",
-        "hash": "9835841503274204229"
-      },
-      {
-        "file": "libs/interact/ng-package.json",
-        "hash": "15879698991530185735"
-      },
-      {
-        "file": "libs/interact/package.json",
-        "hash": "1641425607832228749",
-        "deps": [
-          "npm:tslib",
-          "npm:@angular/common",
-          "npm:@angular/core",
-          "npm:interactjs"
-        ]
-      },
-      {
-        "file": "libs/interact/project.json",
-        "hash": "5357483048191892226"
-      },
-      {
-        "file": "libs/interact/src/index.ts",
-        "hash": "16649952133545752543"
-      },
-      {
-        "file": "libs/interact/src/lib/constants/defaults.ts",
-        "hash": "1622464409612998194"
-      },
-      {
-        "file": "libs/interact/src/lib/directives/account-for-scale.directive.spec.ts",
-        "hash": "11617525887162015454"
-      },
-      {
-        "file": "libs/interact/src/lib/directives/account-for-scale.directive.ts",
-        "hash": "8996910269573547116",
-        "deps": [
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/interact/src/lib/directives/apply-scale.directive.spec.ts",
-        "hash": "9575881033671253095"
-      },
-      {
-        "file": "libs/interact/src/lib/directives/apply-scale.directive.ts",
-        "hash": "4029611093070090670",
-        "deps": [
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/interact/src/lib/directives/auto-scroll.directive.ts",
-        "hash": "5273931006689518880",
-        "deps": [
-          "npm:@angular/core",
-          "npm:rxjs"
-        ]
-      },
-      {
-        "file": "libs/interact/src/lib/directives/drag-preview.directive.spec.ts",
-        "hash": "7195873089698901358"
-      },
-      {
-        "file": "libs/interact/src/lib/directives/drag-preview.directive.ts",
-        "hash": "17186887301478343254",
-        "deps": [
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/interact/src/lib/directives/drag-root.directive.spec.ts",
-        "hash": "8736332229845767495"
-      },
-      {
-        "file": "libs/interact/src/lib/directives/drag-root.directive.ts",
-        "hash": "5454183741175523045",
-        "deps": [
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/interact/src/lib/directives/draggable.directive.spec.ts",
-        "hash": "10473339116334716347"
-      },
-      {
-        "file": "libs/interact/src/lib/directives/draggable.directive.ts",
-        "hash": "17532539004419085239",
-        "deps": [
-          "npm:@angular/core",
-          "npm:@angular/common",
-          "npm:interactjs",
-          "npm:@interactjs/types",
-          "npm:rxjs"
-        ]
-      },
-      {
-        "file": "libs/interact/src/lib/directives/dropzone.directive.spec.ts",
-        "hash": "12857146832377165643"
-      },
-      {
-        "file": "libs/interact/src/lib/directives/dropzone.directive.ts",
-        "hash": "15043605416898945597",
-        "deps": [
-          "npm:@angular/core",
-          "npm:interactjs",
-          "npm:@interactjs/types"
-        ]
-      },
-      {
-        "file": "libs/interact/src/lib/directives/gesturable.directive.ts",
-        "hash": "15915968821392720980",
-        "deps": [
-          "npm:@angular/core",
-          "npm:interactjs",
-          "npm:@interactjs/types",
-          "npm:rxjs"
-        ]
-      },
-      {
-        "file": "libs/interact/src/lib/directives/index.ts",
-        "hash": "16297559518823448116"
-      },
-      {
-        "file": "libs/interact/src/lib/directives/interactable-root.directive.ts",
-        "hash": "16725771769990279662",
-        "deps": [
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/interact/src/lib/directives/resizable.directive.spec.ts",
-        "hash": "5164694994208552953"
-      },
-      {
-        "file": "libs/interact/src/lib/directives/resizable.directive.ts",
-        "hash": "17554470905313383091",
-        "deps": [
-          "npm:@angular/core",
-          "npm:@angular/common",
-          "npm:interactjs",
-          "npm:@interactjs/types",
-          "npm:rxjs"
-        ]
-      },
-      {
-        "file": "libs/interact/src/lib/interact.module.spec.ts",
-        "hash": "13535743508561865160",
-        "deps": [
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/interact/src/lib/interact.module.ts",
-        "hash": "7778271838194073117",
-        "deps": [
-          "npm:@angular/core",
-          "npm:@angular/common"
-        ]
-      },
-      {
-        "file": "libs/interact/src/lib/models/index.ts",
-        "hash": "10609929981503863917"
-      },
-      {
-        "file": "libs/interact/src/lib/models/interact.ts",
-        "hash": "15756620390487945555",
-        "deps": [
-          "npm:@interactjs/types",
-          "npm:rxjs",
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/interact/src/lib/pipes/array-of-n.pipe.spec.ts",
-        "hash": "9101617863715993405"
-      },
-      {
-        "file": "libs/interact/src/lib/pipes/array-of-n.pipe.ts",
-        "hash": "8696305958410412757",
-        "deps": [
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/interact/src/lib/pipes/index.ts",
-        "hash": "3840987974193666370"
-      },
-      {
-        "file": "libs/interact/src/lib/services/interact.service.spec.ts",
-        "hash": "6964117518122006175",
-        "deps": [
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/interact/src/lib/services/interact.service.ts",
-        "hash": "9267230013548788768",
-        "deps": [
-          "npm:@angular/core",
-          "npm:rxjs"
-        ]
-      },
-      {
-        "file": "libs/interact/src/lib/utils/helpers.ts",
-        "hash": "10025489100451585965",
-        "deps": [
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/interact/src/lib/utils/index.ts",
-        "hash": "17018612429813421775"
-      },
-      {
-        "file": "libs/interact/src/test-setup.ts",
-        "hash": "4514677456379744950",
-        "deps": [
-          "npm:jest-preset-angular",
-          "npm:@angular/core",
-          "npm:@angular/platform-browser-dynamic"
-        ]
-      },
-      {
-        "file": "libs/interact/tsconfig.json",
-        "hash": "9062807726820100599"
-      },
-      {
-        "file": "libs/interact/tsconfig.lib.json",
-        "hash": "6963026330675052086"
-      },
-      {
-        "file": "libs/interact/tsconfig.lib.prod.json",
-        "hash": "13458759196402815015"
-      },
-      {
-        "file": "libs/interact/tsconfig.spec.json",
-        "hash": "9419262254794573494"
-      }
-    ],
-    "crispr-forms-e2e": [
-      {
-        "file": "apps/crispr-forms-e2e/.eslintrc.json",
-        "hash": "13236339327153123486"
-      },
-      {
-        "file": "apps/crispr-forms-e2e/cypress.json",
-        "hash": "9037906587003889641"
-      },
-      {
-        "file": "apps/crispr-forms-e2e/project.json",
-        "hash": "18009728954533460956"
-      },
-      {
-        "file": "apps/crispr-forms-e2e/src/fixtures/example.json",
-        "hash": "11614668686582597233"
-      },
-      {
-        "file": "apps/crispr-forms-e2e/src/integration/form-group-list/form-group-list.component.spec.ts",
-        "hash": "17196758535284891666"
-      },
-      {
-        "file": "apps/crispr-forms-e2e/src/integration/form/form.component.spec.ts",
-        "hash": "12083859530661770825"
-      },
-      {
-        "file": "apps/crispr-forms-e2e/src/integration/info/info.component.spec.ts",
-        "hash": "2232005876939417418"
-      },
-      {
-        "file": "apps/crispr-forms-e2e/src/integration/option/option.component.spec.ts",
-        "hash": "8779640051844612979"
-      },
-      {
-        "file": "apps/crispr-forms-e2e/src/integration/sub-group/sub-group.component.spec.ts",
-        "hash": "16061016282432407504"
-      },
-      {
-        "file": "apps/crispr-forms-e2e/src/plugins/index.js",
-        "hash": "1870053236038166983",
-        "deps": [
-          "npm:@nx/cypress"
-        ]
-      },
-      {
-        "file": "apps/crispr-forms-e2e/src/support/commands.ts",
-        "hash": "7314691991044890572"
-      },
-      {
-        "file": "apps/crispr-forms-e2e/src/support/index.ts",
-        "hash": "3666078656922506009"
-      },
-      {
-        "file": "apps/crispr-forms-e2e/tsconfig.e2e.json",
-        "hash": "3552469080385459243"
-      },
-      {
-        "file": "apps/crispr-forms-e2e/tsconfig.json",
-        "hash": "4500232260948002331"
-      }
-    ],
     "form-validation-handler": [
       {
         "file": "libs/form-validation-handler/.eslintrc.json",
@@ -2353,245 +2114,6 @@
       },
       {
         "file": "libs/form-validation-handler/tsconfig.spec.json",
-        "hash": "9419262254794573494"
-      }
-    ],
-    "mat-instantsearch": [
-      {
-        "file": "libs/mat-instantsearch/.eslintrc.json",
-        "hash": "11000451660342875732"
-      },
-      {
-        "file": "libs/mat-instantsearch/README.md",
-        "hash": "16838330841364170755"
-      },
-      {
-        "file": "libs/mat-instantsearch/jest.config.ts",
-        "hash": "10605792479420671346"
-      },
-      {
-        "file": "libs/mat-instantsearch/ng-package.json",
-        "hash": "3680167771588756856"
-      },
-      {
-        "file": "libs/mat-instantsearch/package.json",
-        "hash": "12779561648564470505",
-        "deps": [
-          "npm:tslib",
-          "npm:@angular/common",
-          "npm:@angular/core",
-          "npm:@angular/material",
-          "npm:@angular/cdk",
-          "ui-imports",
-          "npm:lodash-es",
-          "npm:algoliasearch",
-          "npm:angular-instantsearch"
-        ]
-      },
-      {
-        "file": "libs/mat-instantsearch/project.json",
-        "hash": "9569566370629517864"
-      },
-      {
-        "file": "libs/mat-instantsearch/src/index.ts",
-        "hash": "18339303373205833743"
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/algolia-attribution/algolia-attribution.component.html",
-        "hash": "14142867231962626472"
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/algolia-attribution/algolia-attribution.component.scss",
-        "hash": "7156701220399344965"
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/algolia-attribution/algolia-attribution.component.spec.ts",
-        "hash": "6150429582700553409",
-        "deps": [
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/algolia-attribution/algolia-attribution.component.ts",
-        "hash": "3757565360403928244",
-        "deps": [
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/autocomplete/autocomplete.component.html",
-        "hash": "10572401699642736071"
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/autocomplete/autocomplete.component.scss",
-        "hash": "13979901733181112636"
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/autocomplete/autocomplete.component.spec.ts",
-        "hash": "4833703010415122722",
-        "deps": [
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/autocomplete/autocomplete.component.ts",
-        "hash": "12794403755337132204",
-        "deps": [
-          "npm:@angular/core",
-          "npm:@angular/forms",
-          "npm:angular-instantsearch",
-          "npm:instantsearch.js",
-          "npm:@angular/material",
-          "npm:rxjs",
-          "npm:algoliasearch-helper"
-        ]
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/filter-chiplist/filter-chiplist.component.html",
-        "hash": "11419491603026612610"
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/filter-chiplist/filter-chiplist.component.scss",
-        "hash": "14458059189219085576"
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/filter-chiplist/filter-chiplist.component.spec.ts",
-        "hash": "9274070291140371270",
-        "deps": [
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/filter-chiplist/filter-chiplist.component.ts",
-        "hash": "13663429276846332496",
-        "deps": [
-          "npm:@angular/core",
-          "npm:@angular/forms",
-          "npm:angular-instantsearch",
-          "npm:instantsearch.js",
-          "npm:rxjs",
-          "npm:@angular/material"
-        ]
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/filter-select/filter-select.component.html",
-        "hash": "4049145838646616237"
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/filter-select/filter-select.component.scss",
-        "hash": "13979901733181112636"
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/filter-select/filter-select.component.spec.ts",
-        "hash": "6488075772865611660",
-        "deps": [
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/filter-select/filter-select.component.ts",
-        "hash": "8591373157948667604",
-        "deps": [
-          "npm:@angular/core",
-          "npm:angular-instantsearch",
-          "npm:instantsearch.js",
-          "npm:@angular/material",
-          "npm:@angular/common"
-        ]
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/mat-instantsearch.module.spec.ts",
-        "hash": "10452132188115367687",
-        "deps": [
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/mat-instantsearch.module.ts",
-        "hash": "8665298335881960934"
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/models/index.ts",
-        "hash": "5397357818970750475"
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/models/refinement-list.ts",
-        "hash": "14244387290880426330"
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/pagination/pagination.component.html",
-        "hash": "6987742424192673311"
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/pagination/pagination.component.scss",
-        "hash": "7110943866104521963"
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/pagination/pagination.component.spec.ts",
-        "hash": "12984210348925392890",
-        "deps": [
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/pagination/pagination.component.ts",
-        "hash": "16074048214143003654",
-        "deps": [
-          "npm:@angular/core",
-          "npm:instantsearch.js",
-          "npm:lodash-es",
-          "npm:angular-instantsearch",
-          "npm:@angular/material"
-        ]
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/search-box/search-box.component.html",
-        "hash": "13014903417761619681"
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/search-box/search-box.component.scss",
-        "hash": "13979901733181112636"
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/search-box/search-box.component.spec.ts",
-        "hash": "14756726856067809618",
-        "deps": [
-          "npm:@angular/core"
-        ]
-      },
-      {
-        "file": "libs/mat-instantsearch/src/lib/search-box/search-box.component.ts",
-        "hash": "16958524684625615961",
-        "deps": [
-          "npm:@angular/core",
-          "npm:@angular/material",
-          "npm:angular-instantsearch",
-          "npm:instantsearch.js"
-        ]
-      },
-      {
-        "file": "libs/mat-instantsearch/src/test-setup.ts",
-        "hash": "4514677456379744950",
-        "deps": [
-          "npm:jest-preset-angular",
-          "npm:@angular/core",
-          "npm:@angular/platform-browser-dynamic"
-        ]
-      },
-      {
-        "file": "libs/mat-instantsearch/tsconfig.json",
-        "hash": "9062807726820100599"
-      },
-      {
-        "file": "libs/mat-instantsearch/tsconfig.lib.json",
-        "hash": "6963026330675052086"
-      },
-      {
-        "file": "libs/mat-instantsearch/tsconfig.lib.prod.json",
-        "hash": "13458759196402815015"
-      },
-      {
-        "file": "libs/mat-instantsearch/tsconfig.spec.json",
         "hash": "9419262254794573494"
       }
     ],
@@ -3883,53 +3405,531 @@
         "hash": "7889848438926376602"
       }
     ],
-    "documentation-e2e": [
+    "interact": [
       {
-        "file": "apps/documentation-e2e/.eslintrc.json",
-        "hash": "9420694035316535925"
+        "file": "libs/interact/.eslintrc.json",
+        "hash": "9787372952382709327"
       },
       {
-        "file": "apps/documentation-e2e/cypress.json",
-        "hash": "5619671903429368421"
+        "file": "libs/interact/README.md",
+        "hash": "9472625272899982244"
       },
       {
-        "file": "apps/documentation-e2e/project.json",
-        "hash": "17567756726456447800"
+        "file": "libs/interact/jest.config.ts",
+        "hash": "9835841503274204229"
       },
       {
-        "file": "apps/documentation-e2e/src/fixtures/example.json",
-        "hash": "11614668686582597233"
+        "file": "libs/interact/ng-package.json",
+        "hash": "15879698991530185735"
       },
       {
-        "file": "apps/documentation-e2e/src/integration/app.spec.ts",
-        "hash": "10726714171281671477"
-      },
-      {
-        "file": "apps/documentation-e2e/src/plugins/index.js",
-        "hash": "1870053236038166983",
+        "file": "libs/interact/package.json",
+        "hash": "1641425607832228749",
         "deps": [
-          "npm:@nx/cypress"
+          "npm:tslib",
+          "npm:@angular/common",
+          "npm:@angular/core",
+          "npm:interactjs"
         ]
       },
       {
-        "file": "apps/documentation-e2e/src/support/app.po.ts",
-        "hash": "11157016311132186162"
+        "file": "libs/interact/project.json",
+        "hash": "5357483048191892226"
       },
       {
-        "file": "apps/documentation-e2e/src/support/commands.ts",
-        "hash": "7314691991044890572"
+        "file": "libs/interact/src/index.ts",
+        "hash": "16649952133545752543"
       },
       {
-        "file": "apps/documentation-e2e/src/support/index.ts",
-        "hash": "3666078656922506009"
+        "file": "libs/interact/src/lib/constants/defaults.ts",
+        "hash": "1622464409612998194"
       },
       {
-        "file": "apps/documentation-e2e/tsconfig.e2e.json",
-        "hash": "3552469080385459243"
+        "file": "libs/interact/src/lib/directives/account-for-scale.directive.spec.ts",
+        "hash": "11617525887162015454"
       },
       {
-        "file": "apps/documentation-e2e/tsconfig.json",
-        "hash": "4500232260948002331"
+        "file": "libs/interact/src/lib/directives/account-for-scale.directive.ts",
+        "hash": "8996910269573547116",
+        "deps": [
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/interact/src/lib/directives/apply-scale.directive.spec.ts",
+        "hash": "9575881033671253095"
+      },
+      {
+        "file": "libs/interact/src/lib/directives/apply-scale.directive.ts",
+        "hash": "4029611093070090670",
+        "deps": [
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/interact/src/lib/directives/auto-scroll.directive.ts",
+        "hash": "5273931006689518880",
+        "deps": [
+          "npm:@angular/core",
+          "npm:rxjs"
+        ]
+      },
+      {
+        "file": "libs/interact/src/lib/directives/drag-preview.directive.spec.ts",
+        "hash": "7195873089698901358"
+      },
+      {
+        "file": "libs/interact/src/lib/directives/drag-preview.directive.ts",
+        "hash": "17186887301478343254",
+        "deps": [
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/interact/src/lib/directives/drag-root.directive.spec.ts",
+        "hash": "8736332229845767495"
+      },
+      {
+        "file": "libs/interact/src/lib/directives/drag-root.directive.ts",
+        "hash": "5454183741175523045",
+        "deps": [
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/interact/src/lib/directives/draggable.directive.spec.ts",
+        "hash": "10473339116334716347"
+      },
+      {
+        "file": "libs/interact/src/lib/directives/draggable.directive.ts",
+        "hash": "17532539004419085239",
+        "deps": [
+          "npm:@angular/core",
+          "npm:@angular/common",
+          "npm:interactjs",
+          "npm:@interactjs/types",
+          "npm:rxjs"
+        ]
+      },
+      {
+        "file": "libs/interact/src/lib/directives/dropzone.directive.spec.ts",
+        "hash": "12857146832377165643"
+      },
+      {
+        "file": "libs/interact/src/lib/directives/dropzone.directive.ts",
+        "hash": "15043605416898945597",
+        "deps": [
+          "npm:@angular/core",
+          "npm:interactjs",
+          "npm:@interactjs/types"
+        ]
+      },
+      {
+        "file": "libs/interact/src/lib/directives/gesturable.directive.ts",
+        "hash": "15915968821392720980",
+        "deps": [
+          "npm:@angular/core",
+          "npm:interactjs",
+          "npm:@interactjs/types",
+          "npm:rxjs"
+        ]
+      },
+      {
+        "file": "libs/interact/src/lib/directives/index.ts",
+        "hash": "16297559518823448116"
+      },
+      {
+        "file": "libs/interact/src/lib/directives/interactable-root.directive.ts",
+        "hash": "16725771769990279662",
+        "deps": [
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/interact/src/lib/directives/resizable.directive.spec.ts",
+        "hash": "5164694994208552953"
+      },
+      {
+        "file": "libs/interact/src/lib/directives/resizable.directive.ts",
+        "hash": "17554470905313383091",
+        "deps": [
+          "npm:@angular/core",
+          "npm:@angular/common",
+          "npm:interactjs",
+          "npm:@interactjs/types",
+          "npm:rxjs"
+        ]
+      },
+      {
+        "file": "libs/interact/src/lib/interact.module.spec.ts",
+        "hash": "13535743508561865160",
+        "deps": [
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/interact/src/lib/interact.module.ts",
+        "hash": "7778271838194073117",
+        "deps": [
+          "npm:@angular/core",
+          "npm:@angular/common"
+        ]
+      },
+      {
+        "file": "libs/interact/src/lib/models/index.ts",
+        "hash": "10609929981503863917"
+      },
+      {
+        "file": "libs/interact/src/lib/models/interact.ts",
+        "hash": "15756620390487945555",
+        "deps": [
+          "npm:@interactjs/types",
+          "npm:rxjs",
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/interact/src/lib/pipes/array-of-n.pipe.spec.ts",
+        "hash": "9101617863715993405"
+      },
+      {
+        "file": "libs/interact/src/lib/pipes/array-of-n.pipe.ts",
+        "hash": "8696305958410412757",
+        "deps": [
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/interact/src/lib/pipes/index.ts",
+        "hash": "3840987974193666370"
+      },
+      {
+        "file": "libs/interact/src/lib/services/interact.service.spec.ts",
+        "hash": "6964117518122006175",
+        "deps": [
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/interact/src/lib/services/interact.service.ts",
+        "hash": "9267230013548788768",
+        "deps": [
+          "npm:@angular/core",
+          "npm:rxjs"
+        ]
+      },
+      {
+        "file": "libs/interact/src/lib/utils/helpers.ts",
+        "hash": "10025489100451585965",
+        "deps": [
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/interact/src/lib/utils/index.ts",
+        "hash": "17018612429813421775"
+      },
+      {
+        "file": "libs/interact/src/test-setup.ts",
+        "hash": "4514677456379744950",
+        "deps": [
+          "npm:jest-preset-angular",
+          "npm:@angular/core",
+          "npm:@angular/platform-browser-dynamic"
+        ]
+      },
+      {
+        "file": "libs/interact/tsconfig.json",
+        "hash": "9062807726820100599"
+      },
+      {
+        "file": "libs/interact/tsconfig.lib.json",
+        "hash": "6963026330675052086"
+      },
+      {
+        "file": "libs/interact/tsconfig.lib.prod.json",
+        "hash": "13458759196402815015"
+      },
+      {
+        "file": "libs/interact/tsconfig.spec.json",
+        "hash": "9419262254794573494"
+      }
+    ],
+    "mat-instantsearch": [
+      {
+        "file": "libs/mat-instantsearch/.eslintrc.json",
+        "hash": "11000451660342875732"
+      },
+      {
+        "file": "libs/mat-instantsearch/README.md",
+        "hash": "16838330841364170755"
+      },
+      {
+        "file": "libs/mat-instantsearch/jest.config.ts",
+        "hash": "10605792479420671346"
+      },
+      {
+        "file": "libs/mat-instantsearch/ng-package.json",
+        "hash": "3680167771588756856"
+      },
+      {
+        "file": "libs/mat-instantsearch/package.json",
+        "hash": "12779561648564470505",
+        "deps": [
+          "npm:tslib",
+          "npm:@angular/common",
+          "npm:@angular/core",
+          "npm:@angular/material",
+          "npm:@angular/cdk",
+          "ui-imports",
+          "npm:lodash-es",
+          "npm:algoliasearch",
+          "npm:angular-instantsearch"
+        ]
+      },
+      {
+        "file": "libs/mat-instantsearch/project.json",
+        "hash": "9569566370629517864"
+      },
+      {
+        "file": "libs/mat-instantsearch/src/index.ts",
+        "hash": "18339303373205833743"
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/algolia-attribution/algolia-attribution.component.html",
+        "hash": "14142867231962626472"
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/algolia-attribution/algolia-attribution.component.scss",
+        "hash": "7156701220399344965"
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/algolia-attribution/algolia-attribution.component.spec.ts",
+        "hash": "6150429582700553409",
+        "deps": [
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/algolia-attribution/algolia-attribution.component.ts",
+        "hash": "3757565360403928244",
+        "deps": [
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/autocomplete/autocomplete.component.html",
+        "hash": "10572401699642736071"
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/autocomplete/autocomplete.component.scss",
+        "hash": "13979901733181112636"
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/autocomplete/autocomplete.component.spec.ts",
+        "hash": "4833703010415122722",
+        "deps": [
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/autocomplete/autocomplete.component.ts",
+        "hash": "12794403755337132204",
+        "deps": [
+          "npm:@angular/core",
+          "npm:@angular/forms",
+          "npm:angular-instantsearch",
+          "npm:instantsearch.js",
+          "npm:@angular/material",
+          "npm:rxjs",
+          "npm:algoliasearch-helper"
+        ]
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/filter-chiplist/filter-chiplist.component.html",
+        "hash": "11419491603026612610"
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/filter-chiplist/filter-chiplist.component.scss",
+        "hash": "14458059189219085576"
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/filter-chiplist/filter-chiplist.component.spec.ts",
+        "hash": "9274070291140371270",
+        "deps": [
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/filter-chiplist/filter-chiplist.component.ts",
+        "hash": "13663429276846332496",
+        "deps": [
+          "npm:@angular/core",
+          "npm:@angular/forms",
+          "npm:angular-instantsearch",
+          "npm:instantsearch.js",
+          "npm:rxjs",
+          "npm:@angular/material"
+        ]
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/filter-select/filter-select.component.html",
+        "hash": "4049145838646616237"
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/filter-select/filter-select.component.scss",
+        "hash": "13979901733181112636"
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/filter-select/filter-select.component.spec.ts",
+        "hash": "6488075772865611660",
+        "deps": [
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/filter-select/filter-select.component.ts",
+        "hash": "8591373157948667604",
+        "deps": [
+          "npm:@angular/core",
+          "npm:angular-instantsearch",
+          "npm:instantsearch.js",
+          "npm:@angular/material",
+          "npm:@angular/common"
+        ]
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/mat-instantsearch.module.spec.ts",
+        "hash": "10452132188115367687",
+        "deps": [
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/mat-instantsearch.module.ts",
+        "hash": "8665298335881960934"
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/models/index.ts",
+        "hash": "5397357818970750475"
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/models/refinement-list.ts",
+        "hash": "14244387290880426330"
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/pagination/pagination.component.html",
+        "hash": "6987742424192673311"
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/pagination/pagination.component.scss",
+        "hash": "7110943866104521963"
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/pagination/pagination.component.spec.ts",
+        "hash": "12984210348925392890",
+        "deps": [
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/pagination/pagination.component.ts",
+        "hash": "16074048214143003654",
+        "deps": [
+          "npm:@angular/core",
+          "npm:instantsearch.js",
+          "npm:lodash-es",
+          "npm:angular-instantsearch",
+          "npm:@angular/material"
+        ]
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/search-box/search-box.component.html",
+        "hash": "13014903417761619681"
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/search-box/search-box.component.scss",
+        "hash": "13979901733181112636"
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/search-box/search-box.component.spec.ts",
+        "hash": "14756726856067809618",
+        "deps": [
+          "npm:@angular/core"
+        ]
+      },
+      {
+        "file": "libs/mat-instantsearch/src/lib/search-box/search-box.component.ts",
+        "hash": "16958524684625615961",
+        "deps": [
+          "npm:@angular/core",
+          "npm:@angular/material",
+          "npm:angular-instantsearch",
+          "npm:instantsearch.js"
+        ]
+      },
+      {
+        "file": "libs/mat-instantsearch/src/test-setup.ts",
+        "hash": "4514677456379744950",
+        "deps": [
+          "npm:jest-preset-angular",
+          "npm:@angular/core",
+          "npm:@angular/platform-browser-dynamic"
+        ]
+      },
+      {
+        "file": "libs/mat-instantsearch/tsconfig.json",
+        "hash": "9062807726820100599"
+      },
+      {
+        "file": "libs/mat-instantsearch/tsconfig.lib.json",
+        "hash": "6963026330675052086"
+      },
+      {
+        "file": "libs/mat-instantsearch/tsconfig.lib.prod.json",
+        "hash": "13458759196402815015"
+      },
+      {
+        "file": "libs/mat-instantsearch/tsconfig.spec.json",
+        "hash": "9419262254794573494"
+      }
+    ],
+    "api-interfaces": [
+      {
+        "file": "libs/api-interfaces/.eslintrc.json",
+        "hash": "15906139037180937465"
+      },
+      {
+        "file": "libs/api-interfaces/README.md",
+        "hash": "7851769050412724331"
+      },
+      {
+        "file": "libs/api-interfaces/jest.config.ts",
+        "hash": "7434817463029703023"
+      },
+      {
+        "file": "libs/api-interfaces/project.json",
+        "hash": "12753874154189451376"
+      },
+      {
+        "file": "libs/api-interfaces/src/index.ts",
+        "hash": "973041686362827649"
+      },
+      {
+        "file": "libs/api-interfaces/src/lib/api-interfaces.ts",
+        "hash": "12660932326032859285"
+      },
+      {
+        "file": "libs/api-interfaces/tsconfig.json",
+        "hash": "12834038490315927699"
+      },
+      {
+        "file": "libs/api-interfaces/tsconfig.lib.json",
+        "hash": "4769714135255015745"
+      },
+      {
+        "file": "libs/api-interfaces/tsconfig.spec.json",
+        "hash": "11467507841791326307"
       }
     ]
   }

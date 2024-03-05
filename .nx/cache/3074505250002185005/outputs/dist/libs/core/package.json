@@ -1,0 +1,27 @@
+{
+  "name": "@tft/core",
+  "version": "16.0.0",
+  "peerDependencies": {
+    "@angular/common": "^13.0.0",
+    "@angular/core": "^13.0.0",
+    "@angular/material": "16.2.1",
+    "@angular/platform-browser-dynamic": "16.2.1"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
+  "module": "fesm2022/tft-core.mjs",
+  "typings": "index.d.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./index.d.ts",
+      "esm2022": "./esm2022/tft-core.mjs",
+      "esm": "./esm2022/tft-core.mjs",
+      "default": "./fesm2022/tft-core.mjs"
+    }
+  },
+  "sideEffects": false
+}

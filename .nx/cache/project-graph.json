@@ -67,6 +67,50 @@
         "implicitDependencies": []
       }
     },
+    "documentation-e2e": {
+      "name": "documentation-e2e",
+      "type": "e2e",
+      "data": {
+        "name": "documentation-e2e",
+        "root": "apps/documentation-e2e",
+        "$schema": "../../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "apps/documentation-e2e/src",
+        "projectType": "application",
+        "targets": {
+          "e2e": {
+            "inputs": [
+              "default",
+              "^production"
+            ],
+            "executor": "@nx/cypress:cypress",
+            "options": {
+              "cypressConfig": "apps/documentation-e2e/cypress.json",
+              "tsConfig": "apps/documentation-e2e/tsconfig.e2e.json",
+              "devServerTarget": "documentation:serve"
+            },
+            "configurations": {
+              "production": {
+                "devServerTarget": "documentation:serve:production"
+              }
+            }
+          },
+          "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+              "lintFilePatterns": [
+                "apps/documentation-e2e/**/*.{js,ts}",
+                "apps/documentation-e2e/src/**/*.html"
+              ]
+            },
+            "configurations": {}
+          }
+        },
+        "tags": [],
+        "implicitDependencies": [
+          "documentation"
+        ]
+      }
+    },
     "mat-instantsearch": {
       "name": "mat-instantsearch",
       "type": "lib",
@@ -132,50 +176,6 @@
         },
         "tags": [],
         "implicitDependencies": []
-      }
-    },
-    "documentation-e2e": {
-      "name": "documentation-e2e",
-      "type": "e2e",
-      "data": {
-        "name": "documentation-e2e",
-        "root": "apps/documentation-e2e",
-        "$schema": "../../node_modules/nx/schemas/project-schema.json",
-        "sourceRoot": "apps/documentation-e2e/src",
-        "projectType": "application",
-        "targets": {
-          "e2e": {
-            "inputs": [
-              "default",
-              "^production"
-            ],
-            "executor": "@nx/cypress:cypress",
-            "options": {
-              "cypressConfig": "apps/documentation-e2e/cypress.json",
-              "tsConfig": "apps/documentation-e2e/tsconfig.e2e.json",
-              "devServerTarget": "documentation:serve"
-            },
-            "configurations": {
-              "production": {
-                "devServerTarget": "documentation:serve:production"
-              }
-            }
-          },
-          "lint": {
-            "executor": "@nrwl/linter:eslint",
-            "options": {
-              "lintFilePatterns": [
-                "apps/documentation-e2e/**/*.{js,ts}",
-                "apps/documentation-e2e/src/**/*.html"
-              ]
-            },
-            "configurations": {}
-          }
-        },
-        "tags": [],
-        "implicitDependencies": [
-          "documentation"
-        ]
       }
     },
     "crispr-forms-e2e": {
@@ -21751,6 +21751,18 @@
         "type": "static"
       }
     ],
+    "documentation-e2e": [
+      {
+        "source": "documentation-e2e",
+        "target": "documentation",
+        "type": "implicit"
+      },
+      {
+        "source": "documentation-e2e",
+        "target": "npm:@nx/cypress",
+        "type": "static"
+      }
+    ],
     "mat-instantsearch": [
       {
         "source": "mat-instantsearch",
@@ -21825,18 +21837,6 @@
       {
         "source": "mat-instantsearch",
         "target": "npm:@angular/platform-browser-dynamic",
-        "type": "static"
-      }
-    ],
-    "documentation-e2e": [
-      {
-        "source": "documentation-e2e",
-        "target": "documentation",
-        "type": "implicit"
-      },
-      {
-        "source": "documentation-e2e",
-        "target": "npm:@nx/cypress",
         "type": "static"
       }
     ],
