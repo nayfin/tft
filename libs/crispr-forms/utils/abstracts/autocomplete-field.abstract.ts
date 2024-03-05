@@ -6,7 +6,7 @@ import { debounceTime, distinctUntilChanged, map, shareReplay, startWith, switch
 import { crisprControlMixin } from './crispr-control.mixin';
 import type { AutocompleteFieldConfig, AutocompleteChiplistFieldConfig, SelectOption } from '../models';
 import { CrisprFieldComponent } from './crispr-field.abstract';
-import { observablifyOptions } from '../functions/observablifyOptions';
+import { observablifyOptions } from '../functions';
 
 type AutocompleteConfigTypes = AutocompleteFieldConfig | AutocompleteChiplistFieldConfig;
 

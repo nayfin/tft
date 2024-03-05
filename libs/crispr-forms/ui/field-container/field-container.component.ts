@@ -9,9 +9,9 @@ import { Observable, of, Subscription } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { tap, distinctUntilChanged } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
-import { HeadingComponent } from '@tft/crispr-forms/ui/heading';
+import { HeadingComponent } from '../heading';
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import type { CrisprControlConfig } from '@tft/crispr-forms/utils';
+import type { CrisprControlConfig } from '../../utils';
 
 @Component({
   selector: 'crispr-field-container',
