@@ -140,7 +140,7 @@ export class OverviewComponent implements OnInit{
               typeDebounceTime: 0,
               validators: [Validators.required],
               options: (_group, searchTerm) => {
-                console.log({searchTerm, _group})
+                // console.log({searchTerm, _group})
                 return of([
                   {label: 'good', value: 'good'},
                   {label: 'evil', value: 'evil'},
@@ -340,7 +340,7 @@ export class OverviewComponent implements OnInit{
         typeDebounceTime: 0,
         validators: [Validators.required],
         options: (_group, searchTerm) => {
-          console.log({searchTerm, _group})
+          // console.log({searchTerm, _group})
           return of([
             {label: 'good', value: 'good'},
             {label: 'evil', value: 'evil'},

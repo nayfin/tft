@@ -3,7 +3,7 @@ import {
   ControlValue,
   AnyFieldConfig,
   isControlConfig,
-} from '@tft/crispr-forms/utils';
+} from '../../../utils';
 
 @Pipe({
   name: 'initialControlValue',
