@@ -1,0 +1,21 @@
+{
+  "run": {
+    "command": "ng build core --prod",
+    "startTime": "2024-03-05T04:52:25.383Z",
+    "endTime": "2024-03-05T04:52:25.902Z",
+    "inner": false
+  },
+  "tasks": [
+    {
+      "taskId": "core:build:production",
+      "target": "build",
+      "projectName": "core",
+      "hash": "16193250569606612056",
+      "startTime": "2024-03-05T04:52:25.389Z",
+      "endTime": "2024-03-05T04:52:25.897Z",
+      "params": "",
+      "cacheStatus": "remote-cache-hit",
+      "status": 0
+    }
+  ]
+}
