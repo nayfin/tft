@@ -16,7 +16,7 @@ export class SliderComponent implements OnInit {
           content: 'You can use a tooltip on a slider'
         },
         label: 'Slider Field',
-        controlName: 'slider',
+        controlName: 'sliderA',
         displayLimits: true, // default
         max: 80,
         min: 20,
@@ -28,9 +28,14 @@ export class SliderComponent implements OnInit {
         info: {
           content: 'You can use a tooltip on a slider'
         },
-        vertical: true,
         label: 'Slider Field',
-        controlName: 'slider',
+        controlName: 'sliderB',
+      },
+      {
+        controlType: ControlType.BUTTON,
+        type: 'submit',
+        callback: ({value}) => console.log({value}),
+        label: 'Submit',
       }
     ]
   }

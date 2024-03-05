@@ -8,9 +8,7 @@
         [info]="config.info">
       </crispr-info>
     </label>
-    <div class="slider-container"
-      [formGroup]="group"
-      [ngStyle]="{'flex-direction': flexDirection}">
+    <div class="slider-container">
       <span *ngIf="config.displayLimits">
         {{config.min}}
       </span>
@@ -18,13 +16,12 @@
         [discrete]="config.discrete"
         [displayWith]="config.displayWith"
         class="example-margin"
-        
+        [formGroup]="group"
         [max]="config.max"
         [min]="config.min"
         [step]="config.step">
         <input matSliderThumb 
-        [formControlName]="config.controlName" 
-        #slider>
+        [formControlName]="config.controlName">
       </mat-slider>
       <span *ngIf="config.displayLimits">
         {{config.max}}

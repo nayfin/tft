@@ -385,7 +385,6 @@ export class OverviewComponent implements OnInit{
         info: {
           content: 'I am a tooltip on a slider'
         },
-        vertical: false,
         discrete: true,
         min: 2,
         max: 88
@@ -398,8 +397,7 @@ export class OverviewComponent implements OnInit{
         color: 'primary',
         icon: 'info',
         classes: []
-      },
-
+      }
     ]
   }
 

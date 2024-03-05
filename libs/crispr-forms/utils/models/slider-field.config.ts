@@ -12,6 +12,5 @@ export interface SliderFieldConfig extends
   discrete?: boolean;
   tickInterval?: number | 'auto';
   displayLimits?: boolean;
-  vertical?: boolean;
   // invert?: boolean;
 }

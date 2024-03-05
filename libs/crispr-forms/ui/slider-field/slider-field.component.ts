@@ -3,7 +3,6 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatSliderModule } from '@angular/material/slider';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { OptionComponent } from '@tft/crispr-forms/ui/option';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '@tft/crispr-forms/ui/field-container';
 import { InfoComponent } from '@tft/crispr-forms/ui/info';
@@ -29,21 +28,17 @@ const SliderFieldMixin =
   imports: [
     CommonModule,
     InfoComponent,
-    OptionComponent,
     FieldContainerComponent,
     ReactiveFormsModule,
     MatSliderModule,
-    FormValidationHandlerModule,
+    // TODO: Understand validation issue
+    // FormValidationHandlerModule,
   ],
 })
 export class SliderFieldComponent extends SliderFieldMixin implements OnInit {
   defaultConfig = defaultConfig;
   constructor() {
     super();
-  }
-
-  get flexDirection() {
-    return this.config.vertical ? 'column' : 'row';
   }
 
   ngOnInit() {
