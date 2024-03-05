@@ -30,8 +30,7 @@
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/form-validation-handler/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/form-validation-handler/jest.config.ts"
       },
       "outputs": ["{workspaceRoot}/coverage/libs/form-validation-handler"]
     }

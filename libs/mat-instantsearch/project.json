@@ -30,8 +30,7 @@
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/mat-instantsearch/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/mat-instantsearch/jest.config.ts"
       },
       "outputs": ["{workspaceRoot}/coverage/libs/mat-instantsearch"]
     }

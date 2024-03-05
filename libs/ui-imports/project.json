@@ -30,8 +30,7 @@
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/ui-imports/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/ui-imports/jest.config.ts"
       },
       "outputs": ["{workspaceRoot}/coverage/libs/ui-imports"]
     }

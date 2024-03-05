@@ -34,8 +34,7 @@
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/crispr-forms/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/crispr-forms/jest.config.ts"
       },
       "outputs": ["{workspaceRoot}/coverage/libs/crispr-forms"]
     },

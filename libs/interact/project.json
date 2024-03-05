@@ -30,8 +30,7 @@
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/interact/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/interact/jest.config.ts"
       },
       "outputs": ["{workspaceRoot}/coverage/libs/interact"]
     }
