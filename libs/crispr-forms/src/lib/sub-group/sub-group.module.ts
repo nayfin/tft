@@ -4,7 +4,7 @@ import { CrisprFieldDirective } from '../field.directive';
 import { CrisprPipesModule } from '../pipes/crispr-pipes.module';
 import { SubGroupComponent } from './sub-group.component';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
-import { FieldContainerComponent } from '@tft/crispr-forms/ui';
+import { FieldContainerComponent } from '../../lib/ui';
 @NgModule({
   imports: [
     CommonModule,

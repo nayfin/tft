@@ -17,8 +17,8 @@ import {
   crisprControlMixin,
   createControlForType,
   FormGroupListConfig,
-} from '@tft/crispr-forms/utils';
-import { FieldContainerComponent } from '@tft/crispr-forms/ui';
+} from '../utils';
+import { FieldContainerComponent } from '../ui';
 import { CrisprDisplayFieldDirective } from '../display-field.directive';
 
 const defaultConfig: Partial<FormGroupListConfig> = {

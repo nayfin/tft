@@ -1,3 +1,3 @@
 export * from './src/index';
-export * from '@tft/crispr-forms/ui';
-export * from '@tft/crispr-forms/utils';
+export * from './src/lib/ui';
+export * from './src/lib/utils';

@@ -9,8 +9,7 @@
       "executor": "@nx/angular:package",
       "options": {
         "tsConfig": "libs/form-validation-handler/tsconfig.lib.json",
-        "project": "libs/form-validation-handler/ng-package.json",
-        "updateBuildableProjectDepsInPackageJson": true
+        "project": "libs/form-validation-handler/ng-package.json"
       },
       "configurations": {
         "production": {

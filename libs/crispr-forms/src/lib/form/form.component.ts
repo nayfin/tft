@@ -17,7 +17,7 @@ import {
   ControlGroupValue,
   FormConfig,
   buildFormGroupFromConfig,
-} from '@tft/crispr-forms/utils';
+} from '../utils';
 
 @Component({
   selector: 'crispr-form',

@@ -3,7 +3,7 @@ import {
   ControlValue,
   AnyFieldConfig,
   isControlConfig,
-} from '../../../utils';
+} from '../utils';
 
 @Pipe({
   name: 'initialControlValue',

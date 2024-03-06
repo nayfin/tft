@@ -5,7 +5,7 @@ import {
   crisprControlMixin,
   CrisprFieldComponent,
   SubGroupConfig,
-} from '../../../utils';
+} from '../utils';
 
 const FormGroupMixin = crisprControlMixin<SubGroupConfig>(CrisprFieldComponent);
 

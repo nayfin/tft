@@ -9,8 +9,7 @@
       "executor": "@nx/angular:package",
       "options": {
         "tsConfig": "libs/mat-instantsearch/tsconfig.lib.json",
-        "project": "libs/mat-instantsearch/ng-package.json",
-        "updateBuildableProjectDepsInPackageJson": true
+        "project": "libs/mat-instantsearch/ng-package.json"
       },
       "configurations": {
         "production": {

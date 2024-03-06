@@ -1,5 +1,6 @@
 {
-    "dest": "../../dist/libs/crispr-forms/utils",
+  "$schema": "../../../",  
+  "dest": "../../dist/libs/crispr-forms/utils",
     "lib": {
       "entryFile": "public-api.ts"
     }

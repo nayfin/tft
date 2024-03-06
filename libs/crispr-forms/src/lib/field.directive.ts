@@ -13,7 +13,7 @@ import {
   isControlComponent,
   isControlOrButtonComponent,
 } from './field-component-map.const';
-import { AnyFieldConfig, ControlValue } from '../../utils';
+import { AnyFieldConfig, ControlValue } from './utils';
 
 @Directive({
   selector: '[crisprField]',

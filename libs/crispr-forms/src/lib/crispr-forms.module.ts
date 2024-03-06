@@ -11,7 +11,7 @@ import { FormGroupListComponent } from './form-group-list';
 import { CrisprFieldDirective } from './field.directive';
 import { SubGroupModule } from './sub-group';
 import { CrisprPipesModule } from './pipes/crispr-pipes.module';
-import { FieldContainerComponent } from '../../ui';
+import { FieldContainerComponent } from './ui';
 import { CrisprDisplayFieldDirective } from './display-field.directive';
 
 @NgModule({
