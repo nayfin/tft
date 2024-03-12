@@ -1,29 +1,18 @@
 {
   "run": {
-    "command": "ng build crispr-forms --prod",
-    "startTime": "2024-03-12T02:05:47.119Z",
-    "endTime": "2024-03-12T02:05:59.799Z",
+    "command": "ng build core --prod",
+    "startTime": "2024-03-12T02:09:10.998Z",
+    "endTime": "2024-03-12T02:09:14.299Z",
     "inner": false
   },
   "tasks": [
     {
-      "taskId": "form-validation-handler:build:production",
+      "taskId": "core:build:production",
       "target": "build",
-      "projectName": "form-validation-handler",
-      "hash": "10813689626672523381",
-      "startTime": "2024-03-12T02:05:47.128Z",
-      "endTime": "2024-03-12T02:05:55.251Z",
-      "params": "",
-      "cacheStatus": "cache-miss",
-      "status": 0
-    },
-    {
-      "taskId": "crispr-forms:build:production",
-      "target": "build",
-      "projectName": "crispr-forms",
-      "hash": "4485982737182710765",
-      "startTime": "2024-03-12T02:05:55.254Z",
-      "endTime": "2024-03-12T02:05:59.797Z",
+      "projectName": "core",
+      "hash": "9164474198056502952",
+      "startTime": "2024-03-12T02:09:11.003Z",
+      "endTime": "2024-03-12T02:09:14.296Z",
       "params": "",
       "cacheStatus": "cache-miss",
       "status": 0

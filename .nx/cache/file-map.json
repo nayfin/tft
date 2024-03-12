@@ -130,116 +130,116 @@
   "fileMap": {
     "nonProjectFiles": [
       {
-        "file": ".editorconfig",
-        "hash": "5443105041930014821"
-      },
-      {
-        "file": ".eslintrc.json",
-        "hash": "14714623343492391248"
-      },
-      {
         "file": ".firebaserc",
         "hash": "5671199244364894381"
-      },
-      {
-        "file": ".gitignore",
-        "hash": "10271692968493592801"
-      },
-      {
-        "file": ".prettierignore",
-        "hash": "9175937087874081623"
-      },
-      {
-        "file": ".prettierrc",
-        "hash": "16267754514737964994"
-      },
-      {
-        "file": ".storybook/main.js",
-        "hash": "10911834026492760455"
-      },
-      {
-        "file": ".storybook/tsconfig.json",
-        "hash": "15241240177289975427"
-      },
-      {
-        "file": ".storybook/webpack.config.js",
-        "hash": "12928326387676856604"
       },
       {
         "file": ".vscode/extensions.json",
         "hash": "18266993222719141398"
       },
       {
-        "file": ".vscode/settings.json",
-        "hash": "2174994543570759739"
-      },
-      {
-        "file": "README.md",
-        "hash": "11946584262966030293"
-      },
-      {
-        "file": "apps/.gitkeep",
-        "hash": "3244421341483603138"
-      },
-      {
-        "file": "decorate-angular-cli.js",
-        "hash": "17833257574299604139"
-      },
-      {
-        "file": "firebase.json",
-        "hash": "17520003071300658727"
-      },
-      {
-        "file": "jest.config.ts",
-        "hash": "15567885885976820268"
-      },
-      {
-        "file": "jest.preset.js",
-        "hash": "9084884494335109525"
-      },
-      {
-        "file": "libs/.gitkeep",
-        "hash": "3244421341483603138"
-      },
-      {
-        "file": "migrations.json",
-        "hash": "11920702640350856846"
-      },
-      {
-        "file": "nx.json",
-        "hash": "17845702851998204703"
-      },
-      {
-        "file": "package-lock.json",
-        "hash": "16531552123817673416"
+        "file": ".storybook/main.js",
+        "hash": "10911834026492760455"
       },
       {
         "file": "package.json",
         "hash": "12037583340340116606"
       },
       {
+        "file": "tsconfig.base.json",
+        "hash": "14925248790485700955"
+      },
+      {
+        "file": "migrations.json",
+        "hash": "11920702640350856846"
+      },
+      {
+        "file": ".vscode/settings.json",
+        "hash": "2174994543570759739"
+      },
+      {
         "file": "scripts/documentation.sh",
         "hash": "17208314048461063583"
       },
       {
-        "file": "scripts/release.sh",
-        "hash": "3816001589240152552"
+        "file": "libs/.gitkeep",
+        "hash": "3244421341483603138"
       },
       {
-        "file": "scripts/sme.sh",
-        "hash": "17254706626595104537"
+        "file": ".storybook/tsconfig.json",
+        "hash": "15241240177289975427"
+      },
+      {
+        "file": "README.md",
+        "hash": "11946584262966030293"
+      },
+      {
+        "file": "package-lock.json",
+        "hash": "16531552123817673416"
       },
       {
         "file": "storybook-migration-summary.md",
         "hash": "6342158776517762611"
       },
       {
+        "file": "firebase.json",
+        "hash": "17520003071300658727"
+      },
+      {
+        "file": "scripts/release.sh",
+        "hash": "3816001589240152552"
+      },
+      {
+        "file": "jest.config.ts",
+        "hash": "15567885885976820268"
+      },
+      {
+        "file": "decorate-angular-cli.js",
+        "hash": "17833257574299604139"
+      },
+      {
+        "file": ".storybook/webpack.config.js",
+        "hash": "12928326387676856604"
+      },
+      {
+        "file": "nx.json",
+        "hash": "17845702851998204703"
+      },
+      {
+        "file": "scripts/sme.sh",
+        "hash": "17254706626595104537"
+      },
+      {
+        "file": ".eslintrc.json",
+        "hash": "14714623343492391248"
+      },
+      {
+        "file": "jest.preset.js",
+        "hash": "9084884494335109525"
+      },
+      {
+        "file": "apps/.gitkeep",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "10271692968493592801"
+      },
+      {
         "file": "tools/tsconfig.tools.json",
         "hash": "5864009640613726360"
       },
       {
-        "file": "tsconfig.base.json",
-        "hash": "14925248790485700955"
+        "file": ".prettierrc",
+        "hash": "16267754514737964994"
+      },
+      {
+        "file": ".editorconfig",
+        "hash": "5443105041930014821"
+      },
+      {
+        "file": ".prettierignore",
+        "hash": "9175937087874081623"
       }
     ],
     "projectFileMap": {
@@ -262,7 +262,7 @@
         },
         {
           "file": "libs/mat-instantsearch/package.json",
-          "hash": "12779561648564470505",
+          "hash": "8685945420905001721",
           "deps": [
             "npm:tslib",
             "npm:@angular/common",
@@ -698,7 +698,7 @@
         },
         {
           "file": "libs/form-validation-handler/package.json",
-          "hash": "17124061707956132258",
+          "hash": "9227666137072276123",
           "deps": [
             "npm:tslib",
             "npm:@angular/common",
@@ -1115,7 +1115,7 @@
         },
         {
           "file": "libs/ui-imports/package.json",
-          "hash": "13283667151180545736",
+          "hash": "9175166121323754813",
           "deps": [
             "npm:tslib",
             "npm:@angular/common",
@@ -1221,7 +1221,7 @@
         },
         {
           "file": "libs/crispr-forms/package.json",
-          "hash": "12073244417646482339",
+          "hash": "5316865491616323619",
           "deps": [
             "npm:tslib",
             "npm:@angular/common",
@@ -2386,7 +2386,7 @@
         },
         {
           "file": "libs/core/package.json",
-          "hash": "8468881603545586071",
+          "hash": "13370431717819686960",
           "deps": [
             "npm:tslib",
             "npm:@angular/common",
