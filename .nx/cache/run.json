@@ -1,18 +1,18 @@
 {
   "run": {
-    "command": "ng build form-validation-handler --prod",
-    "startTime": "2024-03-12T02:10:24.566Z",
-    "endTime": "2024-03-12T02:10:27.170Z",
+    "command": "ng build interact --prod",
+    "startTime": "2024-03-12T02:11:19.663Z",
+    "endTime": "2024-03-12T02:11:22.549Z",
     "inner": false
   },
   "tasks": [
     {
-      "taskId": "form-validation-handler:build:production",
+      "taskId": "interact:build:production",
       "target": "build",
-      "projectName": "form-validation-handler",
-      "hash": "4593732435197135644",
-      "startTime": "2024-03-12T02:10:24.571Z",
-      "endTime": "2024-03-12T02:10:27.169Z",
+      "projectName": "interact",
+      "hash": "6639204879259689917",
+      "startTime": "2024-03-12T02:11:19.669Z",
+      "endTime": "2024-03-12T02:11:22.548Z",
       "params": "",
       "cacheStatus": "cache-miss",
       "status": 0
