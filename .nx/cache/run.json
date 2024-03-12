@@ -1,18 +1,29 @@
 {
   "run": {
-    "command": "ng build interact --prod",
-    "startTime": "2024-03-12T02:11:19.663Z",
-    "endTime": "2024-03-12T02:11:22.549Z",
+    "command": "ng build mat-instantsearch --prod",
+    "startTime": "2024-03-12T02:11:43.361Z",
+    "endTime": "2024-03-12T02:11:48.814Z",
     "inner": false
   },
   "tasks": [
     {
-      "taskId": "interact:build:production",
+      "taskId": "ui-imports:build:production",
       "target": "build",
-      "projectName": "interact",
-      "hash": "6639204879259689917",
-      "startTime": "2024-03-12T02:11:19.669Z",
-      "endTime": "2024-03-12T02:11:22.548Z",
+      "projectName": "ui-imports",
+      "hash": "7532756842677362227",
+      "startTime": "2024-03-12T02:11:43.368Z",
+      "endTime": "2024-03-12T02:11:46.027Z",
+      "params": "",
+      "cacheStatus": "cache-miss",
+      "status": 0
+    },
+    {
+      "taskId": "mat-instantsearch:build:production",
+      "target": "build",
+      "projectName": "mat-instantsearch",
+      "hash": "7051503187019981366",
+      "startTime": "2024-03-12T02:11:46.031Z",
+      "endTime": "2024-03-12T02:11:48.813Z",
       "params": "",
       "cacheStatus": "cache-miss",
       "status": 0
