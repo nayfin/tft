@@ -17,6 +17,7 @@ import { ValidatorsComponent } from './validators/validators.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { MatSelectModule } from '@angular/material/select';
     CommonModule,
     FeaturesRoutingModule,
     MatCardModule,
+    MatInputModule,
     MatFormFieldModule,
     MatSelectModule,
     // this is only needed because we are creating custom components, CRISPR doesn't need this
