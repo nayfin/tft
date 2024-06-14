@@ -22,7 +22,8 @@ import type {
   RadioFieldConfig,
   ImageUploadFieldConfig,
   FileUploadFieldConfig,
-  UnitConversionFieldConfig
+  UnitConversionFieldConfig,
+  MapFieldConfig
 } from '../models';
 
 import { ThemePalette } from '@angular/material/core';
@@ -37,10 +38,11 @@ export enum ControlType {
   DATEPICKER = 'datepicker',
   DIVIDER = 'divider',
   FILE_UPLOAD = 'fileUpload',
-  HEADING = 'heading',
-  INPUT = 'input',
-  IMAGE_UPLOAD = 'imageUpload',
   GROUP_LIST = 'groupList',
+  HEADING = 'heading',
+  IMAGE_UPLOAD = 'imageUpload',
+  INPUT = 'input',
+  MAP = 'map',
   RADIO = 'radio',
   SELECT = 'select',
   SLIDER = 'slider',
@@ -131,6 +133,7 @@ export type AnyFieldConfig = InputFieldConfig
   | TextareaFieldConfig
   | CheckboxFieldConfig
   | DatepickerFieldConfig
+  | MapFieldConfig
   | SliderFieldConfig
   | FileUploadFieldConfig
   | ImageUploadFieldConfig

@@ -86,6 +86,11 @@ export class OverviewComponent implements OnInit{
     validators: [Validators.required],
     fields: [
       {
+        controlType: ControlType.MAP,
+        controlName: 'map',
+        label: 'Google Map'
+      },
+      {
         controlType: ControlType.INPUT,
         inputType: 'text',
         controlName: 'inputField',

@@ -18,6 +18,7 @@ import type { UnitConversionFieldComponent } from './ui/unit-conversion-field';
 import type { AutocompleteChiplistFieldComponent } from './ui/autocomplete-chiplist-field';
 
 import { isControlConfig, ControlType } from './utils';
+import { MapFieldComponent } from './ui/map';
 
 export const FIELD_COMPONENTS = {
   groupList: () =>
@@ -48,8 +49,11 @@ export const FIELD_COMPONENTS = {
     ),
   autocompleteChiplist: () =>
     import('./ui/autocomplete-chiplist-field').then(
-      ({ AutocompleteChiplistFieldComponent }) =>
-        AutocompleteChiplistFieldComponent
+      ({ AutocompleteChiplistFieldComponent }) => AutocompleteChiplistFieldComponent
+    ),
+  map: () =>
+    import('./ui/map').then(
+      ({ MapFieldComponent }) => MapFieldComponent
     ),
   textarea: () =>
     import('./ui/textarea-field').then(
@@ -122,7 +126,8 @@ export type CrisprControlComponentType =
   | FileUploadFieldComponent
   | ImageUploadFieldComponent
   | DatepickerFieldComponent
-  | UnitConversionFieldComponent;
+  | UnitConversionFieldComponent
+  | MapFieldComponent;
 
 export type ComponentKeys = keyof typeof FIELD_COMPONENTS;
 // export type CrisprFieldComponent = FIELD_COMPONENTS[ComponentKeys];

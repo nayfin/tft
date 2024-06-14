@@ -15,3 +15,4 @@ export * from './divider.config';
 export * from './unit-conversion-field.config';
 export * from './file-upload-field.config';
 export * from './image-upload-field.config';
+export * from './map-field.config';
