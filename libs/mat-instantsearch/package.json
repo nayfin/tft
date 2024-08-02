@@ -2,11 +2,11 @@
   "name": "@tft/mat-instantsearch",
   "version": "17.0.0",
   "peerDependencies": {
-    "@angular/common": "^13.0.0",
-    "@angular/core": "^13.0.0",
-    "@angular/material": "^13.0.0",
-    "@angular/cdk": "^13.0.0",
-    "@tft/ui-imports": "^13.0.0",
+    "@angular/common": "^18.1.0",
+    "@angular/core": "^18.1.0",
+    "@angular/material": "^18.1.0",
+    "@angular/cdk": "^18.1.0",
+    "@tft/ui-imports": "^18.1.0",
     "lodash-es": "^4.17.10",
     "algoliasearch": "~4.13.0",
     "angular-instantsearch": "^4.2.1"

@@ -2,8 +2,8 @@
   "name": "@tft/ui-imports",
   "version": "16.0.0",
   "peerDependencies": {
-    "@angular/common": "^13.0.0",
-    "@angular/core": "^13.0.0"
+    "@angular/common": "^18.1.0",
+    "@angular/core": "^18.1.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"
