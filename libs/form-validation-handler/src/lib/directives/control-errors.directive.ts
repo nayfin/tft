@@ -59,12 +59,6 @@ export class ControlErrorsDirective implements OnInit {
 
   // merges ui events into a single stream and handles events displaying errors when appropriate
   getInteractionHandler() {
-    if( !this.ngControl.statusChanges) {
-      console.log('broke', {ngControl: this.ngControl})
-    } else {
-      console.log({ngControl: this.ngControl})
-    }
-
     return merge(
       this.submit$,
       this.blur$,

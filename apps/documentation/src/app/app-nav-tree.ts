@@ -50,6 +50,10 @@ export const appNavTree: SidenavSection[] = [
             path: 'crispr-forms-demo/fields/unit-conversion'
           },
           {
+            title: 'Map Field',
+            path: 'crispr-forms-demo/fields/map'
+          },
+          {
             title: 'Checkbox Field',
             path: 'crispr-forms-demo/fields/checkbox'
           },

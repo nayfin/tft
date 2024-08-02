@@ -13,3 +13,4 @@ export * from './slider/slider.component';
 export * from './textarea/textarea.component';
 export * from './button/button.component';
 export * from './unit-conversion/unit-conversion.component';
+export * from './map/map.component';

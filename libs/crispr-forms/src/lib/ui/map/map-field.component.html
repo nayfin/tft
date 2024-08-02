@@ -1,1 +1,21 @@
-<p>google-map works!</p>
+
+<input type="text" [formControl]="locationInput" />
+value: {{_value}}
+<google-map 
+  [center]="inputCenter | async" 
+  [zoom]="11"
+  [options]="config.options" 
+  (mapDragend)="onMove(map, group)"
+  #map>
+
+  @for (marker of config.markers(map, group) | async; track $index) {
+    <map-advanced-marker
+      #markerElem="mapAdvancedMarker"
+      [position]="marker.position"
+      [content]="marker.content"
+      [title]="marker.title"
+      (mapClick)="onMarkerClick(markerElem)"
+    />
+    }
+    <map-info-window #infoWindow></map-info-window>
+</google-map>

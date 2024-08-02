@@ -88,7 +88,11 @@ export class OverviewComponent implements OnInit{
       {
         controlType: ControlType.MAP,
         controlName: 'map',
-        label: 'Google Map'
+        label: 'Google Map',
+        center: {
+          lat: 38.8809704,
+          lng: -90.73427339999999
+        }
       },
       {
         controlType: ControlType.INPUT,
