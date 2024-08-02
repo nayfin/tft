@@ -14,7 +14,7 @@ import { DividerComponent } from './divider/divider.component';
 import { HeadingComponent } from './heading/heading.component';
 import { ButtonComponent } from './button/button.component';
 import { AutocompleteChiplistComponent } from './autocomplete-chiplist/autocomplete-chiplist.component';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { UnitConversionComponent } from './unit-conversion/unit-conversion.component';
 import { ImageUploadComponent } from './image-upload/image-upload.component';
@@ -24,31 +24,33 @@ import { OverviewComponent } from './overview/overview.component';
 
 
 @NgModule({
-  declarations: [
-    SelectComponent,
-    AutocompleteComponent,
-    InputComponent,
-    TextareaComponent,
-    CheckboxComponent,
-    SliderComponent,
-    DatepickerComponent,
-    DividerComponent,
-    HeadingComponent,
-    ButtonComponent,
-    AutocompleteChiplistComponent,
-    FileUploadComponent,
-    UnitConversionComponent,
-    CustomDatepickerFooterComponent,
-    ImageUploadComponent,
-    OverviewComponent
-  ],
-  imports: [
-    CommonModule,
-    FieldsRoutingModule,
-    CrisprFormsModule,
-    HttpClientModule,
-    MatCardModule,
-    MatButtonModule
-  ]
-})
+    declarations: [
+        SelectComponent,
+        AutocompleteComponent,
+        InputComponent,
+        TextareaComponent,
+        CheckboxComponent,
+        SliderComponent,
+        DatepickerComponent,
+        DividerComponent,
+        HeadingComponent,
+        ButtonComponent,
+        AutocompleteChiplistComponent,
+        FileUploadComponent,
+        UnitConversionComponent,
+        CustomDatepickerFooterComponent,
+        ImageUploadComponent,
+        OverviewComponent
+    ], 
+    imports: [
+        CommonModule,
+        FieldsRoutingModule,
+        CrisprFormsModule,
+        MatCardModule,
+        MatButtonModule
+        ], 
+        providers: [
+            provideHttpClient(withInterceptorsFromDi())
+        ] 
+    })
 export class FieldsModule { }

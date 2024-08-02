@@ -1,7 +1,4 @@
 {
-  "affected": {
-    "defaultBase": "master"
-  },
   "tasksRunnerOptions": {
     "default": {
       "options": {
@@ -96,5 +93,6 @@
     "@nrwl/js": {
       "analyzeSourceFiles": true
     }
-  }
+  },
+  "defaultBase": "master"
 }
