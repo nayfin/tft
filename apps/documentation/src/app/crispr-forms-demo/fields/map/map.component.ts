@@ -3,6 +3,7 @@ import { FormConfig, ControlType, CrisprFormComponent } from '@tft/crispr-forms'
 import { FormGroup } from '@angular/forms';
 import { EndpointsService } from '../../endpoints.service';
 import { MatCardModule } from '@angular/material/card';
+import { of } from 'rxjs';
 
 
 @Component({
@@ -30,20 +31,23 @@ export class MapComponent {
         options: {
           mapId: 'DEMO_MAP_ID',
         },
-        markers: [
-          {
-            title: 'Place A',
-            position:  { lat: -31.56391, lng: 147.154312 },
-          },
-          {
-            title: 'Place B',
-            position: { lat: -33.727111, lng: 150.371124 },
-          },
-          {
-            title: 'Place C',
-            position: { lat: -33.718234, lng: 150.363181 },
-          }
-        ],
+        markers: (map, formGroup) => { 
+          console.log({map, formGroup});
+          return of([
+            {
+              title: 'Place A',
+              position:  { lat: -31.56391, lng: 147.154312 },
+            },
+            {
+              title: 'Place B',
+              position: { lat: -33.727111, lng: 150.371124 },
+            },
+            {
+              title: 'Place C',
+              position: { lat: -33.718234, lng: 150.363181 },
+            }
+          ])
+        },
         onMove: (event, group) => console.log({event, group}),
         onMarkerClick: (marker) => {
           console.log({marker})

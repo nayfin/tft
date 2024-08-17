@@ -8,7 +8,7 @@ value: {{_value}}
   (mapDragend)="onMove(map, group)"
   #map>
 
-  @for (marker of config.markers(map, group) | async; track $index) {
+  @for (marker of (config.markers(map, group) | async) || []; track $index) {
     <map-advanced-marker
       #markerElem="mapAdvancedMarker"
       [position]="marker.position"
