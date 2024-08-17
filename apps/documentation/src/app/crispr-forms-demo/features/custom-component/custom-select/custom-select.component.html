@@ -6,23 +6,22 @@
     [color]="config.color"
     [appearance]="config.appearance"
     [formGroup]="group">
-    <mat-label *ngIf="config.label">
-      {{config.label}}
-    </mat-label>
+    @if (config.label) {<mat-label>{{config.label}}</mat-label>}
     <mat-select
       [formControlName]="config.controlName"
       [placeholder]="config.placeholder"
       [multiple]="config.multiple">
 
-      <mat-option
-        *ngFor="let option of options$ | async"
-        [value]="option.value">
-        {{option.label}}
-      </mat-option>
+      @for (option of options$ | async; track option) {
+        <mat-option
+          [value]="option.value">
+          {{option.label}}
+        </mat-option>
+      }
 
     </mat-select>
 
-    <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
+    @if (config.fieldSuffix) {<span matSuffix>{{config.fieldSuffix}}</span>}
 
   </mat-form-field>
 

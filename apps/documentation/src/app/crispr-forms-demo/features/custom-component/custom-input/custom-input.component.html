@@ -6,9 +6,7 @@
     [color]="config.color"
     [appearance]="config.appearance"
     [formGroup]="group">
-    <mat-label *ngIf="config.label">
-      {{config.label}}
-    </mat-label>
+    @if (config.label) {<mat-label>{{config.label}}</mat-label>}
     <input
       [type]="config.inputType"
       matInput
@@ -18,7 +16,7 @@
       autocorrect="off"
       autocomplete="off">
 
-    <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
+    @if (config.fieldSuffix) {<span matSuffix>{{config.fieldSuffix}}</span>}
 
   </mat-form-field>
 

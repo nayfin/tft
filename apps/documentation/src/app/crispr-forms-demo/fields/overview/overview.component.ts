@@ -9,17 +9,23 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'doc-display-item',
   template: `<div>
-    Step {{index + 1}}
-    <div *ngIf="value?.autocompleteChiplistObservable?.length">
-    autocompleteChiplistObservable: {{value.autocompleteChiplistObservable | json}}
-    </div>
-    <div *ngIf="value?.subField">
-    subField: {{value.subField}}
-    </div>
-    <div *ngIf="value?.secondSubField">
-    secondSubField: {{value.secondSubField}}
-    </div>
-  </div> `,
+      Step {{index + 1}}
+      @if (value?.autocompleteChiplistObservable?.length) {
+        <div>
+          autocompleteChiplistObservable: {{value.autocompleteChiplistObservable | json}}
+        </div>
+      }
+      @if (value?.subField) {
+        <div>
+          subField: {{value.subField}}
+        </div>
+      }
+      @if (value?.secondSubField) {
+        <div>
+          secondSubField: {{value.secondSubField}}
+        </div>
+      }
+    </div>`,
   styleUrls: ['./overview.component.scss'],
   standalone: true,
   imports: [CommonModule],
