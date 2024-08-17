@@ -162,7 +162,6 @@ export class AutocompleteChiplistFieldComponent
   }
   
   blurField() {
-    console.log('blur')
     this.selectedChip = null;
   }
 }

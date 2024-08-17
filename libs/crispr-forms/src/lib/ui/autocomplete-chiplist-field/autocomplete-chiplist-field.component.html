@@ -20,15 +20,9 @@
         [highlighted]="chip?.value === selectedChip?.value"
         (click)="highlightChip(chip)"
         (removed)="removeChip(chip)">
-        <span *ngIf="chip.imageUrl as imageUrl" class="image-container">
-          <img [src]="imageUrl" alt="image of {{chip.label}}">
-        </span>
+        @if (chip.imageUrl) {<img [src]="chip.imageUrl" matChipAvatar alt="image of {{chip.label}}">}
         {{chip.label}}
-        <mat-icon
-          matChipRemove
-          *ngIf="config.areChipsRemovable">
-          cancel
-        </mat-icon>
+        @if (config.areChipsRemovable) {<mat-icon matChipRemove>cancel</mat-icon>}
       </mat-chip-row>
       <input class="hidden-error-directive-anchor" (blur)="blurField()"
       [formControlName]="config.controlName" type="text"/>
