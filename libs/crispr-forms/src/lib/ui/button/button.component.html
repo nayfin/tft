@@ -9,8 +9,6 @@
   [matTooltip]="config.info?.content"
   [matTooltipPosition]="config.info?.tooltipPosition || 'below'">
   {{ config.label }}
-  <mat-icon *ngIf="config.icon">
-    {{ config.icon}}
-  </mat-icon>
+  @if (config.icon) {<mat-icon>{{ config.icon}}</mat-icon>}
 </button>
 

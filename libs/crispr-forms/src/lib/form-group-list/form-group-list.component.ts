@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CrisprFieldDirective } from '../field.directive';
 import { CrisprPipesModule } from '../pipes/crispr-pipes.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import {
   CrisprFieldComponent,
@@ -35,7 +35,6 @@ const FormGroupListMixin =
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
     MatButtonModule,
     MatIconModule,
     FieldContainerComponent,
@@ -43,8 +42,8 @@ const FormGroupListMixin =
     CrisprFieldDirective,
     CrisprDisplayFieldDirective,
     CrisprPipesModule,
-    FormValidationHandlerModule,
-  ],
+    FormValidationHandlerModule
+],
 })
 export class FormGroupListComponent
   extends FormGroupListMixin

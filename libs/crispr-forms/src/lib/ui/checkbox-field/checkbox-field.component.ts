@@ -1,6 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
@@ -26,13 +26,12 @@ const CheckboxFieldMixin =
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
     InfoComponent,
     MatCheckboxModule,
     ReactiveFormsModule,
     FieldContainerComponent,
-    FormValidationHandlerModule,
-  ],
+    FormValidationHandlerModule
+],
 })
 export class CheckboxFieldComponent
   extends CheckboxFieldMixin

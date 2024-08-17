@@ -5,9 +5,7 @@
     [color]="config.color"
     [appearance]="config.appearance"
     [formGroup]="group">
-    <mat-label *ngIf="config.label">
-      {{config.label}}
-    </mat-label>
+    @if (config.label) {<mat-label>{{config.label}}</mat-label>}
     <input
       matInput
       [formControlName]="config.controlName"
@@ -22,12 +20,14 @@
       [startAt]="startAt$ | async"
       [dateClass]="dateClass || (dateClass$ | async)"
       #picker>
-      <mat-datepicker-actions *ngIf="calendarFooterPortal">
-        <ng-template [cdkPortalOutlet]="calendarFooterPortal"></ng-template>
-      </mat-datepicker-actions>
+      @if (calendarFooterPortal) {
+        <mat-datepicker-actions>
+          <ng-template [cdkPortalOutlet]="calendarFooterPortal"></ng-template>
+        </mat-datepicker-actions>
+      }
     </mat-datepicker>
 
-    <mat-hint *ngIf="config.hint && (control.valid || !control.touched)">{{config.hint}}</mat-hint>
+    @if (config.hint && (control.valid || !control.touched)) {<mat-hint>{{config.hint}}</mat-hint>}
 
   </mat-form-field>
 </crispr-field-container>

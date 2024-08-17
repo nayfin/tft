@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
-import { CommonModule } from '@angular/common';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
@@ -23,7 +23,6 @@ const InputFieldMixin =
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
     InfoComponent,
     ReactiveFormsModule,
     FieldContainerComponent,
@@ -31,7 +30,7 @@ const InputFieldMixin =
     MatInputModule,
     FormValidationHandlerModule,
     MatIconModule
-  ],
+],
 })
 export class InputFieldComponent extends InputFieldMixin implements OnInit {
 

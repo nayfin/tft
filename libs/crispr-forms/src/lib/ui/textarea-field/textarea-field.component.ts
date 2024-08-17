@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
@@ -24,14 +24,13 @@ const TextareaFieldMixin =
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
     InfoComponent,
     ReactiveFormsModule,
     FieldContainerComponent,
     MatFormFieldModule,
     MatInputModule,
-    FormValidationHandlerModule,
-  ],
+    FormValidationHandlerModule
+],
 })
 export class TextareaFieldComponent
   extends TextareaFieldMixin

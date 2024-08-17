@@ -8,6 +8,8 @@ import {
   ChangeDetectionStrategy,
   Optional,
   Self,
+  signal,
+  computed,
 } from '@angular/core';
 import {
   ControlValueAccessor,
@@ -74,7 +76,8 @@ export class FileUploadFieldComponent
 
   @ViewChild('fileInput') fileInputRef: ElementRef;
 
-  selectedFiles: FileList;
+  selectedFiles = signal<FileList | null>(null);
+  selectedFilesArray = computed(() => Array.from(this.selectedFiles()));
 
   isUploaded = false;
 
@@ -100,15 +103,15 @@ export class FileUploadFieldComponent
 
   filesChanged(files: FileList): void {
     if (files && files.length > 0) {
-      this.selectedFiles = files;
+      this.selectedFiles.set(files);
       this.control.patchValue(files);
     }
   }
 
   uploadFiles() {
-    if (this.selectedFiles && this.config.uploadFiles) {
+    if (this.selectedFiles() && this.config.uploadFiles) {
       this.isUploaded = true;
-      this.config.uploadFiles(this.group, this.selectedFiles, this);
+      this.config.uploadFiles(this.group, this.selectedFiles(), this);
     }
   }
 

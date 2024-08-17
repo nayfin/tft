@@ -5,23 +5,16 @@
     [color]="config.color"
     [appearance]="config.appearance"
     [formGroup]="group">
-    <mat-label *ngIf="config.label">
-      {{config.label}}
-    </mat-label>
+    @if (config.label) {<mat-label>{{config.label}}</mat-label>}
     <textarea
       [rows]="config.rows"
       matInput
       [placeholder]="config.placeholder"
       [formControlName]="config.controlName">
     </textarea>
-    <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
-    <crispr-info
-      *ngIf="config.info"
-      matSuffix
-      [info]="config.info">
-    </crispr-info>
-
-    <mat-hint *ngIf="config.hint && control.valid">{{config.hint}}</mat-hint>
+    @if (config.fieldSuffix) {<span matSuffix>{{config.fieldSuffix}}</span>}
+    @if (config.info) {<crispr-info  matSuffix  [info]="config.info"></crispr-info>}
+    @if (config.hint && control.valid) {<mat-hint>{{config.hint}}</mat-hint>}
 
   </mat-form-field>
 
