@@ -1,20 +1,28 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
-import { CrisprFieldComponent, MapFieldConfig, crisprControlMixin } from '../../utils';
-import { GoogleMap, GoogleMapsModule, MapAdvancedMarker, MapGeocoder, } from '@angular/google-maps';
+import { Component, OnInit, Renderer2, SecurityContext, inject, viewChild } from '@angular/core';
+import { CrisprFieldComponent, MapFieldConfig, TftMapMarker, crisprControlMixin } from '../../utils';
+import { GoogleMap, GoogleMapsModule, MapGeocoder, } from '@angular/google-maps';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { map, switchMap } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+import { BehaviorSubject, debounceTime, map, merge, of, startWith, switchMap } from 'rxjs';
+import { AsyncPipe, NgClass } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { DomSanitizer } from '@angular/platform-browser';
 
 const defaultConfig: Partial<MapFieldConfig> = {
-  
+  debounceTime: 500,
 };
 
 const MapFieldMixin = crisprControlMixin<MapFieldConfig>(CrisprFieldComponent);
 
+interface MapState {  
+  center: google.maps.LatLngLiteral;
+  bounds: google.maps.LatLngBounds;
+  zoom: number;
+}
+
 @Component({
   selector: 'crispr-map',
   standalone: true,
-  imports: [GoogleMapsModule, ReactiveFormsModule, AsyncPipe ],
+  imports: [ GoogleMapsModule, ReactiveFormsModule, AsyncPipe, NgClass ],
   templateUrl: './map-field.component.html',
   styleUrl: './map-field.component.scss',
 })
@@ -23,11 +31,15 @@ export class MapFieldComponent
   implements OnInit
 {
   geoCoder = inject(MapGeocoder);
-  locationInput = new FormControl();
+  renderer = inject(Renderer2);
+  domSanitizer = inject(DomSanitizer);
 
+  mapComponent = viewChild(GoogleMap);
   defaultConfig = defaultConfig;
-  markers = signal<google.maps.marker.AdvancedMarkerElementOptions[]>([])
-  inputCenter = this.locationInput.valueChanges.pipe(
+
+  locationControl = new FormControl(this.config?.location);
+
+  inputCenter = this.locationControl.valueChanges.pipe(
     switchMap((value: string) => {
       const request: google.maps.GeocoderRequest = {
         address: value,
@@ -35,30 +47,79 @@ export class MapFieldComponent
       return this.geoCoder.geocode(request);
     }),
     map((res) => {
-      const { geometry, postcode_localities } = res.results?.[0] || {};
+      const { geometry, postcode_localities, address_components } = res.results?.[0] || {};
       const { location, bounds } = geometry || {};
       const center = location?.toJSON();
-      console.log({ center, bounds, postcode_localities });
+      console.log({ center, bounds, postcode_localities, address_components });
       return center;
-    })
+    }),
+    startWith(this.config?.center || undefined)
   )
 
-  // center = new input
-  ngOnInit() {
-    super.ngOnInit();
-    
+  center = merge
+
+  currentMap = new BehaviorSubject<GoogleMap | null>(null);
+
+  currentMarkers = toSignal<TftMapMarker[]>(
+    this.currentMap.pipe( 
+      debounceTime(500),
+      switchMap((map) => {
+        return this.config?.markers?.(map, this.group) || of([]);
+      }),
+      map((markers: TftMapMarker[]) => {  
+        return markers.map((marker) => { 
+          if (this.config.markerTemplateBuilder) {
+            const content: HTMLElement = this.renderer.createElement('div');
+            this.renderer.setProperty(content, 'innerHTML', this.domSanitizer.sanitize(SecurityContext.HTML, this.config.markerTemplateBuilder(marker)));
+            this.config.markerClasses.forEach((className) => this.renderer.addClass(content, className));
+            return { ...marker, content };
+          } else {
+            return marker
+          }
+        });
+      })
+    )
+  );
+
+  constructor() {
+    super();
   }
 
-  onMarkerClick(marker: MapAdvancedMarker) {
+  onMapInit(event: GoogleMap) {
+    // console.log('map event', {event})
+    this.currentMap.next(event);
+  }
+
+  ngOnInit() {
+    super.ngOnInit();
+  }
+
+  onMarkerClick(marker: TftMapMarker) {
     this.config?.onMarkerClick(marker);
   }
 
-  onMove(map: GoogleMap, group: FormGroup) {
-    console.log({map})
-    this.config?.onMove?.(map, group);
+  onBoundsChanged(bounds: google.maps.LatLngBounds) {
+    console.log({bounds});
   }
 
-  getMarkers(map: GoogleMap, group: FormGroup) {
-    this.config.markers(map, group).pipe()
+  onMove(map: GoogleMap, group: FormGroup) {
+    this.config?.onMove?.(map, group);
+    this.currentMap.next(map);
   }
 }
+
+
+interface Station {
+  location: {
+    lat: number;
+    lng: number;
+  };
+  selectedProbability: number;
+  selectedFrostTemperature: number;
+  averageLastFrostDate: string;
+  averageFirstFrostDate: string;
+  averageAnnualRainfall: number;
+
+  hardinessZone: number;
+}
+

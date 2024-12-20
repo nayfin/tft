@@ -3,12 +3,19 @@ import { ControlType, CrisprControlConfig } from "./crispr-field.config";
 import { GoogleMap } from "@angular/google-maps";
 import { Observable } from "rxjs";
 
-export type MapFieldConfig = CrisprControlConfig & {
+export type MapFieldConfig<OMCT = unknown, OMT = unknown> = CrisprControlConfig & {
   controlType: ControlType.MAP;
   label: string;
-  center: google.maps.LatLngLiteral;
+  center?: google.maps.LatLngLiteral;
+  location?: string;
   options?: google.maps.MapOptions;
-  markers?: (map: GoogleMap, group: FormGroup) => Observable<google.maps.marker.AdvancedMarkerElementOptions[]>;
-  onMove?: (map: GoogleMap, group: FormGroup) => unknown;
-  onMarkerClick?: (marker: google.maps.marker.AdvancedMarkerElementOptions) => unknown;
+  debounceTime?: number;
+  markers?: (map: GoogleMap, group: FormGroup) => Observable<TftMapMarker[]>;
+  markerTemplateBuilder?: MarkerTemplateBuilder;
+  markerClasses?: string[];
+  onMove?: (map: GoogleMap, group: FormGroup) => OMT;
+  onMarkerClick?: (marker: TftMapMarker) => OMCT;
 }
+
+export type TftMapMarker<DT = unknown> = google.maps.marker.AdvancedMarkerElementOptions & { data?: DT };
+export type MarkerTemplateBuilder = (marker: TftMapMarker) => string;

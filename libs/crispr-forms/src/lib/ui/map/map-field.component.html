@@ -1,21 +1,21 @@
 
-<input type="text" [formControl]="locationInput" />
-value: {{_value}}
+<input type="text" [formControl]="locationControl" [value]="config.location" />
+{{config.markerClasses}}
 <google-map 
-  [center]="inputCenter | async" 
+  [center]="(inputCenter | async) || config.center" 
   [zoom]="11"
   [options]="config.options" 
-  (mapDragend)="onMove(map, group)"
+  (mapInitialized)="onMapInit($event)"
+  (idle)="onMove(map, group)"
   #map>
 
-  @for (marker of (config.markers(map, group) | async) || []; track $index) {
+  @for (marker of currentMarkers() || []; track $index) {
     <map-advanced-marker
       #markerElem="mapAdvancedMarker"
       [position]="marker.position"
       [content]="marker.content"
       [title]="marker.title"
-      (mapClick)="onMarkerClick(markerElem)"
-    />
-    }
-    <map-info-window #infoWindow></map-info-window>
+      (mapClick)="onMarkerClick(marker)"> 
+    </map-advanced-marker>
+  }
 </google-map>
