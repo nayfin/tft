@@ -50,13 +50,13 @@ export class MapComponent {
             map((stations) => {
               return stations.map(station => {
                 const [lng, lat] = station.location.coordinates;
+              
                 console.log({station})
+                const name = station.stations[0].name;
                 return {
-                  title: station.name,
+                  title: name,
                   position: {lat, lng },
                   data: station,
-                  
-                  // content: markerEl
                 }
               })
             }),
