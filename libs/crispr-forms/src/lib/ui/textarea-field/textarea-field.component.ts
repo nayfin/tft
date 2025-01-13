@@ -8,14 +8,11 @@ import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '../field-container';
 import { InfoComponent } from '../info';
 import {
-  crisprControlMixin,
-  CrisprFieldComponent,
   TextareaFieldConfig,
 } from '../../utils';
+import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
 
 const defaultConfig: Partial<TextareaFieldConfig> = { rows: 5 };
-const TextareaFieldMixin =
-  crisprControlMixin<TextareaFieldConfig>(CrisprFieldComponent);
 
 @Component({
   selector: 'crispr-textarea-field',
@@ -33,7 +30,7 @@ const TextareaFieldMixin =
 ],
 })
 export class TextareaFieldComponent
-  extends TextareaFieldMixin
+  extends CrisprControlComponent<TextareaFieldConfig>
   implements OnInit
 {
   defaultConfig = defaultConfig;

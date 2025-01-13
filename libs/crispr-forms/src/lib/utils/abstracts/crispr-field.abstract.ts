@@ -1,22 +1,26 @@
 import type {
   CrisprFieldConfig,
 } from '../models';
-import { OnInit, Directive } from '@angular/core';
+import { Directive,input, computed, Signal, signal, Input} from '@angular/core';
 
 @Directive({
   standalone: true
 })
-export abstract class CrisprFieldComponent<C extends CrisprFieldConfig> implements OnInit {
-  config: C;
-  defaultConfig?: Partial<C>
+export abstract class CrisprFieldComponent<C extends CrisprFieldConfig> {
 
-  ngOnInit() {
-    this.applyDefaultConfig();
+  defaultConfig?: Partial<C>;
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  @Input({alias: 'config'})
+  set inputConfig(config: C) {
+    this.updateConfig(config);
   }
 
-  applyDefaultConfig() {
-    this.config = this.defaultConfig ? {...this.defaultConfig, ...this.config} : this.config;
+  private updateConfig(inputConfig: C) {
+    const mergedConfig = this.defaultConfig ? {...this.defaultConfig, ...inputConfig} : inputConfig;
+    this.config.set(mergedConfig);
   }
+
+  config = signal<C | null>(null);
 }
 
 

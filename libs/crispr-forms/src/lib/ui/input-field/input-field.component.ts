@@ -7,15 +7,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '../field-container';
 import { InfoComponent } from '../info';
-import {
-  InputFieldConfig,
-  crisprControlMixin,
-  CrisprFieldComponent,
-} from '../../utils';
+import { InputFieldConfig } from '../../utils';
 import { MatIconModule } from '@angular/material/icon';
+import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
 
-const InputFieldMixin =
-  crisprControlMixin<InputFieldConfig>(CrisprFieldComponent);
 @Component({
   selector: 'crispr-input-field',
   templateUrl: './input-field.component.html',
@@ -30,9 +25,9 @@ const InputFieldMixin =
     MatInputModule,
     FormValidationHandlerModule,
     MatIconModule
-],
+  ],
 })
-export class InputFieldComponent extends InputFieldMixin implements OnInit {
+export class InputFieldComponent extends CrisprControlComponent<InputFieldConfig> implements OnInit {
 
   defaultConfig: Partial<InputFieldConfig> = {inputType: 'text'};
   constructor() {

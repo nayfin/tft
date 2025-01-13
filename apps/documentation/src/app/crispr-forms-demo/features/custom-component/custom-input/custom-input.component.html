@@ -1,25 +1,25 @@
 <crispr-field-container
-  [config]="config"
+  [config]="config()"
   [group]="group">
   I'm a super custom component
   <mat-form-field
-    [color]="config.color"
-    [appearance]="config.appearance"
+    [color]="config().color"
+    [appearance]="config().appearance"
     [formGroup]="group">
-    @if (config.label) {<mat-label>{{config.label}}</mat-label>}
+    @if (config().label) {<mat-label>{{config().label}}</mat-label>}
     <input
-      [type]="config.inputType"
+      [type]="config().inputType"
       matInput
-      [placeholder]="config.placeholder"
-      [formControlName]="config.controlName"
+      [placeholder]="config().placeholder"
+      [formControlName]="config().controlName"
       autocapitalize="off"
       autocorrect="off"
       autocomplete="off">
 
-    @if (config.fieldSuffix) {<span matSuffix>{{config.fieldSuffix}}</span>}
+    @if (config().fieldSuffix) {<span matSuffix>{{config().fieldSuffix}}</span>}
 
   </mat-form-field>
 
 
 </crispr-field-container>
-<h2>{{config.customConfigProperty}} </h2>
+<h2>{{config().customConfigProperty}} </h2>

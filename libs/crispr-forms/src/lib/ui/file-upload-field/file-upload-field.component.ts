@@ -25,15 +25,12 @@ import { FileDropzoneDirective } from '../file-dropzone';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
 import {
-  crisprControlMixin,
   CrisprFieldComponent,
   FileUploadFieldConfig,
 } from '../../utils';
 import { FieldContainerComponent } from '../field-container';
 import { SelectedFileComponent } from '../selected-file';
-
-const FileUploadFieldMixin =
-  crisprControlMixin<FileUploadFieldConfig>(CrisprFieldComponent);
+import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
 
 @Component({
   selector: 'crispr-file-upload-field',
@@ -55,7 +52,7 @@ const FileUploadFieldMixin =
   ],
 })
 export class FileUploadFieldComponent
-  extends FileUploadFieldMixin
+  extends CrisprControlComponent<FileUploadFieldConfig>
   implements OnInit, ControlValueAccessor
 {
   onChange: () => void;
@@ -96,8 +93,8 @@ export class FileUploadFieldComponent
 
   ngOnInit() {
     super.ngOnInit();
-    this.disabled$ = this.config.disabledCallback
-      ? this.config.disabledCallback(this.group)
+    this.disabled$ = this.config().disabledCallback
+      ? this.config().disabledCallback(this.group)
       : of(false);
   }
 
@@ -109,9 +106,9 @@ export class FileUploadFieldComponent
   }
 
   uploadFiles() {
-    if (this.selectedFiles() && this.config.uploadFiles) {
+    if (this.selectedFiles() && this.config().uploadFiles) {
       this.isUploaded = true;
-      this.config.uploadFiles(this.group, this.selectedFiles(), this);
+      this.config().uploadFiles(this.group, this.selectedFiles(), this);
     }
   }
 

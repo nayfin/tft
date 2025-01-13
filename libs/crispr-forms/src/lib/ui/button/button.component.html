@@ -2,13 +2,13 @@
   [formGroup]="group"
   mat-button
   [ngClass]="matButtonClass"
-  [color]="config.color"
-  [disabled]="config.disabledOnInvalidForm && !(formValid$ | async)"
-  [type]="config.type"
+  [color]="config().color"
+  [disabled]="config().disabledOnInvalidForm && !(formValid$ | async)"
+  [type]="config().type"
   (click)="handleClick(group, $event)"
-  [matTooltip]="config.info?.content"
-  [matTooltipPosition]="config.info?.tooltipPosition || 'below'">
-  {{ config.label }}
-  @if (config.icon) {<mat-icon>{{ config.icon}}</mat-icon>}
+  [matTooltip]="config().info?.content"
+  [matTooltipPosition]="config().info?.tooltipPosition || 'below'">
+  {{ config().label }}
+  @if (config().icon) {<mat-icon>{{ config().icon}}</mat-icon>}
 </button>
 

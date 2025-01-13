@@ -1,24 +1,24 @@
 <crispr-field-container
-  [config]="config"
+  [config]="config()"
   [group]="group">
 
   <mat-form-field floatLabel="always"
-    [color]="config.color"
-    [appearance]="config.appearance"
+    [color]="config().color"
+    [appearance]="config().appearance"
     [formGroup]="group">
-    <mat-label>{{config.label}}</mat-label>
-    <input [formControlName]="config.controlName" matInput type="text"/>
+    <mat-label>{{config().label}}</mat-label>
+    <input [formControlName]="config().controlName" matInput type="text"/>
     <input
       #fileInput
       type="file"
-      [accept]="config.acceptedTypes"
+      [accept]="config().acceptedTypes"
       (change)="filesChanged($event.target.files)"/>
     <div class="ui-container">
 
-      <div class="image-preview" [style.height]="config.imagePreviewHeight">
+      <div class="image-preview" [style.height]="config().imagePreviewHeight">
         @if ((progress < 100) && inputImageFile$ | async; as file) {
           <crispr-selected-file
-            [color]="config.color === 'primary' ? 'accent' : 'primary'"
+            [color]="config().color === 'primary' ? 'accent' : 'primary'"
             [fileName]="'Compressing: ' + file.name"
             [showProgress]="true"
             [progress]="progress">
@@ -32,7 +32,7 @@
               [crisprFileDropzone]="!(disabled$ | async)"
               (fileDrop)="filesChanged($event)">
               <mat-icon class="drop-icon" inline="true">cloud_upload</mat-icon>
-              <h2 class="mat-h2">{{config.dropZoneText}}</h2>
+              <h2 class="mat-h2">{{config().dropZoneText}}</h2>
             </div>
           }
         }
@@ -51,17 +51,17 @@
           [disabled]="(disabled$ | async)"
           aria-label="Remove Selected File(s)">
           <mat-icon>delete</mat-icon>
-          {{config.clearFilesButtonText}}
+          {{config().clearFilesButtonText}}
         </button>
-        @if (value) {
+        @if (value()) {
           <button
             mat-button
-            (click)="resetToInitialValue(value)"
+            (click)="resetToInitialValue(value())"
             type="button"
             [disabled]="(disabled$ | async)"
             aria-label="Remove Selected File(s)">
             <mat-icon>replay</mat-icon>
-            {{config.resetFilesButtonText}}
+            {{config().resetFilesButtonText}}
           </button>
         }
         <button
@@ -70,7 +70,7 @@
           color="primary"
           [disabled]="(disabled$ | async)"
           (click)="fileInput.click()"
-          [attr.aria-label]="config.controlName">
+          [attr.aria-label]="config().controlName">
           <mat-icon>
             camera
           </mat-icon>
@@ -80,7 +80,7 @@
     }
   </div>
 
-  @if (config.hint && (control.valid || !control.touched)) {<mat-hint>{{config.hint}}</mat-hint>}
+  @if (config().hint && (control.valid || !control.touched)) {<mat-hint>{{config().hint}}</mat-hint>}
 
 </mat-form-field>
 

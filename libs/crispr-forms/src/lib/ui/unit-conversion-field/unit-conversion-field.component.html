@@ -1,32 +1,32 @@
 <crispr-field-container
-  [config]="config"
+  [config]="config()"
   [group]="group">
   <mat-form-field
-    [style.width.%]="config.showUnitSelect ? 60 : 100"
+    [style.width.%]="config().showUnitSelect ? 60 : 100"
     class="number-field"
-    [color]="config.color"
-    [appearance]="config.appearance">
-    @if (config.label) {<mat-label>{{config.label}}</mat-label>}
+    [color]="config().color"
+    [appearance]="config().appearance">
+    @if (config().label) {<mat-label>{{config().label}}</mat-label>}
     <input
       type="number"
       matInput
       [formControl]="displayValueControl"
-      [placeholder]="config.placeholder"
-      [min]="config.min"
-      [max]="config.max"
-      [step]="config.step"
-      [autofocus]="config.autofocus">
-    @if (config.fieldSuffix) {<span matSuffix>{{config.fieldSuffix}}</span>}
-    @if (config.info) {<crispr-info matSuffix [info]="config.info"></crispr-info>}
+      [placeholder]="config().placeholder"
+      [min]="config().min"
+      [max]="config().max"
+      [step]="config().step"
+      [autofocus]="config().autofocus">
+    @if (config().fieldSuffix) {<span matSuffix>{{config().fieldSuffix}}</span>}
+    @if (config().info) {<crispr-info matSuffix [info]="config().info"></crispr-info>}
   </mat-form-field>
 
-  @if (config.showUnitSelect) {
+  @if (config().showUnitSelect) {
     <mat-form-field
-      [color]="config.color"
-      [appearance]="config.appearance"
+      [color]="config().color"
+      [appearance]="config().appearance"
       [formGroup]="group"
       class="unit-field">
-      @if (config.label) {<mat-label>{{config.label}}</mat-label>}
+      @if (config().label) {<mat-label>{{config().label}}</mat-label>}
       <mat-select
         #selectField
         [formControl]="unitSelectControl">
@@ -38,7 +38,7 @@
           </mat-option>
         }
       </mat-select>
-      @if (config.hint && (control.valid || !control.touched)) {<mat-hint>{{config.hint}}</mat-hint>}
+      @if (config().hint && (control.valid || !control.touched)) {<mat-hint>{{config().hint}}</mat-hint>}
     </mat-form-field>
   }
 

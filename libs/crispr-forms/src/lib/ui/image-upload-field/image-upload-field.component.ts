@@ -28,14 +28,10 @@ import { FileDropzoneDirective } from '../file-dropzone';
 import { SelectedFileComponent } from '../selected-file';
 import { FieldContainerComponent } from '../field-container';
 import {
-  crisprControlMixin,
-  CrisprFieldComponent,
   convertBytesToMb,
   ImageUploadFieldConfig,
 } from '../../utils';
-
-const ImageUploadFieldMixin =
-  crisprControlMixin<ImageUploadFieldConfig>(CrisprFieldComponent);
+import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
 
 @Component({
   selector: 'crispr-image-upload-field',
@@ -57,7 +53,7 @@ const ImageUploadFieldMixin =
   ],
 })
 export class ImageUploadFieldComponent
-  extends ImageUploadFieldMixin
+  extends CrisprControlComponent<ImageUploadFieldConfig>
   implements OnInit, ControlValueAccessor
 {
   onChange: () => void;
@@ -96,7 +92,7 @@ export class ImageUploadFieldComponent
         minCompressionThresholdMb,
         maxWidthOrHeight,
         useWebWorker,
-      } = this.config;
+      } = this.config();
       const fileSizeMb = convertBytesToMb(file.size);
       const shouldCompress =
         compressImage &&
@@ -121,7 +117,7 @@ export class ImageUploadFieldComponent
     map((compressedFile: File) => {
       if (!compressedFile) return compressedFile;
       const { type, name, lastModified } = compressedFile;
-      return new File([compressedFile], this.config.fileName || name, {
+      return new File([compressedFile], this.config().fileName || name, {
         type,
         lastModified,
       });
@@ -190,7 +186,7 @@ export class ImageUploadFieldComponent
           if (!controlValue) return null;
           if (controlValue instanceof File) return null;
           return (
-            this.config.mapInputValueToUrl?.(controlValue) ||
+            this.config().mapInputValueToUrl?.(controlValue) ||
             (controlValue as string)
           );
         })
@@ -200,8 +196,8 @@ export class ImageUploadFieldComponent
         return compressedImageUrlString || controlUrl || null;
       })
     );
-    this.disabled$ = this.config.disabledCallback
-      ? this.config.disabledCallback(this.group)
+    this.disabled$ = this.config().disabledCallback
+      ? this.config().disabledCallback(this.group)
       : of(false);
   }
 

@@ -37,11 +37,10 @@ export class ButtonComponent
   formValid$: Observable<boolean>;
 
   get matButtonClass() {
-    return this.config.buttonType ? `mat-${this.config.buttonType}-button` : '';
+    return this.config().buttonType ? `mat-${this.config().buttonType}-button` : '';
   }
 
   ngOnInit() {
-    super.ngOnInit();
     this.formValid$ = this.group.statusChanges.pipe(
       map((status) => status === 'VALID'),
       startWith(this.group.valid)
@@ -49,8 +48,8 @@ export class ButtonComponent
   }
 
   handleClick(group: FormGroup, event: MouseEvent) {
-    if (this.config.callback) {
-      this.config.callback(group, event);
+    if (this.config().callback) {
+      this.config().callback(group, event);
     }
   }
 }

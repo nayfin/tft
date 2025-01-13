@@ -4,15 +4,15 @@
   [group]="group"
   [formGroup]="group">
 
-  <div [formArrayName]="config.controlName">
+  <div [formArrayName]="config().controlName">
 
     <!-- Don't add trackBy function, it confuses the state of the array -->
     @for (itemControl of control?.controls; track itemControl; let i = $index; let last = $last) {
-      @if (!config.displayItemComponent || i === selectedIndex || (last && selectedIndex ?? true)) {
+      @if (!config().displayItemComponent || i === selectedIndex || (last && selectedIndex ?? true)) {
         <!-- TODO: use content projection to allow custom item label component -->
         <div  class="item-header">
-          <span class="mat-h2"> {{ config.itemLabelBuilder ? config.itemLabelBuilder(i) : 'Item ' + (i + 1) }} </span>
-          @if (i + 1 > config.minListLength) {
+          <span class="mat-h2"> {{ config().itemLabelBuilder ? config().itemLabelBuilder(i) : 'Item ' + (i + 1) }} </span>
+          @if (i + 1 > config().minListLength) {
             <button
               mat-icon-button
               type="button"
@@ -24,7 +24,7 @@
         <div
           [formGroup]="itemControl">
           <!-- TODO: if chiplists didn't need to have labels mixed in with their values we could use [value]="control.value" below -->
-          @for (field of config.itemConfig.fields; track field) {
+          @for (field of config().itemConfig.fields; track field) {
             <ng-container
               crisprField
               [value]="blockValue ? null : value && value[i] | initialControlValue : field"
@@ -37,7 +37,7 @@
         <div
           class="display-field-container"
           crisprDisplayField
-          [component]="config.displayItemComponent"
+          [component]="config().displayItemComponent"
           [value]="itemControl.value"
           [index]="i">
           <button mat-icon-button (click)="clickEditItem(i)">
@@ -49,7 +49,7 @@
         <div
           class="display-field-container"
           crisprDisplayField
-          [component]="config.displayItemComponent"
+          [component]="config().displayItemComponent"
           [value]="itemControl.value"
           [index]="i">
           <button mat-icon-button (click)="clickEditItem(i)">
@@ -64,9 +64,9 @@
       type="button"
       class="add"
       mat-raised-button
-      [color]="config.addButtonColor"
+      [color]="config().addButtonColor"
       (click)="clickAdd()">
-      {{config.addItemLabel || config.addButtonLabel}}
+      {{config().addItemLabel || config().addButtonLabel}}
     </button>
   </div>
 

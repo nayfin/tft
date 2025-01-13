@@ -7,17 +7,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FieldContainerComponent } from '../field-container';
 import { InfoComponent } from '../info';
 import {
-  SliderFieldConfig,
-  CrisprFieldComponent,
-  crisprControlMixin,
+  SliderFieldConfig
 } from '../../utils';
+import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
 
 const defaultConfig: Partial<SliderFieldConfig> = { 
   displayLimits: true,
   displayWith: (val) => val,
 };
-const SliderFieldMixin =
-  crisprControlMixin<SliderFieldConfig>(CrisprFieldComponent);
+
 
 @Component({
   selector: 'crispr-slider-field',
@@ -32,7 +30,7 @@ const SliderFieldMixin =
     MatSliderModule
 ],
 })
-export class SliderFieldComponent extends SliderFieldMixin implements OnInit {
+export class SliderFieldComponent extends CrisprControlComponent<SliderFieldConfig> implements OnInit {
   defaultConfig = defaultConfig;
   constructor() {
     super();

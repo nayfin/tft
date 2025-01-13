@@ -1,36 +1,36 @@
 <crispr-field-container
-  [config]="config"
+  [config]="config()"
   [group]="group">
   <mat-form-field floatLabel="always"
-    [color]="config.color"
+    [color]="config().color"
     appearance="outline"
-    [crisprFileDropzone]="!(disabled$ | async) && !(config.disableOnUpload && isUploaded)"
+    [crisprFileDropzone]="!(disabled$ | async) && !(config().disableOnUpload && isUploaded)"
     [formGroup]="group"
     (fileDrop)="filesChanged($event)">
 
-    <input [formControlName]="config.controlName" matInput type="text"/>
+    <input [formControlName]="config().controlName" matInput type="text"/>
     <input
       #fileInput
       type="file"
       style="display: none"
-      [accept]="config.acceptedTypes"
-      [multiple]="config.allowMultipleFiles"
+      [accept]="config().acceptedTypes"
+      [multiple]="config().allowMultipleFiles"
       (change)="filesChanged($event.target.files)"/>
-    <mat-label>{{config.label}}</mat-label>
+    <mat-label>{{config().label}}</mat-label>
 
     @if ((selectedFiles()?.length === 0)) {
       <div  class="drop-info">
         <mat-icon class="drop-icon" inline="true">cloud_upload</mat-icon>
-        <h2 class="mat-h2">{{config.dropZoneText}}</h2>
+        <h2 class="mat-h2">{{config().dropZoneText}}</h2>
         or
         <button
           mat-raised-button
           type="button"
           color="primary"
-          [disabled]="(disabled$ | async) || config.disableOnUpload && isUploaded"
+          [disabled]="(disabled$ | async) || config().disableOnUpload && isUploaded"
           (click)="fileInput.click()"
-          [attr.aria-label]="config.controlName">
-          {{config.selectButtonText}}
+          [attr.aria-label]="config().controlName">
+          {{config().selectButtonText}}
         </button>
       </div>
     } @else {
@@ -38,16 +38,16 @@
         <div class="selected-files-list">
           @for (file of selectedFilesArray(); track file; let i = $index) {
             <crispr-selected-file
-              [color]="config.color === 'primary' ? 'accent' : 'primary'"
+              [color]="config().color === 'primary' ? 'accent' : 'primary'"
               [fileName]="file.name"
-              [showProgress]="config.showUploadProgress"
+              [showProgress]="config().showUploadProgress"
               [progress]="fileProgress && (fileProgress[i] | async)">
             </crispr-selected-file>
           }
         </div>
       </div>
     }
-    @if (config.hint && (control.valid || !control.touched)) {<mat-hint>{{config.hint}}</mat-hint>}
+    @if (config().hint && (control.valid || !control.touched)) {<mat-hint>{{config().hint}}</mat-hint>}
   </mat-form-field>
   @if ((selectedFiles())?.length > 0) {
     <div class="button-container">
@@ -55,21 +55,21 @@
         mat-button
         (click)="resetFileInput()"
         type="button"
-        [disabled]="(disabled$ | async) || (config.disableOnUpload && isUploaded)"
+        [disabled]="(disabled$ | async) || (config().disableOnUpload && isUploaded)"
         aria-label="Remove Selected File(s)">
-        {{config.clearFilesButtonText}}
+        {{config().clearFilesButtonText}}
         <mat-icon>delete</mat-icon>
       </button>
-      @if (!!config.uploadFiles) {
+      @if (!!config().uploadFiles) {
         <button
           mat-raised-button
           type="button"
           color="accent"
           class="file-input-button"
-          [disabled]="(disabled$ | async) || (config.disableOnUpload && isUploaded)"
+          [disabled]="(disabled$ | async) || (config().disableOnUpload && isUploaded)"
           (click)="uploadFiles()"
-          [attr.aria-label]="config.uploadButtonText">
-          {{ config.uploadButtonText }}
+          [attr.aria-label]="config().uploadButtonText">
+          {{ config().uploadButtonText }}
         </button>
       }
     </div>

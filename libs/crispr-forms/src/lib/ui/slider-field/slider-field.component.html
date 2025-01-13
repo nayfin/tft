@@ -1,36 +1,36 @@
 <crispr-field-container
-  [config]="config"
+  [config]="config()"
   [group]="group">
-  @if (config.label) {
+  @if (config().label) {
     <label>
-      {{config.label}}
-      @if (config.info) {
+      {{config().label}}
+      @if (config().info) {
         <crispr-info
-          [info]="config.info">
+          [info]="config().info">
         </crispr-info>
       }
     </label>
   }
   <div class="slider-container">
-    @if (config.displayLimits) {
+    @if (config().displayLimits) {
       <span>
-        {{config.min}}
+        {{config().min}}
       </span>
     }
     <mat-slider
-      [discrete]="config.discrete"
-      [displayWith]="config.displayWith"
+      [discrete]="config().discrete"
+      [displayWith]="config().displayWith"
       class="example-margin"
       [formGroup]="group"
-      [max]="config.max"
-      [min]="config.min"
-      [step]="config.step">
+      [max]="config().max"
+      [min]="config().min"
+      [step]="config().step">
       <input matSliderThumb
-        [formControlName]="config.controlName">
+        [formControlName]="config().controlName">
     </mat-slider>
-    @if (config.displayLimits) {
+    @if (config().displayLimits) {
       <span>
-        {{config.max}}
+        {{config().max}}
       </span>
     }
   </div>

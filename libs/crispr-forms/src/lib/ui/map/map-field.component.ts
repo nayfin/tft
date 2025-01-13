@@ -1,17 +1,16 @@
 import { Component, OnInit, Renderer2, SecurityContext, inject, viewChild } from '@angular/core';
-import { CrisprFieldComponent, MapFieldConfig, TftMapMarker, crisprControlMixin } from '../../utils';
+import { MapFieldConfig, TftMapMarker } from '../../utils';
 import { GoogleMap, GoogleMapsModule, MapGeocoder, } from '@angular/google-maps';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject, debounceTime, map, merge, of, startWith, switchMap } from 'rxjs';
-import { AsyncPipe, NgClass } from '@angular/common';
+import { AsyncPipe,  } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import { InputFieldComponent } from '../input-field/input-field.component';
+import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
 const defaultConfig: Partial<MapFieldConfig> = {
   debounceTime: 500,
 };
-
-const MapFieldMixin = crisprControlMixin<MapFieldConfig>(CrisprFieldComponent);
 
 interface MapState {  
   center: google.maps.LatLngLiteral;
@@ -22,12 +21,12 @@ interface MapState {
 @Component({
   selector: 'crispr-map',
   standalone: true,
-  imports: [ GoogleMapsModule, ReactiveFormsModule, AsyncPipe, NgClass ],
+  imports: [ GoogleMapsModule, ReactiveFormsModule, AsyncPipe, InputFieldComponent ],
   templateUrl: './map-field.component.html',
   styleUrl: './map-field.component.scss',
 })
 export class MapFieldComponent
-  extends MapFieldMixin
+  extends CrisprControlComponent<MapFieldConfig>
   implements OnInit
 {
   geoCoder = inject(MapGeocoder);
@@ -37,7 +36,7 @@ export class MapFieldComponent
   mapComponent = viewChild(GoogleMap);
   defaultConfig = defaultConfig;
 
-  locationControl = new FormControl(this.config?.location);
+  locationControl = new FormControl(this.config()?.location);
 
   inputCenter = this.locationControl.valueChanges.pipe(
     switchMap((value: string) => {
@@ -53,7 +52,7 @@ export class MapFieldComponent
       console.log({ center, bounds, postcode_localities, address_components });
       return center;
     }),
-    startWith(this.config?.center || undefined)
+    startWith(this.config()?.center || undefined)
   )
 
   center = merge
@@ -64,14 +63,14 @@ export class MapFieldComponent
     this.currentMap.pipe( 
       debounceTime(500),
       switchMap((map) => {
-        return this.config?.markers?.(map, this.group) || of([]);
+        return this.config()?.markers?.(map, this.group) || of([]);
       }),
       map((markers: TftMapMarker[]) => {  
         return markers.map((marker) => { 
-          if (this.config.markerTemplateBuilder) {
+          if (this.config().markerTemplateBuilder) {
             const content: HTMLElement = this.renderer.createElement('div');
-            this.renderer.setProperty(content, 'innerHTML', this.domSanitizer.sanitize(SecurityContext.HTML, this.config.markerTemplateBuilder(marker)));
-            this.config.markerClasses.forEach((className) => this.renderer.addClass(content, className));
+            this.renderer.setProperty(content, 'innerHTML', this.domSanitizer.sanitize(SecurityContext.HTML, this.config().markerTemplateBuilder(marker)));
+            this.config().markerClasses.forEach((className) => this.renderer.addClass(content, className));
             return { ...marker, content };
           } else {
             return marker
@@ -95,7 +94,7 @@ export class MapFieldComponent
   }
 
   onMarkerClick(marker: TftMapMarker) {
-    this.config?.onMarkerClick(marker);
+    this.config()?.onMarkerClick(marker);
   }
 
   onBoundsChanged(bounds: google.maps.LatLngBounds) {
@@ -103,7 +102,7 @@ export class MapFieldComponent
   }
 
   onMove(map: GoogleMap, group: FormGroup) {
-    this.config?.onMove?.(map, group);
+    this.config()?.onMove?.(map, group);
     this.currentMap.next(map);
   }
 }

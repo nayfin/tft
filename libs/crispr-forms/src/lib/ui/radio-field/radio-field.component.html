@@ -1,10 +1,10 @@
 <crispr-field-container
-  [config]="config"
+  [config]="config()"
   [group]="group">
 
   <mat-radio-group
     [formControl]="control"
-    [color]="config.color">
+    [color]="config().color">
     @for (option of options$ | async; track option) {
       <mat-radio-button class="example-radio-button" [value]="option.value">
         {{option.label}}

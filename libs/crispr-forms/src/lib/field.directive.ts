@@ -5,6 +5,7 @@ import {
   Renderer2,
   OnInit,
   ChangeDetectorRef,
+  WritableSignal,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import {
@@ -20,6 +21,7 @@ import { AnyFieldConfig, ControlValue } from './utils';
   standalone: true,
 })
 export class CrisprFieldDirective implements OnInit {
+
   @Input() config: AnyFieldConfig;
   @Input() group: FormGroup;
   /**
@@ -53,8 +55,8 @@ export class CrisprFieldDirective implements OnInit {
     const componentRef =
       this.container.createComponent<CrisprFieldComponentType>(component);
 
-    this.component = componentRef.instance;
-    this.component.config = this.config;
+    this.component = componentRef.instance;    
+    (this.component.config as WritableSignal<AnyFieldConfig>).set(this.config);
     if (isControlOrButtonComponent(this.component)) {
       this.component.group = this.group;
     }
@@ -74,9 +76,9 @@ export class CrisprFieldDirective implements OnInit {
     });
   }
 
-  updateComponentValue(value: ControlValue | any[]) {
+  updateComponentValue(value: ControlValue) {
     if (isControlComponent(this.component)) {
-      this.component.value = value;
+      this.component.value.set(value);
       // SubGroups won't populate without this detectChanges
       this.cdr.detectChanges();
     }

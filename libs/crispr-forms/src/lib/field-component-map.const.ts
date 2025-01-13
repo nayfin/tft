@@ -96,7 +96,7 @@ export const FIELD_COMPONENTS = {
 export function isControlComponent(
   component: CrisprFieldComponentType
 ): component is CrisprControlComponentType {
-  return component && isControlConfig(component.config) && 'value' in component; // || component.config.controlType === ControlType.BUTTON;
+  return component && isControlConfig(component.config()) && 'value' in component;
 }
 
 export function isControlOrButtonComponent(
@@ -104,7 +104,7 @@ export function isControlOrButtonComponent(
 ): component is CrisprControlOrButton {
   return (
     isControlComponent(component) ||
-    component.config.controlType === ControlType.BUTTON
+    component.config().controlType === ControlType.BUTTON
   );
 }
 

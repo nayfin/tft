@@ -2,15 +2,13 @@ import type {
   CrisprControlConfig,
 } from '../models';
 import { OnInit, Directive } from '@angular/core';
-import { CrisprFieldComponent } from './crispr-field.abstract';
-import { crisprControlMixin } from './crispr-control.mixin';
+import { CrisprControlComponent } from './crispr-control.abstract';
 
-const CrisprDisplayFieldMixin = crisprControlMixin<CrisprControlConfig>(CrisprFieldComponent);
 
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class CrisprDisplayFieldComponent extends CrisprDisplayFieldMixin implements OnInit {
+export abstract class CrisprDisplayFieldComponent extends CrisprControlComponent<CrisprControlConfig> implements OnInit {
   index?: number;
 }
 

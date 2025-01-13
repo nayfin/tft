@@ -19,16 +19,13 @@ import { MatInputModule } from '@angular/material/input';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '../field-container';
 import {
-  crisprControlMixin,
-  CrisprFieldComponent,
   DatepickerFieldConfig,
 } from '../../utils';
+import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
 
 const defaultConfig: Partial<DatepickerFieldConfig> = {
   startView: 'month',
 };
-const DatepickerFieldMixin =
-  crisprControlMixin<DatepickerFieldConfig>(CrisprFieldComponent);
 
 @Component({
   selector: 'crispr-datepicker-field',
@@ -49,7 +46,7 @@ const DatepickerFieldMixin =
   ],
 })
 export class DatepickerFieldComponent
-  extends DatepickerFieldMixin
+  extends CrisprControlComponent<DatepickerFieldConfig>
   implements OnInit, AfterContentInit
 {
   defaultConfig = defaultConfig;
@@ -63,22 +60,23 @@ export class DatepickerFieldComponent
 
   ngOnInit() {
     super.ngOnInit();
+    const config = this.config();
     this.startAt$ =
-      this.config.startAt instanceof Date
-        ? of(this.config.startAt)
-        : this.config.startAt instanceof Function
-        ? this.config.startAt(this.group)
+      config.startAt instanceof Date
+        ? of(config.startAt)
+        : config.startAt instanceof Function
+        ? config.startAt(this.group)
         : of(null);
-    this.dateClass = this.config?.cellClassFunction || null;
-    this.dateClass$ = this.config.dateClass
-      ? this.config?.dateClass(this.group)
+    this.dateClass = config?.cellClassFunction || null;
+    this.dateClass$ = config.dateClass
+      ? config?.dateClass(this.group)
       : of(() => '');
   }
 
   ngAfterContentInit() {
-    if (this.config.datepickerActions) {
+    if (this.config().datepickerActions) {
       this.calendarFooterPortal = new ComponentPortal(
-        this.config.datepickerActions
+        this.config().datepickerActions
       );
     }
   }

@@ -1,20 +1,20 @@
 
 <crispr-field-container
-  [config]="config"
+  [config]="config()"
   [group]="group">
 
   <mat-form-field
-    [color]="config.color"
-    [appearance]="config.appearance"
+    [color]="config().color"
+    [appearance]="config().appearance"
     [formGroup]="group">
-    @if (config.label) {<mat-label>{{config.label}}</mat-label>}
+    @if (config().label) {<mat-label>{{config().label}}</mat-label>}
 
-    <input class="hidden-error-directive-anchor" [formControlName]="config.controlName" type="text"/>
+    <input class="hidden-error-directive-anchor" [formControlName]="config().controlName" type="text"/>
 
     <input
       matInput
       [formControl]="autocompleteInputControl"
-      [placeholder]="config.placeholder"
+      [placeholder]="config().placeholder"
       [matAutocomplete]="auto"
       role="textbox"
       type="textbox"
@@ -23,12 +23,12 @@
       spellcheck="false"
       #autoInput>
 
-    @if (config.fieldSuffix) {<span matSuffix>{{config.fieldSuffix}}</span>}
-    @if (config.info) {<crispr-info  matSuffix  [info]="config.info "></crispr-info>}
+    @if (config().fieldSuffix) {<span matSuffix>{{config().fieldSuffix}}</span>}
+    @if (config().info) {<crispr-info  matSuffix  [info]="config().info "></crispr-info>}
 
     <mat-autocomplete
       #auto="matAutocomplete"
-      [autoActiveFirstOption]="config.autoActiveFirstOption"
+      [autoActiveFirstOption]="config().autoActiveFirstOption"
       (optionSelected)="handleSelect($event)"
       [displayWith]="displayLabel(options$ | async)">
 
@@ -42,17 +42,17 @@
           }
         } @else {
           <mat-option disabled="true">
-            {{config.emptyOptionsMessage}}
+            {{config().emptyOptionsMessage}}
           </mat-option>
         }
       } @else {
         <mat-option disabled="true">
-          {{config.emptyOptionsMessage}}
+          {{config().emptyOptionsMessage}}
         </mat-option>
       }
     </mat-autocomplete>
 
-    @if (config.hint && (control.valid || !control.touched)) {<mat-hint>{{config.hint}}</mat-hint>}
+    @if (config().hint && (control.valid || !control.touched)) {<mat-hint>{{config().hint}}</mat-hint>}
 
   </mat-form-field>
 </crispr-field-container>

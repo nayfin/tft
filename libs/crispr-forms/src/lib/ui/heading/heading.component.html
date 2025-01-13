@@ -1,11 +1,11 @@
-@if (!!config?.label) {
+@if (!!config()?.label) {
   <label
-    [ngClass]="config.typographyClass">
-    {{ config.label }}
-    @if (config.info) {
+    [ngClass]="config().typographyClass">
+    {{ config().label }}
+    @if (config().info) {
       <crispr-info
         matSuffix
-        [info]="config.info">
+        [info]="config().info">
       </crispr-info>
     }
   </label>

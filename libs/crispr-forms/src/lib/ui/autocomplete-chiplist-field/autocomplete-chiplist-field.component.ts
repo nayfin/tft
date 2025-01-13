@@ -90,11 +90,11 @@ export class AutocompleteChiplistFieldComponent
     super.ngOnInit();
     this.remainingOptions$ = combineLatest([this.chips$, this.options$]).pipe(
       map(([chips, options]) => {
-        return this.config.allowDuplicates
+        return this.config().allowDuplicates
           ? options
           : options?.filter((option) => {
               return !chips.some((chip) =>
-                this.config.duplicateCompareFunction(chip, option)
+                this.config().duplicateCompareFunction(chip, option)
               );
             });
       })
@@ -125,7 +125,7 @@ export class AutocompleteChiplistFieldComponent
   handleTab(_event: FocusEvent) {
     if (
       this.chipInput.activeOption &&
-      (this.config.tabToSelect || this.config.addChipOnBlur)
+      (this.config().tabToSelect || this.config().addChipOnBlur)
     ) {
       const chip = this.chipInput.activeOption.value;
       this.chips$.next([...this.chips$.value, chip]);
@@ -156,7 +156,7 @@ export class AutocompleteChiplistFieldComponent
   }
 
   highlightChip(chip: SelectOption) {
-    if(this.config.chipsSelectable) {
+    if(this.config().chipsSelectable) {
       this.selectedChip = chip
     }
   }

@@ -1,39 +1,39 @@
 <crispr-field-container
-  [config]="config"
+  [config]="config()"
   [group]="group">
 
   <mat-form-field
-    [color]="config.color"
-    [appearance]="config.appearance"
+    [color]="config().color"
+    [appearance]="config().appearance"
     [formGroup]="group">
-    @if (config.label) {<mat-label>{{config.label}}</mat-label>}
+    @if (config().label) {<mat-label>{{config().label}}</mat-label>}
 
     <mat-chip-grid
       #chipList>
-      <!-- [selectable]="config.chipsSelectable" -->
+      <!-- [selectable]="config().chipsSelectable" -->
       @for (chip of controlValue$ | async; track chip; let i = $index) {
         <mat-chip-row
           class="refinement-chip"
-          [removable]="config.areChipsRemovable"
+          [removable]="config().areChipsRemovable"
           [highlighted]="chip?.value === selectedChip?.value"
           (click)="highlightChip(chip)"
           (removed)="removeChip(chip)">
           @if (chip.imageUrl) {<img [src]="chip.imageUrl" matChipAvatar alt="image of {{chip.label}}">}
             {{chip.label}}
-            @if (config.areChipsRemovable) {<mat-icon matChipRemove>cancel</mat-icon>}
+            @if (config().areChipsRemovable) {<mat-icon matChipRemove>cancel</mat-icon>}
           </mat-chip-row>
         }
         <input class="hidden-error-directive-anchor" (blur)="blurField()"
-          [formControlName]="config.controlName" type="text"/>
+          [formControlName]="config().controlName" type="text"/>
 
         <input
           matInput
           [formControl]="autocompleteInputControl"
-          [placeholder]="config.placeholder"
+          [placeholder]="config().placeholder"
           [matChipInputFor]="chipList"
           [matAutocomplete]="auto"
           (keydown.tab)="handleTab($event)"
-          [matChipInputSeparatorKeyCodes]="config.separatorKeyCodes"
+          [matChipInputSeparatorKeyCodes]="config().separatorKeyCodes"
           (matChipInputTokenEnd)="handleTokenEnd($event)"
           role="searchbox"
           type="text"
@@ -42,13 +42,13 @@
           spellcheck="false"
           (blur)="blurField()"
           #autoInput/>
-        @if (config.fieldSuffix) {<span matSuffix>{{config.fieldSuffix}}</span>}
-        @if (config.info) {<crispr-info matSuffix [info]="config.info "></crispr-info>}
+        @if (config().fieldSuffix) {<span matSuffix>{{config().fieldSuffix}}</span>}
+        @if (config().info) {<crispr-info matSuffix [info]="config().info "></crispr-info>}
 
       </mat-chip-grid>
       <mat-autocomplete
         #auto="matAutocomplete"
-        [autoActiveFirstOption]="this.config.autoActiveFirstOption"
+        [autoActiveFirstOption]="this.config().autoActiveFirstOption"
         (optionSelected)="handleSelect($event)"
         [displayWith]="mapToLabel">
         @if (remainingOptions$ | async; as remainingOptions) {
@@ -61,17 +61,17 @@
             }
           } @else {
             <mat-option disabled="true">
-              {{config.emptyOptionsMessage}}
+              {{config().emptyOptionsMessage}}
             </mat-option>
           }
         } @else {
           <mat-option disabled="true">
-            {{config.emptyOptionsMessage}}
+            {{config().emptyOptionsMessage}}
           </mat-option>
         }
       </mat-autocomplete>
 
-      @if (config.hint && (control.valid || !control.touched)) {<mat-hint>{{config.hint}}</mat-hint>}
+      @if (config().hint && (control.valid || !control.touched)) {<mat-hint>{{config().hint}}</mat-hint>}
 
     </mat-form-field>
   </crispr-field-container>

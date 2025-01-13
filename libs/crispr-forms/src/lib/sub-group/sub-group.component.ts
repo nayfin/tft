@@ -2,12 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import {
-  crisprControlMixin,
-  CrisprFieldComponent,
   SubGroupConfig,
 } from '../utils';
+import { CrisprControlComponent } from '../utils/abstracts/crispr-control.abstract';
 
-const FormGroupMixin = crisprControlMixin<SubGroupConfig>(CrisprFieldComponent);
 
 @Component({
   selector: 'crispr-sub-group',
@@ -17,7 +15,7 @@ const FormGroupMixin = crisprControlMixin<SubGroupConfig>(CrisprFieldComponent);
   // We can add cdr to this class, but everything that extends it will need the cdr attached
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SubGroupComponent extends FormGroupMixin implements OnInit {
+export class SubGroupComponent extends CrisprControlComponent<SubGroupConfig> implements OnInit {
   group: FormGroup;
 
   ngOnInit() {

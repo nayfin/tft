@@ -95,8 +95,8 @@ export class AutocompleteFieldComponent
    * @param options the array of options to search for option with corresponding value
    */
   displayLabel(options: SelectOption[]) {
-    if (this.config.displayWith) {
-      return this.config.displayWith(options);
+    if (this.config().displayWith) {
+      return this.config().displayWith(options);
     }
     return (value: any) => {
       const label: string =

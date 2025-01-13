@@ -10,4 +10,4 @@ export interface HeadingConfig extends
   controlType?: ControlType.HEADING;
   typographyClass?: string;
   label: string;
-};
+}
