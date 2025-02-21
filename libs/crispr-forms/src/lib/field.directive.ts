@@ -58,7 +58,7 @@ export class CrisprFieldDirective implements OnInit {
     this.component = componentRef.instance;    
     (this.component.config as WritableSignal<AnyFieldConfig>).set(this.config);
     if (isControlOrButtonComponent(this.component)) {
-      this.component.group = this.group;
+      componentRef.setInput('group', this.group);
     }
     this.updateComponentValue(this.value);
     // adds any config classes to the dynamically generated component

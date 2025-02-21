@@ -197,7 +197,7 @@ export class ImageUploadFieldComponent
       })
     );
     this.disabled$ = this.config().disabledCallback
-      ? this.config().disabledCallback(this.group)
+      ? this.config().disabledCallback(this.group())
       : of(false);
   }
 

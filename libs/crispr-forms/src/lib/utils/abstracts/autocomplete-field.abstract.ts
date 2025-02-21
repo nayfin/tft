@@ -21,7 +21,7 @@ export class AbstractAutocompleteComponent<C>
   ngOnInit() {
     super.ngOnInit();
 
-    this.group.addControl(this.config().controlName, new FormControl());
+    this.group().addControl(this.config().controlName, new FormControl());
     // filter options by the search string using either the default filter function or one passed in through config()
     this.options$ = this.autocompleteInputControl.valueChanges.pipe(
       // this is needed to have the options panel to open on focus
@@ -29,7 +29,7 @@ export class AbstractAutocompleteComponent<C>
       debounceTime(this.config().typeDebounceTime),
       map((searchText: string) => typeof searchText === 'string' ? searchText?.trim() : ''),
       distinctUntilChanged(),
-      switchMap((searchText: string) => observablifyOptions(this.config().options, this.group, searchText)),
+      switchMap((searchText: string) => observablifyOptions(this.config().options, this.group(), searchText)),
       shareReplay(1),
     );
   }

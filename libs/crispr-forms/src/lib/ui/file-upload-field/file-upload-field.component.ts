@@ -94,7 +94,7 @@ export class FileUploadFieldComponent
   ngOnInit() {
     super.ngOnInit();
     this.disabled$ = this.config().disabledCallback
-      ? this.config().disabledCallback(this.group)
+      ? this.config().disabledCallback(this.group())
       : of(false);
   }
 
@@ -108,7 +108,7 @@ export class FileUploadFieldComponent
   uploadFiles() {
     if (this.selectedFiles() && this.config().uploadFiles) {
       this.isUploaded = true;
-      this.config().uploadFiles(this.group, this.selectedFiles(), this);
+      this.config().uploadFiles(this.group(), this.selectedFiles(), this);
     }
   }
 

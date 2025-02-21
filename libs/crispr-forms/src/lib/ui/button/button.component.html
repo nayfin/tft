@@ -1,11 +1,11 @@
 <button
-  [formGroup]="group"
+  [formGroup]="group()"
   mat-button
   [ngClass]="matButtonClass"
   [color]="config().color"
   [disabled]="config().disabledOnInvalidForm && !(formValid$ | async)"
   [type]="config().type"
-  (click)="handleClick(group, $event)"
+  (click)="handleClick(group(), $event)"
   [matTooltip]="config().info?.content"
   [matTooltipPosition]="config().info?.tooltipPosition || 'below'">
   {{ config().label }}

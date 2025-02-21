@@ -71,7 +71,7 @@ export class UnitConversionFieldComponent
     if (config.showUnitSelect === true) {
       this.unitOptions$ = observablifyOptions(
         config.selectableUnits,
-        this.group
+        this.group()
       );
       controlValuePipeline.push(
         this.unitSelectControl.valueChanges.pipe(

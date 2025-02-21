@@ -65,11 +65,11 @@ export class DatepickerFieldComponent
       config.startAt instanceof Date
         ? of(config.startAt)
         : config.startAt instanceof Function
-        ? config.startAt(this.group)
+        ? config.startAt(this.group())
         : of(null);
     this.dateClass = config?.cellClassFunction || null;
     this.dateClass$ = config.dateClass
-      ? config?.dateClass(this.group)
+      ? config?.dateClass(this.group())
       : of(() => '');
   }
 

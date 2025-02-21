@@ -3,6 +3,7 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  WritableSignal,
 } from '@angular/core';
 import { FormGroup, FormArray } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -47,7 +48,7 @@ export class FormGroupListComponent
   implements OnInit
 {
   defaultConfig = defaultConfig;
-  group: FormGroup;
+  group: WritableSignal<FormGroup>;
   control: FormArray;
   /**
    * By setting this to true when adding/removing items from array,

@@ -1,5 +1,5 @@
 import { Component, OnInit, Renderer2, SecurityContext, inject, viewChild } from '@angular/core';
-import { MapFieldConfig, TftMapMarker } from '../../utils';
+import { ControlType, InputFieldConfig, MapFieldConfig, TftMapMarker } from '../../utils';
 import { GoogleMap, GoogleMapsModule, MapGeocoder, } from '@angular/google-maps';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject, debounceTime, map, merge, of, startWith, switchMap } from 'rxjs';
@@ -37,6 +37,17 @@ export class MapFieldComponent
   defaultConfig = defaultConfig;
 
   locationControl = new FormControl(this.config()?.location);
+  locationGroup = new FormGroup({
+    location: this.locationControl,
+  });
+
+  locationConfig: InputFieldConfig = {
+    controlType: ControlType.INPUT,
+    controlName: 'location',
+    inputType: 'text',
+    label: 'Location',
+    placeholder: 'Enter a location',
+  }
 
   inputCenter = this.locationControl.valueChanges.pipe(
     switchMap((value: string) => {
@@ -63,7 +74,7 @@ export class MapFieldComponent
     this.currentMap.pipe( 
       debounceTime(500),
       switchMap((map) => {
-        return this.config()?.markers?.(map, this.group) || of([]);
+        return this.config()?.markers?.(map, this.group()) || of([]);
       }),
       map((markers: TftMapMarker[]) => {  
         return markers.map((marker) => { 

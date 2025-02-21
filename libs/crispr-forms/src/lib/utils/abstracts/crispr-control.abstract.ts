@@ -8,39 +8,46 @@ import { CrisprFieldComponent } from './crispr-field.abstract';
   standalone: true
 })
 export class CrisprControlComponent<C extends CrisprControlConfig> extends CrisprFieldComponent<C> implements OnInit {
-    group: FormGroup;
-    control: AbstractControl;
+  group = signal<FormGroup>(null);
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  @Input({alias: 'group'})
+  set inputGroup(group: ControlValue) {
+    this.group.set(group);
+  }
 
-    value = signal<ControlValue>(null); 
+  control: AbstractControl;
 
-    // eslint-disable-next-line @angular-eslint/no-input-rename
-    @Input({alias: 'valueinput'}) 
-    set inputValue(value: ControlValue) {
-      this.value.set(value);
-    }
+  value = signal<ControlValue>(null); 
+  /*
+    * Having the input alias allows us to consume these components in the traditional Angular way as well as progammatically in the form builder
+    */
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  @Input({alias: 'value'}) 
+  set inputValue(value: ControlValue) {
+    this.value.set(value);
+  }
 
-    constructor() {
-      super();
-      effect(() => {
-        const value = this.value();
-        this.setControlValue(value)
-      })
+  constructor() {
+    super();
+    effect(() => {
+      const value = this.value();
+      this.setControlValue(value)
+    })
+  }
+  
+  ngOnInit() {
+    this.control = this.group().get(this.config().controlName);
+    // this.setControlValue(this.value);
+    // setTimeouts are ugly but this seems to be the only way to get the computed field to compute initial values
+    setTimeout(()=> {
+      this.control.updateValueAndValidity();
+    })
+  }
 
-    }
-    
-    ngOnInit() {
-      this.control = this.group.get(this.config().controlName);
-      // this.setControlValue(this.value);
-      // setTimeouts are ugly but this seems to be the only way to get the computed field to compute initial values
-      setTimeout(()=> {
-        this.control.updateValueAndValidity();
-      })
-    }
-
-    setControlValue(value: ControlValue) {
-      if(value && this.control && this.config().controlType !== ControlType.SUB_GROUP) {
-        this.control.setValue(value)
-      }
+  setControlValue(value: ControlValue) {
+    if(value && this.control && this.config().controlType !== ControlType.SUB_GROUP) {
+      this.control.setValue(value)
     }
   }
+}
 

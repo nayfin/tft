@@ -16,8 +16,7 @@ import { CrisprControlComponent } from '../utils/abstracts/crispr-control.abstra
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SubGroupComponent extends CrisprControlComponent<SubGroupConfig> implements OnInit {
-  group: FormGroup;
-
+  
   ngOnInit() {
     super.ngOnInit();
   }

@@ -20,7 +20,7 @@ export class CustomSelectComponent extends CrisprControlComponent<SelectFieldCon
     super.ngOnInit();
     // options$ can be passed as an array, promise that resolves array, or observable that resolves array
     // this functions accounts for all possibilities and converts to observable that resolves array
-    this.options$ = observablifyOptions(this.config().options, this.group);
+    this.options$ = observablifyOptions(this.config().options, this.group());
   }
 }
 

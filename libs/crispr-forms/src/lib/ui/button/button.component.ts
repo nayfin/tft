@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, signal } from '@angular/core';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { CrisprFieldComponent, ButtonConfig } from '../../utils';
+import { CrisprFieldComponent, ButtonConfig, ControlValue } from '../../utils';
 
 @Component({
   selector: 'crispr-button',
@@ -29,21 +29,26 @@ export class ButtonComponent
   extends CrisprFieldComponent<ButtonConfig>
   implements OnInit
 {
-  group: FormGroup;
   defaultConfig: Partial<ButtonConfig> = {
     buttonType: 'raised',
     type: 'submit',
   };
   formValid$: Observable<boolean>;
 
+  group = signal<FormGroup>(null);
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  @Input({alias: 'group'})
+  set inputGroup(group: ControlValue) {
+    this.group.set(group);
+  }
   get matButtonClass() {
     return this.config().buttonType ? `mat-${this.config().buttonType}-button` : '';
   }
 
   ngOnInit() {
-    this.formValid$ = this.group.statusChanges.pipe(
+    this.formValid$ = this.group().statusChanges.pipe(
       map((status) => status === 'VALID'),
-      startWith(this.group.valid)
+      startWith(this.group().valid)
     );
   }
 
