@@ -1,6 +1,6 @@
 <crispr-field-container
   [config]="config()"
-  [group]="group">
+  [group]="group()">
   <mat-form-field
     [style.width.%]="config().showUnitSelect ? 60 : 100"
     class="number-field"
@@ -24,7 +24,7 @@
     <mat-form-field
       [color]="config().color"
       [appearance]="config().appearance"
-      [formGroup]="group"
+      [formGroup]="group()"
       class="unit-field">
       @if (config().label) {<mat-label>{{config().label}}</mat-label>}
       <mat-select

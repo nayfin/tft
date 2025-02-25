@@ -1,11 +1,11 @@
 <crispr-field-container
   [config]="config()"
-  [group]="group">
+  [group]="group()">
 
   <mat-form-field
     [color]="config().color"
     [appearance]="config().appearance"
-    [formGroup]="group">
+    [formGroup]="group()">
     @if (config().label) {<mat-label>{{config().label}}</mat-label>}
     <mat-select
       [formControlName]="config().controlName"

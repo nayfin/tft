@@ -1,11 +1,11 @@
 <crispr-field-container
   [config]="config()"
-  [group]="group">
+  [group]="group()">
   I'm a super custom component
   <mat-form-field
     [color]="config().color"
     [appearance]="config().appearance"
-    [formGroup]="group">
+    [formGroup]="group()">
     @if (config().label) {<mat-label>{{config().label}}</mat-label>}
     <input
       [type]="config().inputType"

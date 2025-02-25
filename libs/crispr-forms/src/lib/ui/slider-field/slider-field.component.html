@@ -1,6 +1,6 @@
 <crispr-field-container
   [config]="config()"
-  [group]="group">
+  [group]="group()">
   @if (config().label) {
     <label>
       {{config().label}}
@@ -21,7 +21,7 @@
       [discrete]="config().discrete"
       [displayWith]="config().displayWith"
       class="example-margin"
-      [formGroup]="group"
+      [formGroup]="group()"
       [max]="config().max"
       [min]="config().min"
       [step]="config().step">

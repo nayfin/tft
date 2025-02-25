@@ -1,5 +1,9 @@
 
-<crispr-input-field [config]="locationConfig">
+<crispr-input-field 
+  [config]="locationConfig"   
+  (valueChange)="mapOpen.set(true)"
+  [group]="locationGroup"
+  cdkOverlayOrigin #trigger="cdkOverlayOrigin">
 
 </crispr-input-field>
 <google-map 
@@ -20,3 +24,11 @@
     </map-advanced-marker>
   }
 </google-map>
+<!-- <ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="mapOpen()"
+  (detach)="closeMap()"
+  >
+
+</ng-template> -->

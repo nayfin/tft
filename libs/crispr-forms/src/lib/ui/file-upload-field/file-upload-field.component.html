@@ -1,11 +1,11 @@
 <crispr-field-container
   [config]="config()"
-  [group]="group">
+  [group]="group()">
   <mat-form-field floatLabel="always"
     [color]="config().color"
     appearance="outline"
     [crisprFileDropzone]="!(disabled$ | async) && !(config().disableOnUpload && isUploaded)"
-    [formGroup]="group"
+    [formGroup]="group()"
     (fileDrop)="filesChanged($event)">
 
     <input [formControlName]="config().controlName" matInput type="text"/>

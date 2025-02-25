@@ -1,6 +1,6 @@
 <crispr-field-container
   [config]="config()"
-  [group]="group">
+  [group]="group()">
   @for (fieldConfig of config().fields; track fieldConfig) {
     <ng-container
       crisprField

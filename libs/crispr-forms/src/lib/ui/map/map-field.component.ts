@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, SecurityContext, inject, viewChild } from '@angular/core';
+import { Component, OnInit, Renderer2, SecurityContext, inject, signal, viewChild } from '@angular/core';
 import { ControlType, InputFieldConfig, MapFieldConfig, TftMapMarker } from '../../utils';
 import { GoogleMap, GoogleMapsModule, MapGeocoder, } from '@angular/google-maps';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -8,6 +8,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InputFieldComponent } from '../input-field/input-field.component';
 import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
+import { CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
 const defaultConfig: Partial<MapFieldConfig> = {
   debounceTime: 500,
 };
@@ -21,7 +22,7 @@ interface MapState {
 @Component({
   selector: 'crispr-map',
   standalone: true,
-  imports: [ GoogleMapsModule, ReactiveFormsModule, AsyncPipe, InputFieldComponent ],
+  imports: [ GoogleMapsModule, ReactiveFormsModule, AsyncPipe, InputFieldComponent, CdkConnectedOverlay, CdkOverlayOrigin],
   templateUrl: './map-field.component.html',
   styleUrl: './map-field.component.scss',
 })
@@ -33,6 +34,7 @@ export class MapFieldComponent
   renderer = inject(Renderer2);
   domSanitizer = inject(DomSanitizer);
 
+  mapOpen = signal(false);
   mapComponent = viewChild(GoogleMap);
   defaultConfig = defaultConfig;
 
@@ -102,6 +104,8 @@ export class MapFieldComponent
 
   ngOnInit() {
     super.ngOnInit();
+    console.log('group', this.group());
+
   }
 
   onMarkerClick(marker: TftMapMarker) {
@@ -115,6 +119,10 @@ export class MapFieldComponent
   onMove(map: GoogleMap, group: FormGroup) {
     this.config()?.onMove?.(map, group);
     this.currentMap.next(map);
+  }
+
+  closeMap() {
+    this.mapOpen.set(false);
   }
 }
 

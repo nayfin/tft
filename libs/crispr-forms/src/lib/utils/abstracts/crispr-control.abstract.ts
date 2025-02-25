@@ -12,6 +12,7 @@ export class CrisprControlComponent<C extends CrisprControlConfig> extends Crisp
   // eslint-disable-next-line @angular-eslint/no-input-rename
   @Input({alias: 'group'})
   set inputGroup(group: ControlValue) {
+    console.log('set group', group);
     this.group.set(group);
   }
 

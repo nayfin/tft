@@ -1,11 +1,11 @@
 <crispr-field-container
   [config]="config()"
-  [group]="group">
+  [group]="group()">
 
   <mat-form-field floatLabel="always"
     [color]="config().color"
     [appearance]="config().appearance"
-    [formGroup]="group">
+    [formGroup]="group()">
     <mat-label>{{config().label}}</mat-label>
     <input [formControlName]="config().controlName" matInput type="text"/>
     <input
