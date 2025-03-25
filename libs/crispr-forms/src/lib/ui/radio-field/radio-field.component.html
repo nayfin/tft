@@ -1,12 +1,14 @@
 <crispr-field-container
-  [config]="config"
-  [group]="group">
+  [config]="config()"
+  [group]="group()">
 
   <mat-radio-group
     [formControl]="control"
-    [color]="config.color">
-    <mat-radio-button class="example-radio-button" *ngFor="let option of options$ | async" [value]="option.value">
-      {{option.label}}
-    </mat-radio-button>
+    [color]="config().color">
+    @for (option of options$ | async; track option) {
+      <mat-radio-button class="example-radio-button" [value]="option.value">
+        {{option.label}}
+      </mat-radio-button>
+    }
   </mat-radio-group>
 </crispr-field-container>

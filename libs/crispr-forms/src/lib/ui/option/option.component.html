@@ -1,14 +1,16 @@
 <div>
-  <img
-    *ngIf="option.imageUrl"
-    [src]="option.imageUrl"
-    alt="image of {{option.label}}"
-    style="vertical-align:middle;"
-    aria-hidden
-    height="25"/>
+  @if (option.imageUrl) {
+    <img
+      [src]="option.imageUrl"
+      alt="image of {{option.label}}"
+      style="vertical-align:middle;"
+      aria-hidden
+      height="25"/>
+  }
   {{option.label}}
 </div>
 
-<crispr-info *ngIf="option.info as info" [info]="info">
-
-</crispr-info>
+@if (option.info; as info) {
+  <crispr-info [info]="info">
+  </crispr-info>
+}

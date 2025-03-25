@@ -1,45 +1,47 @@
 
 
-  <mat-form-field>
-    <input
-      matInput
-      autocapitalize="off"
-      autocorrect="off"
-      spellcheck="false"
-      [formControl]="autocompleteControl"
-      [placeholder]="placeholder"
-      [matAutocomplete]="auto">
+<mat-form-field>
+  <input
+    matInput
+    autocapitalize="off"
+    autocorrect="off"
+    spellcheck="false"
+    [formControl]="autocompleteControl"
+    [placeholder]="placeholder"
+    [matAutocomplete]="auto">
 
-    <mat-autocomplete
-      (optionSelected)="handleSelect($event)"
-      [displayWith]="displayWithFn"
-      #auto="matAutocomplete">
-      <ng-container *ngFor="let index of state.indices || []">
+  <mat-autocomplete
+    (optionSelected)="handleSelect($event)"
+    [displayWith]="displayWithFn"
+    #auto="matAutocomplete">
+    @for (index of state.indices || []; track index) {
+      @for (hit of index.hits; track hit) {
         <mat-option
-          *ngFor="let hit of index.hits"
           [value]="hit">
-
-          <img
-            *ngIf="hit[imageUrlParam]"
-            [src]="hit[imageUrlParam]"
-            style="vertical-align:middle;"
-            aria-hidden
-            height="25"/>
+          @if (hit[imageUrlParam]) {
+            <img
+              [src]="hit[imageUrlParam]"
+              style="vertical-align:middle;"
+              aria-hidden
+              height="25"/>
+          }
           <span> {{ hit.name }} </span>
         </mat-option>
+      }
+    }
 
-      </ng-container >
-
-    </mat-autocomplete>
+  </mat-autocomplete>
+  @if (algoliaAttribution) {
     <mat-hint
-      *ngIf="algoliaAttribution">
+      >
       <mis-algolia-attribution></mis-algolia-attribution>
     </mat-hint>
-  </mat-form-field>
+  }
+</mat-form-field>
 
-  <div>
+<div>
+  @if (displaySelectButton) {
     <button
-      *ngIf="displaySelectButton"
       mat-raised-button
       [disabled]="autocompleteControl.invalid"
       color="primary"
@@ -50,9 +52,10 @@
       </mat-icon>
       {{ selectTitle }}
     </button>
+  }
 
+  @if (displayClearButton) {
     <button
-      *ngIf="displayClearButton"
       mat-raised-button
       color="accent"
       title="{{clearTitle}}"
@@ -63,5 +66,6 @@
       </mat-icon>
       {{ clearTitle }}
     </button>
-  </div>
+  }
+</div>
 

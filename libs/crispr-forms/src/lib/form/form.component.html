@@ -7,16 +7,17 @@
   [errorDictionary]="config.errorDictionary"
   #ngFormElement="ngForm">
 
-  <ng-container
-    *ngFor="let field of config.fields;"
-    crisprField
-    [value]="value | initialControlValue : field"
-    [config]="field"
-    [group]="form">
-  </ng-container>
+  @for (field of config.fields; track field) {
+    <ng-container
+      crisprField
+      [value]="value | initialControlValue : field"
+      [config]="field"
+      [group]="form">
+    </ng-container>
+  }
   <!-- Hidden button, programmatically clicked when crispr form triggerSubmit function called.
-    Uses a hidden button with type="submit" because it will trigger both native form submit event
-    (which the error handler has to listen for) and ngSubmit event  -->
+  Uses a hidden button with type="submit" because it will trigger both native form submit event
+  (which the error handler has to listen for) and ngSubmit event  -->
   <button #submitTrigger class="submit-trigger" type="submit">
   </button>
 </form>

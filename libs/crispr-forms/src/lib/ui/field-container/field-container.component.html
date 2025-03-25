@@ -1,15 +1,14 @@
-<div
-  *ngIf="(disabled$ | async) ? !config.hideDisabled : true"
-  [ngClass]="config.classes"
-  [class.inline-field]="inlineField"
-  class="field-container">
-
-  <crispr-heading
-    *ngIf="config.heading"
-    [config]="config.heading">
-  </crispr-heading>
-
-  <ng-content>
-  </ng-content>
-
-</div>
+@if ((disabled$ | async) ? !config.hideDisabled : true) {
+  <div
+    [ngClass]="config.classes"
+    [class.inline-field]="inlineField"
+    class="field-container">
+    @if (config.heading) {
+      <crispr-heading
+        [config]="config.heading">
+      </crispr-heading>
+    }
+    <ng-content>
+    </ng-content>
+  </div>
+}

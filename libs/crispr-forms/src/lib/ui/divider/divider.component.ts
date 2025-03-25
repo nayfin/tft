@@ -13,11 +13,7 @@ import { CrisprFieldComponent, DividerConfig } from '../../utils';
 })
 export class DividerComponent
   extends CrisprFieldComponent<DividerConfig>
-  implements OnInit
 {
   // TODO: pull in type after configs are better organized
   defaultConfig = {};
-  ngOnInit() {
-    super.ngOnInit();
-  }
 }

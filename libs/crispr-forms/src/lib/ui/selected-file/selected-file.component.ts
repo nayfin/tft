@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Input } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -9,9 +9,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
   styleUrls: ['./selected-file.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     MatProgressBarModule
-  ],
+],
 })
 export class SelectedFileComponent {
 

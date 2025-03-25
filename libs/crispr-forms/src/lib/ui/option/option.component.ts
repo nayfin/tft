@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { InfoComponent } from '../info';
 // eslint-disable-next-line @nx/enforce-module-boundaries
@@ -10,7 +10,7 @@ import { SelectOption } from '../../utils';
   styleUrls: ['./option.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, InfoComponent],
+  imports: [InfoComponent],
 })
 export class OptionComponent {
   @Input() option: SelectOption;

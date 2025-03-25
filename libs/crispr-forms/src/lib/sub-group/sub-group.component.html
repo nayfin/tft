@@ -1,12 +1,13 @@
 <crispr-field-container
-  [config]="config"
-  [group]="group">
-  <ng-container
-    *ngFor="let fieldConfig of config.fields;"
-    crisprField
-    [value]="value | initialControlValue : fieldConfig"
-    [config]="fieldConfig"
-    [group]="control">
-  </ng-container>
+  [config]="config()"
+  [group]="group()">
+  @for (fieldConfig of config().fields; track fieldConfig) {
+    <ng-container
+      crisprField
+      [value]="value | initialControlValue : fieldConfig"
+      [config]="fieldConfig"
+      [group]="control">
+    </ng-container>
+  }
 </crispr-field-container>
 

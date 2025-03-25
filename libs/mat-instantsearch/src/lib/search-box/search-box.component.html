@@ -11,10 +11,12 @@
     [value]="state.query"
     (input)="handleChange($event.target.value)"
     #searchInput/>
-  <mat-hint
-    *ngIf="algoliaAttribution">
-    <mis-algolia-attribution></mis-algolia-attribution>
-  </mat-hint>
+  @if (algoliaAttribution) {
+    <mat-hint
+      >
+      <mis-algolia-attribution></mis-algolia-attribution>
+    </mat-hint>
+  }
 </mat-form-field>
 
 <button mat-raised-button
@@ -27,15 +29,16 @@
   {{ submitTitle }}
 </button>
 
-<button
-  *ngIf="displayResetButton"
-  mat-raised-button
-  color="accent"
-  type="reset"
-  title="{{resetTitle}}"
-  (click)="handleReset($event)">
-  <mat-icon>
-    close
-  </mat-icon>
-  {{ resetTitle }}
-</button>
+@if (displayResetButton) {
+  <button
+    mat-raised-button
+    color="accent"
+    type="reset"
+    title="{{resetTitle}}"
+    (click)="handleReset($event)">
+    <mat-icon>
+      close
+    </mat-icon>
+    {{ resetTitle }}
+  </button>
+}

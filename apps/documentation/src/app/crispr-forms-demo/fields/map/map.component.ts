@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormConfig, ControlType, CrisprFormComponent } from '@tft/crispr-forms';
 import { FormGroup } from '@angular/forms';
-import { EndpointsService } from '../../endpoints.service';
 import { MatCardModule } from '@angular/material/card';
+import { map } from 'rxjs/operators';
+import { GCAreaCoordinates } from './geocode.model';
+import { NoaaService } from './noaa.service';
+import { of } from 'rxjs';
 
 
 @Component({
@@ -16,7 +19,10 @@ import { MatCardModule } from '@angular/material/card';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent {
-
+  noaaService = inject(NoaaService);
+  mapValue = {
+    mapField: '63366'
+  }
   mapConfig: FormConfig = {
     fields: [
       {
@@ -24,33 +30,56 @@ export class MapComponent {
         label: 'This map field uses a simple array of options',
         controlName: 'mapField',
         center: {
-          lat: 38.8809704,
-          lng: -90.73427339999999
+          lat:  38.8809704, lng: -90.73427339999999
         },
         options: {
           mapId: 'DEMO_MAP_ID',
         },
-        markers: [
-          {
-            title: 'Place A',
-            position:  { lat: -31.56391, lng: 147.154312 },
-          },
-          {
-            title: 'Place B',
-            position: { lat: -33.727111, lng: 150.371124 },
-          },
-          {
-            title: 'Place C',
-            position: { lat: -33.718234, lng: 150.363181 },
+        markers: (mapComponent, formGroup) => { 
+          const bounds = mapComponent?.getBounds()?.toJSON();
+          if (!bounds) {
+            return of([]);
           }
-        ],
+          const coords: GCAreaCoordinates = {
+            ymax: bounds.north,
+            ymin: bounds.south,
+            xmax: bounds.east,
+            xmin: bounds.west
+          }  
+          return this.noaaService.getValidStationIds(coords).pipe(
+            map((stations) => {
+              return stations.map(station => {
+                const [lng, lat] = station.location.coordinates;
+              
+                console.log({station})
+                const name = station.stations[0].name;
+                return {
+                  title: name,
+                  position: {lat, lng },
+                  data: station,
+                }
+              })
+            }),
+            // switchMap((stations) => {
+            //   return this.noaaService.getFostDateProbabilities()
+            // })
+          )
+        },
+        markerClasses: ['weather-station-map-marker'],
+        markerTemplateBuilder: (marker) => {
+          console.log({marker})
+          return `<div>
+          ${marker.title}
+          </div>`
+        },
         onMove: (event, group) => console.log({event, group}),
         onMarkerClick: (marker) => {
+          // const things: TftMapMarker
           console.log({marker})
+          // this.noaaService.getFostDateProbabilities(marker.).subscribe((data) => {
         }
         // validators: [Validators.required]
       },
-     
       {
         controlType: ControlType.BUTTON,
         label: 'SUBMIT',
@@ -59,13 +88,9 @@ export class MapComponent {
     ]
   }
 
-  
-  constructor(
-    private endpointsService: EndpointsService
-  ) { }
-
   handleSubmit(form: FormGroup) {
     console.log({value: form.value})
   }
 
 }
+

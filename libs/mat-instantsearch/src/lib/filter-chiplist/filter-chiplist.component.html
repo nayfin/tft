@@ -2,18 +2,21 @@
   <mat-chip-listbox
     #chipList>
     <!-- [selectable]="chipSelectable" -->
-    <mat-chip
-      class="refinement-chip"
-      *ngFor="let chip of chips$ | async"
-      [removable]="areChipsRemovable"
-      (removed)="removeChip(chip)">
-      {{chip.label}}
-      <mat-icon
-        matChipRemove
-        *ngIf="areChipsRemovable">
-        cancel
-      </mat-icon>
-    </mat-chip>
+    @for (chip of chips$ | async; track chip) {
+      <mat-chip
+        class="refinement-chip"
+        [removable]="areChipsRemovable"
+        (removed)="removeChip(chip)">
+        {{chip.label}}
+        @if (areChipsRemovable) {
+          <mat-icon
+            matChipRemove
+            >
+            cancel
+          </mat-icon>
+        }
+      </mat-chip>
+    }
     <!-- [value]="state.query" -->
     <input
       role="textbox"
@@ -36,18 +39,19 @@
     (optionSelected)="handleSelect($event)"
     [displayWith]="mapToName">
 
-    <mat-option
-      *ngFor="let item of remainingItems$ | async"
-      [value]="item">
-
-      <img
-        *ngIf="item[imageUrlParam]"
-        [src]="item[imageUrlParam]"
-        style="vertical-align:middle;"
-        aria-hidden
-        height="25"/>
-      {{ item.label }}
-    </mat-option>
+    @for (item of remainingItems$ | async; track item) {
+      <mat-option
+        [value]="item">
+        @if (item[imageUrlParam]) {
+          <img
+            [src]="item[imageUrlParam]"
+            style="vertical-align:middle;"
+            aria-hidden
+            height="25"/>
+        }
+        {{ item.label }}
+      </mat-option>
+    }
   </mat-autocomplete>
 
 </mat-form-field>

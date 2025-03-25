@@ -8,6 +8,8 @@ import {
   ChangeDetectionStrategy,
   Optional,
   Self,
+  signal,
+  computed,
 } from '@angular/core';
 import {
   ControlValueAccessor,
@@ -23,15 +25,12 @@ import { FileDropzoneDirective } from '../file-dropzone';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
 import {
-  crisprControlMixin,
   CrisprFieldComponent,
   FileUploadFieldConfig,
 } from '../../utils';
 import { FieldContainerComponent } from '../field-container';
 import { SelectedFileComponent } from '../selected-file';
-
-const FileUploadFieldMixin =
-  crisprControlMixin<FileUploadFieldConfig>(CrisprFieldComponent);
+import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
 
 @Component({
   selector: 'crispr-file-upload-field',
@@ -53,7 +52,7 @@ const FileUploadFieldMixin =
   ],
 })
 export class FileUploadFieldComponent
-  extends FileUploadFieldMixin
+  extends CrisprControlComponent<FileUploadFieldConfig>
   implements OnInit, ControlValueAccessor
 {
   onChange: () => void;
@@ -74,7 +73,8 @@ export class FileUploadFieldComponent
 
   @ViewChild('fileInput') fileInputRef: ElementRef;
 
-  selectedFiles: FileList;
+  selectedFiles = signal<FileList | null>(null);
+  selectedFilesArray = computed(() => Array.from(this.selectedFiles()));
 
   isUploaded = false;
 
@@ -93,22 +93,22 @@ export class FileUploadFieldComponent
 
   ngOnInit() {
     super.ngOnInit();
-    this.disabled$ = this.config.disabledCallback
-      ? this.config.disabledCallback(this.group)
+    this.disabled$ = this.config().disabledCallback
+      ? this.config().disabledCallback(this.group())
       : of(false);
   }
 
   filesChanged(files: FileList): void {
     if (files && files.length > 0) {
-      this.selectedFiles = files;
+      this.selectedFiles.set(files);
       this.control.patchValue(files);
     }
   }
 
   uploadFiles() {
-    if (this.selectedFiles && this.config.uploadFiles) {
+    if (this.selectedFiles() && this.config().uploadFiles) {
       this.isUploaded = true;
-      this.config.uploadFiles(this.group, this.selectedFiles, this);
+      this.config().uploadFiles(this.group(), this.selectedFiles(), this);
     }
   }
 

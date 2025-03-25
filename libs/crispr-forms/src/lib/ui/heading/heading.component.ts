@@ -17,6 +17,5 @@ const defaultConfig: Partial<HeadingConfig> = {
   imports: [CommonModule, MatFormFieldModule, InfoComponent],
 })
 export class HeadingComponent extends CrisprFieldComponent<HeadingConfig> {
-  @Input() config: HeadingConfig;
   defaultConfig = defaultConfig;
 }

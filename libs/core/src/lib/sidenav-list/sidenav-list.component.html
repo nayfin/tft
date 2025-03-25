@@ -1,31 +1,35 @@
 <mat-nav-list>
 
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let section of sections">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{section.title}}
-        </mat-panel-title>
-        <mat-panel-description>
-          {{section.subtitle}}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <mat-list-item
-        *ngFor="let link of section.links"
-        (click)="onItemClicked(link)">
-
-        <a matLine>
-          {{ link.title }}
-        </a>
-        <mat-icon *ngIf="!!link.description"
-          [matTooltip]="link.description || 'Description coming soon!'">
-          info
-        </mat-icon>
-      </mat-list-item>
-      <tft-sidenav-list
-        [sections]="section.subsections"
-        (itemClicked)="onItemClicked($event)">
-      </tft-sidenav-list>
-    </mat-expansion-panel>
+    @for (section of sections; track section) {
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{section.title}}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{section.subtitle}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        @for (link of section.links; track link) {
+          <mat-list-item
+            (click)="onItemClicked(link)">
+            <a matLine>
+              {{ link.title }}
+            </a>
+            @if (!!link.description) {
+              <mat-icon
+                [matTooltip]="link.description || 'Description coming soon!'">
+                info
+              </mat-icon>
+            }
+          </mat-list-item>
+        }
+        <tft-sidenav-list
+          [sections]="section.subsections"
+          (itemClicked)="onItemClicked($event)">
+        </tft-sidenav-list>
+      </mat-expansion-panel>
+    }
   </mat-accordion>
 </mat-nav-list>

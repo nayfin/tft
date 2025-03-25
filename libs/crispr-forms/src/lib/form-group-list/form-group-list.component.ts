@@ -3,6 +3,7 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  WritableSignal,
 } from '@angular/core';
 import { FormGroup, FormArray } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,24 +11,21 @@ import { MatIconModule } from '@angular/material/icon';
 import { CrisprFieldDirective } from '../field.directive';
 import { CrisprPipesModule } from '../pipes/crispr-pipes.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import {
-  CrisprFieldComponent,
-  crisprControlMixin,
   createControlForType,
   FormGroupListConfig,
 } from '../utils';
 import { FieldContainerComponent } from '../ui';
 import { CrisprDisplayFieldDirective } from '../display-field.directive';
+import { CrisprControlComponent } from '../utils/abstracts/crispr-control.abstract';
 
 const defaultConfig: Partial<FormGroupListConfig> = {
   addButtonLabel: 'ADD ITEM',
   minListLength: 1,
 };
 
-const FormGroupListMixin =
-  crisprControlMixin<FormGroupListConfig>(CrisprFieldComponent);
 @Component({
   selector: 'crispr-form-group-list',
   templateUrl: './form-group-list.component.html',
@@ -35,7 +33,6 @@ const FormGroupListMixin =
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
     MatButtonModule,
     MatIconModule,
     FieldContainerComponent,
@@ -43,15 +40,15 @@ const FormGroupListMixin =
     CrisprFieldDirective,
     CrisprDisplayFieldDirective,
     CrisprPipesModule,
-    FormValidationHandlerModule,
-  ],
+    FormValidationHandlerModule
+],
 })
 export class FormGroupListComponent
-  extends FormGroupListMixin
+  extends CrisprControlComponent<FormGroupListConfig>
   implements OnInit
 {
   defaultConfig = defaultConfig;
-  group: FormGroup;
+  group: WritableSignal<FormGroup>;
   control: FormArray;
   /**
    * By setting this to true when adding/removing items from array,
@@ -79,7 +76,7 @@ export class FormGroupListComponent
           this.control.clear();
         }
         values.forEach((value) => this.addGroup(value));
-      } else if (this.config.displayInitialItem) {
+      } else if (this.config().displayInitialItem) {
         this.addGroup();
       }
       // needed to ensure new array items render
@@ -100,7 +97,7 @@ export class FormGroupListComponent
   }
 
   addGroup(value = null) {
-    this.control.push(createControlForType(this.config.itemConfig, value));
+    this.control.push(createControlForType(this.config().itemConfig, value));
     // needed to ensure new array items render
     setTimeout(() => {
       this.cdr.detectChanges();

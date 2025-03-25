@@ -2,17 +2,18 @@
   <mat-select
     [placeholder]="title"
     [multiple]="multiple">
-    <mat-option
-      *ngFor="let item of state.items"
-      [value]="item.value"
-      (click)="refine($event, item)">
-      {{ item.label | titlecase }}
-    </mat-option>
+    @for (item of state.items; track item) {
+      <mat-option
+        [value]="item.value"
+        (click)="refine($event, item)">
+        {{ item.label | titlecase }}
+      </mat-option>
+    }
   </mat-select>
 </mat-form-field>
 
 <!-- <button
-  *ngIf="state.canToggleShowMore"
-  (click)="state.toggleShowMore()">
-  {{state.isShowingMore ? showLessLabel : showMoreLabel}}
+*ngIf="state.canToggleShowMore"
+(click)="state.toggleShowMore()">
+{{state.isShowingMore ? showLessLabel : showMoreLabel}}
 </button> -->

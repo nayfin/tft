@@ -1,6 +1,7 @@
-<mat-icon
-  *ngIf="info"
-  [matTooltip]="info.content"
-  [matTooltipPosition]="info.tooltipPosition || 'below'">
-  {{info.iconName || 'info'}}
-</mat-icon>
+@if (info) {
+  <mat-icon
+    [matTooltip]="info.content"
+    [matTooltipPosition]="info.tooltipPosition || 'below'">
+    {{info.iconName || 'info'}}
+  </mat-icon>
+}

@@ -1,22 +1,20 @@
 
 <crispr-field-container
-  [config]="config"
-  [group]="group">
+  [config]="config()"
+  [group]="group()">
 
   <mat-form-field
-    [color]="config.color"
-    [appearance]="config.appearance"
-    [formGroup]="group">
-    <mat-label *ngIf="config.label">
-      {{config.label}}
-    </mat-label>
+    [color]="config().color"
+    [appearance]="config().appearance"
+    [formGroup]="group()">
+    @if (config().label) {<mat-label>{{config().label}}</mat-label>}
 
-    <input class="hidden-error-directive-anchor" [formControlName]="config.controlName" type="text"/>
+    <input class="hidden-error-directive-anchor" [formControlName]="config().controlName" type="text"/>
 
     <input
       matInput
       [formControl]="autocompleteInputControl"
-      [placeholder]="config.placeholder"
+      [placeholder]="config().placeholder"
       [matAutocomplete]="auto"
       role="textbox"
       type="textbox"
@@ -25,38 +23,36 @@
       spellcheck="false"
       #autoInput>
 
-    <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
-    <crispr-info
-      *ngIf="config.info"
-      matSuffix
-      [info]="config.info ">
-    </crispr-info>
+    @if (config().fieldSuffix) {<span matSuffix>{{config().fieldSuffix}}</span>}
+    @if (config().info) {<crispr-info  matSuffix  [info]="config().info "></crispr-info>}
 
     <mat-autocomplete
       #auto="matAutocomplete"
-      [autoActiveFirstOption]="config.autoActiveFirstOption"
+      [autoActiveFirstOption]="config().autoActiveFirstOption"
       (optionSelected)="handleSelect($event)"
       [displayWith]="displayLabel(options$ | async)">
 
-      <ng-container *ngIf="options$ | async as options; else emptyOption">
-        <ng-container *ngIf="options.length > 0; else emptyOption">
-          <mat-option
-            *ngFor="let option of options"
-            [value]="option.value">
-            <crispr-option [option]="option"></crispr-option>
+      @if (options$ | async; as options) {
+        @if (options.length > 0) {
+          @for (option of options; track option) {
+            <mat-option
+              [value]="option.value">
+              <crispr-option [option]="option"></crispr-option>
+            </mat-option>
+          }
+        } @else {
+          <mat-option disabled="true">
+            {{config().emptyOptionsMessage}}
           </mat-option>
-        </ng-container>
-
-      </ng-container>
-      <ng-template #emptyOption>
+        }
+      } @else {
         <mat-option disabled="true">
-          {{config.emptyOptionsMessage}}
+          {{config().emptyOptionsMessage}}
         </mat-option>
-      </ng-template>
-
+      }
     </mat-autocomplete>
 
-    <mat-hint *ngIf="config.hint && (control.valid || !control.touched)">{{config.hint}}</mat-hint>
+    @if (config().hint && (control.valid || !control.touched)) {<mat-hint>{{config().hint}}</mat-hint>}
 
   </mat-form-field>
 </crispr-field-container>

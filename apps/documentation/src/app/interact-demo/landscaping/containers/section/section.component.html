@@ -8,14 +8,15 @@
   <h3>
     {{scale}}
   </h3>
-  <section
-    *ngFor="let item of droppedItems"
-    tftDraggable
-    [dragConfig]="dragConfig"
-    [x]="item.x"
-    [y]="item.y"
-    [dragData]="item"
-    class="dropzone-item">
-    <div class="handle">{{item.name}}</div>
-  </section>
+  @for (item of droppedItems; track item) {
+    <section
+      tftDraggable
+      [dragConfig]="dragConfig"
+      [x]="item.x"
+      [y]="item.y"
+      [dragData]="item"
+      class="dropzone-item">
+      <div class="handle">{{item.name}}</div>
+    </section>
+  }
 </div>

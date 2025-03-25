@@ -17,16 +17,13 @@ import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '../field-container';
 import { InfoComponent } from '../info';
 import {
-  crisprControlMixin,
-  CrisprFieldComponent,
   observablifyOptions,
   SelectOption,
   UnitConversionFieldConfig,
 } from '../../utils';
+import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
 
 const defaultConfig: Partial<UnitConversionFieldConfig> = {};
-const UnitConversionFieldMixin =
-  crisprControlMixin<UnitConversionFieldConfig>(CrisprFieldComponent);
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -48,7 +45,7 @@ const UnitConversionFieldMixin =
   ],
 })
 export class UnitConversionFieldComponent
-  extends UnitConversionFieldMixin
+  extends CrisprControlComponent<UnitConversionFieldConfig>
   implements OnInit, OnDestroy
 {
   defaultConfig = defaultConfig;
@@ -60,6 +57,7 @@ export class UnitConversionFieldComponent
   transformationSubscription: Subscription;
 
   ngOnInit() {
+    const config = this.config();
     super.ngOnInit();
     // TODO: Validators need work. validation is tricky because the input needs to be validated against but the validator will compare against the controls value
     // this.displayValueControl.setValidators(this.config.validators);
@@ -70,23 +68,23 @@ export class UnitConversionFieldComponent
       ),
     ];
     // setup all required pieces when showing a field for selecting units
-    if (this.config.showUnitSelect) {
+    if (config.showUnitSelect === true) {
       this.unitOptions$ = observablifyOptions(
-        this.config.selectableUnits,
-        this.group
+        config.selectableUnits,
+        this.group()
       );
       controlValuePipeline.push(
         this.unitSelectControl.valueChanges.pipe(
-          startWith(this.config?.initialDisplayUnit || null)
+          startWith(config?.initialDisplayUnit || null)
         )
       );
-      this.unitSelectControl.setValue(this.config?.initialDisplayUnit || null);
+      this.unitSelectControl.setValue(config?.initialDisplayUnit || null);
     }
 
     this.transformationSubscription = combineLatest(
       controlValuePipeline
     ).subscribe(([displayValue, unitValue]) => {
-      const computedValue = this.config.storedValueConversion(
+      const computedValue = this.config().storedValueConversion(
         displayValue,
         unitValue
       );
@@ -99,7 +97,7 @@ export class UnitConversionFieldComponent
   }
 
   setInitialDisplayValue(storedValue: any, unit: unknown) {
-    const initialDisplayValue = this.config.initialDisplayValueConversion(
+    const initialDisplayValue = this.config().initialDisplayValueConversion(
       storedValue || null,
       unit
     );
@@ -113,8 +111,9 @@ export class UnitConversionFieldComponent
    * @param value the initial value for the control passed down from the form components input
    */
   setControlValue(value) {
-    const initialUnitValue = this.config.showUnitSelect
-      ? this.config?.initialDisplayUnit
+    const config = this.config();
+    const initialUnitValue = config.showUnitSelect
+      ? config?.initialDisplayUnit
       : null;
     this.setInitialDisplayValue(value, initialUnitValue);
   }

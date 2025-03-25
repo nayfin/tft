@@ -4,7 +4,7 @@ import { OverviewComponent } from './fields';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'overview', pathMatch: 'full'},
+  { path: '', redirectTo: 'fields/map', pathMatch: 'full'},
   { path: 'overview', component: OverviewComponent},
   {
     path: 'fields',

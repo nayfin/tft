@@ -7,10 +7,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '../field-container';
-import { CrisprFieldComponent, RadioFieldConfig, SelectOption, crisprControlMixin, observablifyOptions } from '../../utils';
-
-const RadioFieldMixin =
-  crisprControlMixin<RadioFieldConfig>(CrisprFieldComponent);
+import { RadioFieldConfig, SelectOption, observablifyOptions } from '../../utils';
+import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
 
 @Component({
   selector: 'crispr-radio-field',
@@ -26,13 +24,13 @@ const RadioFieldMixin =
     FormValidationHandlerModule,
   ],
 })
-export class RadioFieldComponent extends RadioFieldMixin implements OnInit {
+export class RadioFieldComponent extends CrisprControlComponent<RadioFieldConfig> implements OnInit {
   defaultConfig = {};
   options$: Observable<SelectOption[]>;
   ngOnInit() {
     super.ngOnInit();
     // options$ can be passed as an array, promise that resolves array, or observable that resolves array
     // this functions accounts for all possibilities and converts to observable that resolves array
-    this.options$ = observablifyOptions(this.config.options, this.group);
+    this.options$ = observablifyOptions(this.config().options, this.group());
   }
 }

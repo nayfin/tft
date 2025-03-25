@@ -1,35 +1,30 @@
 <crispr-field-container
-  [config]="config"
-  [group]="group">
+  [config]="config()"
+  [group]="group()">
   <mat-form-field
-    [color]="config.color"
-    [appearance]="config.appearance"
-    [formGroup]="group">
+    [color]="config().color"
+    [appearance]="config().appearance"
+    [formGroup]="group()">
     <mat-label>
-      {{config.label}}
+      {{config().label}}
     </mat-label>
     <input
-      [type]="config.inputType"
+      [type]="config().inputType"
       matInput
-      [placeholder]="config.placeholder"
-      [formControlName]="config.controlName"
-      [min]="config.min"
-      [max]="config.max"
-      [maxlength]="config.maxLength"
-      [step]="config.step"
-      [autofocus]="config.autofocus"
-      [pattern]="config.pattern"
-      [spellcheck]="config.spellcheck"
-      [autocomplete]="config.autoComplete"
-      [autocapitalize]="config.autoCapitalize">
-    <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
-    <crispr-info
-      matSuffix
-      *ngIf="config.info"
-      [info]="config.info">
-    </crispr-info>
-
-    <mat-hint *ngIf="config.hint && (control.valid || !control.touched)">{{config.hint}}</mat-hint>
+      [placeholder]="config().placeholder"
+      [formControlName]="config().controlName"
+      [min]="config().min"
+      [max]="config().max"
+      [maxlength]="config().maxLength"
+      [step]="config().step"
+      [autofocus]="config().autofocus"
+      [pattern]="config().pattern"
+      [spellcheck]="config().spellcheck"
+      [autocomplete]="config().autoComplete"
+      [autocapitalize]="config().autoCapitalize">
+    @if (config().fieldSuffix) {<span matSuffix>{{config().fieldSuffix}}</span>}
+    @if (config().info) {<crispr-info  matSuffix  [info]="config().info"></crispr-info>}
+    @if (config().hint && (control.valid || !control.touched)) {<mat-hint>{{config().hint}}</mat-hint>}
 
   </mat-form-field>
 

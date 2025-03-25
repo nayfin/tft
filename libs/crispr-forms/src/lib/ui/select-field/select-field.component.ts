@@ -20,14 +20,10 @@ import { InfoComponent } from '../info';
 import { FieldContainerComponent } from '../field-container';
 import {
   observablifyOptions,
-  CrisprFieldComponent,
-  crisprControlMixin,
   SelectFieldConfig,
   SelectOption,
 } from '../../utils';
-
-const SelectFieldMixin =
-  crisprControlMixin<SelectFieldConfig>(CrisprFieldComponent);
+import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
 
 @Component({
   selector: 'crispr-select-field',
@@ -48,7 +44,7 @@ const SelectFieldMixin =
   ],
 })
 export class SelectFieldComponent
-  extends SelectFieldMixin
+  extends CrisprControlComponent<SelectFieldConfig>
   implements OnInit, AfterViewInit
 {
   defaultConfig = {
@@ -64,14 +60,14 @@ export class SelectFieldComponent
     super.ngOnInit();
     // options$ can be passed as an array, promise that resolves array, or observable that resolves array
     // this functions accounts for all possibilities and converts to observable that resolves array
-    this.options$ = observablifyOptions(this.config.options, this.group);
+    this.options$ = observablifyOptions(this.config().options, this.group());
   }
 
   ngAfterViewInit() {
     if (
-      this.config.multiple &&
-      this.config.enableToggleAll &&
-      this.selectField.options?.length === (this.value as any[])?.length
+      this.config().multiple &&
+      this.config().enableToggleAll &&
+      this.selectField.options?.length === (this.value() as any[])?.length
     ) {
       this.allSelected = true;
     }

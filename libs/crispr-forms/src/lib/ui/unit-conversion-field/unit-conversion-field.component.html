@@ -1,55 +1,45 @@
 <crispr-field-container
-  [config]="config"
-  [group]="group">
+  [config]="config()"
+  [group]="group()">
   <mat-form-field
-    [style.width.%]="config.showUnitSelect ? 60 : 100"
+    [style.width.%]="config().showUnitSelect ? 60 : 100"
     class="number-field"
-    [color]="config.color"
-    [appearance]="config.appearance">
-    <mat-label *ngIf="config.label">
-      {{config.label}}
-    </mat-label>
+    [color]="config().color"
+    [appearance]="config().appearance">
+    @if (config().label) {<mat-label>{{config().label}}</mat-label>}
     <input
       type="number"
       matInput
       [formControl]="displayValueControl"
-      [placeholder]="config.placeholder"
-      [min]="config.min"
-      [max]="config.max"
-      [step]="config.step"
-      [autofocus]="config.autofocus">
-    <span *ngIf="config.fieldSuffix" matSuffix>{{config.fieldSuffix}}</span>
-    <crispr-info
-      matSuffix
-      *ngIf="config.info"
-      [info]="config.info">
-    </crispr-info>
+      [placeholder]="config().placeholder"
+      [min]="config().min"
+      [max]="config().max"
+      [step]="config().step"
+      [autofocus]="config().autofocus">
+    @if (config().fieldSuffix) {<span matSuffix>{{config().fieldSuffix}}</span>}
+    @if (config().info) {<crispr-info matSuffix [info]="config().info"></crispr-info>}
   </mat-form-field>
 
-  <mat-form-field
-    *ngIf="config.showUnitSelect"
-    [color]="config.color"
-    [appearance]="config.appearance"
-    [formGroup]="group"
-    class="unit-field">
-    <mat-label *ngIf="config.label">
-      {{config.label}}
-    </mat-label>
-    <mat-select
-      #selectField
-      [formControl]="unitSelectControl">
-
-      <mat-option
-        *ngFor="let option of unitOptions$ | async"
-        [value]="option.value">
-        <crispr-option [option]="option">
-        </crispr-option>
-      </mat-option>
-
-    </mat-select>
-
-    <mat-hint *ngIf="config.hint && (control.valid || !control.touched)">{{config.hint}}</mat-hint>
-
-  </mat-form-field>
+  @if (config().showUnitSelect) {
+    <mat-form-field
+      [color]="config().color"
+      [appearance]="config().appearance"
+      [formGroup]="group()"
+      class="unit-field">
+      @if (config().label) {<mat-label>{{config().label}}</mat-label>}
+      <mat-select
+        #selectField
+        [formControl]="unitSelectControl">
+        @for (option of unitOptions$ | async; track option) {
+          <mat-option
+            [value]="option.value">
+            <crispr-option [option]="option">
+            </crispr-option>
+          </mat-option>
+        }
+      </mat-select>
+      @if (config().hint && (control.valid || !control.touched)) {<mat-hint>{{config().hint}}</mat-hint>}
+    </mat-form-field>
+  }
 
 </crispr-field-container>
