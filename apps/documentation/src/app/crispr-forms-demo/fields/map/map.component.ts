@@ -51,7 +51,6 @@ export class MapComponent {
               return stations.map(station => {
                 const [lng, lat] = station.location.coordinates;
               
-                console.log({station})
                 const name = station.stations[0].name;
                 return {
                   title: name,

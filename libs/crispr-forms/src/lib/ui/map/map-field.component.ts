@@ -1,14 +1,18 @@
 import { Component, OnInit, Renderer2, SecurityContext, inject, signal, viewChild } from '@angular/core';
-import { ControlType, InputFieldConfig, MapFieldConfig, TftMapMarker } from '../../utils';
+import { AutocompleteFieldConfig, ControlType, MapFieldConfig, TftMapMarker } from '../../utils';
 import { GoogleMap, GoogleMapsModule, MapGeocoder, } from '@angular/google-maps';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { BehaviorSubject, debounceTime, map, merge, of, startWith, switchMap } from 'rxjs';
+import { BehaviorSubject, debounceTime, from, map, merge, of, startWith, switchMap, tap } from 'rxjs';
 import { AsyncPipe,  } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
-import { InputFieldComponent } from '../input-field/input-field.component';
 import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
-import { CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
+import { AutocompleteFieldComponent } from "../autocomplete-field/autocomplete-field.component";
+import { OverlayModule } from '@angular/cdk/overlay';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { FieldContainerComponent } from '../field-container';
+
 const defaultConfig: Partial<MapFieldConfig> = {
   debounceTime: 500,
 };
@@ -22,7 +26,16 @@ interface MapState {
 @Component({
   selector: 'crispr-map',
   standalone: true,
-  imports: [ GoogleMapsModule, ReactiveFormsModule, AsyncPipe, InputFieldComponent, CdkConnectedOverlay, CdkOverlayOrigin],
+  imports: [
+    GoogleMapsModule, 
+    ReactiveFormsModule, 
+    MatFormField,
+    MatSelect,
+    MatLabel,
+    AsyncPipe, 
+    AutocompleteFieldComponent, 
+    FieldContainerComponent,
+    OverlayModule],
   templateUrl: './map-field.component.html',
   styleUrl: './map-field.component.scss',
 })
@@ -42,13 +55,41 @@ export class MapFieldComponent
   locationGroup = new FormGroup({
     location: this.locationControl,
   });
+  
 
-  locationConfig: InputFieldConfig = {
-    controlType: ControlType.INPUT,
+  locationConfig: AutocompleteFieldConfig = {
+    controlType: ControlType.AUTOCOMPLETE,
     controlName: 'location',
-    inputType: 'text',
     label: 'Location',
     placeholder: 'Enter a location',
+
+    options: async (group, searchTerm) => {
+      // Add an initial request body.
+      if (searchTerm) {
+        console.log({searchTerm});
+        const request: google.maps.places.AutocompleteRequest= {
+          input: searchTerm,
+          // locationRestriction: { west: -122.44, north: 37.8, east: -122.39, south: 37.78 },
+          // origin: { lat: 37.7893, lng: -122.4039 },
+          includedPrimaryTypes: [
+            'postal_code', 
+            'administrative_area_level_2', 
+            'administrative_area_level_3'
+          ],
+          language: "en-US",
+          region: "us",
+          // sessionToken: token,
+        };
+        return await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions(request).then((response) => response.suggestions.map(suggestion => {
+          const option = {
+            value: suggestion,
+            label: suggestion.placePrediction.text.text
+          }
+          return option;
+        }))
+      }
+      return []
+    }
   }
 
   inputCenter = this.locationControl.valueChanges.pipe(
@@ -104,8 +145,6 @@ export class MapFieldComponent
 
   ngOnInit() {
     super.ngOnInit();
-    console.log('group', this.group());
-
   }
 
   onMarkerClick(marker: TftMapMarker) {
@@ -121,6 +160,16 @@ export class MapFieldComponent
     this.currentMap.next(map);
   }
 
+  async onSelectLocation(suggestion: google.maps.places.AutocompleteSuggestion) { 
+    const place = new google.maps.places.Place({id: suggestion.placePrediction.placeId })
+    const location = await place.fetchFields({fields: ['location']});
+    
+    console.log({location});
+  }
+
+  openMap() {
+    this.mapOpen.set(true);
+  }
   closeMap() {
     this.mapOpen.set(false);
   }

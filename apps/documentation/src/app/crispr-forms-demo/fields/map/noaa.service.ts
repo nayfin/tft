@@ -33,7 +33,7 @@ export class NoaaService {
     const url: URL = new URL(this.BASE_URL + this.BASE_PATH + this.STATIONS_PATH);
     return this.http.get<NoaaBboxStationResponse>(url.href, {params: urlParams}).pipe(
       map((data: NoaaBboxStationResponse): NoaaBboxStationResult[] => {
-        console.log('NOAA Station Meta Info: ', data.results);
+        // console.log('NOAA Station Meta Info: ', data.results);
         return data.results;
       }),
       catchError((err) => {
@@ -87,7 +87,7 @@ export class NoaaService {
    */
   getValidStationIds(gps: GCAreaCoordinates): Observable<NoaaBboxStationResult[]>  { // Observable<NoaaStationsResultInfo[]> {
     const dataTypes: string[] = [...Object.values(FrostDateRiskRefs)];
-    console.log('dataTypes', dataTypes);
+    // console.log('dataTypes', dataTypes);
     return this.getStationIds(gps, dataTypes).pipe(
       map((noaaLocationInfo: NoaaBboxStationResult[]) => {
         // const viableStationMeta: NoaaStationsResultInfo[] = noaaLocationInfo?.length ? noaaLocationInfo.reduce((stationResults: NoaaStationsResultInfo[], location: NoaaBboxStationResult) => {
