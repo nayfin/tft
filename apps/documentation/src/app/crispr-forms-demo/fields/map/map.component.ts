@@ -21,7 +21,6 @@ import { of } from 'rxjs';
 export class MapComponent {
   noaaService = inject(NoaaService);
   mapValue = {
-    mapField: '63366'
   }
   mapConfig: FormConfig = {
     fields: [
@@ -64,8 +63,8 @@ export class MapComponent {
             // })
           )
         },
-        markerClasses: ['weather-station-map-marker'],
-        markerTemplateBuilder: (marker) => {
+        // markerClasses: ['weather-station-map-marker'],
+        infoWindowTemplateBuilder: (marker) => {
           console.log({marker})
           return `<div>
           ${marker.title}

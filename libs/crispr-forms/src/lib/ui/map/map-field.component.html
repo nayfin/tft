@@ -1,53 +1,40 @@
-<crispr-field-container
-  [config]="config()"
-  [group]="group()">
+<crispr-field-container [config]="config()" [group]="group()">
 
-  <mat-form-field
-    [color]="config().color"
-    [appearance]="config().appearance"
-    [formGroup]="group()">
+  <mat-form-field [color]="config().color" [appearance]="config().appearance" [formGroup]="group()"
+    #trigger="cdkOverlayOrigin" (click)="openMap()" cdkOverlayOrigin>
     @if (config().label) {<mat-label>{{config().label}}</mat-label>}
-    <mat-select
-      #selectField
-      [formControlName]="config().controlName"
-      [placeholder]="config().placeholder"
-      cdkOverlayOrigin #trigger="cdkOverlayOrigin"
-      (click)="openMap()"/>
+    <mat-select [formControlName]="config().controlName" [placeholder]="config().placeholder">
+      @if(group()?.get(config().controlName)?.value) {
+      <mat-option [value]="group().get(config().controlName).value">
+        {{ group().get(config().controlName).value }}
+      </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 
-  </mat-form-field> 
-
-  <ng-template
-    cdkConnectedOverlay
-    (overlayOutsideClick)="closeMap()"
-    [cdkConnectedOverlayOrigin]="trigger"
-    [cdkConnectedOverlayOpen]="mapOpen()"
-    (detach)="closeMap()"
-    (backdropClick)="closeMap()"
-    >
-    <crispr-autocomplete-field 
-      class="search-field"
-      [config]="locationConfig"   
-      [group]="locationGroup"
-      (valueChanges)="onSelectLocation($event)"
-      >
+  <ng-template cdkConnectedOverlay (overlayOutsideClick)="closeMap()" [cdkConnectedOverlayOrigin]="trigger"
+    [cdkConnectedOverlayOpen]="mapOpen()" [cdkConnectedOverlayPositions]="overlayPositions"
+    [cdkConnectedOverlayWidth]="trigger.elementRef.nativeElement.offsetWidth"
+    [cdkConnectedOverlayMinWidth]="trigger.elementRef.nativeElement.offsetWidth" (detach)="closeMap()"
+    (backdropClick)="closeMap()">
+    <crispr-autocomplete-field class="search-field" [config]="locationConfig" [group]="locationGroup"
+      (valueChanges)="onSelectLocation($event)" aria-label="Search for a location">
     </crispr-autocomplete-field>
-    <google-map 
-      [center]="(inputCenter | async) || config().center" 
-      [zoom]="11"
-      [options]="config().options" 
-      (mapInitialized)="onMapInit($event)"
-      (idle)="onMove(map, group())"
-      #map>
+    <google-map [center]="(inputCenter | async) || config().center" [zoom]="11" [options]="config().options"
+      (mapInitialized)="onMapInit($event)" (idle)="onMove(map, group())" #map>
 
       @for (marker of currentMarkers() || []; track $index) {
-        <map-advanced-marker
-          #markerElem="mapAdvancedMarker"
-          [position]="marker.position"
-          [content]="marker.content"
-          [title]="marker.title"
-          (mapClick)="onMarkerClick(marker)"> 
-        </map-advanced-marker>
+      <map-marker #markerRef="mapMarker" [position]="marker.position" [title]="marker.title"
+        (mapClick)="onMarkerClick(markerRef)">
+      </map-marker>
+
       }
+      <map-info-window>
+
+        <button mat-button> Click</button>
+
+      </map-info-window>
+
     </google-map>
   </ng-template>
 </crispr-field-container>

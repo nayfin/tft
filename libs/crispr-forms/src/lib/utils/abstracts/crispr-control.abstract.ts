@@ -35,8 +35,8 @@ export class CrisprControlComponent<C extends CrisprControlConfig> extends Crisp
   constructor() {
     super();
     effect(() => {
-      const value = this.value();
-      this.setControlValue(value)
+      // const value = this.value();
+      this.setControlValue(this.value())
     })
   }
   
