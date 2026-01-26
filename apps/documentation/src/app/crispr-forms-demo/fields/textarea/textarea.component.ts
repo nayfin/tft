@@ -17,6 +17,11 @@ export class TextareaComponent {
         controlName: 'textInput',
         rows: 5
       },
+      {
+        controlType: ControlType.BUTTON,
+        buttonType: 'raised',
+        label: 'Submit'
+      }
     ]
   }
 
