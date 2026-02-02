@@ -49,12 +49,12 @@ export class MapComponent {
             map((stations) => {
               return stations.map(station => {
                 const [lng, lat] = station.location.coordinates;
-              
+
                 const name = station.stations[0].name;
                 return {
                   title: name,
                   position: {lat, lng },
-                  data: station,
+                  value: station,
                 }
               })
             }),
@@ -71,11 +71,6 @@ export class MapComponent {
           </div>`
         },
         onMove: (event, group) => console.log({event, group}),
-        onMarkerClick: (marker) => {
-          // const things: TftMapMarker
-          console.log({marker})
-          // this.noaaService.getFostDateProbabilities(marker.).subscribe((data) => {
-        }
         // validators: [Validators.required]
       },
       {

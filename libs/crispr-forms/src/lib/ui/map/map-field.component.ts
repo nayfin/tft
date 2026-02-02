@@ -74,12 +74,9 @@ export class MapFieldComponent
   domSanitizer = inject(DomSanitizer);
   
   infoWindow = viewChild(MapInfoWindow);
-  fieldState = computed<'initiallyEmpty' | 'selecting' | 'selected'>(() => {
-    if (this.mapOpen()) {
-      return 'selecting';
-    }
-    return this.value() ? 'selected' : 'initiallyEmpty';
-  });
+  selectedMarker = signal<TftMapMarker | null>(null);
+  private _preMapValue: any = null;
+  private _selectionMade = false;
 
   mapOpen = signal(false);
   mapComponent = viewChild(GoogleMap);
@@ -90,7 +87,6 @@ export class MapFieldComponent
     location: this.locationControl,
   });
   
-  location = toSignal<google.maps.places.AutocompleteSuggestion | null>(this.locationControl.valueChanges);
 
   locationConfig: AutocompleteFieldConfig = {  
     controlType: ControlType.AUTOCOMPLETE,
@@ -173,14 +169,6 @@ export class MapFieldComponent
     )
   );
 
-  constructor() {
-    super();
-    effect(() => {
-      console.log('config.location', this.config().location);
-      console.log('location', this.location());
-      // this.config().location && this.locationControl.setValue(this.config().location);
-    });
-  }
 
   onMapInit(event: GoogleMap) {
     // console.log('map event', {event})
@@ -191,14 +179,26 @@ export class MapFieldComponent
     super.ngOnInit();
   }
 
-  onMarkerClick(marker: MapMarker) {
-    const title = marker.getTitle();
-    if (title) {
-      this.control.setValue(title);
-      this.closeMap();
-    }
-    // this.infoWindow().open(marker)
-    this.config()?.onMarkerClick?.(marker);
+  onMarkerClick(clickedMarker: MapMarker) {
+    const clickedPosition = clickedMarker.getPosition();
+    if (!clickedPosition) return;
+    // A simple title match is less prone to float precision issues than position
+    const originalMarker = this.currentMarkers().find(m => m.title === clickedMarker.getTitle());
+
+    if (originalMarker) {
+      this.selectedMarker.set(originalMarker);
+      this.infoWindow().open(clickedMarker);
+    } 
+  }
+
+  selectMarker(marker: TftMapMarker) {
+    this._selectionMade = true;
+    console.log({marker})
+    // Set the control value to the marker's data object if it exists, otherwise fallback to the title
+    const valueToSet = marker.value || marker.title;
+    this.control.setValue(valueToSet);
+    this.closeMap();
+    this.infoWindow()?.close();
   }
 
   onBoundsChanged(bounds: google.maps.LatLngBounds) {
@@ -219,11 +219,27 @@ export class MapFieldComponent
   }
 
   openMap() {
+    // store previous value and clear control for clean selection
+    this._preMapValue = this.control.value;
+    this.control.setValue(null);
+    this._selectionMade = false;
     this.mapOpen.set(true);
   }
   closeMap() {
-    console.log('close click')
-    // this.mapOpen.set(false);
+    // if map is closed without a selection, restore previous value
+    if (!this._selectionMade && this._preMapValue) {
+      this.control.setValue(this._preMapValue);
+    }
+    this._preMapValue = null;
+    this.mapOpen.set(false);
+  }
+
+  getDisplay(value: any): string {
+    if (typeof value === 'object' && value !== null) {
+      // Attempt to find a sensible display property
+      return value.name || value.title || 'Selected Location';
+    }
+    return value;
   }
 }
 

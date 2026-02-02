@@ -4,11 +4,6 @@
     #trigger="cdkOverlayOrigin" (click)="openMap()" cdkOverlayOrigin>
     @if (config().label) {<mat-label>{{config().label}}</mat-label>}
     <mat-select [formControlName]="config().controlName" [placeholder]="config().placeholder">
-      @if(group()?.get(config().controlName)?.value) {
-      <mat-option [value]="group().get(config().controlName).value">
-        {{ group().get(config().controlName).value }}
-      </mat-option>
-      }
     </mat-select>
   </mat-form-field>
 
@@ -30,9 +25,12 @@
 
       }
       <map-info-window>
-
-        <button mat-button> Click</button>
-
+        @if(selectedMarker(); as marker) {
+        <div class="info-window-content">
+          <p>{{ marker.title }}</p>
+          <button mat-button (click)="selectMarker(marker)">Select</button>
+        </div>
+        }
       </map-info-window>
 
     </google-map>

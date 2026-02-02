@@ -7,7 +7,8 @@ export type MapFieldConfig<OMCT = unknown, OMT = unknown> = CrisprControlConfig 
   controlType: ControlType.MAP;
   label: string;
   center?: google.maps.LatLngLiteral;
-  location?: google.maps.places.AutocompleteSuggestion;
+  location?: string; // google.maps.places.AutocompleteSuggestion;
+
   options?: google.maps.MapOptions;
   debounceTime?: number;
   markers?: (map: GoogleMap, group: FormGroup) => Observable<TftMapMarker[]>;
@@ -16,8 +17,7 @@ export type MapFieldConfig<OMCT = unknown, OMT = unknown> = CrisprControlConfig 
 
   // markerClasses?: string[];
   onMove?: (map: GoogleMap, group: FormGroup) => OMT;
-  onMarkerClick?: (marker: TftMapMarker) => OMCT;
 }
 
-export type TftMapMarker<DT = unknown> = google.maps.marker.AdvancedMarkerElementOptions & { data?: DT };
+export type TftMapMarker<DT = unknown> = google.maps.marker.AdvancedMarkerElementOptions & { value: DT };
 export type TemplateBuilder<T> = (props: T) => string;
