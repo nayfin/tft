@@ -6,9 +6,9 @@ export default {
   globals: {},
   coverageDirectory: '../../coverage/libs/interact',
   snapshotSerializers: [
-    'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
-    'jest-preset-angular/build/AngularSnapshotSerializer.js',
-    'jest-preset-angular/build/HTMLCommentSerializer.js',
+    'jest-preset-angular/build/serializers/no-ng-attributes.js',
+    'jest-preset-angular/build/serializers/ng-snapshot.js',
+    'jest-preset-angular/build/serializers/html-comment.js',
   ],
   transform: {
     '^.+\\.(ts|js|html)$': [

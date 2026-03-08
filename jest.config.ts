@@ -1,8 +1,8 @@
-const { getJestProjects } = require('@nx/jest');
+const { getJestProjectsAsync } = require('@nx/jest');
 
-export default {
+module.exports = async () => ({
   projects: [
-    ...getJestProjects(),
+    ...(await getJestProjectsAsync()),
     '<rootDir>/apps/documentation',
     '<rootDir>/apps/api',
     '<rootDir>/libs/api-interfaces',
@@ -13,4 +13,4 @@ export default {
     '<rootDir>/libs/mat-instantsearch',
     '<rootDir>/libs/ui-imports',
   ],
-};
+});
