@@ -3,7 +3,7 @@ import { ControlType, CrisprControlConfig, FieldDescriptors, MatFieldProperties 
 import { GoogleMap } from "@angular/google-maps";
 import { Observable } from "rxjs";
 
-export type MapFieldConfig<OMCT = unknown, OMT = unknown> = CrisprControlConfig & MatFieldProperties & FieldDescriptors & {
+export type MapFieldConfig<OMT = unknown> = CrisprControlConfig & MatFieldProperties & FieldDescriptors & {
   controlType: ControlType.MAP;
   label: string;
   center?: google.maps.LatLngLiteral;
