@@ -62,7 +62,8 @@ const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
         MatChipsModule,
         MatIconModule,
         FormValidationHandlerModule,
-    ]
+    ],
+    standalone: true
 })
 export class AutocompleteChiplistFieldComponent
   extends AbstractAutocompleteComponent<AutocompleteChiplistFieldConfig>
@@ -74,7 +75,7 @@ export class AutocompleteChiplistFieldComponent
   selectedChip: SelectOption = null;
   controlValue$ = this.chips$.pipe(
     tap((chips) => {
-      this.control.setValue(chips.map((chip) => chip.value));
+      this.control().setValue(chips.map((chip) => chip.value));
     })
   );
 

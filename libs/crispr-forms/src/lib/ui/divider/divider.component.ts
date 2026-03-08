@@ -8,7 +8,8 @@ import { CrisprFieldComponent, DividerConfig } from '../../utils';
     selector: 'crispr-divider',
     templateUrl: './divider.component.html',
     styleUrls: ['./divider.component.scss'],
-    imports: [CommonModule, MatDividerModule]
+    imports: [CommonModule, MatDividerModule],
+    standalone: true
 })
 export class DividerComponent
   extends CrisprFieldComponent<DividerConfig>

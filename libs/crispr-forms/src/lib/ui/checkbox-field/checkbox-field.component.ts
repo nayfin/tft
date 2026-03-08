@@ -28,7 +28,8 @@ const defaultConfig: Partial<CheckboxFieldConfig> = {
         ReactiveFormsModule,
         FieldContainerComponent,
         FormValidationHandlerModule
-    ]
+    ],
+    standalone: true
 })
 export class CheckboxFieldComponent
   extends CrisprControlComponent<CheckboxFieldConfig>

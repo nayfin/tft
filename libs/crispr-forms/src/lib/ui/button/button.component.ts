@@ -22,7 +22,8 @@ import { CrisprFieldComponent, ButtonConfig, ControlValue } from '../../utils';
         MatTooltipModule,
         ReactiveFormsModule,
         FormValidationHandlerModule,
-    ]
+    ],
+    standalone: true
 })
 export class ButtonComponent
   extends CrisprFieldComponent<ButtonConfig>

@@ -40,7 +40,8 @@ import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abs
         FormValidationHandlerModule,
         FieldContainerComponent,
         MatFormFieldModule,
-    ]
+    ],
+    standalone: true
 })
 export class SelectFieldComponent
   extends CrisprControlComponent<SelectFieldConfig>

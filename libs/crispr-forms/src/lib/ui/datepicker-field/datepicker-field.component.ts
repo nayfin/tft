@@ -42,7 +42,8 @@ const defaultConfig: Partial<DatepickerFieldConfig> = {
         MatDateFnsModule,
         PortalModule,
         FormValidationHandlerModule,
-    ]
+    ],
+    standalone: true
 })
 export class DatepickerFieldComponent
   extends CrisprControlComponent<DatepickerFieldConfig>

@@ -24,7 +24,8 @@ import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abs
         MatInputModule,
         FormValidationHandlerModule,
         MatIconModule
-    ]
+    ],
+    standalone: true
 })
 export class InputFieldComponent extends CrisprControlComponent<InputFieldConfig> implements OnInit {
 

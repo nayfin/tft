@@ -27,7 +27,8 @@ const defaultConfig: Partial<SliderFieldConfig> = {
         FieldContainerComponent,
         ReactiveFormsModule,
         MatSliderModule
-    ]
+    ],
+    standalone: true
 })
 export class SliderFieldComponent extends CrisprControlComponent<SliderFieldConfig> implements OnInit {
   defaultConfig = defaultConfig;

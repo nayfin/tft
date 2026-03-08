@@ -21,7 +21,8 @@ import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abs
         FieldContainerComponent,
         MatRadioModule,
         FormValidationHandlerModule,
-    ]
+    ],
+    standalone: true
 })
 export class RadioFieldComponent extends CrisprControlComponent<RadioFieldConfig> implements OnInit {
   defaultConfig = {};

@@ -41,7 +41,8 @@ const defaultConfig: Partial<UnitConversionFieldConfig> = {};
         MatSelectModule,
         MatOptionModule,
         FormValidationHandlerModule,
-    ]
+    ],
+    standalone: true
 })
 export class UnitConversionFieldComponent
   extends CrisprControlComponent<UnitConversionFieldConfig>
@@ -87,7 +88,7 @@ export class UnitConversionFieldComponent
         displayValue,
         unitValue
       );
-      this.control.setValue(computedValue);
+      this.control().setValue(computedValue);
     });
   }
 

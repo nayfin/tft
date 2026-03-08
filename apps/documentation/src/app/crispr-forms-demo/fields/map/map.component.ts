@@ -47,13 +47,19 @@ export class MapComponent {
           return this.noaaService.getValidStationIds(coords).pipe(
             map((stations) => {
               return stations.map(station => {
-                const [lng, lat] = station.location.coordinates;
+                const {location } = station;
+                const [lng, lat] = location.coordinates;
 
-                const name = station.stations[0].name;
+                const {name, id} = station.stations[0];
+                const mappedStation = {
+                  name,
+                  id,
+                  location
+                }
                 return {
                   title: name,
                   position: {lat, lng },
-                  value: station,
+                  value: mappedStation,
                 }
               })
             }),
@@ -69,6 +75,7 @@ export class MapComponent {
           ${marker.title}
           </div>`
         },
+        valueDisplayKey: 'name',
         onMove: (event, group) => console.log({event, group}),
         // validators: [Validators.required]
       },

@@ -1,28 +1,22 @@
-import { ChangeDetectionStrategy, Component, OnInit, Renderer2, inject, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Renderer2, computed, inject, signal, viewChild } from '@angular/core';
 import { AutocompleteFieldConfig, ControlType, MapFieldConfig, TftMapMarker } from '../../utils';
 import { GoogleMap, MapInfoWindow, MapMarker, MapGeocoder, } from '@angular/google-maps';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject, debounceTime, filter, map, merge, of, startWith, switchMap } from 'rxjs';
 import { AsyncPipe,  } from '@angular/common';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
 import { AutocompleteFieldComponent } from "../autocomplete-field/autocomplete-field.component";
 import { ConnectionPositionPair, OverlayModule } from '@angular/cdk/overlay';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatSelect, MatSelectTrigger } from '@angular/material/select';
 import { FieldContainerComponent } from '../field-container';
 import { MatButton } from '@angular/material/button';
+import { MatInput } from '@angular/material/input';
 
 const defaultConfig: Partial<MapFieldConfig> = {
   debounceTime: 500,
 };
-
-interface MapState {  
-  center: google.maps.LatLngLiteral;
-  bounds: google.maps.LatLngBounds;
-  zoom: number;
-}
 
 @Component({
     selector: 'crispr-map',
@@ -32,8 +26,7 @@ interface MapState {
         MapMarker,
         ReactiveFormsModule,
         MatFormField,
-        MatSelect,
-        MatSelectTrigger,
+        MatInput,
         MatLabel,
         AsyncPipe,
         AutocompleteFieldComponent,
@@ -43,7 +36,8 @@ interface MapState {
     ],
     templateUrl: './map-field.component.html',
     styleUrl: './map-field.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true
 })
 export class MapFieldComponent
   extends CrisprControlComponent<MapFieldConfig>
@@ -75,8 +69,6 @@ export class MapFieldComponent
   
   infoWindow = viewChild(MapInfoWindow);
   selectedMarker = signal<TftMapMarker | null>(null);
-  private _preMapValue: any = null;
-  private _selectionMade = false;
 
   mapOpen = signal(false);
   mapComponent = viewChild(GoogleMap);
@@ -97,7 +89,6 @@ export class MapFieldComponent
       // Add an initial request body.
       if (searchTerm) {
         return new Promise((resolve) => {
-          console.log({searchTerm})
           const request: google.maps.places.AutocompleteRequest = {
             input: searchTerm,
             // locationRestriction: { west: -122.44, north: 37.8, east: -122.39, south: 37.78 },
@@ -138,10 +129,9 @@ export class MapFieldComponent
       return this.geoCoder.geocode(request);
     }),
     map((res) => {
-      const { geometry, postcode_localities, address_components } = res.results?.[0] || {};
-      const { location, bounds } = geometry || {};
+      const { geometry } = res.results?.[0] || {};
+      const { location }= geometry || {};
       const center = location?.toJSON();
-      console.log({ center, bounds, postcode_localities, address_components });
       return center;
     }),
     startWith(this.config()?.center || undefined)
@@ -150,31 +140,30 @@ export class MapFieldComponent
   center = merge
 
   currentMap = new BehaviorSubject<GoogleMap | null>(null);
-  displayValue = toSignal(this.control.valueChanges.pipe(map(value => this.displayValue(value))))
+
+  displayValue = toSignal(
+    toObservable(this.control).pipe(
+      switchMap(control => control
+        ? control.valueChanges.pipe(startWith(control.value))
+        : of('')
+      ),
+      map(value => this.getDisplay(value))
+    )
+  )  
+  
   currentMarkers = toSignal<TftMapMarker[]>(
     this.currentMap.pipe( 
       debounceTime(500),
       switchMap((map) => {
         return this.config()?.markers?.(map, this.group()) || of([]);
-      }),
-      // map((markers: TftMapMarker[]) => {  
-      //   // return !this.config().markerTemplateBuilder ? markers 
-      //   //   : markers.map((marker) => { 
-      //   //     const content: HTMLElement = this.renderer.createElement('div');
-      //   //     this.renderer.setProperty(content, 'innerHTML', this.domSanitizer.sanitize(SecurityContext.HTML, this.config().markerTemplateBuilder(marker)));
-      //   //     this.config().markerClasses.forEach((className) => this.renderer.addClass(content, className));
-      //   //     return { ...marker, content };
-      //   // })
-      // })
+      })
     )
   );
 
 
   onMapInit(event: GoogleMap) {
-    // console.log('map event', {event})
     this.currentMap.next(event);
   }
-
   ngOnInit() {
     super.ngOnInit();
   }
@@ -192,11 +181,8 @@ export class MapFieldComponent
   }
 
   selectMarker(marker: TftMapMarker) {
-    this._selectionMade = true;
-    console.log({marker})
-    // Set the control value to the marker's data object if it exists, otherwise fallback to the title
     const valueToSet = marker.value || marker.title;
-    this.control.setValue(valueToSet);
+    this.control().setValue(valueToSet);
     this.closeMap();
     this.infoWindow()?.close();
   }
@@ -219,18 +205,10 @@ export class MapFieldComponent
   }
 
   openMap() {
-    // store previous value and clear control for clean selection
-    this._preMapValue = this.control.value;
-    this.control.setValue(null);
-    this._selectionMade = false;
     this.mapOpen.set(true);
   }
+
   closeMap() {
-    // if map is closed without a selection, restore previous value
-    if (!this._selectionMade && this._preMapValue) {
-      this.control.setValue(this._preMapValue);
-    }
-    this._preMapValue = null;
     this.mapOpen.set(false);
   }
 
@@ -239,6 +217,7 @@ export class MapFieldComponent
       return value;
     }
     const displayKey = this.config()?.valueDisplayKey;
+    console.log({value, displayKey, displayValue: value[displayKey]})
     if (displayKey && value[displayKey]) {
       return value[displayKey];
     }

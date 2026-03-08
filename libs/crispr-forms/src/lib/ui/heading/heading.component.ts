@@ -13,7 +13,8 @@ const defaultConfig: Partial<HeadingConfig> = {
     templateUrl: './heading.component.html',
     styleUrls: ['./heading.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [CommonModule, MatFormFieldModule, InfoComponent]
+    imports: [CommonModule, MatFormFieldModule, InfoComponent],
+    standalone: true
 })
 export class HeadingComponent extends CrisprFieldComponent<HeadingConfig> {
   defaultConfig = defaultConfig;

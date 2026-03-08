@@ -26,7 +26,8 @@ const defaultConfig: Partial<TextareaFieldConfig> = { rows: 5 };
         MatFormFieldModule,
         MatInputModule,
         FormValidationHandlerModule
-    ]
+    ],
+    standalone: true
 })
 export class TextareaFieldComponent
   extends CrisprControlComponent<TextareaFieldConfig>
