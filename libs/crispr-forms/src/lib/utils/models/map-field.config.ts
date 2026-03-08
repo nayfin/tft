@@ -14,7 +14,7 @@ export type MapFieldConfig<OMCT = unknown, OMT = unknown> = CrisprControlConfig 
   markers?: (map: GoogleMap, group: FormGroup) => Observable<TftMapMarker[]>;
   // markerTemplateBuilder?: TemplateBuilder<TftMapMarker>;
   infoWindowTemplateBuilder?: TemplateBuilder<TftMapMarker>;
-
+  valueDisplayKey?: string;
   // markerClasses?: string[];
   onMove?: (map: GoogleMap, group: FormGroup) => OMT;
 }

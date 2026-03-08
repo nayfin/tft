@@ -4,6 +4,7 @@
     #trigger="cdkOverlayOrigin" (click)="openMap()" cdkOverlayOrigin>
     @if (config().label) {<mat-label>{{config().label}}</mat-label>}
     <mat-select [formControlName]="config().controlName" [placeholder]="config().placeholder">
+      <mat-select-trigger>{{ displayValue() }}</mat-select-trigger>
     </mat-select>
   </mat-form-field>
 

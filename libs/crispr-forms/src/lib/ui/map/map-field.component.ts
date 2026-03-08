@@ -1,6 +1,6 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, OnInit, Renderer2, SecurityContext, computed, effect, inject, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Renderer2, inject, signal, viewChild } from '@angular/core';
 import { AutocompleteFieldConfig, ControlType, MapFieldConfig, TftMapMarker } from '../../utils';
-import { GoogleMap, MapInfoWindow, MapMarker, MapGeocoder, MapAnchorPoint, } from '@angular/google-maps';
+import { GoogleMap, MapInfoWindow, MapMarker, MapGeocoder, } from '@angular/google-maps';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject, debounceTime, filter, map, merge, of, startWith, switchMap } from 'rxjs';
 import { AsyncPipe,  } from '@angular/common';
@@ -10,7 +10,7 @@ import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abs
 import { AutocompleteFieldComponent } from "../autocomplete-field/autocomplete-field.component";
 import { ConnectionPositionPair, OverlayModule } from '@angular/cdk/overlay';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatOption, MatSelect } from '@angular/material/select';
+import { MatSelect, MatSelectTrigger } from '@angular/material/select';
 import { FieldContainerComponent } from '../field-container';
 import { MatButton } from '@angular/material/button';
 
@@ -34,7 +34,7 @@ interface MapState {
     ReactiveFormsModule, 
     MatFormField,
     MatSelect,
-    MatOption,
+    MatSelectTrigger,
     MatLabel,
     AsyncPipe, 
     AutocompleteFieldComponent, 
@@ -150,7 +150,7 @@ export class MapFieldComponent
   center = merge
 
   currentMap = new BehaviorSubject<GoogleMap | null>(null);
-
+  displayValue = toSignal(this.control.valueChanges.pipe(map(value => this.displayValue(value))))
   currentMarkers = toSignal<TftMapMarker[]>(
     this.currentMap.pipe( 
       debounceTime(500),
@@ -235,11 +235,15 @@ export class MapFieldComponent
   }
 
   getDisplay(value: any): string {
-    if (typeof value === 'object' && value !== null) {
-      // Attempt to find a sensible display property
-      return value.name || value.title || 'Selected Location';
+    if (typeof value !== 'object' || value === null) {
+      return value;
     }
-    return value;
+    const displayKey = this.config()?.valueDisplayKey;
+    if (displayKey && value[displayKey]) {
+      return value[displayKey];
+    }
+    // Attempt to find a sensible display property
+    return value.name || value.title || 'Selected Location';
   }
 }
 
