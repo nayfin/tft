@@ -33,23 +33,23 @@ import { SelectedFileComponent } from '../selected-file';
 import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
 
 @Component({
-  selector: 'crispr-file-upload-field',
-  templateUrl: './file-upload-field.component.html',
-  styleUrls: ['./file-upload-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    CommonModule,
-    FieldContainerComponent,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    SelectedFileComponent,
-    FormValidationHandlerModule,
-    FileDropzoneDirective,
-  ],
+    selector: 'crispr-file-upload-field',
+    templateUrl: './file-upload-field.component.html',
+    styleUrls: ['./file-upload-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        CommonModule,
+        FieldContainerComponent,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        SelectedFileComponent,
+        FormValidationHandlerModule,
+        FileDropzoneDirective,
+    ],
+    standalone: true
 })
 export class FileUploadFieldComponent
   extends CrisprControlComponent<FileUploadFieldConfig>
@@ -101,7 +101,7 @@ export class FileUploadFieldComponent
   filesChanged(files: FileList): void {
     if (files && files.length > 0) {
       this.selectedFiles.set(files);
-      this.control.patchValue(files);
+      this.control().patchValue(files);
     }
   }
 
@@ -114,7 +114,7 @@ export class FileUploadFieldComponent
 
   resetFileInput(): void {
     this.fileInputRef.nativeElement.value = '';
-    this.control.patchValue(null);
+    this.control().patchValue(null);
     this.isUploaded = false;
   }
 

@@ -1,5 +1,5 @@
-import { Directive, OnInit, OnDestroy, ElementRef, Input, Optional, SkipSelf, Output, EventEmitter, OnChanges, SimpleChanges, Renderer2, Inject} from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Directive, OnInit, OnDestroy, ElementRef, Input, Optional, SkipSelf, Output, EventEmitter, OnChanges, SimpleChanges, Renderer2, Inject, DOCUMENT } from '@angular/core';
+
 import interact from 'interactjs';
 import { InteractService } from '../services/interact.service';
 import { ResizableOptions, ResizeEvent, Interactable } from '@interactjs/types/index';
@@ -19,19 +19,19 @@ interface ActiveEdges {
 }
 /** @dynamic */
 @Directive({
-  selector: '[tftResizable]',
-  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
-  host: {
-    // prevents touch events from colliding with with mouse events
-    // on touch screen
-    '[style.touchAction]': 'this.resizeDisabled ? "auto" : "none"',
-    // default to absolute here to accommodate likely use cases
-    // consuming component can easily over ride with position input
-    '[style.position]': 'position',
-    // follows interactjs suggested practices
-    '[style.boxSizing]': '"border-box"',
-
-  }
+    selector: '[tftResizable]',
+    // eslint-disable-next-line @angular-eslint/no-host-metadata-property
+    host: {
+        // prevents touch events from colliding with with mouse events
+        // on touch screen
+        '[style.touchAction]': 'this.resizeDisabled ? "auto" : "none"',
+        // default to absolute here to accommodate likely use cases
+        // consuming component can easily over ride with position input
+        '[style.position]': 'position',
+        // follows interactjs suggested practices
+        '[style.boxSizing]': '"border-box"',
+    },
+    standalone: false
 })
 export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
 

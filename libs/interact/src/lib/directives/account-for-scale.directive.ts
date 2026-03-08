@@ -7,7 +7,8 @@ import { Directive, ElementRef, HostBinding, Input, OnChanges, SimpleChanges } f
  * element accounts for scale
  */
 @Directive({
-  selector: '[tftAccountForScale]'
+    selector: '[tftAccountForScale]',
+    standalone: false
 })
 export class AccountForScaleDirective {
   // this setup allows consumers to set x, y scale independently or just set them both with scale

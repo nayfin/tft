@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'tft-scoreboard',
-  templateUrl: './scoreboard.component.html',
-  styleUrls: ['./scoreboard.component.scss']
+    selector: 'tft-scoreboard',
+    templateUrl: './scoreboard.component.html',
+    styleUrls: ['./scoreboard.component.scss'],
+    standalone: false
 })
 export class ScoreboardComponent implements OnInit {
   @Input() redScore: number;

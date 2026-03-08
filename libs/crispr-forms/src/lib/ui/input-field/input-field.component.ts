@@ -12,20 +12,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
 
 @Component({
-  selector: 'crispr-input-field',
-  templateUrl: './input-field.component.html',
-  styleUrls: ['./input-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    InfoComponent,
-    ReactiveFormsModule,
-    FieldContainerComponent,
-    MatFormFieldModule,
-    MatInputModule,
-    FormValidationHandlerModule,
-    MatIconModule
-  ],
+    selector: 'crispr-input-field',
+    templateUrl: './input-field.component.html',
+    styleUrls: ['./input-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        InfoComponent,
+        ReactiveFormsModule,
+        FieldContainerComponent,
+        MatFormFieldModule,
+        MatInputModule,
+        FormValidationHandlerModule,
+        MatIconModule
+    ],
+    standalone: true
 })
 export class InputFieldComponent extends CrisprControlComponent<InputFieldConfig> implements OnInit {
 

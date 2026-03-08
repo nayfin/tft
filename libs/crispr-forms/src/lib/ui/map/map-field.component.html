@@ -1,34 +1,38 @@
+<crispr-field-container [config]="config()" [group]="group()">
 
-<crispr-input-field 
-  [config]="locationConfig"   
-  (valueChange)="mapOpen.set(true)"
-  [group]="locationGroup"
-  cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+  <mat-form-field [color]="config().color" [appearance]="config().appearance" [formGroup]="group()"
+    #trigger="cdkOverlayOrigin" (click)="openMap()" cdkOverlayOrigin>
+    @if (config().label) {<mat-label>{{config().label}}</mat-label>}
+    <input matInput [formControlName]="config().controlName" style="display:none">
+    <input matInput readonly [value]="displayValue() || ''" [placeholder]="config().placeholder">
+  </mat-form-field>
 
-</crispr-input-field>
-<google-map 
-  [center]="(inputCenter | async) || config().center" 
-  [zoom]="11"
-  [options]="config().options" 
-  (mapInitialized)="onMapInit($event)"
-  (idle)="onMove(map, group())"
-  #map>
+  <ng-template cdkConnectedOverlay (overlayOutsideClick)="closeMap()" [cdkConnectedOverlayOrigin]="trigger"
+    [cdkConnectedOverlayOpen]="mapOpen()" [cdkConnectedOverlayPositions]="overlayPositions"
+    [cdkConnectedOverlayWidth]="trigger.elementRef.nativeElement.offsetWidth"
+    [cdkConnectedOverlayMinWidth]="trigger.elementRef.nativeElement.offsetWidth" (detach)="closeMap()"
+    (backdropClick)="closeMap()">
+    <crispr-autocomplete-field class="search-field" [config]="locationConfig" [group]="locationGroup"
+      (valueChanges)="onSelectLocation($event)" aria-label="Search for a location">
+    </crispr-autocomplete-field>
+    <google-map [center]="(inputCenter | async) || config().center" [zoom]="11" [options]="config().options"
+      (mapInitialized)="onMapInit($event)" (idle)="onMove(map, group())" #map>
 
-  @for (marker of currentMarkers() || []; track $index) {
-    <map-advanced-marker
-      #markerElem="mapAdvancedMarker"
-      [position]="marker.position"
-      [content]="marker.content"
-      [title]="marker.title"
-      (mapClick)="onMarkerClick(marker)"> 
-    </map-advanced-marker>
-  }
-</google-map>
-<!-- <ng-template
-  cdkConnectedOverlay
-  [cdkConnectedOverlayOrigin]="trigger"
-  [cdkConnectedOverlayOpen]="mapOpen()"
-  (detach)="closeMap()"
-  >
+      @for (marker of currentMarkers() || []; track $index) {
+      <map-marker #markerRef="mapMarker" [position]="marker.position" [title]="marker.title"
+        (mapClick)="onMarkerClick(markerRef)">
+      </map-marker>
 
-</ng-template> -->
+      }
+      <map-info-window>
+        @if(selectedMarker(); as marker) {
+        <div class="info-window-content">
+          <p>{{ marker.title }}</p>
+          <button mat-button (click)="selectMarker(marker)">Select</button>
+        </div>
+        }
+      </map-info-window>
+
+    </google-map>
+  </ng-template>
+</crispr-field-container>

@@ -1,77 +1,52 @@
-<crispr-field-container
-  [config]="config()"
-  [group]="group()">
+<crispr-field-container [config]="config()" [group]="group()">
 
-  <mat-form-field
-    [color]="config().color"
-    [appearance]="config().appearance"
-    [formGroup]="group()">
+  <mat-form-field [color]="config().color" [appearance]="config().appearance" [formGroup]="group()">
     @if (config().label) {<mat-label>{{config().label}}</mat-label>}
 
-    <mat-chip-grid
-      #chipList>
+    <mat-chip-grid #chipList>
       <!-- [selectable]="config().chipsSelectable" -->
       @for (chip of controlValue$ | async; track chip; let i = $index) {
-        <mat-chip-row
-          class="refinement-chip"
-          [removable]="config().areChipsRemovable"
-          [highlighted]="chip?.value === selectedChip?.value"
-          (click)="highlightChip(chip)"
-          (removed)="removeChip(chip)">
-          @if (chip.imageUrl) {<img [src]="chip.imageUrl" matChipAvatar alt="image of {{chip.label}}">}
-            {{chip.label}}
-            @if (config().areChipsRemovable) {<mat-icon matChipRemove>cancel</mat-icon>}
-          </mat-chip-row>
-        }
-        <input class="hidden-error-directive-anchor" (blur)="blurField()"
-          [formControlName]="config().controlName" type="text"/>
+      <mat-chip-row class="refinement-chip" [removable]="config().areChipsRemovable"
+        [highlighted]="chip?.value === selectedChip?.value" (click)="highlightChip(chip)" (removed)="removeChip(chip)">
+        @if (chip.imageUrl) {<img [src]="chip.imageUrl" matChipAvatar alt="image of {{chip.label}}">}
+        {{chip.label}}
+        @if (config().areChipsRemovable) {<mat-icon matChipRemove>cancel</mat-icon>}
+      </mat-chip-row>
+      }
+      <input class="hidden-error-directive-anchor" (blur)="blurField()" [formControlName]="config().controlName"
+        type="text" />
 
-        <input
-          matInput
-          [formControl]="autocompleteInputControl"
-          [placeholder]="config().placeholder"
-          [matChipInputFor]="chipList"
-          [matAutocomplete]="auto"
-          (keydown.tab)="handleTab($event)"
-          [matChipInputSeparatorKeyCodes]="config().separatorKeyCodes"
-          (matChipInputTokenEnd)="handleTokenEnd($event)"
-          role="searchbox"
-          type="text"
-          autocapitalize="off"
-          autocorrect="off"
-          spellcheck="false"
-          (blur)="blurField()"
-          #autoInput/>
-        @if (config().fieldSuffix) {<span matSuffix>{{config().fieldSuffix}}</span>}
-        @if (config().info) {<crispr-info matSuffix [info]="config().info "></crispr-info>}
+      <input matInput [formControl]="autocompleteInputControl" [placeholder]="config().placeholder"
+        [matChipInputFor]="chipList" [matAutocomplete]="auto" (keydown.tab)="handleTab($event)"
+        [matChipInputSeparatorKeyCodes]="config().separatorKeyCodes" (matChipInputTokenEnd)="handleTokenEnd($event)"
+        role="searchbox" type="text" autocapitalize="off" autocorrect="off" spellcheck="false" (blur)="blurField()"
+        #autoInput />
+      @if (config().fieldSuffix) {<span matSuffix>{{config().fieldSuffix}}</span>}
+      @if (config().info) {<crispr-info matSuffix [info]="config().info "></crispr-info>}
 
-      </mat-chip-grid>
-      <mat-autocomplete
-        #auto="matAutocomplete"
-        [autoActiveFirstOption]="this.config().autoActiveFirstOption"
-        (optionSelected)="handleSelect($event)"
-        [displayWith]="mapToLabel">
-        @if (remainingOptions$ | async; as remainingOptions) {
-          @if (remainingOptions.length > 0) {
-            @for (option of remainingOptions$ | async; track option) {
-              <mat-option
-                [value]="option">
-                <crispr-option [option]="option"></crispr-option>
-              </mat-option>
-            }
-          } @else {
-            <mat-option disabled="true">
-              {{config().emptyOptionsMessage}}
-            </mat-option>
-          }
-        } @else {
-          <mat-option disabled="true">
-            {{config().emptyOptionsMessage}}
-          </mat-option>
-        }
-      </mat-autocomplete>
+    </mat-chip-grid>
+    <mat-autocomplete #auto="matAutocomplete" [autoActiveFirstOption]="this.config().autoActiveFirstOption"
+      (optionSelected)="handleSelect($event)" [displayWith]="mapToLabel">
+      @if (remainingOptions$ | async; as remainingOptions) {
+      @if (remainingOptions.length > 0) {
+      @for (option of remainingOptions$ | async; track option) {
+      <mat-option [value]="option">
+        <crispr-option [option]="option"></crispr-option>
+      </mat-option>
+      }
+      } @else {
+      <mat-option disabled="true">
+        {{config().emptyOptionsMessage}}
+      </mat-option>
+      }
+      } @else {
+      <mat-option disabled="true">
+        {{config().emptyOptionsMessage}}
+      </mat-option>
+      }
+    </mat-autocomplete>
 
-      @if (config().hint && (control.valid || !control.touched)) {<mat-hint>{{config().hint}}</mat-hint>}
+    @if (config().hint && (control().valid || !control().touched)) {<mat-hint>{{config().hint}}</mat-hint>}
 
-    </mat-form-field>
-  </crispr-field-container>
+  </mat-form-field>
+</crispr-field-container>

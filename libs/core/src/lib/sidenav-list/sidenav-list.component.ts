@@ -2,9 +2,10 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { SidenavSection, SidenavLink } from './sidenav-list.model';
 
 @Component({
-  selector: 'tft-sidenav-list',
-  templateUrl: './sidenav-list.component.html',
-  styleUrls: ['./sidenav-list.component.scss']
+    selector: 'tft-sidenav-list',
+    templateUrl: './sidenav-list.component.html',
+    styleUrls: ['./sidenav-list.component.scss'],
+    standalone: false
 })
 export class SidenavListComponent {
 

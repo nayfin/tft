@@ -28,22 +28,22 @@ const defaultConfig: Partial<DatepickerFieldConfig> = {
 };
 
 @Component({
-  selector: 'crispr-datepicker-field',
-  templateUrl: './datepicker-field.component.html',
-  styleUrls: ['./datepicker-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    CommonModule,
-    FieldContainerComponent,
-    MatDatepickerModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatDateFnsModule,
-    PortalModule,
-    FormValidationHandlerModule,
-  ],
+    selector: 'crispr-datepicker-field',
+    templateUrl: './datepicker-field.component.html',
+    styleUrls: ['./datepicker-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        CommonModule,
+        FieldContainerComponent,
+        MatDatepickerModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatDateFnsModule,
+        PortalModule,
+        FormValidationHandlerModule,
+    ],
+    standalone: true
 })
 export class DatepickerFieldComponent
   extends CrisprControlComponent<DatepickerFieldConfig>

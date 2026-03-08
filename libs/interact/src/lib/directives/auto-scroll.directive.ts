@@ -10,7 +10,8 @@ interface ScrollObject {scrollTop: number, scrollLeft: number};
  * element accounts for scale
  */
 @Directive({
-  selector: '[tftAutoScroll]'
+    selector: '[tftAutoScroll]',
+    standalone: false
 })
 export class AutoScrollDirective {
   /**

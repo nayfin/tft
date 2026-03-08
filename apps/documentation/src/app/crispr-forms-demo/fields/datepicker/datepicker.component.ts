@@ -4,9 +4,10 @@ import { map } from 'rxjs/operators';
 import { getDayOfYear } from 'date-fns';
 
 @Component({
-  selector: 'doc-datepicker',
-  templateUrl: './datepicker.component.html',
-  styleUrls: ['./datepicker.component.scss']
+    selector: 'doc-datepicker',
+    templateUrl: './datepicker.component.html',
+    styleUrls: ['./datepicker.component.scss'],
+    standalone: false
 })
 export class DatepickerComponent {
 
@@ -104,10 +105,11 @@ export class DatepickerComponent {
 }
 
 @Component({
-  selector: 'doc-datepicker-custom-footer',
-  template: `
+    selector: 'doc-datepicker-custom-footer',
+    template: `
     <button mat-raised-button matDatepickerCancel>CANCEL</button>
     <button mat-raised-button matDatepickerApply>SELECT</button>
-  `
+  `,
+    standalone: false
 })
 export class CustomDatepickerFooterComponent { }

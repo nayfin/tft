@@ -11,17 +11,16 @@ import { AlgoliaAttributionComponent } from '../algolia-attribution/algolia-attr
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'mis-autocomplete',
-  templateUrl: './autocomplete.component.html',
-  styleUrls: ['./autocomplete.component.scss'],
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatAutocompleteModule,
-    MatIconModule,
-    AlgoliaAttributionComponent,
-    ReactiveFormsModule
-  ]
+    selector: 'mis-autocomplete',
+    templateUrl: './autocomplete.component.html',
+    styleUrls: ['./autocomplete.component.scss'],
+    imports: [
+        MatFormFieldModule,
+        MatAutocompleteModule,
+        MatIconModule,
+        AlgoliaAttributionComponent,
+        ReactiveFormsModule
+    ]
 })
 export class MisAutocompleteComponent extends BaseWidget implements OnInit {
 

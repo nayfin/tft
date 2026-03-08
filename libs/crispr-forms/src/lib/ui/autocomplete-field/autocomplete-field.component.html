@@ -52,7 +52,7 @@
       }
     </mat-autocomplete>
 
-    @if (config().hint && (control.valid || !control.touched)) {<mat-hint>{{config().hint}}</mat-hint>}
+    @if (config().hint && (control().valid || !control().touched)) {<mat-hint>{{config().hint}}</mat-hint>}
 
   </mat-form-field>
 </crispr-field-container>

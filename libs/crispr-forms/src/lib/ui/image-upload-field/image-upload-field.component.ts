@@ -34,23 +34,23 @@ import {
 import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
 
 @Component({
-  selector: 'crispr-image-upload-field',
-  templateUrl: './image-upload-field.component.html',
-  styleUrls: ['./image-upload-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    CommonModule,
-    FieldContainerComponent,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    SelectedFileComponent,
-    FileDropzoneDirective,
-    FormValidationHandlerModule,
-  ],
+    selector: 'crispr-image-upload-field',
+    templateUrl: './image-upload-field.component.html',
+    styleUrls: ['./image-upload-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        CommonModule,
+        FieldContainerComponent,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        SelectedFileComponent,
+        FileDropzoneDirective,
+        FormValidationHandlerModule,
+    ],
+    standalone: true
 })
 export class ImageUploadFieldComponent
   extends CrisprControlComponent<ImageUploadFieldConfig>
@@ -126,10 +126,10 @@ export class ImageUploadFieldComponent
       // only set the value if there is a file because resetToInitialValue sets the control value
       // to initial value and clears the compressed image, so setting it to null here would undo that
       if (file) {
-        this.control.setValue(file);
+        this.control().setValue(file);
       }
       if (file || this.value) {
-        this.control.markAsTouched();
+        this.control().markAsTouched();
         setTimeout(() => {
           this.cdr.detectChanges();
         }, 100);
@@ -180,7 +180,7 @@ export class ImageUploadFieldComponent
     super.ngOnInit();
     this.imageSrcUrl$ = combineLatest([
       this.compressedImageUrlString$.pipe(startWith(null)),
-      this.control.valueChanges.pipe(
+      this.control().valueChanges.pipe(
         startWith(this.value),
         map((controlValue): string => {
           if (!controlValue) return null;
@@ -206,9 +206,9 @@ export class ImageUploadFieldComponent
       const imageFile = files[0];
       // We clear the control here so that it is invalid while compressing
       // the input pipeline will take care of resetting it
-      this.control.patchValue(null);
-      // this.control.setErrors({compressing: {loadingMessage: 'Please wait while file compresses'}});
-      this.control.markAsTouched();
+      this.control().patchValue(null);
+      // this.control().setErrors({compressing: {loadingMessage: 'Please wait while file compresses'}});
+      this.control().markAsTouched();
       this.inputImageFileSubject.next(imageFile);
     }
   }
@@ -216,14 +216,14 @@ export class ImageUploadFieldComponent
   clearFileInput(): void {
     this.inputImageFileSubject.next(null);
     this.fileInputRef.nativeElement.value = '';
-    this.control.patchValue(null);
-    this.control.markAsTouched();
+    this.control().patchValue(null);
+    this.control().markAsTouched();
     this.isUploaded = false;
   }
 
   resetToInitialValue(initialValue: string): void {
     this.inputImageFileSubject.next(null);
-    this.control.patchValue(initialValue);
+    this.control().patchValue(initialValue);
     this.isUploaded = false;
   }
 

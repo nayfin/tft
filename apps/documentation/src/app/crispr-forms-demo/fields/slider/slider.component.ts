@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormConfig, ControlType } from '@tft/crispr-forms';
 
 @Component({
-  selector: 'doc-slider',
-  templateUrl: './slider.component.html',
-  styleUrls: ['./slider.component.scss']
+    selector: 'doc-slider',
+    templateUrl: './slider.component.html',
+    styleUrls: ['./slider.component.scss'],
+    standalone: false
 })
 export class SliderComponent implements OnInit {
 

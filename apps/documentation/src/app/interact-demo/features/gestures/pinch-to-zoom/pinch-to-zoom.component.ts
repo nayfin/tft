@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { TftGestureEvent } from '@tft/interact';
 
 @Component({
-  selector: 'tft-pinch-to-zoom',
-  templateUrl: './pinch-to-zoom.component.html',
-  styleUrls: ['./pinch-to-zoom.component.scss']
+    selector: 'tft-pinch-to-zoom',
+    templateUrl: './pinch-to-zoom.component.html',
+    styleUrls: ['./pinch-to-zoom.component.scss'],
+    standalone: false
 })
 export class PinchToZoomComponent {
 

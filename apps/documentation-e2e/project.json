@@ -3,12 +3,13 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/documentation-e2e/src",
   "projectType": "application",
+  "tags": [],
+  "implicitDependencies": ["documentation"],
   "targets": {
     "e2e": {
       "executor": "@nx/cypress:cypress",
       "options": {
         "cypressConfig": "apps/documentation-e2e/cypress.json",
-        "tsConfig": "apps/documentation-e2e/tsconfig.e2e.json",
         "devServerTarget": "documentation:serve"
       },
       "configurations": {
@@ -26,7 +27,5 @@
         ]
       }
     }
-  },
-  "tags": [],
-  "implicitDependencies": ["documentation"]
+  }
 }

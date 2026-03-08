@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   WritableSignal,
+  Signal,
 } from '@angular/core';
 import { FormGroup, FormArray } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -27,21 +28,21 @@ const defaultConfig: Partial<FormGroupListConfig> = {
 };
 
 @Component({
-  selector: 'crispr-form-group-list',
-  templateUrl: './form-group-list.component.html',
-  styleUrls: ['./form-group-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    MatButtonModule,
-    MatIconModule,
-    FieldContainerComponent,
-    ReactiveFormsModule,
-    CrisprFieldDirective,
-    CrisprDisplayFieldDirective,
-    CrisprPipesModule,
-    FormValidationHandlerModule
-],
+    selector: 'crispr-form-group-list',
+    templateUrl: './form-group-list.component.html',
+    styleUrls: ['./form-group-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        MatButtonModule,
+        MatIconModule,
+        FieldContainerComponent,
+        ReactiveFormsModule,
+        CrisprFieldDirective,
+        CrisprDisplayFieldDirective,
+        CrisprPipesModule,
+        FormValidationHandlerModule
+    ],
+    standalone: true
 })
 export class FormGroupListComponent
   extends CrisprControlComponent<FormGroupListConfig>
@@ -49,7 +50,7 @@ export class FormGroupListComponent
 {
   defaultConfig = defaultConfig;
   group: WritableSignal<FormGroup>;
-  control: FormArray;
+  control: Signal<FormArray>;
   /**
    * By setting this to true when adding/removing items from array,
    * we can block original values from overwriting form values
@@ -68,12 +69,12 @@ export class FormGroupListComponent
   }
 
   setControlValue(values: any[]) {
-    if (this.control) {
+    if (this.control()) {
       if (values?.length > 0) {
         // clear any existing values so that new values don't concatenate onto the old
-        const currentValues: [] = this.control.value;
+        const currentValues: [] = this.control().value;
         if (currentValues.length) {
-          this.control.clear();
+          this.control().clear();
         }
         values.forEach((value) => this.addGroup(value));
       } else if (this.config().displayInitialItem) {
@@ -97,7 +98,7 @@ export class FormGroupListComponent
   }
 
   addGroup(value = null) {
-    this.control.push(createControlForType(this.config().itemConfig, value));
+    this.control().push(createControlForType(this.config().itemConfig, value));
     // needed to ensure new array items render
     setTimeout(() => {
       this.cdr.detectChanges();
@@ -105,7 +106,7 @@ export class FormGroupListComponent
   }
 
   deleteGroup(index: number) {
-    this.control.removeAt(index);
+    this.control().removeAt(index);
   }
 
   clickEditItem(index: number) {

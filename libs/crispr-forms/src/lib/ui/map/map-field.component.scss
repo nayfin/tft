@@ -3,3 +3,9 @@
     background-color: aqua;
   }
 }
+.search-field {
+  position: absolute;
+  top: .4rem;
+  left: .4rem;
+  z-index: 1000;
+}

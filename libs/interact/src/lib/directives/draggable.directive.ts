@@ -1,6 +1,9 @@
-import { Directive, ElementRef, Input, OnInit, Output,
-   OnDestroy, EventEmitter, Optional, SkipSelf, Renderer2, SimpleChanges, OnChanges, ContentChild, ViewContainerRef, Inject, AfterViewInit } from '@angular/core';
-import { DOCUMENT } from '@angular/common'
+import {
+  Directive, ElementRef, Input, OnInit, Output,
+  OnDestroy, EventEmitter, Optional, SkipSelf, Renderer2, SimpleChanges, OnChanges, ContentChild, ViewContainerRef, Inject, AfterViewInit,
+  DOCUMENT
+} from '@angular/core';
+
 import interact from 'interactjs';
 import { InteractService } from '../services/interact.service';
 import { DraggableOptions, Interactable } from '@interactjs/types/index';
@@ -15,13 +18,14 @@ import { AutoScrollDirective } from './auto-scroll.directive';
 
 /** @dynamic */
 @Directive({
-  selector: '[tftDraggable]',
-  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
-  host: {
-    '[style.touchAction]': 'this.dragDisabled ? "auto" : "none"',
-    '[style.position]': '"absolute"',
-    '[id]': 'interactableId',
-  }
+    selector: '[tftDraggable]',
+    // eslint-disable-next-line @angular-eslint/no-host-metadata-property
+    host: {
+        '[style.touchAction]': 'this.dragDisabled ? "auto" : "none"',
+        '[style.position]': '"absolute"',
+        '[id]': 'interactableId',
+    },
+    standalone: false
 })
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy, AfterViewInit {

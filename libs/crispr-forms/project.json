@@ -4,6 +4,12 @@
   "projectType": "library",
   "sourceRoot": "libs/crispr-forms/src",
   "prefix": "crispr",
+  "tags": [],
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
@@ -33,7 +39,8 @@
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/crispr-forms/jest.config.ts"
+        "jestConfig": "libs/crispr-forms/jest.config.ts",
+        "tsConfig": "libs/crispr-forms/tsconfig.spec.json"
       },
       "outputs": ["{workspaceRoot}/coverage/libs/crispr-forms"]
     },
@@ -66,11 +73,5 @@
         }
       }
     }
-  },
-  "generators": {
-    "@schematics/angular:component": {
-      "style": "scss"
-    }
-  },
-  "tags": []
+  }
 }

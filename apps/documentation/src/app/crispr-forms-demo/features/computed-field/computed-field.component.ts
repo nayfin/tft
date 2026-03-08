@@ -4,9 +4,10 @@ import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'doc-computed-field',
-  templateUrl: './computed-field.component.html',
-  styleUrls: ['./computed-field.component.scss']
+    selector: 'doc-computed-field',
+    templateUrl: './computed-field.component.html',
+    styleUrls: ['./computed-field.component.scss'],
+    standalone: false
 })
 export class ComputedFieldComponent {
   computedNumberFieldConfig: FormConfig = {

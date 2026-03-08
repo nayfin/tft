@@ -5,9 +5,10 @@ import { someControlIsValid } from '@tft/form-validation-handler';
 import { map } from 'rxjs';
 
 @Component({
-  selector: 'tft-validators',
-  templateUrl: './validators.component.html',
-  styleUrls: ['./validators.component.css']
+    selector: 'tft-validators',
+    templateUrl: './validators.component.html',
+    styleUrls: ['./validators.component.css'],
+    standalone: false
 })
 export class ValidatorsComponent {
   formConfig: FormConfig = {

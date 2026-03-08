@@ -5,9 +5,10 @@ import { appNavTree } from './app-nav-tree';
 import { SidenavLink } from '@tft/core'
 
 @Component({
-  selector: 'tft-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'tft-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent {
   @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;

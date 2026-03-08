@@ -26,23 +26,23 @@ import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abs
 const defaultConfig: Partial<UnitConversionFieldConfig> = {};
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'crispr-unit-conversion-field',
-  templateUrl: './unit-conversion-field.component.html',
-  styleUrls: ['./unit-conversion-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    CommonModule,
-    InfoComponent,
-    OptionComponent,
-    ReactiveFormsModule,
-    FieldContainerComponent,
-    MatInputModule,
-    MatSelectModule,
-    MatOptionModule,
-    FormValidationHandlerModule,
-  ],
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'crispr-unit-conversion-field',
+    templateUrl: './unit-conversion-field.component.html',
+    styleUrls: ['./unit-conversion-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        CommonModule,
+        InfoComponent,
+        OptionComponent,
+        ReactiveFormsModule,
+        FieldContainerComponent,
+        MatInputModule,
+        MatSelectModule,
+        MatOptionModule,
+        FormValidationHandlerModule,
+    ],
+    standalone: true
 })
 export class UnitConversionFieldComponent
   extends CrisprControlComponent<UnitConversionFieldConfig>
@@ -88,7 +88,7 @@ export class UnitConversionFieldComponent
         displayValue,
         unitValue
       );
-      this.control.setValue(computedValue);
+      this.control().setValue(computedValue);
     });
   }
 

@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ControlType, FormConfig } from '@tft/crispr-forms';
 
 @Component({
-  selector: 'doc-textarea',
-  templateUrl: './textarea.component.html',
-  styleUrls: ['./textarea.component.scss']
+    selector: 'doc-textarea',
+    templateUrl: './textarea.component.html',
+    styleUrls: ['./textarea.component.scss'],
+    standalone: false
 })
 export class TextareaComponent {
 
@@ -17,6 +18,11 @@ export class TextareaComponent {
         controlName: 'textInput',
         rows: 5
       },
+      {
+        controlType: ControlType.BUTTON,
+        buttonType: 'raised',
+        label: 'Submit'
+      }
     ]
   }
 

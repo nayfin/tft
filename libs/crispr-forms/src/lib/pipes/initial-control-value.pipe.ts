@@ -6,7 +6,8 @@ import {
 } from '../utils';
 
 @Pipe({
-  name: 'initialControlValue',
+    name: 'initialControlValue',
+    standalone: false
 })
 export class InitialControlValuePipe implements PipeTransform {
   // TODO: does changing any to unknown break anything?

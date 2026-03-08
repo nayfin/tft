@@ -22,5 +22,6 @@
   "peacock.color": "#85a6e2",
   "cSpell.words": [
     "gesturable"
-  ]
+  ],
+  "nxConsole.generateAiAgentRules": true
 }

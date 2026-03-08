@@ -4,6 +4,12 @@
   "projectType": "library",
   "sourceRoot": "libs/mat-instantsearch/src",
   "prefix": "tft",
+  "tags": [],
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
@@ -29,15 +35,10 @@
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/mat-instantsearch/jest.config.ts"
+        "jestConfig": "libs/mat-instantsearch/jest.config.ts",
+        "tsConfig": "libs/mat-instantsearch/tsconfig.spec.json"
       },
       "outputs": ["{workspaceRoot}/coverage/libs/mat-instantsearch"]
     }
-  },
-  "generators": {
-    "@schematics/angular:component": {
-      "style": "scss"
-    }
-  },
-  "tags": []
+  }
 }

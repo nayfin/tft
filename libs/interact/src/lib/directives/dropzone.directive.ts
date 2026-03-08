@@ -7,10 +7,11 @@ import { AccountForScaleDirective } from './account-for-scale.directive';
 
 export type PositionOption = 'relative' | 'absolute' | 'fixed' | 'static' | 'sticky' | 'unset' | 'inherit' | 'initial' | 'revert'
 @Directive({
-  selector: '[tftDropzone]',
-  host: {
-    '[id]': 'dropzoneId'
-  }
+    selector: '[tftDropzone]',
+    host: {
+        '[id]': 'dropzoneId'
+    },
+    standalone: false
 })
 export class DropzoneDirective implements OnInit, OnChanges {
 

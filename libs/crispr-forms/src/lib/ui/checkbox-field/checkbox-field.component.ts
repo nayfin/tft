@@ -18,18 +18,18 @@ const defaultConfig: Partial<CheckboxFieldConfig> = {
 };
 
 @Component({
-  selector: 'crispr-checkbox-field',
-  templateUrl: './checkbox-field.component.html',
-  styleUrls: ['./checkbox-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    InfoComponent,
-    MatCheckboxModule,
-    ReactiveFormsModule,
-    FieldContainerComponent,
-    FormValidationHandlerModule
-],
+    selector: 'crispr-checkbox-field',
+    templateUrl: './checkbox-field.component.html',
+    styleUrls: ['./checkbox-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        InfoComponent,
+        MatCheckboxModule,
+        ReactiveFormsModule,
+        FieldContainerComponent,
+        FormValidationHandlerModule
+    ],
+    standalone: true
 })
 export class CheckboxFieldComponent
   extends CrisprControlComponent<CheckboxFieldConfig>

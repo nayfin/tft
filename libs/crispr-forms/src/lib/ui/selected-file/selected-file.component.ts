@@ -4,13 +4,12 @@ import { ThemePalette } from '@angular/material/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
-  selector: 'crispr-selected-file',
-  templateUrl: './selected-file.component.html',
-  styleUrls: ['./selected-file.component.scss'],
-  standalone: true,
-  imports: [
-    MatProgressBarModule
-],
+    selector: 'crispr-selected-file',
+    templateUrl: './selected-file.component.html',
+    styleUrls: ['./selected-file.component.scss'],
+    imports: [
+        MatProgressBarModule
+    ]
 })
 export class SelectedFileComponent {
 

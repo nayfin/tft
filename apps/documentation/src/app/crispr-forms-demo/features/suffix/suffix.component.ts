@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormConfig, ControlType } from '@tft/crispr-forms';
 
 @Component({
-  selector: 'doc-suffix',
-  templateUrl: './suffix.component.html',
-  styleUrls: ['./suffix.component.scss']
+    selector: 'doc-suffix',
+    templateUrl: './suffix.component.html',
+    styleUrls: ['./suffix.component.scss'],
+    standalone: false
 })
-export class SuffixComponent implements OnInit {
+export class SuffixComponent {
 
   formConfig: FormConfig = {
     fields: [
@@ -44,10 +45,6 @@ export class SuffixComponent implements OnInit {
         color: 'warn',
       }
     ]
-  }
-  constructor() { }
-
-  ngOnInit() {
   }
 
 }

@@ -3,7 +3,7 @@
   [group]="group()">
 
   <mat-radio-group
-    [formControl]="control"
+    [formControl]="control()"
     [color]="config().color">
     @for (option of options$ | async; track option) {
       <mat-radio-button class="example-radio-button" [value]="option.value">

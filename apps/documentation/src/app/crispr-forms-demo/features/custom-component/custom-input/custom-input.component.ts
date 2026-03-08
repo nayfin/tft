@@ -9,9 +9,10 @@ export interface CustomInputConfig extends Omit<InputFieldConfig, 'controlType'>
 }
 
 @Component({
-  selector: 'doc-custom-input',
-  templateUrl: './custom-input.component.html',
-  styleUrls: ['./custom-input.component.scss']
+    selector: 'doc-custom-input',
+    templateUrl: './custom-input.component.html',
+    styleUrls: ['./custom-input.component.scss'],
+    standalone: false
 })
 export class CustomInputComponent extends CrisprControlComponent<CustomInputConfig> implements OnInit {
 

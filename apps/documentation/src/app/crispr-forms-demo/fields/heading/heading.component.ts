@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ControlType, FormConfig } from '@tft/crispr-forms';
 
 @Component({
-  selector: 'doc-heading',
-  templateUrl: './heading.component.html',
-  styleUrls: ['./heading.component.scss']
+    selector: 'doc-heading',
+    templateUrl: './heading.component.html',
+    styleUrls: ['./heading.component.scss'],
+    standalone: false
 })
 export class HeadingComponent implements OnInit {
 

@@ -12,17 +12,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
-  selector: 'mis-filter-chiplist',
-  templateUrl: './filter-chiplist.component.html',
-  styleUrls: ['./filter-chiplist.component.scss'],
-  standalone: true,
-  imports: [
-    MatChipsModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatAutocompleteModule,
-    ReactiveFormsModule
-  ]
+    selector: 'mis-filter-chiplist',
+    templateUrl: './filter-chiplist.component.html',
+    styleUrls: ['./filter-chiplist.component.scss'],
+    imports: [
+        MatChipsModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule
+    ]
 })
 export class MisFilterChiplistComponent extends TypedBaseWidget<RefinementListWidgetDescription, RefinementListConnectorParams> implements OnInit {
 

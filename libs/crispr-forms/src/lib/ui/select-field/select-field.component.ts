@@ -26,22 +26,22 @@ import {
 import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
 
 @Component({
-  selector: 'crispr-select-field',
-  templateUrl: './select-field.component.html',
-  styleUrls: ['./select-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    CommonModule,
-    InfoComponent,
-    OptionComponent,
-    MatCheckboxModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    FormValidationHandlerModule,
-    FieldContainerComponent,
-    MatFormFieldModule,
-  ],
+    selector: 'crispr-select-field',
+    templateUrl: './select-field.component.html',
+    styleUrls: ['./select-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        CommonModule,
+        InfoComponent,
+        OptionComponent,
+        MatCheckboxModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        FormValidationHandlerModule,
+        FieldContainerComponent,
+        MatFormFieldModule,
+    ],
+    standalone: true
 })
 export class SelectFieldComponent
   extends CrisprControlComponent<SelectFieldConfig>

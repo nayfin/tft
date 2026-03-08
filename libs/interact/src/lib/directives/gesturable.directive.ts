@@ -8,12 +8,13 @@ import { DraggableDirective } from '../directives';
 
 /** @dynamic */
 @Directive({
-  selector: '[tftGesturable]',
-  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
-  host: {
-    // '[style.touchAction]': 'this.gestureDisabled ? "auto" : "none"',
-    '[id]': 'gesturableId',
-  }
+    selector: '[tftGesturable]',
+    // eslint-disable-next-line @angular-eslint/no-host-metadata-property
+    host: {
+        // '[style.touchAction]': 'this.gestureDisabled ? "auto" : "none"',
+        '[id]': 'gesturableId',
+    },
+    standalone: false
 })
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class GesturableDirective<D = any> implements OnInit, OnChanges {

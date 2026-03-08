@@ -4,6 +4,12 @@
   "projectType": "library",
   "sourceRoot": "libs/interact/src",
   "prefix": "tft",
+  "tags": [],
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
@@ -29,15 +35,10 @@
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/interact/jest.config.ts"
+        "jestConfig": "libs/interact/jest.config.ts",
+        "tsConfig": "libs/interact/tsconfig.spec.json"
       },
       "outputs": ["{workspaceRoot}/coverage/libs/interact"]
     }
-  },
-  "generators": {
-    "@schematics/angular:component": {
-      "style": "scss"
-    }
-  },
-  "tags": []
+  }
 }

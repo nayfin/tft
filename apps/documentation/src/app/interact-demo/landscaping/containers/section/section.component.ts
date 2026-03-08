@@ -9,9 +9,10 @@ interface DroppedItem {
 }
 
 @Component({
-  selector: 'tft-section',
-  templateUrl: './section.component.html',
-  styleUrls: ['./section.component.scss']
+    selector: 'tft-section',
+    templateUrl: './section.component.html',
+    styleUrls: ['./section.component.scss'],
+    standalone: false
 })
 export class SectionComponent {
   droppedItems: DroppedItem[] = [];

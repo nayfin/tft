@@ -2,13 +2,14 @@
   "name": "documentation",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
+  "sourceRoot": "apps/documentation/src",
+  "prefix": "tft",
+  "tags": [],
   "generators": {
     "@schematics/angular:component": {
       "style": "scss"
     }
   },
-  "sourceRoot": "apps/documentation/src",
-  "prefix": "tft",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
@@ -110,7 +111,8 @@
           "buildTarget": "documentation:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "continuous": true
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -130,7 +132,8 @@
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "apps/documentation/jest.config.ts"
+        "jestConfig": "apps/documentation/jest.config.ts",
+        "tsConfig": "apps/documentation/tsconfig.spec.json"
       },
       "outputs": ["{workspaceRoot}/coverage/apps/documentation"]
     },
@@ -138,6 +141,5 @@
       "executor": "@angular/fire:deploy",
       "options": {}
     }
-  },
-  "tags": []
+  }
 }

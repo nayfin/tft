@@ -9,19 +9,17 @@ import { of } from 'rxjs';
 
 
 @Component({
-  selector: 'doc-map',
-  templateUrl: './map.component.html',
-  standalone: true,
-  imports: [
-    CrisprFormComponent,
-    MatCardModule
-  ],
-  styleUrls: ['./map.component.scss']
+    selector: 'doc-map',
+    templateUrl: './map.component.html',
+    imports: [
+        CrisprFormComponent,
+        MatCardModule
+    ],
+    styleUrls: ['./map.component.scss']
 })
 export class MapComponent {
   noaaService = inject(NoaaService);
   mapValue = {
-    mapField: '63366'
   }
   mapConfig: FormConfig = {
     fields: [
@@ -49,14 +47,19 @@ export class MapComponent {
           return this.noaaService.getValidStationIds(coords).pipe(
             map((stations) => {
               return stations.map(station => {
-                const [lng, lat] = station.location.coordinates;
-              
-                console.log({station})
-                const name = station.stations[0].name;
+                const {location } = station;
+                const [lng, lat] = location.coordinates;
+
+                const {name, id} = station.stations[0];
+                const mappedStation = {
+                  name,
+                  id,
+                  location
+                }
                 return {
                   title: name,
                   position: {lat, lng },
-                  data: station,
+                  value: mappedStation,
                 }
               })
             }),
@@ -65,19 +68,15 @@ export class MapComponent {
             // })
           )
         },
-        markerClasses: ['weather-station-map-marker'],
-        markerTemplateBuilder: (marker) => {
+        // markerClasses: ['weather-station-map-marker'],
+        infoWindowTemplateBuilder: (marker) => {
           console.log({marker})
           return `<div>
           ${marker.title}
           </div>`
         },
+        valueDisplayKey: 'name',
         onMove: (event, group) => console.log({event, group}),
-        onMarkerClick: (marker) => {
-          // const things: TftMapMarker
-          console.log({marker})
-          // this.noaaService.getFostDateProbabilities(marker.).subscribe((data) => {
-        }
         // validators: [Validators.required]
       },
       {

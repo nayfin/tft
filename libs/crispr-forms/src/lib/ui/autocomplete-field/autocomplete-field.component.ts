@@ -37,22 +37,22 @@ const defaultConfig: Partial<AutocompleteFieldConfig> = {
 };
 
 @Component({
-  selector: 'crispr-autocomplete-field',
-  templateUrl: './autocomplete-field.component.html',
-  styleUrls: ['./autocomplete-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    CommonModule,
-    InfoComponent,
-    OptionComponent,
-    ReactiveFormsModule,
-    FieldContainerComponent,
-    MatAutocompleteModule,
-    MatInputModule,
-    MatOptionModule,
-    FormValidationHandlerModule,
-  ],
+    selector: 'crispr-autocomplete-field',
+    templateUrl: './autocomplete-field.component.html',
+    styleUrls: ['./autocomplete-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        CommonModule,
+        InfoComponent,
+        OptionComponent,
+        ReactiveFormsModule,
+        FieldContainerComponent,
+        MatAutocompleteModule,
+        MatInputModule,
+        MatOptionModule,
+        FormValidationHandlerModule,
+    ],
+    standalone: true
 })
 export class AutocompleteFieldComponent
   extends AbstractAutocompleteComponent<AutocompleteFieldConfig>
@@ -70,7 +70,7 @@ export class AutocompleteFieldComponent
     this.clearFieldSubscription =
       this.autocompleteInputControl.valueChanges.subscribe((text: string) => {
         if (typeof text === 'string' && text?.trim() === '') {
-          this.control.setValue(null);
+          this.control().setValue(null);
         }
       });
   }
@@ -80,9 +80,9 @@ export class AutocompleteFieldComponent
   }
 
   setControlValue(value: SelectOption) {
-    if (this.control && value) {
+    if (this.control() && value) {
       // sets the initial value on the control if one is passed
-      this.control.setValue(value.value || '');
+      this.control().setValue(value.value || '');
       this.autocompleteInputControl.setValue(value.label || '');
     }
   }
@@ -110,7 +110,7 @@ export class AutocompleteFieldComponent
   }
 
   handleSelect(event: MatAutocompleteSelectedEvent) {
-    this.control.setValue(event.option.value);
+    this.control().setValue(event.option.value);
     this.autoInputRef.nativeElement.blur();
   }
 }

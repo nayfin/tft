@@ -6,9 +6,10 @@ import { CustomSelectComponent, CustomSelectConfig } from './custom-select/custo
 
 
 @Component({
-  selector: 'doc-custom-component',
-  templateUrl: './custom-component.component.html',
-  styleUrls: ['./custom-component.component.scss']
+    selector: 'doc-custom-component',
+    templateUrl: './custom-component.component.html',
+    styleUrls: ['./custom-component.component.scss'],
+    standalone: false
 })
 export class CustomComponentComponent {
 

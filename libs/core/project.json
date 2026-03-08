@@ -4,6 +4,12 @@
   "projectType": "library",
   "sourceRoot": "libs/core/src",
   "prefix": "tft",
+  "tags": [],
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
@@ -26,15 +32,10 @@
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/core/jest.config.ts"
+        "jestConfig": "libs/core/jest.config.ts",
+        "tsConfig": "libs/core/tsconfig.spec.json"
       },
       "outputs": ["{workspaceRoot}/coverage/libs/core"]
     }
-  },
-  "generators": {
-    "@schematics/angular:component": {
-      "style": "scss"
-    }
-  },
-  "tags": []
+  }
 }

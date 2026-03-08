@@ -15,19 +15,19 @@ import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abs
 const defaultConfig: Partial<TextareaFieldConfig> = { rows: 5 };
 
 @Component({
-  selector: 'crispr-textarea-field',
-  templateUrl: './textarea-field.component.html',
-  styleUrls: ['./textarea-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    InfoComponent,
-    ReactiveFormsModule,
-    FieldContainerComponent,
-    MatFormFieldModule,
-    MatInputModule,
-    FormValidationHandlerModule
-],
+    selector: 'crispr-textarea-field',
+    templateUrl: './textarea-field.component.html',
+    styleUrls: ['./textarea-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        InfoComponent,
+        ReactiveFormsModule,
+        FieldContainerComponent,
+        MatFormFieldModule,
+        MatInputModule,
+        FormValidationHandlerModule
+    ],
+    standalone: true
 })
 export class TextareaFieldComponent
   extends CrisprControlComponent<TextareaFieldConfig>

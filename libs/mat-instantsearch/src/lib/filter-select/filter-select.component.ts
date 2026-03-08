@@ -7,15 +7,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'mis-filter-select',
-  templateUrl: './filter-select.component.html',
-  styleUrls: ['./filter-select.component.scss'],
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatSelectModule,
-    CommonModule
-  ]
+    selector: 'mis-filter-select',
+    templateUrl: './filter-select.component.html',
+    styleUrls: ['./filter-select.component.scss'],
+    imports: [
+        MatFormFieldModule,
+        MatSelectModule,
+        CommonModule
+    ]
 })
 export class MisFilterSelectComponent extends TypedBaseWidget<RefinementListWidgetDescription, RefinementListConnectorParams> implements OnInit {
 

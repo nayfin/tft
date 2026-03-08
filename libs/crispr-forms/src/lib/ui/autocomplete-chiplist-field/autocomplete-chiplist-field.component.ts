@@ -46,24 +46,24 @@ const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
 };
 
 @Component({
-  selector: 'crispr-autocomplete-chiplist-field',
-  templateUrl: './autocomplete-chiplist-field.component.html',
-  styleUrls: ['./autocomplete-chiplist-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    CommonModule,
-    InfoComponent,
-    OptionComponent,
-    ReactiveFormsModule,
-    FieldContainerComponent,
-    MatAutocompleteModule,
-    MatInputModule,
-    MatOptionModule,
-    MatChipsModule,
-    MatIconModule,
-    FormValidationHandlerModule,
-  ],
+    selector: 'crispr-autocomplete-chiplist-field',
+    templateUrl: './autocomplete-chiplist-field.component.html',
+    styleUrls: ['./autocomplete-chiplist-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        CommonModule,
+        InfoComponent,
+        OptionComponent,
+        ReactiveFormsModule,
+        FieldContainerComponent,
+        MatAutocompleteModule,
+        MatInputModule,
+        MatOptionModule,
+        MatChipsModule,
+        MatIconModule,
+        FormValidationHandlerModule,
+    ],
+    standalone: true
 })
 export class AutocompleteChiplistFieldComponent
   extends AbstractAutocompleteComponent<AutocompleteChiplistFieldConfig>
@@ -75,7 +75,7 @@ export class AutocompleteChiplistFieldComponent
   selectedChip: SelectOption = null;
   controlValue$ = this.chips$.pipe(
     tap((chips) => {
-      this.control.setValue(chips.map((chip) => chip.value));
+      this.control().setValue(chips.map((chip) => chip.value));
     })
   );
 

@@ -8,10 +8,11 @@ export interface CustomSelectConfig extends Omit<SelectFieldConfig, 'controlType
 }
 
 @Component({
-  selector: 'doc-custom-select',
-  templateUrl: './custom-select.component.html',
-  styleUrls: ['./custom-select.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'doc-custom-select',
+    templateUrl: './custom-select.component.html',
+    styleUrls: ['./custom-select.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class CustomSelectComponent extends CrisprControlComponent<SelectFieldConfig> implements OnInit {
   defaultConfig = {};

@@ -5,9 +5,10 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'doc-appearance',
-  templateUrl: './appearance.component.html',
-  styleUrls: ['./appearance.component.scss']
+    selector: 'doc-appearance',
+    templateUrl: './appearance.component.html',
+    styleUrls: ['./appearance.component.scss'],
+    standalone: false
 })
 export class AppearanceComponent implements OnInit {
   formConfig: FormConfig = {

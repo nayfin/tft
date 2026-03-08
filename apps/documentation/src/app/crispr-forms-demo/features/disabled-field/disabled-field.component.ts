@@ -4,10 +4,10 @@ import { of, combineLatest } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
 @Component({
-  selector: 'doc-disabled-field',
-  templateUrl: './disabled-field.component.html',
-  styleUrls: ['./disabled-field.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'doc-disabled-field',
+    templateUrl: './disabled-field.component.html',
+    styleUrls: ['./disabled-field.component.scss'],
+    standalone: false
 })
 export class DisabledFieldComponent implements OnInit {
 

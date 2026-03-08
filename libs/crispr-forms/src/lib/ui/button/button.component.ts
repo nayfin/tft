@@ -11,19 +11,19 @@ import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { CrisprFieldComponent, ButtonConfig, ControlValue } from '../../utils';
 
 @Component({
-  selector: 'crispr-button',
-  templateUrl: './button.component.html',
-  styleUrls: ['./button.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTooltipModule,
-    ReactiveFormsModule,
-    FormValidationHandlerModule,
-  ],
+    selector: 'crispr-button',
+    templateUrl: './button.component.html',
+    styleUrls: ['./button.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatIconModule,
+        MatTooltipModule,
+        ReactiveFormsModule,
+        FormValidationHandlerModule,
+    ],
+    standalone: true
 })
 export class ButtonComponent
   extends CrisprFieldComponent<ButtonConfig>
