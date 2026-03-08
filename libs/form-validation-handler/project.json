@@ -4,6 +4,12 @@
   "projectType": "library",
   "sourceRoot": "libs/form-validation-handler/src",
   "prefix": "tft",
+  "tags": [],
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
@@ -29,15 +35,10 @@
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/form-validation-handler/jest.config.ts"
+        "jestConfig": "libs/form-validation-handler/jest.config.ts",
+        "tsConfig": "libs/form-validation-handler/tsconfig.spec.json"
       },
       "outputs": ["{workspaceRoot}/coverage/libs/form-validation-handler"]
     }
-  },
-  "generators": {
-    "@schematics/angular:component": {
-      "style": "scss"
-    }
-  },
-  "tags": []
+  }
 }

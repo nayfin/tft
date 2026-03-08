@@ -60,10 +60,9 @@
     "lodash-es": "^4.17.15",
     "reflect-metadata": "^0.1.13",
     "rxjs": "7.8.1",
+    "storybook": "9.0.5",
     "tslib": "^2.0.0",
-    "zone.js": "0.15.1",
-    "@storybook/addon-interactions": "^8.2.8",
-    "storybook": "9.0.5"
+    "zone.js": "0.15.1"
   },
   "devDependencies": {
     "@angular-devkit/architect": "0.2003.9",
@@ -73,7 +72,7 @@
     "@angular-eslint/eslint-plugin": "20.3.0",
     "@angular-eslint/eslint-plugin-template": "20.3.0",
     "@angular-eslint/template-parser": "20.3.0",
-    "@angular/cli": "~19.2.0",
+    "@angular/cli": "~20.3.0",
     "@angular/compiler-cli": "20.3.17",
     "@angular/language-service": "20.3.17",
     "@nestjs/schematics": "11.0.0",
@@ -86,7 +85,6 @@
     "@nx/storybook": "21.6.9",
     "@nx/workspace": "21.6.9",
     "@schematics/angular": "20.3.9",
-    "@storybook/addon-essentials": "8.6.11",
     "@storybook/addon-knobs": "~7.0.2",
     "@storybook/angular": "9.0.5",
     "@types/google.maps": "^3.58.1",

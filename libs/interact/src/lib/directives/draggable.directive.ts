@@ -1,6 +1,9 @@
-import { Directive, ElementRef, Input, OnInit, Output,
-   OnDestroy, EventEmitter, Optional, SkipSelf, Renderer2, SimpleChanges, OnChanges, ContentChild, ViewContainerRef, Inject, AfterViewInit } from '@angular/core';
-import { DOCUMENT } from '@angular/common'
+import {
+  Directive, ElementRef, Input, OnInit, Output,
+  OnDestroy, EventEmitter, Optional, SkipSelf, Renderer2, SimpleChanges, OnChanges, ContentChild, ViewContainerRef, Inject, AfterViewInit,
+  DOCUMENT
+} from '@angular/core';
+
 import interact from 'interactjs';
 import { InteractService } from '../services/interact.service';
 import { DraggableOptions, Interactable } from '@interactjs/types/index';

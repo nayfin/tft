@@ -1,5 +1,5 @@
-import { Directive, OnInit, OnDestroy, ElementRef, Input, Optional, SkipSelf, Output, EventEmitter, OnChanges, SimpleChanges, Renderer2, Inject} from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Directive, OnInit, OnDestroy, ElementRef, Input, Optional, SkipSelf, Output, EventEmitter, OnChanges, SimpleChanges, Renderer2, Inject, DOCUMENT } from '@angular/core';
+
 import interact from 'interactjs';
 import { InteractService } from '../services/interact.service';
 import { ResizableOptions, ResizeEvent, Interactable } from '@interactjs/types/index';
