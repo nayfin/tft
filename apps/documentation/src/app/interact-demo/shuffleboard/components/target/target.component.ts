@@ -4,10 +4,10 @@ import { Team } from '../../models/shuffleboard.model';
 import { DropzoneOptions } from '@interactjs/types/index';
 
 @Component({
-  selector: 'tft-target',
-  templateUrl: './target.component.html',
-  styleUrls: ['./target.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'tft-target',
+    templateUrl: './target.component.html',
+    styleUrls: ['./target.component.scss'],
+    standalone: false
 })
 export class TargetComponent implements OnInit {
   @Input() value = 10;

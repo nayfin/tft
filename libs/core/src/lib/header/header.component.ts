@@ -2,9 +2,10 @@ import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 
 
 @Component({
-  selector: 'tft-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+    selector: 'tft-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss'],
+    standalone: false
 })
 export class HeaderComponent implements OnInit {
 

@@ -15,13 +15,14 @@ import { AutoScrollDirective } from './auto-scroll.directive';
 
 /** @dynamic */
 @Directive({
-  selector: '[tftDraggable]',
-  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
-  host: {
-    '[style.touchAction]': 'this.dragDisabled ? "auto" : "none"',
-    '[style.position]': '"absolute"',
-    '[id]': 'interactableId',
-  }
+    selector: '[tftDraggable]',
+    // eslint-disable-next-line @angular-eslint/no-host-metadata-property
+    host: {
+        '[style.touchAction]': 'this.dragDisabled ? "auto" : "none"',
+        '[style.position]': '"absolute"',
+        '[id]': 'interactableId',
+    },
+    standalone: false
 })
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy, AfterViewInit {

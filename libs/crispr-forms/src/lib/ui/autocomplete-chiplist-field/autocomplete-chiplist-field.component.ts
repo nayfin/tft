@@ -46,24 +46,23 @@ const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
 };
 
 @Component({
-  selector: 'crispr-autocomplete-chiplist-field',
-  templateUrl: './autocomplete-chiplist-field.component.html',
-  styleUrls: ['./autocomplete-chiplist-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    CommonModule,
-    InfoComponent,
-    OptionComponent,
-    ReactiveFormsModule,
-    FieldContainerComponent,
-    MatAutocompleteModule,
-    MatInputModule,
-    MatOptionModule,
-    MatChipsModule,
-    MatIconModule,
-    FormValidationHandlerModule,
-  ],
+    selector: 'crispr-autocomplete-chiplist-field',
+    templateUrl: './autocomplete-chiplist-field.component.html',
+    styleUrls: ['./autocomplete-chiplist-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        CommonModule,
+        InfoComponent,
+        OptionComponent,
+        ReactiveFormsModule,
+        FieldContainerComponent,
+        MatAutocompleteModule,
+        MatInputModule,
+        MatOptionModule,
+        MatChipsModule,
+        MatIconModule,
+        FormValidationHandlerModule,
+    ]
 })
 export class AutocompleteChiplistFieldComponent
   extends AbstractAutocompleteComponent<AutocompleteChiplistFieldConfig>

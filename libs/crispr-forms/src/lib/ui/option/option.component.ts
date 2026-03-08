@@ -5,12 +5,11 @@ import { InfoComponent } from '../info';
 import { SelectOption } from '../../utils';
 
 @Component({
-  selector: 'crispr-option',
-  templateUrl: './option.component.html',
-  styleUrls: ['./option.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [InfoComponent],
+    selector: 'crispr-option',
+    templateUrl: './option.component.html',
+    styleUrls: ['./option.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [InfoComponent]
 })
 export class OptionComponent {
   @Input() option: SelectOption;

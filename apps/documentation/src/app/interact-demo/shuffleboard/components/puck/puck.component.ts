@@ -5,10 +5,10 @@ import interact from 'interactjs';
 import { TftDragEvent } from '@tft/interact';
 
 @Component({
-  selector: 'tft-puck',
-  templateUrl: './puck.component.html',
-  styleUrls: ['./puck.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'tft-puck',
+    templateUrl: './puck.component.html',
+    styleUrls: ['./puck.component.scss'],
+    standalone: false
 })
 export class PuckComponent implements OnInit, OnChanges {
   @Input() whosTurn: Team;

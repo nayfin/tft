@@ -7,9 +7,10 @@ import { Subscription } from 'rxjs';
 // import { RestrictOptions } from '@interactjs/modifiers/restrict/pointer';
 
 @Component({
-  selector: 'tft-game',
-  templateUrl: './game.component.html',
-  styleUrls: ['./game.component.scss']
+    selector: 'tft-game',
+    templateUrl: './game.component.html',
+    styleUrls: ['./game.component.scss'],
+    standalone: false
 })
 export class GameComponent implements OnInit {
   moves = 0;

@@ -7,8 +7,8 @@ import { CommonModule } from '@angular/common';
 
 
 @Component({
-  selector: 'doc-display-item',
-  template: `<div>
+    selector: 'doc-display-item',
+    template: `<div>
       Step {{index + 1}}
       @if (value?.autocompleteChiplistObservable?.length) {
         <div>
@@ -26,10 +26,9 @@ import { CommonModule } from '@angular/common';
         </div>
       }
     </div>`,
-  styleUrls: ['./overview.component.scss'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    styleUrls: ['./overview.component.scss'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DisplayItemComponent {
   value;
@@ -37,9 +36,10 @@ export class DisplayItemComponent {
 }
 
 @Component({
-  selector: 'doc-overview',
-  templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.scss']
+    selector: 'doc-overview',
+    templateUrl: './overview.component.html',
+    styleUrls: ['./overview.component.scss'],
+    standalone: false
 })
 export class OverviewComponent implements OnInit{
 

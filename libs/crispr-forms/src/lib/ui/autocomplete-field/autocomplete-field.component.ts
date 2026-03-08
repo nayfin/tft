@@ -37,22 +37,21 @@ const defaultConfig: Partial<AutocompleteFieldConfig> = {
 };
 
 @Component({
-  selector: 'crispr-autocomplete-field',
-  templateUrl: './autocomplete-field.component.html',
-  styleUrls: ['./autocomplete-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    CommonModule,
-    InfoComponent,
-    OptionComponent,
-    ReactiveFormsModule,
-    FieldContainerComponent,
-    MatAutocompleteModule,
-    MatInputModule,
-    MatOptionModule,
-    FormValidationHandlerModule,
-  ],
+    selector: 'crispr-autocomplete-field',
+    templateUrl: './autocomplete-field.component.html',
+    styleUrls: ['./autocomplete-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        CommonModule,
+        InfoComponent,
+        OptionComponent,
+        ReactiveFormsModule,
+        FieldContainerComponent,
+        MatAutocompleteModule,
+        MatInputModule,
+        MatOptionModule,
+        FormValidationHandlerModule,
+    ]
 })
 export class AutocompleteFieldComponent
   extends AbstractAutocompleteComponent<AutocompleteFieldConfig>

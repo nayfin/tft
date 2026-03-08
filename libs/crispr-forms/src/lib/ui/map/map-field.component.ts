@@ -25,25 +25,25 @@ interface MapState {
 }
 
 @Component({
-  selector: 'crispr-map',
-  standalone: true,
-  imports: [
-    GoogleMap,
-    MapInfoWindow, 
-    MapMarker,
-    ReactiveFormsModule, 
-    MatFormField,
-    MatSelect,
-    MatSelectTrigger,
-    MatLabel,
-    AsyncPipe, 
-    AutocompleteFieldComponent, 
-    FieldContainerComponent,
-    MatButton,
-    OverlayModule],
-  templateUrl: './map-field.component.html',
-  styleUrl: './map-field.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'crispr-map',
+    imports: [
+        GoogleMap,
+        MapInfoWindow,
+        MapMarker,
+        ReactiveFormsModule,
+        MatFormField,
+        MatSelect,
+        MatSelectTrigger,
+        MatLabel,
+        AsyncPipe,
+        AutocompleteFieldComponent,
+        FieldContainerComponent,
+        MatButton,
+        OverlayModule
+    ],
+    templateUrl: './map-field.component.html',
+    styleUrl: './map-field.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MapFieldComponent
   extends CrisprControlComponent<MapFieldConfig>

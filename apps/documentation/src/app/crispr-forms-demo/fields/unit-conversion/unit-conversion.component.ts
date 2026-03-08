@@ -3,9 +3,10 @@ import { Validators } from '@angular/forms';
 import { ControlType, FormConfig } from '@tft/crispr-forms';
 import qty from 'js-quantities';
 @Component({
-  selector: 'tft-unit-conversion',
-  templateUrl: './unit-conversion.component.html',
-  styleUrls: ['./unit-conversion.component.scss']
+    selector: 'tft-unit-conversion',
+    templateUrl: './unit-conversion.component.html',
+    styleUrls: ['./unit-conversion.component.scss'],
+    standalone: false
 })
 export class UnitConversionComponent {
   // initial stored value to pass to configuration

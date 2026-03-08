@@ -4,9 +4,10 @@ import { TftGestureEvent, TftResizeEvent } from '@tft/interact';
 
 
 @Component({
-  selector: 'tft-yard',
-  templateUrl: './yard.component.html',
-  styleUrls: ['./yard.component.scss']
+    selector: 'tft-yard',
+    templateUrl: './yard.component.html',
+    styleUrls: ['./yard.component.scss'],
+    standalone: false
 })
 export class YardComponent {
 

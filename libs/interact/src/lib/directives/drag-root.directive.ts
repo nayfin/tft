@@ -7,8 +7,9 @@ import { Directive, ElementRef, Optional, Self } from '@angular/core';
  * @note this directive will overwrite any style transformations (e.g. transform: scale(2); )
  */
 @Directive({
-  selector: '[tftDragRoot]',
-  exportAs: 'tftDragRoot'
+    selector: '[tftDragRoot]',
+    exportAs: 'tftDragRoot',
+    standalone: false
 })
 export class DragRootDirective {
 

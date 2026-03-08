@@ -6,15 +6,14 @@ import { AlgoliaAttributionComponent } from '../algolia-attribution/algolia-attr
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'mis-search-box',
-  templateUrl: './search-box.component.html',
-  styleUrls: ['./search-box.component.scss'],
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    AlgoliaAttributionComponent,
-    MatIconModule
-  ]
+    selector: 'mis-search-box',
+    templateUrl: './search-box.component.html',
+    styleUrls: ['./search-box.component.scss'],
+    imports: [
+        MatFormFieldModule,
+        AlgoliaAttributionComponent,
+        MatIconModule
+    ]
 })
 export class MisSearchBoxComponent extends BaseWidget implements OnInit {
 

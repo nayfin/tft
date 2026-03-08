@@ -7,15 +7,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @Component({
-  selector: 'mis-pagination',
-  templateUrl: 'pagination.component.html',
-  styleUrls: ['pagination.component.scss'],
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatPaginatorModule,
-    NgAisHitsPerPageModule
-  ]
+    selector: 'mis-pagination',
+    templateUrl: 'pagination.component.html',
+    styleUrls: ['pagination.component.scss'],
+    imports: [
+        MatFormFieldModule,
+        MatPaginatorModule,
+        NgAisHitsPerPageModule
+    ]
 })
 export class MisPaginationComponent extends BaseWidget implements OnInit {
   // render options

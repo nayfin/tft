@@ -1,10 +1,11 @@
 import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef } from '@angular/core';
 @Component({
-  selector: 'tft-control-error',
-  templateUrl: './control-error.component.html',
-  styleUrls: ['./control-error.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
- })
+    selector: 'tft-control-error',
+    templateUrl: './control-error.component.html',
+    styleUrls: ['./control-error.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
+})
  export class ControlErrorComponent {
   _text: string;
   _hide = true;

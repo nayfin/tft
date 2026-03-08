@@ -6,9 +6,10 @@ import { EndpointsService } from '../../endpoints.service';
 import { FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'doc-select',
-  templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss']
+    selector: 'doc-select',
+    templateUrl: './select.component.html',
+    styleUrls: ['./select.component.scss'],
+    standalone: false
 })
 export class SelectComponent implements OnInit {
 

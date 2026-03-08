@@ -6,9 +6,10 @@ import { minArrayLength } from '@tft/form-validation-handler';
 
 
 @Component({
-  selector: 'doc-autocomplete-chiplist',
-  templateUrl: './autocomplete-chiplist.component.html',
-  styleUrls: ['./autocomplete-chiplist.component.scss']
+    selector: 'doc-autocomplete-chiplist',
+    templateUrl: './autocomplete-chiplist.component.html',
+    styleUrls: ['./autocomplete-chiplist.component.scss'],
+    standalone: false
 })
 export class AutocompleteChiplistComponent {
 

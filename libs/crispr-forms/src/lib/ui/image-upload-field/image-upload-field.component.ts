@@ -34,23 +34,22 @@ import {
 import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
 
 @Component({
-  selector: 'crispr-image-upload-field',
-  templateUrl: './image-upload-field.component.html',
-  styleUrls: ['./image-upload-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    CommonModule,
-    FieldContainerComponent,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    SelectedFileComponent,
-    FileDropzoneDirective,
-    FormValidationHandlerModule,
-  ],
+    selector: 'crispr-image-upload-field',
+    templateUrl: './image-upload-field.component.html',
+    styleUrls: ['./image-upload-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        CommonModule,
+        FieldContainerComponent,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        SelectedFileComponent,
+        FileDropzoneDirective,
+        FormValidationHandlerModule,
+    ]
 })
 export class ImageUploadFieldComponent
   extends CrisprControlComponent<ImageUploadFieldConfig>

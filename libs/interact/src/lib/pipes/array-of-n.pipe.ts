@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'arrayOfN'
+    name: 'arrayOfN',
+    standalone: false
 })
 export class ArrayOfNPipe implements PipeTransform {
 

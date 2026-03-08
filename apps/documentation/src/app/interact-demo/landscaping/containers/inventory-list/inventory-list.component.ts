@@ -7,9 +7,10 @@ interface InventoryItem {
 }
 
 @Component({
-  selector: 'tft-inventory-list',
-  templateUrl: './inventory-list.component.html',
-  styleUrls: ['./inventory-list.component.scss']
+    selector: 'tft-inventory-list',
+    templateUrl: './inventory-list.component.html',
+    styleUrls: ['./inventory-list.component.scss'],
+    standalone: false
 })
 export class InventoryListComponent {
   @Input() dragRoot: HTMLElement;

@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ControlType, FormConfig } from '@tft/crispr-forms';
 
 @Component({
-  selector: 'doc-divider',
-  templateUrl: './divider.component.html',
-  styleUrls: ['./divider.component.scss']
+    selector: 'doc-divider',
+    templateUrl: './divider.component.html',
+    styleUrls: ['./divider.component.scss'],
+    standalone: false
 })
 export class DividerComponent implements OnInit {
 

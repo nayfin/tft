@@ -4,9 +4,10 @@ import { Team } from '../../models/shuffleboard.model';
 import { DropzoneOptions } from '@interactjs/types/index';
 
 @Component({
-  selector: 'tft-target-zone',
-  templateUrl: './target-zone.component.html',
-  styleUrls: ['./target-zone.component.scss']
+    selector: 'tft-target-zone',
+    templateUrl: './target-zone.component.html',
+    styleUrls: ['./target-zone.component.scss'],
+    standalone: false
 })
 export class TargetZoneComponent implements OnInit {
   @Output() turnOver = new EventEmitter<TftDropEvent>();

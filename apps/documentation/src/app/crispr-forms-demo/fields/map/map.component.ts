@@ -9,14 +9,13 @@ import { of } from 'rxjs';
 
 
 @Component({
-  selector: 'doc-map',
-  templateUrl: './map.component.html',
-  standalone: true,
-  imports: [
-    CrisprFormComponent,
-    MatCardModule
-  ],
-  styleUrls: ['./map.component.scss']
+    selector: 'doc-map',
+    templateUrl: './map.component.html',
+    imports: [
+        CrisprFormComponent,
+        MatCardModule
+    ],
+    styleUrls: ['./map.component.scss']
 })
 export class MapComponent {
   noaaService = inject(NoaaService);

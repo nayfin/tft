@@ -14,12 +14,11 @@ import { HeadingComponent } from '../heading';
 import type { CrisprControlConfig } from '../../utils';
 
 @Component({
-  selector: 'crispr-field-container',
-  templateUrl: './field-container.component.html',
-  styleUrls: ['./field-container.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [CommonModule, HeadingComponent],
+    selector: 'crispr-field-container',
+    templateUrl: './field-container.component.html',
+    styleUrls: ['./field-container.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [CommonModule, HeadingComponent]
 })
 export class FieldContainerComponent implements OnInit, OnDestroy {
   // the configuration object for the field

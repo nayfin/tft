@@ -94,5 +94,6 @@
       "analyzeSourceFiles": true
     }
   },
-  "defaultBase": "master"
+  "defaultBase": "master",
+  "useLegacyCache": true
 }

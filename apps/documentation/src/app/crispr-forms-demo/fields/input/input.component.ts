@@ -3,9 +3,10 @@ import { ControlType, FormConfig } from '@tft/crispr-forms';
 import { FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'doc-input',
-  templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss']
+    selector: 'doc-input',
+    templateUrl: './input.component.html',
+    styleUrls: ['./input.component.scss'],
+    standalone: false
 })
 export class InputComponent implements OnInit {
 

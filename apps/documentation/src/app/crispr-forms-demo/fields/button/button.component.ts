@@ -3,9 +3,10 @@ import { ControlType, FormConfig } from '@tft/crispr-forms';
 import { Validators } from '@angular/forms';
 
 @Component({
-  selector: 'doc-button',
-  templateUrl: './button.component.html',
-  styleUrls: ['./button.component.scss']
+    selector: 'doc-button',
+    templateUrl: './button.component.html',
+    styleUrls: ['./button.component.scss'],
+    standalone: false
 })
 export class ButtonComponent {
   formConfig: FormConfig = {

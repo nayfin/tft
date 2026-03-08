@@ -5,15 +5,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import type { Info } from '../../utils';
 
 @Component({
-  selector: 'crispr-info',
-  templateUrl: './info.component.html',
-  styleUrls: ['./info.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    MatIconModule,
-    MatTooltipModule
-],
+    selector: 'crispr-info',
+    templateUrl: './info.component.html',
+    styleUrls: ['./info.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        MatIconModule,
+        MatTooltipModule
+    ]
 })
 export class InfoComponent {
 

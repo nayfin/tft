@@ -27,21 +27,20 @@ const defaultConfig: Partial<FormGroupListConfig> = {
 };
 
 @Component({
-  selector: 'crispr-form-group-list',
-  templateUrl: './form-group-list.component.html',
-  styleUrls: ['./form-group-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    MatButtonModule,
-    MatIconModule,
-    FieldContainerComponent,
-    ReactiveFormsModule,
-    CrisprFieldDirective,
-    CrisprDisplayFieldDirective,
-    CrisprPipesModule,
-    FormValidationHandlerModule
-],
+    selector: 'crispr-form-group-list',
+    templateUrl: './form-group-list.component.html',
+    styleUrls: ['./form-group-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        MatButtonModule,
+        MatIconModule,
+        FieldContainerComponent,
+        ReactiveFormsModule,
+        CrisprFieldDirective,
+        CrisprDisplayFieldDirective,
+        CrisprPipesModule,
+        FormValidationHandlerModule
+    ]
 })
 export class FormGroupListComponent
   extends CrisprControlComponent<FormGroupListConfig>

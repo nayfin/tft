@@ -11,18 +11,17 @@ import { RadioFieldConfig, SelectOption, observablifyOptions } from '../../utils
 import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
 
 @Component({
-  selector: 'crispr-radio-field',
-  templateUrl: './radio-field.component.html',
-  styleUrls: ['./radio-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FieldContainerComponent,
-    MatRadioModule,
-    FormValidationHandlerModule,
-  ],
+    selector: 'crispr-radio-field',
+    templateUrl: './radio-field.component.html',
+    styleUrls: ['./radio-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FieldContainerComponent,
+        MatRadioModule,
+        FormValidationHandlerModule,
+    ]
 })
 export class RadioFieldComponent extends CrisprControlComponent<RadioFieldConfig> implements OnInit {
   defaultConfig = {};

@@ -5,9 +5,10 @@ import { EndpointsService, ENDPOINTS } from '../../endpoints.service';
 
 
 @Component({
-  selector: 'doc-autocomplete',
-  templateUrl: './autocomplete.component.html',
-  styleUrls: ['./autocomplete.component.scss']
+    selector: 'doc-autocomplete',
+    templateUrl: './autocomplete.component.html',
+    styleUrls: ['./autocomplete.component.scss'],
+    standalone: false
 })
 export class AutocompleteComponent {
 
