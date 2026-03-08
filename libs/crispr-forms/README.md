@@ -25,6 +25,14 @@ At its core, CRISPR Forms is a component that dynamically generates form fields 
 
 CRISPR Forms requires Angular Material.
 
+Install the package and its peer dependency:
+
+```bash
+npm install @tft/crispr-forms @tft/form-validation-handler
+```
+
+Add Angular Material:
+
 ```bash
 ng add @angular/material
 ```
@@ -112,6 +120,7 @@ The following field types are supported:
 - Datepicker
 - Divider
 - File Upload
+- Form Group List
 - Heading
 - Image Upload
 - Input
@@ -119,6 +128,7 @@ The following field types are supported:
 - Radio Buttons
 - Select
 - Slider
+- Sub Group
 - Textarea
 - Unit Conversion
 
