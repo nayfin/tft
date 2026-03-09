@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Validators } from '@angular/forms';
-import { FormConfig, ControlType } from '@tft/crispr-forms';
+import { Component } from '@angular/core';
+import { FormConfig } from '@tft/crispr-forms';
+import { checkboxFormConfig } from './checkbox.config';
 
 @Component({
     selector: 'doc-checkbox',
@@ -8,24 +8,8 @@ import { FormConfig, ControlType } from '@tft/crispr-forms';
     styleUrls: ['./checkbox.component.scss'],
     standalone: false
 })
-export class CheckboxComponent implements OnInit {
+export class CheckboxComponent {
 
-  formConfig: FormConfig = {
-    fields: [
-      {
-        controlType: ControlType.CHECKBOX,
-        info: {
-          content: 'You can use a tooltip on a checkbox'
-        },
-        label: 'Checkbox Field',
-        controlName: 'checkbox',
-        validators: [Validators.requiredTrue],
-      },
-    ]
-  }
-  constructor() { }
-
-  ngOnInit() {
-  }
+  formConfig: FormConfig = checkboxFormConfig;
 
 }

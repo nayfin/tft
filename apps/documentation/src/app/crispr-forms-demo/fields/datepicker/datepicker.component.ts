@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormConfig, ControlType } from '@tft/crispr-forms';
 import { map } from 'rxjs/operators';
 import { getDayOfYear } from 'date-fns';
+import { datepickerFormConfig } from './datepicker.config';
 
 @Component({
     selector: 'doc-datepicker',
@@ -11,7 +12,9 @@ import { getDayOfYear } from 'date-fns';
 })
 export class DatepickerComponent {
 
-  formConfig: FormConfig = {
+  formConfig: FormConfig = datepickerFormConfig;
+
+  complexFormConfig: FormConfig = {
     fields: [
       {
         heading: {

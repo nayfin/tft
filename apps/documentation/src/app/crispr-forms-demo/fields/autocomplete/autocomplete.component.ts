@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormConfig, ControlType, SelectOption } from '@tft/crispr-forms';
-import { FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { EndpointsService, ENDPOINTS } from '../../endpoints.service';
+import { autocompleteFormConfig } from './autocomplete.config';
 
 
 @Component({
@@ -13,62 +14,10 @@ import { EndpointsService, ENDPOINTS } from '../../endpoints.service';
 export class AutocompleteComponent {
 
   arraySelectInitialValue = {
-    groupList: [
-      {
-        selectField: 'a',
-        autocompleteField: {label: 'option a', value: {id:'a', description: 'some things a'}},
-      }
-    ]
+    autocompleteField: { label: 'option a', value: 'a' },
   };
-  arraySelectConfig: FormConfig = {
-    fields: [
-      {
-        controlType: ControlType.AUTOCOMPLETE,
-        label: 'This autocomplete field uses a simple array of options',
-        controlName: 'autocompleteField',
-        options: (_group, searchTerm) => [
-          {label: 'option a', value: 'a'},
-          {label: 'option b', value: 'b'},
-          {label: 'option c', value: 'c'},
-        ].filter(option => option.label.includes(searchTerm)),
-        validators: [Validators.required]
-      },
-      {
-        controlType: ControlType.GROUP_LIST,
-        controlName: 'groupList',
-        minListLength: 0,
-        displayInitialItem: true,
-        itemLabelBuilder: (i) => `${i + 1}) item`,
-        heading: {
-          label: 'Group List',
-          typographyClass: 'mat-h2'
-        },
-        addButtonLabel: 'ADD ITEM',
-        addButtonColor: 'primary',
-        itemConfig: {
-          controlName: 'groupListItem',
-          controlType: ControlType.SUB_GROUP,
-          fields: [
-            {
-              controlType: ControlType.AUTOCOMPLETE,
-              controlName: 'autocompleteField',
-              label: 'This autocomplete field is part of a group list',
-              options: (_group, searchTerm) => [
-                {label: 'option a', value: {id:'a', description: 'some things a'}},
-                {label: 'option b', value: {id:'b', description: 'some things b'}},
-                {label: 'option c', value: {id:'c', description: 'some things c'}},
-              ].filter(option => option.label.includes(searchTerm)),
-            },
-          ]
-        },
-      },
-      {
-        controlType: ControlType.BUTTON,
-        label: 'SUBMIT',
-        type: 'submit'
-      }
-    ]
-  }
+
+  arraySelectConfig: FormConfig = autocompleteFormConfig;
 
   promiseSelectConfig: FormConfig = {
     fields: [

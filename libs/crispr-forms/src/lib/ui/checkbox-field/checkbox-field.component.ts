@@ -5,10 +5,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '../field-container';
-import {
-  CrisprFieldComponent,
-  CheckboxFieldConfig,
-} from '../../utils';
+import { CheckboxFieldConfig } from '../../utils';
 import { InfoComponent } from '../info';
 import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
 
@@ -18,18 +15,18 @@ const defaultConfig: Partial<CheckboxFieldConfig> = {
 };
 
 @Component({
-    selector: 'crispr-checkbox-field',
-    templateUrl: './checkbox-field.component.html',
-    styleUrls: ['./checkbox-field.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [
-        InfoComponent,
-        MatCheckboxModule,
-        ReactiveFormsModule,
-        FieldContainerComponent,
-        FormValidationHandlerModule
-    ],
-    standalone: true
+  selector: 'crispr-checkbox-field',
+  templateUrl: './checkbox-field.component.html',
+  styleUrls: ['./checkbox-field.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    InfoComponent,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    FieldContainerComponent,
+    FormValidationHandlerModule
+  ],
+  standalone: true
 })
 export class CheckboxFieldComponent
   extends CrisprControlComponent<CheckboxFieldConfig>

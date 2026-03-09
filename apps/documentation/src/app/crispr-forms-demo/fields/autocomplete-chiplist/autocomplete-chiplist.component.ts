@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ControlType, FormConfig, SelectOption } from '@tft/crispr-forms';
 import { EndpointsService, ENDPOINTS } from '../../endpoints.service';
-import { FormGroup, Validators } from '@angular/forms';
-import { minArrayLength } from '@tft/form-validation-handler';
+import { FormGroup } from '@angular/forms';
+import { autocompleteChiplistFormConfig } from './autocomplete-chiplist.config';
 
 
 @Component({
@@ -18,42 +18,12 @@ export class AutocompleteChiplistComponent {
     selectFieldObservable: [
       {
         label: 'initial value',
-        value: 'abcdefg'
-      }
-    ]
-  }
-
-  arraySelectConfig: FormConfig = {
-    errorDictionary: {
-      required: () => {
-        console.log('required')
-
-        return `I am a custom error message on a required field`
+        value: 'abcdefg',
       },
-    },
-    fields: [
-      {
-        controlType: ControlType.AUTOCOMPLETE_CHIPLIST,
-        label: 'This autocomplete field uses a simple array of options',
-        controlName: 'selectField',
-        duplicateCompareFunction: (chip, option) => {
-          // console.log({chip, option});
-          return chip.value === option.value;
-        },
-        options: (_group, searchTerm) => [
-          {label: 'option a', value: 'a', imageUrl: 'https://i.udemycdn.com/course/480x270/1362070_b9a1_2.jpg'},
-          {label: 'option b', value: 'b'},
-          {label: 'option c', value: 'c'},
-        ].filter(option => option.label.includes(searchTerm)),
-        validators: [minArrayLength(2), Validators.required]
-      },
-      {
-        controlType: ControlType.BUTTON,
-        label: 'SUBMIT',
-        buttonType: 'flat'
-      }
-    ]
-  }
+    ],
+  };
+
+  arraySelectConfig: FormConfig = autocompleteChiplistFormConfig;
 
   promiseSelectConfig: FormConfig = {
     fields: [

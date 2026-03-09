@@ -18,6 +18,7 @@
       </span>
     }
     <mat-slider
+      [attr.data-testid]="config().controlName"
       [discrete]="config().discrete"
       [displayWith]="config().displayWith"
       class="example-margin"

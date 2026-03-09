@@ -32,7 +32,7 @@ import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 ## Custom error dictionary
 Pass an `ErrorDictionary` to override messages. Each key is a validator name, value is a function receiving the error object:
 ```ts
-import { ErrorDictionary } from '@tft/form-validation-handler';
+import { ErrorDictionary } from '@tft/form-validation-handler/utils';
 
 const myErrors: ErrorDictionary = {
   required: () => 'Please fill this in',
@@ -46,7 +46,7 @@ Pass via `FormConfig.errorDictionary` in crispr-forms, or directly to `ControlEr
 ### someControlIsValid
 Form-level validator: passes if at least one of the named controls is valid.
 ```ts
-import { someControlIsValid } from '@tft/form-validation-handler';
+import { someControlIsValid } from '@tft/form-validation-handler/utils';
 
 config: FormConfig = {
   validators: [someControlIsValid(['fieldA', 'fieldB', 'fieldC'])],
@@ -57,7 +57,7 @@ config: FormConfig = {
 ### minArrayLength
 Control-level validator for array values (e.g. chiplist, multi-select):
 ```ts
-import { minArrayLength } from '@tft/form-validation-handler';
+import { minArrayLength } from '@tft/form-validation-handler/utils';
 
 { validators: [minArrayLength(2)] }
 ```

@@ -5,6 +5,7 @@
   <div
     [formGroup]="group()">
     <mat-checkbox
+      [attr.data-testid]="config().controlName"
       [color]="config().color"
       [labelPosition]="config().labelPosition"
       [formControlName]="config().controlName">
