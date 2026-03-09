@@ -1,0 +1,55 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Set NX SHAs
+        uses: nrwl/nx-set-shas@v4
+
+      - name: Build and publish affected libs
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          EXCLUDED=("mat-instantsearch" "ui-imports" "core" "api-interfaces")
+          AFFECTED=$(npx nx show projects --affected --base=$NX_BASE --head=$NX_HEAD)
+
+          for lib in $AFFECTED; do
+            # Skip excluded libs
+            if [[ " ${EXCLUDED[*]} " =~ " ${lib} " ]]; then
+              echo "Skipping $lib (excluded)"
+              continue
+            fi
+
+            # Skip if no package.json (apps, etc.)
+            if [ ! -f "libs/$lib/package.json" ]; then
+              echo "Skipping $lib (no package.json)"
+              continue
+            fi
+
+            echo "Building $lib..."
+            npx nx build $lib
+
+            VERSION=$(node -p "require('./libs/$lib/package.json').version")
+            TAG=$([[ "$VERSION" == *"-"* ]] && echo "next" || echo "latest")
+
+            echo "Publishing @tft/$lib@$VERSION with tag $TAG..."
+            npm publish dist/libs/$lib --access public --tag $TAG
+          done

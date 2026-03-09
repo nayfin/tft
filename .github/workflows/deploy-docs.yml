@@ -1,0 +1,36 @@
+name: Deploy Docs
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/documentation/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checkout tft-documentation
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/tft-documentation
+          token: ${{ secrets.DOCS_DEPLOY_TOKEN }}
+          path: tft-documentation
+
+      - name: Copy docs app
+        run: |
+          rm -rf tft-documentation/src/app
+          cp -rf apps/documentation/src/app tft-documentation/src/app
+
+      - name: Commit and push
+        working-directory: tft-documentation
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git diff --staged --quiet || git commit -m "release to stackblitz"
+          git push
