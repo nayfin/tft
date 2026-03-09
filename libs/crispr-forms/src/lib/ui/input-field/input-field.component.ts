@@ -17,15 +17,14 @@ import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abs
     styleUrls: ['./input-field.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
-        InfoComponent,
-        ReactiveFormsModule,
-        FieldContainerComponent,
-        MatFormFieldModule,
-        MatInputModule,
-        FormValidationHandlerModule,
-        MatIconModule
-    ],
-    standalone: true
+      InfoComponent,
+      ReactiveFormsModule,
+      FieldContainerComponent,
+      MatFormFieldModule,
+      MatInputModule,
+      FormValidationHandlerModule,
+      MatIconModule
+    ]
 })
 export class InputFieldComponent extends CrisprControlComponent<InputFieldConfig> implements OnInit {
 

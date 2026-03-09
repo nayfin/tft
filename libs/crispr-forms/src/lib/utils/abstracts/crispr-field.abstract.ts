@@ -1,7 +1,7 @@
 import type {
   CrisprFieldConfig,
 } from '../models';
-import { Directive,input, computed, Signal, signal, Input} from '@angular/core';
+import { Directive, signal, Input} from '@angular/core';
 
 @Directive({
   standalone: true
