@@ -45,7 +45,7 @@ jobs:
             fi
 
             echo "Building $lib..."
-            npx nx build $lib
+            npx nx build $lib --configuration=production
 
             VERSION=$(node -p "require('./libs/$lib/package.json').version")
             TAG=$([[ "$VERSION" == *"-"* ]] && echo "next" || echo "latest")
