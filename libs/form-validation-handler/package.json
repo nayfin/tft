@@ -1,6 +1,6 @@
 {
   "name": "@tft/form-validation-handler",
-  "version": "21.0.0",
+  "version": "21.0.1",
   "peerDependencies": {
     "@angular/common": "^21.0.0",
     "@angular/core": "^21.0.0"
