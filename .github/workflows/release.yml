@@ -24,26 +24,32 @@ jobs:
       - name: Set NX SHAs
         uses: nrwl/nx-set-shas@v4
 
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Build and publish affected libs
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           EXCLUDED=("mat-instantsearch" "ui-imports" "core" "api-interfaces")
           AFFECTED=$(npx nx show projects --affected --base=$NX_BASE --head=$NX_HEAD)
+          PUBLISHED=()
 
           for lib in $AFFECTED; do
-            # Skip excluded libs
             echo "LIB: $lib"
             if [[ " ${EXCLUDED[*]} " =~ " ${lib} " ]]; then
               echo "Skipping $lib (excluded)"
               continue
             fi
 
-            # Skip if no package.json (apps, etc.)
             if [ ! -f "libs/$lib/package.json" ]; then
               echo "Skipping $lib (no package.json)"
               continue
             fi
+
+            npm --prefix libs/$lib version patch --no-git-tag-version
 
             echo "Building $lib..."
             npx nx build $lib --configuration=production
@@ -53,4 +59,12 @@ jobs:
 
             echo "Publishing @tft/$lib@$VERSION with tag $TAG..."
             npm publish dist/libs/$lib --access public --tag $TAG
+
+            PUBLISHED+=($lib)
           done
+
+          if [ ${#PUBLISHED[@]} -gt 0 ]; then
+            git add libs/*/package.json
+            git commit -m "chore: bump patch versions for ${PUBLISHED[*]} [skip ci]"
+            git push
+          fi

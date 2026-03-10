@@ -20,16 +20,16 @@ import {
 } from '../utils';
 
 @Component({
-    selector: 'crispr-form',
-    styleUrls: ['form.component.scss'],
-    templateUrl: 'form.component.html',
-    imports: [
-        CommonModule,
-        CrisprFieldDirective,
-        ReactiveFormsModule,
-        FormValidationHandlerModule,
-        CrisprPipesModule,
-    ]
+  selector: 'crispr-form',
+  styleUrls: ['form.component.scss'],
+  templateUrl: 'form.component.html',
+  imports: [
+    CommonModule,
+    CrisprFieldDirective,
+    ReactiveFormsModule,
+    FormValidationHandlerModule,
+    CrisprPipesModule,
+  ]
 })
 export class CrisprFormComponent implements OnInit {
   // if no form has been passed in by consuming component, we create an empty group to build out
@@ -50,7 +50,6 @@ export class CrisprFormComponent implements OnInit {
   }
 
   handleSubmit() {
-    console.log('submitting')
     this.form.markAllAsTouched();
     this.submitted.emit(this.form);
   }
