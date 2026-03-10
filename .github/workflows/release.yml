@@ -33,6 +33,7 @@ jobs:
 
           for lib in $AFFECTED; do
             # Skip excluded libs
+            echo "LIB: $lib"
             if [[ " ${EXCLUDED[*]} " =~ " ${lib} " ]]; then
               echo "Skipping $lib (excluded)"
               continue
