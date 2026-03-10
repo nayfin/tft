@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
 
-import { ErrorDictionary } from '@tft/form-validation-handler/utils';
+import { ErrorDictionary } from '@tft/form-validation-handler';
 
 import type {
   SelectFieldConfig,

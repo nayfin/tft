@@ -61,7 +61,7 @@ export class SelectComponent implements OnInit {
         controlType: ControlType.SELECT,
         label: 'Results',
         placeholder: 'Searched plants available as options here',
-        controlName: 'multiSelectField',
+        controlName: 'observableMultiSelect',
         multiple:true,
         info: {
           content: 'The result of the plant search above are displayed here'

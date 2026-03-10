@@ -17,15 +17,15 @@ export function testSliderField(config: SliderFieldConfig) {
 
   if (config.min !== undefined) {
     test(`has correct min value (${config.min})`, async ({ page }) => {
-      const slider = page.locator(`[data-testid="${config.controlName}"]`);
-      await expect(slider).toHaveAttribute('min', String(config.min));
+      const thumb = page.locator(`[data-testid="${config.controlName}"] input`);
+      await expect(thumb).toHaveAttribute('min', String(config.min));
     });
   }
 
   if (config.max !== undefined) {
     test(`has correct max value (${config.max})`, async ({ page }) => {
-      const slider = page.locator(`[data-testid="${config.controlName}"]`);
-      await expect(slider).toHaveAttribute('max', String(config.max));
+      const thumb = page.locator(`[data-testid="${config.controlName}"] input`);
+      await expect(thumb).toHaveAttribute('max', String(config.max));
     });
   }
 }

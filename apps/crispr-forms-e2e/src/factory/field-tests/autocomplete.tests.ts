@@ -1,7 +1,7 @@
 import { test, expect } from '../../fixtures/angular-test';
 import { AutocompleteFieldConfig } from '@tft/crispr-forms/utils';
 import { Validators } from '@angular/forms';
-import { getLabel, getHint, getError, getAutocompleteInput, touchAutocomplete } from '../../helpers/form.helpers';
+import { getLabel, getHint, getError, getAutocompleteInput, submitForm } from '../../helpers/form.helpers';
 
 export function testAutocompleteField(config: AutocompleteFieldConfig) {
   if (config.label) {
@@ -29,8 +29,11 @@ export function testAutocompleteField(config: AutocompleteFieldConfig) {
   });
 
   if (config.validators?.includes(Validators.required)) {
-    test('shows required error when blurred without selection', async ({ page }) => {
-      await touchAutocomplete(page, config.controlName);
+    test('shows required error when form submitted empty', async ({ page }) => {
+      // Clear the visible input so the internal control value becomes null
+      await getAutocompleteInput(page, config.controlName).fill('');
+      // Submit triggers error display for the hidden [formControlName] control
+      await submitForm(page);
       await expect(getError(page, config.controlName, 'autocomplete')).toBeVisible();
     });
   }

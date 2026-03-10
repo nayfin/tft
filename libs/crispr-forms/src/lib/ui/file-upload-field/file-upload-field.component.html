@@ -19,7 +19,7 @@
       (change)="filesChanged($event.target.files)"/>
     <mat-label>{{config().label}}</mat-label>
 
-    @if ((selectedFiles()?.length === 0)) {
+    @if (!selectedFiles() || selectedFiles().length === 0) {
       <div  class="drop-info">
         <mat-icon class="drop-icon" inline="true">cloud_upload</mat-icon>
         <h2 class="mat-h2">{{config().dropZoneText}}</h2>

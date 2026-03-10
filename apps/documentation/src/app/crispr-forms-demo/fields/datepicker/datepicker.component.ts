@@ -23,7 +23,7 @@ export class DatepickerComponent {
         controlType: ControlType.DATEPICKER,
         startAt: new Date('April 20 2019'),
         label: 'Datepicker Field',
-        controlName: 'datepicker',
+        controlName: 'customFooterDatepicker',
         datepickerActions: CustomDatepickerFooterComponent
       },
       {

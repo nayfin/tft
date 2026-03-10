@@ -74,7 +74,7 @@ export class FileUploadFieldComponent
   @ViewChild('fileInput') fileInputRef: ElementRef;
 
   selectedFiles = signal<FileList | null>(null);
-  selectedFilesArray = computed(() => Array.from(this.selectedFiles()));
+  selectedFilesArray = computed(() => this.selectedFiles() ? Array.from(this.selectedFiles()) : []);
 
   isUploaded = false;
 

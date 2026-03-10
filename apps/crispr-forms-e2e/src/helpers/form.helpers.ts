@@ -9,9 +9,11 @@ export function getInput(page: Page, controlName: string): Locator {
 }
 
 export function getError(page: Page, controlName: string, fieldType = 'input'): Locator {
-  // tft-control-error is inserted outside mat-form-field due to content projection,
-  // but stays within the crispr-*-field component boundary
-  return page.locator(`crispr-${fieldType}-field:has([data-testid="${controlName}"]) tft-control-error`);
+  // Target the inner <p> inside tft-control-error (only rendered when error text is present).
+  // This avoids strict-mode failures on fields like autocomplete that have two tft-control-error
+  // host elements (one per form input) where only the relevant one has visible content.
+  // TODO: can we be less rigid with this selector?  use getMatFormField like getLabel?
+  return page.locator(`crispr-${fieldType}-field:has([data-testid="${controlName}"]) p.tft-control-error`);
 }
 
 export function getLabel(page: Page, controlName: string): Locator {
@@ -45,6 +47,7 @@ export async function selectOption(page: Page, controlName: string, optionLabel:
 export async function touchSelect(page: Page, controlName: string): Promise<void> {
   await openSelect(page, controlName);
   await page.keyboard.press('Escape');
+  await page.keyboard.press('Tab'); // blur the select to trigger touched state
 }
 
 // Checkbox helpers
@@ -67,6 +70,15 @@ export function getAutocompleteInput(page: Page, controlName: string): Locator {
 export async function touchAutocomplete(page: Page, controlName: string): Promise<void> {
   await getAutocompleteInput(page, controlName).click();
   await page.keyboard.press('Tab');
+}
+
+// Submit the nearest crispr-form — fires the hidden submit-trigger to trigger the form's submit event.
+// Must use evaluate+native click because display:none elements have no layout position for pointer events.
+export async function submitForm(page: Page, nth = 0): Promise<void> {
+  await page.evaluate((n) => {
+    const triggers = document.querySelectorAll<HTMLButtonElement>('[data-testid="submit-trigger"]');
+    triggers[n]?.click();
+  }, nth);
 }
 
 // Datepicker helpers
