@@ -35,6 +35,5 @@ export class InputFieldComponent extends CrisprControlComponent<InputFieldConfig
 
   ngOnInit() {
     super.ngOnInit();
-    console.log('InputFieldComponent', this.group() );
   }
 }

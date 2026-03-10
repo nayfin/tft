@@ -29,7 +29,7 @@
       (optionSelected)="handleSelect($event)" [displayWith]="mapToLabel">
       @if (remainingOptions$ | async; as remainingOptions) {
       @if (remainingOptions.length > 0) {
-      @for (option of remainingOptions$ | async; track option) {
+      @for (option of remainingOptions$ | async; track option.value) {
       <mat-option [value]="option">
         <crispr-option [option]="option"></crispr-option>
       </mat-option>

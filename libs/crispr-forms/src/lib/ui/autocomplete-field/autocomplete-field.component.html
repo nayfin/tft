@@ -35,7 +35,7 @@
 
       @if (options$ | async; as options) {
         @if (options.length > 0) {
-          @for (option of options; track option) {
+          @for (option of options; track option.value) {
             <mat-option
               [value]="option.value">
               <crispr-option [option]="option"></crispr-option>

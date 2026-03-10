@@ -1,40 +1,29 @@
-<crispr-field-container
-  [config]="config()"
-  [group]="group()">
+<crispr-field-container [config]="config()" [group]="group()">
   @if (config().label) {
-    <label>
-      {{config().label}}
-      @if (config().info) {
-        <crispr-info
-          [info]="config().info">
-        </crispr-info>
-      }
-    </label>
+  <label>
+    {{config().label}}
+    @if (config().info) {
+    <crispr-info [info]="config().info">
+    </crispr-info>
+    }
+  </label>
   }
   <div class="slider-container">
     @if (config().displayLimits) {
-      <span>
-        {{config().min}}
-      </span>
+    <span>
+      {{config().min}}
+    </span>
     }
-    <mat-slider
-      [attr.data-testid]="config().controlName"
-      [discrete]="config().discrete"
-      [displayWith]="config().displayWith"
-      class="example-margin"
-      [formGroup]="group()"
-      [max]="config().max"
-      [min]="config().min"
-      [step]="config().step">
-      <input matSliderThumb
-        [formControlName]="config().controlName">
+    <mat-slider [attr.data-testid]="config().controlName" [discrete]="config().discrete"
+      [displayWith]="config().displayWith" class="example-margin" [formGroup]="group()" [max]="config().max"
+      [min]="config().min" [step]="config().step">
+      <input matSliderThumb [formControlName]="config().controlName">
     </mat-slider>
     @if (config().displayLimits) {
-      <span>
-        {{config().max}}
-      </span>
+    <span>
+      {{config().max}}
+    </span>
     }
   </div>
 
 </crispr-field-container>
-

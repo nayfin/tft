@@ -5,7 +5,6 @@ import {
   Renderer2,
   OnInit,
   ChangeDetectorRef,
-  WritableSignal,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import {
@@ -55,8 +54,8 @@ export class CrisprFieldDirective implements OnInit {
     const componentRef =
       this.container.createComponent<CrisprFieldComponentType>(component);
 
-    this.component = componentRef.instance;    
-    (this.component.config as WritableSignal<AnyFieldConfig>).set(this.config);
+    this.component = componentRef.instance;
+    componentRef.setInput('config', this.config);
     if (isControlOrButtonComponent(this.component)) {
       componentRef.setInput('group', this.group);
     }

@@ -23,12 +23,11 @@ const defaultConfig: Partial<SliderFieldConfig> = {
     styleUrls: ['./slider-field.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
-        InfoComponent,
-        FieldContainerComponent,
-        ReactiveFormsModule,
-        MatSliderModule
-    ],
-    standalone: true
+      InfoComponent,
+      FieldContainerComponent,
+      ReactiveFormsModule,
+      MatSliderModule
+    ]
 })
 export class SliderFieldComponent extends CrisprControlComponent<SliderFieldConfig> implements OnInit {
   defaultConfig = defaultConfig;
