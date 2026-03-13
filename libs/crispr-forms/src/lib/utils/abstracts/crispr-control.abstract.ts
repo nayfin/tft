@@ -44,7 +44,6 @@ export class CrisprControlComponent<C extends CrisprControlConfig> extends Crisp
     ).subscribe((value: ControlValue) => {
       this.valueChanges.emit(value);
     });
-    // this.setControlValue(this.value);
     // setTimeouts are ugly but this seems to be the only way to get the computed field to compute initial values
     setTimeout(()=> {
       this.control().updateValueAndValidity();

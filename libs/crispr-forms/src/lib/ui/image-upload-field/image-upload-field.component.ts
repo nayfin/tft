@@ -181,7 +181,7 @@ export class ImageUploadFieldComponent
     this.imageSrcUrl$ = combineLatest([
       this.compressedImageUrlString$.pipe(startWith(null)),
       this.control().valueChanges.pipe(
-        startWith(this.value),
+        startWith(this.value()),
         map((controlValue): string => {
           if (!controlValue) return null;
           if (controlValue instanceof File) return null;
