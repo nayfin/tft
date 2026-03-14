@@ -1,9 +1,10 @@
 <mat-card>
-  <h3 class="mat-h1">I am a dynamically generated file upload field</h3>
-  <crispr-form
-    [config]="config"
-    [value]="value | async"
-    (submitted)="handleSubmit($event)">
+  <h2 class="mat-h2">
+    Image upload field
+  </h2>
+  <p class="mat-p">
+    Use to upload images
+  </p> <crispr-form [config]="config" [value]="value | async" (submitted)="handleSubmit($event)">
   </crispr-form>
 
 </mat-card>
