@@ -21,6 +21,7 @@ import { ImageUploadComponent } from './image-upload/image-upload.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { OverviewComponent } from './overview/overview.component';
+import { MapComponent } from './map/map.component';
 
 
 @NgModule({
@@ -47,10 +48,11 @@ import { OverviewComponent } from './overview/overview.component';
         FieldsRoutingModule,
         CrisprFormsModule,
         MatCardModule,
-        MatButtonModule
-        ], 
-        providers: [
-            provideHttpClient(withInterceptorsFromDi())
-        ] 
+        MatButtonModule,
+        MapComponent
+    ], 
+    providers: [
+        provideHttpClient(withInterceptorsFromDi())
+    ] 
     })
 export class FieldsModule { }
