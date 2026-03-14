@@ -1,11 +1,12 @@
 <crispr-field-container [config]="config()" [group]="group()">
-  <mat-form-field [attr.data-testid]="config().controlName" [color]="config().color" [appearance]="config().appearance" [formGroup]="group()">
+  <mat-form-field [attr.data-testid]="config().controlName" [color]="config().color" [appearance]="config().appearance"
+    [formGroup]="group()">
     @if (config().label) {<mat-label>{{config().label}}</mat-label>}
     <textarea [rows]="config().rows" matInput [placeholder]="config().placeholder"
       [formControlName]="config().controlName">
     </textarea>
+    @if (config().info) {<crispr-info [info]="config().info"></crispr-info>}
     @if (config().fieldSuffix) {<span matSuffix>{{config().fieldSuffix}}</span>}
-    @if (config().info) {<crispr-info matSuffix [info]="config().info"></crispr-info>}
     @if (config().hint && control().valid) {<mat-hint>{{config().hint}}</mat-hint>}
 
   </mat-form-field>
