@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx nx:*)"
+      "Bash(npx nx:*)",
+      "Bash(grep -n \"data-testid\" libs/crispr-forms/src/lib/ui/**/*.html)"
     ]
   }
 }
