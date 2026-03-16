@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, inject } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { scan, shareReplay } from 'rxjs/operators';
 
@@ -14,6 +14,8 @@ interface ScrollObject {scrollTop: number, scrollLeft: number};
     standalone: false
 })
 export class AutoScrollDirective {
+  el = inject(ElementRef);
+
   /**
    * Limit minimum time between scroll events in milliseconds
    */
@@ -35,9 +37,9 @@ export class AutoScrollDirective {
   }
 
 
-  constructor(
-    public el: ElementRef
-  ) {
+  constructor() {
+    const el = this.el;
+
     const { scrollTop, scrollLeft } = (el.nativeElement as HTMLElement);
     this.scrollSubject = new BehaviorSubject({scrollTop, scrollLeft});
     this.scrollObserver = this.scrollSubject.pipe(

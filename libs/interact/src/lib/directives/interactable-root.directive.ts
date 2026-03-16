@@ -1,9 +1,9 @@
-import { Directive, ElementRef } from '@angular/core';
+import { Directive, ElementRef, inject } from '@angular/core';
 
 @Directive({
     selector: '[tftDragRoot]',
     standalone: false
 })
 export class DragRootDirective {
-  constructor(public el: ElementRef) { }
+  el = inject(ElementRef);
 }

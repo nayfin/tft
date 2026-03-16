@@ -1,4 +1,4 @@
-import { Directive, OnInit, OnDestroy, ElementRef, Input, Optional, SkipSelf, Output, EventEmitter, OnChanges, SimpleChanges, Renderer2, Inject, DOCUMENT } from '@angular/core';
+import { Directive, OnInit, OnDestroy, ElementRef, Input, Output, EventEmitter, OnChanges, SimpleChanges, Renderer2, DOCUMENT, inject } from '@angular/core';
 
 import interact from 'interactjs';
 import { InteractService } from '../services/interact.service';
@@ -34,6 +34,16 @@ interface ActiveEdges {
     standalone: false
 })
 export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
+  el = inject(ElementRef);
+  private _document = inject<Document>(DOCUMENT);
+  private interactService = inject(InteractService);
+  private renderer = inject(Renderer2);
+  private drag_root_dir = inject(DragRootDirective, { optional: true });
+  account_for_scale_dir? = inject(AccountForScaleDirective, { optional: true });
+  private draggable_dir = inject(DraggableDirective, { optional: true });
+  private dropzone_dir = inject(DropzoneDirective, { optional: true, skipSelf: true });
+  auto_scroll_dir? = inject(AutoScrollDirective, { optional: true, skipSelf: true });
+
 
   @Input() enableResizeDefault = true;
   // TODO: should this be an input with default or should consuming user set display in styles each time
@@ -66,19 +76,9 @@ export class ResizableDirective implements OnInit, OnDestroy, OnChanges {
     return this.account_for_scale_dir?.scale || this.drag_root_dir?.account_for_scale_dir?.scale;
   }
 
-  constructor(
-    public el: ElementRef,
-    @Inject(DOCUMENT) private _document: Document,
-    private interactService: InteractService,
-    private renderer: Renderer2,
-    @Optional() private drag_root_dir?: DragRootDirective,
-    @Optional() public account_for_scale_dir?: AccountForScaleDirective,
-    @Optional() private draggable_dir?: DraggableDirective,
-    @Optional() @SkipSelf() private dropzone_dir?: DropzoneDirective,
-    @Optional() @SkipSelf() public auto_scroll_dir?: AutoScrollDirective
+  constructor() {
+    const drag_root_dir = this.drag_root_dir;
 
-
-  ) {
     this.dragRootEl = (drag_root_dir?.el?.nativeElement as HTMLElement) || this._document.body;
   }
 

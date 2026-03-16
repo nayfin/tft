@@ -1,5 +1,4 @@
-import { Directive, ElementRef, Input, OnInit, Output,
-   EventEmitter, Optional, SimpleChanges, OnChanges } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, Output, EventEmitter, SimpleChanges, OnChanges, inject } from '@angular/core';
 import interact from 'interactjs';
 import { DraggableOptions, GesturableOptions, Interactable, GestureEvent } from '@interactjs/types/index';
 import { Observable } from 'rxjs';
@@ -18,6 +17,9 @@ import { DraggableDirective } from '../directives';
 })
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class GesturableDirective<D = any> implements OnInit, OnChanges {
+  el = inject(ElementRef);
+  private draggable_dir = inject(DraggableDirective, { optional: true });
+
 
   @Input() gesturableId: string;
   @Input() gestureDisabled = false;
@@ -29,11 +31,6 @@ export class GesturableDirective<D = any> implements OnInit, OnChanges {
 
   interactableState: Observable<TftCoords>;
   interactable: Interactable;
-
-  constructor(
-    public el: ElementRef,
-    @Optional() private draggable_dir?: DraggableDirective,
-  ) { }
 
   ngOnInit() {
     this.gesturableId = this.draggable_dir?.interactableId || 'id';

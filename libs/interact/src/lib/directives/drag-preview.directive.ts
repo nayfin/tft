@@ -1,4 +1,4 @@
-import {Directive, InjectionToken, Input, TemplateRef} from '@angular/core';
+import { Directive, InjectionToken, Input, TemplateRef, inject } from '@angular/core';
 
 export const TFT_DRAG_PREVIEW = new InjectionToken<DragPreviewDirective>('DragPreviewDirective');
 
@@ -8,7 +8,8 @@ export const TFT_DRAG_PREVIEW = new InjectionToken<DragPreviewDirective>('DragPr
     standalone: false
 })
 export class DragPreviewDirective<T = any> {
+  templateRef = inject<TemplateRef<T>>(TemplateRef);
+
 
   @Input() dragData: T;
-  constructor(public templateRef: TemplateRef<T>) { }
 }

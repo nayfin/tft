@@ -1,5 +1,5 @@
 
-import { Injectable, Renderer2, RendererFactory2, NgZone, Inject, Optional } from '@angular/core';
+import { Injectable, Renderer2, RendererFactory2, NgZone, inject } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { tap, map, shareReplay } from 'rxjs/operators';
 import {
@@ -11,6 +11,10 @@ import {
 
 @Injectable({providedIn: 'root'})
 export class InteractService {
+  private rendererFactory = inject(RendererFactory2);
+  private ngZone = inject(NgZone);
+  rootConfig = inject(INTERACT_ROOT_CONFIG, { optional: true });
+
 
   private _interactableIndex = 0;
   private _dropzoneIndex = 0;
@@ -19,11 +23,9 @@ export class InteractService {
   // TODO: consider using Map here
   readonly dragRegistrySystem: { [key: string]: InteractableRegistry } = { };
   private cssUnit = 'px'
-  constructor(
-    private rendererFactory: RendererFactory2,
-    private ngZone: NgZone,
-    @Optional() @Inject(INTERACT_ROOT_CONFIG) public rootConfig
-  ) {
+  constructor() {
+    const rootConfig = this.rootConfig;
+
     this.renderer = this.rendererFactory.createRenderer(null, null);
     this.cssUnit = rootConfig?.cssDimensionUnit || 'px';
   }

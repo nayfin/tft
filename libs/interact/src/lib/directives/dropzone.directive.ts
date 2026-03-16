@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit, Output, EventEmitter, SimpleChanges, OnChanges, Renderer2, Optional, HostBinding } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, Output, EventEmitter, SimpleChanges, OnChanges, Renderer2, HostBinding, inject } from '@angular/core';
 import interact from 'interactjs';
 import { DropzoneOptions, Interactable } from '@interactjs/types/index';
 import { InteractService } from '../services/interact.service';
@@ -14,6 +14,11 @@ export type PositionOption = 'relative' | 'absolute' | 'fixed' | 'static' | 'sti
     standalone: false
 })
 export class DropzoneDirective implements OnInit, OnChanges {
+  el = inject(ElementRef);
+  private renderer = inject(Renderer2);
+  private interactService = inject(InteractService);
+  private account_for_scale_dir = inject(AccountForScaleDirective, { optional: true });
+
 
   @Input() dropzoneId: string;
   @Input() dropzoneConfig: DropzoneOptions = {};
@@ -33,12 +38,6 @@ export class DropzoneDirective implements OnInit, OnChanges {
   get scale(): number {
     return this.account_for_scale_dir?.scale;
   }
-  constructor(
-    public el: ElementRef,
-    private renderer: Renderer2,
-    private interactService: InteractService,
-    @Optional() private account_for_scale_dir?: AccountForScaleDirective
-  ) { }
 
   ngOnInit() {
     // connects

@@ -1,8 +1,4 @@
-import {
-  Directive, ElementRef, Input, OnInit, Output,
-  OnDestroy, EventEmitter, Optional, SkipSelf, Renderer2, SimpleChanges, OnChanges, ContentChild, ViewContainerRef, Inject, AfterViewInit,
-  DOCUMENT
-} from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, Output, OnDestroy, EventEmitter, Renderer2, SimpleChanges, OnChanges, ContentChild, ViewContainerRef, AfterViewInit, DOCUMENT, inject } from '@angular/core';
 
 import interact from 'interactjs';
 import { InteractService } from '../services/interact.service';
@@ -29,6 +25,16 @@ import { AutoScrollDirective } from './auto-scroll.directive';
 })
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+  el = inject(ElementRef);
+  private interactService = inject(InteractService);
+  private renderer = inject(Renderer2);
+  private _viewContainerRef = inject(ViewContainerRef);
+  private _document = inject<Document>(DOCUMENT);
+  account_for_scale_dir? = inject(AccountForScaleDirective, { optional: true });
+  dropzone_dir? = inject(DropzoneDirective, { optional: true, skipSelf: true });
+  drag_root_dir? = inject(DragRootDirective, { optional: true, skipSelf: true });
+  auto_scroll_dir? = inject(AutoScrollDirective, { optional: true, skipSelf: true });
+
 
 
   @Input() x: number;
@@ -76,18 +82,6 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   get scale(): number {
     return this.account_for_scale_dir?.scale || this.drag_root_dir?.account_for_scale_dir?.scale || this.dragRoot?.account_for_scale_dir?.scale || 1;
   }
-
-  constructor(
-    public el: ElementRef,
-    private interactService: InteractService,
-    private renderer: Renderer2,
-    private _viewContainerRef: ViewContainerRef,
-    @Inject(DOCUMENT) private _document: Document,
-    @Optional() public account_for_scale_dir?: AccountForScaleDirective,
-    @Optional() @SkipSelf() public dropzone_dir?: DropzoneDirective,
-    @Optional() @SkipSelf() public drag_root_dir?: DragRootDirective,
-    @Optional() @SkipSelf() public auto_scroll_dir?: AutoScrollDirective
-  ) { }
 
   ngOnInit() {
     this.interactable = this.initiateDragEvents(this.dragConfig, this.el.nativeElement);

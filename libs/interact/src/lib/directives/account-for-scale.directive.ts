@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostBinding, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, HostBinding, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 
 /**
  * Use to apply scale to the element and tell the drag and resize directives to account for the scale when
@@ -11,10 +11,8 @@ import { Directive, ElementRef, HostBinding, Input, OnChanges, SimpleChanges } f
     standalone: false
 })
 export class AccountForScaleDirective {
+  el = inject(ElementRef);
+
   // this setup allows consumers to set x, y scale independently or just set them both with scale
   @Input() scale = 1;
-
-  constructor(
-    public el: ElementRef
-  ) { }
 }
