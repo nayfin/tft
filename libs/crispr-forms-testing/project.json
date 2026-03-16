@@ -6,6 +6,9 @@
   "tags": [],
   "targets": {
     "build": {
+      "dependsOn": [
+        { "projects": ["crispr-forms", "form-validation-handler"], "target": "build", "params": "forward" }
+      ],
       "executor": "nx:run-commands",
       "options": {
         "command": "npx tsc -p libs/crispr-forms-testing/tsconfig.lib.json && cp libs/crispr-forms-testing/package.json dist/libs/crispr-forms-testing/package.json && cp libs/crispr-forms-testing/CLAUDE.md dist/libs/crispr-forms-testing/CLAUDE.md"
