@@ -18,7 +18,7 @@
       <!-- TODO: if chiplists didn't need to have labels mixed in with their values we could use [value]="control.value" below -->
       @for (field of config().itemConfig.fields; track field) {
       <ng-container crisprField [value]="blockValue ? null : value && value[i] | initialControlValue : field"
-        [config]="field" [group]="itemControl">
+        [config]="field" [group]="itemControl" [testIdPrefix]="testId() + '[' + i + ']'">
       </ng-container>
       }
     </div>

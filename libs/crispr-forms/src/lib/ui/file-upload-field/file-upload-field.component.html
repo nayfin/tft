@@ -2,7 +2,7 @@
   [config]="config()"
   [group]="group()">
   <mat-form-field floatLabel="always"
-    [attr.data-testid]="config().controlName"
+    [attr.data-testid]="testId()"
     [color]="config().color"
     appearance="outline"
     [crisprFileDropzone]="!(disabled$ | async) && !(config().disableOnUpload && isUploaded)"

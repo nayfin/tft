@@ -1,5 +1,5 @@
 <crispr-field-container [config]="config()" [group]="group()">
-  <mat-form-field [attr.data-testid]="config().controlName" [style.width.%]="config().showUnitSelect ? 60 : 100" class="number-field" [color]="config().color"
+  <mat-form-field [attr.data-testid]="testId()" [style.width.%]="config().showUnitSelect ? 60 : 100" class="number-field" [color]="config().color"
     [appearance]="config().appearance">
     @if (config().label) {<mat-label>{{config().label}}</mat-label>}
     <input type="number" matInput [formControl]="displayValueControl" [placeholder]="config().placeholder"

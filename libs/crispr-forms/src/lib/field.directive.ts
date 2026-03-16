@@ -5,6 +5,7 @@ import {
   Renderer2,
   OnInit,
   ChangeDetectorRef,
+  inject,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import {
@@ -23,6 +24,7 @@ export class CrisprFieldDirective implements OnInit {
 
   @Input() config: AnyFieldConfig;
   @Input() group: FormGroup;
+  @Input() testIdPrefix?: string;
   /**
    * value setter updates the control's value as well
    */
@@ -38,12 +40,10 @@ export class CrisprFieldDirective implements OnInit {
 
   component: CrisprFieldComponentType;
 
-  constructor(
-    private container: ViewContainerRef,
-    private renderer: Renderer2,
-    private cdr: ChangeDetectorRef
-  ) {}
-
+  container  = inject(ViewContainerRef);
+  renderer  = inject(Renderer2);
+  cdr  = inject(ChangeDetectorRef); 
+  
   async ngOnInit() {
     /**
      * create component and set values from config on its instance
@@ -59,6 +59,7 @@ export class CrisprFieldDirective implements OnInit {
     if (isControlOrButtonComponent(this.component)) {
       componentRef.setInput('group', this.group);
     }
+    componentRef.setInput('testIdPrefix', this.testIdPrefix);
     this.updateComponentValue(this.value);
     // adds any config classes to the dynamically generated component
     // doing this here keeps us from having to extend a base component into each field component individually

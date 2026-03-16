@@ -14,7 +14,7 @@
       {{config().min}}
     </span>
     }
-    <mat-slider [attr.data-testid]="config().controlName" [discrete]="config().discrete"
+    <mat-slider [attr.data-testid]="testId()" [discrete]="config().discrete"
       [displayWith]="config().displayWith" class="example-margin" [formGroup]="group()" [max]="config().max"
       [min]="config().min" [step]="config().step">
       <input matSliderThumb [formControlName]="config().controlName">

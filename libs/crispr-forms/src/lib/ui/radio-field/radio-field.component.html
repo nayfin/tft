@@ -3,6 +3,7 @@
   [group]="group()">
 
   <mat-radio-group
+    [attr.data-testid]="testId()"
     [formControl]="control()"
     [color]="config().color">
     @for (option of options$ | async; track option) {

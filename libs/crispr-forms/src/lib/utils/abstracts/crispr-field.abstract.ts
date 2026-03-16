@@ -1,7 +1,8 @@
 import type {
   CrisprFieldConfig,
+  CrisprControlConfig,
 } from '../models';
-import { Directive, signal, Input} from '@angular/core';
+import { computed, Directive, input, signal, Input} from '@angular/core';
 
 @Directive({
   standalone: true
@@ -21,6 +22,15 @@ export abstract class CrisprFieldComponent<C extends CrisprFieldConfig> {
   }
 
   config = signal<C | null>(null);
+
+  testIdPrefix = input<string | undefined>(undefined);
+
+  testId = computed(() => {
+    const controlName = (this.config() as unknown as CrisprControlConfig)?.controlName;
+    if (!controlName) return undefined;
+    const prefix = this.testIdPrefix();
+    return prefix ? `${prefix}.${controlName}` : controlName;
+  });
 }
 
 
