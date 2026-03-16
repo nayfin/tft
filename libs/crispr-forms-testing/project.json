@@ -6,14 +6,13 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/angular:package",
+      "executor": "nx:run-commands",
       "options": {
-        "tsConfig": "libs/crispr-forms-testing/tsconfig.lib.json",
-        "project": "libs/crispr-forms-testing/ng-package.json"
+        "command": "npx tsc -p libs/crispr-forms-testing/tsconfig.lib.json && cp libs/crispr-forms-testing/package.json dist/libs/crispr-forms-testing/package.json && cp libs/crispr-forms-testing/CLAUDE.md dist/libs/crispr-forms-testing/CLAUDE.md"
       },
       "configurations": {
         "production": {
-          "tsConfig": "libs/crispr-forms-testing/tsconfig.lib.prod.json"
+          "command": "npx tsc -p libs/crispr-forms-testing/tsconfig.lib.prod.json && cp libs/crispr-forms-testing/package.json dist/libs/crispr-forms-testing/package.json && cp libs/crispr-forms-testing/CLAUDE.md dist/libs/crispr-forms-testing/CLAUDE.md"
         }
       }
     }
