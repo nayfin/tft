@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, inject } from '@angular/core';
 @Component({
     selector: 'tft-control-error',
     templateUrl: './control-error.component.html',
@@ -7,6 +7,8 @@ import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef } from '@a
     standalone: false
 })
  export class ControlErrorComponent {
+  private cdr = inject(ChangeDetectorRef);
+
   _text: string;
   _hide = true;
 
@@ -17,7 +19,5 @@ import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef } from '@a
     }
     this.cdr.detectChanges();
   }
-
-  constructor(private cdr: ChangeDetectorRef) { }
 
 }

@@ -1,4 +1,4 @@
-import { Directive, Input, ElementRef } from '@angular/core';
+import { Directive, Input, ElementRef, inject } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { ErrorDictionary } from '../form-errors';
@@ -11,6 +11,8 @@ import { ErrorDictionary } from '../form-errors';
 })
 // TODO: rename this directive as it does more than just capture button submits
 export class ControlErrorsFormDirective {
+  private host = inject<ElementRef<HTMLFormElement>>(ElementRef);
+
 
   @Input() errorDictionary: ErrorDictionary;
 
@@ -20,8 +22,6 @@ export class ControlErrorsFormDirective {
     // it uses this to determine if errors should be thrown in an untouched form
     map(() => 'submitted'),
   );
-
-  constructor(private host: ElementRef<HTMLFormElement>) { }
 
   get element() {
     return this.host.nativeElement;
