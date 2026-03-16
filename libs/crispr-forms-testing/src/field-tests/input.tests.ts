@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { InputFieldConfig } from '@tft/crispr-forms/utils';
+import type { InputFieldConfig } from '@tft/crispr-forms/utils';
 import { Validators } from '@angular/forms';
 import { getInput, getError, getLabel, getHint, touchInput } from '../helpers/form.helpers';
 

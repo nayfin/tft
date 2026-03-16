@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { AutocompleteChiplistFieldConfig } from '@tft/crispr-forms/utils';
+import type { AutocompleteChiplistFieldConfig } from '@tft/crispr-forms/utils';
 import { getLabel, getHint, getError, getMatFormField, submitForm } from '../helpers/form.helpers';
 
 /**

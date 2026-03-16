@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { OptionsType, SelectFieldConfig, SelectOption } from '@tft/crispr-forms/utils';
+import type { SelectFieldConfig, SelectOption } from '@tft/crispr-forms/utils';
 import { Validators } from '@angular/forms';
 import { getLabel, getHint, getError, getMatSelect, openSelect, selectOption, touchSelect } from '../helpers/form.helpers';
 

@@ -1,7 +1,6 @@
 import { test } from '@playwright/test';
-import {
+import type {
   AnyFieldConfig,
-  ControlType,
   InputFieldConfig,
   TextareaFieldConfig,
   CheckboxFieldConfig,
@@ -13,6 +12,7 @@ import {
   FileUploadFieldConfig,
   UnitConversionFieldConfig,
 } from '@tft/crispr-forms/utils';
+import { ControlType } from '@tft/crispr-forms/utils'
 import { testInputField } from './input.tests';
 import { testTextareaField } from './textarea.tests';
 import { testCheckboxField } from './checkbox.tests';

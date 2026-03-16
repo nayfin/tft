@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { TextareaFieldConfig } from '@tft/crispr-forms/utils';
+import type { TextareaFieldConfig } from '@tft/crispr-forms/utils';
 import { Validators } from '@angular/forms';
 import { getMatFormField, getError, getLabel, getHint } from '../helpers/form.helpers';
 

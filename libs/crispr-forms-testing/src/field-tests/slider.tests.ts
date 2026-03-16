@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { SliderFieldConfig } from '@tft/crispr-forms/utils';
+import type { SliderFieldConfig } from '@tft/crispr-forms/utils';
 
 /**
  * Registers Playwright tests for a SLIDER field config.

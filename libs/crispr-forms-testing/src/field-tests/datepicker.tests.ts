@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { DatepickerFieldConfig } from '@tft/crispr-forms/utils';
+import type { DatepickerFieldConfig } from '@tft/crispr-forms/utils';
 import { Validators } from '@angular/forms';
 import { getLabel, getHint, getError, getMatFormField, touchDatepicker } from '../helpers/form.helpers';
 

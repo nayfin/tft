@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { UnitConversionFieldConfig } from '@tft/crispr-forms/utils';
+import type { UnitConversionFieldConfig } from '@tft/crispr-forms/utils';
 import { getLabel, getMatFormField } from '../helpers/form.helpers';
 
 /**
