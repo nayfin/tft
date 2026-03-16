@@ -1,16 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  ElementRef,
-  ViewChild,
-  OnInit,
-  ChangeDetectionStrategy,
-  Optional,
-  Self,
-  signal,
-  computed,
-} from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit, ChangeDetectionStrategy, signal, computed, inject } from '@angular/core';
 import {
   ControlValueAccessor,
   NgControl,
@@ -55,6 +45,8 @@ export class FileUploadFieldComponent
   extends CrisprControlComponent<FileUploadFieldConfig>
   implements OnInit, ControlValueAccessor
 {
+  ngControl = inject(NgControl, { optional: true, self: true });
+
   onChange: () => void;
 
   defaultConfig: Partial<FileUploadFieldConfig> = {
@@ -82,8 +74,10 @@ export class FileUploadFieldComponent
   disabled$: Observable<boolean>;
 
   // ngControl: NgControl = null;
-  constructor(@Optional() @Self() public ngControl: NgControl) {
+  constructor() {
     super();
+    const ngControl = this.ngControl;
+
     if (this.ngControl != null) {
       // Setting the value accessor directly (instead of using
       // the providers) to avoid running into a circular import.

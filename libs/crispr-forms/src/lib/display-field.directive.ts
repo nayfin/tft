@@ -1,11 +1,4 @@
-import {
-  Directive,
-  Input,
-  ViewContainerRef,
-  OnInit,
-  ChangeDetectorRef,
-  Type,
-} from '@angular/core';
+import { Directive, Input, ViewContainerRef, OnInit, ChangeDetectorRef, Type, inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import {
   ControlValue,
@@ -17,6 +10,9 @@ import {
   standalone: true,
 })
 export class CrisprDisplayFieldDirective implements OnInit {
+  private container = inject(ViewContainerRef);
+  private cdr = inject(ChangeDetectorRef);
+
   @Input() group: FormGroup;
   /**
    * value setter updates the control's value as well
@@ -36,11 +32,6 @@ export class CrisprDisplayFieldDirective implements OnInit {
   @Input() index?: number;
 
   private componentInstance: CrisprDisplayFieldComponent;
-
-  constructor(
-    private container: ViewContainerRef,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   async ngOnInit() {
     if (this.component) {

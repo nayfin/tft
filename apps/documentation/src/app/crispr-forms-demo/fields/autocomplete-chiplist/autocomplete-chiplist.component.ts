@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ControlType, FormConfig, SelectOption } from '@tft/crispr-forms';
 import { EndpointsService, ENDPOINTS } from '../../endpoints.service';
 import { FormGroup } from '@angular/forms';
@@ -12,6 +12,8 @@ import { autocompleteChiplistFormConfig } from './autocomplete-chiplist.config';
     standalone: false
 })
 export class AutocompleteChiplistComponent {
+  private endpointsService = inject(EndpointsService);
+
 
   value = {
     optionsDriver: 'openFarm',
@@ -83,9 +85,6 @@ export class AutocompleteChiplistComponent {
       }
     ]
   }
-  constructor(
-    private endpointsService: EndpointsService
-  ) { }
 
   handleSubmit(form: FormGroup) {
     console.log({form});

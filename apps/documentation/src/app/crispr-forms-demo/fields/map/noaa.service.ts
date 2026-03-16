@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 // import { FrostDates, FrostRiskLevel, TempThreshold } from '@tft-private/gardens/util';
 import { catchError, map, Observable } from 'rxjs';
 import { NoaaBboxStationResponse, NoaaBboxStationResult, NoaaDataPoint, NoaaStationsResultInfo } from './noaa.model';
@@ -11,13 +11,13 @@ import { Params } from '@angular/router';
   providedIn: 'root'
 })
 export class NoaaService {
+  private http = inject(HttpClient);
+
 
   BASE_URL = 'https://www.ncei.noaa.gov';
   BASE_PATH = '/access/services';
   STATIONS_PATH = '/search/v1/data';
   DATA_PATH = '/data/v1';
-
-  constructor(private http: HttpClient) { }
 
   getStationIds(gps: GCAreaCoordinates, dataTypes: string[]): Observable<any> {
   

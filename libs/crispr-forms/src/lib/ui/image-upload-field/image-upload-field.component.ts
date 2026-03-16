@@ -1,15 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  ElementRef,
-  ViewChild,
-  OnInit,
-  ChangeDetectionStrategy,
-  Optional,
-  Self,
-  ChangeDetectorRef,
-} from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, inject } from '@angular/core';
 import {
   ControlValueAccessor,
   NgControl,
@@ -56,6 +47,10 @@ export class ImageUploadFieldComponent
   extends CrisprControlComponent<ImageUploadFieldConfig>
   implements OnInit, ControlValueAccessor
 {
+  ngControl = inject(NgControl, { optional: true, self: true });
+  private domSanitizer = inject(DomSanitizer);
+  private cdr = inject(ChangeDetectorRef);
+
   onChange: () => void;
 
   defaultConfig: Partial<ImageUploadFieldConfig> = {
@@ -163,12 +158,10 @@ export class ImageUploadFieldComponent
 
   disabled$: Observable<boolean>;
 
-  constructor(
-    @Optional() @Self() public ngControl: NgControl,
-    private domSanitizer: DomSanitizer,
-    private cdr: ChangeDetectorRef
-  ) {
+  constructor() {
     super();
+    const ngControl = this.ngControl;
+
     if (this.ngControl != null) {
       // Setting the value accessor directly (instead of using
       // the providers) to avoid running into a circular import.

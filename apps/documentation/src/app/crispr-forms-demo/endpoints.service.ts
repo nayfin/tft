@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { SelectOption } from '@tft/crispr-forms';
@@ -41,10 +41,8 @@ export const ENDPOINTS: {[key: string]: {url: string, mappingCallback: (response
   providedIn: 'root'
 })
 export class EndpointsService {
+  private http = inject(HttpClient);
 
-  constructor(
-    private http: HttpClient
-  ) { }
 
   getSearchResults(databaseUrl: string, searchTerm: string) {
     return this.http.get(databaseUrl + searchTerm);

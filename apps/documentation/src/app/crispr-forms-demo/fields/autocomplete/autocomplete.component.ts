@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormConfig, ControlType, SelectOption } from '@tft/crispr-forms';
 import { FormGroup } from '@angular/forms';
 import { EndpointsService, ENDPOINTS } from '../../endpoints.service';
@@ -12,6 +12,8 @@ import { autocompleteFormConfig } from './autocomplete.config';
     standalone: false
 })
 export class AutocompleteComponent {
+  private endpointsService = inject(EndpointsService);
+
 
   arraySelectInitialValue = {
     autocompleteField: { label: 'option a', value: 'a' },
@@ -74,9 +76,6 @@ export class AutocompleteComponent {
       }
     ]
   }
-  constructor(
-    private endpointsService: EndpointsService
-  ) { }
 
   handleSubmit(form: FormGroup) {
     console.log({value: form.value})

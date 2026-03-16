@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormConfig, SelectOption, ControlType } from '@tft/crispr-forms';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -12,7 +12,9 @@ import { selectFormConfig } from './select.config';
     styleUrls: ['./select.component.scss'],
     standalone: false
 })
-export class SelectComponent implements OnInit {
+export class SelectComponent {
+  private endpointsService = inject(EndpointsService);
+
 
   multiSelectInitialValue = {
     toggleAllField: ['a', 'b', 'c'],
@@ -112,13 +114,6 @@ export class SelectComponent implements OnInit {
         },
       }
     ]
-  }
-
-  constructor(
-    private endpointsService: EndpointsService
-  ) { }
-
-  ngOnInit() {
   }
 
   handleSubmit(form: FormGroup) {

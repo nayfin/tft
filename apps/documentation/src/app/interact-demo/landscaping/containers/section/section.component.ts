@@ -1,4 +1,4 @@
-import { Component, Input, Renderer2 } from '@angular/core';
+import { Component, Input, Renderer2, inject } from '@angular/core';
 import { TftDropEvent } from '@tft/interact';
 import { DraggableOptions } from '@interactjs/types';
 
@@ -9,19 +9,18 @@ interface DroppedItem {
 }
 
 @Component({
-    selector: 'tft-section',
-    templateUrl: './section.component.html',
-    styleUrls: ['./section.component.scss'],
-    standalone: false
+  selector: 'tft-section',
+  templateUrl: './section.component.html',
+  styleUrls: ['./section.component.scss'],
+  standalone: false
 })
 export class SectionComponent {
+  private renderer = inject(Renderer2);
+
   droppedItems: DroppedItem[] = [];
   dragConfig: DraggableOptions = {};
 
   @Input() scale: number;
-  constructor(
-    private renderer: Renderer2
-  ) { }
 
 
   handleDrop(event: TftDropEvent) {

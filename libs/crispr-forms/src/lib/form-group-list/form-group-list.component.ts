@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  WritableSignal,
-  Signal,
-} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, WritableSignal, Signal, inject } from '@angular/core';
 import { FormGroup, FormArray } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -48,6 +41,8 @@ export class FormGroupListComponent
   extends CrisprControlComponent<FormGroupListConfig>
   implements OnInit
 {
+  private cdr = inject(ChangeDetectorRef);
+
   defaultConfig = defaultConfig;
   group: WritableSignal<FormGroup>;
   control: Signal<FormArray>;
@@ -58,10 +53,6 @@ export class FormGroupListComponent
   blockValue = false;
 
   selectedIndex: number = null;
-
-  constructor(private cdr: ChangeDetectorRef) {
-    super();
-  }
 
   ngOnInit() {
     super.ngOnInit();
