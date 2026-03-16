@@ -1,4 +1,4 @@
-import { Component, Inject, forwardRef, OnInit, Input, Optional } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { NgAisIndex, NgAisInstantSearch, TypedBaseWidget } from 'angular-instantsearch';
 import connectRefinementList, { RefinementListWidgetDescription, RefinementListConnectorParams  } from 'instantsearch.js/es/connectors/refinement-list/connectRefinementList';
 import { FilterListState, RefinementListItem } from '../models';
@@ -17,6 +17,9 @@ import { CommonModule } from '@angular/common';
     ]
 })
 export class MisFilterSelectComponent extends TypedBaseWidget<RefinementListWidgetDescription, RefinementListConnectorParams> implements OnInit {
+  parentIndex = inject(NgAisIndex, { optional: true });
+  instantSearchInstance = inject(NgAisInstantSearch);
+
 
   @Input() title: string | null = 'Filter results';
   @Input() multiple = true;
@@ -38,12 +41,7 @@ export class MisFilterSelectComponent extends TypedBaseWidget<RefinementListWidg
     toggleShowMore: () => {}
   };
 
-  constructor(
-    @Inject(forwardRef(() => NgAisIndex))
-    @Optional() public parentIndex: NgAisIndex,
-    @Inject(forwardRef(() => NgAisInstantSearch))
-    public instantSearchInstance: NgAisInstantSearch
-  ) {
+  constructor() {
     super('RefinementList');
   }
 

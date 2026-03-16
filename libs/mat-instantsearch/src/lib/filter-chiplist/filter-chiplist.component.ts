@@ -1,4 +1,4 @@
-import { Component, Inject, forwardRef, OnInit, Input, Optional } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NgAisIndex, NgAisInstantSearch, TypedBaseWidget } from 'angular-instantsearch';
 import connectRefinementList, { RefinementListWidgetDescription, RefinementListConnectorParams  } from 'instantsearch.js/es/connectors/refinement-list/connectRefinementList';
@@ -24,6 +24,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     ]
 })
 export class MisFilterChiplistComponent extends TypedBaseWidget<RefinementListWidgetDescription, RefinementListConnectorParams> implements OnInit {
+  parentIndex = inject(NgAisIndex, { optional: true });
+  instantSearchInstance = inject(NgAisInstantSearch);
+
 
   // attribute of search index to search and filter on
   @Input() attributeName: string;
@@ -77,12 +80,7 @@ export class MisFilterChiplistComponent extends TypedBaseWidget<RefinementListWi
     toggleShowMore: () => {}
   };
 
-  constructor (
-    @Inject(forwardRef(() => NgAisIndex))
-    @Optional() public parentIndex: NgAisIndex,
-    @Inject(forwardRef(() => NgAisInstantSearch))
-    public instantSearchInstance: NgAisInstantSearch
-  ) {
+  constructor () {
     super('RefinementList');
   }
 

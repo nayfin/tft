@@ -1,4 +1,4 @@
-import { Component, Input, Inject, OnInit, forwardRef, Optional } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { connectPagination } from 'instantsearch.js/es/connectors';
 import { noop } from 'lodash-es';
 import { BaseWidget, NgAisInstantSearch, NgAisIndex, NgAisHitsPerPageModule } from 'angular-instantsearch';
@@ -17,6 +17,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ]
 })
 export class MisPaginationComponent extends BaseWidget implements OnInit {
+  parentIndex = inject(NgAisIndex, { optional: true });
+  instantSearchInstance = inject(NgAisInstantSearch);
+
   // render options
   @Input() public showFirst = true;
   @Input() public showLast = false;
@@ -43,12 +46,7 @@ export class MisPaginationComponent extends BaseWidget implements OnInit {
     nbPages: 0,
     refine: noop
   };
-  constructor(
-    @Inject(forwardRef(() => NgAisIndex))
-    @Optional() public parentIndex: NgAisIndex,
-    @Inject(forwardRef(() => NgAisInstantSearch))
-    public instantSearchInstance: NgAisInstantSearch
-  ) {
+  constructor() {
     super('Pagination');
   }
 

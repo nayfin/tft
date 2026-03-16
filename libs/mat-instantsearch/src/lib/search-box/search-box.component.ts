@@ -1,4 +1,4 @@
-import { Component, Inject, forwardRef, OnInit, Input, Optional } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BaseWidget, NgAisIndex, NgAisInstantSearch } from 'angular-instantsearch';
 import { connectSearchBox } from 'instantsearch.js/es/connectors';
@@ -16,6 +16,9 @@ import { MatIconModule } from '@angular/material/icon';
     ]
 })
 export class MisSearchBoxComponent extends BaseWidget implements OnInit {
+  parentIndex = inject(NgAisIndex, { optional: true });
+  instantSearchInstance = inject(NgAisInstantSearch);
+
 
   @Input() public placeholder = 'Search';
   @Input() public submitTitle = 'Submit';
@@ -29,11 +32,7 @@ export class MisSearchBoxComponent extends BaseWidget implements OnInit {
     refine: (value: string) => void;
   };
 
-  constructor(
-    @Inject(forwardRef(() => NgAisIndex))
-    @Optional() public parentIndex: NgAisIndex,
-    @Inject(forwardRef(() => NgAisInstantSearch))
-    public instantSearchInstance: NgAisInstantSearch  ) {
+  constructor() {
     super('SearchBox');
   }
 

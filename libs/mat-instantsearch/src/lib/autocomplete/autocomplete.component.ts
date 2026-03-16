@@ -1,4 +1,4 @@
-import { Component, Inject, forwardRef, OnInit, Input, Output, EventEmitter, Optional } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
 import { Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { BaseWidget, NgAisIndex, NgAisInstantSearch } from 'angular-instantsearch';
 import { connectAutocomplete } from 'instantsearch.js/es/connectors';
@@ -23,6 +23,9 @@ import { MatIconModule } from '@angular/material/icon';
     ]
 })
 export class MisAutocompleteComponent extends BaseWidget implements OnInit {
+  parentIndex = inject(NgAisIndex, { optional: true });
+  instantSearchInstance = inject(NgAisInstantSearch);
+
 
 
 
@@ -78,11 +81,7 @@ export class MisAutocompleteComponent extends BaseWidget implements OnInit {
 
   @Output() selectHit = new EventEmitter<{ query: string }>();
 
-  constructor (
-    @Optional() public parentIndex: NgAisIndex,
-    @Inject(forwardRef(() => NgAisInstantSearch))
-    public instantSearchInstance: NgAisInstantSearch
-  ) {
+  constructor () {
     super('AutocompleteComponent');
   }
 
