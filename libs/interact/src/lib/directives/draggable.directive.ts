@@ -162,9 +162,12 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   }
 
   setDragStyles(dragElement: HTMLElement) {
-    this.renderer.setStyle(dragElement, 'touchAction', 'none')
-    this.renderer.setStyle(dragElement, 'zIndex', this.dragZIndex)
-    this.renderer.setStyle(dragElement, 'position', 'absolute')
+    this.renderer.setStyle(dragElement, 'touchAction', 'none');
+    this.renderer.setStyle(dragElement, 'zIndex', this.dragZIndex);
+    this.renderer.setStyle(dragElement, 'position', 'absolute');
+    // Prevents highlighting text if dragging over, which will interrupt the next drag action
+    this.renderer.setStyle(dragElement, 'userSelect', 'none');
+
   }
 
   addDragPropertiesToElement(nativeElement: TftDragElement) {
@@ -235,12 +238,7 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
       .on('dragstart',  (event: NgDragEvent) => {
         const interaction = event.interaction;
         // check if we should append drag element to body
-        if ( this.enableDragDefault
-          && interaction.pointerIsDown
-          // TODO: probably don't need following condition checks anymore remove by 2022
-          // && !!this.dropzone_dir
-          // && !interaction.interacting()
-          ) {
+        if ( this.enableDragDefault && interaction.pointerIsDown ) {
           if (this._previewTemplate) {
             const viewRef = this._viewContainerRef.createEmbeddedView(this._previewTemplate.templateRef);
             this.previewRef = getRootNode(viewRef, this._document);
