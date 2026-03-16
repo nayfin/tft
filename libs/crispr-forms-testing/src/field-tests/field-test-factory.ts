@@ -12,7 +12,6 @@ import type {
   FileUploadFieldConfig,
   UnitConversionFieldConfig,
 } from '@tft/crispr-forms/utils';
-import { ControlType } from '@tft/crispr-forms/utils'
 import { testInputField } from './input.tests';
 import { testTextareaField } from './textarea.tests';
 import { testCheckboxField } from './checkbox.tests';
@@ -48,34 +47,34 @@ export function testField(config: AnyFieldConfig) {
 
   test.describe(config.controlName, () => {
     switch (config.controlType) {
-      case ControlType.INPUT:
+      case 'input':
         testInputField(config as InputFieldConfig);
         break;
-      case ControlType.TEXTAREA:
+      case 'textarea':
         testTextareaField(config as TextareaFieldConfig);
         break;
-      case ControlType.CHECKBOX:
+      case 'checkbox':
         testCheckboxField(config as CheckboxFieldConfig);
         break;
-      case ControlType.SELECT:
+      case 'select':
         testSelectField(config as SelectFieldConfig);
         break;
-      case ControlType.SLIDER:
+      case 'slider':
         testSliderField(config as SliderFieldConfig);
         break;
-      case ControlType.DATEPICKER:
+      case 'datepicker':
         testDatepickerField(config as DatepickerFieldConfig);
         break;
-      case ControlType.AUTOCOMPLETE:
+      case 'autocomplete':
         testAutocompleteField(config as AutocompleteFieldConfig);
         break;
-      case ControlType.AUTOCOMPLETE_CHIPLIST:
+      case 'autocompleteChiplist':
         testAutocompleteChiplistField(config as AutocompleteChiplistFieldConfig);
         break;
-      case ControlType.FILE_UPLOAD:
+      case 'fileUpload':
         testFileUploadField(config as FileUploadFieldConfig);
         break;
-      case ControlType.UNIT_CONVERSION:
+      case 'unitConversion':
         testUnitConversionField(config as UnitConversionFieldConfig);
         break;
     }

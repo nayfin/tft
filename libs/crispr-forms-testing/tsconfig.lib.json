@@ -1,11 +1,17 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
+    "outDir": "../../dist/libs/crispr-forms-testing",
+    "rootDir": "src",
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": []
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@tft/crispr-forms": ["../../dist/libs/crispr-forms/types/tft-crispr-forms.d.ts"],
+      "@tft/crispr-forms/utils": ["../../dist/libs/crispr-forms/types/tft-crispr-forms.d.ts"]
+    }
   },
   "exclude": ["**/*.spec.ts", "jest.config.ts"]
 }
