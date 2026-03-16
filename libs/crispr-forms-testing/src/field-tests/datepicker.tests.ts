@@ -1,8 +1,12 @@
-import { test, expect } from '../../fixtures/angular-test';
+import { test, expect } from '@playwright/test';
 import { DatepickerFieldConfig } from '@tft/crispr-forms/utils';
 import { Validators } from '@angular/forms';
-import { getLabel, getHint, getError, touchDatepicker } from '../../helpers/form.helpers';
+import { getLabel, getHint, getError, getMatFormField, touchDatepicker } from '../helpers/form.helpers';
 
+/**
+ * Registers Playwright tests for a DATEPICKER field config.
+ * Call inside a `test.describe` block that has already navigated to the page.
+ */
 export function testDatepickerField(config: DatepickerFieldConfig) {
   if (config.label) {
     test('renders label', async ({ page }) => {
@@ -17,7 +21,7 @@ export function testDatepickerField(config: DatepickerFieldConfig) {
   }
 
   test('renders datepicker toggle button', async ({ page }) => {
-    const toggle = page.locator(`[data-testid="${config.controlName}"] mat-datepicker-toggle`);
+    const toggle = getMatFormField(page, config.controlName).locator('mat-datepicker-toggle');
     await expect(toggle).toBeVisible();
   });
 

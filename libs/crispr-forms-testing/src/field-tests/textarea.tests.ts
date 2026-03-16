@@ -1,8 +1,12 @@
-import { test, expect } from '../../fixtures/angular-test';
+import { test, expect } from '@playwright/test';
 import { TextareaFieldConfig } from '@tft/crispr-forms/utils';
 import { Validators } from '@angular/forms';
-import { getMatFormField, getError, getLabel, getHint, touchInput } from '../../helpers/form.helpers';
+import { getMatFormField, getError, getLabel, getHint } from '../helpers/form.helpers';
 
+/**
+ * Registers Playwright tests for a TEXTAREA field config.
+ * Call inside a `test.describe` block that has already navigated to the page.
+ */
 export function testTextareaField(config: TextareaFieldConfig) {
   if (config.label) {
     test('renders label', async ({ page }) => {

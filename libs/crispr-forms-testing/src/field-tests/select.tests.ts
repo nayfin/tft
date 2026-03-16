@@ -1,8 +1,12 @@
-import { test, expect } from '../../fixtures/angular-test';
-import { SelectFieldConfig } from '@tft/crispr-forms/utils';
+import { test, expect } from '@playwright/test';
+import { OptionsType, SelectFieldConfig, SelectOption } from '@tft/crispr-forms/utils';
 import { Validators } from '@angular/forms';
-import { getLabel, getHint, getError, getMatSelect, openSelect, selectOption, touchSelect } from '../../helpers/form.helpers';
+import { getLabel, getHint, getError, getMatSelect, openSelect, selectOption, touchSelect } from '../helpers/form.helpers';
 
+/**
+ * Registers Playwright tests for a SELECT field config.
+ * Call inside a `test.describe` block that has already navigated to the page.
+ */
 export function testSelectField(config: SelectFieldConfig) {
   if (config.label) {
     test('renders label', async ({ page }) => {
@@ -20,7 +24,7 @@ export function testSelectField(config: SelectFieldConfig) {
     test('shows all options when opened', async ({ page }) => {
       await openSelect(page, config.controlName);
       const options = page.locator('mat-option');
-      await expect(options).toHaveCount(config.options.length);
+      await expect(options).toHaveCount((config.options as SelectOption[]).length);
       await page.keyboard.press('Escape');
     });
 

@@ -1,4 +1,4 @@
-import { test } from '../fixtures/angular-test';
+import { test } from '@playwright/test';
 import {
   AnyFieldConfig,
   ControlType,
@@ -13,19 +13,37 @@ import {
   FileUploadFieldConfig,
   UnitConversionFieldConfig,
 } from '@tft/crispr-forms/utils';
-import { testInputField } from './field-tests/input.tests';
-import { testTextareaField } from './field-tests/textarea.tests';
-import { testCheckboxField } from './field-tests/checkbox.tests';
-import { testSelectField } from './field-tests/select.tests';
-import { testSliderField } from './field-tests/slider.tests';
-import { testDatepickerField } from './field-tests/datepicker.tests';
-import { testAutocompleteField } from './field-tests/autocomplete.tests';
-import { testAutocompleteChiplistField } from './field-tests/autocomplete-chiplist.tests';
-import { testFileUploadField } from './field-tests/file-upload.tests';
-import { testUnitConversionField } from './field-tests/unit-conversion.tests';
+import { testInputField } from './input.tests';
+import { testTextareaField } from './textarea.tests';
+import { testCheckboxField } from './checkbox.tests';
+import { testSelectField } from './select.tests';
+import { testSliderField } from './slider.tests';
+import { testDatepickerField } from './datepicker.tests';
+import { testAutocompleteField } from './autocomplete.tests';
+import { testAutocompleteChiplistField } from './autocomplete-chiplist.tests';
+import { testFileUploadField } from './file-upload.tests';
+import { testUnitConversionField } from './unit-conversion.tests';
 
+/**
+ * Registers a `test.describe` block for a field config, automatically selecting
+ * the correct test suite based on `controlType`.
+ *
+ * Non-control fields (heading, divider, button) are skipped silently.
+ *
+ * @example
+ * ```ts
+ * import { testField } from '@tft/crispr-forms-testing';
+ * import { myFormConfig } from './my-form.config';
+ *
+ * test.describe('My Form', () => {
+ *   test.beforeEach(async ({ page }) => page.goto('/my-form'));
+ *   for (const field of myFormConfig.fields) {
+ *     testField(field);
+ *   }
+ * });
+ * ```
+ */
 export function testField(config: AnyFieldConfig) {
-  // Skip non-control fields
   if (!('controlName' in config)) return;
 
   test.describe(config.controlName, () => {

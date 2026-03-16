@@ -1,7 +1,15 @@
-import { test, expect } from '../../fixtures/angular-test';
+import { test, expect } from '@playwright/test';
 import { AutocompleteChiplistFieldConfig } from '@tft/crispr-forms/utils';
-import { getLabel, getHint, getError, getMatFormField, submitForm } from '../../helpers/form.helpers';
+import { getLabel, getHint, getError, getMatFormField, submitForm } from '../helpers/form.helpers';
 
+/**
+ * Registers Playwright tests for an AUTOCOMPLETE_CHIPLIST field config.
+ * Call inside a `test.describe` block that has already navigated to the page.
+ *
+ * Note: like autocomplete, errors require `submitForm()` rather than blur because
+ * the hidden `[formControlName]` anchor is what holds validators. Blurring the
+ * visible search input does not touch the hidden control.
+ */
 export function testAutocompleteChiplistField(config: AutocompleteChiplistFieldConfig) {
   if (config.label) {
     test('renders label', async ({ page }) => {
@@ -16,7 +24,6 @@ export function testAutocompleteChiplistField(config: AutocompleteChiplistFieldC
   }
 
   test('can type and see options', async ({ page }) => {
-    // The search input in the chiplist (role="searchbox")
     const searchInput = getMatFormField(page, config.controlName).locator('input[matInput]');
     await searchInput.fill('Option');
     const options = page.locator('mat-option');

@@ -1,0 +1,10 @@
+{
+  "name": "@tft/crispr-forms-testing",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/compiler": "^21.0.0",
+    "@angular/forms": "^21.0.0",
+    "@playwright/test": ">=1.40.0",
+    "@tft/crispr-forms": "*"
+  }
+}

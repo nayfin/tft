@@ -1,8 +1,21 @@
-import { test, expect } from '../../fixtures/angular-test';
+import { test, expect } from '@playwright/test';
 import { InputFieldConfig } from '@tft/crispr-forms/utils';
 import { Validators } from '@angular/forms';
-import { getInput, getError, getLabel, getHint, touchInput } from '../../helpers/form.helpers';
+import { getInput, getError, getLabel, getHint, touchInput } from '../helpers/form.helpers';
 
+/**
+ * Registers Playwright tests for an INPUT field config.
+ * Call inside a `test.describe` block that has already navigated to the page.
+ *
+ * Tests generated based on config:
+ * - Always: renders label, has correct input type
+ * - If `placeholder`: renders placeholder attribute
+ * - If `hint`: shows hint when untouched
+ * - If `Validators.required`: shows required error on blur
+ * - If `min`: validates min boundary
+ * - If `max`: validates max boundary
+ * - If `maxLength`: enforces maxLength attribute
+ */
 export function testInputField(config: InputFieldConfig) {
   test('renders label', async ({ page }) => {
     await expect(getLabel(page, config.controlName)).toHaveText(config.label);

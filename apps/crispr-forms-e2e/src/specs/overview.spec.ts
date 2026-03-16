@@ -1,4 +1,4 @@
-import { test } from '../fixtures/angular-test';
+import { test } from '@tft/crispr-forms-testing';
 
 test('overview page screenshot', async ({ page }) => {
   await page.goto('/crispr-forms-demo/overview');

@@ -1,8 +1,12 @@
-import { test, expect } from '../../fixtures/angular-test';
+import { test, expect } from '@playwright/test';
 import { CheckboxFieldConfig } from '@tft/crispr-forms/utils';
 import { Validators } from '@angular/forms';
-import { getCheckbox, getError } from '../../helpers/form.helpers';
+import { getCheckbox, getError } from '../helpers/form.helpers';
 
+/**
+ * Registers Playwright tests for a CHECKBOX field config.
+ * Call inside a `test.describe` block that has already navigated to the page.
+ */
 export function testCheckboxField(config: CheckboxFieldConfig) {
   test('renders label', async ({ page }) => {
     const label = getCheckbox(page, config.controlName).locator('.mdc-label');
@@ -11,7 +15,6 @@ export function testCheckboxField(config: CheckboxFieldConfig) {
 
   if (config.validators?.includes(Validators.requiredTrue)) {
     test('shows error when unchecked and blurred', async ({ page }) => {
-      // Click to check, then click again to uncheck, then Tab to blur
       await getCheckbox(page, config.controlName).click();
       await getCheckbox(page, config.controlName).click();
       await page.keyboard.press('Tab');

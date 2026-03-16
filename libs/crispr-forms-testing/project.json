@@ -1,0 +1,21 @@
+{
+  "name": "crispr-forms-testing",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/crispr-forms-testing/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "options": {
+        "tsConfig": "libs/crispr-forms-testing/tsconfig.lib.json",
+        "project": "libs/crispr-forms-testing/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/crispr-forms-testing/tsconfig.lib.prod.json"
+        }
+      }
+    }
+  }
+}

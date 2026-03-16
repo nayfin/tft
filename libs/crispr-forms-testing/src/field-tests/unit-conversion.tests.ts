@@ -1,7 +1,16 @@
-import { test, expect } from '../../fixtures/angular-test';
+import { test, expect } from '@playwright/test';
 import { UnitConversionFieldConfig } from '@tft/crispr-forms/utils';
-import { getLabel, getMatFormField } from '../../helpers/form.helpers';
+import { getLabel, getMatFormField } from '../helpers/form.helpers';
 
+/**
+ * Registers Playwright tests for a UNIT_CONVERSION field config.
+ * Call inside a `test.describe` block that has already navigated to the page.
+ *
+ * Note: required error display is not testable for this field type. The
+ * `displayValueControl` (what the user types into) is separate from the
+ * `[formControlName]` that holds validators, so validation errors are never
+ * wired to the visible input.
+ */
 export function testUnitConversionField(config: UnitConversionFieldConfig) {
   if (config.label) {
     test('renders label', async ({ page }) => {
@@ -16,12 +25,8 @@ export function testUnitConversionField(config: UnitConversionFieldConfig) {
 
   if (config.showUnitSelect) {
     test('renders unit select when showUnitSelect is true', async ({ page }) => {
-      // The unit select is a sibling mat-form-field within the same crispr-unit-conversion-field
       const unitSelect = page.locator(`crispr-unit-conversion-field:has([data-testid="${config.controlName}"]) .unit-field mat-select`);
       await expect(unitSelect).toBeVisible();
     });
   }
-
-  // Note: required error display is not implemented for unit-conversion fields
-  // (the displayValueControl is separate from the form control that has validators)
 }

@@ -1,7 +1,11 @@
-import { test, expect } from '../../fixtures/angular-test';
+import { test, expect } from '@playwright/test';
 import { FileUploadFieldConfig } from '@tft/crispr-forms/utils';
-import { getLabel, getMatFormField } from '../../helpers/form.helpers';
+import { getLabel, getMatFormField } from '../helpers/form.helpers';
 
+/**
+ * Registers Playwright tests for a FILE_UPLOAD field config.
+ * Call inside a `test.describe` block that has already navigated to the page.
+ */
 export function testFileUploadField(config: FileUploadFieldConfig) {
   if (config.label) {
     test('renders label', async ({ page }) => {

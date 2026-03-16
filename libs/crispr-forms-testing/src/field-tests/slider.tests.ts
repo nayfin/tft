@@ -1,6 +1,17 @@
-import { test, expect } from '../../fixtures/angular-test';
+import { test, expect } from '@playwright/test';
 import { SliderFieldConfig } from '@tft/crispr-forms/utils';
 
+/**
+ * Registers Playwright tests for a SLIDER field config.
+ * Call inside a `test.describe` block that has already navigated to the page.
+ *
+ * Note: slider uses a plain `<label>` (not `<mat-label>`) because it is not
+ * rendered inside a `mat-form-field`. The `data-testid` is on the `<mat-slider>`
+ * element itself.
+ *
+ * Note: `min`/`max` are read from the native HTML attributes on `input[matSliderThumb]`,
+ * not from `aria-valuemin`/`aria-valuemax`.
+ */
 export function testSliderField(config: SliderFieldConfig) {
   test('renders slider', async ({ page }) => {
     const slider = page.locator(`[data-testid="${config.controlName}"]`);
@@ -9,7 +20,6 @@ export function testSliderField(config: SliderFieldConfig) {
 
   if (config.label) {
     test('renders label', async ({ page }) => {
-      // Slider uses a plain <label> not mat-label
       const sliderHost = page.locator(`crispr-slider-field:has([data-testid="${config.controlName}"])`);
       await expect(sliderHost.locator('label')).toContainText(config.label);
     });

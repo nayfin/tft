@@ -28,6 +28,7 @@
       "@tft/form-validation-handler/utils": [
         "libs/form-validation-handler/utils/index.ts"
       ],
+      "@tft/crispr-forms-testing": ["libs/crispr-forms-testing/src/index.ts"],
       "@tft/interact": ["libs/interact/src/index.ts"],
       "@tft/ui-imports": ["libs/ui-imports/src/index.ts"]
     }
