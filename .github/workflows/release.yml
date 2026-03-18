@@ -29,6 +29,11 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+      - name: Build publishable lib dependencies
+        env:
+          NX_DAEMON: false
+        run: npx nx build crispr-forms --configuration=production
+
       - name: Build and publish affected libs
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
