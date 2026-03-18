@@ -32,12 +32,14 @@ jobs:
       - name: Build publishable lib dependencies
         env:
           NX_DAEMON: false
+          NX_NO_CLOUD: true
         run: npx nx build crispr-forms --configuration=production
 
       - name: Build and publish affected libs
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NX_DAEMON: false
+          NX_NO_CLOUD: true
         run: |
           EXCLUDED=("mat-instantsearch" "ui-imports" "core" "api-interfaces")
           AFFECTED=$(npx nx show projects --affected --base=$NX_BASE --head=$NX_HEAD)
