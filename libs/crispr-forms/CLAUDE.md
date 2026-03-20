@@ -152,6 +152,13 @@ For multiple triggers, use `combineLatest` in the callback.
 3. Add to `ControlType` enum and `AnyFieldConfig` union in `crispr-field.config.ts`
 4. Map in `libs/crispr-forms/src/lib/field-component-map.const.ts`
 
+## Export skill
+`libs/crispr-forms/export-skill/` contains the published skill docs:
+- `SKILL.md` — feature narrative, usage examples, guidelines
+- `models.md` — TypeScript interfaces for all field configs
+
+**Whenever a new feature or field config property is added to this library, update both files** to reflect the change: add or extend the relevant interface in `models.md` and add a usage example / explanation in `SKILL.md`.
+
 ## Key files
 - `libs/crispr-forms/src/lib/utils/models/crispr-field.config.ts` — FormConfig, ControlType, base interfaces
 - `libs/crispr-forms/src/lib/utils/models/` — per-field config interfaces
