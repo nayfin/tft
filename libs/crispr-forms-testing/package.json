@@ -1,6 +1,6 @@
 {
   "name": "@tft/crispr-forms-testing",
-  "version": "21.0.1",
+  "version": "21.0.2",
   "main": "index.js",
   "types": "index.d.ts",
   "exports": {
