@@ -269,6 +269,27 @@ interface TextareaFieldConfig extends CrisprControlConfig, FieldDescriptors, Mat
 }
 ```
 
+### Map Field (`ControlType.MAP`)
+```typescript
+interface MapFieldConfig extends CrisprControlConfig, FieldDescriptors, MatFieldProperties {
+  controlType: ControlType.MAP;
+  label: string;
+  center?: google.maps.LatLngLiteral;
+  location?: string;
+  options?: google.maps.MapOptions;
+  /** Optional overrides for the Places Autocomplete request.
+   *  `input` is always set from the search term and cannot be overridden here.
+   *  Defaults: includedPrimaryTypes: ['postal_code', 'administrative_area_level_2', 'administrative_area_level_3'],
+   *            language: 'en-US', region: 'us'. */
+  searchAutocompleteRequest?: Omit<google.maps.places.AutocompleteRequest, 'input'>;
+  debounceTime?: number;
+  markers?: (map: GoogleMap, group: FormGroup) => Observable<TftMapMarker[]>;
+  infoWindowTemplateBuilder?: (props: TftMapMarker) => string;
+  valueDisplayKey?: string;
+  onMove?: (map: GoogleMap, group: FormGroup) => unknown;
+}
+```
+
 ### Unit Conversion Field (`ControlType.UNIT_CONVERSION`)
 ```typescript
 interface UnitConversionFieldConfig<ST = unknown, UT = unknown> extends CrisprControlConfig, FieldDescriptors, MatFieldProperties {

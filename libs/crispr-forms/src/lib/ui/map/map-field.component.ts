@@ -85,37 +85,29 @@ export class MapFieldComponent
     controlName: 'location',
     label: 'Location',
     placeholder: 'Enter a location',
-    options: async (group, searchTerm) => {
-      // Add an initial request body.
+    options: async (_group, searchTerm) => {
       if (searchTerm) {
         return new Promise((resolve) => {
           const request: google.maps.places.AutocompleteRequest = {
-            input: searchTerm,
-            // locationRestriction: { west: -122.44, north: 37.8, east: -122.39, south: 37.78 },
-            // origin: { lat: 37.7893, lng: -122.4039 },
             includedPrimaryTypes: [
-              'postal_code', 
-              'administrative_area_level_2', 
+              'postal_code',
+              'administrative_area_level_2',
               'administrative_area_level_3',
-              // 'locality',
-              // 'sublocality',
             ],
             language: "en-US",
             region: "us",
-            // sessionToken: token,
+            ...this.config().searchAutocompleteRequest,
+            input: searchTerm,
           };
           const options = google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions(request)
-          .then((response) => response.suggestions.map(suggestion => {
-            const option = {
+            .then((response) => response.suggestions.map(suggestion => ({
               value: suggestion,
-              label: suggestion.placePrediction.text.text
-            }
-            return option;
-          }))
-          resolve(options)
-        })
+              label: suggestion.placePrediction.text.text,
+            })));
+          resolve(options);
+        });
       }
-      return []
+      return [];
     }
   }
 

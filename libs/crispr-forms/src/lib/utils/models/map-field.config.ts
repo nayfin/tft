@@ -10,6 +10,8 @@ export type MapFieldConfig<OMT = unknown> = CrisprControlConfig & MatFieldProper
   location?: string; // google.maps.places.AutocompleteSuggestion;
 
   options?: google.maps.MapOptions;
+  /** Optional overrides for the Places Autocomplete request. `input` is always supplied by the search term and cannot be set here. */
+  searchAutocompleteRequest?: Omit<google.maps.places.AutocompleteRequest, 'input'>;
   debounceTime?: number;
   markers?: (map: GoogleMap, group: FormGroup) => Observable<TftMapMarker[]>;
   // markerTemplateBuilder?: TemplateBuilder<TftMapMarker>;
