@@ -36,3 +36,16 @@
     [value]="value">
   </crispr-form>
 </mat-card>
+
+<mat-card>
+  <h2 class="mat-h2">
+    Example of creating new chips with a custom sub-form
+  </h2>
+  <p class="mat-body-2">
+    Search for existing tags or click "+ Create custom tag" to open an inline form and add a new one.
+  </p>
+  <crispr-form
+    (submitted)="handleSubmit($event)"
+    [config]="createChipConfig">
+  </crispr-form>
+</mat-card>

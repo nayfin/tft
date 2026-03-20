@@ -99,7 +99,59 @@ Include the following types depending on what UI elements you need:
 - `MAP`: Map selection.
 - `UNIT_CONVERSION`: Measurements.
 
-## 5. Advanced Configuration Notes
+## 5. Creating New Chips via Inline Sub-Form (`createChip`)
+
+`AUTOCOMPLETE_CHIPLIST` supports an optional `createChip` config that adds a **"+ Create New"** option at the bottom of the autocomplete dropdown. When selected, a CDK overlay sub-form opens below the field, allowing the user to fill in a custom form and submit a new chip with a complex value.
+
+**Key properties (`CreateChipConfig`):**
+- `createLabel` — label for the option in the dropdown (default: `'+ Create New'`)
+- `fields` — `AnyFieldConfig[]` rendered inside the overlay sub-form
+- `submitChip` — `(group: FormGroup) => Observable<SelectOption>` — called on submit; must return an Observable that emits the new chip
+- `submitLabel` — label for the submit button inside the overlay (default: `'Add'`)
+
+**Example:**
+```typescript
+{
+  controlType: ControlType.AUTOCOMPLETE_CHIPLIST,
+  label: 'Tags',
+  controlName: 'tags',
+  hint: 'Search existing tags or create a custom one',
+  options: (_group, searchTerm) =>
+    existingTags.filter(o => o.label.toLowerCase().includes(searchTerm.toLowerCase())),
+  createChip: {
+    createLabel: '+ Create custom tag',
+    submitLabel: 'Add Tag',
+    fields: [
+      {
+        controlType: ControlType.INPUT,
+        controlName: 'label',
+        label: 'Tag Name',
+        placeholder: 'e.g. NgRx',
+      },
+      {
+        controlType: ControlType.SELECT,
+        controlName: 'category',
+        label: 'Category',
+        options: [
+          { label: 'Framework', value: 'framework' },
+          { label: 'Library', value: 'library' },
+        ],
+      },
+    ],
+    submitChip: (group: FormGroup) => {
+      const label = group.get('label')?.value ?? '';
+      const category = group.get('category')?.value ?? '';
+      const newChip: SelectOption = {
+        label,
+        value: `${category}:${label.toLowerCase().replace(/\s+/g, '-')}`,
+      };
+      return of(newChip).pipe(delay(300)); // simulate async POST
+    },
+  },
+}
+```
+
+## 6. Advanced Configuration Notes
 - **Computed Values**: You can use `computeFieldConfig` or `computeValue` to create reactive fields that change their state (e.g., disabled, different options) based on other field values.
 - **Validation**: Pass standard Angular `Validators` arrays into the `validators` property of any field. Error messages will be automatically handled if `@tft/form-validation-handler` is set up properly.
 - **Custom Components**: You are not limited to the pre-built components. You can define custom field types and register them within the library's `field-component-map.const.ts` pattern.

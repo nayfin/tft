@@ -152,6 +152,20 @@ interface AutocompleteChiplistFieldConfig extends AutocompleteFieldConfig {
   duplicateCompareFunction?: (chip: SelectOption, availableOption: SelectOption) => boolean;
   separatorKeyCodes?: number[];
   tabToSelect?: boolean;
+  /** Optional. When set, adds a "Create New" option at the bottom of the autocomplete dropdown
+   *  that opens an inline CDK overlay sub-form for creating a new chip with a complex value. */
+  createChip?: CreateChipConfig;
+}
+
+interface CreateChipConfig {
+  /** Label for the "Create New" option in the autocomplete dropdown. Defaults to '+ Create New'. */
+  createLabel?: string;
+  /** Fields to render inside the create-chip overlay sub-form. */
+  fields: AnyFieldConfig[];
+  /** Called when the user submits the sub-form. Must return an Observable that emits the new SelectOption. */
+  submitChip: (group: FormGroup) => Observable<SelectOption>;
+  /** Label for the submit button inside the overlay. Defaults to 'Add'. */
+  submitLabel?: string;
 }
 ```
 

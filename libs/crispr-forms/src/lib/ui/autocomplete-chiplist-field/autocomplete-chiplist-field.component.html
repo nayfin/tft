@@ -1,6 +1,6 @@
 <crispr-field-container [config]="config()" [group]="group()">
 
-  <mat-form-field [attr.data-testid]="testId()" [color]="config().color" [appearance]="config().appearance" [formGroup]="group()">
+  <mat-form-field cdkOverlayOrigin [attr.data-testid]="testId()" [color]="config().color" [appearance]="config().appearance" [formGroup]="group()">
     @if (config().label) {<mat-label>{{config().label}}</mat-label>}
 
     <mat-chip-grid #chipList>
@@ -44,9 +44,35 @@
         {{config().emptyOptionsMessage}}
       </mat-option>
       }
+      @if (config().createChip) {
+      <mat-option [value]="createNewSentinel" class="create-new-option">
+        {{ config().createChip?.createLabel ?? '+ Create New' }}
+      </mat-option>
+      }
     </mat-autocomplete>
 
     @if (config().hint && (control().valid || !control().touched)) {<mat-hint>{{config().hint}}</mat-hint>}
 
   </mat-form-field>
+
+  <ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayOrigin]="overlayOrigin"
+    [cdkConnectedOverlayOpen]="showCreateForm()"
+    [cdkConnectedOverlayWidth]="overlayWidth"
+    [cdkConnectedOverlayPositions]="createFormPositions"
+    (overlayOutsideClick)="closeCreateForm()">
+    <div class="create-chip-panel mat-elevation-z4">
+      @for (field of config().createChip?.fields ?? []; track field) {
+      <ng-container crisprField [config]="field" [group]="createFormGroup"></ng-container>
+      }
+      <div class="create-chip-actions">
+        <button mat-stroked-button type="button" (click)="closeCreateForm()">Cancel</button>
+        <button mat-raised-button color="primary" type="button" (click)="submitNewChip()">
+          {{ config().createChip?.submitLabel ?? 'Add' }}
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
 </crispr-field-container>

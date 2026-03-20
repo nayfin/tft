@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ControlType, FormConfig, SelectOption } from '@tft/crispr-forms';
 import { EndpointsService, ENDPOINTS } from '../../endpoints.service';
 import { FormGroup } from '@angular/forms';
+import { of, delay } from 'rxjs';
 import { autocompleteChiplistFormConfig } from './autocomplete-chiplist.config';
 
 
@@ -85,6 +86,62 @@ export class AutocompleteChiplistComponent {
       }
     ]
   }
+
+  createChipConfig: FormConfig = {
+    fields: [
+      {
+        controlType: ControlType.AUTOCOMPLETE_CHIPLIST,
+        label: 'Tags',
+        controlName: 'tags',
+        hint: 'Search existing tags or create a custom one',
+        options: (_group, searchTerm) =>
+          [
+            { label: 'Angular', value: 'angular' },
+            { label: 'TypeScript', value: 'typescript' },
+            { label: 'RxJS', value: 'rxjs' },
+            { label: 'Material', value: 'material' },
+          ].filter((o) => o.label.toLowerCase().includes(searchTerm.toLowerCase())),
+        createChip: {
+          createLabel: '+ Create custom tag',
+          submitLabel: 'Add Tag',
+          fields: [
+            {
+              controlType: ControlType.INPUT,
+              controlName: 'label',
+              label: 'Tag Name',
+              placeholder: 'e.g. NgRx',
+            },
+            {
+              controlType: ControlType.SELECT,
+              controlName: 'category',
+              label: 'Category',
+              options: [
+                { label: 'Framework', value: 'framework' },
+                { label: 'Language', value: 'language' },
+                { label: 'Library', value: 'library' },
+                { label: 'Tool', value: 'tool' },
+              ],
+            },
+          ],
+          submitChip: (group: FormGroup) => {
+            const label = group.get('label')?.value ?? '';
+            const category = group.get('category')?.value ?? '';
+            const newChip: SelectOption = {
+              label,
+              value: `${category}:${label.toLowerCase().replace(/\s+/g, '-')}`,
+            };
+            // Simulate async save (e.g. POST to API)
+            return of(newChip).pipe(delay(300));
+          },
+        },
+      },
+      {
+        controlType: ControlType.BUTTON,
+        label: 'Submit',
+        buttonType: 'flat',
+      },
+    ],
+  };
 
   handleSubmit(form: FormGroup) {
     console.log({form});

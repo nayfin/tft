@@ -1,7 +1,7 @@
 import { AbstractAutocompleteFieldConfig } from './autocomplete-field.config';
 import { SelectOption } from './select-field.config';
-
 import { ControlType, FieldDescriptors, MatFieldProperties } from './crispr-field.config';
+import type { CreateChipConfig } from './create-chip.config';
 
 export interface AutocompleteChiplistFieldConfig extends AbstractAutocompleteFieldConfig,
   FieldDescriptors,
@@ -21,4 +21,6 @@ export interface AutocompleteChiplistFieldConfig extends AbstractAutocompleteFie
    * @deprecated replaced with tabToSelect as it is more accurate
    */
   addChipOnBlur?: boolean;
+  /** Config for creating new chips with complex values via an inline sub-form */
+  createChip?: CreateChipConfig;
 }

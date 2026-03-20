@@ -5,8 +5,9 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   ElementRef,
+  signal,
 } from '@angular/core';
-import { map, tap } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
 import {
   MatAutocompleteModule,
   MatAutocompleteSelectedEvent,
@@ -14,12 +15,15 @@ import {
 } from '@angular/material/autocomplete';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { ENTER } from '@angular/cdk/keycodes';
+import { FormGroup } from '@angular/forms';
+import { ConnectionPositionPair, CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
 
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { OptionComponent } from '../option';
 import { MatIconModule } from '@angular/material/icon';
 import {
@@ -27,10 +31,12 @@ import {
   AbstractAutocompleteComponent,
   DEFAULT_EMPTY_OPTIONS_MESSAGE,
   SelectOption,
+  buildFormGroupFromConfig,
 } from '../../utils';
 import { FieldContainerComponent } from '../field-container';
 import { InfoComponent } from '../info';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { CrisprFieldDirective } from '../../field.directive';
 
 const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
   chipsSelectable: true,
@@ -44,6 +50,9 @@ const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
   separatorKeyCodes: [ENTER],
   emptyOptionsMessage: DEFAULT_EMPTY_OPTIONS_MESSAGE,
 };
+
+/** Sentinel used to detect "Create New" selection — never matches a real SelectOption */
+const CREATE_NEW_SENTINEL: unique symbol = Symbol('CREATE_NEW');
 
 @Component({
     selector: 'crispr-autocomplete-chiplist-field',
@@ -61,7 +70,11 @@ const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
         MatOptionModule,
         MatChipsModule,
         MatIconModule,
+        MatButtonModule,
         FormValidationHandlerModule,
+        CdkConnectedOverlay,
+        CdkOverlayOrigin,
+        CrisprFieldDirective,
     ],
     standalone: true
 })
@@ -85,6 +98,20 @@ export class AutocompleteChiplistFieldComponent
   @ViewChild('autoInput', { read: MatAutocompleteTrigger })
   chipInput: MatAutocompleteTrigger;
   @ViewChild('autoInput') chipInputRef: ElementRef<HTMLInputElement>;
+  @ViewChild(CdkOverlayOrigin) overlayOrigin: CdkOverlayOrigin;
+
+  readonly createNewSentinel = CREATE_NEW_SENTINEL;
+  showCreateForm = signal(false);
+  createFormGroup = new FormGroup({});
+
+  readonly createFormPositions: ConnectionPositionPair[] = [
+    { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
+    { originX: 'start', originY: 'top',    overlayX: 'start', overlayY: 'bottom' },
+  ];
+
+  get overlayWidth(): number {
+    return this.overlayOrigin?.elementRef.nativeElement.offsetWidth ?? 0;
+  }
 
   ngOnInit() {
     super.ngOnInit();
@@ -107,14 +134,37 @@ export class AutocompleteChiplistFieldComponent
     }
   }
 
-  // handles mat selecting
   handleSelect(event: MatAutocompleteSelectedEvent) {
+    if ((event.option.value as unknown) === CREATE_NEW_SENTINEL) {
+      this.openCreateForm();
+      return;
+    }
     const selectedOption: SelectOption = event.option.value as SelectOption;
     this.chips$.next([...this.chips$.value, selectedOption]);
     this.chipInputRef.nativeElement.value = '';
     this.autocompleteInputControl.setValue('');
     // setTimeout needed because the panel thinks it's still open at this point
     setTimeout(() => this.chipInput.openPanel());
+  }
+
+  openCreateForm() {
+    this.createFormGroup = buildFormGroupFromConfig({ fields: this.config().createChip!.fields });
+    this.chipInputRef.nativeElement.value = '';
+    this.autocompleteInputControl.setValue('');
+    setTimeout(() => this.showCreateForm.set(true));
+  }
+
+  submitNewChip() {
+    this.config().createChip!.submitChip(this.createFormGroup)
+      .pipe(take(1))
+      .subscribe((newChip) => {
+        this.chips$.next([...this.chips$.value, newChip]);
+        this.showCreateForm.set(false);
+      });
+  }
+
+  closeCreateForm() {
+    this.showCreateForm.set(false);
   }
 
   /**
@@ -145,7 +195,8 @@ export class AutocompleteChiplistFieldComponent
   }
 
   mapToLabel(option: SelectOption) {
-    return option ? option.label : '';
+    if (!option || (option as unknown) === CREATE_NEW_SENTINEL) return '';
+    return option.label ?? '';
   }
 
   removeChip(removedChip: SelectOption) {
@@ -160,7 +211,7 @@ export class AutocompleteChiplistFieldComponent
       this.selectedChip = chip
     }
   }
-  
+
   blurField() {
     this.selectedChip = null;
   }
