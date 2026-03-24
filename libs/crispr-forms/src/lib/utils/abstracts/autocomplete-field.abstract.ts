@@ -1,4 +1,4 @@
-import { OnInit, Directive, signal } from '@angular/core';
+import { computed, Directive, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, shareReplay, startWith, switchMap } from 'rxjs/operators';
@@ -17,7 +17,9 @@ export class AbstractAutocompleteComponent<C>
   // we need a separate control for the UI because of the way the material autocomplete chiplist works
   autocompleteInputControl = new FormControl('');
   options$: Observable<SelectOption[]>
-  config = signal<AutocompleteConfigTypes & C>(null);
+  // Narrows the parent's computed config type to include C-specific properties (e.g. chiplist-only fields)
+  config = computed(() => this.inputConfig() as (AutocompleteConfigTypes & C) | null);
+
   ngOnInit() {
     super.ngOnInit();
 

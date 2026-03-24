@@ -1,9 +1,9 @@
 import {
-  Component,
-  OnInit,
-  Input,
   ChangeDetectionStrategy,
+  Component,
+  input,
   OnDestroy,
+  OnInit,
 } from '@angular/core';
 import { Observable, of, Subscription } from 'rxjs';
 import { FormGroup } from '@angular/forms';
@@ -18,31 +18,32 @@ import type { CrisprControlConfig } from '../../utils';
     templateUrl: './field-container.component.html',
     styleUrls: ['./field-container.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
     imports: [CommonModule, HeadingComponent]
 })
 export class FieldContainerComponent implements OnInit, OnDestroy {
   // the configuration object for the field
-  @Input() config: CrisprControlConfig;
+  config = input.required<CrisprControlConfig>();
   // the parent formGroup
-  @Input() group: FormGroup;
+  group = input.required<FormGroup>();
   // boolean whether field-container is inline
-  @Input() inlineField = false;
+  inlineField = input(false);
   // used to determine whether or not field should be shown
   disabled$: Observable<boolean>;
 
   subs: Subscription[] = [];
 
   ngOnInit() {
-    this.disabled$ = this.connectDisabledCallback(this.group, this.config);
+    this.disabled$ = this.connectDisabledCallback(this.group(), this.config());
     // we tried moving this into afterViewChecked and afterContentChecked lifecycle hooks without any luck
-    if (this.config.computeValue) {
+    if (this.config().computeValue) {
       this.subs.push(
-        this.config
-          .computeValue(this.group)
+        this.config()
+          .computeValue(this.group())
           .pipe(
             distinctUntilChanged(),
             tap((computedValue) =>
-              this.group.get(this.config.controlName).setValue(computedValue)
+              this.group().get(this.config().controlName).setValue(computedValue)
             )
           )
           .subscribe()
@@ -69,7 +70,7 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
     // as a parameter otherwise return an observable of true.
     return config?.disabledCallback &&
       config.disabledCallback instanceof Function
-      ? config.disabledCallback(group).pipe(
+      ? config.disabledCallback(group as FormGroup).pipe(
           // This enables/disables when callback conditions are met
           tap((shouldDisable) =>
             shouldDisable ? control.disable() : control.enable()

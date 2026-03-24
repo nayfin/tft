@@ -1,6 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import {
   ControlValueAccessor,
   NgControl,
@@ -103,7 +103,7 @@ export class ImageUploadFieldComponent
           maxIterations: 30,
           onProgress: (progress: number) => {
             this.progress = progress;
-            this.cdr.detectChanges();
+            this.cdr.markForCheck();
           },
         };
         return await imageCompression(file, options);
@@ -123,11 +123,9 @@ export class ImageUploadFieldComponent
       if (file) {
         this.control().setValue(file);
       }
-      if (file || this.value) {
+      if (file || this.value()) {
         this.control().markAsTouched();
-        setTimeout(() => {
-          this.cdr.detectChanges();
-        }, 100);
+        this.cdr.markForCheck();
       }
     }),
     shareReplay(1)

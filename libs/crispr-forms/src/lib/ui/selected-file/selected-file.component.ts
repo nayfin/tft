@@ -1,5 +1,5 @@
 
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
@@ -7,15 +7,17 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     selector: 'crispr-selected-file',
     templateUrl: './selected-file.component.html',
     styleUrls: ['./selected-file.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
     imports: [
         MatProgressBarModule
     ]
 })
 export class SelectedFileComponent {
 
-  @Input() fileName: string;
-  @Input() progress: number;
-  @Input() showProgress: boolean;
-  @Input() color: ThemePalette;
+  fileName = input.required<string>();
+  progress = input<number>();
+  showProgress = input<boolean>();
+  color = input<ThemePalette>();
 
 }

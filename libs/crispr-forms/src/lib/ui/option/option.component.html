@@ -1,16 +1,16 @@
 <div>
-  @if (option.imageUrl) {
+  @if (option().imageUrl) {
     <img
-      [src]="option.imageUrl"
-      alt="image of {{option.label}}"
+      [src]="option().imageUrl"
+      alt="image of {{option().label}}"
       style="vertical-align:middle;"
       aria-hidden
       height="25"/>
   }
-  {{option.label}}
+  {{option().label}}
 </div>
 
-@if (option.info; as info) {
+@if (option().info; as info) {
   <crispr-info [info]="info">
   </crispr-info>
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, WritableSignal, Signal, inject } from '@angular/core';
-import { FormGroup, FormArray } from '@angular/forms';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { FormArray } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CrisprFieldDirective } from '../field.directive';
@@ -41,11 +41,7 @@ export class FormGroupListComponent
   extends CrisprControlComponent<FormGroupListConfig>
   implements OnInit
 {
-  private cdr = inject(ChangeDetectorRef);
-
   defaultConfig = defaultConfig;
-  group: WritableSignal<FormGroup>;
-  control: Signal<FormArray>;
   /**
    * By setting this to true when adding/removing items from array,
    * we can block original values from overwriting form values
@@ -60,21 +56,18 @@ export class FormGroupListComponent
   }
 
   setControlValue(values: any[]) {
-    if (this.control()) {
+    const formArray = this.control() as FormArray;
+    if (formArray) {
       if (values?.length > 0) {
         // clear any existing values so that new values don't concatenate onto the old
-        const currentValues: [] = this.control().value;
+        const currentValues: [] = formArray.value;
         if (currentValues.length) {
-          this.control().clear();
+          formArray.clear();
         }
         values.forEach((value) => this.addGroup(value));
       } else if (this.config().displayInitialItem) {
         this.addGroup();
       }
-      // needed to ensure new array items render
-      setTimeout(() => {
-        this.cdr.detectChanges();
-      });
     }
   }
 
@@ -89,15 +82,13 @@ export class FormGroupListComponent
   }
 
   addGroup(value = null) {
-    this.control().push(createControlForType(this.config().itemConfig, value));
-    // needed to ensure new array items render
-    setTimeout(() => {
-      this.cdr.detectChanges();
-    });
+    const formArray = this.control() as FormArray;
+    formArray.push(createControlForType(this.config().itemConfig, value));
   }
 
   deleteGroup(index: number) {
-    this.control().removeAt(index);
+    const formArray = this.control() as FormArray;
+    formArray.removeAt(index);
   }
 
   clickEditItem(index: number) {

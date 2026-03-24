@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { CrisprFieldComponent, ButtonConfig, ControlValue } from '../../utils';
+import { CrisprFieldComponent, ButtonConfig } from '../../utils';
 
 @Component({
     selector: 'crispr-button',
@@ -35,12 +35,8 @@ export class ButtonComponent
   };
   formValid$: Observable<boolean>;
 
-  group = signal<FormGroup>(null);
-  // eslint-disable-next-line @angular-eslint/no-input-rename
-  @Input({alias: 'group'})
-  set inputGroup(group: ControlValue) {
-    this.group.set(group);
-  }
+  group = input<FormGroup>(null);
+
   get matButtonClass() {
     return this.config().buttonType ? `mat-${this.config().buttonType}-button` : '';
   }

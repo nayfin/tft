@@ -1,18 +1,18 @@
 <form
   class="crispr-form"
-  [ngClass]="config.classes"
-  [formGroup]="form"
+  [ngClass]="config().classes"
+  [formGroup]="form()"
   (ngSubmit)="handleSubmit()"
-  [autocomplete]="config.autocomplete || 'off'"
-  [errorDictionary]="config.errorDictionary"
+  [autocomplete]="config().autocomplete || 'off'"
+  [errorDictionary]="config().errorDictionary"
   #ngFormElement="ngForm">
 
-  @for (field of config.fields; track field) {
+  @for (field of config().fields; track field) {
     <ng-container
       crisprField
-      [value]="value | initialControlValue : field"
+      [value]="value() | initialControlValue : field"
       [config]="field"
-      [group]="form">
+      [group]="form()">
     </ng-container>
   }
   <!-- Hidden button, programmatically clicked when crispr form triggerSubmit function called.

@@ -1,7 +1,7 @@
-@if (info) {
+@if (info()) {
   <mat-icon
-    [matTooltip]="info.content"
-    [matTooltipPosition]="info.tooltipPosition || 'below'">
-    {{info.iconName || 'info'}}
+    [matTooltip]="info().content"
+    [matTooltipPosition]="info().tooltipPosition || 'below'">
+    {{info().iconName || 'info'}}
   </mat-icon>
 }

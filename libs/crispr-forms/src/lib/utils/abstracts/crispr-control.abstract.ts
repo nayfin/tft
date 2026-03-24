@@ -1,7 +1,7 @@
 
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { CrisprControlConfig, ControlValue, ControlType } from '../models/crispr-field.config';
-import { computed, DestroyRef, Directive, effect, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
+import { computed, DestroyRef, Directive, effect, EventEmitter, inject, input, OnInit, Output } from '@angular/core';
 import { CrisprFieldComponent } from './crispr-field.abstract';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -10,26 +10,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class CrisprControlComponent<C extends CrisprControlConfig> extends CrisprFieldComponent<C> implements OnInit {
   destroyRef = inject(DestroyRef);
-  group = signal<FormGroup>(null);
-  // eslint-disable-next-line @angular-eslint/no-input-rename
-  @Input({alias: 'group'})
-  set inputGroup(group: ControlValue) {
-    this.group.set(group);
-  }
+
+  group = input<FormGroup>(null);
 
   control = computed<AbstractControl>(() => this.group()?.get(this.config().controlName))
 
   @Output() valueChanges: EventEmitter<ControlValue> = new EventEmitter<ControlValue>();
 
-  value = signal<ControlValue>(null); 
-  /*
-    * Having the input alias allows us to consume these components in the traditional Angular way as well as progammatically in the form builder
-    */
-  // eslint-disable-next-line @angular-eslint/no-input-rename
-  @Input({alias: 'value'}) 
-  set inputValue(value: ControlValue) {
-    this.value.set(value);
-  }
+  value = input<ControlValue>(null);
 
   constructor() {
     super();

@@ -14,6 +14,9 @@ import { CrisprPipesModule } from './pipes/crispr-pipes.module';
 import { FieldContainerComponent } from './ui';
 import { CrisprDisplayFieldDirective } from './display-field.directive';
 
+/**
+ * @deprecated Use stanadlone CripsrFormComponent
+ */
 @NgModule({
   imports: [
     CommonModule,

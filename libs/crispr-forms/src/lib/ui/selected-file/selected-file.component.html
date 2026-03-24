@@ -1,8 +1,8 @@
-<h3 class="mat-h3">{{ fileName }}</h3>
-@if (showProgress) {
+<h3 class="mat-h3">{{ fileName() }}</h3>
+@if (showProgress()) {
   <mat-progress-bar
     mode="determinate"
-    [color]="color"
-    [value]="progress">
+    [color]="color()"
+    [value]="progress()">
   </mat-progress-bar>
 }

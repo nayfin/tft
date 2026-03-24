@@ -2,7 +2,7 @@ import type {
   CrisprFieldConfig,
   CrisprControlConfig,
 } from '../models';
-import { computed, Directive, input, signal, Input} from '@angular/core';
+import { computed, Directive, input } from '@angular/core';
 
 @Directive({
   standalone: true
@@ -10,18 +10,13 @@ import { computed, Directive, input, signal, Input} from '@angular/core';
 export abstract class CrisprFieldComponent<C extends CrisprFieldConfig> {
 
   defaultConfig?: Partial<C>;
-  // eslint-disable-next-line @angular-eslint/no-input-rename
-  @Input({alias: 'config'})
-  set inputConfig(config: C) {
-    this.updateConfig(config);
-  }
 
-  private updateConfig(inputConfig: C) {
-    const mergedConfig = this.defaultConfig ? {...this.defaultConfig, ...inputConfig} : inputConfig;
-    this.config.set(mergedConfig);
-  }
+  inputConfig = input<C | null>(null, { alias: 'config' });
 
-  config = signal<C | null>(null);
+  config = computed<C | null>(() => {
+    const c = this.inputConfig();
+    return c && this.defaultConfig ? { ...this.defaultConfig, ...c } : c;
+  });
 
   testIdPrefix = input<string | undefined>(undefined);
 

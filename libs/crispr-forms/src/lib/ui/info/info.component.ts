@@ -1,5 +1,5 @@
 
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import type { Info } from '../../utils';
@@ -9,6 +9,7 @@ import type { Info } from '../../utils';
     templateUrl: './info.component.html',
     styleUrls: ['./info.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
     imports: [
         MatIconModule,
         MatTooltipModule
@@ -16,6 +17,6 @@ import type { Info } from '../../utils';
 })
 export class InfoComponent {
 
-  @Input() info: Info;
+  info = input.required<Info>();
 
 }
