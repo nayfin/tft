@@ -156,11 +156,11 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   }
 
   setDragStyles(dragElement: HTMLElement) {
-    this.renderer.setStyle(dragElement, 'touchAction', 'none');
-    this.renderer.setStyle(dragElement, 'zIndex', this.dragZIndex);
+    this.renderer.setStyle(dragElement, 'touch-action', 'none');
+    this.renderer.setStyle(dragElement, 'z-index', this.dragZIndex);
     this.renderer.setStyle(dragElement, 'position', 'absolute');
     // Prevents highlighting text if dragging over, which will interrupt the next drag action
-    this.renderer.setStyle(dragElement, 'userSelect', 'none');
+    this.renderer.setStyle(dragElement, 'user-select', 'none');
 
   }
 
