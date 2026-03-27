@@ -1,9 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  effect,
   input,
   OnInit,
   output,
+  untracked,
   ViewChild,
   ElementRef,
 } from '@angular/core';
@@ -40,6 +42,17 @@ export class CrisprFormComponent implements OnInit {
   value = input<ControlGroupValue>(null);
 
   submitted = output<FormGroup>();
+
+  /** Patch form values whenever the [value] input changes without firing valueChanges. */
+  private patchValueEffect = effect(() => {
+    const value = this.value();
+    untracked(() => {
+      if (value) {
+        this.form().patchValue(value, { emitEvent: false });
+      }
+    });
+  });
+
   // proxy value and status change events through to consuming component
   valueChanges = outputFromObservable(
     toObservable(this.form).pipe(switchMap((f) => f.valueChanges))
