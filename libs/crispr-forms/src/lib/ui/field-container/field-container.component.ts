@@ -73,7 +73,9 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
       ? config.disabledCallback(group as FormGroup).pipe(
           // This enables/disables when callback conditions are met
           tap((shouldDisable) =>
-            shouldDisable ? control.disable() : control.enable()
+            shouldDisable
+              ? control.disable({ emitEvent: false })
+              : control.enable({ emitEvent: false })
           )
         )
       : of(false);
