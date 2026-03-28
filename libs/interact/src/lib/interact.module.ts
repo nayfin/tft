@@ -1,7 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ArrayOfNPipe } from './pipes/array-of-n.pipe';
-import { ApplyScaleDirective, DraggableDirective, DragRootDirective, AutoScrollDirective, AccountForScaleDirective, GesturableDirective, ResizableDirective, DropzoneDirective, DragPreviewDirective } from './directives';
+import { ApplyScaleDirective, DraggableDirective, DragRootDirective, AutoScrollDirective, AccountForScaleDirective, GesturableDirective, ResizableDirective, DropzoneDirective, DragPreviewDirective, LassoDirective } from './directives';
 import { InteractService } from './services/interact.service';
 import { InteractRootConfig, INTERACT_ROOT_CONFIG } from './models';
 
@@ -17,6 +17,7 @@ const EXPORTS = [
   AccountForScaleDirective,
   ApplyScaleDirective,
   DragPreviewDirective,
+  LassoDirective,
   ArrayOfNPipe,
 ];
 

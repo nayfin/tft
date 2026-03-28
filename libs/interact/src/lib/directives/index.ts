@@ -7,3 +7,4 @@ export * from './drag-root.directive';
 export * from './account-for-scale.directive';
 export * from './apply-scale.directive';
 export * from './auto-scroll.directive';
+export * from './lasso.directive';
