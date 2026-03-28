@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostBinding, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { Directive, ElementRef, inject, input } from '@angular/core';
 
 /**
  * Use to apply scale to the element and tell the drag and resize directives to account for the scale when
@@ -7,12 +7,11 @@ import { Directive, ElementRef, HostBinding, Input, OnChanges, SimpleChanges, in
  * element accounts for scale
  */
 @Directive({
-    selector: '[tftAccountForScale]',
-    standalone: false
+  selector: '[tftAccountForScale]',
+  standalone: true,
 })
 export class AccountForScaleDirective {
   el = inject(ElementRef);
 
-  // this setup allows consumers to set x, y scale independently or just set them both with scale
-  @Input() scale = 1;
+  scale = input(1);
 }

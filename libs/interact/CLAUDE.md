@@ -135,6 +135,11 @@ TftResizeEvent { interactEvent, resizeRef, dragRef, dragOrigin, dropTarget, posi
 TftGestureEvent { interactEvent }
 ```
 
+## Export skill
+`libs/interact/export-skill/SKILL.md` contains the published skill docs with usage examples, directive reference, and migration guide.
+
+**Whenever a new directive, input, output, or breaking change is made to this library, update `SKILL.md`** — add or extend the relevant section and update the migration guide if the change affects existing consumers.
+
 ## Key files
 - `libs/interact/src/lib/directives/` — all directive implementations
 - `libs/interact/src/lib/services/interact.service.ts` — position/size registry

@@ -1,19 +1,14 @@
-import { Directive, ElementRef, HostBinding, Input, inject } from '@angular/core';
+import { Directive, ElementRef, inject, input } from '@angular/core';
 
 @Directive({
-    selector: '[tftApplyScale]',
-    standalone: false
+  selector: '[tftApplyScale]',
+  standalone: true,
+  host: {
+    '[style.font-size]': 'scale() + "px"',
+  },
 })
 export class ApplyScaleDirective {
   el = inject(ElementRef);
 
-
-  _scale = 1;
-   // this setup allows consumers to set x, y scale independently or just set them both with scale
-  @Input() set scale(val: number){
-    this._scale;
-    this.fontSize = `${val}px`;
-  };
-
-  @HostBinding('style.fontSize') fontSize: string;
+  scale = input(1);
 }

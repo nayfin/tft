@@ -1,11 +1,11 @@
-import { Directive, ElementRef, Input, OnInit, Output, OnDestroy, EventEmitter, Renderer2, SimpleChanges, OnChanges, ContentChild, ViewContainerRef, AfterViewInit, DOCUMENT, inject } from '@angular/core';
+import { Directive, ElementRef, input, output, OnInit, OnDestroy, effect, computed, Renderer2, ContentChild, ViewContainerRef, AfterViewInit, DOCUMENT, inject } from '@angular/core';
 
 import interact from 'interactjs';
 import { InteractService } from '../services/interact.service';
 import { DraggableOptions, Interactable } from '@interactjs/types/index';
 import { Subscription, Observable } from 'rxjs';
 import { DropzoneDirective } from './dropzone.directive';
-import { NgDragEvent, TftDragEvent, DEFAULT_REGISTRY_ID, TftCoords, TftDragElement} from '../models';
+import { NgDragEvent, TftDragEvent, DEFAULT_REGISTRY_ID, TftCoords, TftDragElement } from '../models';
 import { DragPreviewDirective } from './drag-preview.directive';
 import { getRootNode } from '../utils';
 import { DragRootDirective } from './drag-root.directive';
@@ -14,17 +14,17 @@ import { AutoScrollDirective } from './auto-scroll.directive';
 
 /** @dynamic */
 @Directive({
-    selector: '[tftDraggable]',
-    // eslint-disable-next-line @angular-eslint/no-host-metadata-property
-    host: {
-        '[style.touchAction]': 'this.dragDisabled ? "auto" : "none"',
-        '[style.position]': '"absolute"',
-        '[id]': 'interactableId',
-    },
-    standalone: false
+  selector: '[tftDraggable]',
+  standalone: true,
+  host: {
+    '[style.user-select]': 'dragDisabled() ? "auto" : "none"',
+    '[style.touch-action]': 'dragDisabled() ? "auto" : "none"',
+    '[style.position]': '"absolute"',
+    '[id]': 'interactableId',
+  },
 })
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+export class DraggableDirective<D = any> implements OnInit, OnDestroy, AfterViewInit {
   el = inject(ElementRef);
   private interactService = inject(InteractService);
   private renderer = inject(Renderer2);
@@ -35,96 +35,81 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   drag_root_dir? = inject(DragRootDirective, { optional: true, skipSelf: true });
   auto_scroll_dir? = inject(AutoScrollDirective, { optional: true, skipSelf: true });
 
-
-
-  @Input() x: number;
-  @Input() y: number;
-  /* zIndex while dragging*/
-  @Input() dragZIndex = 10000;
+  x = input<number>();
+  y = input<number>();
+  /** zIndex while dragging */
+  dragZIndex = input(10000);
   /** zIndex while at rest */
-  @Input() zIndex: number
-  @Input() interactableId: string;
-  @Input() dragData: D;
-  @Input() enableDragDefault = true;
+  zIndex = input<number>();
+  interactableId: string;
+  dragData = input<D>();
+  enableDragDefault = input(true);
   /**
    * @deprecated replaced by 'dragDisabled' property, please migrate before v13
    */
-  @Input() disabled = false;
-  @Input() dragDisabled = false;
-  @Input() dragConfig: Partial<Interact.OrBoolean<DraggableOptions>>;
-  @Input() showPlaceholder = false;
+  disabled = input(false);
+  dragDisabled = input(false);
+  dragConfig = input<Partial<Interact.OrBoolean<DraggableOptions>>>();
+  showPlaceholder = input(false);
 
   /**
    * The element we want to prepend the drag element to.
    * Use `tftDragRoot` directive on a parent element to set custom root element
    *  @default document.body
    */
-  @Input() dragRoot: DragRootDirective; // HTMLElement;
+  dragRoot = input<DragRootDirective>();
 
   private dragRootEl: HTMLElement;
-  // pipes all interact events to event emitters
-  @Output() dragStart = new EventEmitter<TftDragEvent>();
-  @Output() dragMove = new EventEmitter<TftDragEvent>();
-  @Output() dragInertiaStart = new EventEmitter<TftDragEvent>();
-  @Output() dragEnd = new EventEmitter<TftDragEvent>();
+
+  dragStart = output<TftDragEvent>();
+  dragMove = output<TftDragEvent>();
+  dragInertiaStart = output<TftDragEvent>();
+  dragEnd = output<TftDragEvent>();
 
   @ContentChild(DragPreviewDirective) _previewTemplate: DragPreviewDirective;
-  // dragPreview: Interact.Element;
   interactableState: Observable<TftCoords>;
   interactable: Interactable;
   private registryId: string;
   private interactableSubscription: Subscription;
   private scrollEventsSubscription: Subscription;
 
-  // cache holding element to use as drag preview (the element the user sees being dragged around)
   previewRef: TftDragElement;
-  // check all the different places for scale
-  get scale(): number {
-    return this.account_for_scale_dir?.scale || this.drag_root_dir?.account_for_scale_dir?.scale || this.dragRoot?.account_for_scale_dir?.scale || 1;
+
+  scale = computed(() =>
+    this.account_for_scale_dir?.scale() || this.drag_root_dir?.account_for_scale_dir?.scale() || this.dragRoot()?.account_for_scale_dir?.scale() || 1
+  );
+
+  constructor() {
+    effect(() => {
+      this.alignPositionWithInputs(this.x(), this.y());
+    });
+
+    effect(() => {
+      const disabled = this.disabled();
+      this.dragConfig(); this.dragDisabled();
+      if (disabled) {
+        console.warn(`It looks like your using the 'disabled' input on a tftDraggable directive, it has been deprecated and is replaced with 'dragDisabled', please migrate by v13`);
+      }
+      if (!this.interactable) return;
+      this.setDragConfig();
+    });
   }
 
   ngOnInit() {
-    this.interactable = this.initiateDragEvents(this.dragConfig, this.el.nativeElement);
-    this.dragRootEl = (this.dragRoot?.el?.nativeElement || this.drag_root_dir?.el?.nativeElement) as HTMLElement || this._document.body;
-    // register with parent dropzone if it exists, otherwise use default
-    // this gives us a place on the registry to store our drag items that don't have a dropzone
-    this.registryId = this.dropzone_dir?.dropzoneId || DEFAULT_REGISTRY_ID;
-    // add draggable to directory and store its id
+    this.interactable = this.initiateDragEvents(this.dragConfig(), this.el.nativeElement);
+    this.dragRootEl = (this.dragRoot()?.el?.nativeElement || this.drag_root_dir?.el?.nativeElement) as HTMLElement || this._document.body;
+    this.registryId = this.dropzone_dir?._registeredId() || DEFAULT_REGISTRY_ID;
     this.interactableId = this.interactService.addDraggableToRegistry(this.registryId, this.interactableId);
-    this.alignPositionWithInputs(this.x, this.y);
-    // cache subscription to interactable state so we can unsubscribe onDestroy
+    this.alignPositionWithInputs(this.x(), this.y());
     this.interactableState = this.interactService
       .getInteractableState(this.interactableId, this.registryId);
-    // keep our cached position values in line with our drag state
-    this.interactableSubscription = this.interactableState.subscribe((state) => {
-      this.y = state.y;
-      this.x = state.x;
-    });
+    this.interactableSubscription = this.interactableState.subscribe();
     this.setDragConfig();
   }
 
-  // TODO: watch config here as well and update interactable
-  ngOnChanges(changes: SimpleChanges) {
-    // we do this here instead of using a setter on the input so that it
-    // will only run once when there is a change to x and y
-    if(changes.y || changes.x) {
-      this.alignPositionWithInputs(this.x, this.y);
-    }
-    if(changes.dragConfig || changes.disabled || changes.dragDisabled) {
-      if(!this.interactable) return;
-      this.setDragConfig();
-    }
-    /**
-     * @deprecated remove this in v13
-     */
-    if (changes.disabled) {
-      console.warn(`It looks like your using the 'disabled' input on a tftDraggable directive, it has been deprecated and is replaced with 'dragDisabled', please migrate by v13`)
-    }
-  }
-
   setDragConfig() {
-    const enabled = !(this.disabled || this.dragDisabled)
-    const dragConfig = {...this.dragConfig, enabled};
+    const enabled = !(this.disabled() || this.dragDisabled());
+    const dragConfig = { ...this.dragConfig(), enabled };
     this.interactable.draggable(dragConfig);
   }
 
@@ -136,32 +121,30 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   }
 
   ngOnDestroy() {
-    // clean up state and subscriptions related to destroyed component
     this.interactableSubscription.unsubscribe();
     this.interactService.destroyInteractable(this.interactableId, this.registryId);
   }
 
   dragMoveListener(event: NgDragEvent, element: Interact.Element) {
     const { dx, dy } = event;
-    const scale = this.scale;
+    const scale = this.scale();
     const deltaX = scale ? dx / scale : dx;
     const deltaY = scale ? dy / scale : dy;
 
     this.interactService.updateDeltas(
       this.interactableId,
       this.registryId,
-      {deltaX, deltaY},
+      { deltaX, deltaY },
       element
     );
   }
 
   setDragStyles(dragElement: HTMLElement) {
     this.renderer.setStyle(dragElement, 'touch-action', 'none');
-    this.renderer.setStyle(dragElement, 'z-index', this.dragZIndex);
+    this.renderer.setStyle(dragElement, 'z-index', this.dragZIndex());
     this.renderer.setStyle(dragElement, 'position', 'absolute');
     // Prevents highlighting text if dragging over, which will interrupt the next drag action
     this.renderer.setStyle(dragElement, 'user-select', 'none');
-
   }
 
   addDragPropertiesToElement(nativeElement: TftDragElement) {
@@ -173,7 +156,7 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   mapDragEvent(event: NgDragEvent): TftDragEvent {
     const { target, dropzone } = event;
     const dropzoneElement = dropzone?.target || target.dropTarget?.el.nativeElement;
-    const scale = this.scale;
+    const scale = this.scale();
     const positionInDropTarget = target && dropzoneElement
       ? this.interactService.calculatePositionInElement(dropzoneElement, this.previewRef, scale)
       : null;
@@ -182,26 +165,25 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
       dragRef: this,
       dragOrigin: target.dragOrigin,
       dropTarget: target.dropTarget,
-      positionInDropTarget
-    }
+      positionInDropTarget,
+    };
   }
 
   setPosition(x: number, y: number) {
     this.interactService.updatePosition(
       this.interactableId,
       this.registryId,
-      {x, y},
+      { x, y },
       this.el.nativeElement
     );
   }
 
   alignPositionWithInputs(x: number, y: number) {
-    // short circuit if positions aren't numbers or  if they haven't changed
-    if(!this.isValidPosition(x, y)) return;
+    if (!this.isValidPosition(x, y)) return;
     this.interactService.updatePosition(
       this.interactableId,
       this.registryId,
-      {x, y},
+      { x, y },
       this.el.nativeElement
     );
   }
@@ -209,8 +191,7 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   isValidPosition(x: number, y: number) {
     return this.isNumeric(x) && this.isNumeric(y);
   }
-  // We use use this instead of isNaN here to try and help performance
-  // We should be able to reliably restrict to numbers or falsey values
+
   isNumeric(num: number) {
     return typeof num === 'number' && !isNaN(num);
   }
@@ -218,21 +199,18 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
   initiateDragEvents(dragConfig: Partial<Interact.OrBoolean<DraggableOptions>>, nativeElement: HTMLElement) {
     const defaultDragConfig = {
       ...dragConfig,
-      enabled:  !(this.disabled || this.dragDisabled),
+      enabled: !(this.disabled() || this.dragDisabled()),
       ...(this.auto_scroll_dir && {
-        autoScroll:
-          {
-            ...this.auto_scroll_dir.autoScrollConfig,
-            container: this.auto_scroll_dir.el.nativeElement as HTMLElement
-          }
-        }
-      )
+        autoScroll: {
+          ...this.auto_scroll_dir.autoScrollConfig(),
+          container: this.auto_scroll_dir.el.nativeElement as HTMLElement,
+        },
+      }),
     };
     return interact(nativeElement).draggable(defaultDragConfig)
-      .on('dragstart',  (event: NgDragEvent) => {
+      .on('dragstart', (event: NgDragEvent) => {
         const interaction = event.interaction;
-        // check if we should append drag element to body
-        if ( this.enableDragDefault && interaction.pointerIsDown ) {
+        if (this.enableDragDefault() && interaction.pointerIsDown) {
           if (this._previewTemplate) {
             const viewRef = this._viewContainerRef.createEmbeddedView(this._previewTemplate.templateRef);
             this.previewRef = getRootNode(viewRef, this._document);
@@ -240,85 +218,70 @@ export class DraggableDirective<D = any> implements OnInit, OnChanges, OnDestroy
             this.previewRef = cloneElement(this.el.nativeElement);
           }
           this.addDragPropertiesToElement(this.previewRef);
-          this.setDragStyles(this.previewRef)
+          this.setDragStyles(this.previewRef);
 
           this.dragRootEl.prepend(this.previewRef);
-          const scale = this.account_for_scale_dir?.scale || this.dragRoot?.account_for_scale_dir?.scale || 1;
-          const {x, y} = this.interactService.calculatePositionInElement(this.dragRootEl, nativeElement, scale);
-          this.interactService.updatePosition(this.interactableId, this.registryId, {x, y}, this.previewRef);
-          if (!this.showPlaceholder) {
+          const scale = this.account_for_scale_dir?.scale() || this.dragRoot()?.account_for_scale_dir?.scale() || 1;
+          const { x, y } = this.interactService.calculatePositionInElement(this.dragRootEl, nativeElement, scale);
+          this.interactService.updatePosition(this.interactableId, this.registryId, { x, y }, this.previewRef);
+          if (!this.showPlaceholder()) {
             this.renderer.setStyle(this.el.nativeElement, 'display', 'none');
           }
         }
-        // subscribe to scroll events if they are there, by only subscribing on dragstart we avoid wasting subscriptions on interactables that aren't be dragged
         if (this.auto_scroll_dir) {
           this.subscribeToScrollEvents();
         }
         this.dragStart.emit(this.mapDragEvent(event));
       })
       .on('dragmove', (event: NgDragEvent) => {
-        if (this.enableDragDefault) {
-          const dragElement = this.dropzone_dir && this.previewRef || nativeElement
+        if (this.enableDragDefault()) {
+          const dragElement = this.dropzone_dir && this.previewRef || nativeElement;
           this.dragMoveListener(event, dragElement);
         }
-        const mappedEvent = this.mapDragEvent(event);
-        this.dragMove.emit(mappedEvent);
+        this.dragMove.emit(this.mapDragEvent(event));
       })
       .on('draginertiastart', (event: NgDragEvent) => {
-        this.dragInertiaStart.emit(this.mapDragEvent(event))
+        this.dragInertiaStart.emit(this.mapDragEvent(event));
       })
       .on('dragend', (event: NgDragEvent) => {
-        const mappedEvent = this.mapDragEvent(event)
-        if(!!this.dropzone_dir && this.dropzone_dir === event.target.dropTarget) {
-          const { x, y} = mappedEvent.positionInDropTarget;
+        const mappedEvent = this.mapDragEvent(event);
+        if (!!this.dropzone_dir && this.dropzone_dir === event.target.dropTarget) {
+          const { x, y } = mappedEvent.positionInDropTarget;
           this.setPosition(x, y);
         }
         this.renderer.setStyle(this.el.nativeElement, 'display', '');
         this.dragEnd.emit(mappedEvent);
-        // unsubscribe from scroll events if subscribed
         if (this.auto_scroll_dir) {
           this.scrollEventsSubscription.unsubscribe();
         }
-        if ( this.el.nativeElement !== this.previewRef) {
-          // we do this in a timeout, so that we don't remove before the dropzone can get the boundingElementRect
+        if (this.el.nativeElement !== this.previewRef) {
           setTimeout(() => {
             this.dragRootEl.removeChild(this.previewRef);
-          })
+          });
         }
       });
   }
 
   subscribeToScrollEvents() {
-    this.scrollEventsSubscription = this.auto_scroll_dir.scrollDeltaObserver.subscribe(({scrollLeft, scrollTop}) => {
-      const deltaX = this.scale ? scrollLeft / this.scale : scrollLeft;
-      const deltaY = this.scale ? scrollTop / this.scale : scrollTop;
+    this.scrollEventsSubscription = this.auto_scroll_dir.scrollDeltaObserver.subscribe(({ scrollLeft, scrollTop }) => {
+      const deltaX = this.scale() ? scrollLeft / this.scale() : scrollLeft;
+      const deltaY = this.scale() ? scrollTop / this.scale() : scrollTop;
 
       this.interactService.updateDeltas(
         this.interactableId,
         this.registryId,
-        {deltaX, deltaY},
+        { deltaX, deltaY },
         this.previewRef
       );
     });
-
   }
 }
 
 /**
  * Component utils
  */
-// create a clone of the component passed in and add it to the root component
 function cloneElement(element: HTMLElement) {
   const clone = element.cloneNode(true) as HTMLElement;
   clone.removeAttribute('id');
   return clone;
-}
-function getPreviewInsertionPoint(documentRef: any): HTMLElement {
-  // We can't use the body if the user is in fullscreen mode,
-  // because the preview will render under the fullscreen element.
-  return documentRef.fullscreenElement ||
-         documentRef.webkitFullscreenElement ||
-         documentRef.mozFullScreenElement ||
-         documentRef.msFullscreenElement ||
-         documentRef.body;
 }

@@ -2,11 +2,10 @@ import {
   computed,
   Directive,
   ElementRef,
-  EventEmitter,
   HostListener,
   inject,
-  Input,
-  Output,
+  input,
+  output,
   signal,
 } from '@angular/core';
 
@@ -37,26 +36,26 @@ export interface LassoRect {
 @Directive({
   selector: '[tftLasso]',
   exportAs: 'tftLasso',
-  standalone: false,
+  standalone: true,
   host: {
-    '[style.touch-action]': 'lassoDisabled ? "auto" : "none"',
+    '[style.touch-action]': 'lassoDisabled() ? "auto" : "none"',
   },
 })
 export class LassoDirective {
   private host = inject(ElementRef<HTMLElement>);
 
   /** Scale factor applied to the host element — used to convert viewport px to container-local px. */
-  @Input() scale = 1;
+  scale = input(1);
   /** When true, lasso interaction is disabled. */
-  @Input() lassoDisabled = false;
+  lassoDisabled = input(false);
 
-  /** Emitted on mousedown (before any drag). Use to clear previous selection state. */
-  @Output() lassoStart = new EventEmitter<void>();
+  /** Emitted on pointerdown (before any drag). Use to clear previous selection state. */
+  lassoStart = output<void>();
   /**
-   * Emitted on mouseup when the drag exceeded the 5 px threshold.
+   * Emitted on pointerup when the drag exceeded the 5 px threshold.
    * Rect is in viewport (clientX/Y) space — pass directly to getBoundingClientRect comparisons.
    */
-  @Output() lassoCommit = new EventEmitter<LassoRect>();
+  lassoCommit = output<LassoRect>();
 
   // -------------------------------------------------------------------------
   // Internal state
@@ -93,8 +92,8 @@ export class LassoDirective {
   private toLocal(vpX: number, vpY: number): { x: number; y: number } {
     const rect = this.host.nativeElement.getBoundingClientRect();
     return {
-      x: (vpX - rect.left) / this.scale,
-      y: (vpY - rect.top) / this.scale,
+      x: (vpX - rect.left) / this.scale(),
+      y: (vpY - rect.top) / this.scale(),
     };
   }
 
@@ -104,7 +103,7 @@ export class LassoDirective {
 
   @HostListener('pointerdown', ['$event'])
   onPointerDown(e: PointerEvent) {
-    if (this.lassoDisabled) return;
+    if (this.lassoDisabled()) return;
     if (e.target !== e.currentTarget) return; // ignore clicks on children
     this._activePointerId = e.pointerId;
     this.host.nativeElement.setPointerCapture(e.pointerId); // track movement outside element bounds

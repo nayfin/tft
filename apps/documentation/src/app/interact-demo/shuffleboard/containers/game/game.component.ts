@@ -55,7 +55,7 @@ export class GameComponent implements OnInit {
   }
 
   updateLocation(event: TftDropEvent, key: string) {
-    const team = event.dragRef.dragData.team;
+    const team = event.dragRef.dragData().team;
     this.game[team].pucks[key].location.x = event.dragRef.x;
     this.game[team].pucks[key].location.y = event.dragRef.y;
   }
@@ -68,7 +68,7 @@ export class GameComponent implements OnInit {
     this.targets[index].pucksInTarget++;
   }
   handleDrop(event: TftDropEvent) {
-    const { team, key} = event.dragRef.dragData;
+    const { team, key} = event.dragRef.dragData();
     this.updateLocation(event, key);
     this.changeTeams(team);
     if ( team === Team.BLUE ) {
@@ -97,8 +97,8 @@ export class GameComponent implements OnInit {
   }
 
   handleScore(event: TftDropEvent) {
-    const points = event.dropTarget.dropzoneData.points;
-    const team = event.dragRef.dragData.team;
+    const points = event.dropTarget.dropzoneData().points;
+    const team = event.dragRef.dragData().team;
     this.game[team].score += points;
     this.handleDrop(event);
   }

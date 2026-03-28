@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit, Output, EventEmitter, SimpleChanges, OnChanges, inject } from '@angular/core';
+import { Directive, ElementRef, OnInit, output, input, inject, effect } from '@angular/core';
 import interact from 'interactjs';
 import { DraggableOptions, GesturableOptions, Interactable, GestureEvent } from '@interactjs/types/index';
 import { Observable } from 'rxjs';
@@ -7,69 +7,63 @@ import { DraggableDirective } from '../directives';
 
 /** @dynamic */
 @Directive({
-    selector: '[tftGesturable]',
-    // eslint-disable-next-line @angular-eslint/no-host-metadata-property
-    host: {
-        // '[style.touchAction]': 'this.gestureDisabled ? "auto" : "none"',
-        '[id]': 'gesturableId',
-    },
-    standalone: false
+  selector: '[tftGesturable]',
+  standalone: true,
+  host: {
+    // '[style.touch-action]': 'gestureDisabled() ? "auto" : "none"',
+    '[id]': 'gesturableId()',
+  },
 })
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class GesturableDirective<D = any> implements OnInit, OnChanges {
+export class GesturableDirective<D = any> implements OnInit {
   el = inject(ElementRef);
   private draggable_dir = inject(DraggableDirective, { optional: true });
 
+  gesturableId = input<string>();
+  gestureDisabled = input(false);
+  gestureConfig = input<Partial<Interact.OrBoolean<DraggableOptions>>>();
 
-  @Input() gesturableId: string;
-  @Input() gestureDisabled = false;
-  @Input() gestureConfig: Partial<Interact.OrBoolean<DraggableOptions>>;
-  // pipes all interact events to event emitters
-  @Output() gestureStart = new EventEmitter<TftGestureEvent>();
-  @Output() gestureMove = new EventEmitter<TftGestureEvent>();
-  @Output() gestureEnd = new EventEmitter<TftGestureEvent>();
+  gestureStart = output<TftGestureEvent>();
+  gestureMove = output<TftGestureEvent>();
+  gestureEnd = output<TftGestureEvent>();
 
   interactableState: Observable<TftCoords>;
   interactable: Interactable;
 
+  constructor() {
+    effect(() => {
+      this.gestureConfig(); this.gestureDisabled();
+      if (!this.interactable) return;
+      this.setGestureConfig();
+    });
+  }
+
   ngOnInit() {
-    this.gesturableId = this.draggable_dir?.interactableId || 'id';
-    this.interactable = this.initiateGestureEvents(this.gestureConfig, this.el.nativeElement);
+    this.interactable = this.initiateGestureEvents(this.gestureConfig(), this.el.nativeElement);
     this.setGestureConfig();
   }
 
-  // TODO: watch config here as well and update interactable
-  ngOnChanges(changes: SimpleChanges) {
-    // we do this here instead of using a setter on the input so that it
-    // will only run once when there is a change to x and y
-    if(changes.gestureConfig || changes.gestureDisabled) {
-      if(!this.interactable) return;
-      this.setGestureConfig();
-    }
-  }
-
   setGestureConfig() {
-    const enabled = !this.gestureDisabled;
-    const gestureConfig = {...this.gestureConfig, enabled};
+    const enabled = !this.gestureDisabled();
+    const gestureConfig = { ...this.gestureConfig(), enabled };
     this.interactable.gesturable(gestureConfig);
   }
 
   initiateGestureEvents(gestureConfig: Partial<Interact.OrBoolean<GesturableOptions>>, nativeElement: HTMLElement) {
-
     const defaultConfig: GesturableOptions = {
-      enabled:  !this.gestureDisabled,
+      enabled: !this.gestureDisabled(),
     };
     const interactable = this.draggable_dir?.interactable || interact(nativeElement);
 
-    return interactable.gesturable({...defaultConfig, ...gestureConfig})
+    return interactable.gesturable({ ...defaultConfig, ...gestureConfig })
       .on('gesturestart', (event: GestureEvent) => {
-        this.gestureStart.emit({gestureRef: this, interactEvent: event})
+        this.gestureStart.emit({ gestureRef: this, interactEvent: event });
       })
       .on('gesturemove', (event: GestureEvent) => {
-        this.gestureMove.emit({gestureRef: this, interactEvent: event})
+        this.gestureMove.emit({ gestureRef: this, interactEvent: event });
       })
       .on('gestureend', (event: GestureEvent) => {
-        this.gestureEnd.emit({gestureRef: this, interactEvent: event})
-      })
+        this.gestureEnd.emit({ gestureRef: this, interactEvent: event });
+      });
   }
 }
