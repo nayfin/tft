@@ -297,9 +297,9 @@ LassoRect {
 
 ---
 
-## 12. Migration to v21.1.6 (Standalone + Signal Inputs)
+## 12. Migration to v21.1.0 (Standalone + Signal Inputs)
 
-Version 21.1.6 converted all directives to **standalone** and replaced `@Input()`/`@Output()` with signal-based `input()`/`output()`. If upgrading from an earlier version, apply the following changes.
+Version 21.1.0 converted all directives to **standalone** and replaced `@Input()`/`@Output()` with signal-based `input()`/`output()`. If upgrading from an earlier version, apply the following changes.
 
 ### 12.1 — Import directives directly (no more NgModule required)
 

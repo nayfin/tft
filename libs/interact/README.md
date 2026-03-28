@@ -286,9 +286,9 @@ LassoRect {
 
 ---
 
-## Migration to v21.1.6
+## Migration to v21.1.0
 
-Version 21.1.6 converted all directives to **standalone** and replaced `@Input()`/`@Output()` with signal-based `input()`/`output()`.
+Version 21.1.0 converted all directives to **standalone** and replaced `@Input()`/`@Output()` with signal-based `input()`/`output()`.
 
 ### Import directives directly
 
