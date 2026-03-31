@@ -79,23 +79,22 @@ export class DraggableDirective<D = any> implements OnInit, OnDestroy, AfterView
     this.account_for_scale_dir?.scale() || this.drag_root_dir?.account_for_scale_dir?.scale() || this.dragRoot()?.account_for_scale_dir?.scale() || 1
   );
 
-  constructor() {
-    effect(() => {
-      this.alignPositionWithInputs(this.x(), this.y());
-    });
+  syncPosition = effect(() => {
+    this.alignPositionWithInputs(this.x(), this.y());
+  });
 
-    effect(() => {
-      const disabled = this.disabled();
-      this.dragConfig(); this.dragDisabled();
-      if (disabled) {
-        console.warn(`It looks like your using the 'disabled' input on a tftDraggable directive, it has been deprecated and is replaced with 'dragDisabled', please migrate by v13`);
-      }
-      if (!this.interactable) return;
-      this.setDragConfig();
-    });
-  }
+  syncDragConfig = effect(() => {
+    const config = this.dragConfig();
+    const enabled = !(this.disabled() || this.dragDisabled());
+    if (!this.interactable) return;
+    this.setDragConfig(config, enabled);
+  });
 
   ngOnInit() {
+    const disabled = this.disabled();
+    if (disabled) {
+      console.warn(`It looks like your using the 'disabled' input on a tftDraggable directive, it has been deprecated and is replaced with 'dragDisabled', please migrate by v13`);
+    }
     this.interactable = this.initiateDragEvents(this.dragConfig(), this.el.nativeElement);
     this.dragRootEl = (this.dragRoot()?.el?.nativeElement || this.drag_root_dir?.el?.nativeElement) as HTMLElement || this._document.body;
     this.registryId = this.dropzone_dir?._registeredId() || DEFAULT_REGISTRY_ID;
@@ -104,13 +103,11 @@ export class DraggableDirective<D = any> implements OnInit, OnDestroy, AfterView
     this.interactableState = this.interactService
       .getInteractableState(this.interactableId, this.registryId);
     this.interactableSubscription = this.interactableState.subscribe();
-    this.setDragConfig();
+    this.setDragConfig(this.dragConfig(), !(this.disabled() || this.dragDisabled()));
   }
 
-  setDragConfig() {
-    const enabled = !(this.disabled() || this.dragDisabled());
-    const dragConfig = { ...this.dragConfig(), enabled };
-    this.interactable.draggable(dragConfig);
+  setDragConfig(config: Partial<Interact.OrBoolean<DraggableOptions>>, enabled: boolean) {
+    this.interactable.draggable({ ...config, enabled });
   }
 
   ngAfterViewInit() {
@@ -250,6 +247,9 @@ export class DraggableDirective<D = any> implements OnInit, OnDestroy, AfterView
           this.setPosition(x, y);
         }
         this.renderer.setStyle(this.el.nativeElement, 'display', '');
+        // Prevents triggering a click event on the drag root when dropping
+        // a drag element, which can deselect drag items 
+        (this.drag_root_dir ?? this.dragRoot())?.suppressNextClick();
         this.dragEnd.emit(mappedEvent);
         if (this.auto_scroll_dir) {
           this.scrollEventsSubscription.unsubscribe();
