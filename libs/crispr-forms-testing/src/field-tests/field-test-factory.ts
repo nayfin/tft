@@ -1,5 +1,6 @@
 import { test } from '@playwright/test';
 import type {
+  FormConfig,
   AnyFieldConfig,
   InputFieldConfig,
   TextareaFieldConfig,
@@ -79,4 +80,22 @@ export function testField(config: AnyFieldConfig) {
         break;
     }
   });
+}
+
+/**
+ * Registers a `testField` block for every field in a `FormConfig`.
+ * Non-control fields (heading, divider, button) are skipped automatically.
+ *
+ * @example
+ * ```ts
+ * test.describe('My Form', () => {
+ *   test.beforeEach(async ({ page }) => page.goto('/my-form'));
+ *   testForm(myFormConfig);
+ * });
+ * ```
+ */
+export function testForm(config: FormConfig) {
+  for (const field of config.fields) {
+    testField(field);
+  }
 }
