@@ -18,14 +18,14 @@ npm install -D @tft/crispr-forms-testing
 `@tft/crispr-forms-testing` re-exports `@angular/compiler` automatically (required for Ivy partial compilation in Node/Playwright). You do **not** need a separate fixture file — just import directly:
 
 ```ts
-import { test, expect, testField, getMatFormField } from '@tft/crispr-forms-testing';
+import { test, expect, testField, getMatFormField, testForm } from '@tft/crispr-forms-testing';
 ```
 
 ---
 
-## 2. Config-driven testing with `testField`
+## 2. Config-driven testing with `testForm`
 
-The primary pattern is to import your `FormConfig` and call `testField` for each field. This auto-dispatches to the correct field test factory based on `controlType`:
+The primary pattern is to import your `FormConfig` and call `testForm` passing the form's config. This auto-dispatches to the correct field test factory for each field based on `controlType`:
 
 ```ts
 import { test, testForm } from '@tft/crispr-forms-testing';
