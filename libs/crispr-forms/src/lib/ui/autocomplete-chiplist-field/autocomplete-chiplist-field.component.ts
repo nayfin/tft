@@ -120,9 +120,9 @@ export class AutocompleteChiplistFieldComponent
         return this.config().allowDuplicates
           ? options
           : options?.filter((option) => {
-              return !chips.some((chip) =>
-                this.config().duplicateCompareFunction(chip, option)
-              );
+              const compare = this.config().duplicateCompareFunction
+                ?? ((chip: SelectOption, opt: SelectOption) => chip.value === opt.value);
+              return !chips.some((chip) => compare(chip, option));
             });
       })
     );

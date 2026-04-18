@@ -1,3 +1,22 @@
+@use '@angular/material' as mat;
+
 .submit-trigger {
   display: none;
+}
+
+@each $density in (-1, -2, -3, -4, -5) {
+  :host[data-density="#{$density}"] {
+    /* stylelint-disable-next-line selector-pseudo-element-no-unknown */
+    ::ng-deep {
+      @include mat.form-field-density($density);
+      @include mat.select-density($density);
+      @include mat.autocomplete-density($density);
+      @include mat.datepicker-density($density);
+      @include mat.checkbox-density($density);
+      @include mat.radio-density($density);
+      @include mat.slider-density($density);
+      @include mat.button-density($density);
+      @include mat.icon-button-density($density);
+    }
+  }
 }

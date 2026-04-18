@@ -10,6 +10,7 @@ interface FormConfig {
   errorDictionary?: ErrorDictionary; // Global error messages by validator key
   validators?: ValidatorFn[]; // Cross-field validators
   autoComplete?: string; // HTML autocomplete attribute
+  density?: 0 | -1 | -2 | -3 | -4 | -5; // Angular Material density scale; 0 = default, -5 = most compact
 }
 ```
 

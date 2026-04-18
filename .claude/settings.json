@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(grep -v \"^$\")"
+      "Bash(grep -v \"^$\")",
+      "Read(//c/Users/Nathan/ Kern/Documents/Dev/tft/libs/interact/src/lib/directives/**)"
     ]
   }
 }

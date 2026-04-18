@@ -115,6 +115,11 @@ export interface FormConfig<C = AnyFieldConfig> extends AbstractGroupConfig<C> {
   /** @deprecated use autoComplete */
   autocomplete?: string;
   validators?: ValidatorFn[];
+  /**
+   * Angular Material density scale applied to all form fields.
+   * 0 = default size, -5 = most compact.
+   */
+  density?: 0 | -1 | -2 | -3 | -4 | -5;
 }
 /**
  * Configuration for SubGroup components

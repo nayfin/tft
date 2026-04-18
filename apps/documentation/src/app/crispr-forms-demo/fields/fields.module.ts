@@ -20,11 +20,12 @@ import { UnitConversionComponent } from './unit-conversion/unit-conversion.compo
 import { ImageUploadComponent } from './image-upload/image-upload.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { OverviewComponent } from './overview/overview.component';
 import { MapComponent } from './map/map.component';
 
 
-@NgModule({
+@NgModule({ 
     declarations: [
         SelectComponent,
         AutocompleteComponent,
@@ -49,6 +50,7 @@ import { MapComponent } from './map/map.component';
         CrisprFormsModule,
         MatCardModule,
         MatButtonModule,
+        MatButtonToggleModule,
         MapComponent
     ], 
     providers: [

@@ -8,6 +8,14 @@
       <mat-card-title>I am a form dynamically generated from a configuration object</mat-card-title>
     </mat-card-header>
     <mat-card-content>
+      <div class="density-control">
+        <label>Density</label>
+        <mat-button-toggle-group [value]="density" (change)="setDensity($event.value)">
+          @for (d of densityOptions; track d) {
+            <mat-button-toggle [value]="d">{{ d }}</mat-button-toggle>
+          }
+        </mat-button-toggle-group>
+      </div>
       <crispr-form
         (statusChanges)="handleStatusChanges($event)"
         (valueChanges)="handleValueChanges($event)"

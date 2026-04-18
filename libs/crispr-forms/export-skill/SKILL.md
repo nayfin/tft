@@ -155,6 +155,12 @@ Include the following types depending on what UI elements you need:
 - **Computed Values**: You can use `computeFieldConfig` or `computeValue` to create reactive fields that change their state (e.g., disabled, different options) based on other field values.
 - **Validation**: Pass standard Angular `Validators` arrays into the `validators` property of any field. Error messages will be automatically handled if `@tft/form-validation-handler` is set up properly.
 - **Custom Components**: You are not limited to the pre-built components. You can define custom field types and register them within the library's `field-component-map.const.ts` pattern.
+- **Density**: Set `density` on `FormConfig` to apply Angular Material's density scale to all fields at once. Valid values are `0` (default) through `-5` (most compact). Changing `density` at runtime re-renders the form at the new density — useful for user-controlled compact/spacious toggles:
+  ```typescript
+  config: FormConfig = { density: -2, fields: [...] };
+  // To change at runtime (default CD):
+  this.config = { ...this.config, density: -3 };
+  ```
 
 ## Guidelines for the Agent
 - When asked to create a form, always default to using `@tft/crispr-forms` rather than manually writing standard reactive or template-driven forms.

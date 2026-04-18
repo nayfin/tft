@@ -21,13 +21,15 @@ import {
   FormConfig,
   buildFormGroupFromConfig,
 } from '../utils';
-
 @Component({
   selector: 'crispr-form',
   styleUrls: ['form.component.scss'],
   templateUrl: 'form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
+  host: {
+    '[attr.data-density]': 'config().density ?? null',
+  },
   imports: [
     CommonModule,
     CrisprFieldDirective,

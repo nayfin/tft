@@ -1,28 +1,33 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, input } from '@angular/core';
 import { FormConfig, ControlType, SelectOption, CrisprFormComponent } from '@tft/crispr-forms';
 import { Validators, FormGroup } from '@angular/forms';
 import { BehaviorSubject, of } from 'rxjs';
 import { map, delay } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 
+interface GroupListItem {
+  autocompleteChiplistObservable?: string[];
+  subField?: string;
+  secondSubField?: string;
+}
 
 @Component({
     selector: 'doc-display-item',
     template: `<div>
       Step {{index + 1}}
-      @if (value?.autocompleteChiplistObservable?.length) {
+      @if (value()?.autocompleteChiplistObservable?.length) {
         <div>
-          autocompleteChiplistObservable: {{value.autocompleteChiplistObservable | json}}
+          autocompleteChiplistObservable: {{value().autocompleteChiplistObservable | json}}
         </div>
       }
-      @if (value?.subField) {
+      @if (value()?.subField) {
         <div>
-          subField: {{value.subField}}
+          subField: {{value().subField}}
         </div>
       }
-      @if (value?.secondSubField) {
+      @if (value()?.secondSubField) {
         <div>
-          secondSubField: {{value.secondSubField}}
+          secondSubField: {{value().secondSubField}}
         </div>
       }
     </div>`,
@@ -31,7 +36,7 @@ import { CommonModule } from '@angular/common';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DisplayItemComponent {
-  value;
+  value = input<GroupListItem>();
   index: number;
 }
 
@@ -81,6 +86,14 @@ export class OverviewComponent implements OnInit{
     }),
     delay(101)
   );
+
+  readonly densityOptions = [0, -1, -2, -3, -4, -5] as const;
+  density: 0 | -1 | -2 | -3 | -4 | -5 = 0;
+
+  setDensity(density: 0 | -1 | -2 | -3 | -4 | -5) {
+    this.density = density;
+    this.config = { ...this.config, density };
+  }
 
   config: FormConfig = {
     autoComplete: 'off',
