@@ -18,7 +18,13 @@ export class AbstractAutocompleteComponent<C>
   autocompleteInputControl = new FormControl('');
   options$: Observable<SelectOption[]>
   // Narrows the parent's computed config type to include C-specific properties (e.g. chiplist-only fields)
-  config = computed(() => this.inputConfig() as (AutocompleteConfigTypes & C) | null);
+  // Must re-implement the defaultConfig merge from CrisprFieldComponent because this override replaces it.
+  config = computed(() => {
+    const c = this.inputConfig() as (AutocompleteConfigTypes & C) | null;
+    return (c && this.defaultConfig)
+      ? { ...this.defaultConfig, ...c } as (AutocompleteConfigTypes & C)
+      : c;
+  });
 
   ngOnInit() {
     super.ngOnInit();
