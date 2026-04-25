@@ -7,8 +7,6 @@
     Documentation can be found <a href="https://material.angular.io/components/input/overview">here</a>.
     Here are some examples of the most common types.
   </p>
-  <crispr-form
-    [config]="formConfig"
-    (submitted)="handleSubmit($event)">
+  <crispr-form [config]="formConfig" [value]="initialValue" (submitted)="handleSubmit($event)">
   </crispr-form>
 </mat-card>

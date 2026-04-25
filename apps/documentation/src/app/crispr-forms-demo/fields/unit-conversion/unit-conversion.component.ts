@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormConfig } from '@tft/crispr-forms';
 import { unitConversionFormConfig } from './unit-conversion.config';
+import { FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'tft-unit-conversion',
@@ -10,9 +11,13 @@ import { unitConversionFormConfig } from './unit-conversion.config';
 })
 export class UnitConversionComponent {
   initialValue = {
-    withUnitSelection: 3.6576, // meters
+    withUnitSelection: 3.76, // meters
     withoutUnitSelection: 25.908, // meters
   };
 
   formConfig: FormConfig = unitConversionFormConfig;
+
+  submitForm(form: FormGroup) {
+    console.log({form})
+  }
 }

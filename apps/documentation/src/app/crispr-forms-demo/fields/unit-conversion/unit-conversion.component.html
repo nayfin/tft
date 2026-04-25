@@ -5,8 +5,6 @@
   <p class="mat-p">
     Record to a fixed unit while enabling user selection of input unit.
   </p>
-  <crispr-form
-    [value]="initialValue"
-    [config]="formConfig">
+  <crispr-form [value]="initialValue" [config]="formConfig" (submitted)="submitForm($event)">
   </crispr-form>
 </mat-card>

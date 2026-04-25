@@ -12,7 +12,9 @@ import { inputFormConfig } from './input.config';
 export class InputComponent {
 
   formConfig: FormConfig = inputFormConfig;
-
+  initialValue = {
+    numberInput: 0.5
+  }
   handleSubmit(form: FormGroup) {
     console.log({form})
   }
