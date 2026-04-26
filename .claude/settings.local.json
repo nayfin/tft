@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "Bash(npx nx:*)",
-      "Bash(grep -n \"data-testid\" libs/crispr-forms/src/lib/ui/**/*.html)"
+      "Bash(grep -n \"data-testid\" libs/crispr-forms/src/lib/ui/**/*.html)",
+      "mcp__playwright__browser_wait_for",
+      "mcp__playwright__browser_console_messages",
+      "mcp__playwright__browser_evaluate",
+      "mcp__playwright__browser_navigate",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }

@@ -1,4 +1,4 @@
-@if ((disabled$ | async) ? !config().hideDisabled : true) {
+@if (!isHidden()) {
   <div
     [ngClass]="config().classes"
     [class.inline-field]="inlineField()"

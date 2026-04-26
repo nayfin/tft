@@ -1,5 +1,4 @@
 # TODOS
-- autccomplete chiplists aren't deletable
 - "hidden" fields still take a flex slot
 - how can skills changes automated for consumers 
 - Convert everything to standalone components
@@ -10,3 +9,4 @@
 
 ## DOone
 - Adds e2e identifiers
+- autccomplete chiplists aren't deletable

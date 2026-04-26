@@ -15,6 +15,9 @@ import { selectFormConfig } from './select.config';
 export class SelectComponent {
   private endpointsService = inject(EndpointsService);
 
+  promiseSelectInitialValue = {
+    selectFieldPromise: ['a', 'b', 'c'],
+  }
 
   multiSelectInitialValue = {
     toggleAllField: ['a', 'b', 'c'],
@@ -28,6 +31,7 @@ export class SelectComponent {
         controlType: ControlType.SELECT,
         label: 'This select field uses a function that returns a promise to resolve options',
         controlName: 'selectFieldPromise',
+        multiple: true,
         // validators: [Validators.required],
         options: (): Promise<SelectOption[]> => {
           return new Promise( (resolve, reject) => {
@@ -38,10 +42,14 @@ export class SelectComponent {
                 {label: 'option b', value: 'b'},
                 {label: 'option c', value: 'c'},
               ]);
-            }, 5000);
+            }, 1000);
           });
         }
       },
+      {
+        controlType: ControlType.BUTTON,
+        label: 'Submit'
+      }
     ]
   }
 

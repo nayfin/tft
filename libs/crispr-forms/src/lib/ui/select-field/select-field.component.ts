@@ -7,6 +7,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { ThemePalette } from '@angular/material/core';
@@ -60,7 +61,18 @@ export class SelectFieldComponent
     super.ngOnInit();
     // options$ can be passed as an array, promise that resolves array, or observable that resolves array
     // this functions accounts for all possibilities and converts to observable that resolves array
-    this.options$ = observablifyOptions(this.config().options, this.group());
+    this.options$ = observablifyOptions(this.config().options, this.group()).pipe(
+      tap(() => {
+        // mat-select.writeValue() runs before async options render, so _setSelectionByValue
+        // finds no matches. Re-apply the value after options are in the DOM.
+        setTimeout(() => {
+          const ctrl = this.control();
+          if (ctrl?.value != null) {
+            ctrl.setValue(ctrl.value, { emitEvent: false });
+          }
+        });
+      })
+    );
   }
 
   ngAfterViewInit() {

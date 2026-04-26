@@ -1,9 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   input,
   OnDestroy,
   OnInit,
+  signal,
 } from '@angular/core';
 import { Observable, of, Subscription } from 'rxjs';
 import { FormGroup } from '@angular/forms';
@@ -19,7 +21,10 @@ import type { CrisprControlConfig } from '../../utils';
     styleUrls: ['./field-container.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [CommonModule, HeadingComponent]
+    imports: [CommonModule, HeadingComponent],
+    host: {
+      '[style.display]': 'isHidden() ? "none" : ""',
+    },
 })
 export class FieldContainerComponent implements OnInit, OnDestroy {
   // the configuration object for the field
@@ -31,10 +36,16 @@ export class FieldContainerComponent implements OnInit, OnDestroy {
   // used to determine whether or not field should be shown
   disabled$: Observable<boolean>;
 
+  private readonly isDisabled = signal(false);
+  readonly isHidden = computed(() => this.isDisabled() && !!this.config().hideDisabled);
+
   subs: Subscription[] = [];
 
   ngOnInit() {
     this.disabled$ = this.connectDisabledCallback(this.group(), this.config());
+    this.subs.push(
+      this.disabled$.subscribe(disabled => this.isDisabled.set(disabled))
+    );
     // we tried moving this into afterViewChecked and afterContentChecked lifecycle hooks without any luck
     if (this.config().computeValue) {
       this.subs.push(
