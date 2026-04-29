@@ -27,8 +27,8 @@ export interface LassoRect {
  * <div tftLasso #lasso="tftLasso" [scale]="scale"
  *      (lassoStart)="onStart()" (lassoCommit)="onCommit($event)">
  *   @if (lasso.lassoDisplayRect(); as r) {
- *     <div class="lasso-rect" [style.left.px]="r.x" [style.top.px]="r.y"
- *                              [style.width.px]="r.w" [style.height.px]="r.h"></div>
+ *     <div class="lasso-rect" [style.left.em]="r.x" [style.top.em]="r.y"
+ *                              [style.width.em]="r.w" [style.height.em]="r.h"></div>
  *   }
  * </div>
  * ```
@@ -39,6 +39,7 @@ export interface LassoRect {
   standalone: true,
   host: {
     '[style.touch-action]': 'lassoDisabled() ? "auto" : "none"',
+    '[style.font-size]': 'scale() + "px"',
   },
 })
 export class LassoDirective {
@@ -71,8 +72,9 @@ export class LassoDirective {
   isLassoing = signal(false);
 
   /**
-   * Rectangle in container-local CSS pixels (pre-divided by scale) — bind directly to
-   * [style.left.px], [style.top.px], [style.width.px], [style.height.px].
+   * Rectangle in canvas units (viewport px ÷ scale) — bind with em units:
+   * [style.left.em], [style.top.em], [style.width.em], [style.height.em].
+   * The directive sets font-size: scale on its host, so 1em = scale px visually.
    * Null when no drag is in progress.
    */
   lassoDisplayRect = computed(
@@ -93,7 +95,7 @@ export class LassoDirective {
     const rect = this.host.nativeElement.getBoundingClientRect();
     return {
       x: (vpX - rect.left) / this.scale(),
-      y: (vpY - rect.top) / this.scale(),
+      y: (vpY - rect.top)  / this.scale(),
     };
   }
 
