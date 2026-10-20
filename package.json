@@ -44,7 +44,7 @@
     "@angular/material-date-fns-adapter": "21.1.6",
     "@angular/platform-browser": "21.1.6",
     "@angular/platform-browser-dynamic": "21.1.6",
-    "@angular/router": "21.1.6",
+    "@angular/router": "21.2.25",
     "@nestjs/common": "10.2.0",
     "@nestjs/core": "10.2.0",
     "@nestjs/platform-express": "^10.3.10",
