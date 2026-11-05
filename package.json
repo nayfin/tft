@@ -56,7 +56,7 @@
     "firebase": "^8.10.1",
     "interactjs": "~1.9.19",
     "js-quantities": "^1.7.6",
-    "lodash-es": "^4.17.15",
+    "lodash-es": "^4.18.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "7.8.1",
     "storybook": "10.1.0",
