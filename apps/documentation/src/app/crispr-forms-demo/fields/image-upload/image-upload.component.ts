@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
-import { allowedFileExtValidator, ControlType, FormConfig, maxFileSizeValidator } from '@tft/crispr-forms';
+import { allowedFileExtValidator, ControlType, FormConfig, ImageProcessingState, maxFileSizeValidator } from '@tft/crispr-forms';
 import { delay, of, startWith } from 'rxjs';
 
 @Component({
@@ -89,6 +89,29 @@ export class ImageUploadComponent {
       }
     ]
   }
+
+  /** Records every processing state change along with the form status at the time of the callback */
+  processingLog = signal<{ state: ImageProcessingState; formStatus: string }[]>([]);
+
+  processingConfig: FormConfig = {
+    fields: [
+      {
+        controlType: ControlType.IMAGE_UPLOAD,
+        controlName: 'processedImage',
+        label: 'Image with processing state',
+        acceptedTypes: 'image/*',
+        compressImage: true,
+        // thresholds are kept low so that a modest image gets compressed
+        targetCompressedImageFileSizeMb: 0.05,
+        minCompressionThresholdMb: 0.05,
+        // avoids the web worker script which is loaded from a CDN
+        useWebWorker: false,
+        processingStateChange: (state, group) => {
+          this.processingLog.update((log) => [...log, { state, formStatus: group.status }]);
+        },
+      },
+    ],
+  };
 
   constructor() { }
 

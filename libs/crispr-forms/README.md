@@ -132,6 +132,37 @@ The following field types are supported:
 - Textarea
 - Unit Conversion
 
+## Image Upload Field
+
+`ControlType.IMAGE_UPLOAD` lets users pick, preview and optionally compress an image before it is set as the control value (a `File`).
+
+```ts
+{
+  controlType: ControlType.IMAGE_UPLOAD,
+  controlName: 'photo',
+  label: 'Photo',
+  acceptedTypes: 'image/*',
+  compressImage: true,
+  targetCompressedImageFileSizeMb: 0.4,
+  // called on every processing state change, validity is already up to date
+  processingStateChange: (state, group) => console.log(state, group.status),
+  // called with the final processed File once it has been set as the control value
+  filesChanged: (group, file) => console.log(file.name),
+}
+```
+
+### Processing state
+
+The component exposes a `processingState` signal (`ImageProcessingState`: `'idle' | 'processing' | 'failed'`):
+
+- `processing`: a selected image is being compressed. A "Compressing: <name>" indicator is shown, the control is cleared and **the form is invalid** with the `imageProcessing` error until processing finishes. Previously a form could be submitted mid-compression.
+- `failed`: compression threw (e.g. a corrupt file). The control stays `null`, a failure message is shown and the control is invalid with the `imageProcessingFailed` error (`{ message }`). Selecting another image, clearing or resetting the field recovers it. A failure no longer breaks the field for later selections.
+- `idle`: nothing is being processed.
+
+`processingStateChange?: (state, parentGroup) => void` fires on every transition. The control's validity is updated before it is called, so `parentGroup.status` already reflects the new state. `filesChanged?: (parentGroup, file) => void` (previously declared but never called) now fires with the final processed `File`.
+
+Default messages for the new `imageProcessing` and `imageProcessingFailed` error keys live in `defaultErrors` and can be overridden through the form's `errorDictionary`.
+
 ## Creating a Custom Field
 
 To create a new field type for CRISPR Forms, follow these steps:

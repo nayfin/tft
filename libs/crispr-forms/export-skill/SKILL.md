@@ -91,7 +91,7 @@ Include the following types depending on what UI elements you need:
 - `RADIO`: Radio button group.
 - `SLIDER`: Numeric slider.
 - `DATEPICKER`: Date selection.
-- `FILE_UPLOAD` / `IMAGE_UPLOAD`: Upload fields.
+- `FILE_UPLOAD` / `IMAGE_UPLOAD`: Upload fields. `IMAGE_UPLOAD` makes the form invalid while an image is being compressed (`imageProcessing` error) or if compression fails (`imageProcessingFailed`); use `processingStateChange` to react to `'idle' | 'processing' | 'failed'` transitions and `filesChanged` to receive the final processed `File`.
 - `AUTOCOMPLETE` / `AUTOCOMPLETE_CHIPLIST`: Type-ahead and tag inputs.
 - `HEADING` / `DIVIDER`: Structural and visual layout fields (not form controls).
 - `SUB_GROUP` / `GROUP_LIST`: For nested `FormGroup`s and `FormArray`s.

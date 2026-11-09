@@ -1,10 +1,12 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, OnInit, signal, untracked, ViewChild } from '@angular/core';
 import {
   ControlValueAccessor,
   NgControl,
   ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,6 +22,7 @@ import { SelectedFileComponent } from '../selected-file';
 import { FieldContainerComponent } from '../field-container';
 import {
   convertBytesToMb,
+  ImageProcessingState,
   ImageUploadFieldConfig,
 } from '../../utils';
 import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
@@ -73,61 +76,126 @@ export class ImageUploadFieldComponent
   inputImageFile$ = this.inputImageFileSubject
     .asObservable()
     .pipe(shareReplay(1));
-  /**
-   * the compression progress
-   */
-  progress: number | undefined;
 
-  compressedFile$: Observable<File> = this.inputImageFile$.pipe(
-    switchMap(async (file) => {
-      if (!file || !(file instanceof File)) return null;
-      const {
-        compressImage,
-        targetCompressedImageFileSizeMb,
-        minCompressionThresholdMb,
-        maxWidthOrHeight,
-        useWebWorker,
-      } = this.config();
-      const fileSizeMb = convertBytesToMb(file.size);
-      const shouldCompress =
-        compressImage &&
-        targetCompressedImageFileSizeMb < fileSizeMb &&
-        minCompressionThresholdMb < fileSizeMb;
-      if (shouldCompress) {
-        const options = {
-          // Use maxWidthOrHeight if it was provided, else use target compressed size
-          ...(maxWidthOrHeight
-            ? { maxWidthOrHeight }
-            : { maxSizeMB: targetCompressedImageFileSizeMb }),
+  /**
+   * The compression progress (0-100), undefined when nothing is compressing
+   */
+  progress = signal<number | undefined>(undefined);
+
+  /**
+   * Whether the field is idle, processing (compressing) a selected image, or failed to process it.
+   * While `processing` or `failed` the control is invalid.
+   */
+  processingState = signal<ImageProcessingState>('idle');
+
+  /** The message describing why processing failed, null unless `processingState` is `failed` */
+  failureMessage = signal<string | null>(null);
+
+  /** The name of the file currently being processed */
+  processingFileName = signal<string>('');
+
+  /**
+   * The most recently selected file (null once cleared/reset). Used to ignore progress
+   * reports from compressions that were superseded by a newer selection.
+   */
+  private latestFile: File | null = null;
+
+  /**
+   * Makes the control invalid while an image is processing or after processing failed.
+   * Implemented as a validator because Angular clears manually set errors whenever
+   * the control's validity is recalculated.
+   */
+  private imageProcessingValidator: ValidatorFn = (): ValidationErrors | null =>
+    // untracked: this runs inside effects (e.g. setControlValue) which must not depend on the state
+    untracked(() => {
+      switch (this.processingState()) {
+        case 'processing':
+          return { imageProcessing: true };
+        case 'failed':
+          return {
+            imageProcessingFailed: {
+              message:
+                this.failureMessage() ||
+                'The image could not be processed. Please try a different image.',
+            },
+          };
+        default:
+          return null;
+      }
+    });
+
+  /**
+   * Compresses (when configured) and wraps each selected file. Failures are caught inside the
+   * switchMap so that one bad file never errors out, and so kills, the stream.
+   */
+  compressedFile$: Observable<File | null> = this.inputImageFile$.pipe(
+    switchMap(async (file): Promise<{ file: File | null; failed?: File }> => {
+      if (!file || !(file instanceof File)) return { file: null };
+      try {
+        const {
+          compressImage,
+          targetCompressedImageFileSizeMb,
+          minCompressionThresholdMb,
+          maxWidthOrHeight,
           useWebWorker,
-          maxIterations: 30,
-          onProgress: (progress: number) => {
-            this.progress = progress;
-            this.cdr.markForCheck();
-          },
+        } = this.config();
+        const fileSizeMb = convertBytesToMb(file.size);
+        const shouldCompress =
+          compressImage &&
+          targetCompressedImageFileSizeMb < fileSizeMb &&
+          minCompressionThresholdMb < fileSizeMb;
+        let processed: File = file;
+        if (shouldCompress) {
+          const options = {
+            // Use maxWidthOrHeight if it was provided, else use target compressed size
+            ...(maxWidthOrHeight
+              ? { maxWidthOrHeight }
+              : { maxSizeMB: targetCompressedImageFileSizeMb }),
+            useWebWorker,
+            maxIterations: 30,
+            onProgress: (progress: number) => {
+              // ignore progress from a compression that a newer selection has superseded
+              if (this.latestFile !== file) return;
+              this.progress.set(progress);
+            },
+          };
+          processed = await imageCompression(file, options);
+        }
+        const { type, name, lastModified } = processed;
+        return {
+          file: new File([processed], this.config().fileName || name, {
+            type,
+            lastModified,
+          }),
         };
-        return await imageCompression(file, options);
-      } else return file;
+      } catch {
+        return { file: null, failed: file };
+      }
     }),
-    map((compressedFile: File) => {
-      if (!compressedFile) return compressedFile;
-      const { type, name, lastModified } = compressedFile;
-      return new File([compressedFile], this.config().fileName || name, {
-        type,
-        lastModified,
-      });
-    }),
-    tap((file) => {
-      // only set the value if there is a file because resetToInitialValue sets the control value
-      // to initial value and clears the compressed image, so setting it to null here would undo that
-      if (file) {
-        this.control().setValue(file);
+    // switchMap has already discarded results of superseded selections, so state
+    // transitions made here always belong to the latest selection
+    tap(({ file, failed }) => {
+      const control = this.control();
+      if (failed) {
+        this.progress.set(undefined);
+        this.setProcessingState(
+          'failed',
+          `Unable to process "${failed.name}". Please try a different image.`,
+          () => control.updateValueAndValidity()
+        );
+      } else if (file) {
+        this.progress.set(undefined);
+        // only set the value if there is a file because resetToInitialValue sets the control value
+        // to initial value and clears the compressed image, so setting it to null here would undo that
+        this.setProcessingState('idle', null, () => control.setValue(file));
+        this.config().filesChanged?.(this.group(), file);
       }
       if (file || this.value()) {
-        this.control().markAsTouched();
+        control.markAsTouched();
         this.cdr.markForCheck();
       }
     }),
+    map(({ file }) => file),
     shareReplay(1)
   );
 
@@ -135,12 +203,16 @@ export class ImageUploadFieldComponent
     this.compressedFile$.pipe(
       switchMap(async (file) => {
         if (!file) return null;
-        const compressedStringImage = await imageCompression.getDataUrlFromFile(
-          file
-        );
-        return this.domSanitizer.bypassSecurityTrustResourceUrl(
-          compressedStringImage
-        ) as string;
+        try {
+          const compressedStringImage = await imageCompression.getDataUrlFromFile(
+            file
+          );
+          return this.domSanitizer.bypassSecurityTrustResourceUrl(
+            compressedStringImage
+          ) as string;
+        } catch {
+          return null;
+        }
       }),
       shareReplay(1)
     );
@@ -169,6 +241,11 @@ export class ImageUploadFieldComponent
 
   ngOnInit() {
     super.ngOnInit();
+    const control = this.control();
+    control.addValidators(this.imageProcessingValidator);
+    this.destroyRef.onDestroy(() =>
+      control.removeValidators(this.imageProcessingValidator)
+    );
     this.imageSrcUrl$ = combineLatest([
       this.compressedImageUrlString$.pipe(startWith(null)),
       this.control().valueChanges.pipe(
@@ -195,27 +272,59 @@ export class ImageUploadFieldComponent
   filesChanged(files: FileList): void {
     if (files && files.length > 0) {
       const imageFile = files[0];
-      // We clear the control here so that it is invalid while compressing
-      // the input pipeline will take care of resetting it
-      this.control().patchValue(null);
-      // this.control().setErrors({compressing: {loadingMessage: 'Please wait while file compresses'}});
-      this.control().markAsTouched();
+      this.latestFile = imageFile;
+      this.progress.set(undefined);
+      this.processingFileName.set(imageFile.name);
+      // We clear the control here and flag the field as processing so that the control is invalid
+      // while compressing, the input pipeline will take care of setting the processed value
+      this.setProcessingState('processing', null, () => {
+        this.control().patchValue(null);
+        this.control().markAsTouched();
+      });
       this.inputImageFileSubject.next(imageFile);
     }
   }
 
   clearFileInput(): void {
+    this.latestFile = null;
     this.inputImageFileSubject.next(null);
     this.fileInputRef.nativeElement.value = '';
-    this.control().patchValue(null);
-    this.control().markAsTouched();
+    this.progress.set(undefined);
+    this.setProcessingState('idle', null, () => {
+      this.control().patchValue(null);
+      this.control().markAsTouched();
+    });
     this.isUploaded = false;
   }
 
   resetToInitialValue(initialValue: string): void {
+    this.latestFile = null;
     this.inputImageFileSubject.next(null);
-    this.control().patchValue(initialValue);
+    this.progress.set(undefined);
+    this.setProcessingState('idle', null, () =>
+      this.control().patchValue(initialValue)
+    );
     this.isUploaded = false;
+  }
+
+  /**
+   * Transitions the processing state. `applyValue` updates the control (which revalidates it),
+   * so validity is current before `processingStateChange` is called. The callback only fires
+   * when the state actually changes.
+   */
+  private setProcessingState(
+    state: ImageProcessingState,
+    message: string | null,
+    applyValue: () => void
+  ): void {
+    const changed =
+      this.processingState() !== state || this.failureMessage() !== message;
+    this.processingState.set(state);
+    this.failureMessage.set(message);
+    applyValue();
+    if (changed) {
+      this.config().processingStateChange?.(state, this.group());
+    }
   }
 
   writeValue(value: null) {}

@@ -1,10 +1,30 @@
 import { FormGroup } from '@angular/forms';
 import { CrisprControlConfig, ControlType, MatFieldProperties } from './crispr-field.config';
 import { ButtonType } from './button.config';
+/**
+ * The processing state of an image upload field.
+ * - `idle`: nothing is being processed
+ * - `processing`: a selected image is being compressed/prepared; the control is invalid until it finishes
+ * - `failed`: the selected image could not be processed; the control is null and invalid
+ */
+export type ImageProcessingState = 'idle' | 'processing' | 'failed';
+
 export type ImageUploadFieldConfig = CrisprControlConfig & MatFieldProperties & {
   controlType: ControlType.IMAGE_UPLOAD;
   label: string;
+  /**
+   * Called once a newly selected image has been processed (compressed if configured)
+   * and set as the control value. Receives the final processed File.
+   */
   filesChanged?: (parentGroup: FormGroup, file: File) => void;
+  /**
+   * Called on every change of the field's processing state (`idle`, `processing`, `failed`).
+   * The control's validity has already been updated when this is called, so
+   * `parentGroup.status` reflects the new state. While `processing` the control
+   * is invalid (`imageProcessing` error) and after a failure it is invalid
+   * (`imageProcessingFailed` error) until another image is selected or the field is cleared.
+   */
+  processingStateChange?: (state: ImageProcessingState, parentGroup: FormGroup) => void;
   /**
    * The file types to accept. The onus is on the consuming developer to limit these to file types compatible with usage.
    * See https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/accept

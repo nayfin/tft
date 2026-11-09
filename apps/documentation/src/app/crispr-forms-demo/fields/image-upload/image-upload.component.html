@@ -8,3 +8,19 @@
   </crispr-form>
 
 </mat-card>
+
+<mat-card>
+  <h2 class="mat-h2">
+    Processing state
+  </h2>
+  <p class="mat-p">
+    While an image is being compressed the field reports a 'processing' state and the form is invalid.
+    Use 'processingStateChange' to react to every transition ('idle', 'processing', 'failed').
+  </p>
+  <crispr-form [config]="processingConfig"></crispr-form>
+  <ul data-testid="processing-log">
+    @for (entry of processingLog(); track $index) {
+      <li>{{ entry.state }}:{{ entry.formStatus }}</li>
+    }
+  </ul>
+</mat-card>

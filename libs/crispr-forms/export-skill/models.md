@@ -221,10 +221,19 @@ interface HeadingConfig extends CrisprFieldConfig {
 
 ### Image Upload Field (`ControlType.IMAGE_UPLOAD`)
 ```typescript
+type ImageProcessingState = 'idle' | 'processing' | 'failed';
+
 interface ImageUploadFieldConfig extends CrisprControlConfig, MatFieldProperties {
   controlType: ControlType.IMAGE_UPLOAD;
   label: string;
+  /** Called with the final processed (e.g. compressed) File once it has been set as the control value */
   filesChanged?: (parentGroup: FormGroup, file: File) => void;
+  /**
+   * Called on every processing state change. Control validity is already updated, so parentGroup.status is current.
+   * While 'processing' the control is invalid (`imageProcessing` error); after 'failed' it is invalid
+   * (`imageProcessingFailed` error with a `message`) until another image is selected or the field is cleared.
+   */
+  processingStateChange?: (state: ImageProcessingState, parentGroup: FormGroup) => void;
   acceptedTypes: string;
   fileName?: string;
   showClearFilesButton?: boolean;
