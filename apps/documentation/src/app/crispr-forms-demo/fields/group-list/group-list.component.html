@@ -1,0 +1,13 @@
+<mat-card>
+  <h2 class="mat-h2">Group list field</h2>
+  <p class="mat-body-2">
+    A list of sub-groups. Each item is created from the initial value, including
+    chiplist values.
+  </p>
+  <crispr-form
+    [config]="config"
+    [value]="value"
+    (submitted)="handleSubmit($event)"
+  >
+  </crispr-form>
+</mat-card>

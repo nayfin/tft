@@ -23,6 +23,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { OverviewComponent } from './overview/overview.component';
 import { MapComponent } from './map/map.component';
+import { GroupListComponent } from './group-list/group-list.component';
 
 
 @NgModule({ 
@@ -42,6 +43,7 @@ import { MapComponent } from './map/map.component';
         UnitConversionComponent,
         CustomDatepickerFooterComponent,
         ImageUploadComponent,
+        GroupListComponent,
         OverviewComponent
     ], 
     imports: [
