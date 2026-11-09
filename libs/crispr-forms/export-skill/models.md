@@ -21,6 +21,7 @@ interface FormConfig {
 interface CrisprFieldConfig {
   controlType?: ControlType; // Required on specific implementations
   classes?: string[]; // Custom classes to apply to the field wrapper
+  testId?: string; // Explicit data-testid, overrides the controlName-derived id (parent prefix still applies)
 }
 ```
 

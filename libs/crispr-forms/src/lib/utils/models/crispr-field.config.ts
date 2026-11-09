@@ -58,6 +58,12 @@ export interface CrisprFieldConfig {
   controlType?: ControlType;
   classes?: string[];
   component?: any; // TODO: Define this better
+  /**
+   * An explicit test id, rendered as the field's `data-testid` attribute.
+   * Overrides the id derived from `controlName` (a `testIdPrefix` from a parent group/list is still applied).
+   * Useful for fields without a `controlName`, such as buttons.
+   */
+  testId?: string;
 }
 
 /**

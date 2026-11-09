@@ -132,6 +132,16 @@ The following field types are supported:
 - Textarea
 - Unit Conversion
 
+## Test IDs
+
+Control fields render a `data-testid` attribute derived from their `controlName` (prefixed by parent sub groups / list items, e.g. `address.city`, `contacts[0].name`). Buttons have no `controlName`, so they only render one when you set the optional `testId` on any field config:
+
+```ts
+{ controlType: ControlType.BUTTON, label: 'SAVE', testId: 'save-button' }
+```
+
+`testId` overrides the `controlName`-derived id; a parent group prefix is still applied (`testId: 'save'` inside sub group `actions` renders `actions.save`).
+
 ## Image Upload Field
 
 `ControlType.IMAGE_UPLOAD` lets users pick, preview and optionally compress an image before it is set as the control value (a `File`).
