@@ -93,6 +93,33 @@ export class ImageUploadComponent {
   /** Records every processing state change along with the form status at the time of the callback */
   processingLog = signal<{ state: ImageProcessingState; formStatus: string }[]>([]);
 
+  /** Records every `filesChanged` call as `<file name>:<file size>` */
+  filesChangedLog = signal<string[]>([]);
+
+  /** Whether the processing form is rendered, removing it while an image is compressing exercises field destruction */
+  showProcessingForm = signal(true);
+
+  /** A tiny 1x1 png, used as the initial value so that no network request is needed */
+  private initialImageUrl =
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==';
+
+  initialImageValue = { initialImage: this.initialImageUrl };
+
+  initialImageConfig: FormConfig = {
+    fields: [
+      {
+        controlType: ControlType.IMAGE_UPLOAD,
+        controlName: 'initialImage',
+        label: 'Image with an initial value',
+        acceptedTypes: 'image/*',
+        compressImage: true,
+        targetCompressedImageFileSizeMb: 0.05,
+        minCompressionThresholdMb: 0.05,
+        useWebWorker: false,
+      },
+    ],
+  };
+
   processingConfig: FormConfig = {
     fields: [
       {
@@ -106,6 +133,9 @@ export class ImageUploadComponent {
         minCompressionThresholdMb: 0.05,
         // avoids the web worker script which is loaded from a CDN
         useWebWorker: false,
+        filesChanged: (_group, file) => {
+          this.filesChangedLog.update((log) => [...log, `${file.name}:${file.size}`]);
+        },
         processingStateChange: (state, group) => {
           this.processingLog.update((log) => [...log, { state, formStatus: group.status }]);
         },

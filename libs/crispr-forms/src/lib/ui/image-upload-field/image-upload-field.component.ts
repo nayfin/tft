@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { DomSanitizer } from '@angular/platform-browser';
 import imageCompression from 'browser-image-compression';
-import { combineLatest, Observable, of, Subject } from 'rxjs';
+import { combineLatest, defer, from, Observable, of, Subject } from 'rxjs';
 import { map, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { FileDropzoneDirective } from '../file-dropzone';
@@ -100,6 +100,9 @@ export class ImageUploadFieldComponent
    */
   private latestFile: File | null = null;
 
+  /** Set on destroy so that an in-flight compression can no longer touch the control or call back */
+  private destroyed = false;
+
   /**
    * Makes the control invalid while an image is processing or after processing failed.
    * Implemented as a validator because Angular clears manually set errors whenever
@@ -155,7 +158,7 @@ export class ImageUploadFieldComponent
             maxIterations: 30,
             onProgress: (progress: number) => {
               // ignore progress from a compression that a newer selection has superseded
-              if (this.latestFile !== file) return;
+              if (this.destroyed || this.latestFile !== file) return;
               this.progress.set(progress);
             },
           };
@@ -175,6 +178,7 @@ export class ImageUploadFieldComponent
     // switchMap has already discarded results of superseded selections, so state
     // transitions made here always belong to the latest selection
     tap(({ file, failed }) => {
+      if (this.destroyed) return;
       const control = this.control();
       if (failed) {
         this.progress.set(undefined);
@@ -201,21 +205,24 @@ export class ImageUploadFieldComponent
 
   compressedImageUrlString$: Observable<string | null> =
     this.compressedFile$.pipe(
-      switchMap(async (file) => {
-        if (!file) return null;
-        try {
-          const compressedStringImage = await imageCompression.getDataUrlFromFile(
-            file
-          );
-          return this.domSanitizer.bypassSecurityTrustResourceUrl(
-            compressedStringImage
-          ) as string;
-        } catch {
-          return null;
-        }
-      }),
+      // null is emitted synchronously so that a resubscribing template (shareReplay replays the
+      // latest value) can never see the url of a file that has since been cleared or failed
+      switchMap((file) => (file ? from(this.toImageUrl(file)) : of(null))),
       shareReplay(1)
     );
+
+  private async toImageUrl(file: File): Promise<string | null> {
+    try {
+      const compressedStringImage = await imageCompression.getDataUrlFromFile(
+        file
+      );
+      return this.domSanitizer.bypassSecurityTrustResourceUrl(
+        compressedStringImage
+      ) as string;
+    } catch {
+      return null;
+    }
+  }
 
   // This is what is displayed by the image preview
   imageSrcUrl$: Observable<string | null>;
@@ -243,13 +250,19 @@ export class ImageUploadFieldComponent
     super.ngOnInit();
     const control = this.control();
     control.addValidators(this.imageProcessingValidator);
-    this.destroyRef.onDestroy(() =>
-      control.removeValidators(this.imageProcessingValidator)
-    );
+    this.destroyRef.onDestroy(() => {
+      this.destroyed = true;
+      this.inputImageFileSubject.complete();
+      control.removeValidators(this.imageProcessingValidator);
+      // a destroyed field must not leave the form invalid because of a processing/failed state
+      control.updateValueAndValidity();
+    });
     this.imageSrcUrl$ = combineLatest([
       this.compressedImageUrlString$.pipe(startWith(null)),
-      this.control().valueChanges.pipe(
-        startWith(this.value()),
+      // defer: start with the control's value at subscribe time, the template resubscribes after
+      // every processing phase and must not replay the value the control had at init
+      defer(() => this.control().valueChanges.pipe(
+        startWith(this.control().value),
         map((controlValue): string => {
           if (!controlValue) return null;
           if (controlValue instanceof File) return null;
@@ -258,7 +271,7 @@ export class ImageUploadFieldComponent
             (controlValue as string)
           );
         })
-      ),
+      )),
     ]).pipe(
       map(([compressedImageUrlString, controlUrl]) => {
         return compressedImageUrlString || controlUrl || null;

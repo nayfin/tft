@@ -17,10 +17,30 @@
     While an image is being compressed the field reports a 'processing' state and the form is invalid.
     Use 'processingStateChange' to react to every transition ('idle', 'processing', 'failed').
   </p>
-  <crispr-form [config]="processingConfig"></crispr-form>
+  @if (showProcessingForm()) {
+    <crispr-form [config]="processingConfig"></crispr-form>
+  }
+  <button mat-button type="button" data-testid="toggle-processing-form" (click)="showProcessingForm.set(!showProcessingForm())">
+    Toggle form
+  </button>
   <ul data-testid="processing-log">
     @for (entry of processingLog(); track $index) {
       <li>{{ entry.state }}:{{ entry.formStatus }}</li>
     }
   </ul>
+  <ul data-testid="files-changed-log">
+    @for (entry of filesChangedLog(); track $index) {
+      <li>{{ entry }}</li>
+    }
+  </ul>
+</mat-card>
+
+<mat-card>
+  <h2 class="mat-h2">
+    Initial value
+  </h2>
+  <p class="mat-p">
+    The preview shows the initial value until a new image is selected, and never again once the control is cleared.
+  </p>
+  <crispr-form [config]="initialImageConfig" [value]="initialImageValue"></crispr-form>
 </mat-card>
