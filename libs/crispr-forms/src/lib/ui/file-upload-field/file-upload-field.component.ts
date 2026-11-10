@@ -14,10 +14,7 @@ import { Observable, of } from 'rxjs';
 import { FileDropzoneDirective } from '../file-dropzone';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
-import {
-  CrisprFieldComponent,
-  FileUploadFieldConfig,
-} from '../../utils';
+import { FileUploadFieldConfig } from '../../utils';
 import { FieldContainerComponent } from '../field-container';
 import { SelectedFileComponent } from '../selected-file';
 import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
