@@ -8,6 +8,8 @@
 - convert all NgModule-based components/directives/pipes to standalone components (deprecate and support both?)
 
 - migrate from `fullTemplateTypeCheck` to `strictTemplates` (found several real bugs when attempted)
+- fix Jest: `nx test crispr-forms` fails all 27 suites at load (esbuild "Buffer.from("") instanceof Uint8Array" invariant in the jsdom env), and most specs are broken generator stubs; CI doesn't run unit tests
+- fix lint target: `project.json` uses the removed `@nrwl/linter:eslint` executor (switch to `@nx/eslint:lint`); the lib's component-selector rule expects `tft` but every component uses `crispr`
 
 ## Later
 - improve `getError` e2e helper — currently scopes to `crispr-${fieldType}-field` host which requires knowing the field type; explore using `getMatFormField` pattern instead
