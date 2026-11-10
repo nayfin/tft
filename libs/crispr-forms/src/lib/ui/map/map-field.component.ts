@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit, Renderer2, computed, inject, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, viewChild } from '@angular/core';
 import { AutocompleteFieldConfig, ControlType, MapFieldConfig, TftMapMarker } from '../../utils';
 import { GoogleMap, MapInfoWindow, MapMarker, MapGeocoder, } from '@angular/google-maps';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { BehaviorSubject, debounceTime, filter, map, merge, of, startWith, switchMap } from 'rxjs';
+import { BehaviorSubject, debounceTime, filter, map, of, startWith, switchMap } from 'rxjs';
 import { AsyncPipe,  } from '@angular/common';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { DomSanitizer } from '@angular/platform-browser';
 import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
 import { AutocompleteFieldComponent } from "../autocomplete-field/autocomplete-field.component";
 import { ConnectionPositionPair, OverlayModule } from '@angular/cdk/overlay';
@@ -39,10 +38,7 @@ const defaultConfig: Partial<MapFieldConfig> = {
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true
 })
-export class MapFieldComponent
-  extends CrisprControlComponent<MapFieldConfig>
-  implements OnInit
-{
+export class MapFieldComponent extends CrisprControlComponent<MapFieldConfig> {
 
     /**
    * The overlay is positioned to align the top-right corner with the origin's bottom-right corner,
@@ -64,8 +60,6 @@ export class MapFieldComponent
     }
   ];
   geoCoder = inject(MapGeocoder);
-  renderer = inject(Renderer2);
-  domSanitizer = inject(DomSanitizer);
   
   infoWindow = viewChild(MapInfoWindow);
   selectedMarker = signal<TftMapMarker | null>(null);
@@ -129,8 +123,6 @@ export class MapFieldComponent
     startWith(this.config()?.center || undefined)
   )
 
-  center = merge
-
   currentMap = new BehaviorSubject<GoogleMap | null>(null);
 
   displayValue = toSignal(
@@ -156,9 +148,6 @@ export class MapFieldComponent
   onMapInit(event: GoogleMap) {
     this.currentMap.next(event);
   }
-  ngOnInit() {
-    super.ngOnInit();
-  }
 
   onMarkerClick(clickedMarker: MapMarker) {
     const clickedPosition = clickedMarker.getPosition();
@@ -179,10 +168,6 @@ export class MapFieldComponent
     this.infoWindow()?.close();
   }
 
-  onBoundsChanged(bounds: google.maps.LatLngBounds) {
-    console.log({bounds});
-  }
-
   onMove(map: GoogleMap, group: FormGroup) {
     this.config()?.onMove?.(map, group);
     this.currentMap.next(map);
@@ -191,9 +176,8 @@ export class MapFieldComponent
   async onSelectLocation(suggestion: google.maps.places.AutocompletePrediction) { 
     if(!google.maps.places || !suggestion.place_id) return;
     const place = new google.maps.places.Place({id: suggestion.place_id })
-    const location = await place.fetchFields({fields: ['location']});
-    
-    console.log({suggestion, location});
+    // TODO: the fetched location is not used yet, it should recenter the map on the selected suggestion
+    await place.fetchFields({fields: ['location']});
   }
 
   openMap() {
@@ -204,31 +188,16 @@ export class MapFieldComponent
     this.mapOpen.set(false);
   }
 
-  getDisplay(value: any): string {
+  getDisplay(value: unknown): string {
     if (typeof value !== 'object' || value === null) {
-      return value;
+      return value == null ? '' : String(value);
     }
+    const record = value as Record<string, unknown>;
     const displayKey = this.config()?.valueDisplayKey;
-    console.log({value, displayKey, displayValue: value[displayKey]})
-    if (displayKey && value[displayKey]) {
-      return value[displayKey];
+    if (displayKey && record[displayKey]) {
+      return String(record[displayKey]);
     }
     // Attempt to find a sensible display property
-    return value.name || value.title || 'Selected Location';
+    return String(record['name'] || record['title'] || 'Selected Location');
   }
-}
-
-
-interface Station {
-  location: {
-    lat: number;
-    lng: number;
-  };
-  selectedProbability: number;
-  selectedFrostTemperature: number;
-  averageLastFrostDate: string;
-  averageFirstFrostDate: string;
-  averageAnnualRainfall: number;
-
-  hardinessZone: number;
 }
