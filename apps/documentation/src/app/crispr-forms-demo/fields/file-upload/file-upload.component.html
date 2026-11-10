@@ -7,5 +7,9 @@
   </p>
   <crispr-form [config]="config" (submitted)="handleSubmit($event)">
   </crispr-form>
-
+  <ul data-testid="files-changed-log">
+    @for (entry of filesChangedLog(); track $index) {
+      <li>{{ entry }}</li>
+    }
+  </ul>
 </mat-card>

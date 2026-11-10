@@ -20,6 +20,7 @@ export type FileUploadFieldConfig = CrisprControlConfig &
   MatFieldProperties & {
     controlType: ControlType.FILE_UPLOAD;
     label: string;
+    /** Called with the selected (or dropped) files after they have been set as the control value */
     filesChanged?: (parentGroup: FormGroup, files: FileList) => void;
     allowMultipleFiles?: boolean;
     showClearFilesButton?: boolean;
