@@ -12,9 +12,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
 import imageCompression from 'browser-image-compression';
-import { combineLatest, defer, from, Observable, of, Subject } from 'rxjs';
+import { combineLatest, concat, defer, from, Observable, of, Subject } from 'rxjs';
 import { map, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 import { FileDropzoneDirective } from '../file-dropzone';
@@ -26,6 +27,14 @@ import {
   ImageUploadFieldConfig,
 } from '../../utils';
 import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
+
+/** The outcome of processing one selected file */
+interface ProcessedImage {
+  /** The processed file, null when there is no file or processing failed */
+  file: File | null;
+  /** The selected file that could not be processed */
+  failed?: File;
+}
 
 @Component({
     selector: 'crispr-image-upload-field',
@@ -132,49 +141,26 @@ export class ImageUploadFieldComponent
    * switchMap so that one bad file never errors out, and so kills, the stream.
    */
   compressedFile$: Observable<File | null> = this.inputImageFile$.pipe(
-    switchMap(async (file): Promise<{ file: File | null; failed?: File }> => {
-      if (!file || !(file instanceof File)) return { file: null };
-      try {
-        const {
-          compressImage,
-          targetCompressedImageFileSizeMb,
-          minCompressionThresholdMb,
-          maxWidthOrHeight,
-          useWebWorker,
-        } = this.config();
-        const fileSizeMb = convertBytesToMb(file.size);
-        const shouldCompress =
-          compressImage &&
-          targetCompressedImageFileSizeMb < fileSizeMb &&
-          minCompressionThresholdMb < fileSizeMb;
-        let processed: File = file;
-        if (shouldCompress) {
-          const options = {
-            // Use maxWidthOrHeight if it was provided, else use target compressed size
-            ...(maxWidthOrHeight
-              ? { maxWidthOrHeight }
-              : { maxSizeMB: targetCompressedImageFileSizeMb }),
-            useWebWorker,
-            maxIterations: 30,
-            onProgress: (progress: number) => {
-              // ignore progress from a compression that a newer selection has superseded
-              if (this.destroyed || this.latestFile !== file) return;
-              this.progress.set(progress);
-            },
-          };
-          processed = await imageCompression(file, options);
-        }
-        const { type, name, lastModified } = processed;
-        return {
-          file: new File([processed], this.config().fileName || name, {
-            type,
-            lastModified,
-          }),
+    // Each selection gets its own AbortController. switchMap unsubscribing (new selection, clear,
+    // reset) runs the teardown below which aborts the superseded compression, and an aborted
+    // compression never emits so it can not produce a `failed` state.
+    switchMap((file) =>
+      new Observable<ProcessedImage>((subscriber) => {
+        const controller = new AbortController();
+        let finished = false;
+        this.processFile(file, controller.signal).then((result) => {
+          if (controller.signal.aborted) return;
+          finished = true;
+          subscriber.next(result);
+          subscriber.complete();
+        });
+        return () => {
+          if (!finished) controller.abort();
         };
-      } catch {
-        return { file: null, failed: file };
-      }
-    }),
+      })
+    ),
+    // unsubscribing from the switchMap on destroy aborts any in-flight compression
+    takeUntilDestroyed(),
     // switchMap has already discarded results of superseded selections, so state
     // transitions made here always belong to the latest selection
     tap(({ file, failed }) => {
@@ -205,11 +191,63 @@ export class ImageUploadFieldComponent
 
   compressedImageUrlString$: Observable<string | null> =
     this.compressedFile$.pipe(
-      // null is emitted synchronously so that a resubscribing template (shareReplay replays the
-      // latest value) can never see the url of a file that has since been cleared or failed
-      switchMap((file) => (file ? from(this.toImageUrl(file)) : of(null))),
+      // null is emitted synchronously whenever a file starts (or no file is left) so that a
+      // resubscribing template (shareReplay replays the latest value) can never see the url of a
+      // previous file, or of one that has since been cleared or failed, while the new url is pending
+      switchMap((file) =>
+        file ? concat(of(null), from(this.toImageUrl(file))) : of(null)
+      ),
       shareReplay(1)
     );
+
+  /** Compresses (when configured) and wraps a file. Never rejects, failures are returned. */
+  private async processFile(
+    file: File | null,
+    signal: AbortSignal
+  ): Promise<ProcessedImage> {
+    if (!file || !(file instanceof File)) return { file: null };
+    try {
+      const {
+        compressImage,
+        targetCompressedImageFileSizeMb,
+        minCompressionThresholdMb,
+        maxWidthOrHeight,
+        useWebWorker,
+      } = this.config();
+      const fileSizeMb = convertBytesToMb(file.size);
+      const shouldCompress =
+        compressImage &&
+        targetCompressedImageFileSizeMb < fileSizeMb &&
+        minCompressionThresholdMb < fileSizeMb;
+      let processed: File = file;
+      if (shouldCompress) {
+        const options = {
+          // Use maxWidthOrHeight if it was provided, else use target compressed size
+          ...(maxWidthOrHeight
+            ? { maxWidthOrHeight }
+            : { maxSizeMB: targetCompressedImageFileSizeMb }),
+          useWebWorker,
+          maxIterations: 30,
+          signal,
+          onProgress: (progress: number) => {
+            // ignore progress from a compression that a newer selection has superseded
+            if (this.destroyed || this.latestFile !== file) return;
+            this.progress.set(progress);
+          },
+        };
+        processed = await imageCompression(file, options);
+      }
+      const { type, name, lastModified } = processed;
+      return {
+        file: new File([processed], this.config().fileName || name, {
+          type,
+          lastModified,
+        }),
+      };
+    } catch {
+      return { file: null, failed: file };
+    }
+  }
 
   private async toImageUrl(file: File): Promise<string | null> {
     try {
@@ -256,6 +294,11 @@ export class ImageUploadFieldComponent
       control.removeValidators(this.imageProcessingValidator);
       // a destroyed field must not leave the form invalid because of a processing/failed state
       control.updateValueAndValidity();
+      if (this.processingState() !== 'idle') {
+        this.processingState.set('idle');
+        this.failureMessage.set(null);
+        this.config().processingStateChange?.('idle', this.group());
+      }
     });
     this.imageSrcUrl$ = combineLatest([
       this.compressedImageUrlString$.pipe(startWith(null)),

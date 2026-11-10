@@ -130,7 +130,7 @@ test.describe('Image Upload Field processing state', () => {
     await expect(getMatFormField(page, FIELD).locator('img')).toBeVisible();
   });
 
-  test('ignores an in-flight compression that finishes after the field is destroyed', async ({
+  test('cancels an in-flight compression and reports idle when the field is destroyed', async ({
     page,
   }) => {
     const image = await createLargeImage(page);
@@ -160,12 +160,101 @@ test.describe('Image Upload Field processing state', () => {
 
     // give the in-flight compression time to finish, then make sure it had no effect
     await page.waitForTimeout(4000);
+    // the destroyed field reports idle (with the form valid again) exactly once, and nothing afterwards
     await expect(page.locator('[data-testid="processing-log"] li')).toHaveText([
       'processing:INVALID',
+      'idle:VALID',
     ]);
     await expect(
       page.locator('[data-testid="files-changed-log"] li')
     ).toHaveCount(0);
+  });
+
+  test('a superseded compression neither fails nor calls filesChanged', async ({
+    page,
+  }) => {
+    const slow = await createLargeImage(page, 2000);
+    const fast = await createLargeImage(page);
+    await getFileInput(page).setInputFiles({
+      name: 'slow.png',
+      mimeType: 'image/png',
+      buffer: slow,
+    });
+    await expect(
+      getMatFormField(page, FIELD).locator('[data-testid="image-processing"]')
+    ).toBeVisible();
+    await getFileInput(page).setInputFiles({
+      name: 'fast.png',
+      mimeType: 'image/png',
+      buffer: fast,
+    });
+
+    await expect(page.locator('[data-testid="processing-log"] li')).toHaveText(
+      ['processing:INVALID', 'idle:VALID'],
+      { timeout: 30000 }
+    );
+    await expect(
+      page.locator('[data-testid="files-changed-log"] li')
+    ).toHaveText(/^fast\.png:\d+$/);
+    await expect(
+      getMatFormField(page, FIELD).locator(
+        '[data-testid="image-processing-failed"]'
+      )
+    ).toHaveCount(0);
+  });
+
+  test('never shows the previous image while the next one is being prepared', async ({
+    page,
+  }) => {
+    const field = getMatFormField(page, FIELD);
+    const first = await createLargeImage(page);
+    await getFileInput(page).setInputFiles({
+      name: 'first.png',
+      mimeType: 'image/png',
+      buffer: first,
+    });
+    await expect(field.locator('img')).toBeVisible({ timeout: 30000 });
+    const firstSrc = await field.locator('img').getAttribute('src');
+    expect(firstSrc).toMatch(/^data:image/);
+
+    // record every src an img inside the field has from now on
+    await page.evaluate((field) => {
+      const seen: string[] = [];
+      (window as any).__seenImageSrcs = seen;
+      const root = document.querySelector(`[data-testid="${field}"]`);
+      const record = () =>
+        root.querySelectorAll('img').forEach((img) => {
+          const src = img.getAttribute('src');
+          if (src) seen.push(src);
+        });
+      new MutationObserver(record).observe(root, {
+        subtree: true,
+        childList: true,
+        attributes: true,
+        attributeFilter: ['src'],
+      });
+    }, FIELD);
+
+    const second = await createLargeImage(page, 800);
+    await getFileInput(page).setInputFiles({
+      name: 'second.png',
+      mimeType: 'image/png',
+      buffer: second,
+    });
+    await expect(page.locator('[data-testid="processing-log"] li')).toHaveCount(
+      4,
+      { timeout: 30000 }
+    );
+    await expect(field.locator('img')).toBeVisible();
+    await expect
+      .poll(async () => field.locator('img').getAttribute('src'))
+      .not.toBe(firstSrc);
+
+    const seen = await page.evaluate(
+      () => (window as any).__seenImageSrcs as string[]
+    );
+    expect(seen.length).toBeGreaterThan(0);
+    expect(seen).not.toContain(firstSrc);
   });
 });
 
