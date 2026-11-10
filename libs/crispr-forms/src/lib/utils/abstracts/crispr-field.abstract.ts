@@ -22,7 +22,7 @@ export abstract class CrisprFieldComponent<C extends CrisprFieldConfig> {
 
   testId = computed(() => {
     const config = this.config();
-    const id = config?.testId ?? (config as unknown as CrisprControlConfig)?.controlName;
+    const id = config?.testId || (config as unknown as CrisprControlConfig)?.controlName;
     if (!id) return undefined;
     const prefix = this.testIdPrefix();
     return prefix ? `${prefix}.${id}` : id;
