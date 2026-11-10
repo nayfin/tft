@@ -169,9 +169,15 @@ The component exposes a `processingState` signal (`ImageProcessingState`: `'idle
 - `failed`: compression threw (e.g. a corrupt file). The control stays `null`, a failure message is shown and the control is invalid with the `imageProcessingFailed` error (`{ message }`). Selecting another image, clearing or resetting the field recovers it. A failure no longer breaks the field for later selections.
 - `idle`: nothing is being processed.
 
+Selecting another image, clearing or resetting while an image is compressing cancels the superseded compression (it never reports `failed`). If the field is destroyed mid-processing, the in-flight compression is cancelled, the processing error is removed from the control and `processingStateChange` reports `idle`.
+
 `processingStateChange?: (state, parentGroup) => void` fires on every transition. The control's validity is updated before it is called, so `parentGroup.status` already reflects the new state. `filesChanged?: (parentGroup, file) => void` (previously declared but never called) now fires with the final processed `File`.
 
 Default messages for the new `imageProcessing` and `imageProcessingFailed` error keys live in `defaultErrors` and can be overridden through the form's `errorDictionary`.
+
+## File Upload Field
+
+`ControlType.FILE_UPLOAD`'s `filesChanged?: (parentGroup, files) => void` (previously declared but never called) now fires with the selected or dropped `FileList` after it is set as the control value. The `uploadComponent` passed to `uploadFiles` keeps its `isUploaded` boolean; it is now signal-backed, so assigning it asynchronously (e.g. when an upload completes) re-renders the field without zone.js.
 
 ## Creating a Custom Field
 
