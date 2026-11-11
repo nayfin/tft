@@ -267,10 +267,6 @@ export class ImageUploadFieldComponent
 
   @ViewChild('fileInput') fileInputRef: ElementRef;
 
-  selectedFiles: FileList;
-
-  isUploaded = false;
-
   disabled$: Observable<boolean>;
 
   constructor() {
@@ -350,7 +346,6 @@ export class ImageUploadFieldComponent
       this.control().patchValue(null);
       this.control().markAsTouched();
     });
-    this.isUploaded = false;
   }
 
   resetToInitialValue(initialValue: string): void {
@@ -360,7 +355,6 @@ export class ImageUploadFieldComponent
     this.setProcessingState('idle', null, () =>
       this.control().patchValue(initialValue)
     );
-    this.isUploaded = false;
   }
 
   /**

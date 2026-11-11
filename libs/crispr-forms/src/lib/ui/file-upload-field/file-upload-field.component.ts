@@ -72,8 +72,9 @@ export class FileUploadFieldComponent
   readonly uploaded = signal(false);
 
   /**
-   * Plain boolean view of `uploaded`, kept so consumers of the `uploadFiles` callback
-   * (`AbstractUploadComponent`) can still read and assign `isUploaded` directly.
+   * Plain boolean view of `uploaded`, kept only for the public `AbstractUploadComponent` contract so
+   * consumers of the `uploadFiles` callback can still read and assign `isUploaded`.
+   * Internal code and the template use the `uploaded` signal directly.
    */
   get isUploaded(): boolean {
     return this.uploaded();
@@ -114,7 +115,7 @@ export class FileUploadFieldComponent
 
   uploadFiles() {
     if (this.selectedFiles() && this.config().uploadFiles) {
-      this.isUploaded = true;
+      this.uploaded.set(true);
       this.config().uploadFiles(this.group(), this.selectedFiles(), this);
     }
   }
@@ -122,7 +123,7 @@ export class FileUploadFieldComponent
   resetFileInput(): void {
     this.fileInputRef.nativeElement.value = '';
     this.control().patchValue(null);
-    this.isUploaded = false;
+    this.uploaded.set(false);
   }
 
   writeValue(value: null) {

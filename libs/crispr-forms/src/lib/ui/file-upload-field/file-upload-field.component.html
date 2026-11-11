@@ -5,7 +5,7 @@
     [attr.data-testid]="testId()"
     [color]="config().color"
     appearance="outline"
-    [crisprFileDropzone]="!(disabled$ | async) && !(config().disableOnUpload && isUploaded)"
+    [crisprFileDropzone]="!(disabled$ | async) && !(config().disableOnUpload && uploaded())"
     [formGroup]="group()"
     (fileDrop)="filesChanged($event)">
 
@@ -28,7 +28,7 @@
           mat-raised-button
           type="button"
           color="primary"
-          [disabled]="(disabled$ | async) || config().disableOnUpload && isUploaded"
+          [disabled]="(disabled$ | async) || config().disableOnUpload && uploaded()"
           (click)="fileInput.click()"
           [attr.aria-label]="config().controlName">
           {{config().selectButtonText}}
@@ -56,7 +56,7 @@
         mat-button
         (click)="resetFileInput()"
         type="button"
-        [disabled]="(disabled$ | async) || (config().disableOnUpload && isUploaded)"
+        [disabled]="(disabled$ | async) || (config().disableOnUpload && uploaded())"
         aria-label="Remove Selected File(s)">
         {{config().clearFilesButtonText}}
         <mat-icon>delete</mat-icon>
@@ -67,7 +67,7 @@
           type="button"
           color="accent"
           class="file-input-button"
-          [disabled]="(disabled$ | async) || (config().disableOnUpload && isUploaded)"
+          [disabled]="(disabled$ | async) || (config().disableOnUpload && uploaded())"
           (click)="uploadFiles()"
           [attr.aria-label]="config().uploadButtonText">
           {{ config().uploadButtonText }}
