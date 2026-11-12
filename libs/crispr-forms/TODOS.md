@@ -9,6 +9,7 @@
 
 - migrate from `fullTemplateTypeCheck` to `strictTemplates` (found several real bugs when attempted)
 - fix Jest: `nx test crispr-forms` fails all 27 suites at load (esbuild "Buffer.from("") instanceof Uint8Array" invariant in the jsdom env), and most specs are broken generator stubs; CI doesn't run unit tests
+  - once fixed, add unit tests for the pure geometry helpers in `libs/interact-testing/src/geometry.ts` and run unit tests in `.github/workflows/ci.yml`
 
 ## Later
 - improve `getError` e2e helper — currently scopes to `crispr-${fieldType}-field` host which requires knowing the field type; explore using `getMatFormField` pattern instead

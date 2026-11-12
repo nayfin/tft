@@ -10,12 +10,6 @@
       "executor": "@nx/playwright:playwright",
       "options": {
         "config": "apps/crispr-forms-e2e/playwright.config.ts"
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "reporter": "github"
-        }
       }
     },
     "lint": {
