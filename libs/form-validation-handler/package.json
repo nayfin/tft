@@ -1,6 +1,11 @@
 {
   "name": "@tft/form-validation-handler",
   "version": "21.0.14",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nayfin/tft.git",
+    "directory": "libs/form-validation-handler"
+  },
   "peerDependencies": {
     "@angular/common": "^21.0.0",
     "@angular/core": "^21.0.0"

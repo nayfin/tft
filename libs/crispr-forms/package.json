@@ -1,6 +1,11 @@
 {
   "name": "@tft/crispr-forms",
   "version": "21.0.16",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nayfin/tft.git",
+    "directory": "libs/crispr-forms"
+  },
   "peerDependencies": {
     "@angular/common": "^18.0.0",
     "@angular/forms": "^18.0.0",
