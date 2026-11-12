@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NX_DAEMON: false
+  NX_NO_CLOUD: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      # crispr-forms-testing compiles against the built crispr-forms types and its build target
+      # does not depend on crispr-forms, so build that first (the release workflow does the same)
+      - name: Build crispr-forms
+        run: npx nx build crispr-forms --configuration=production
+
+      - name: Build libs and docs app
+        run: >
+          npx nx run-many -t build
+          -p form-validation-handler,interact,crispr-forms-testing,interact-testing,documentation
+          --configuration=production
+
+      # documentation-e2e is a Cypress project and is not run here. The projects' `ci` configurations are not
+      # used: they pass --ci, which Playwright does not have. CI=true (set by GitHub) already switches on retries
+      # and a single worker in the Playwright config.
+      - name: E2E
+        run: npx nx run-many -t e2e -p crispr-forms-e2e,interact-e2e
+
+      - name: Upload Playwright reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-reports
+          path: dist/.playwright/
+          if-no-files-found: ignore
+          retention-days: 7
