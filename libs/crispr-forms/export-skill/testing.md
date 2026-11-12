@@ -76,6 +76,8 @@ Every crispr-forms field has `data-testid` set automatically from its control pa
 
 Pass these values to all helper functions as `controlName`/`testId`.
 
+Fields without a `controlName` (e.g. buttons) have no `data-testid` by default. Set the optional `testId` on any field config to opt in; it overrides the `controlName`-derived id, and a parent subGroup/formGroupList prefix is still applied (e.g. `testId: 'save'` inside subGroup `actions` renders `actions.save`).
+
 ---
 
 ## 5. Helper functions

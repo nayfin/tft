@@ -9,6 +9,7 @@ export * from './heading/heading.component';
 export * from './input/input.component';
 export * from './file-upload/file-upload.component';
 export * from './image-upload/image-upload.component';
+export * from './group-list/group-list.component';
 export * from './slider/slider.component';
 export * from './textarea/textarea.component';
 export * from './button/button.component';

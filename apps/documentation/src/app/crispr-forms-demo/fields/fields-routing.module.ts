@@ -14,6 +14,7 @@ import {
   ButtonComponent,
   FileUploadComponent,
   ImageUploadComponent,
+  GroupListComponent,
   UnitConversionComponent,
   MapComponent
 } from '.';
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'textarea', component: TextareaComponent},
   { path: 'file-upload', component: FileUploadComponent},
   { path: 'image-upload', component: ImageUploadComponent},
+  { path: 'group-list', component: GroupListComponent},
   { path: 'checkbox', component: CheckboxComponent},
   { path: 'datepicker', component: DatepickerComponent},
   { path: 'slider', component: SliderComponent},

@@ -57,6 +57,29 @@ export class ButtonComponent {
       },
       {
         controlType: ControlType.BUTTON,
+        label: 'SAVE',
+        testId: 'save-button',
+        buttonType: 'flat',
+        type: 'button',
+        info: {
+          content: `Buttons accept an optional 'testId' which is rendered as the data-testid attribute`,
+        },
+      },
+      {
+        controlType: ControlType.SUB_GROUP,
+        controlName: 'actions',
+        fields: [
+          {
+            controlType: ControlType.BUTTON,
+            label: 'SUB GROUP SAVE',
+            testId: 'sub-save-button',
+            buttonType: 'stroked',
+            type: 'button',
+          },
+        ],
+      },
+      {
+        controlType: ControlType.BUTTON,
         label: 'CHECK',
         color: 'accent',
         icon: 'check',

@@ -21,10 +21,11 @@ export abstract class CrisprFieldComponent<C extends CrisprFieldConfig> {
   testIdPrefix = input<string | undefined>(undefined);
 
   testId = computed(() => {
-    const controlName = (this.config() as unknown as CrisprControlConfig)?.controlName;
-    if (!controlName) return undefined;
+    const config = this.config();
+    const id = config?.testId || (config as unknown as CrisprControlConfig)?.controlName;
+    if (!id) return undefined;
     const prefix = this.testIdPrefix();
-    return prefix ? `${prefix}.${controlName}` : controlName;
+    return prefix ? `${prefix}.${id}` : id;
   });
 
 }

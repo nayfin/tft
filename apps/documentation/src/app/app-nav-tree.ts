@@ -34,6 +34,10 @@ export const appNavTree: SidenavSection[] = [
             path: 'crispr-forms-demo/fields/image-upload'
           },
           {
+            title: 'Group List Field',
+            path: 'crispr-forms-demo/fields/group-list'
+          },
+          {
             title: 'Select Field',
             path: 'crispr-forms-demo/fields/select'
           },

@@ -1,5 +1,6 @@
 # TODOS
-- "hidden" fields still take a flex slot
+- can we make google maps install only required if the field is used?
+- "hidden" fields still take a flex slots
 - how can skills changes automated for consumers 
 - Convert everything to standalone components
 - Convert to signals

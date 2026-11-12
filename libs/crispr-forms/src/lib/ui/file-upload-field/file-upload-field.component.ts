@@ -14,10 +14,7 @@ import { Observable, of } from 'rxjs';
 import { FileDropzoneDirective } from '../file-dropzone';
 import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
-import {
-  CrisprFieldComponent,
-  FileUploadFieldConfig,
-} from '../../utils';
+import { FileUploadFieldConfig } from '../../utils';
 import { FieldContainerComponent } from '../field-container';
 import { SelectedFileComponent } from '../selected-file';
 import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
@@ -68,7 +65,23 @@ export class FileUploadFieldComponent
   selectedFiles = signal<FileList | null>(null);
   selectedFilesArray = computed(() => this.selectedFiles() ? Array.from(this.selectedFiles()) : []);
 
-  isUploaded = false;
+  /**
+   * Whether the files have been uploaded. A signal so that changes made asynchronously (e.g. from the
+   * `uploadFiles` callback once an upload finishes) re-render the OnPush/zoneless component.
+   */
+  readonly uploaded = signal(false);
+
+  /**
+   * Plain boolean view of `uploaded`, kept only for the public `AbstractUploadComponent` contract so
+   * consumers of the `uploadFiles` callback can still read and assign `isUploaded`.
+   * Internal code and the template use the `uploaded` signal directly.
+   */
+  get isUploaded(): boolean {
+    return this.uploaded();
+  }
+  set isUploaded(value: boolean) {
+    this.uploaded.set(value);
+  }
 
   fileProgress: Observable<number>[] = [];
   disabled$: Observable<boolean>;
@@ -96,12 +109,13 @@ export class FileUploadFieldComponent
     if (files && files.length > 0) {
       this.selectedFiles.set(files);
       this.control().patchValue(files);
+      this.config().filesChanged?.(this.group(), files);
     }
   }
 
   uploadFiles() {
     if (this.selectedFiles() && this.config().uploadFiles) {
-      this.isUploaded = true;
+      this.uploaded.set(true);
       this.config().uploadFiles(this.group(), this.selectedFiles(), this);
     }
   }
@@ -109,7 +123,7 @@ export class FileUploadFieldComponent
   resetFileInput(): void {
     this.fileInputRef.nativeElement.value = '';
     this.control().patchValue(null);
-    this.isUploaded = false;
+    this.uploaded.set(false);
   }
 
   writeValue(value: null) {

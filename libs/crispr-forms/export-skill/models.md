@@ -21,6 +21,7 @@ interface FormConfig {
 interface CrisprFieldConfig {
   controlType?: ControlType; // Required on specific implementations
   classes?: string[]; // Custom classes to apply to the field wrapper
+  testId?: string; // Explicit data-testid, overrides the controlName-derived id (parent prefix still applies)
 }
 ```
 
@@ -198,12 +199,14 @@ interface DividerConfig extends CrisprFieldConfig {
 interface FileUploadFieldConfig extends CrisprControlConfig, MatFieldProperties {
   controlType: ControlType.FILE_UPLOAD;
   label: string;
+  /** Called with the selected (or dropped) files after they have been set as the control value */
   filesChanged?: (parentGroup: FormGroup, files: FileList) => void;
   allowMultipleFiles?: boolean;
   showClearFilesButton?: boolean;
   acceptedTypes?: string;
   dropZoneText?: string;
-  // If Using Upload Button
+  // If Using Upload Button. `uploadComponent.isUploaded` may be assigned asynchronously (e.g. when the
+  // upload finishes); it is signal-backed, so the field re-renders without zone.js
   uploadFiles?: (parentGroup: FormGroup, files: FileList, uploadComponent: AbstractUploadComponent) => Promise<unknown> | unknown;
   showUploadProgress?: boolean;
   disableOnUpload?: boolean;
@@ -221,10 +224,19 @@ interface HeadingConfig extends CrisprFieldConfig {
 
 ### Image Upload Field (`ControlType.IMAGE_UPLOAD`)
 ```typescript
+type ImageProcessingState = 'idle' | 'processing' | 'failed';
+
 interface ImageUploadFieldConfig extends CrisprControlConfig, MatFieldProperties {
   controlType: ControlType.IMAGE_UPLOAD;
   label: string;
+  /** Called with the final processed (e.g. compressed) File once it has been set as the control value */
   filesChanged?: (parentGroup: FormGroup, file: File) => void;
+  /**
+   * Called on every processing state change. Control validity is already updated, so parentGroup.status is current.
+   * While 'processing' the control is invalid (`imageProcessing` error); after 'failed' it is invalid
+   * (`imageProcessingFailed` error with a `message`) until another image is selected or the field is cleared.
+   */
+  processingStateChange?: (state: ImageProcessingState, parentGroup: FormGroup) => void;
   acceptedTypes: string;
   fileName?: string;
   showClearFilesButton?: boolean;

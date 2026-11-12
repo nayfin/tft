@@ -17,12 +17,13 @@
     <div class="ui-container">
 
       <div class="image-preview" [style.height]="config().imagePreviewHeight">
-        @if ((progress < 100) && inputImageFile$ | async; as file) {
+        @if (processingState() === 'processing') {
           <crispr-selected-file
+            data-testid="image-processing"
             [color]="config().color === 'primary' ? 'accent' : 'primary'"
-            [fileName]="'Compressing: ' + file.name"
+            [fileName]="(config().compressImage ? 'Compressing: ' : 'Processing: ') + processingFileName()"
             [showProgress]="true"
-            [progress]="progress">
+            [progress]="progress()">
           </crispr-selected-file>
         } @else {
           <!-- <img *ngIf="(initialUrlString$ | async) as initialUrlString;" [src]="initialUrlString" alt=""> -->
@@ -35,6 +36,12 @@
               <mat-icon class="drop-icon" inline="true">cloud_upload</mat-icon>
               <h2 class="mat-h2">{{config().dropZoneText}}</h2>
             </div>
+          }
+          @if (processingState() === 'failed') {
+            <p class="processing-failed mat-body-2" role="alert" data-testid="image-processing-failed">
+              <mat-icon inline="true">error</mat-icon>
+              {{failureMessage()}}
+            </p>
           }
         }
 

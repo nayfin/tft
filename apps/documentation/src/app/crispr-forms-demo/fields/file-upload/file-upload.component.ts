@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormConfig } from '@tft/crispr-forms';
+import { FileUploadFieldConfig, FormConfig } from '@tft/crispr-forms';
 import { fileUploadFormConfig } from './file-upload.config';
 
 @Component({
@@ -10,7 +10,25 @@ import { fileUploadFormConfig } from './file-upload.config';
     standalone: false
 })
 export class FileUploadComponent {
-  config: FormConfig = fileUploadFormConfig;
+  /** Records every `filesChanged` call as the comma separated names of the selected files */
+  filesChangedLog = signal<string[]>([]);
+
+  config: FormConfig = {
+    ...fileUploadFormConfig,
+    fields: [
+      {
+        ...(fileUploadFormConfig.fields[0] as FileUploadFieldConfig),
+        filesChanged: (_group: FormGroup, files: FileList) =>
+          this.filesChangedLog.update((log) => [
+            ...log,
+            Array.from(files)
+              .map((file) => file.name)
+              .join(','),
+          ]),
+      },
+      ...fileUploadFormConfig.fields.slice(1),
+    ],
+  };
 
   handleSubmit(form: FormGroup) {
     console.log({ form });
