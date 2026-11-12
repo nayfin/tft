@@ -118,3 +118,31 @@ test.describe('Resize basics', () => {
     expectNear(delta.height, 30);
   });
 });
+
+test.describe('Resize without a tftAccountForScale ancestor', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/interact-demo/features/resize/basics');
+  });
+
+  test('resizes by the pointer delta and reports the size at scale 1', async ({
+    page,
+  }) => {
+    const box = page.getByTestId('unscaled-box');
+    const before = await getBox(box);
+
+    await resizeBy(page, box, 'bottom-right', 60, 30);
+
+    const delta = boxDelta(before, await getBox(box));
+    expectNear(delta.width, 60);
+    expectNear(delta.height, 30);
+    await expect(page.getByTestId('unscaled-event')).toHaveText('resizeEnd');
+    expectNear(
+      toNumber(await page.getByTestId('unscaled-width').textContent()),
+      260
+    );
+    expectNear(
+      toNumber(await page.getByTestId('unscaled-height').textContent()),
+      150
+    );
+  });
+});

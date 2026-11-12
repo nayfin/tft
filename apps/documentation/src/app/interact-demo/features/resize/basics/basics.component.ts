@@ -34,9 +34,9 @@ const START: SizeReadout = { event: 'none', width: 200, height: 120 };
       <code>edges: {{ '{' }} right: true, bottom: true {{ '}' }}</code
       >) and <code>resizeDisabled</code>. Outputs: <code>resizeStart</code>,
       <code>resizeMove</code>, <code>resizeEnd</code>, each with the new
-      <code>size</code>. A resizable needs a
-      <code>tftAccountForScale</code> ancestor (here the stage, at scale 1) to
-      know the scale it is drawn at.
+      <code>size</code>. Inside a scaled area, put
+      <code>tftAccountForScale</code> on an ancestor so sizes are reported in
+      unscaled units.
     </p>
 
     <section class="example">
@@ -82,6 +82,36 @@ const START: SizeReadout = { event: 'none', width: 200, height: 120 };
         </dd>
       </dl>
     </section>
+
+    <section class="example">
+      <h2>Without a scale ancestor</h2>
+      <p>
+        With no <code>tftAccountForScale</code> ancestor, the scale is 1 and
+        sizes are reported as drawn.
+      </p>
+      <div class="stage" tftApplyScale [scale]="1">
+        <div
+          class="box"
+          tftResizable
+          [width]="200"
+          [height]="120"
+          [resizeConfig]="resizeConfig"
+          data-testid="unscaled-box"
+          (resizeEnd)="unscaled.set(read('resizeEnd', $event, unscaled()))"
+        >
+          <span class="label">Resize me</span>
+        </div>
+      </div>
+      <dl class="readout">
+        <dt>Last event</dt>
+        <dd data-testid="unscaled-event">{{ unscaled().event }}</dd>
+        <dt>Size</dt>
+        <dd>
+          <span data-testid="unscaled-width">{{ unscaled().width }}</span> x
+          <span data-testid="unscaled-height">{{ unscaled().height }}</span>
+        </dd>
+      </dl>
+    </section>
   `,
   styles: `
     .box {
@@ -99,6 +129,7 @@ const START: SizeReadout = { event: 'none', width: 200, height: 120 };
 export class ResizeBasicsComponent {
   readonly size = signal<SizeReadout>(START);
   readonly resizeDisabled = signal(false);
+  readonly unscaled = signal<SizeReadout>(START);
 
   readonly resizeConfig = { edges: { right: true, bottom: true } };
 

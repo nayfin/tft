@@ -69,8 +69,9 @@ export class ResizableDirective implements OnInit, OnDestroy {
   private interactableSubscription: Subscription;
   private scrollEventsSubscription: Subscription;
 
+  // Falls back to 1 when there is no tftAccountForScale, as the draggable does; sizes are divided by it
   scale = computed(() =>
-    this.account_for_scale_dir?.scale() || this.drag_root_dir?.account_for_scale_dir?.scale()
+    this.account_for_scale_dir?.scale() || this.drag_root_dir?.account_for_scale_dir?.scale() || 1
   );
 
   constructor() {
