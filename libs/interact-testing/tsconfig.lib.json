@@ -6,7 +6,10 @@
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "module": "commonjs",
+    "moduleResolution": "node10",
+    "importHelpers": false
   },
   "include": ["src/**/*.ts"],
   "exclude": ["**/*.spec.ts"]

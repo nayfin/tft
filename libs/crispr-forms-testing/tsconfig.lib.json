@@ -9,9 +9,16 @@
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "@tft/crispr-forms": ["../../dist/libs/crispr-forms/types/tft-crispr-forms.d.ts"],
-      "@tft/crispr-forms/utils": ["../../dist/libs/crispr-forms/types/tft-crispr-forms.d.ts"]
-    }
+      "@tft/crispr-forms": [
+        "../../dist/libs/crispr-forms/types/tft-crispr-forms.d.ts"
+      ],
+      "@tft/crispr-forms/utils": [
+        "../../dist/libs/crispr-forms/types/tft-crispr-forms.d.ts"
+      ]
+    },
+    "module": "commonjs",
+    "moduleResolution": "node10",
+    "importHelpers": false
   },
   "exclude": ["**/*.spec.ts", "jest.config.ts"]
 }
