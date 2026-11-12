@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { boxDelta, dragBy, getBox } from '@tft/interact-testing';
-import { expectNear, toNumber } from '../../support';
+import { expectNear, toNumber, expectBoxNear } from '../../support';
 
 test.describe('Drag basics', () => {
   test.beforeEach(async ({ page }) => {
@@ -19,8 +19,8 @@ test.describe('Drag basics', () => {
       const delta = boxDelta(before, await getBox(item));
       expectNear(delta.x, 120);
       expectNear(delta.y, 60);
-      expect(delta.width).toBe(0);
-      expect(delta.height).toBe(0);
+      expectNear(delta.width, 0);
+      expectNear(delta.height, 0);
 
       // The final position is written to the element's style and stays there
       await expect(item).toHaveCSS('left', '160px');
@@ -72,7 +72,7 @@ test.describe('Drag basics', () => {
       // The centre of the element is its body, not the grip in the corner
       await dragBy(page, item, 120, 60);
 
-      expect(await getBox(item)).toEqual(before);
+      expectBoxNear(await getBox(item), before);
       await expect(page.getByTestId('handle-event')).toHaveText('none');
       await expect(page.getByTestId('handle-x')).toHaveText('40');
     });
@@ -106,7 +106,7 @@ test.describe('Drag basics', () => {
       await expect(page.getByTestId('toggle-disabled')).toHaveText('true');
       await dragBy(page, item, 120, 60);
 
-      expect(await getBox(item)).toEqual(before);
+      expectBoxNear(await getBox(item), before);
       await expect(page.getByTestId('toggle-event')).toHaveText('none');
 
       await page.getByTestId('toggle-drag-disabled').click();

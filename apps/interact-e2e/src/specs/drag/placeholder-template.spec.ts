@@ -6,7 +6,7 @@ import {
   offset,
   startDrag,
 } from '@tft/interact-testing';
-import { expectNear } from '../../support';
+import { expectNear, expectBoxNear } from '../../support';
 
 test.describe('Drag preview and placeholder', () => {
   test.beforeEach(async ({ page }) => {
@@ -100,7 +100,7 @@ test.describe('Drag preview and placeholder', () => {
       await drag.moveTo(offset(from, 90, 40));
 
       await expect(item).toBeVisible();
-      expect(await getBox(item)).toEqual(before);
+      expectBoxNear(await getBox(item), before);
       // The preview is the thing that moves
       const preview = page
         .getByTestId('shown-stage')

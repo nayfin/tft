@@ -96,7 +96,13 @@ interface LogEntry {
         <dt>Items in Zone B</dt>
         <dd data-testid="dz-count-b">{{ itemsByZone().b.length }}</dd>
         <dt>Dropped at</dt>
-        <dd data-testid="dz-drop-position">{{ dropPosition() }}</dd>
+        <dd>
+          @if (dropPosition(); as drop) {
+          <span data-testid="dz-drop-x">{{ drop.x }}</span
+          >,
+          <span data-testid="dz-drop-y">{{ drop.y }}</span>
+          } @else { none }
+        </dd>
       </dl>
       <h2>Event log</h2>
       <ol data-testid="dz-log">
@@ -141,7 +147,7 @@ export class DragDropzonesComponent {
     { id: 'item-1', zone: 'a', x: 40, y: 60 },
   ]);
   readonly log = signal<LogEntry[]>([]);
-  readonly dropPosition = signal('none');
+  readonly dropPosition = signal<{ x: number; y: number } | null>(null);
 
   readonly itemsByZone = computed(() => ({
     a: this.items().filter((item) => item.zone === 'a'),
@@ -177,17 +183,18 @@ export class DragDropzonesComponent {
     this.record('dragDrop', zone, e);
     const item = e.dragRef.dragData() as DropItem;
     const position = e.positionInDropTarget;
-    this.dropPosition.set(
-      `${Math.round(position.x)}, ${Math.round(position.y)}`
+    this.dropPosition.set({
+      x: Math.round(position.x),
+      y: Math.round(position.y),
+    });
+    // Move the item to the zone it was dropped in, at the position it was dropped at.
+    // This also runs when it is dropped in its own zone, so the model matches the DOM.
+    this.items.update((items) =>
+      items.map((i) =>
+        i.id === item.id
+          ? { ...i, zone: zone.id, x: position.x, y: position.y }
+          : i
+      )
     );
-    if (item.zone !== zone.id) {
-      this.items.update((items) =>
-        items.map((i) =>
-          i.id === item.id
-            ? { ...i, zone: zone.id, x: position.x, y: position.y }
-            : i
-        )
-      );
-    }
   }
 }

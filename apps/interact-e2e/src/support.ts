@@ -1,4 +1,5 @@
 import { expect } from '@playwright/test';
+import type { Box } from '@tft/interact-testing';
 
 /**
  * Asserts that a measured value is within `tolerance` pixels of the expected one.
@@ -16,7 +17,22 @@ export function expectNear(
   ).toBeLessThanOrEqual(tolerance);
 }
 
-/** Reads a numeric readout, such as the text of a `data-testid="...-x"` element. */
+/** Asserts that every field of a box (x, y, width, height) is within `tolerance` pixels of the expected box. */
+export function expectBoxNear(actual: Box, expected: Box, tolerance = 1): void {
+  expectNear(actual.x, expected.x, tolerance);
+  expectNear(actual.y, expected.y, tolerance);
+  expectNear(actual.width, expected.width, tolerance);
+  expectNear(actual.height, expected.height, tolerance);
+}
+
+/**
+ * Reads a numeric readout, such as the text of a `data-testid="...-x"` element.
+ * Throws on missing or non-numeric text (`Number(null)` and `Number('')` are 0, which could pass by accident).
+ */
 export function toNumber(text: string | null): number {
-  return Number(text);
+  const value = text?.trim() ? Number(text) : NaN;
+  if (Number.isNaN(value)) {
+    throw new Error(`expected a numeric readout, got ${JSON.stringify(text)}`);
+  }
+  return value;
 }

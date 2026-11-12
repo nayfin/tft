@@ -5,9 +5,8 @@ import {
   DraggableDirective,
   DragRootDirective,
   DropzoneDirective,
-  TftDragEvent,
 } from '@tft/interact';
-import { Readout, toReadout } from '../../readout';
+import { Readout, readDrag } from '../../readout';
 
 const START: Readout = { event: 'none', x: 40, y: 40 };
 
@@ -64,9 +63,11 @@ const START: Readout = { event: 'none', x: 40, y: 40 };
             [x]="40"
             [y]="40"
             data-testid="scale-item"
-            (dragStart)="position.set(read('dragStart', $event, position()))"
-            (dragMove)="position.set(read('dragMove', $event, position()))"
-            (dragEnd)="position.set(read('dragEnd', $event, position()))"
+            (dragStart)="
+              position.set(readDrag('dragStart', $event, position()))
+            "
+            (dragMove)="position.set(readDrag('dragMove', $event, position()))"
+            (dragEnd)="position.set(readDrag('dragEnd', $event, position()))"
           >
             <span class="label">Drag me</span>
           </div>
@@ -106,7 +107,5 @@ export class ScaleBasicsComponent {
   readonly scale = signal(1.5);
   readonly position = signal<Readout>(START);
 
-  read(event: string, e: TftDragEvent, previous: Readout): Readout {
-    return toReadout(event, e.positionInDropTarget, previous);
-  }
+  protected readonly readDrag = readDrag;
 }

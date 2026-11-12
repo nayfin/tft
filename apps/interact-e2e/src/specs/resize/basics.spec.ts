@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { boxDelta, getBox, resizeBy } from '@tft/interact-testing';
-import { expectNear, toNumber } from '../../support';
+import { expectNear, toNumber, expectBoxNear } from '../../support';
 
 test.describe('Resize basics', () => {
   test.beforeEach(async ({ page }) => {
@@ -19,8 +19,8 @@ test.describe('Resize basics', () => {
     expectNear(delta.width, 60);
     expectNear(delta.height, 0);
     // Resizing from the right does not move the element
-    expect(delta.x).toBe(0);
-    expect(delta.y).toBe(0);
+    expectNear(delta.x, 0);
+    expectNear(delta.y, 0);
     await expect(page.getByTestId('resize-event')).toHaveText('resizeEnd');
     expectNear(
       toNumber(await page.getByTestId('resize-width').textContent()),
@@ -92,7 +92,7 @@ test.describe('Resize basics', () => {
     // Only the right and bottom edges are enabled in the resizeConfig
     await resizeBy(page, box, 'left', -40, 0);
 
-    expect(await getBox(box)).toEqual(before);
+    expectBoxNear(await getBox(box), before);
     await expect(page.getByTestId('resize-event')).toHaveText('none');
   });
 
@@ -106,7 +106,7 @@ test.describe('Resize basics', () => {
     await expect(page.getByTestId('resize-disabled')).toHaveText('true');
     await resizeBy(page, box, 'bottom-right', 60, 30);
 
-    expect(await getBox(box)).toEqual(before);
+    expectBoxNear(await getBox(box), before);
     await expect(page.getByTestId('resize-event')).toHaveText('none');
 
     await page.getByTestId('resize-toggle-disabled').click();

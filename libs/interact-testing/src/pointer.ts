@@ -125,8 +125,7 @@ export async function pointerDrag(
 
 /** Where to press on an element: its centre, a point inside it, or the centre of a handle. */
 async function grabPoint(locator: Locator, opts: GrabOptions): Promise<Point> {
-  await (opts.grab ?? locator).scrollIntoViewIfNeeded();
-  const box = await measure(opts.grab ?? locator);
+  const box = await getBox(opts.grab ?? locator);
   return opts.grabAt ? pointIn(box, opts.grabAt) : centerOf(box);
 }
 
@@ -152,9 +151,8 @@ export async function dragOnto(
   dropzone: Locator,
   opts: DragOntoOptions = {}
 ): Promise<void> {
-  // Scroll both into view before measuring either, as scrolling one can move the other
+  // Scroll the dropzone first: the source is scrolled into view when it is grabbed, and has to be measured after
   await dropzone.scrollIntoViewIfNeeded();
-  await (opts.grab ?? source).scrollIntoViewIfNeeded();
   const from = await grabPoint(source, opts);
   const to = pointIn(
     await measure(dropzone),

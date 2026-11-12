@@ -6,7 +6,7 @@ import {
   getBox,
   pointIn,
 } from '@tft/interact-testing';
-import { expectNear } from '../../support';
+import { expectNear, toNumber } from '../../support';
 
 test.describe('Dropzones', () => {
   test.beforeEach(async ({ page }) => {
@@ -51,13 +51,14 @@ test.describe('Dropzones', () => {
       await getBox(zoneB),
       await getBox(zoneB.getByTestId('dz-item'))
     );
-    const [x, y] = (
-      (await page.getByTestId('dz-drop-position').textContent()) ?? ''
-    )
-      .split(',')
-      .map(Number);
-    expectNear(x, delta.x);
-    expectNear(y, delta.y);
+    expectNear(
+      toNumber(await page.getByTestId('dz-drop-x').textContent()),
+      delta.x
+    );
+    expectNear(
+      toNumber(await page.getByTestId('dz-drop-y').textContent()),
+      delta.y
+    );
   });
 
   test('the item can be dragged back to the first zone', async ({ page }) => {

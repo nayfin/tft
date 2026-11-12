@@ -4,9 +4,8 @@ import {
   DraggableDirective,
   DragRootDirective,
   DropzoneDirective,
-  TftDragEvent,
 } from '@tft/interact';
-import { Readout, toReadout } from '../../readout';
+import { Readout, readDrag } from '../../readout';
 
 const START: Readout = { event: 'none', x: 40, y: 40 };
 
@@ -52,9 +51,9 @@ const START: Readout = { event: 'none', x: 40, y: 40 };
             [x]="40"
             [y]="40"
             data-testid="basic-item"
-            (dragStart)="basic.set(read('dragStart', $event, basic()))"
-            (dragMove)="basic.set(read('dragMove', $event, basic()))"
-            (dragEnd)="basic.set(read('dragEnd', $event, basic()))"
+            (dragStart)="basic.set(readDrag('dragStart', $event, basic()))"
+            (dragMove)="basic.set(readDrag('dragMove', $event, basic()))"
+            (dragEnd)="basic.set(readDrag('dragEnd', $event, basic()))"
           >
             <span class="label">Drag me</span>
           </div>
@@ -90,9 +89,9 @@ const START: Readout = { event: 'none', x: 40, y: 40 };
             [y]="40"
             [dragConfig]="handleConfig"
             data-testid="handle-item"
-            (dragStart)="handle.set(read('dragStart', $event, handle()))"
-            (dragMove)="handle.set(read('dragMove', $event, handle()))"
-            (dragEnd)="handle.set(read('dragEnd', $event, handle()))"
+            (dragStart)="handle.set(readDrag('dragStart', $event, handle()))"
+            (dragMove)="handle.set(readDrag('dragMove', $event, handle()))"
+            (dragEnd)="handle.set(readDrag('dragEnd', $event, handle()))"
           >
             <span class="label">Body</span>
             <span class="grip" data-testid="handle-grip">Grip</span>
@@ -126,9 +125,9 @@ const START: Readout = { event: 'none', x: 40, y: 40 };
             [dragDisabled]="dragDisabled()"
             [class.disabled]="dragDisabled()"
             data-testid="toggle-item"
-            (dragStart)="toggle.set(read('dragStart', $event, toggle()))"
-            (dragMove)="toggle.set(read('dragMove', $event, toggle()))"
-            (dragEnd)="toggle.set(read('dragEnd', $event, toggle()))"
+            (dragStart)="toggle.set(readDrag('dragStart', $event, toggle()))"
+            (dragMove)="toggle.set(readDrag('dragMove', $event, toggle()))"
+            (dragEnd)="toggle.set(readDrag('dragEnd', $event, toggle()))"
           >
             <span class="label">{{
               dragDisabled() ? 'Locked' : 'Drag me'
@@ -182,7 +181,5 @@ export class DragBasicsComponent {
 
   readonly handleConfig = { allowFrom: '.grip' };
 
-  read(event: string, e: TftDragEvent, previous: Readout): Readout {
-    return toReadout(event, e.positionInDropTarget, previous);
-  }
+  protected readonly readDrag = readDrag;
 }

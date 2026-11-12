@@ -5,9 +5,8 @@ import {
   DragPreviewDirective,
   DragRootDirective,
   DropzoneDirective,
-  TftDragEvent,
 } from '@tft/interact';
-import { Readout, toReadout } from '../../readout';
+import { Readout, readDrag } from '../../readout';
 
 const START: Readout = { event: 'none', x: 40, y: 40 };
 
@@ -49,9 +48,9 @@ const START: Readout = { event: 'none', x: 40, y: 40 };
             [x]="40"
             [y]="40"
             data-testid="hidden-item"
-            (dragStart)="hidden.set(read('dragStart', $event, hidden()))"
-            (dragMove)="hidden.set(read('dragMove', $event, hidden()))"
-            (dragEnd)="hidden.set(read('dragEnd', $event, hidden()))"
+            (dragStart)="hidden.set(readDrag('dragStart', $event, hidden()))"
+            (dragMove)="hidden.set(readDrag('dragMove', $event, hidden()))"
+            (dragEnd)="hidden.set(readDrag('dragEnd', $event, hidden()))"
           >
             <span class="label">Drag item</span>
             <div *tftDragPreview class="preview" data-testid="hidden-preview">
@@ -89,9 +88,9 @@ const START: Readout = { event: 'none', x: 40, y: 40 };
             [y]="40"
             [showPlaceholder]="true"
             data-testid="shown-item"
-            (dragStart)="shown.set(read('dragStart', $event, shown()))"
-            (dragMove)="shown.set(read('dragMove', $event, shown()))"
-            (dragEnd)="shown.set(read('dragEnd', $event, shown()))"
+            (dragStart)="shown.set(readDrag('dragStart', $event, shown()))"
+            (dragMove)="shown.set(readDrag('dragMove', $event, shown()))"
+            (dragEnd)="shown.set(readDrag('dragEnd', $event, shown()))"
           >
             <span class="label">Drag item</span>
             <div *tftDragPreview class="preview" data-testid="shown-preview">
@@ -130,7 +129,5 @@ export class PlaceholderTemplateComponent {
   readonly hidden = signal<Readout>(START);
   readonly shown = signal<Readout>(START);
 
-  read(event: string, e: TftDragEvent, previous: Readout): Readout {
-    return toReadout(event, e.positionInDropTarget, previous);
-  }
+  protected readonly readDrag = readDrag;
 }

@@ -46,9 +46,10 @@ jobs:
 
       # documentation-e2e is a Cypress project and is not run here. The projects' `ci` configurations are not
       # used: they pass --ci, which Playwright does not have. CI=true (set by GitHub) already switches on retries
-      # and a single worker in the Playwright config.
+      # and a single worker in the Playwright config. --parallel=1 runs the two suites one after the other, as two
+      # dev-server compiles at once on a 2-core runner risk the 120s webServer timeout.
       - name: E2E
-        run: npx nx run-many -t e2e -p crispr-forms-e2e,interact-e2e
+        run: npx nx run-many -t e2e -p crispr-forms-e2e,interact-e2e --parallel=1
 
       - name: Upload Playwright reports
         if: failure()
