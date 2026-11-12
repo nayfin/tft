@@ -9,11 +9,11 @@
       "dependsOn": [],
       "executor": "nx:run-commands",
       "options": {
-        "command": "npx tsc -p libs/crispr-forms-testing/tsconfig.lib.json && cp libs/crispr-forms-testing/package.json dist/libs/crispr-forms-testing/package.json && cp libs/crispr-forms-testing/CLAUDE.md dist/libs/crispr-forms-testing/CLAUDE.md"
+        "command": "npx tsc -p libs/crispr-forms-testing/tsconfig.lib.json && cp libs/crispr-forms-testing/package.json dist/libs/crispr-forms-testing/package.json && cp libs/crispr-forms-testing/CLAUDE.md dist/libs/crispr-forms-testing/CLAUDE.md && cp libs/crispr-forms-testing/README.md dist/libs/crispr-forms-testing/README.md"
       },
       "configurations": {
         "production": {
-          "command": "npx tsc -p libs/crispr-forms-testing/tsconfig.lib.prod.json && cp libs/crispr-forms-testing/package.json dist/libs/crispr-forms-testing/package.json && cp libs/crispr-forms-testing/CLAUDE.md dist/libs/crispr-forms-testing/CLAUDE.md"
+          "command": "npx tsc -p libs/crispr-forms-testing/tsconfig.lib.prod.json && cp libs/crispr-forms-testing/package.json dist/libs/crispr-forms-testing/package.json && cp libs/crispr-forms-testing/CLAUDE.md dist/libs/crispr-forms-testing/CLAUDE.md && cp libs/crispr-forms-testing/README.md dist/libs/crispr-forms-testing/README.md"
         }
       }
     }

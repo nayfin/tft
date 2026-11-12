@@ -5,6 +5,12 @@ on:
     branches:
       - main
 
+permissions:
+  # push the version bump commit
+  contents: write
+  # npm trusted publishing (OIDC): no long-lived NPM_TOKEN, provenance is generated automatically
+  id-token: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -13,10 +19,14 @@ jobs:
         with:
           fetch-depth: 0
 
+      # No registry-url: it writes an .npmrc that expects NODE_AUTH_TOKEN, which trusted publishing doesn't use
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-          registry-url: 'https://registry.npmjs.org'
+
+      # Trusted publishing requires npm >= 11.5.1
+      - name: Update npm
+        run: npm install -g npm@^11.5.1
 
       - name: Install dependencies
         run: npm ci
@@ -37,13 +47,28 @@ jobs:
 
       - name: Build and publish affected libs
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NX_DAEMON: false
           NX_NO_CLOUD: true
         run: |
           EXCLUDED=("mat-instantsearch" "ui-imports" "core" "api-interfaces")
           AFFECTED=$(npx nx show projects --affected --base=$NX_BASE --head=$NX_HEAD)
           PUBLISHED=()
+
+          # Commit the version bumps of the libs that were actually published, even if a later lib
+          # fails. Otherwise the next run would bump to an already-published version and npm would
+          # reject it. Bumps of libs that did not publish are discarded.
+          commit_published() {
+            status=$?
+            if [ ${#PUBLISHED[@]} -gt 0 ]; then
+              for lib in "${PUBLISHED[@]}"; do
+                git add "libs/$lib/package.json"
+              done
+              git commit -m "chore: bump patch versions for ${PUBLISHED[*]} [skip ci]"
+              git push
+            fi
+            exit $status
+          }
+          trap commit_published EXIT
 
           for lib in $AFFECTED; do
             echo "LIB: $lib"
@@ -70,9 +95,3 @@ jobs:
 
             PUBLISHED+=($lib)
           done
-
-          if [ ${#PUBLISHED[@]} -gt 0 ]; then
-            git add libs/*/package.json
-            git commit -m "chore: bump patch versions for ${PUBLISHED[*]} [skip ci]"
-            git push
-          fi
