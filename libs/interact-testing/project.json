@@ -1,0 +1,28 @@
+{
+  "name": "interact-testing",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/interact-testing/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "dependsOn": [],
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/libs/interact-testing"],
+      "options": {
+        "command": "npx tsc -p libs/interact-testing/tsconfig.lib.json && cp libs/interact-testing/package.json dist/libs/interact-testing/package.json && cp libs/interact-testing/README.md dist/libs/interact-testing/README.md"
+      },
+      "configurations": {
+        "production": {
+          "command": "npx tsc -p libs/interact-testing/tsconfig.lib.prod.json && cp libs/interact-testing/package.json dist/libs/interact-testing/package.json && cp libs/interact-testing/README.md dist/libs/interact-testing/README.md"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/interact-testing/src/**/*.ts"]
+      }
+    }
+  }
+}

@@ -30,6 +30,7 @@
       ],
       "@tft/crispr-forms-testing": ["libs/crispr-forms-testing/src/index.ts"],
       "@tft/interact": ["libs/interact/src/index.ts"],
+      "@tft/interact-testing": ["libs/interact-testing/src/index.ts"],
       "@tft/ui-imports": ["libs/ui-imports/src/index.ts"]
     }
   },
