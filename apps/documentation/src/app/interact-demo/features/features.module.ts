@@ -9,6 +9,26 @@ const routes: Routes = [
     loadChildren: () => import('./drag/drag.module').then(m => m.DragModule)
   },
   {
+    path: 'resize',
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'basics' },
+      {
+        path: 'basics',
+        loadComponent: () => import('./resize/basics/basics.component').then(m => m.ResizeBasicsComponent)
+      },
+    ]
+  },
+  {
+    path: 'scale',
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'basics' },
+      {
+        path: 'basics',
+        loadComponent: () => import('./scale/basics/basics.component').then(m => m.ScaleBasicsComponent)
+      },
+    ]
+  },
+  {
     path: 'gestures',
     loadChildren: () => import('./gestures/gestures.module').then(m => m.GesturesModule)
   },
