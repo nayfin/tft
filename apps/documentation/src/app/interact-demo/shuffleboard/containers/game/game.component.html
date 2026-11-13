@@ -1,37 +1,30 @@
-<tft-scoreboard
-  [redScore]="game.RED.score"
-  [blueScore]="game.BLUE.score">
-
-</tft-scoreboard>
-{{ whosTurn }} {{ turnCount }}
+<tft-scoreboard [redScore]="game.RED.score"
+  [blueScore]="game.BLUE.score" />
+{{ whosTurn() }} {{ turnCount() }}
 <input type="number" step=".1" [formControl]="inertiaResistanceControl">
-@if (turnCount > 2) {
+@if (turnCount() > 2) {
   <button (click)="resetBoard()">RESET BOARD</button>
 }
 <tft-board tftDragRoot>
   <!-- Red Pucks -->
   @for (puck of game[team.RED].pucks | keyvalue; track puck; let i = $index) {
-    <tft-puck
-      [puck]="puck.value"
+    <tft-puck [puck]="puck.value"
       [team]="team.RED"
       [key]="puck.key"
-      [whosTurn]="whosTurn"
-      [resistance]="resistance"
-      [turnCount]="turnCount"
-      [index]="i">
-    </tft-puck>
+      [whosTurn]="whosTurn()"
+      [resistance]="resistance()"
+      [turnCount]="turnCount()"
+      [index]="i" />
   }
   <!-- Blue Pucks -->
   @for (puck of game[team.BLUE].pucks | keyvalue; track puck; let i = $index) {
-    <tft-puck
-      [puck]="puck.value"
+    <tft-puck [puck]="puck.value"
       [team]="team.BLUE"
       [key]="puck.key"
-      [whosTurn]="whosTurn"
-      [resistance]="resistance"
-      [turnCount]="turnCount"
-      [index]="i">
-    </tft-puck>
+      [whosTurn]="whosTurn()"
+      [resistance]="resistance()"
+      [turnCount]="turnCount()"
+      [index]="i" />
   }
 
   <tft-player-zone
@@ -40,23 +33,20 @@
     (dragLeave)="checkForFoul($event)"
     class="a">
 
-    <tft-tray>
-    </tft-tray>
+    <tft-tray />
 
   </tft-player-zone>
 
   <tft-target-zone
     (turnOver)="handleDrop($event)">
     @for (target of targets; track target; let i = $index) {
-      <tft-target
-        [value]="target.value"
+      <tft-target [value]="target.value"
         [pucksInTarget]="target.pucksInTarget"
         (puckEnter)="updateTargetState(i, 'enter')"
         (puckLeave)="updateTargetState(i, 'leave')"
-        (scorePoints)="handleScore($event)">
-      </tft-target>
+        (scorePoints)="handleScore($event)" />
     }
-    <tft-tray></tft-tray>
+    <tft-tray />
 
   </tft-target-zone>
 

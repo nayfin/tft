@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { ControlErrorContainerDirective } from '@tft/form-validation-handler';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { CrisprFieldComponent, ButtonConfig } from '../../utils';
 
@@ -21,7 +21,7 @@ import { CrisprFieldComponent, ButtonConfig } from '../../utils';
         MatIconModule,
         MatTooltipModule,
         ReactiveFormsModule,
-        FormValidationHandlerModule,
+        ControlErrorContainerDirective
     ],
     standalone: true
 })

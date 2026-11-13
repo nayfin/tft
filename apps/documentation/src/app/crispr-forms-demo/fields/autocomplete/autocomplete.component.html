@@ -2,37 +2,29 @@
   <h2 class="mat-h2">
     Example of using an array of autocomplete options
   </h2>
-  <crispr-form
-    [value]="arraySelectInitialValue"
+  <crispr-form [value]="arraySelectInitialValue"
     [config]="arraySelectConfig"
-    (submitted)="handleSubmit($event)">
-  </crispr-form>
+    (submitted)="handleSubmit($event)" />
 </mat-card>
 
 <mat-card>
   <h2 class="mat-h2">
     Example of using a promise of autocomplete options
   </h2>
-  <crispr-form
-    [config]="promiseSelectConfig">
-  </crispr-form>
+  <crispr-form [config]="promiseSelectConfig" />
 </mat-card>
 
 <mat-card>
   <h2 class="mat-h2">
     Example of using an observable of autocomplete options
   </h2>
-  <crispr-form
-    [config]="observableSelectConfig">
-  </crispr-form>
+  <crispr-form [config]="observableSelectConfig" />
 </mat-card>
 
 <mat-card>
   <h2 class="mat-h2">
     Example of using one field to drive the options of another autocomplete field
   </h2>
-  <crispr-form
-    (submitted)="handleSubmit($event)"
-    [config]="reactiveOptionsConfig">
-  </crispr-form>
+  <crispr-form (submitted)="handleSubmit($event)"
+    [config]="reactiveOptionsConfig" />
 </mat-card>

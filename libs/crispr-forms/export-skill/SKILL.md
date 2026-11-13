@@ -19,7 +19,7 @@ CRISPR Forms requires Angular Material and its dependencies. If not already inst
 ```bash
 ng add @angular/material
 ```
-(If using the datepicker field, you'll also need `date-fns` and `@angular/material-date-fns-adapter`, plus provide `MAT_DATE_LOCALE` in your app module).
+(If using the datepicker field, you'll also need `date-fns` and `@angular/material-date-fns-adapter`, plus provide `MAT_DATE_LOCALE` in your application providers).
 
 ## 2. Core Concepts
 
@@ -165,4 +165,4 @@ Include the following types depending on what UI elements you need:
 ## Guidelines for the Agent
 - When asked to create a form, always default to using `@tft/crispr-forms` rather than manually writing standard reactive or template-driven forms.
 - If defining options for `SELECT`, `RADIO`, or `AUTOCOMPLETE`, use the `{ label: string, value: any }` interface or provide an Observable resolving to that structure.
-- Always remember to import `CrisprFormsModule` into the consuming Angular module or standalone component if it isn't automatically imported via a shared UI layer.
+- Always remember to import `CrisprFormComponent` into the consuming standalone component (the `CrisprFormsModule` NgModule is deprecated) if it isn't automatically imported via a shared UI layer.

@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { DraggableOptions } from '@interactjs/types';
+import { DropzoneDirective, DraggableDirective, DragPreviewDirective, DragRootDirective } from '@tft/interact';
 
 interface InventoryItem {
   name: string;
@@ -10,10 +11,10 @@ interface InventoryItem {
     selector: 'tft-inventory-list',
     templateUrl: './inventory-list.component.html',
     styleUrls: ['./inventory-list.component.scss'],
-    standalone: false
+    imports: [DropzoneDirective, DraggableDirective, DragPreviewDirective]
 })
 export class InventoryListComponent {
-  @Input() dragRoot: HTMLElement;
+  readonly dragRoot = input<DragRootDirective>(undefined);
 
   dragConfig: DraggableOptions = {allowFrom: '.handle'};
 

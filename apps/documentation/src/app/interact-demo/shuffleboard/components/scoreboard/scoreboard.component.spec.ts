@@ -8,8 +8,8 @@ describe('ScoreboardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ScoreboardComponent ]
-    })
+    imports: [ScoreboardComponent]
+})
     .compileComponents();
   }));
 

@@ -16,7 +16,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { ControlErrorContainerDirective, ControlErrorsDirective } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '../field-container';
 import {
   DatepickerFieldConfig,
@@ -41,7 +41,8 @@ const defaultConfig: Partial<DatepickerFieldConfig> = {
         MatInputModule,
         MatDateFnsModule,
         PortalModule,
-        FormValidationHandlerModule,
+        ControlErrorContainerDirective,
+        ControlErrorsDirective
     ],
     standalone: true
 })

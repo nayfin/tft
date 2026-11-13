@@ -8,8 +8,8 @@ describe('DividerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DividerComponent ]
-    })
+    imports: [DividerComponent]
+})
     .compileComponents();
   }));
 

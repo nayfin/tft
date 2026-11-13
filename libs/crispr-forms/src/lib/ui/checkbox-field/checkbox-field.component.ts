@@ -3,7 +3,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { ControlErrorContainerDirective, ControlErrorsDirective } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '../field-container';
 import { CheckboxFieldConfig } from '../../utils';
 import { InfoComponent } from '../info';
@@ -24,7 +24,8 @@ const defaultConfig: Partial<CheckboxFieldConfig> = {
     MatCheckboxModule,
     ReactiveFormsModule,
     FieldContainerComponent,
-    FormValidationHandlerModule
+    ControlErrorContainerDirective,
+    ControlErrorsDirective
   ],
   standalone: true
 })

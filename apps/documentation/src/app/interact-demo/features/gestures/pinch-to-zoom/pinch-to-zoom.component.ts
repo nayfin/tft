@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { TftGestureEvent } from '@tft/interact';
+import { TftGestureEvent, DragRootDirective, DropzoneDirective, AccountForScaleDirective, GesturableDirective, ResizableDirective, DraggableDirective } from '@tft/interact';
 
 @Component({
     selector: 'tft-pinch-to-zoom',
     templateUrl: './pinch-to-zoom.component.html',
     styleUrls: ['./pinch-to-zoom.component.scss'],
-    standalone: false
+    imports: [DragRootDirective, DropzoneDirective, AccountForScaleDirective, GesturableDirective, ResizableDirective, DraggableDirective]
 })
 export class PinchToZoomComponent {
 

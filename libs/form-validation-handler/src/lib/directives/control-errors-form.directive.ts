@@ -1,4 +1,4 @@
-import { Directive, Input, ElementRef, inject } from '@angular/core';
+import { Directive, ElementRef, inject, input } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { ErrorDictionary } from '../form-errors';
@@ -6,15 +6,14 @@ import { ErrorDictionary } from '../form-errors';
 
 @Directive({
     // tslint:disable-next-line: directive-selector
-    selector: 'form',
-    standalone: false
+    selector: 'form'
 })
 // TODO: rename this directive as it does more than just capture button submits
 export class ControlErrorsFormDirective {
   private host = inject<ElementRef<HTMLFormElement>>(ElementRef);
 
 
-  @Input() errorDictionary: ErrorDictionary;
+  readonly errorDictionary = input<ErrorDictionary>(undefined);
 
   submit$ = fromEvent(this.element, 'submit').pipe(
     shareReplay(1),

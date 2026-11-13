@@ -8,8 +8,8 @@ describe('TrayComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TrayComponent ]
-    })
+    imports: [TrayComponent]
+})
     .compileComponents();
   }));
 

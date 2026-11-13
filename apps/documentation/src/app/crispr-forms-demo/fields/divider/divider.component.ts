@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ControlType, FormConfig } from '@tft/crispr-forms';
+import { ControlType, FormConfig, CrisprFormComponent } from '@tft/crispr-forms';
+import { MatCard } from '@angular/material/card';
 
 @Component({
     selector: 'doc-divider',
     templateUrl: './divider.component.html',
     styleUrls: ['./divider.component.scss'],
-    standalone: false
+    imports: [MatCard, CrisprFormComponent]
 })
 export class DividerComponent implements OnInit {
 

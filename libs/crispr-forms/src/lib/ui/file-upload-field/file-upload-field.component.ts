@@ -1,6 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild, OnInit, ChangeDetectionStrategy, signal, computed, inject } from '@angular/core';
+import { Component, ElementRef, OnInit, ChangeDetectionStrategy, signal, computed, inject, viewChild } from '@angular/core';
 import {
   ControlValueAccessor,
   NgControl,
@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Observable, of } from 'rxjs';
 import { FileDropzoneDirective } from '../file-dropzone';
-import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { ControlErrorContainerDirective, ControlErrorsDirective } from '@tft/form-validation-handler';
 
 import { FileUploadFieldConfig } from '../../utils';
 import { FieldContainerComponent } from '../field-container';
@@ -33,8 +33,9 @@ import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abs
         MatFormFieldModule,
         MatInputModule,
         SelectedFileComponent,
-        FormValidationHandlerModule,
-        FileDropzoneDirective,
+        ControlErrorContainerDirective,
+        ControlErrorsDirective,
+        FileDropzoneDirective
     ],
     standalone: true
 })
@@ -60,7 +61,7 @@ export class FileUploadFieldComponent
     disableOnUpload: true,
   };
 
-  @ViewChild('fileInput') fileInputRef: ElementRef;
+  readonly fileInputRef = viewChild<ElementRef>('fileInput');
 
   selectedFiles = signal<FileList | null>(null);
   selectedFilesArray = computed(() => this.selectedFiles() ? Array.from(this.selectedFiles()) : []);
@@ -121,7 +122,7 @@ export class FileUploadFieldComponent
   }
 
   resetFileInput(): void {
-    this.fileInputRef.nativeElement.value = '';
+    this.fileInputRef().nativeElement.value = '';
     this.control().patchValue(null);
     this.uploaded.set(false);
   }

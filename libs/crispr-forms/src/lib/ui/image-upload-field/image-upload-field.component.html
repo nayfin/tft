@@ -18,13 +18,11 @@
 
       <div class="image-preview" [style.height]="config().imagePreviewHeight">
         @if (processingState() === 'processing') {
-          <crispr-selected-file
-            data-testid="image-processing"
+          <crispr-selected-file data-testid="image-processing"
             [color]="config().color === 'primary' ? 'accent' : 'primary'"
             [fileName]="(config().compressImage ? 'Compressing: ' : 'Processing: ') + processingFileName()"
             [showProgress]="true"
-            [progress]="progress()">
-          </crispr-selected-file>
+            [progress]="progress()" />
         } @else {
           <!-- <img *ngIf="(initialUrlString$ | async) as initialUrlString;" [src]="initialUrlString" alt=""> -->
           @if (imageSrcUrl$ | async; as srcUrl) {
@@ -88,7 +86,7 @@
     }
   </div>
 
-  @if (config().hint && (control().valid || !control().touched)) {<mat-hint>{{config().hint}}</mat-hint>}
+  @if (config().hint && hintVisible()) {<mat-hint>{{config().hint}}</mat-hint>}
 
 </mat-form-field>
 

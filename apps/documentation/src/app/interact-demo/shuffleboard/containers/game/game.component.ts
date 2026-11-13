@@ -1,22 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { TftDropEvent } from '@tft/interact';
+import { Component, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { TftDropEvent, DragRootDirective, DropzoneDirective } from '@tft/interact';
 import { initialGameState } from './consts';
 import { Team } from '../../models/shuffleboard.model'
-import { FormControl } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ScoreboardComponent } from '../../components/scoreboard/scoreboard.component';
+import { BoardComponent } from '../../components/board/board.component';
+import { PuckComponent } from '../../components/puck/puck.component';
+import { PlayerZoneComponent } from '../../components/player-zone/player-zone.component';
+import { TrayComponent } from '../../components/tray/tray.component';
+import { TargetZoneComponent } from '../../components/target-zone/target-zone.component';
+import { TargetComponent } from '../../components/target/target.component';
+import { JsonPipe, KeyValuePipe } from '@angular/common';
 // import { RestrictOptions } from '@interactjs/modifiers/restrict/pointer';
 
 @Component({
     selector: 'tft-game',
     templateUrl: './game.component.html',
     styleUrls: ['./game.component.scss'],
-    standalone: false
+    imports: [ScoreboardComponent, ReactiveFormsModule, BoardComponent, DragRootDirective, PuckComponent, PlayerZoneComponent, DropzoneDirective, TrayComponent, TargetZoneComponent, TargetComponent, JsonPipe, KeyValuePipe]
 })
-export class GameComponent implements OnInit {
+export class GameComponent {
   moves = 0;
   team = Team;
-  whosTurn: Team = Team.RED;
-  turnCount = 0;
+  readonly whosTurn = signal<Team>(Team.RED);
+  readonly turnCount = signal(0);
   game = initialGameState;
 
   get allPucks() {
@@ -38,17 +46,8 @@ export class GameComponent implements OnInit {
       pucksInTarget: 0
     },
   ];
-  resistance = 2;
-  inertiaResistanceControl = new FormControl(this.resistance);
-  ircSubscription: Subscription;
-  constructor(
-    // private cdr: ChangeDetectorRef,
-  ) { }
-
-  ngOnInit() {
-    this.ircSubscription = this.inertiaResistanceControl.valueChanges
-      .subscribe(resistance => this.resistance = resistance)
-  }
+  inertiaResistanceControl = new FormControl(2);
+  readonly resistance = toSignal(this.inertiaResistanceControl.valueChanges, { initialValue: this.inertiaResistanceControl.value });
 
   checkForFoul(event) {
     console.log({foul: event})
@@ -72,14 +71,14 @@ export class GameComponent implements OnInit {
     this.updateLocation(event, key);
     this.changeTeams(team);
     if ( team === Team.BLUE ) {
-      this.turnCount++;
+      this.turnCount.update((count) => count + 1);
     }
   }
 
   resetBoard() {
     this.resetPucks();
     this.targets.forEach(target => target.pucksInTarget = 0);
-    this.turnCount = 0;
+    this.turnCount.set(0);
   }
 
   resetTeamPucks(team: Team) {
@@ -104,7 +103,7 @@ export class GameComponent implements OnInit {
   }
 
   changeTeams(currentTeam: Team) {
-    this.whosTurn = currentTeam === Team.BLUE ? Team.RED : Team.BLUE;
+    this.whosTurn.set(currentTeam === Team.BLUE ? Team.RED : Team.BLUE);
   }
 
 }

@@ -1,12 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormArray } from '@angular/forms';
+import { Component, OnInit, ChangeDetectionStrategy, computed, signal } from '@angular/core';
+import { FormArray, FormGroup } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CrisprFieldDirective } from '../field.directive';
-import { CrisprPipesModule } from '../pipes/crispr-pipes.module';
+import { InitialControlValuePipe } from '../pipes/initial-control-value.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { ControlErrorContainerDirective } from '@tft/form-validation-handler';
 import {
   createControlForType,
   FormGroupListConfig,
@@ -32,8 +32,8 @@ const defaultConfig: Partial<FormGroupListConfig> = {
         ReactiveFormsModule,
         CrisprFieldDirective,
         CrisprDisplayFieldDirective,
-        CrisprPipesModule,
-        FormValidationHandlerModule
+        InitialControlValuePipe,
+        ControlErrorContainerDirective
     ],
     standalone: true
 })
@@ -46,9 +46,12 @@ export class FormGroupListComponent
    * By setting this to true when adding/removing items from array,
    * we can block original values from overwriting form values
    * */
-  blockValue = false;
+  readonly blockValue = signal(false);
 
-  selectedIndex: number = null;
+  readonly selectedIndex = signal<number | null>(null);
+
+  /** The item groups of the list's form array, typed for the template bindings. */
+  readonly itemGroups = computed(() => (this.control() as FormArray<FormGroup> | null)?.controls);
 
   ngOnInit() {
     super.ngOnInit();
@@ -72,12 +75,12 @@ export class FormGroupListComponent
   }
 
   clickDelete(index: number) {
-    this.blockValue = true;
+    this.blockValue.set(true);
     this.deleteGroup(index);
   }
 
   clickAdd() {
-    this.blockValue = true;
+    this.blockValue.set(true);
     this.addGroup();
   }
 
@@ -92,6 +95,6 @@ export class FormGroupListComponent
   }
 
   clickEditItem(index: number) {
-    this.selectedIndex = index;
+    this.selectedIndex.set(index);
   }
 }

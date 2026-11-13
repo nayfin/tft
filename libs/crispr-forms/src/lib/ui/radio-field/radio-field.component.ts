@@ -1,11 +1,11 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, computed } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { MatRadioModule } from '@angular/material/radio';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { ControlErrorsDirective } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '../field-container';
 import { RadioFieldConfig, SelectOption, observablifyOptions } from '../../utils';
 import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
@@ -20,12 +20,14 @@ import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abs
         ReactiveFormsModule,
         FieldContainerComponent,
         MatRadioModule,
-        FormValidationHandlerModule,
+        ControlErrorsDirective
     ],
     standalone: true
 })
 export class RadioFieldComponent extends CrisprControlComponent<RadioFieldConfig> implements OnInit {
   defaultConfig = {};
+  /** The radio group's control, typed for the `[formControl]` binding. */
+  readonly radioControl = computed(() => this.control() as FormControl);
   options$: Observable<SelectOption[]>;
   ngOnInit() {
     super.ngOnInit();

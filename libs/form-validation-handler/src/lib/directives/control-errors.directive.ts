@@ -1,5 +1,5 @@
 import {
-  Directive, Self, OnInit, OnDestroy, Optional, ComponentRef,
+  Directive, OnInit, OnDestroy, ComponentRef,
   ViewContainerRef, HostListener, DestroyRef, inject } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { Subscription, EMPTY, Observable, merge, Subject } from 'rxjs';
@@ -13,15 +13,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Directive({
     // we want to hook into all formControls so we use these selectors
     // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: '[formControl], [formControlName]',
-    standalone: false
+    selector: '[formControl], [formControlName]'
 })
 export class ControlErrorsDirective implements OnInit {
 
   destroyRef = inject(DestroyRef)
-  @Self() ngControl = inject(NgControl);
-  @Optional() form = inject(ControlErrorsFormDirective);
-  @Optional() controlErrorContainer = inject(ControlErrorContainerDirective);
+  ngControl = inject(NgControl, { self: true });
+  form = inject(ControlErrorsFormDirective, { optional: true });
+  controlErrorContainer = inject(ControlErrorContainerDirective, { optional: true });
   private vcr = inject(ViewContainerRef);
 
   ref: ComponentRef<ControlErrorComponent>;
@@ -36,13 +35,12 @@ export class ControlErrorsDirective implements OnInit {
     this.blur$.next();
   }
 
-  constructor(
-    
-  ) {
+  constructor() {
     this.submit$ = this.form ? this.form.submit$ : EMPTY;
     this.container = this.controlErrorContainer?.vcr || this.vcr;
-    this.errors = this.form?.errorDictionary
-      ? { ...defaultErrors, ...this.form.errorDictionary}
+    const errorDictionary = this.form?.errorDictionary();
+    this.errors = errorDictionary
+      ? { ...defaultErrors, ...errorDictionary}
       : defaultErrors;
   }
 
@@ -84,7 +82,7 @@ export class ControlErrorsDirective implements OnInit {
     if (!this.ref) {
       this.ref = this.container.createComponent(ControlErrorComponent);
     }
-    this.ref.instance.text = text;
+    this.ref.setInput('text', text);
   }
 
   getErrorMessage() {

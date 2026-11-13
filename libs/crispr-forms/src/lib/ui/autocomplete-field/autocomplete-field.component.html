@@ -25,7 +25,7 @@
       #autoInput>
 
     @if (config().fieldSuffix) {<span matSuffix>{{config().fieldSuffix}}</span>}
-    @if (config().info) {<crispr-info  matSuffix  [info]="config().info "></crispr-info>}
+    @if (config().info) {<crispr-info matSuffix  [info]="config().info " />}
 
     <mat-autocomplete
       #auto="matAutocomplete"
@@ -38,7 +38,7 @@
           @for (option of options; track option.value) {
             <mat-option
               [value]="option.value">
-              <crispr-option [option]="option"></crispr-option>
+              <crispr-option [option]="option" />
             </mat-option>
           }
         } @else {

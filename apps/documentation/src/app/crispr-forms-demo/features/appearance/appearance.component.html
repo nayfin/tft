@@ -6,8 +6,6 @@
     Just as with Angular Material components, the 'appearance' option can be set on any form field that
     can be wrapped with the 'mat-form-field' component. Find related docs <a href="https://material.angular.io/components/form-field/overview">here</a>.
   </p>
-  <crispr-form
-    [config]="formConfig"
-    (submitted)="handleSubmit($event)">
-  </crispr-form>
+  <crispr-form [config]="formConfig"
+    (submitted)="handleSubmit($event)" />
 </mat-card>

@@ -1,4 +1,4 @@
-import { Directive, HostListener, Output, EventEmitter, Input } from '@angular/core';
+import { Directive, HostListener, input, output } from '@angular/core';
 
 @Directive({
   selector: '[crisprFileDropzone]',
@@ -6,13 +6,13 @@ import { Directive, HostListener, Output, EventEmitter, Input } from '@angular/c
 })
 export class FileDropzoneDirective {
 
-  @Output() fileDrop =  new EventEmitter<FileList>();
+  readonly fileDrop = output<FileList>();
 
-  @Input() crisprFileDropzone = true;
+  readonly crisprFileDropzone = input(true);
 
   @HostListener('drop', ['$event'])
   onDrop($event: DragEvent) {
-    if(this.crisprFileDropzone) {
+    if(this.crisprFileDropzone()) {
       $event.preventDefault();
       this.fileDrop.emit($event.dataTransfer.files);
     }
@@ -21,7 +21,7 @@ export class FileDropzoneDirective {
   // Prevents DOM from trying to open file in browser
   @HostListener('dragover', ['$event'])
   onDragOver($event: DragEvent) {
-    if(this.crisprFileDropzone) {
+    if(this.crisprFileDropzone()) {
       $event.preventDefault();
     }
   }

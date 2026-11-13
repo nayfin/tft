@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { CommonModule } from '@angular/common';
 // eslint-disable-next-line @nx/enforce-module-boundaries
@@ -8,6 +8,7 @@ import { CrisprFieldComponent, DividerConfig } from '../../utils';
     selector: 'crispr-divider',
     templateUrl: './divider.component.html',
     styleUrls: ['./divider.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [CommonModule, MatDividerModule],
     standalone: true
 })

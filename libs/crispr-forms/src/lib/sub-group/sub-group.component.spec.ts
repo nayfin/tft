@@ -8,7 +8,7 @@ describe('SubGroupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SubGroupComponent ]
+      imports: [SubGroupComponent]
     })
     .compileComponents();
   }));

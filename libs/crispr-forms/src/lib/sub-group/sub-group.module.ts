@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { SubGroupComponent } from './sub-group.component';
 
 /**
- * @deprecated SubGroupComponent is now standalone. Import SubGroupComponent directly.
+ * @deprecated Import the standalone SubGroupComponent directly.
  * This module will be removed in the next major version.
  */
 @NgModule({

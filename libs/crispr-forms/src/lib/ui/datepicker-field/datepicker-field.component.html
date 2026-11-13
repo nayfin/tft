@@ -14,7 +14,7 @@
       [max]="config().max"
       [matDatepicker]="picker"
       [matDatepickerFilter]="config().datepickerFilter">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker-toggle matSuffix [for]="picker" />
     <mat-datepicker
       [touchUi]="config().touchUi"
       [startView]="config().startView"
@@ -23,7 +23,7 @@
       #picker>
       @if (calendarFooterPortal) {
         <mat-datepicker-actions>
-          <ng-template [cdkPortalOutlet]="calendarFooterPortal"></ng-template>
+          <ng-template [cdkPortalOutlet]="calendarFooterPortal" />
         </mat-datepicker-actions>
       }
     </mat-datepicker>

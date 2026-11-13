@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
-import { FormConfig } from '@tft/crispr-forms';
+import { FormConfig, CrisprFormComponent } from '@tft/crispr-forms';
 import { unitConversionFormConfig } from './unit-conversion.config';
 import { FormGroup } from '@angular/forms';
+import { MatCard } from '@angular/material/card';
 
 @Component({
     selector: 'tft-unit-conversion',
     templateUrl: './unit-conversion.component.html',
     styleUrls: ['./unit-conversion.component.scss'],
-    standalone: false
+    imports: [MatCard, CrisprFormComponent]
 })
 export class UnitConversionComponent {
   initialValue = {

@@ -8,7 +8,7 @@ describe('FormGroupListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormGroupListComponent ]
+      imports: [FormGroupListComponent]
     })
     .compileComponents();
   }));

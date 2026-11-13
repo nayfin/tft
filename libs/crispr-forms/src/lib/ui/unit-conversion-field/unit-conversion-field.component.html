@@ -5,7 +5,7 @@
     <input type="number" matInput [formControl]="displayValueControl" [placeholder]="config().placeholder"
       [min]="config().min" [max]="config().max" [step]="config().step" [autofocus]="config().autofocus">
     @if (config().fieldSuffix) {<span matSuffix>{{config().fieldSuffix}}</span>}
-    @if (config().info) {<crispr-info matSuffix [info]="config().info"></crispr-info>}
+    @if (config().info) {<crispr-info matSuffix [info]="config().info" />}
   </mat-form-field>
 
   @if (config().showUnitSelect) {
@@ -14,8 +14,7 @@
     <mat-select #selectField [formControl]="unitSelectControl">
       @for (option of unitOptions$ | async; track option) {
       <mat-option [value]="option.value">
-        <crispr-option [option]="option">
-        </crispr-option>
+        <crispr-option [option]="option" />
       </mat-option>
       }
     </mat-select>

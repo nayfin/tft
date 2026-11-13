@@ -8,8 +8,8 @@ describe('FilterChiplistDemoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FilterChiplistDemoComponent ]
-    })
+    imports: [FilterChiplistDemoComponent]
+})
     .compileComponents();
   }));
 

@@ -13,7 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 import { OptionComponent } from '../option';
-import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { ControlErrorContainerDirective, ControlErrorsDirective } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '../field-container';
 import { InfoComponent } from '../info';
 import {
@@ -40,7 +40,8 @@ const defaultConfig: Partial<UnitConversionFieldConfig> = {};
         MatInputModule,
         MatSelectModule,
         MatOptionModule,
-        FormValidationHandlerModule,
+        ControlErrorContainerDirective,
+        ControlErrorsDirective
     ],
     standalone: true
 })
@@ -65,7 +66,7 @@ export class UnitConversionFieldComponent
     const controlValuePipeline: Observable<string>[] = [
       this.displayValueControl.valueChanges.pipe(
         startWith(this.displayValueControl.value)
-      ),
+      )
     ];
     // setup all required pieces when showing a field for selecting units
     if (config.showUnitSelect === true) {

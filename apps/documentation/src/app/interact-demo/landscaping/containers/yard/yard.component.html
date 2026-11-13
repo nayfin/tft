@@ -17,20 +17,17 @@
       Dropzone for Draggable Dropzone
     </h2>
     <button (click)="disableBlueBox = !disableBlueBox" >{{disableBlueBox ? 'enable' : 'disable'}}</button>
-    <tft-section
-      tftDraggable
+    <tft-section tftDraggable
       tftResizable
       [dragDisabled]="disableBlueBox"
       [resizeDisabled]="disableBlueBox"
       [scale]="scale"
       [width]="dropZoneWidth"
       [height]="dropZoneHeight"
-      (resizeEnd)="updateSize($event)">
-    </tft-section>
+      (resizeEnd)="updateSize($event)" />
   </div>
 </div>
 
 <div class="drag-origin-container">
-  <tft-inventory-list [dragRoot]="dragRoot">
-  </tft-inventory-list>
+  <tft-inventory-list [dragRoot]="dragRoot" />
 </div>

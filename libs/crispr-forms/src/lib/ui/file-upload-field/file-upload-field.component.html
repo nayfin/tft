@@ -38,12 +38,10 @@
       <div class="selected-files-container">
         <div class="selected-files-list">
           @for (file of selectedFilesArray(); track file; let i = $index) {
-            <crispr-selected-file
-              [color]="config().color === 'primary' ? 'accent' : 'primary'"
+            <crispr-selected-file [color]="config().color === 'primary' ? 'accent' : 'primary'"
               [fileName]="file.name"
               [showProgress]="config().showUploadProgress"
-              [progress]="fileProgress && (fileProgress[i] | async)">
-            </crispr-selected-file>
+              [progress]="fileProgress && (fileProgress[i] | async)" />
           }
         </div>
       </div>

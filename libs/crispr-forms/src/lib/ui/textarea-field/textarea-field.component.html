@@ -5,7 +5,7 @@
     <textarea [rows]="config().rows" matInput [placeholder]="config().placeholder"
       [formControlName]="config().controlName">
     </textarea>
-    @if (config().info) {<crispr-info [info]="config().info"></crispr-info>}
+    @if (config().info) {<crispr-info [info]="config().info" />}
     @if (config().fieldSuffix) {<span matSuffix>{{config().fieldSuffix}}</span>}
     @if (config().hint && control().valid) {<mat-hint>{{config().hint}}</mat-hint>}
 

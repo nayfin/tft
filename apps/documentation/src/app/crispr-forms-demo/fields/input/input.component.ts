@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
-import { FormConfig } from '@tft/crispr-forms';
+import { FormConfig, CrisprFormComponent } from '@tft/crispr-forms';
 import { FormGroup } from '@angular/forms';
 import { inputFormConfig } from './input.config';
+import { MatCard } from '@angular/material/card';
 
 @Component({
     selector: 'doc-input',
     templateUrl: './input.component.html',
     styleUrls: ['./input.component.scss'],
-    standalone: false
+    imports: [MatCard, CrisprFormComponent]
 })
 export class InputComponent {
 

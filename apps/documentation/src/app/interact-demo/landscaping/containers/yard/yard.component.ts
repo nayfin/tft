@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { TftGestureEvent, TftResizeEvent } from '@tft/interact';
+import { TftGestureEvent, TftResizeEvent, AutoScrollDirective, DragRootDirective, ApplyScaleDirective, AccountForScaleDirective, GesturableDirective, DropzoneDirective, DraggableDirective, ResizableDirective } from '@tft/interact';
+import { SectionComponent } from '../section/section.component';
+import { InventoryListComponent } from '../inventory-list/inventory-list.component';
 
 
 
@@ -7,7 +9,7 @@ import { TftGestureEvent, TftResizeEvent } from '@tft/interact';
     selector: 'tft-yard',
     templateUrl: './yard.component.html',
     styleUrls: ['./yard.component.scss'],
-    standalone: false
+    imports: [AutoScrollDirective, DragRootDirective, ApplyScaleDirective, AccountForScaleDirective, GesturableDirective, DropzoneDirective, SectionComponent, DraggableDirective, ResizableDirective, InventoryListComponent]
 })
 export class YardComponent {
 

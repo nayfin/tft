@@ -22,6 +22,20 @@ import { DraggableDirective, DropzoneDirective, ResizableDirective } from '@tft/
 export class MyComponent {}
 ```
 
+**Configuration (`provideInteract`):**
+```typescript
+import { provideInteract } from '@tft/interact';
+
+// application-wide
+bootstrapApplication(AppComponent, {
+  providers: [provideInteract({ cssDimensionUnit: 'em' })], // defaults to 'px'
+});
+
+// or scoped to a route
+{ path: 'demo', providers: [provideInteract({ cssDimensionUnit: 'em' })], loadChildren: ... }
+```
+`provideInteract()` provides `INTERACT_ROOT_CONFIG` (merged over `{ cssDimensionUnit: 'px' }`) and `InteractService`. It is optional: without it the service falls back to its defaults. It replaces `InteractModule.forRoot()`.
+
 **NgModule (legacy):**
 ```typescript
 import { InteractModule } from '@tft/interact';
@@ -32,7 +46,7 @@ import { InteractModule } from '@tft/interact';
 export class AppModule {}
 ```
 
-> `InteractModule` is deprecated and will be removed in the next major version. Prefer importing directives directly.
+> `InteractModule` (and `InteractModule.forRoot()`) is deprecated and will be removed in the next major version. Prefer importing directives directly and `provideInteract()` for configuration.
 
 ---
 
@@ -311,6 +325,7 @@ Version 21.1.0 converted all directives to **standalone** and replaced `@Input()
 ```
 
 `InteractModule` still works but is deprecated. `InteractService` is `providedIn: 'root'`.
+To configure the default CSS unit without the module, use `provideInteract()` (see below).
 
 ### `dragData` and `dropzoneData` are now signals
 

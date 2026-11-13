@@ -1,7 +1,7 @@
 <mat-nav-list>
 
   <mat-accordion>
-    @for (section of sections; track section) {
+    @for (section of sections(); track section) {
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -25,10 +25,8 @@
             }
           </mat-list-item>
         }
-        <tft-sidenav-list
-          [sections]="section.subsections"
-          (itemClicked)="onItemClicked($event)">
-        </tft-sidenav-list>
+        <tft-sidenav-list [sections]="section.subsections"
+          (itemClicked)="onItemClicked($event)" />
       </mat-expansion-panel>
     }
   </mat-accordion>

@@ -8,8 +8,8 @@ describe('CustomSelectComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CustomSelectComponent ]
-    })
+    imports: [CustomSelectComponent]
+})
     .compileComponents();
   }));
 

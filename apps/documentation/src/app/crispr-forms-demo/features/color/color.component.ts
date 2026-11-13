@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormConfig, ControlType } from '@tft/crispr-forms';
+import { FormConfig, ControlType, CrisprFormComponent } from '@tft/crispr-forms';
+import { MatCard } from '@angular/material/card';
 
 @Component({
     selector: 'doc-color',
     templateUrl: './color.component.html',
     styleUrls: ['./color.component.scss'],
-    standalone: false
+    imports: [MatCard, CrisprFormComponent]
 })
 export class ColorComponent implements OnInit {
   formConfig: FormConfig = {

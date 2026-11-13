@@ -8,8 +8,8 @@ describe('PuckComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PuckComponent ]
-    })
+    imports: [PuckComponent]
+})
     .compileComponents();
   }));
 

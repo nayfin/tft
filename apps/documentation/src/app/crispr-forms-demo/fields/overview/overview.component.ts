@@ -1,9 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, input, viewChild } from '@angular/core';
 import { FormConfig, ControlType, SelectOption, CrisprFormComponent } from '@tft/crispr-forms';
 import { Validators, FormGroup } from '@angular/forms';
 import { BehaviorSubject, of } from 'rxjs';
 import { map, delay } from 'rxjs/operators';
-import { CommonModule } from '@angular/common';
+import { CommonModule, AsyncPipe } from '@angular/common';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
+import { MatButton } from '@angular/material/button';
 
 interface GroupListItem {
   autocompleteChiplistObservable?: string[];
@@ -44,7 +47,7 @@ export class DisplayItemComponent {
     selector: 'doc-overview',
     templateUrl: './overview.component.html',
     styleUrls: ['./overview.component.scss'],
-    standalone: false
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatButtonToggleGroup, MatButtonToggle, CrisprFormComponent, MatCardActions, MatButton, AsyncPipe]
 })
 export class OverviewComponent implements OnInit{
 
@@ -430,7 +433,7 @@ export class OverviewComponent implements OnInit{
     ]
   }
 
-  @ViewChild('crisprForm') crisprForm: CrisprFormComponent;
+  readonly crisprForm = viewChild<CrisprFormComponent>('crisprForm');
 
   ngOnInit(): void {
     const currentFormValue = this.valueSubject.getValue()
@@ -451,6 +454,6 @@ export class OverviewComponent implements OnInit{
   }
 
   triggerSubmitFromOutsideForm() {
-    this.crisprForm.triggerSubmit();
+    this.crisprForm().triggerSubmit();
   }
 }

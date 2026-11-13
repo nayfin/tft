@@ -14,12 +14,9 @@
 <form [formGroup]="form">
 
   <ais-instantsearch [config]="searchConfig">
-    <mis-autocomplete
-      [autocompleteControl]="form.get('autocompleteEx')"
+    <mis-autocomplete [autocompleteControl]="form.get('autocompleteEx')"
       [mapHitsToOptions]="mapOptions"
-      (selectHit)="handleSelect($event)">
-
-    </mis-autocomplete>
+      (selectHit)="handleSelect($event)" />
 
   </ais-instantsearch>
 </form>

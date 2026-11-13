@@ -7,7 +7,7 @@
       <!-- [selectable]="config().chipsSelectable" -->
       @for (chip of controlValue$ | async; track chip; let i = $index) {
       <mat-chip-row class="refinement-chip" [removable]="config().areChipsRemovable"
-        [highlighted]="chip?.value === selectedChip?.value" (click)="highlightChip(chip)" (removed)="removeChip(chip)">
+        [highlighted]="chip?.value === selectedChip()?.value" (click)="highlightChip(chip)" (removed)="removeChip(chip)">
         @if (chip.imageUrl) {<img [src]="chip.imageUrl" matChipAvatar alt="image of {{chip.label}}">}
         {{chip.label}}
         @if (config().areChipsRemovable) {<mat-icon matChipRemove>cancel</mat-icon>}
@@ -22,7 +22,7 @@
         role="searchbox" type="text" autocapitalize="off" autocorrect="off" spellcheck="false" (blur)="blurField()"
         #autoInput />
       @if (config().fieldSuffix) {<span matSuffix>{{config().fieldSuffix}}</span>}
-      @if (config().info) {<crispr-info matSuffix [info]="config().info "></crispr-info>}
+      @if (config().info) {<crispr-info matSuffix [info]="config().info " />}
 
     </mat-chip-grid>
     <mat-autocomplete #auto="matAutocomplete" [autoActiveFirstOption]="this.config().autoActiveFirstOption"
@@ -31,7 +31,7 @@
       @if (remainingOptions.length > 0) {
       @for (option of remainingOptions$ | async; track option.value) {
       <mat-option [value]="option">
-        <crispr-option [option]="option"></crispr-option>
+        <crispr-option [option]="option" />
       </mat-option>
       }
       } @else {
@@ -57,14 +57,14 @@
 
   <ng-template
     cdkConnectedOverlay
-    [cdkConnectedOverlayOrigin]="overlayOrigin"
+    [cdkConnectedOverlayOrigin]="overlayOrigin()"
     [cdkConnectedOverlayOpen]="showCreateForm()"
     [cdkConnectedOverlayWidth]="overlayWidth"
     [cdkConnectedOverlayPositions]="createFormPositions"
     (overlayOutsideClick)="closeCreateForm()">
     <div class="create-chip-panel mat-elevation-z4">
       @for (field of config().createChip?.fields ?? []; track field) {
-      <ng-container crisprField [config]="field" [group]="createFormGroup"></ng-container>
+      <ng-container crisprField [config]="field" [group]="createFormGroup" />
       }
       <div class="create-chip-actions">
         <button mat-stroked-button type="button" (click)="closeCreateForm()">Cancel</button>

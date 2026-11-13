@@ -1,13 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, OnInit, computed } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { SubGroupConfig } from '../utils';
 import { CrisprControlComponent } from '../utils/abstracts/crispr-control.abstract';
 import { CrisprFieldDirective } from '../field.directive';
-import { CrisprPipesModule } from '../pipes/crispr-pipes.module';
+import { InitialControlValuePipe } from '../pipes/initial-control-value.pipe';
 import { FieldContainerComponent } from '../ui/field-container';
-import { FormValidationHandlerModule } from '@tft/form-validation-handler';
 
 @Component({
     selector: 'crispr-sub-group',
@@ -16,16 +14,16 @@ import { FormValidationHandlerModule } from '@tft/form-validation-handler';
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [
-      CommonModule,
       ReactiveFormsModule,
       CrisprFieldDirective,
       FieldContainerComponent,
-      CrisprPipesModule,
-      FormValidationHandlerModule,
+      InitialControlValuePipe
     ],
 })
 export class SubGroupComponent extends CrisprControlComponent<SubGroupConfig> implements OnInit {
-  
+  /** The sub group's control, typed for the nested `[group]` binding. */
+  readonly subGroup = computed(() => this.control() as FormGroup);
+
   ngOnInit() {
     super.ngOnInit();
   }

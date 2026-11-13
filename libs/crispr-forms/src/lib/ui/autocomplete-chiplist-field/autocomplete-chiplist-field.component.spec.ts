@@ -8,7 +8,7 @@ describe('AutocompleteChiplistFieldComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AutocompleteChiplistFieldComponent ]
+      imports: [AutocompleteChiplistFieldComponent]
     })
     .compileComponents();
   }));

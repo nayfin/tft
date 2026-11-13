@@ -1,20 +1,21 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { TftDragEvent, TftDropEvent } from '@tft/interact';
+import { Component, OnInit, ChangeDetectionStrategy, input, output } from '@angular/core';
+import { TftDragEvent, TftDropEvent, DropzoneDirective } from '@tft/interact';
 import { Team } from '../../models/shuffleboard.model';
 import { DropzoneOptions } from '@interactjs/types/index';
+import { NgClass } from '@angular/common';
 
 @Component({
     selector: 'tft-target',
     templateUrl: './target.component.html',
     styleUrls: ['./target.component.scss'],
-    standalone: false
+    imports: [DropzoneDirective, NgClass]
 })
 export class TargetComponent implements OnInit {
-  @Input() value = 10;
-  @Input() pucksInTarget = 0;
-  @Output() scorePoints: EventEmitter<TftDropEvent> = new EventEmitter();
-  @Output() puckEnter = new EventEmitter<void>();
-  @Output() puckLeave = new EventEmitter<void>();
+  readonly value = input(10);
+  readonly pucksInTarget = input(0);
+  readonly scorePoints = output<TftDropEvent>();
+  readonly puckEnter = output<void>();
+  readonly puckLeave = output<void>();
 
   dropzoneConfig: DropzoneOptions = {
     overlap: 0.5

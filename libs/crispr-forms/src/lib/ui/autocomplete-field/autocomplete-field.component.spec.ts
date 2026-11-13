@@ -8,7 +8,7 @@ describe('AutocompleteFieldComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AutocompleteFieldComponent ]
+      imports: [AutocompleteFieldComponent]
     })
     .compileComponents();
   }));

@@ -8,8 +8,8 @@ describe('ColorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ColorComponent ]
-    })
+    imports: [ColorComponent]
+})
     .compileComponents();
   }));
 

@@ -8,8 +8,8 @@ describe('DisabledFieldComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DisabledFieldComponent ]
-    })
+    imports: [DisabledFieldComponent]
+})
     .compileComponents();
   }));
 

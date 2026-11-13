@@ -2,10 +2,10 @@
 import {
   Component,
   OnInit,
-  ViewChild,
   ChangeDetectionStrategy,
   ElementRef,
   OnDestroy,
+  viewChild
 } from '@angular/core';
 import {
   MatAutocompleteTrigger,
@@ -19,7 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { OptionComponent } from '../option';
-import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { ControlErrorContainerDirective, ControlErrorsDirective } from '@tft/form-validation-handler';
 
 import { FieldContainerComponent } from '../field-container';
 import {
@@ -50,7 +50,8 @@ const defaultConfig: Partial<AutocompleteFieldConfig> = {
         MatAutocompleteModule,
         MatInputModule,
         MatOptionModule,
-        FormValidationHandlerModule,
+        ControlErrorContainerDirective,
+        ControlErrorsDirective
     ],
     standalone: true
 })
@@ -59,9 +60,8 @@ export class AutocompleteFieldComponent
   implements OnInit, OnDestroy
 {
   defaultConfig = defaultConfig;
-  @ViewChild('autoInput', { read: MatAutocompleteTrigger })
-  autoInput: MatAutocompleteTrigger;
-  @ViewChild('autoInput') autoInputRef: ElementRef<HTMLInputElement>;
+  readonly autoInput = viewChild('autoInput', { read: MatAutocompleteTrigger });
+  readonly autoInputRef = viewChild<ElementRef<HTMLInputElement>>('autoInput');
 
   clearFieldSubscription: Subscription;
 
@@ -111,6 +111,6 @@ export class AutocompleteFieldComponent
 
   handleSelect(event: MatAutocompleteSelectedEvent) {
     this.control().setValue(event.option.value);
-    this.autoInputRef.nativeElement.blur();
+    this.autoInputRef().nativeElement.blur();
   }
 }

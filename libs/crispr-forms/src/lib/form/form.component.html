@@ -8,12 +8,10 @@
   #ngFormElement="ngForm">
 
   @for (field of config().fields; track field) {
-    <ng-container
-      crisprField
+    <ng-container crisprField
       [value]="value() | initialControlValue : field"
       [config]="field"
-      [group]="form()">
-    </ng-container>
+      [group]="form()" />
   }
   <!-- Hidden button, programmatically clicked when crispr form triggerSubmit function called.
   Uses a hidden button with type="submit" because it will trigger both native form submit event

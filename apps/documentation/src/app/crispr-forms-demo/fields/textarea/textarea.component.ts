@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { FormConfig } from '@tft/crispr-forms';
+import { FormConfig, CrisprFormComponent } from '@tft/crispr-forms';
 import { textareaFormConfig } from './textarea.config';
+import { MatCard } from '@angular/material/card';
 
 @Component({
     selector: 'doc-textarea',
     templateUrl: './textarea.component.html',
     styleUrls: ['./textarea.component.scss'],
-    standalone: false
+    imports: [MatCard, CrisprFormComponent]
 })
 export class TextareaComponent {
 

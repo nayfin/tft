@@ -4,11 +4,8 @@
     [class.inline-field]="inlineField()"
     class="field-container">
     @if (config().heading) {
-      <crispr-heading
-        [config]="config().heading">
-      </crispr-heading>
+      <crispr-heading [config]="config().heading" />
     }
-    <ng-content>
-    </ng-content>
+    <ng-content />
   </div>
 }
