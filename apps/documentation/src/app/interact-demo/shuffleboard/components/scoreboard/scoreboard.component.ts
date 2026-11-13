@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, input } from '@angular/core';
 
 @Component({
     selector: 'tft-scoreboard',
@@ -6,8 +6,8 @@ import { Component, OnInit, Input } from '@angular/core';
     styleUrls: ['./scoreboard.component.scss']
 })
 export class ScoreboardComponent implements OnInit {
-  @Input() redScore: number;
-  @Input() blueScore: number;
+  readonly redScore = input<number>(undefined);
+  readonly blueScore = input<number>(undefined);
 
   constructor() { }
 

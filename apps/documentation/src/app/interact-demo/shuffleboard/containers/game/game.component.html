@@ -1,8 +1,8 @@
 <tft-scoreboard [redScore]="game.RED.score"
   [blueScore]="game.BLUE.score" />
-{{ whosTurn }} {{ turnCount }}
+{{ whosTurn() }} {{ turnCount() }}
 <input type="number" step=".1" [formControl]="inertiaResistanceControl">
-@if (turnCount > 2) {
+@if (turnCount() > 2) {
   <button (click)="resetBoard()">RESET BOARD</button>
 }
 <tft-board tftDragRoot>
@@ -11,9 +11,9 @@
     <tft-puck [puck]="puck.value"
       [team]="team.RED"
       [key]="puck.key"
-      [whosTurn]="whosTurn"
-      [resistance]="resistance"
-      [turnCount]="turnCount"
+      [whosTurn]="whosTurn()"
+      [resistance]="resistance()"
+      [turnCount]="turnCount()"
       [index]="i" />
   }
   <!-- Blue Pucks -->
@@ -21,9 +21,9 @@
     <tft-puck [puck]="puck.value"
       [team]="team.BLUE"
       [key]="puck.key"
-      [whosTurn]="whosTurn"
-      [resistance]="resistance"
-      [turnCount]="turnCount"
+      [whosTurn]="whosTurn()"
+      [resistance]="resistance()"
+      [turnCount]="turnCount()"
       [index]="i" />
   }
 

@@ -1,6 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild, OnInit, ChangeDetectionStrategy, signal, computed, inject } from '@angular/core';
+import { Component, ElementRef, OnInit, ChangeDetectionStrategy, signal, computed, inject, viewChild } from '@angular/core';
 import {
   ControlValueAccessor,
   NgControl,
@@ -61,7 +61,7 @@ export class FileUploadFieldComponent
     disableOnUpload: true,
   };
 
-  @ViewChild('fileInput') fileInputRef: ElementRef;
+  readonly fileInputRef = viewChild<ElementRef>('fileInput');
 
   selectedFiles = signal<FileList | null>(null);
   selectedFilesArray = computed(() => this.selectedFiles() ? Array.from(this.selectedFiles()) : []);
@@ -122,7 +122,7 @@ export class FileUploadFieldComponent
   }
 
   resetFileInput(): void {
-    this.fileInputRef.nativeElement.value = '';
+    this.fileInputRef().nativeElement.value = '';
     this.control().patchValue(null);
     this.uploaded.set(false);
   }

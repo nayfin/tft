@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, input, output } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -12,10 +12,10 @@ import { MatIcon } from '@angular/material/icon';
 })
 export class HeaderComponent implements OnInit {
 
-  @Output() menuClicked = new EventEmitter<void>();
+  readonly menuClicked = output<void>();
 
-  @Input() title = 'Tortilla Flat Tech';
-  @Input() subtitle;
+  readonly title = input('Tortilla Flat Tech');
+  readonly subtitle = input<string>();
 
   constructor() { }
 

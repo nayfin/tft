@@ -1,7 +1,7 @@
 
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { CrisprControlConfig, ControlValue, ControlType } from '../models/crispr-field.config';
-import { computed, DestroyRef, Directive, effect, EventEmitter, inject, input, OnInit, Output } from '@angular/core';
+import { computed, DestroyRef, Directive, effect, inject, input, OnInit, output } from '@angular/core';
 import { CrisprFieldComponent } from './crispr-field.abstract';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -15,7 +15,7 @@ export class CrisprControlComponent<C extends CrisprControlConfig> extends Crisp
 
   control = computed<AbstractControl>(() => this.group()?.get(this.config().controlName))
 
-  @Output() valueChanges: EventEmitter<ControlValue> = new EventEmitter<ControlValue>();
+  readonly valueChanges = output<ControlValue>();
 
   value = input<ControlValue>(null);
 

@@ -1,4 +1,4 @@
-import { Directive, Input, ElementRef, inject } from '@angular/core';
+import { Directive, ElementRef, inject, input } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { ErrorDictionary } from '../form-errors';
@@ -13,7 +13,7 @@ export class ControlErrorsFormDirective {
   private host = inject<ElementRef<HTMLFormElement>>(ElementRef);
 
 
-  @Input() errorDictionary: ErrorDictionary;
+  readonly errorDictionary = input<ErrorDictionary>(undefined);
 
   submit$ = fromEvent(this.element, 'submit').pipe(
     shareReplay(1),

@@ -35,13 +35,12 @@ export class ControlErrorsDirective implements OnInit {
     this.blur$.next();
   }
 
-  constructor(
-    
-  ) {
+  constructor() {
     this.submit$ = this.form ? this.form.submit$ : EMPTY;
     this.container = this.controlErrorContainer?.vcr || this.vcr;
-    this.errors = this.form?.errorDictionary
-      ? { ...defaultErrors, ...this.form.errorDictionary}
+    const errorDictionary = this.form?.errorDictionary();
+    this.errors = errorDictionary
+      ? { ...defaultErrors, ...errorDictionary}
       : defaultErrors;
   }
 
@@ -83,7 +82,7 @@ export class ControlErrorsDirective implements OnInit {
     if (!this.ref) {
       this.ref = this.container.createComponent(ControlErrorComponent);
     }
-    this.ref.instance.text = text;
+    this.ref.setInput('text', text);
   }
 
   getErrorMessage() {

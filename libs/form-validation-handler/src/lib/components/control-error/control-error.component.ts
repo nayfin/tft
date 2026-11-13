@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, computed, input } from '@angular/core';
 @Component({
     selector: 'tft-control-error',
     templateUrl: './control-error.component.html',
@@ -6,17 +6,9 @@ import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, inject } 
     changeDetection: ChangeDetectionStrategy.OnPush
 })
  export class ControlErrorComponent {
-  private cdr = inject(ChangeDetectorRef);
+  /** The error message to display. A falsy value hides the error. */
+  readonly text = input<string | null | undefined>();
 
-  _text: string;
-  _hide = true;
-
-  @Input() set text(value: string) {
-    if (value !== this._text) {
-      this._text = value;
-      this._hide = !value;
-    }
-    this.cdr.detectChanges();
-  }
-
+  /** Hidden until there is a message to show. */
+  readonly hide = computed(() => !this.text());
 }

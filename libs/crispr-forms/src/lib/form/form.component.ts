@@ -6,8 +6,8 @@ import {
   OnInit,
   output,
   untracked,
-  ViewChild,
   ElementRef,
+  viewChild
 } from '@angular/core';
 import { outputFromObservable, toObservable } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
@@ -64,7 +64,7 @@ export class CrisprFormComponent implements OnInit {
     toObservable(this.form).pipe(switchMap((f) => f.statusChanges))
   );
 
-  @ViewChild('submitTrigger') submitTrigger: ElementRef<HTMLButtonElement>;
+  readonly submitTrigger = viewChild<ElementRef<HTMLButtonElement>>('submitTrigger');
 
   ngOnInit() {
     // build out the form, note that we pass in the form as the third argument and the function modifies it
@@ -77,6 +77,6 @@ export class CrisprFormComponent implements OnInit {
   }
 
   triggerSubmit() {
-    this.submitTrigger.nativeElement.click();
+    this.submitTrigger().nativeElement.click();
   }
 }

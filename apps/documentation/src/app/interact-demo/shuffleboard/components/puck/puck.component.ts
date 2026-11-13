@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, SimpleChanges, OnChanges, computed, input, output } from '@angular/core';
 import { Team, Puck } from '../../models/shuffleboard.model';
 import { DraggableOptions } from '@interactjs/types/index';
 import interact from 'interactjs';
@@ -12,26 +12,19 @@ import { NgClass, NgStyle } from '@angular/common';
     imports: [DraggableDirective, NgClass, NgStyle]
 })
 export class PuckComponent implements OnInit, OnChanges {
-  @Input() whosTurn: Team;
-  @Input() turnCount: number;
-  @Input() index: number;
-  @Input() team: Team;
-  @Input() puck: Puck;
-  @Input() key: string;
-  _resistance = 2;
-  @Input() set resistance(val: number){
-    this._resistance = val;
-    this.dragConfig = {...this.dragConfig, ...{inertia: {resistance: val}}}
-    // this.dragConfig.inertia.resistance = val;
-  };
-  get resistance() {
-    return this._resistance;
-  }
-  @Output() puckDrop = new EventEmitter<TftDragEvent>();
+  readonly whosTurn = input<Team>(undefined);
+  readonly turnCount = input<number>(undefined);
+  readonly index = input<number>(undefined);
+  readonly team = input<Team>(undefined);
+  readonly puck = input<Puck>(undefined);
+  readonly key = input<string>(undefined);
+  /** When set, replaces the default inertia options with `{ resistance }`. */
+  readonly resistance = input<number>();
+  readonly puckDrop = output<TftDragEvent>();
 
   teamClass: string;
   // restrictOptions: RestrictOptions;
-  dragConfig: DraggableOptions = {
+  private readonly baseDragConfig: DraggableOptions = {
     inertia: {
       resistance: 1,
       allowResume: true,
@@ -46,10 +39,18 @@ export class PuckComponent implements OnInit, OnChanges {
       })
     ]
   }
+
+  readonly dragConfig = computed<DraggableOptions>(() => {
+    const resistance = this.resistance();
+    return resistance === undefined
+      ? this.baseDragConfig
+      : { ...this.baseDragConfig, inertia: { resistance } };
+  });
+
   constructor() { }
 
   ngOnInit() {
-    this.teamClass = this.team.toLowerCase();
+    this.teamClass = this.team().toLowerCase();
   }
 
   ngOnChanges(changes: SimpleChanges) {

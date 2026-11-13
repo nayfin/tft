@@ -1,6 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, OnInit, signal, untracked, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, OnInit, signal, untracked, viewChild } from '@angular/core';
 import {
   ControlValueAccessor,
   NgControl,
@@ -62,7 +62,6 @@ export class ImageUploadFieldComponent
 {
   ngControl = inject(NgControl, { optional: true, self: true });
   private domSanitizer = inject(DomSanitizer);
-  private cdr = inject(ChangeDetectorRef);
 
   onChange: () => void;
 
@@ -183,7 +182,6 @@ export class ImageUploadFieldComponent
       }
       if (file || this.value()) {
         control.markAsTouched();
-        this.cdr.markForCheck();
       }
     }),
     map(({ file }) => file),
@@ -266,7 +264,14 @@ export class ImageUploadFieldComponent
   // This is what is displayed by the image preview
   imageSrcUrl$: Observable<string | null>;
 
-  @ViewChild('fileInput') fileInputRef: ElementRef;
+  readonly fileInputRef = viewChild<ElementRef>('fileInput');
+
+  /**
+   * Whether the hint is shown, i.e. the control is valid or has not been touched. Mirrors the control's
+   * state into a signal so that changes made asynchronously (e.g. when image processing finishes)
+   * re-render this OnPush/zoneless component.
+   */
+  readonly hintVisible = signal(true);
 
   disabled$: Observable<boolean>;
 
@@ -285,6 +290,9 @@ export class ImageUploadFieldComponent
     super.ngOnInit();
     const control = this.control();
     control.addValidators(this.imageProcessingValidator);
+    const updateHintVisible = () => this.hintVisible.set(control.valid || !control.touched);
+    updateHintVisible();
+    control.events.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(updateHintVisible);
     this.destroyRef.onDestroy(() => {
       this.destroyed = true;
       this.inputImageFileSubject.complete();
@@ -341,7 +349,7 @@ export class ImageUploadFieldComponent
   clearFileInput(): void {
     this.latestFile = null;
     this.inputImageFileSubject.next(null);
-    this.fileInputRef.nativeElement.value = '';
+    this.fileInputRef().nativeElement.value = '';
     this.progress.set(undefined);
     this.setProcessingState('idle', null, () => {
       this.control().patchValue(null);

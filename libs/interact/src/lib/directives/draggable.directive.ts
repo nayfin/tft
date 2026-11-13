@@ -1,4 +1,4 @@
-import { Directive, ElementRef, input, output, OnInit, OnDestroy, effect, computed, Renderer2, ContentChild, ViewContainerRef, AfterViewInit, DOCUMENT, inject } from '@angular/core';
+import { Directive, ElementRef, input, output, OnInit, OnDestroy, effect, computed, Renderer2, ViewContainerRef, AfterViewInit, DOCUMENT, inject, contentChild } from '@angular/core';
 
 import interact from 'interactjs';
 import { InteractService } from '../services/interact.service';
@@ -66,7 +66,7 @@ export class DraggableDirective<D = any> implements OnInit, OnDestroy, AfterView
   dragInertiaStart = output<TftDragEvent>();
   dragEnd = output<TftDragEvent>();
 
-  @ContentChild(DragPreviewDirective) _previewTemplate: DragPreviewDirective;
+  readonly _previewTemplate = contentChild(DragPreviewDirective);
   interactableState: Observable<TftCoords>;
   interactable: Interactable;
   private registryId: string;
@@ -208,8 +208,9 @@ export class DraggableDirective<D = any> implements OnInit, OnDestroy, AfterView
       .on('dragstart', (event: NgDragEvent) => {
         const interaction = event.interaction;
         if (this.enableDragDefault() && interaction.pointerIsDown) {
-          if (this._previewTemplate) {
-            const viewRef = this._viewContainerRef.createEmbeddedView(this._previewTemplate.templateRef);
+          const _previewTemplate = this._previewTemplate();
+          if (_previewTemplate) {
+            const viewRef = this._viewContainerRef.createEmbeddedView(_previewTemplate.templateRef);
             this.previewRef = getRootNode(viewRef, this._document);
           } else {
             this.previewRef = cloneElement(this.el.nativeElement);

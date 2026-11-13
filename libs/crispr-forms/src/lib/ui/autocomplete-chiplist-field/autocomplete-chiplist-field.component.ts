@@ -3,9 +3,9 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  ViewChild,
   ElementRef,
   signal,
+  viewChild
 } from '@angular/core';
 import { map, take, tap } from 'rxjs/operators';
 import {
@@ -86,7 +86,7 @@ export class AutocompleteChiplistFieldComponent
   defaultConfig = defaultConfig;
   chips$ = new BehaviorSubject<SelectOption[]>([]);
   remainingOptions$: Observable<SelectOption[]>;
-  selectedChip: SelectOption = null;
+  readonly selectedChip = signal<SelectOption | null>(null);
   controlValue$ = this.chips$.pipe(
     tap((chips) => {
       this.control().setValue(chips.map((chip) => chip.value));
@@ -96,10 +96,9 @@ export class AutocompleteChiplistFieldComponent
   // We need use ViewChild twice on the same template ref to access as different types
   // - the MatAutocompleteTrigger is used to for selecting value on tab
   // - the ElementRef<HTMLInputElement> is used to clear the value from input element on selection
-  @ViewChild('autoInput', { read: MatAutocompleteTrigger })
-  chipInput: MatAutocompleteTrigger;
-  @ViewChild('autoInput') chipInputRef: ElementRef<HTMLInputElement>;
-  @ViewChild(CdkOverlayOrigin) overlayOrigin: CdkOverlayOrigin;
+  readonly chipInput = viewChild('autoInput', { read: MatAutocompleteTrigger });
+  readonly chipInputRef = viewChild<ElementRef<HTMLInputElement>>('autoInput');
+  readonly overlayOrigin = viewChild(CdkOverlayOrigin);
 
   readonly createNewSentinel = CREATE_NEW_SENTINEL;
   showCreateForm = signal(false);
@@ -111,7 +110,7 @@ export class AutocompleteChiplistFieldComponent
   ];
 
   get overlayWidth(): number {
-    return this.overlayOrigin?.elementRef.nativeElement.offsetWidth ?? 0;
+    return this.overlayOrigin()?.elementRef.nativeElement.offsetWidth ?? 0;
   }
 
   ngOnInit() {
@@ -142,15 +141,15 @@ export class AutocompleteChiplistFieldComponent
     }
     const selectedOption: SelectOption = event.option.value as SelectOption;
     this.chips$.next([...this.chips$.value, selectedOption]);
-    this.chipInputRef.nativeElement.value = '';
+    this.chipInputRef().nativeElement.value = '';
     this.autocompleteInputControl.setValue('');
     // setTimeout needed because the panel thinks it's still open at this point
-    setTimeout(() => this.chipInput.openPanel());
+    setTimeout(() => this.chipInput().openPanel());
   }
 
   openCreateForm() {
     this.createFormGroup = buildFormGroupFromConfig({ fields: this.config().createChip!.fields });
-    this.chipInputRef.nativeElement.value = '';
+    this.chipInputRef().nativeElement.value = '';
     this.autocompleteInputControl.setValue('');
     setTimeout(() => this.showCreateForm.set(true));
   }
@@ -174,11 +173,12 @@ export class AutocompleteChiplistFieldComponent
    * @param event blur event that triggers the handle blur
    */
   handleTab(_event: FocusEvent) {
+    const chipInput = this.chipInput();
     if (
-      this.chipInput.activeOption &&
+      chipInput.activeOption &&
       (this.config().tabToSelect || this.config().addChipOnBlur)
     ) {
-      const chip = this.chipInput.activeOption.value;
+      const chip = chipInput.activeOption.value;
       this.chips$.next([...this.chips$.value, chip]);
     }
   }
@@ -189,8 +189,9 @@ export class AutocompleteChiplistFieldComponent
    * @param event
    */
   handleTokenEnd(event: MatChipInputEvent) {
-    if (this.chipInput.activeOption) {
-      this.chipInput.activeOption.select();
+    const chipInput = this.chipInput();
+    if (chipInput.activeOption) {
+      chipInput.activeOption.select();
     }
     event.chipInput?.clear();
   }
@@ -209,11 +210,11 @@ export class AutocompleteChiplistFieldComponent
 
   highlightChip(chip: SelectOption) {
     if(this.config().chipsSelectable) {
-      this.selectedChip = chip
+      this.selectedChip.set(chip);
     }
   }
 
   blurField() {
-    this.selectedChip = null;
+    this.selectedChip.set(null);
   }
 }

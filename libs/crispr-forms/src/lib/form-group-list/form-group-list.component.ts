@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, signal } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -46,9 +46,9 @@ export class FormGroupListComponent
    * By setting this to true when adding/removing items from array,
    * we can block original values from overwriting form values
    * */
-  blockValue = false;
+  readonly blockValue = signal(false);
 
-  selectedIndex: number = null;
+  readonly selectedIndex = signal<number | null>(null);
 
   ngOnInit() {
     super.ngOnInit();
@@ -72,12 +72,12 @@ export class FormGroupListComponent
   }
 
   clickDelete(index: number) {
-    this.blockValue = true;
+    this.blockValue.set(true);
     this.deleteGroup(index);
   }
 
   clickAdd() {
-    this.blockValue = true;
+    this.blockValue.set(true);
     this.addGroup();
   }
 
@@ -92,6 +92,6 @@ export class FormGroupListComponent
   }
 
   clickEditItem(index: number) {
-    this.selectedIndex = index;
+    this.selectedIndex.set(index);
   }
 }

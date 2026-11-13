@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 
 import { SubGroupConfig } from '../utils';
 import { CrisprControlComponent } from '../utils/abstracts/crispr-control.abstract';
@@ -15,7 +14,6 @@ import { FieldContainerComponent } from '../ui/field-container';
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [
-      CommonModule,
       ReactiveFormsModule,
       CrisprFieldDirective,
       FieldContainerComponent,

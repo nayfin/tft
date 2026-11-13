@@ -7,7 +7,7 @@
       <!-- [selectable]="config().chipsSelectable" -->
       @for (chip of controlValue$ | async; track chip; let i = $index) {
       <mat-chip-row class="refinement-chip" [removable]="config().areChipsRemovable"
-        [highlighted]="chip?.value === selectedChip?.value" (click)="highlightChip(chip)" (removed)="removeChip(chip)">
+        [highlighted]="chip?.value === selectedChip()?.value" (click)="highlightChip(chip)" (removed)="removeChip(chip)">
         @if (chip.imageUrl) {<img [src]="chip.imageUrl" matChipAvatar alt="image of {{chip.label}}">}
         {{chip.label}}
         @if (config().areChipsRemovable) {<mat-icon matChipRemove>cancel</mat-icon>}
@@ -57,7 +57,7 @@
 
   <ng-template
     cdkConnectedOverlay
-    [cdkConnectedOverlayOrigin]="overlayOrigin"
+    [cdkConnectedOverlayOrigin]="overlayOrigin()"
     [cdkConnectedOverlayOpen]="showCreateForm()"
     [cdkConnectedOverlayWidth]="overlayWidth"
     [cdkConnectedOverlayPositions]="createFormPositions"

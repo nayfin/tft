@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { SidenavSection, SidenavLink } from './sidenav-list.model';
 import { MatNavList, MatListItem } from '@angular/material/list';
 import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription } from '@angular/material/expansion';
@@ -14,8 +14,8 @@ import { MatLine } from '@angular/material/core';
 })
 export class SidenavListComponent {
 
-  @Input() sections: SidenavSection[];
-  @Output() itemClicked = new EventEmitter<SidenavLink>();
+  readonly sections = input<SidenavSection[]>(undefined);
+  readonly itemClicked = output<SidenavLink>();
 
   // want to allow any data to pass through here
   onItemClicked(item: SidenavLink) {

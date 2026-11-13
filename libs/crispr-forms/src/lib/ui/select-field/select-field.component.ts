@@ -3,8 +3,9 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  ViewChild,
   AfterViewInit,
+  signal,
+  viewChild
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -54,9 +55,9 @@ export class SelectFieldComponent
     color: 'primary' as ThemePalette,
   };
   options$: Observable<SelectOption[]>;
-  allSelected = false;
+  readonly allSelected = signal(false);
 
-  @ViewChild('selectField') selectField: MatSelect;
+  readonly selectField = viewChild<MatSelect>('selectField');
 
   ngOnInit() {
     super.ngOnInit();
@@ -80,18 +81,18 @@ export class SelectFieldComponent
     if (
       this.config().multiple &&
       this.config().enableToggleAll &&
-      this.selectField.options?.length === (this.value() as any[])?.length
+      this.selectField().options?.length === (this.value() as any[])?.length
     ) {
-      this.allSelected = true;
+      this.allSelected.set(true);
     }
   }
 
   toggleAll(isSelected: boolean) {
     if (isSelected) {
-      this.selectField.options.forEach((option) => option.deselect());
+      this.selectField().options.forEach((option) => option.deselect());
     } else {
-      this.selectField.options.forEach((option) => option.select());
+      this.selectField().options.forEach((option) => option.select());
     }
-    this.allSelected = !this.allSelected;
+    this.allSelected.update((selected) => !selected);
   }
 }

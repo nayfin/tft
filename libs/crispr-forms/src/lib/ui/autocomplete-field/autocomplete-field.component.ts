@@ -2,10 +2,10 @@
 import {
   Component,
   OnInit,
-  ViewChild,
   ChangeDetectionStrategy,
   ElementRef,
   OnDestroy,
+  viewChild
 } from '@angular/core';
 import {
   MatAutocompleteTrigger,
@@ -60,9 +60,8 @@ export class AutocompleteFieldComponent
   implements OnInit, OnDestroy
 {
   defaultConfig = defaultConfig;
-  @ViewChild('autoInput', { read: MatAutocompleteTrigger })
-  autoInput: MatAutocompleteTrigger;
-  @ViewChild('autoInput') autoInputRef: ElementRef<HTMLInputElement>;
+  readonly autoInput = viewChild('autoInput', { read: MatAutocompleteTrigger });
+  readonly autoInputRef = viewChild<ElementRef<HTMLInputElement>>('autoInput');
 
   clearFieldSubscription: Subscription;
 
@@ -112,6 +111,6 @@ export class AutocompleteFieldComponent
 
   handleSelect(event: MatAutocompleteSelectedEvent) {
     this.control().setValue(event.option.value);
-    this.autoInputRef.nativeElement.blur();
+    this.autoInputRef().nativeElement.blur();
   }
 }

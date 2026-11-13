@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { DraggableOptions } from '@interactjs/types';
 import { DropzoneDirective, DraggableDirective, DragPreviewDirective } from '@tft/interact';
 
@@ -14,7 +14,7 @@ interface InventoryItem {
     imports: [DropzoneDirective, DraggableDirective, DragPreviewDirective]
 })
 export class InventoryListComponent {
-  @Input() dragRoot: HTMLElement;
+  readonly dragRoot = input<HTMLElement>(undefined);
 
   dragConfig: DraggableOptions = {allowFrom: '.handle'};
 

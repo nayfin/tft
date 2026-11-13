@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { enUS } from 'date-fns/locale';
-import { INTERACT_ROOT_CONFIG, InteractService } from '@tft/interact';
+import { provideInteract } from '@tft/interact';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'crispr-forms-demo', pathMatch: 'full' },
@@ -15,11 +15,8 @@ export const routes: Routes = [
   },
   {
     path: 'interact-demo',
-    // scoped to the interact demo, replaces InteractModule.forRoot({ cssDimensionUnit: 'em' })
-    providers: [
-      { provide: INTERACT_ROOT_CONFIG, useValue: { cssDimensionUnit: 'em' } },
-      InteractService,
-    ],
+    // scoped to the interact demo
+    providers: [provideInteract({ cssDimensionUnit: 'em' })],
     loadChildren: () =>
       import('./interact-demo/interact-demo.routes').then(
         (m) => m.INTERACT_DEMO_ROUTES

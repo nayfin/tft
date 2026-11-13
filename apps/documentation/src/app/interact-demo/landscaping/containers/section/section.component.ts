@@ -1,4 +1,4 @@
-import { Component, Input, Renderer2, inject } from '@angular/core';
+import { Component, Renderer2, inject, input } from '@angular/core';
 import { TftDropEvent, DropzoneDirective, DraggableDirective } from '@tft/interact';
 import { DraggableOptions } from '@interactjs/types';
 
@@ -20,7 +20,7 @@ export class SectionComponent {
   droppedItems: DroppedItem[] = [];
   dragConfig: DraggableOptions = {};
 
-  @Input() scale: number;
+  readonly scale = input<number>(undefined);
 
 
   handleDrop(event: TftDropEvent) {

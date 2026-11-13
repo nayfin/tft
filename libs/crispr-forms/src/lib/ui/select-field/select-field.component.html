@@ -17,8 +17,8 @@
       @if (config()?.multiple && config().enableToggleAll) {
         <mat-checkbox
           [color]="config().color"
-          [checked]="allSelected"
-          (click)="toggleAll(allSelected)">
+          [checked]="allSelected()"
+          (click)="toggleAll(allSelected())">
           Select All
         </mat-checkbox>
       }

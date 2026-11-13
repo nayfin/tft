@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, input, viewChild } from '@angular/core';
 import { FormConfig, ControlType, SelectOption, CrisprFormComponent } from '@tft/crispr-forms';
 import { Validators, FormGroup } from '@angular/forms';
 import { BehaviorSubject, of } from 'rxjs';
@@ -433,7 +433,7 @@ export class OverviewComponent implements OnInit{
     ]
   }
 
-  @ViewChild('crisprForm') crisprForm: CrisprFormComponent;
+  readonly crisprForm = viewChild<CrisprFormComponent>('crisprForm');
 
   ngOnInit(): void {
     const currentFormValue = this.valueSubject.getValue()
@@ -454,6 +454,6 @@ export class OverviewComponent implements OnInit{
   }
 
   triggerSubmitFromOutsideForm() {
-    this.crisprForm.triggerSubmit();
+    this.crisprForm().triggerSubmit();
   }
 }
