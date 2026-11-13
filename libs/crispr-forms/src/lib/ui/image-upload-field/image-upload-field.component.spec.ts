@@ -1,25 +1,38 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ImageUploadFieldConfig, ControlType } from '../../utils';
+import { ImageUploadFieldComponent } from './image-upload-field.component';
 
-import { ImageUploadComponent } from './image-upload.component';
+describe('ImageUploadFieldComponent', () => {
+  let component: ImageUploadFieldComponent;
+  let fixture: ComponentFixture<ImageUploadFieldComponent>;
+  let group: FormGroup;
 
-describe('ImageUploadComponent', () => {
-  let component: ImageUploadComponent;
-  let fixture: ComponentFixture<ImageUploadComponent>;
+  const config: ImageUploadFieldConfig = {
+    controlName: 'field',
+    controlType: ControlType.IMAGE_UPLOAD,
+    label: 'Avatar',
+    acceptedTypes: 'image/*',
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ImageUploadComponent]
-    })
-    .compileComponents();
-  });
+      imports: [ImageUploadFieldComponent],
+    }).compileComponents();
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ImageUploadComponent);
+    group = new FormGroup({ field: new FormControl(null) });
+    fixture = TestBed.createComponent(ImageUploadFieldComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.componentRef.setInput('config', config);
+    fixture.componentRef.setInput('group', group);
+    await fixture.whenStable();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should render the label', () => {
+    expect(fixture.nativeElement.textContent).toContain('Avatar');
   });
 });

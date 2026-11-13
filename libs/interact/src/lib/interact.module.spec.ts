@@ -1,14 +1,12 @@
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { InteractModule } from './interact.module';
 
 describe('InteractModule', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [InteractModule]
+  it('should be importable into a TestBed', async () => {
+    await TestBed.configureTestingModule({
+      imports: [InteractModule],
     }).compileComponents();
-  }));
 
-  it('should create', () => {
-    expect(InteractModule).toBeDefined();
+    expect(TestBed.inject(InteractModule)).toBeInstanceOf(InteractModule);
   });
 });

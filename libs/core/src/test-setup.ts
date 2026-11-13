@@ -1,14 +1,3 @@
-import 'jest-preset-angular';
+import { setupZonelessTestEnv } from 'jest-preset-angular/setup-env/zoneless';
 
-import { getTestBed } from '@angular/core/testing';
-import {
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting,
-} from '@angular/platform-browser-dynamic/testing';
-
-getTestBed().resetTestEnvironment();
-getTestBed().initTestEnvironment(
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting(),
-  { teardown: { destroyAfterEach: false } }
-);
+setupZonelessTestEnv();

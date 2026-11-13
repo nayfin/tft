@@ -5,7 +5,9 @@
     "module": "preserve",
     "types": ["jest", "node"],
     "moduleResolution": "bundler",
-    "isolatedModules": true
+    "isolatedModules": true,
+    "emitDecoratorMetadata": false,
+    "esModuleInterop": true
   },
   "files": ["src/test-setup.ts"],
   "include": ["**/*.spec.ts", "**/*.test.ts", "**/*.d.ts", "jest.config.ts"]

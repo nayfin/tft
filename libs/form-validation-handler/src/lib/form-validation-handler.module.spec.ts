@@ -1,14 +1,14 @@
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { FormValidationHandlerModule } from './form-validation-handler.module';
 
 describe('FormValidationHandlerModule', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [FormValidationHandlerModule]
+  it('should be importable into a TestBed', async () => {
+    await TestBed.configureTestingModule({
+      imports: [FormValidationHandlerModule],
     }).compileComponents();
-  }));
 
-  it('should create', () => {
-    expect(FormValidationHandlerModule).toBeDefined();
+    expect(TestBed.inject(FormValidationHandlerModule)).toBeInstanceOf(
+      FormValidationHandlerModule
+    );
   });
 });
