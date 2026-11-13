@@ -21,5 +21,10 @@
     "module": "preserve",
     "moduleResolution": "bundler",
     "lib": ["dom", "es2022"]
+  },
+  "angularCompilerOptions": {
+    "strictTemplates": true,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true
   }
 }

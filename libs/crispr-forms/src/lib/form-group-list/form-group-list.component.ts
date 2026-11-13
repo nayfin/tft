@@ -1,5 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy, signal } from '@angular/core';
-import { FormArray } from '@angular/forms';
+import { Component, OnInit, ChangeDetectionStrategy, computed, signal } from '@angular/core';
+import { FormArray, FormGroup } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CrisprFieldDirective } from '../field.directive';
@@ -49,6 +49,9 @@ export class FormGroupListComponent
   readonly blockValue = signal(false);
 
   readonly selectedIndex = signal<number | null>(null);
+
+  /** The item groups of the list's form array, typed for the template bindings. */
+  readonly itemGroups = computed(() => (this.control() as FormArray<FormGroup> | null)?.controls);
 
   ngOnInit() {
     super.ngOnInit();

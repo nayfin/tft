@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, computed } from '@angular/core';
 import { MatSliderModule } from '@angular/material/slider';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -31,6 +31,13 @@ const defaultConfig: Partial<SliderFieldConfig> = {
 })
 export class SliderFieldComponent extends CrisprControlComponent<SliderFieldConfig> implements OnInit {
   defaultConfig = defaultConfig;
+
+  /** `MatSlider` expects the label as a string, the config allows numbers too. */
+  readonly displayWith = computed(() => {
+    const displayWith = this.config().displayWith;
+    return (value: number) => `${displayWith(value)}`;
+  });
+
   constructor() {
     super();
   }

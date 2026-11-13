@@ -175,7 +175,7 @@ export class AutocompleteChiplistFieldComponent
    * matChipInputAddOnBlur should do this but it causes buggy behaviour
    * @param event blur event that triggers the handle blur
    */
-  handleTab(_event: FocusEvent) {
+  handleTab(_event: Event) {
     const chipInput = this.chipInput();
     if (
       chipInput.activeOption &&

@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, computed } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { SubGroupConfig } from '../utils';
 import { CrisprControlComponent } from '../utils/abstracts/crispr-control.abstract';
@@ -21,7 +21,9 @@ import { FieldContainerComponent } from '../ui/field-container';
     ],
 })
 export class SubGroupComponent extends CrisprControlComponent<SubGroupConfig> implements OnInit {
-  
+  /** The sub group's control, typed for the nested `[group]` binding. */
+  readonly subGroup = computed(() => this.control() as FormGroup);
+
   ngOnInit() {
     super.ngOnInit();
   }

@@ -3,7 +3,7 @@
   <div [formArrayName]="config().controlName">
 
     <!-- Don't add trackBy function, it confuses the state of the array -->
-    @for (itemControl of control()?.controls; track itemControl; let i = $index; let last = $last) {
+    @for (itemControl of itemGroups(); track itemControl; let i = $index; let last = $last) {
     @if (!config().displayItemComponent || i === selectedIndex() || (last && selectedIndex() ?? true)) {
     <!-- TODO: use content projection to allow custom item label component -->
     <div class="item-header">

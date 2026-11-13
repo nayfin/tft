@@ -145,8 +145,15 @@ export class MapFieldComponent extends CrisprControlComponent<MapFieldConfig> {
   );
 
 
-  onMapInit(event: GoogleMap) {
-    this.currentMap.next(event);
+  /**
+   * `mapInitialized` emits the native `google.maps.Map`, but consumers of `markers`/`onMove` are typed to
+   * receive the `GoogleMap` component, so publish that instead (once it has resolved; `idle` follows shortly).
+   */
+  onMapInit(_map: google.maps.Map) {
+    const mapComponent = this.mapComponent();
+    if (mapComponent) {
+      this.currentMap.next(mapComponent);
+    }
   }
 
   onMarkerClick(clickedMarker: MapMarker) {
