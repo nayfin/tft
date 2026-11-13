@@ -1,13 +1,16 @@
 import { Component, signal } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
-import { allowedFileExtValidator, ControlType, FormConfig, ImageProcessingState, maxFileSizeValidator } from '@tft/crispr-forms';
+import { allowedFileExtValidator, ControlType, FormConfig, ImageProcessingState, maxFileSizeValidator, CrisprFormComponent } from '@tft/crispr-forms';
 import { delay, of, startWith } from 'rxjs';
+import { MatCard } from '@angular/material/card';
+import { MatButton } from '@angular/material/button';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
     selector: 'tft-image-upload',
     templateUrl: './image-upload.component.html',
     styleUrls: ['./image-upload.component.scss'],
-    standalone: false
+    imports: [MatCard, CrisprFormComponent, MatButton, AsyncPipe]
 })
 export class ImageUploadComponent {
   value = of({

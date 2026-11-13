@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormConfig, ControlType } from '@tft/crispr-forms';
+import { FormConfig, ControlType, CrisprFormComponent } from '@tft/crispr-forms';
+import { MatCard } from '@angular/material/card';
 
 @Component({
     selector: 'doc-info',
     templateUrl: './info.component.html',
     styleUrls: ['./info.component.scss'],
-    standalone: false
+    imports: [MatCard, CrisprFormComponent]
 })
 export class InfoComponent implements OnInit {
   formConfig: FormConfig = {

@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
-import { ControlType, FormConfig } from '@tft/crispr-forms';
+import { ControlType, FormConfig, CrisprFormComponent } from '@tft/crispr-forms';
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { MatCard } from '@angular/material/card';
 
 @Component({
     selector: 'doc-computed-field',
     templateUrl: './computed-field.component.html',
     styleUrls: ['./computed-field.component.scss'],
-    standalone: false
+    imports: [MatCard, CrisprFormComponent]
 })
 export class ComputedFieldComponent {
   computedNumberFieldConfig: FormConfig = {

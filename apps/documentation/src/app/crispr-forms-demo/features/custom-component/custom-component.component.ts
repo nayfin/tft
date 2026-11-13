@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { CustomInputComponent, CustomInputConfig } from './custom-input/custom-input.component';
-import { ControlType, FormConfig } from '@tft/crispr-forms';
+import { ControlType, FormConfig, CrisprFormComponent } from '@tft/crispr-forms';
 import { FormGroup } from '@angular/forms';
 import { CustomSelectComponent, CustomSelectConfig } from './custom-select/custom-select.component';
+import { MatCard } from '@angular/material/card';
 
 
 @Component({
     selector: 'doc-custom-component',
     templateUrl: './custom-component.component.html',
     styleUrls: ['./custom-component.component.scss'],
-    standalone: false
+    imports: [MatCard, CrisprFormComponent]
 })
 export class CustomComponentComponent {
 

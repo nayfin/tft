@@ -8,8 +8,8 @@ describe('PinchToZoomComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PinchToZoomComponent ]
-    })
+    imports: [PinchToZoomComponent]
+})
     .compileComponents();
   });
 

@@ -1,16 +1,17 @@
 import { Component, inject } from '@angular/core';
-import { FormConfig, SelectOption, ControlType } from '@tft/crispr-forms';
+import { FormConfig, SelectOption, ControlType, CrisprFormComponent } from '@tft/crispr-forms';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { EndpointsService } from '../../endpoints.service';
 import { FormGroup } from '@angular/forms';
 import { selectFormConfig } from './select.config';
+import { MatCard } from '@angular/material/card';
 
 @Component({
     selector: 'doc-select',
     templateUrl: './select.component.html',
     styleUrls: ['./select.component.scss'],
-    standalone: false
+    imports: [MatCard, CrisprFormComponent]
 })
 export class SelectComponent {
   private endpointsService = inject(EndpointsService);

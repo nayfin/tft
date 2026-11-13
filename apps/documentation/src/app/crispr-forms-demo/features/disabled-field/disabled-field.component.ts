@@ -1,13 +1,14 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ControlType, FormConfig } from '@tft/crispr-forms';
+import { ControlType, FormConfig, CrisprFormComponent } from '@tft/crispr-forms';
 import { of, combineLatest } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { MatCard } from '@angular/material/card';
 
 @Component({
     selector: 'doc-disabled-field',
     templateUrl: './disabled-field.component.html',
     styleUrls: ['./disabled-field.component.scss'],
-    standalone: false
+    imports: [MatCard, CrisprFormComponent]
 })
 export class DisabledFieldComponent implements OnInit {
 

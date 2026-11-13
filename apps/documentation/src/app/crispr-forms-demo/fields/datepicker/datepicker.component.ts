@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
-import { FormConfig, ControlType } from '@tft/crispr-forms';
+import { FormConfig, ControlType, CrisprFormComponent } from '@tft/crispr-forms';
 import { map } from 'rxjs/operators';
 import { getDayOfYear } from 'date-fns';
 import { datepickerFormConfig } from './datepicker.config';
+import { MatCard } from '@angular/material/card';
+import { MatButton } from '@angular/material/button';
 
 @Component({
     selector: 'doc-datepicker',
     templateUrl: './datepicker.component.html',
     styleUrls: ['./datepicker.component.scss'],
-    standalone: false
+    imports: [MatCard, CrisprFormComponent]
 })
 export class DatepickerComponent {
 
@@ -113,6 +115,6 @@ export class DatepickerComponent {
     <button mat-raised-button matDatepickerCancel>CANCEL</button>
     <button mat-raised-button matDatepickerApply>SELECT</button>
   `,
-    standalone: false
+    imports: [MatButton]
 })
 export class CustomDatepickerFooterComponent { }

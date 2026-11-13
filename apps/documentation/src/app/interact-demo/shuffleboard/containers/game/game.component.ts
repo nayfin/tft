@@ -1,16 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { TftDropEvent } from '@tft/interact';
+import { TftDropEvent, DragRootDirective, DropzoneDirective } from '@tft/interact';
 import { initialGameState } from './consts';
 import { Team } from '../../models/shuffleboard.model'
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { ScoreboardComponent } from '../../components/scoreboard/scoreboard.component';
+import { BoardComponent } from '../../components/board/board.component';
+import { PuckComponent } from '../../components/puck/puck.component';
+import { PlayerZoneComponent } from '../../components/player-zone/player-zone.component';
+import { TrayComponent } from '../../components/tray/tray.component';
+import { TargetZoneComponent } from '../../components/target-zone/target-zone.component';
+import { TargetComponent } from '../../components/target/target.component';
+import { JsonPipe, KeyValuePipe } from '@angular/common';
 // import { RestrictOptions } from '@interactjs/modifiers/restrict/pointer';
 
 @Component({
     selector: 'tft-game',
     templateUrl: './game.component.html',
     styleUrls: ['./game.component.scss'],
-    standalone: false
+    imports: [ScoreboardComponent, ReactiveFormsModule, BoardComponent, DragRootDirective, PuckComponent, PlayerZoneComponent, DropzoneDirective, TrayComponent, TargetZoneComponent, TargetComponent, JsonPipe, KeyValuePipe]
 })
 export class GameComponent implements OnInit {
   moves = 0;

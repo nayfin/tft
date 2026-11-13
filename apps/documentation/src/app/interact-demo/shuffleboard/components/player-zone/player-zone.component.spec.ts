@@ -8,8 +8,8 @@ describe('PlayerZoneComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PlayerZoneComponent ]
-    })
+    imports: [PlayerZoneComponent]
+})
     .compileComponents();
   }));
 

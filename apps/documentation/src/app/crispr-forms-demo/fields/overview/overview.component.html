@@ -16,14 +16,12 @@
           }
         </mat-button-toggle-group>
       </div>
-      <crispr-form
-        (statusChanges)="handleStatusChanges($event)"
+      <crispr-form (statusChanges)="handleStatusChanges($event)"
         (valueChanges)="handleValueChanges($event)"
         [config]="config"
         [value]="value$ | async"
         (submitted)="handleSubmit($event)"
-        #crisprForm>
-      </crispr-form>
+        #crisprForm />
     </mat-card-content>
     <mat-card-actions>
       <button mat-button (click)="triggerSubmitFromOutsideForm()">TRIGGER SUBMIT FROM OUTSIDE FORM</button>

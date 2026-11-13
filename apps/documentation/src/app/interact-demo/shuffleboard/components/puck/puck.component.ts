@@ -2,13 +2,14 @@ import { Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter
 import { Team, Puck } from '../../models/shuffleboard.model';
 import { DraggableOptions } from '@interactjs/types/index';
 import interact from 'interactjs';
-import { TftDragEvent } from '@tft/interact';
+import { TftDragEvent, DraggableDirective } from '@tft/interact';
+import { NgClass, NgStyle } from '@angular/common';
 
 @Component({
     selector: 'tft-puck',
     templateUrl: './puck.component.html',
     styleUrls: ['./puck.component.scss'],
-    standalone: false
+    imports: [DraggableDirective, NgClass, NgStyle]
 })
 export class PuckComponent implements OnInit, OnChanges {
   @Input() whosTurn: Team;

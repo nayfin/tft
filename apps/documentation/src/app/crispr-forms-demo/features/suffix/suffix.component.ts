@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { FormConfig, ControlType } from '@tft/crispr-forms';
+import { FormConfig, ControlType, CrisprFormComponent } from '@tft/crispr-forms';
+import { MatCard } from '@angular/material/card';
 
 @Component({
     selector: 'doc-suffix',
     templateUrl: './suffix.component.html',
     styleUrls: ['./suffix.component.scss'],
-    standalone: false
+    imports: [MatCard, CrisprFormComponent]
 })
 export class SuffixComponent {
 

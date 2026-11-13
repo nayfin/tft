@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { FormConfig, ControlType } from '@tft/crispr-forms';
+import { FormConfig, ControlType, CrisprFormComponent } from '@tft/crispr-forms';
 import { someControlIsValid } from '@tft/form-validation-handler/utils';
 import { map } from 'rxjs';
+import { MatCard } from '@angular/material/card';
 
 @Component({
     selector: 'tft-validators',
     templateUrl: './validators.component.html',
     styleUrls: ['./validators.component.css'],
-    standalone: false
+    imports: [MatCard, CrisprFormComponent]
 })
 export class ValidatorsComponent {
   formConfig: FormConfig = {

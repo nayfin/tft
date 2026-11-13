@@ -8,8 +8,8 @@ describe('UnitConversionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UnitConversionComponent ]
-    })
+    imports: [UnitConversionComponent]
+})
     .compileComponents();
   });
 

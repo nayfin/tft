@@ -3,7 +3,10 @@ import { FormConfig, ControlType, SelectOption, CrisprFormComponent } from '@tft
 import { Validators, FormGroup } from '@angular/forms';
 import { BehaviorSubject, of } from 'rxjs';
 import { map, delay } from 'rxjs/operators';
-import { CommonModule } from '@angular/common';
+import { CommonModule, AsyncPipe } from '@angular/common';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
+import { MatButton } from '@angular/material/button';
 
 interface GroupListItem {
   autocompleteChiplistObservable?: string[];
@@ -44,7 +47,7 @@ export class DisplayItemComponent {
     selector: 'doc-overview',
     templateUrl: './overview.component.html',
     styleUrls: ['./overview.component.scss'],
-    standalone: false
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatButtonToggleGroup, MatButtonToggle, CrisprFormComponent, MatCardActions, MatButton, AsyncPipe]
 })
 export class OverviewComponent implements OnInit{
 

@@ -8,8 +8,8 @@ describe('SuffixComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SuffixComponent ]
-    })
+    imports: [SuffixComponent]
+})
     .compileComponents();
   }));
 

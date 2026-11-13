@@ -8,8 +8,8 @@ describe('ComputedFieldComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ComputedFieldComponent ]
-    })
+    imports: [ComputedFieldComponent]
+})
     .compileComponents();
   }));
 

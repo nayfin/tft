@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { ControlType, FormConfig } from '@tft/crispr-forms';
+import { ControlType, FormConfig, CrisprFormComponent } from '@tft/crispr-forms';
 import { Validators } from '@angular/forms';
+import { MatCard } from '@angular/material/card';
 
 @Component({
     selector: 'doc-button',
     templateUrl: './button.component.html',
     styleUrls: ['./button.component.scss'],
-    standalone: false
+    imports: [MatCard, CrisprFormComponent]
 })
 export class ButtonComponent {
   formConfig: FormConfig = {

@@ -1,16 +1,17 @@
 import { Component, inject } from '@angular/core';
-import { ControlType, FormConfig, SelectOption } from '@tft/crispr-forms';
+import { ControlType, FormConfig, SelectOption, CrisprFormComponent } from '@tft/crispr-forms';
 import { EndpointsService, ENDPOINTS } from '../../endpoints.service';
 import { FormGroup } from '@angular/forms';
 import { of, delay } from 'rxjs';
 import { autocompleteChiplistFormConfig } from './autocomplete-chiplist.config';
+import { MatCard } from '@angular/material/card';
 
 
 @Component({
     selector: 'doc-autocomplete-chiplist',
     templateUrl: './autocomplete-chiplist.component.html',
     styleUrls: ['./autocomplete-chiplist.component.scss'],
-    standalone: false
+    imports: [MatCard, CrisprFormComponent]
 })
 export class AutocompleteChiplistComponent {
   private endpointsService = inject(EndpointsService);

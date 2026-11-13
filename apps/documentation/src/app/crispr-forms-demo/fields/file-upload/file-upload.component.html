@@ -5,8 +5,7 @@
   <p class="mat-p">
     Use to upload files
   </p>
-  <crispr-form [config]="config" (submitted)="handleSubmit($event)">
-  </crispr-form>
+  <crispr-form [config]="config" (submitted)="handleSubmit($event)" />
   <ul data-testid="files-changed-log">
     @for (entry of filesChangedLog(); track $index) {
       <li>{{ entry }}</li>

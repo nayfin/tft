@@ -8,8 +8,8 @@ describe('TargetZoneComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TargetZoneComponent ]
-    })
+    imports: [TargetZoneComponent]
+})
     .compileComponents();
   }));
 

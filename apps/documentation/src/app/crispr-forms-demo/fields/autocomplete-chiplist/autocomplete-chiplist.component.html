@@ -2,39 +2,31 @@
   <h2 class="mat-h2">
     Example of using an array of autocomplete options
   </h2>
-  <crispr-form
-    [config]="arraySelectConfig"
-    (submitted)="handleSubmit($event)">
-  </crispr-form>
+  <crispr-form [config]="arraySelectConfig"
+    (submitted)="handleSubmit($event)" />
 </mat-card>
 
 <mat-card>
   <h2 class="mat-h2">
     Example of using a promise of autocomplete options
   </h2>
-  <crispr-form
-    [config]="promiseSelectConfig">
-  </crispr-form>
+  <crispr-form [config]="promiseSelectConfig" />
 </mat-card>
 
 <mat-card>
   <h2 class="mat-h2">
     Example of using an observable of autocomplete options
   </h2>
-  <crispr-form
-    [config]="observableSelectConfig">
-  </crispr-form>
+  <crispr-form [config]="observableSelectConfig" />
 </mat-card>
 
 <mat-card>
   <h2 class="mat-h2">
     Example of using one field to drive the options of another autocomplete field
   </h2>
-  <crispr-form
-    (submitted)="handleSubmit($event)"
+  <crispr-form (submitted)="handleSubmit($event)"
     [config]="reactiveOptionsConfig"
-    [value]="value">
-  </crispr-form>
+    [value]="value" />
 </mat-card>
 
 <mat-card>
@@ -44,8 +36,6 @@
   <p class="mat-body-2">
     Search for existing tags or click "+ Create custom tag" to open an inline form and add a new one.
   </p>
-  <crispr-form
-    (submitted)="handleSubmit($event)"
-    [config]="createChipConfig">
-  </crispr-form>
+  <crispr-form (submitted)="handleSubmit($event)"
+    [config]="createChipConfig" />
 </mat-card>

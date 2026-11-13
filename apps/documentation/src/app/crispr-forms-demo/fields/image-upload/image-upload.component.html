@@ -4,8 +4,7 @@
   </h2>
   <p class="mat-p">
     Use to upload images
-  </p> <crispr-form [config]="config" [value]="value | async" (submitted)="handleSubmit($event)">
-  </crispr-form>
+  </p> <crispr-form [config]="config" [value]="value | async" (submitted)="handleSubmit($event)" />
 
 </mat-card>
 
@@ -18,7 +17,7 @@
     Use 'processingStateChange' to react to every transition ('idle', 'processing', 'failed').
   </p>
   @if (showProcessingForm()) {
-    <crispr-form [config]="processingConfig"></crispr-form>
+    <crispr-form [config]="processingConfig" />
   }
   <button mat-button type="button" data-testid="toggle-processing-form" (click)="showProcessingForm.set(!showProcessingForm())">
     Toggle form
@@ -42,5 +41,5 @@
   <p class="mat-p">
     The preview shows the initial value until a new image is selected, and never again once the control is cleared.
   </p>
-  <crispr-form [config]="initialImageConfig" [value]="initialImageValue"></crispr-form>
+  <crispr-form [config]="initialImageConfig" [value]="initialImageValue" />
 </mat-card>

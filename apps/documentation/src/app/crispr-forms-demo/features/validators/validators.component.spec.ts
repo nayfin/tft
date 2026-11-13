@@ -8,8 +8,8 @@ describe('ValidatorsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ValidatorsComponent ]
-    })
+    imports: [ValidatorsComponent]
+})
     .compileComponents();
   });
 

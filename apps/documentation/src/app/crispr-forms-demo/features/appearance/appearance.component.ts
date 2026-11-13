@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ControlType, FormConfig, filterOptionsByLabel } from '@tft/crispr-forms';
+import { ControlType, FormConfig, filterOptionsByLabel, CrisprFormComponent } from '@tft/crispr-forms';
 import { of } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
 import { map } from 'rxjs/operators';
+import { MatCard } from '@angular/material/card';
 
 @Component({
     selector: 'doc-appearance',
     templateUrl: './appearance.component.html',
     styleUrls: ['./appearance.component.scss'],
-    standalone: false
+    imports: [MatCard, CrisprFormComponent]
 })
 export class AppearanceComponent implements OnInit {
   formConfig: FormConfig = {

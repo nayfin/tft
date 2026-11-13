@@ -1,6 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SelectFieldConfig, SelectOption, observablifyOptions, ControlType, CrisprControlComponent } from '@tft/crispr-forms';
+import { SelectFieldConfig, SelectOption, observablifyOptions, ControlType, CrisprControlComponent, FieldContainerComponent } from '@tft/crispr-forms';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { AsyncPipe } from '@angular/common';
 
 export interface CustomSelectConfig extends Omit<SelectFieldConfig, 'controlType'> {
   controlType: ControlType.CUSTOM;
@@ -12,7 +17,7 @@ export interface CustomSelectConfig extends Omit<SelectFieldConfig, 'controlType
     templateUrl: './custom-select.component.html',
     styleUrls: ['./custom-select.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FieldContainerComponent, MatFormField, ReactiveFormsModule, MatLabel, MatSelect, MatOption, MatSuffix, AsyncPipe]
 })
 export class CustomSelectComponent extends CrisprControlComponent<SelectFieldConfig> implements OnInit {
   defaultConfig = {};

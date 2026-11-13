@@ -14,8 +14,6 @@
     All three "type"s can hook into the 'callback' property allowing users to pass a callback function that expects optional arguments
     of the form group and the click event (i.e. {{'{'}}...callback: (group: FormGroup, event: MouseEvent) => unknown {{'}'}})
   </p>
-  <crispr-form
-    [config]="formConfig"
-    (submitted)="onSubmitted($event)">
-  </crispr-form>
+  <crispr-form [config]="formConfig"
+    (submitted)="onSubmitted($event)" />
 </mat-card>
