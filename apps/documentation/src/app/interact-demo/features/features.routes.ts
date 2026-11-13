@@ -33,6 +33,19 @@ export const INTERACT_FEATURES_ROUTES: Routes = [
     ],
   },
   {
+    path: 'lasso',
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'basics' },
+      {
+        path: 'basics',
+        loadComponent: () =>
+          import('./lasso/basics/basics.component').then(
+            (m) => m.LassoBasicsComponent
+          ),
+      },
+    ],
+  },
+  {
     path: 'gestures',
     loadChildren: () =>
       import('./gestures/gestures.routes').then((m) => m.GESTURES_ROUTES),

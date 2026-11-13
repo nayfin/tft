@@ -174,6 +174,12 @@ export const appNavTree: SidenavSection[] = [
             ]
           },
           {
+            title: 'Lasso',
+            links: [
+              { title: 'Basics', path: 'interact-demo/features/lasso/basics' }
+            ]
+          },
+          {
             title: 'Gestures',
             links: [
               { title: 'Pinch To Zoom', path: 'interact-demo/features/gestures/pinch-to-zoom' }

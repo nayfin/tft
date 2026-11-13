@@ -1,6 +1,5 @@
 # TODOS
 - untangle crispr-forms' field-based dependencies (google maps, date-fns adapter, image compression) when we upgrade Angular — breaking change, see `libs/crispr-forms/TODOS.md`
-- interact lasso: the selection box doesn't show the expected size when `scale` changes (`lasso.directive.ts`)
 - enable configuring  inputType:number input fields convert number input strings to number types 
 
 - "hidden" fields still take a flex slots
@@ -15,5 +14,6 @@
 ## DOone
 - Convert everything to standalone components
 - Convert to signals (plus zoneless and strictTemplates)
+- interact lasso rect wrong size at scale ≠ 1: README/skill bound it in `.px`, the directive needs `.em`; covered by `interact-e2e` lasso specs
 - Adds e2e identifiers
 - autccomplete chiplists aren't deletable
