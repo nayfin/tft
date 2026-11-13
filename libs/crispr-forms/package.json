@@ -7,11 +7,11 @@
     "directory": "libs/crispr-forms"
   },
   "peerDependencies": {
-    "@angular/common": "^18.0.0",
-    "@angular/forms": "^18.0.0",
-    "@angular/core": "^18.0.0",
-    "@angular/material": "^18.0.0",
-    "@angular/cdk": "^18.0.0",
+    "@angular/common": "^21.0.0",
+    "@angular/forms": "^21.0.0",
+    "@angular/core": "^21.0.0",
+    "@angular/material": "^21.0.0",
+    "@angular/cdk": "^21.0.0",
     "@tft/form-validation-handler": "^21.1.0"
   },
   "dependencies": {

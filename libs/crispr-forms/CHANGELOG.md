@@ -14,4 +14,4 @@ Angular modernization: standalone, signals, zoneless-ready and `strictTemplates`
 - Works in zoneless apps (`provideZonelessChangeDetection()`) as well as zone-based ones.
 - `MapFieldComponent` passes the `GoogleMap` component to the `markers` callback on initialisation, matching its declared type and what `onMove` already receives.
 - All standalone pieces, including the `ui/*` field components, are exported from the package entry point.
-- Requires `@tft/form-validation-handler` 21.1.0 or later (peer dependency), since it imports its standalone directives.
+- Peer dependencies now match what the package is built with: Angular (`common`, `core`, `forms`, `material`, `cdk`) `^21.0.0`, up from the stale `^18.0.0`, and `@tft/form-validation-handler` `^21.1.0`, since it imports its standalone directives.
