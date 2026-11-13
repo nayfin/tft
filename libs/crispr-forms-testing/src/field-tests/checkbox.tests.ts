@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import type { CheckboxFieldConfig } from '@tft/crispr-forms/utils';
+import type { CheckboxFieldConfig } from '@tft/crispr-forms';
 import { Validators } from '@angular/forms';
 import { getCheckbox, getError } from '../helpers/form.helpers';
 

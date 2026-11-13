@@ -7,14 +7,22 @@
   "targets": {
     "build": {
       "dependsOn": [],
-      "executor": "nx:run-commands",
-      "outputs": ["{workspaceRoot}/dist/libs/interact-testing"],
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
       "options": {
-        "command": "npx tsc -p libs/interact-testing/tsconfig.lib.json && cp libs/interact-testing/package.json dist/libs/interact-testing/package.json && cp libs/interact-testing/README.md dist/libs/interact-testing/README.md"
+        "outputPath": "dist/libs/interact-testing",
+        "main": "libs/interact-testing/src/index.ts",
+        "rootDir": "libs/interact-testing/src",
+        "tsConfig": "libs/interact-testing/tsconfig.lib.json",
+        "generatePackageJson": false,
+        "assets": [
+          "libs/interact-testing/package.json",
+          "libs/interact-testing/README.md"
+        ]
       },
       "configurations": {
         "production": {
-          "command": "npx tsc -p libs/interact-testing/tsconfig.lib.prod.json && cp libs/interact-testing/package.json dist/libs/interact-testing/package.json && cp libs/interact-testing/README.md dist/libs/interact-testing/README.md"
+          "tsConfig": "libs/interact-testing/tsconfig.lib.prod.json"
         }
       }
     },

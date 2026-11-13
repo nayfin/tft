@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import type { FileUploadFieldConfig } from '@tft/crispr-forms/utils';
+import type { FileUploadFieldConfig } from '@tft/crispr-forms';
 import { getLabel, getMatFormField } from '../helpers/form.helpers';
 
 /**
