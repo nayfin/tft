@@ -1,5 +1,5 @@
 import {
-  Directive, Self, OnInit, OnDestroy, Optional, ComponentRef,
+  Directive, OnInit, OnDestroy, ComponentRef,
   ViewContainerRef, HostListener, DestroyRef, inject } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { Subscription, EMPTY, Observable, merge, Subject } from 'rxjs';
@@ -18,9 +18,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class ControlErrorsDirective implements OnInit {
 
   destroyRef = inject(DestroyRef)
-  @Self() ngControl = inject(NgControl);
-  @Optional() form = inject(ControlErrorsFormDirective);
-  @Optional() controlErrorContainer = inject(ControlErrorContainerDirective);
+  ngControl = inject(NgControl, { self: true });
+  form = inject(ControlErrorsFormDirective, { optional: true });
+  controlErrorContainer = inject(ControlErrorContainerDirective, { optional: true });
   private vcr = inject(ViewContainerRef);
 
   ref: ComponentRef<ControlErrorComponent>;

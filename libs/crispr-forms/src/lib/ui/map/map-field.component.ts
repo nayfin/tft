@@ -65,7 +65,6 @@ export class MapFieldComponent extends CrisprControlComponent<MapFieldConfig> {
   selectedMarker = signal<TftMapMarker | null>(null);
 
   mapOpen = signal(false);
-  mapComponent = viewChild(GoogleMap);
   defaultConfig = defaultConfig;
 
   locationControl = new FormControl(this.config()?.location);
@@ -146,14 +145,11 @@ export class MapFieldComponent extends CrisprControlComponent<MapFieldConfig> {
 
 
   /**
-   * `mapInitialized` emits the native `google.maps.Map`, but consumers of `markers`/`onMove` are typed to
-   * receive the `GoogleMap` component, so publish that instead (once it has resolved; `idle` follows shortly).
+   * `mapInitialized` emits the native `google.maps.Map`, but `markers`/`onMove` are typed to receive the
+   * `GoogleMap` component, so the template passes its `#map` ref instead.
    */
-  onMapInit(_map: google.maps.Map) {
-    const mapComponent = this.mapComponent();
-    if (mapComponent) {
-      this.currentMap.next(mapComponent);
-    }
+  onMapInit(map: GoogleMap) {
+    this.currentMap.next(map);
   }
 
   onMarkerClick(clickedMarker: MapMarker) {

@@ -35,7 +35,7 @@ export class SliderFieldComponent extends CrisprControlComponent<SliderFieldConf
   /** `MatSlider` expects the label as a string, the config allows numbers too. */
   readonly displayWith = computed(() => {
     const displayWith = this.config().displayWith;
-    return (value: number) => `${displayWith(value)}`;
+    return (value: number) => `${displayWith ? displayWith(value) : value}`;
   });
 
   constructor() {
