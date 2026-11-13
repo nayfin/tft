@@ -13,6 +13,39 @@ Invoke this skill when asked to:
 
 ---
 
+## Step 0 — Run the Angular CLI migrations first
+
+**Use the official schematics wherever one exists, and only hand-migrate what they don't cover.** They handle edge cases (inheritance, template references, inputs written from outside) that manual edits miss. The patterns below are for cleaning up after them and for the cases they skip or report.
+
+This is an Nx workspace with no `angular.json`, so run them through Nx:
+
+```bash
+npx nx g @angular/core:<migration> --path=<directory> --dry-run   # inspect first
+npx nx g @angular/core:<migration> --path=<directory>
+```
+
+Run them in this order, one directory or project at a time. Commit after each so a bad run is easy to revert.
+
+| # | Migration | What it does |
+|---|---|---|
+| 1 | `standalone-migration` | NgModule declarations → standalone. Use `--mode=convert-to-standalone`. **Do not use `prune-ng-modules` on published libs**: their NgModules are public API and stay as `@deprecated` wrappers until the next major. Use `standalone-bootstrap` only for apps. |
+| 2 | `control-flow-migration` | `*ngIf` / `*ngFor` / `*ngSwitch` → `@if` / `@for` / `@switch` |
+| 3 | `signal-input-migration` | `@Input()` → `input()` |
+| 4 | `output-migration` | `@Output()` + `EventEmitter` → `output()` |
+| 5 | `signal-queries-migration` | `@ViewChild` / `@ContentChild` (and `-Children`) → `viewChild()` / `contentChild()` |
+| 6 | `inject-migration` | constructor injection → `inject()` (already done in this repo) |
+| 7 | `route-lazy-loading-migration` | eager route components → `loadComponent` (apps only) |
+| 8 | `self-closing-tags-migration` | `<x></x>` → `<x />` |
+| 9 | `cleanup-unused-imports` | removes unused standalone `imports` entries |
+
+Gotchas:
+- **The signal migrations analyse every tsconfig in the workspace, whatever `--path` says.** A dry run of `signal-input-migration` on `libs/core` took ~16 minutes. Run them in the background with output redirected to a file, and prefer one run with a wider `--path` over many narrow ones. `--path` only limits which files get written. Verified: the dry run reported `Migrated 3/3 inputs` and listed only files under `libs/core`.
+- **A clean dry run is not proof.** Check it against a file you know contains the pattern before trusting "no changes".
+- **Migrations skip what they can't prove safe** (e.g. inputs that are written to, or read through a getter), and print the reason. Use the patterns below for those, or leave them and note why.
+- **After each migration**, run the production builds of the published libs and the docs app, then the e2e suite. Template type errors only show up in the build.
+
+---
+
 ## Pattern 1 — Simple `@Input()` property → `input<T>()`
 
 ```typescript
@@ -187,7 +220,7 @@ For a component that was `standalone: false` and declared in an NgModule:
 
 ## Zoneless Preparation Checklist
 
-Do these **before** enabling `provideExperimentalZonelessChangeDetection()`:
+Do these **before** enabling `provideZonelessChangeDetection()` (stable since Angular 20; the old name `provideExperimentalZonelessChangeDetection` is gone):
 
 - [ ] All components use `ChangeDetectionStrategy.OnPush`
 - [ ] All inputs are `input()` signals (not `@Input()` with manual `markForCheck`)
@@ -195,15 +228,15 @@ Do these **before** enabling `provideExperimentalZonelessChangeDetection()`:
 - [ ] No `setTimeout`/`setInterval` used to trigger CD (replace with `signal()` or `rxjs` timer)
 - [ ] `ChangeDetectorRef.detectChanges()` removed or replaced with `markForCheck()`
 - [ ] E2E and unit test coverage is sufficient to catch missed CD triggers
-- [ ] Remove `zone.js` from `polyfills` in `angular.json` after enabling
+- [ ] Remove `zone.js` from the app's polyfills after enabling (in this repo: `apps/documentation/src/polyfills.ts`, referenced from `apps/documentation/project.json`)
 
 **Enable zoneless:**
 ```typescript
 // app.config.ts or main.ts
-import { provideExperimentalZonelessChangeDetection } from '@angular/core';
+import { provideZonelessChangeDetection } from '@angular/core';
 bootstrapApplication(AppComponent, {
   providers: [
-    provideExperimentalZonelessChangeDetection(),
+    provideZonelessChangeDetection(),
     // remove provideZoneChangeDetection() if present
   ]
 });

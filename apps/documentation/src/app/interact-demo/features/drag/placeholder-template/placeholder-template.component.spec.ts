@@ -8,9 +8,8 @@ describe('PlaceholderTemplateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PlaceholderTemplateComponent ]
-    })
-    .compileComponents();
+      imports: [PlaceholderTemplateComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

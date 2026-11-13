@@ -1,0 +1,21 @@
+{
+  "name": "@tft/interact-testing",
+  "version": "21.0.0",
+  "description": "Playwright helpers for testing drag, drop and resize built with @tft/interact",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nayfin/tft.git",
+    "directory": "libs/interact-testing"
+  },
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    }
+  },
+  "peerDependencies": {
+    "@playwright/test": ">=1.40.0"
+  }
+}

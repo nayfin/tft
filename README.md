@@ -3,4 +3,5 @@
 Repo for all [Tortilla Flat](https://en.wikipedia.org/wiki/Tortilla_Flat) Technologies Angular libraries. Interactive documentation can be found on Stackblitz [here](https://stackblitz.com/github/nayfin/tft-documentation).
 
 ## Libraries
-- [interact]('./interact')
+- [interact](libs/interact/README.md)
+- [interact-testing](libs/interact-testing/README.md): Playwright helpers for testing `interact`

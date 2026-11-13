@@ -156,7 +156,21 @@ export const appNavTree: SidenavSection[] = [
           {
             title: 'Drag',
             links: [
+              { title: 'Basics', path: 'interact-demo/features/drag/basics' },
+              { title: 'Dropzones', path: 'interact-demo/features/drag/dropzones' },
               { title: 'Placeholder Template', path: 'interact-demo/features/drag/placeholder-template' }
+            ]
+          },
+          {
+            title: 'Resize',
+            links: [
+              { title: 'Basics', path: 'interact-demo/features/resize/basics' }
+            ]
+          },
+          {
+            title: 'Scale',
+            links: [
+              { title: 'Basics', path: 'interact-demo/features/scale/basics' }
             ]
           },
           {

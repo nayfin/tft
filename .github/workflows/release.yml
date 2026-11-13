@@ -50,7 +50,8 @@ jobs:
           NX_DAEMON: false
           NX_NO_CLOUD: true
         run: |
-          EXCLUDED=("mat-instantsearch" "ui-imports" "core" "api-interfaces")
+          # interact-testing is excluded until it has been published once by hand and a trusted publisher is configured on npm
+          EXCLUDED=("mat-instantsearch" "ui-imports" "core" "api-interfaces" "interact-testing")
           AFFECTED=$(npx nx show projects --affected --base=$NX_BASE --head=$NX_HEAD)
           PUBLISHED=()
 

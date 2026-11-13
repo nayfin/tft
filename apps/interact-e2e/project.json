@@ -1,0 +1,22 @@
+{
+  "name": "interact-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/interact-e2e/src",
+  "projectType": "application",
+  "tags": [],
+  "implicitDependencies": ["documentation"],
+  "targets": {
+    "e2e": {
+      "executor": "@nx/playwright:playwright",
+      "options": {
+        "config": "apps/interact-e2e/playwright.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["apps/interact-e2e/**/*.{js,ts}"]
+      }
+    }
+  }
+}

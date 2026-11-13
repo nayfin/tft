@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import type { AutocompleteFieldConfig } from '@tft/crispr-forms/utils';
+import type { AutocompleteFieldConfig } from '@tft/crispr-forms';
 import { Validators } from '@angular/forms';
 import { getLabel, getHint, getError, getAutocompleteInput, submitForm } from '../helpers/form.helpers';
 

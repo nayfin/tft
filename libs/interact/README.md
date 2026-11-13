@@ -286,6 +286,16 @@ LassoRect {
 
 ---
 
+## Testing
+
+[`@tft/interact-testing`](../interact-testing/README.md) has Playwright helpers for drag, drop and resize (`dragBy`, `dragOnto`, `resizeBy`, `startDrag`). Playwright's `dragTo()` doesn't reliably trigger interactjs, so use these instead.
+
+```bash
+npm install --save-dev @tft/interact-testing
+```
+
+---
+
 ## Migration to v21.1.0
 
 Version 21.1.0 converted all directives to **standalone** and replaced `@Input()`/`@Output()` with signal-based `input()`/`output()`.

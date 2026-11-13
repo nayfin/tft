@@ -12,7 +12,7 @@ import type {
   AutocompleteChiplistFieldConfig,
   FileUploadFieldConfig,
   UnitConversionFieldConfig,
-} from '@tft/crispr-forms/utils';
+} from '@tft/crispr-forms';
 import { testInputField } from './input.tests';
 import { testTextareaField } from './textarea.tests';
 import { testCheckboxField } from './checkbox.tests';
