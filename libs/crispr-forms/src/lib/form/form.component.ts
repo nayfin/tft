@@ -14,8 +14,8 @@ import { ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { CrisprFieldDirective } from '../field.directive';
-import { FormValidationHandlerModule } from '@tft/form-validation-handler';
-import { CrisprPipesModule } from '../pipes/crispr-pipes.module';
+import { ControlErrorContainerDirective, ControlErrorsFormDirective } from '@tft/form-validation-handler';
+import { InitialControlValuePipe } from '../pipes/initial-control-value.pipe';
 import {
   ControlGroupValue,
   FormConfig,
@@ -34,8 +34,9 @@ import {
     CommonModule,
     CrisprFieldDirective,
     ReactiveFormsModule,
-    FormValidationHandlerModule,
-    CrisprPipesModule,
+    ControlErrorContainerDirective,
+    ControlErrorsFormDirective,
+    InitialControlValuePipe
   ]
 })
 export class CrisprFormComponent implements OnInit {

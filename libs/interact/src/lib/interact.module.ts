@@ -19,9 +19,10 @@ const EXPORTS = [
 ];
 
 /**
- * @deprecated All directives are now standalone. Import them directly instead of using InteractModule.
- * InteractModule will be removed in the next major version.
- * `InteractModule.forRoot()` is still supported for providing InteractService configuration.
+ * @deprecated Import the standalone directives and pipe (DraggableDirective, ResizableDirective, etc.) directly.
+ * This module will be removed in the next major version.
+ * `InteractModule.forRoot()` is still supported for providing InteractService configuration; the
+ * equivalent without the module is to provide `INTERACT_ROOT_CONFIG` and `InteractService` yourself.
  */
 @NgModule({
   imports: [...EXPORTS],

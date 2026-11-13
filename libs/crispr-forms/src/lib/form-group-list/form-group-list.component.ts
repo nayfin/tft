@@ -3,10 +3,10 @@ import { FormArray } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CrisprFieldDirective } from '../field.directive';
-import { CrisprPipesModule } from '../pipes/crispr-pipes.module';
+import { InitialControlValuePipe } from '../pipes/initial-control-value.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { ControlErrorContainerDirective } from '@tft/form-validation-handler';
 import {
   createControlForType,
   FormGroupListConfig,
@@ -32,8 +32,8 @@ const defaultConfig: Partial<FormGroupListConfig> = {
         ReactiveFormsModule,
         CrisprFieldDirective,
         CrisprDisplayFieldDirective,
-        CrisprPipesModule,
-        FormValidationHandlerModule
+        InitialControlValuePipe,
+        ControlErrorContainerDirective
     ],
     standalone: true
 })

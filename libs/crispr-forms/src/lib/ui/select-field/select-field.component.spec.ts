@@ -8,7 +8,7 @@ describe('SelectFieldComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SelectFieldComponent ]
+      imports: [SelectFieldComponent]
     })
     .compileComponents();
   }));

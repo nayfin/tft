@@ -35,7 +35,7 @@ import {
 } from '../../utils';
 import { FieldContainerComponent } from '../field-container';
 import { InfoComponent } from '../info';
-import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { ControlErrorContainerDirective, ControlErrorsDirective } from '@tft/form-validation-handler';
 import { CrisprFieldDirective } from '../../field.directive';
 
 const defaultConfig: Partial<AutocompleteChiplistFieldConfig> = {
@@ -71,10 +71,11 @@ const CREATE_NEW_SENTINEL: unique symbol = Symbol('CREATE_NEW');
         MatChipsModule,
         MatIconModule,
         MatButtonModule,
-        FormValidationHandlerModule,
+        ControlErrorContainerDirective,
+        ControlErrorsDirective,
         CdkConnectedOverlay,
         CdkOverlayOrigin,
-        CrisprFieldDirective,
+        CrisprFieldDirective
     ],
     standalone: true
 })
@@ -106,7 +107,7 @@ export class AutocompleteChiplistFieldComponent
 
   readonly createFormPositions: ConnectionPositionPair[] = [
     { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
-    { originX: 'start', originY: 'top',    overlayX: 'start', overlayY: 'bottom' },
+    { originX: 'start', originY: 'top',    overlayX: 'start', overlayY: 'bottom' }
   ];
 
   get overlayWidth(): number {

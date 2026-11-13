@@ -3,10 +3,8 @@
     [ngClass]="config().typographyClass">
     {{ config().label }}
     @if (config().info) {
-      <crispr-info
-        matSuffix
-        [info]="config().info">
-      </crispr-info>
+      <crispr-info matSuffix
+        [info]="config().info" />
     }
   </label>
 }

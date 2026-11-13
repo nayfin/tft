@@ -4,8 +4,9 @@ Automatically displays validation error messages on Angular form controls. Also 
 
 ## Setup
 ```ts
-import { FormValidationHandlerModule } from '@tft/form-validation-handler';
-// add to module imports
+import { ControlErrorsDirective, ControlErrorsFormDirective, ControlErrorContainerDirective } from '@tft/form-validation-handler';
+// add to your component's `imports` (standalone).
+// FormValidationHandlerModule is deprecated and will be removed in the next major version.
 ```
 
 ## How it works

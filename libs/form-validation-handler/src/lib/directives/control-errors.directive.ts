@@ -13,8 +13,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Directive({
     // we want to hook into all formControls so we use these selectors
     // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: '[formControl], [formControlName]',
-    standalone: false
+    selector: '[formControl], [formControlName]'
 })
 export class ControlErrorsDirective implements OnInit {
 

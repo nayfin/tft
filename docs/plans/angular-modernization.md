@@ -1,6 +1,6 @@
 # Angular modernization plan
 
-Angular 21.1, Nx 22.5. One PR per phase. Each phase: implementer → review → one code review. Verify with the production builds of the published libs and docs app, plus the full Playwright e2e suite (Jest is broken; see `libs/crispr-forms/TODOS.md`).
+Angular 21.1, Nx 22.5. Phase 0 shipped in PR #98. Phases 1a–4 ship together in one PR, one commit per phase, with full verification after each phase. Planning and implementation follow the `angular-developer` skill (official `@angular/core` migration schematics first, manual edits after). Verify with the production builds of the published libs and docs app, plus the full Playwright e2e suite (Jest is broken; see `libs/crispr-forms/TODOS.md`).
 
 ## Decisions
 - **Published NgModules** (`CrisprFormsModule`, `CrisprPipesModule`, `SubGroupModule`, `FormValidationHandlerModule`, `InteractModule`) stay, marked `@deprecated`. They only import and export the standalone pieces, so nothing breaks; remove them in the next major. Each `@deprecated` message must say so and name the replacement, e.g. `@deprecated Import the standalone pieces (CrisprFormComponent, …) directly. This module will be removed in the next major version.`
@@ -97,7 +97,7 @@ The Cypress `documentation-e2e` project stays out of CI. The long-term goal is P
   - `form-validation-handler`: 2 inputs
   - `core`: 3 inputs and 2 outputs
   - docs app: the rest
-- `CrisprControlComponent.valueChanges`: `EventEmitter` → `output()`. Consumers calling `.pipe()` on it will break, so note it in the PR.
+- `CrisprControlComponent.valueChanges`: `EventEmitter` → `output()`. Its only listener is the `(valueChanges)` template binding in `map-field`, which is unaffected, so no deprecation. Release note: subclasses can no longer `.pipe()` it (`.subscribe()` still works).
 - Template-read mutable fields become signals, e.g. group-list's `blockValue` and `selectedIndex`.
 - Remove `ChangeDetectorRef`: the `form-validation-handler` `detectChanges()` and the image upload `markForCheck()`.
 - `divider` gets OnPush. Run the unused-imports migration.

@@ -8,7 +8,7 @@ describe('ControlErrorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ControlErrorComponent ]
+      imports: [ControlErrorComponent]
     })
     .compileComponents();
   }));

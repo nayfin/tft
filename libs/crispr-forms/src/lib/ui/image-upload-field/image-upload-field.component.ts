@@ -17,7 +17,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import imageCompression from 'browser-image-compression';
 import { combineLatest, concat, defer, from, Observable, of, Subject } from 'rxjs';
 import { map, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
-import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { ControlErrorContainerDirective, ControlErrorsDirective } from '@tft/form-validation-handler';
 import { FileDropzoneDirective } from '../file-dropzone';
 import { SelectedFileComponent } from '../selected-file';
 import { FieldContainerComponent } from '../field-container';
@@ -51,7 +51,8 @@ interface ProcessedImage {
         MatInputModule,
         SelectedFileComponent,
         FileDropzoneDirective,
-        FormValidationHandlerModule,
+        ControlErrorContainerDirective,
+        ControlErrorsDirective
     ],
     standalone: true
 })
@@ -310,7 +311,7 @@ export class ImageUploadFieldComponent
             (controlValue as string)
           );
         })
-      )),
+      ))
     ]).pipe(
       map(([compressedImageUrlString, controlUrl]) => {
         return compressedImageUrlString || controlUrl || null;

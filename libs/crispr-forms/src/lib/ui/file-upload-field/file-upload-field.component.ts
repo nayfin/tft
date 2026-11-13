@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Observable, of } from 'rxjs';
 import { FileDropzoneDirective } from '../file-dropzone';
-import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { ControlErrorContainerDirective, ControlErrorsDirective } from '@tft/form-validation-handler';
 
 import { FileUploadFieldConfig } from '../../utils';
 import { FieldContainerComponent } from '../field-container';
@@ -33,8 +33,9 @@ import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abs
         MatFormFieldModule,
         MatInputModule,
         SelectedFileComponent,
-        FormValidationHandlerModule,
-        FileDropzoneDirective,
+        ControlErrorContainerDirective,
+        ControlErrorsDirective,
+        FileDropzoneDirective
     ],
     standalone: true
 })

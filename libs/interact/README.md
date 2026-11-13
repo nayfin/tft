@@ -311,6 +311,7 @@ Version 21.1.0 converted all directives to **standalone** and replaced `@Input()
 ```
 
 `InteractModule` still works but is deprecated. `InteractService` is `providedIn: 'root'`.
+To configure the default CSS unit without the module, provide `INTERACT_ROOT_CONFIG` yourself: `{ provide: INTERACT_ROOT_CONFIG, useValue: { cssDimensionUnit: 'px' } }`.
 
 ### `dragData` and `dropzoneData` are now signals
 

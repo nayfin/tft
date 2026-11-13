@@ -8,7 +8,7 @@ describe('UnitConversionFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UnitConversionFieldComponent ]
+      imports: [UnitConversionFieldComponent]
     })
     .compileComponents();
   });

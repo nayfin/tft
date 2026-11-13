@@ -8,7 +8,7 @@ describe('CrisprFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CrisprFormComponent ]
+      imports: [CrisprFormComponent]
     })
     .compileComponents();
   }));

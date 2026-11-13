@@ -43,23 +43,40 @@ The datepicker field requires `date-fns`:
 npm i date-fns @angular/material-date-fns-adapter
 ```
 
-You also need to provide `MAT_DATE_LOCALE` in your root module:
+You also need to provide `MAT_DATE_LOCALE` in your application providers:
 
 ```ts
+import { bootstrapApplication } from '@angular/platform-browser';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { enUS } from 'date-fns/locale';
 
-@NgModule({
-  // ...
+bootstrapApplication(AppComponent, {
   providers: [
     {
       provide: MAT_DATE_LOCALE,
       useValue: enUS,
     },
   ],
-})
-export class AppModule {}
+});
 ```
+
+## Standalone imports
+
+Everything in the library is standalone. Import the pieces you need directly into your component:
+
+```ts
+import { Component } from '@angular/core';
+import { CrisprFormComponent } from '@tft/crispr-forms';
+
+@Component({
+  selector: 'app-my-form',
+  imports: [CrisprFormComponent],
+  templateUrl: './my-form.component.html',
+})
+export class MyFormComponent {}
+```
+
+> `CrisprFormsModule`, `CrisprPipesModule` and `SubGroupModule` are deprecated. They only re-export the standalone pieces and will be removed in the next major version.
 
 ## Usage
 

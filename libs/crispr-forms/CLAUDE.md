@@ -6,7 +6,7 @@ Config-driven Angular Material form builder. Provide a `FormConfig` object → g
 ```ts
 import { FormConfig, ControlType } from '@tft/crispr-forms';
 ```
-Add `CrisprFormsModule` to your module's `imports`.
+Add `CrisprFormComponent` to your component's `imports` (standalone). `CrisprFormsModule` is deprecated and will be removed in the next major version.
 
 ## Template
 ```html
@@ -100,7 +100,7 @@ config: FormConfig = {
 ```ts
 { controlType: ControlType.DATEPICKER, controlName: 'dob', label: 'Date of Birth' }
 ```
-Requires: `date-fns`, `@angular/material-date-fns-adapter`, and `MAT_DATE_LOCALE` provider in root module.
+Requires: `date-fns`, `@angular/material-date-fns-adapter`, and `MAT_DATE_LOCALE` provider in your application providers.
 
 ### HEADING / DIVIDER
 ```ts

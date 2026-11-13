@@ -6,8 +6,7 @@ import { ErrorDictionary } from '../form-errors';
 
 @Directive({
     // tslint:disable-next-line: directive-selector
-    selector: 'form',
-    standalone: false
+    selector: 'form'
 })
 // TODO: rename this directive as it does more than just capture button submits
 export class ControlErrorsFormDirective {

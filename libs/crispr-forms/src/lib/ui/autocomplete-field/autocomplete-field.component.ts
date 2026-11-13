@@ -19,7 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { OptionComponent } from '../option';
-import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { ControlErrorContainerDirective, ControlErrorsDirective } from '@tft/form-validation-handler';
 
 import { FieldContainerComponent } from '../field-container';
 import {
@@ -50,7 +50,8 @@ const defaultConfig: Partial<AutocompleteFieldConfig> = {
         MatAutocompleteModule,
         MatInputModule,
         MatOptionModule,
-        FormValidationHandlerModule,
+        ControlErrorContainerDirective,
+        ControlErrorsDirective
     ],
     standalone: true
 })

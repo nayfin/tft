@@ -8,7 +8,7 @@ describe('RadioFieldComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RadioFieldComponent ]
+      imports: [RadioFieldComponent]
     })
     .compileComponents();
   }));

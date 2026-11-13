@@ -1,18 +1,13 @@
-import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { InitialControlValuePipe } from "./initial-control-value.pipe";
 
+/**
+ * @deprecated Import the standalone InitialControlValuePipe directly.
+ * This module will be removed in the next major version.
+ */
 @NgModule({
-  imports: [
-    CommonModule
-  ],
-  exports: [
-    InitialControlValuePipe
-  ],
-  declarations: [
-    InitialControlValuePipe
-  ]
+  imports: [InitialControlValuePipe],
+  exports: [InitialControlValuePipe],
 })
-
 export class CrisprPipesModule {
 }

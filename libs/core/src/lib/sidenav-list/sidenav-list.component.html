@@ -25,10 +25,8 @@
             }
           </mat-list-item>
         }
-        <tft-sidenav-list
-          [sections]="section.subsections"
-          (itemClicked)="onItemClicked($event)">
-        </tft-sidenav-list>
+        <tft-sidenav-list [sections]="section.subsections"
+          (itemClicked)="onItemClicked($event)" />
       </mat-expansion-panel>
     }
   </mat-accordion>

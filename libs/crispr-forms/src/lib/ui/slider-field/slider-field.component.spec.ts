@@ -8,7 +8,7 @@ describe('SliderFieldComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SliderFieldComponent ]
+      imports: [SliderFieldComponent]
     })
     .compileComponents();
   }));

@@ -4,7 +4,7 @@ import { MatInputModule } from '@angular/material/input';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { ControlErrorContainerDirective, ControlErrorsDirective } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '../field-container';
 import { InfoComponent } from '../info';
 import { InputFieldConfig } from '../../utils';
@@ -22,7 +22,8 @@ import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abs
       FieldContainerComponent,
       MatFormFieldModule,
       MatInputModule,
-      FormValidationHandlerModule,
+      ControlErrorContainerDirective,
+      ControlErrorsDirective,
       MatIconModule
     ]
 })

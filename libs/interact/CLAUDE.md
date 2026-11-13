@@ -6,7 +6,7 @@ Angular directive wrapper for interactjs. Handles drag-and-drop, resize, and ges
 ```bash
 npm i interactjs @tft/interact
 ```
-Add `InteractModule` to your module's `imports`.
+Import the standalone directives (e.g. `DraggableDirective`) into your component's `imports`. `InteractModule` is deprecated and will be removed in the next major version.
 
 ## Directives
 

@@ -3,8 +3,7 @@ import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, inject } 
     selector: 'tft-control-error',
     templateUrl: './control-error.component.html',
     styleUrls: ['./control-error.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
  export class ControlErrorComponent {
   private cdr = inject(ChangeDetectorRef);

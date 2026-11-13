@@ -16,7 +16,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { OptionComponent } from '../option';
-import { FormValidationHandlerModule } from '@tft/form-validation-handler';
+import { ControlErrorContainerDirective, ControlErrorsDirective } from '@tft/form-validation-handler';
 import { InfoComponent } from '../info';
 import { FieldContainerComponent } from '../field-container';
 import {
@@ -38,9 +38,10 @@ import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abs
         MatCheckboxModule,
         MatSelectModule,
         ReactiveFormsModule,
-        FormValidationHandlerModule,
+        ControlErrorContainerDirective,
+        ControlErrorsDirective,
         FieldContainerComponent,
-        MatFormFieldModule,
+        MatFormFieldModule
     ],
     standalone: true
 })

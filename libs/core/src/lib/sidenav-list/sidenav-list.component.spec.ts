@@ -8,7 +8,7 @@ describe('SidenavListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SidenavListComponent ]
+      imports: [SidenavListComponent]
     })
     .compileComponents();
   }));

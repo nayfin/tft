@@ -5,10 +5,7 @@ import {
   isControlConfig,
 } from '../utils';
 
-@Pipe({
-    name: 'initialControlValue',
-    standalone: false
-})
+@Pipe({ name: 'initialControlValue' })
 export class InitialControlValuePipe implements PipeTransform {
   // TODO: does changing any to unknown break anything?
   transform(
