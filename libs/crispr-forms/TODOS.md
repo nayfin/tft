@@ -1,15 +1,14 @@
 # TODOS
 
 ## Sooner 
+- untangle field-based dependencies (`@angular/google-maps`, `@angular/material-date-fns-adapter`, `browser-image-compression`) at the next Angular major upgrade, as a breaking change. ng-packagr inlines the lazy `import()`s in `field-component-map.const.ts`, so the published bundle imports all three statically and every consumer must install them. Plan: `@tft/crispr-forms/map` and `/image-upload` secondary entry points, a `provideCrisprFields({ map: () => import(...) })` registry so the app's own dynamic import keeps them lazy, the datepicker stops bundling the date-fns adapter (app provides a `DateAdapter`), and the three become optional peers
+- enable configuring  inputType:number input fields convert number input strings to number types 
 - Enable passing location search configuration to map field
 - map element tests
 - enable triggering blur on unit-conversion field and trigger validators
 - autocomplete new chip form should use cdk overlay setting to achieve styling
-- convert all NgModule-based components/directives/pipes to standalone components (deprecate and support both?)
 
-- migrate from `fullTemplateTypeCheck` to `strictTemplates` (found several real bugs when attempted)
-- fix Jest: `nx test crispr-forms` fails all 27 suites at load (esbuild "Buffer.from("") instanceof Uint8Array" invariant in the jsdom env), and most specs are broken generator stubs; CI doesn't run unit tests
-  - once fixed, add unit tests for the pure geometry helpers in `libs/interact-testing/src/geometry.ts` and run unit tests in `.github/workflows/ci.yml`
+
 
 ## Later
 - improve `getError` e2e helper — currently scopes to `crispr-${fieldType}-field` host which requires knowing the field type; explore using `getMatFormField` pattern instead
