@@ -17,7 +17,6 @@
         "outputPath": "dist/apps/documentation",
         "index": "apps/documentation/src/index.html",
         "main": "apps/documentation/src/main.ts",
-        "polyfills": "apps/documentation/src/polyfills.ts",
         "tsConfig": "apps/documentation/tsconfig.app.json",
         "aot": true,
         "assets": [

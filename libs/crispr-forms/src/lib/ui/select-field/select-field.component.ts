@@ -4,6 +4,7 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   AfterViewInit,
+  afterNextRender,
   signal,
   viewChild
 } from '@angular/core';
@@ -67,12 +68,12 @@ export class SelectFieldComponent
       tap(() => {
         // mat-select.writeValue() runs before async options render, so _setSelectionByValue
         // finds no matches. Re-apply the value after options are in the DOM.
-        setTimeout(() => {
+        afterNextRender(() => {
           const ctrl = this.control();
           if (ctrl?.value != null) {
             ctrl.setValue(ctrl.value, { emitEvent: false });
           }
-        });
+        }, { injector: this.injector });
       })
     );
   }

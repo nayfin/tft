@@ -143,7 +143,8 @@ export class AutocompleteChiplistFieldComponent
     this.chips$.next([...this.chips$.value, selectedOption]);
     this.chipInputRef().nativeElement.value = '';
     this.autocompleteInputControl.setValue('');
-    // setTimeout needed because the panel thinks it's still open at this point
+    // A macrotask is needed here (not a change detection workaround): MatAutocomplete only closes its panel
+    // after this selection event has finished, so reopening it synchronously is a no-op.
     setTimeout(() => this.chipInput().openPanel());
   }
 
@@ -151,6 +152,8 @@ export class AutocompleteChiplistFieldComponent
     this.createFormGroup = buildFormGroupFromConfig({ fields: this.config().createChip!.fields });
     this.chipInputRef().nativeElement.value = '';
     this.autocompleteInputControl.setValue('');
+    // Deferred to a macrotask so that the click that opened the form has finished bubbling to the document;
+    // otherwise the overlay's outside-click handling would close the form straight away (zone.js or not).
     setTimeout(() => this.showCreateForm.set(true));
   }
 

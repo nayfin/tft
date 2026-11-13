@@ -211,6 +211,9 @@ export class DraggableDirective<D = any> implements OnInit, OnDestroy, AfterView
           const _previewTemplate = this._previewTemplate();
           if (_previewTemplate) {
             const viewRef = this._viewContainerRef.createEmbeddedView(_previewTemplate.templateRef);
+            // interact.js calls this handler outside of Angular's change detection, so render the preview's
+            // bindings now instead of waiting for a CD pass that nothing would schedule without zone.js
+            viewRef.detectChanges();
             this.previewRef = getRootNode(viewRef, this._document);
           } else {
             this.previewRef = cloneElement(this.el.nativeElement);
@@ -256,6 +259,8 @@ export class DraggableDirective<D = any> implements OnInit, OnDestroy, AfterView
           this.scrollEventsSubscription.unsubscribe();
         }
         if (this.el.nativeElement !== this.previewRef) {
+          // interact.js fires `dragend` before `drop`, and the drop handlers read the preview element
+          // (it is the drop event's relatedTarget), so it must outlive the current event dispatch.
           setTimeout(() => {
             this.dragRootEl.removeChild(this.previewRef);
           });

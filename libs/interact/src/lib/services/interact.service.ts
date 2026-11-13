@@ -89,6 +89,7 @@ export class InteractService {
         shareReplay(1),
         // filter(resizeEvent => !!resizeEvent.targetElement),
         tap(({deltaX, deltaY, width, height, targetElement}) => {
+          // DOM writes only, so skip change detection when running with zone.js (no-op when zoneless)
           this.ngZone.runOutsideAngular(() => {
             this.setElementSize(width, height, targetElement);
           });

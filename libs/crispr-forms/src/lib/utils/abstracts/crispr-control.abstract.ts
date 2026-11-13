@@ -1,7 +1,7 @@
 
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { CrisprControlConfig, ControlValue, ControlType } from '../models/crispr-field.config';
-import { computed, DestroyRef, Directive, effect, inject, input, OnInit, output } from '@angular/core';
+import { afterNextRender, computed, DestroyRef, Directive, effect, inject, Injector, input, OnInit, output } from '@angular/core';
 import { CrisprFieldComponent } from './crispr-field.abstract';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -10,6 +10,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class CrisprControlComponent<C extends CrisprControlConfig> extends CrisprFieldComponent<C> implements OnInit {
   destroyRef = inject(DestroyRef);
+  protected injector = inject(Injector);
 
   group = input<FormGroup>(null);
 
@@ -32,10 +33,11 @@ export class CrisprControlComponent<C extends CrisprControlConfig> extends Crisp
     ).subscribe((value: ControlValue) => {
       this.valueChanges.emit(value);
     });
-    // setTimeouts are ugly but this seems to be the only way to get the computed field to compute initial values
-    setTimeout(()=> {
+    // Computed fields derive their value from sibling controls, which only exist once the whole form has
+    // rendered, so re-run validation (and valueChanges) after the first render to compute initial values.
+    afterNextRender(() => {
       this.control().updateValueAndValidity();
-    })
+    }, { injector: this.injector });
   }
 
   setControlValue(value: ControlValue) {
