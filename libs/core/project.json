@@ -29,6 +29,7 @@
         "lintFilePatterns": ["libs/core/src/**/*.ts", "libs/core/src/**/*.html"]
       }
     },
+    "typecheck": {},
     "test": {
       "executor": "@nx/jest:jest",
       "options": {

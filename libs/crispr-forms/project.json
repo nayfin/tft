@@ -36,6 +36,7 @@
         ]
       }
     },
+    "typecheck": {},
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
