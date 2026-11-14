@@ -80,52 +80,57 @@ const ITEMS: LassoItem[] = [
         }
       </div>
       <div
-        class="stage"
-        [style.width.px]="mode() === 'transform' ? 480 : null"
-        [style.height.px]="mode() === 'transform' ? 200 : null"
-        [style.transform]="
-          mode() === 'transform' ? 'scale(' + scale() + ')' : null
-        "
-        style="transform-origin: 0 0"
-        tftLasso
-        #lasso="tftLasso"
-        [scale]="scale()"
-        data-testid="lasso-stage"
-        (lassoStart)="selected.set([])"
-        (lassoCommit)="onCommit($event)"
+        class="stage-viewport"
+        [style.height.px]="mode() === 'transform' ? 200 * scale() + 2 : null"
       >
-        @for (item of items; track item.id) {
         <div
-          class="lasso-item"
-          [class.selected]="selected().includes(item.id)"
-          [attr.data-item-id]="item.id"
-          [attr.data-testid]="'lasso-item-' + item.id"
-          [style.left]="item.x + unit()"
-          [style.top]="item.y + unit()"
-          [style.width]="40 + unit()"
-          [style.height]="30 + unit()"
+          class="stage"
+          [style.width.px]="mode() === 'transform' ? 480 : null"
+          [style.height.px]="mode() === 'transform' ? 200 : null"
+          [style.transform]="
+            mode() === 'transform' ? 'scale(' + scale() + ')' : null
+          "
+          style="transform-origin: 0 0"
+          tftLasso
+          #lasso="tftLasso"
+          [scale]="scale()"
+          data-testid="lasso-stage"
+          (lassoStart)="selected.set([])"
+          (lassoCommit)="onCommit($event)"
         >
-          <span class="label">{{ item.id }}</span>
+          @for (item of items; track item.id) {
+          <div
+            class="lasso-item"
+            [class.selected]="selected().includes(item.id)"
+            [attr.data-item-id]="item.id"
+            [attr.data-testid]="'lasso-item-' + item.id"
+            [style.left]="item.x + unit()"
+            [style.top]="item.y + unit()"
+            [style.width]="40 + unit()"
+            [style.height]="30 + unit()"
+          >
+            <span class="label">{{ item.id }}</span>
+          </div>
+          } @if (lasso.lassoDisplayRect(); as r) { @if (mode() === 'em') {
+          <div
+            class="lasso-rect"
+            data-testid="lasso-rect"
+            [style.left.em]="r.x"
+            [style.top.em]="r.y"
+            [style.width.em]="r.w"
+            [style.height.em]="r.h"
+          ></div>
+          } @else {
+          <div
+            class="lasso-rect"
+            data-testid="lasso-rect"
+            [style.left.px]="r.x"
+            [style.top.px]="r.y"
+            [style.width.px]="r.w"
+            [style.height.px]="r.h"
+          ></div>
+          } }
         </div>
-        } @if (lasso.lassoDisplayRect(); as r) { @if (mode() === 'em') {
-        <div
-          class="lasso-rect"
-          data-testid="lasso-rect"
-          [style.left.em]="r.x"
-          [style.top.em]="r.y"
-          [style.width.em]="r.w"
-          [style.height.em]="r.h"
-        ></div>
-        } @else {
-        <div
-          class="lasso-rect"
-          data-testid="lasso-rect"
-          [style.left.px]="r.x"
-          [style.top.px]="r.y"
-          [style.width.px]="r.w"
-          [style.height.px]="r.h"
-        ></div>
-        } }
       </div>
       <dl class="readout">
         <dt>Scale</dt>
@@ -159,6 +164,12 @@ const ITEMS: LassoItem[] = [
     .scale-options .toggle[aria-pressed='true'] {
       background: #1976d2;
       color: #fff;
+    }
+    /* At larger scales the stage is wider than the page column: scroll it instead of overflowing the page */
+    .stage-viewport {
+      max-width: 100%;
+      overflow: auto;
+      padding: 1px;
     }
     .stage {
       user-select: none;
