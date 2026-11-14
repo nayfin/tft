@@ -40,4 +40,4 @@ export const defaultErrors: ErrorDictionary<string | string[]> = {
 /**
  * We export the interfaces so end users can easily strongly type their own custom error dictionary
  */
-export { ErrorDictionary, ErrorFactory };
+export type { ErrorDictionary, ErrorFactory };

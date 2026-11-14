@@ -80,6 +80,22 @@ export class MapComponent {
         // validators: [Validators.required]
       },
       {
+        controlType: ControlType.MAP,
+        label: 'This map field only suggests cities in Canada',
+        controlName: 'canadianCityMapField',
+        center: { lat: 45.4215, lng: -75.6972 },
+        options: {
+          mapId: 'DEMO_MAP_ID',
+        },
+        // Options for the Places autocomplete request behind the location search. The search term is added for you
+        searchAutocompleteRequest: {
+          includedPrimaryTypes: ['locality'],
+          includedRegionCodes: ['ca'],
+          language: 'en-CA',
+          region: 'ca',
+        },
+      },
+      {
         controlType: ControlType.BUTTON,
         label: 'SUBMIT',
         type: 'submit'

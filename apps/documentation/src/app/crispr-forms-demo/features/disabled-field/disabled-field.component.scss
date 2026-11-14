@@ -1,0 +1,12 @@
+// Lays the fields of the "flex row" example out in a row. The classes come from the form config
+// (`classes` on the form and on each field), so they have to reach into crispr-form's view.
+.row-form ::ng-deep {
+  .flex-row {
+    display: flex;
+    gap: 16px;
+  }
+  .grow {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}

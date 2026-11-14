@@ -24,6 +24,7 @@ import type { CrisprControlConfig } from '../../utils';
     imports: [CommonModule, HeadingComponent],
     host: {
       '[style.display]': 'isHidden() ? "none" : ""',
+      '[class.crispr-field-hidden]': 'isHidden()',
     },
 })
 export class FieldContainerComponent implements OnInit, OnDestroy {

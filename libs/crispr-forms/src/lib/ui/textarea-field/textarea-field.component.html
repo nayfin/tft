@@ -7,7 +7,7 @@
     </textarea>
     @if (config().info) {<crispr-info [info]="config().info" />}
     @if (config().fieldSuffix) {<span matSuffix>{{config().fieldSuffix}}</span>}
-    @if (config().hint && control().valid) {<mat-hint>{{config().hint}}</mat-hint>}
+    @if (config().hint && controlValid()) {<mat-hint>{{config().hint}}</mat-hint>}
 
   </mat-form-field>
 

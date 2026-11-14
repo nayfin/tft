@@ -1,16 +1,12 @@
 # TODOS
 
-- "hidden" fields still take a flex slots
 - how can skills changes be automated for consumers?
   - use the google tools to make publicly available (good for resume)
 - strictly typed forms
   - would switching to signal forms enable?
 - apps/documentation, apps/api, api-interfaces, mat-instantsearch and ui-imports still have broken generator-stub Jest specs and are excluded from the CI unit test step (`--exclude` in `ci.yml`; remove each from the list once fixed)
 - remove unused projects (core, ui-imports, mat-instasearch)
-- Jest specs aren't type-checked: the spec tsconfigs use `isolatedModules`, so ts-jest only transpiles. Add a `tsc -p tsconfig.spec.json --noEmit` typecheck target and run it in CI
-- most rewritten Jest specs only check "creates" and "renders the label"; add behaviour tests (draggable/resizable registration, field value/validation wiring), and unit tests for `ControlErrorsDirective` / `ControlErrorContainerDirective` (their old specs were fully commented out and deleted)
-- jsdom logs NG0303 "Can't bind to 'spellcheck'/'autocapitalize'/'autocomplete'" in the input-field and form specs, which would hide a real unknown-binding error. Shim the properties in test-setup, then fail tests on unexpected `console.error`
-- interact lasso demo: at scale 2 in em mode the stage (480em = 960px) overflows the page column
+- most rewritten Jest specs only check "creates" and "renders the label"; add behaviour tests (draggable/resizable registration, field value/validation wiring), and unit tests for `ControlErrorContainerDirective` (its old spec was fully commented out and deleted; `ControlErrorsDirective` has one now)
 - interact ui tests — see `docs/plans/interact-showplaceholder-transform-bug.md`
 - add a package smoke test to CI: import each built testing package from a Playwright spec outside the workspace, so a packaging break (like the ESM/extensionless one fixed in 6acd241) fails a PR
 - CI: e2e compiles the docs app three times (production build, then a dev server per suite). Serve the production build statically for both suites instead

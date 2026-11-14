@@ -1,5 +1,13 @@
 # Changelog
 
+## 21.1.1
+
+### Fixed
+- Form group list with a `displayItemComponent`: opening an item for editing no longer opens the last item as well. When nothing is selected the last item is the one open for editing. Adding an item now opens the new item for editing, and deleting an item keeps the selection on the same item (or clears it if that item was deleted).
+- A field hidden through `hideDisabled` no longer keeps its place in a flex or grid form. The field component's own element, and any `classes` set on it, used to stay in the layout and leave an empty slot and gap.
+- Hints on the input, select, textarea, file upload, autocomplete, chiplist, datepicker and unit conversion fields now follow the control's state when the form changes it from outside the template (`markAsTouched`, `setErrors`, `patchValue`, an async validator finishing). `CrisprControlComponent` exposes this as the `controlValid`, `controlTouched` and `hintVisible` signals.
+- The map field no longer has an unused `onSelectLocation` handler. The map was already recentred on the chosen location.
+
 ## 21.1.0
 
 Angular modernization: standalone, signals, zoneless-ready and `strictTemplates`-clean.

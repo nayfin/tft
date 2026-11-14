@@ -77,11 +77,22 @@ export class FormGroupListComponent
   clickDelete(index: number) {
     this.blockValue.set(true);
     this.deleteGroup(index);
+    // keep the selection on the same item, or clear it if that item was deleted
+    const selected = this.selectedIndex();
+    if (selected !== null) {
+      if (index === selected) {
+        this.selectedIndex.set(null);
+      } else if (index < selected) {
+        this.selectedIndex.set(selected - 1);
+      }
+    }
   }
 
   clickAdd() {
     this.blockValue.set(true);
     this.addGroup();
+    // with no item selected the last item, the new one, is the one open for editing
+    this.selectedIndex.set(null);
   }
 
   addGroup(value = null) {

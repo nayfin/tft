@@ -4,6 +4,13 @@
   display: none;
 }
 
+// A field hidden through `hideDisabled` hides its field-container, but the field component that wraps the
+// container is still an element in the form's layout. In a flex or grid form it would keep its slot (and gap),
+// so drop the wrapping element out of the layout too.
+.crispr-form ::ng-deep :has(> crispr-field-container.crispr-field-hidden) {
+  display: none;
+}
+
 @each $density in (-1, -2, -3, -4, -5) {
   :host[data-density="#{$density}"] {
     /* stylelint-disable-next-line selector-pseudo-element-no-unknown */

@@ -102,6 +102,48 @@ export class DisabledFieldComponent implements OnInit {
     ]
   }
 
+  /** Fields laid out in a flex row. Hiding the middle one must not leave an empty slot (or gap) in the row. */
+  hiddenFieldInRowConfig: FormConfig = {
+    classes: ['flex-row'],
+    fields: [
+      {
+        controlType: ControlType.INPUT,
+        inputType: 'text',
+        controlName: 'rowFirst',
+        label: 'First',
+        classes: ['grow'],
+      },
+      {
+        controlType: ControlType.INPUT,
+        inputType: 'text',
+        controlName: 'rowHidden',
+        label: 'Hidden when disabled',
+        classes: ['grow'],
+        hideDisabled: true,
+        disabledCallback: (group) => {
+          return group.get('rowEnabler').valueChanges.pipe(map(value => value !== 'enable'))
+        }
+      },
+      {
+        controlType: ControlType.INPUT,
+        inputType: 'text',
+        controlName: 'rowLast',
+        label: 'Last',
+        classes: ['grow'],
+      },
+      {
+        controlType: ControlType.SELECT,
+        controlName: 'rowEnabler',
+        label: 'Show the hidden field',
+        classes: ['grow'],
+        options: [
+          {label: 'Hide', value: 'disable'},
+          {label: 'Show', value: 'enable'}
+        ]
+      },
+    ]
+  }
+
   constructor() { }
 
   ngOnInit() {
