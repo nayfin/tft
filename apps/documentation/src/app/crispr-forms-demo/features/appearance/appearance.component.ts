@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ControlType, FormConfig, filterOptionsByLabel, CrisprFormComponent } from '@tft/crispr-forms';
 import { of } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -11,7 +11,7 @@ import { MatCard } from '@angular/material/card';
     styleUrls: ['./appearance.component.scss'],
     imports: [MatCard, CrisprFormComponent]
 })
-export class AppearanceComponent implements OnInit {
+export class AppearanceComponent {
   formConfig: FormConfig = {
     fields: [
       {
@@ -79,10 +79,6 @@ export class AppearanceComponent implements OnInit {
         buttonType: 'stroked'
       },
     ]
-  }
-  constructor() { }
-
-  ngOnInit() {
   }
 
   handleSubmit(form: FormGroup) {

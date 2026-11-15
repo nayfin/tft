@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ControlType, FormConfig, CrisprFormComponent } from '@tft/crispr-forms';
 import { MatCard } from '@angular/material/card';
 
@@ -8,7 +8,7 @@ import { MatCard } from '@angular/material/card';
     styleUrls: ['./heading.component.scss'],
     imports: [MatCard, CrisprFormComponent]
 })
-export class HeadingComponent implements OnInit {
+export class HeadingComponent {
 
   formConfig: FormConfig = {
     classes: ['form'],
@@ -40,9 +40,4 @@ export class HeadingComponent implements OnInit {
 
     ]
   };
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

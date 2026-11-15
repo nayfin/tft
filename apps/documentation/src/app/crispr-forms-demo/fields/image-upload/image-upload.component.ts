@@ -146,8 +146,6 @@ export class ImageUploadComponent {
     ],
   };
 
-  constructor() { }
-
   handleSubmit(form: FormGroup) {
     console.log({fieldValue: form.value.fileUploadExample})
   }

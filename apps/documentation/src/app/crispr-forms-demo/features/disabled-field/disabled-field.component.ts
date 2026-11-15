@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ControlType, FormConfig, CrisprFormComponent } from '@tft/crispr-forms';
 import { of, combineLatest } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { MatCard } from '@angular/material/card';
     styleUrls: ['./disabled-field.component.scss'],
     imports: [MatCard, CrisprFormComponent]
 })
-export class DisabledFieldComponent implements OnInit {
+export class DisabledFieldComponent {
 
   disabledFieldConfig: FormConfig = {
     fields: [
@@ -143,10 +143,4 @@ export class DisabledFieldComponent implements OnInit {
       },
     ]
   }
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

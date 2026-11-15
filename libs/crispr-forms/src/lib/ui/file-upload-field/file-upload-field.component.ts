@@ -137,5 +137,7 @@ export class FileUploadFieldComponent
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: () => void) {}
+  registerOnTouched(fn: () => void) {
+    // no-op: required by ControlValueAccessor; touched state is not propagated to the form control
+  }
 }

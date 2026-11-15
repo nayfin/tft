@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SEARCH_CONFIG } from '../../search.config';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NgAisInstantSearchModule } from 'angular-instantsearch';
@@ -31,18 +31,13 @@ const initialValue = {
     MisAutocompleteComponent
   ]
 })
-export class AutocompleteDemoComponent implements OnInit {
+export class AutocompleteDemoComponent {
 
   searchConfig = SEARCH_CONFIG;
 
   form = new FormGroup({
     autocompleteEx: new FormControl()
   });
-  constructor() { }
-
-  ngOnInit() {
-
-  }
 
   handleSelect(event) {
     console.log({selectEvent: event})
