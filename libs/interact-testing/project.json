@@ -31,6 +31,14 @@
       "options": {
         "lintFilePatterns": ["libs/interact-testing/src/**/*.ts"]
       }
+    },
+    "typecheck": {},
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/interact-testing/jest.config.cts"
+      }
     }
   }
 }

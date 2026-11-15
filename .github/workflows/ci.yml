@@ -32,6 +32,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Jest unit tests. GitHub sets CI=true, which Jest picks up (the equivalent of --ci), so no extra flag is needed.
+      - name: Unit tests
+        run: npx nx run-many -t test --exclude=documentation,api,api-interfaces,mat-instantsearch,ui-imports
+
+      # Jest only transpiles the specs (isolatedModules), so type-check them here
+      - name: Type-check specs
+        run: npx nx run-many -t typecheck --exclude=documentation,api,api-interfaces,mat-instantsearch,ui-imports
+
       - name: Install Playwright browser
         run: npx playwright install --with-deps chromium
 

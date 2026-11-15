@@ -13,7 +13,7 @@
     [cdkConnectedOverlayMinWidth]="trigger.elementRef.nativeElement.offsetWidth" (detach)="closeMap()"
     (backdropClick)="closeMap()">
     <crispr-autocomplete-field class="search-field" [config]="locationConfig" [group]="locationGroup"
-      (valueChanges)="onSelectLocation($event)" aria-label="Search for a location" />
+      aria-label="Search for a location" />
     <google-map [center]="(inputCenter | async) || config().center" [zoom]="11" [options]="config().options"
       (mapInitialized)="onMapInit(map)" (idle)="onMove(map, group())" #map>
 

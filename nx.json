@@ -106,11 +106,19 @@
     "lint": {
       "cache": true
     },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p {projectRoot}/tsconfig.spec.json --noEmit"
+      },
+      "inputs": ["default", "^production", "{workspaceRoot}/tools/jest/**/*"],
+      "cache": true
+    },
     "@nx/jest:jest": {
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
+      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js", "{workspaceRoot}/jest.preset.angular.js", "{workspaceRoot}/tools/jest/**/*"],
       "cache": true,
       "options": {
-        "passWithNoTests": true
+        "passWithNoTests": false
       },
       "configurations": {
         "ci": {
@@ -135,6 +143,7 @@
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/jest.config.[jt]s",
+      "!{projectRoot}/jest.config.cts",
       "!{projectRoot}/tsconfig.storybook.json",
       "!{projectRoot}/src/test-setup.[jt]s"
     ]

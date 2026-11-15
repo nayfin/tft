@@ -266,13 +266,6 @@ export class ImageUploadFieldComponent
 
   readonly fileInputRef = viewChild<ElementRef>('fileInput');
 
-  /**
-   * Whether the hint is shown, i.e. the control is valid or has not been touched. Mirrors the control's
-   * state into a signal so that changes made asynchronously (e.g. when image processing finishes)
-   * re-render this OnPush/zoneless component.
-   */
-  readonly hintVisible = signal(true);
-
   disabled$: Observable<boolean>;
 
   constructor() {
@@ -290,9 +283,6 @@ export class ImageUploadFieldComponent
     super.ngOnInit();
     const control = this.control();
     control.addValidators(this.imageProcessingValidator);
-    const updateHintVisible = () => this.hintVisible.set(control.valid || !control.touched);
-    updateHintVisible();
-    control.events.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(updateHintVisible);
     this.destroyRef.onDestroy(() => {
       this.destroyed = true;
       this.inputImageFileSubject.complete();

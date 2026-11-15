@@ -238,12 +238,14 @@ autoScrollConfig = { margin: 50, distance: 3, interval: 50, speed: 300, enabled:
 
   @if (lasso.lassoDisplayRect(); as r) {
     <div class="lasso-rect"
-         [style.left.px]="r.x" [style.top.px]="r.y"
-         [style.width.px]="r.w" [style.height.px]="r.h">
+         [style.left.em]="r.x" [style.top.em]="r.y"
+         [style.width.em]="r.w" [style.height.em]="r.h">
     </div>
   }
 </div>
 ```
+
+`lassoDisplayRect` is in canvas units (viewport px ÷ `scale`). The directive sets `font-size: <scale>px` on its host, so bind the rect with `.em` (as above, not `.px`). The rect must be a descendant of the `tftLasso` host and must not set its own `font-size`.
 
 ```typescript
 onLassoCommit(rect: LassoRect) {

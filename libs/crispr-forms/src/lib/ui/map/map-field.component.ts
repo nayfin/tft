@@ -176,13 +176,6 @@ export class MapFieldComponent extends CrisprControlComponent<MapFieldConfig> {
     this.currentMap.next(map);
   }
 
-  async onSelectLocation(suggestion: google.maps.places.AutocompletePrediction) { 
-    if(!google.maps.places || !suggestion.place_id) return;
-    const place = new google.maps.places.Place({id: suggestion.place_id })
-    // TODO: the fetched location is not used yet, it should recenter the map on the selected suggestion
-    await place.fetchFields({fields: ['location']});
-  }
-
   openMap() {
     this.mapOpen.set(true);
   }

@@ -14,6 +14,13 @@
 
 <mat-card>
   <h2 class="mat-h2">
+    Example of hiding a field in a flex row
+  </h2>
+  <crispr-form class="row-form" [config]="hiddenFieldInRowConfig" />
+</mat-card>
+
+<mat-card>
+  <h2 class="mat-h2">
     Example of enabling field if either of the other fields is set to 'enable'
   </h2>
   <crispr-form [config]="complexHiddenFieldConfig" />

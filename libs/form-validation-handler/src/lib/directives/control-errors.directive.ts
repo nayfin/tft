@@ -1,5 +1,5 @@
 import {
-  Directive, OnInit, OnDestroy, ComponentRef,
+  Directive, OnInit, OnDestroy, ComponentRef, computed, signal,
   ViewContainerRef, HostListener, DestroyRef, inject } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { Subscription, EMPTY, Observable, merge, Subject } from 'rxjs';
@@ -28,7 +28,21 @@ export class ControlErrorsDirective implements OnInit {
   submit$: Observable<string | never>;
   blur$ = new Subject<void>();
   subs: Subscription[] = [];
-  errors: ErrorDictionary;
+  private readonly errorsOverride = signal<ErrorDictionary | null>(null);
+  /** The default errors merged with the form's `errorDictionary`, which is read each time so later changes apply. */
+  private readonly mergedErrors = computed<ErrorDictionary>(() => {
+    const errorDictionary = this.form?.errorDictionary();
+    return errorDictionary
+      ? { ...defaultErrors, ...errorDictionary }
+      : defaultErrors;
+  });
+  /** The error messages in use. Assigning replaces the form's dictionary, as it did when this was a plain field. */
+  get errors(): ErrorDictionary {
+    return this.errorsOverride() ?? this.mergedErrors();
+  }
+  set errors(value: ErrorDictionary) {
+    this.errorsOverride.set(value);
+  }
   // we need to make our own Observable of the blur event as it's not provided by the formControl
   @HostListener('blur')
   handleBlur() {
@@ -38,10 +52,6 @@ export class ControlErrorsDirective implements OnInit {
   constructor() {
     this.submit$ = this.form ? this.form.submit$ : EMPTY;
     this.container = this.controlErrorContainer?.vcr || this.vcr;
-    const errorDictionary = this.form?.errorDictionary();
-    this.errors = errorDictionary
-      ? { ...defaultErrors, ...errorDictionary}
-      : defaultErrors;
   }
 
   ngOnInit() {

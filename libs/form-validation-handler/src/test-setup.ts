@@ -1,14 +1,3 @@
-import 'jest-preset-angular';
-
-import { getTestBed } from '@angular/core/testing';
-import {
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting,
-} from '@angular/platform-browser-dynamic/testing';
-
-getTestBed().resetTestEnvironment();
-getTestBed().initTestEnvironment(
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting(),
-  { teardown: { destroyAfterEach: false } }
-);
+// The shared Jest setup lives in tools/, outside any project, so the import has to be relative
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import '../../../tools/jest/angular-test-setup';

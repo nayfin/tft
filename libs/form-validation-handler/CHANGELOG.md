@@ -1,5 +1,11 @@
 # Changelog
 
+## 21.1.1
+
+### Fixed
+- `ControlErrorsDirective` reads the form's `errorDictionary` each time it builds a message instead of once when it is created, so a dictionary that is bound late or changes later is used. `errors` is now a getter and setter backed by a signal, and keeps working as before for code that read or assigned it.
+- `ErrorDictionary` and `ErrorFactory` are exported as types, so the package compiles under `isolatedModules`.
+
 ## 21.1.0
 
 Angular modernization: standalone, signals, zoneless-ready and `strictTemplates`-clean.

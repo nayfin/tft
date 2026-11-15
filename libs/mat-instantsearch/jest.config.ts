@@ -1,7 +1,7 @@
 /* eslint-disable */
 export default {
   displayName: 'mat-instantsearch',
-  preset: '../../jest.preset.js',
+  preset: '../../jest.preset.angular.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {},
   coverageDirectory: '../../coverage/libs/mat-instantsearch',
