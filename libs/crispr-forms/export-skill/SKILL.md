@@ -84,7 +84,7 @@ export class DynamicFormComponent {
 > **IMPORTANT**: See the attached `models.md` file in this skill folder for the exact TypeScript interfaces of `FormConfig` and the various `FieldConfig` properties.
 
 Include the following types depending on what UI elements you need:
-- `INPUT`: Standard text input.
+- `INPUT`: Standard text input. With `inputType: 'number'`, set `valueAsNumber: true` to get a number (or `null` when empty) as the control value instead of a string. It has no effect on other input types.
 - `TEXTAREA`: Multi-line text area.
 - `SELECT`: Dropdown list.
 - `CHECKBOX`: Single boolean checkbox.

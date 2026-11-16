@@ -64,6 +64,8 @@ interface MatFieldProperties {
 interface InputFieldConfig extends CrisprControlConfig, FieldDescriptors, MatFieldProperties {
   controlType: ControlType.INPUT;
   inputType?: 'color'|'date'|'email'|'number'|'password'|'search'|'tel'|'text'|'time'|'url';
+  /** Only with inputType 'number': control value is a number (empty input -> null) instead of a string. Default false. */
+  valueAsNumber?: boolean;
   min?: number;
   max?: number;
   maxLength?: number;
