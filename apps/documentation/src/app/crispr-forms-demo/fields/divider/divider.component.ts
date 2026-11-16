@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ControlType, FormConfig, CrisprFormComponent } from '@tft/crispr-forms';
 import { MatCard } from '@angular/material/card';
 
@@ -8,7 +8,7 @@ import { MatCard } from '@angular/material/card';
     styleUrls: ['./divider.component.scss'],
     imports: [MatCard, CrisprFormComponent]
 })
-export class DividerComponent implements OnInit {
+export class DividerComponent {
 
   formConfig: FormConfig = {
     fields: [
@@ -38,10 +38,4 @@ export class DividerComponent implements OnInit {
       }
     ]
   };
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

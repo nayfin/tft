@@ -64,7 +64,7 @@ export class InteractService {
         const prop = interactableSystem[propName];
         if (prop.unsubscribe && typeof prop.unsubscribe === 'function' ) {
           prop.unsubscribe();
-        };
+        }
       }
       delete this.dragRegistrySystem[registryId][interactableId];
     }

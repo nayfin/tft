@@ -24,7 +24,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "tft",
+            "prefix": ["doc", "tft"],
             "style": "kebab-case"
           }
         ],

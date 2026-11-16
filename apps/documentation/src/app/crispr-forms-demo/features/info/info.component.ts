@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormConfig, ControlType, CrisprFormComponent } from '@tft/crispr-forms';
 import { MatCard } from '@angular/material/card';
 
@@ -8,7 +8,7 @@ import { MatCard } from '@angular/material/card';
     styleUrls: ['./info.component.scss'],
     imports: [MatCard, CrisprFormComponent]
 })
-export class InfoComponent implements OnInit {
+export class InfoComponent {
   formConfig: FormConfig = {
     fields: [
       {
@@ -50,9 +50,4 @@ export class InfoComponent implements OnInit {
       },
     ]
   }
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

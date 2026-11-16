@@ -1,7 +1,7 @@
 import { Directive, ViewContainerRef, inject } from '@angular/core';
 
 @Directive({
-    // tslint:disable-next-line: directive-selector
+    // eslint-disable-next-line @angular-eslint/directive-selector -- also attaches to every Angular `[formGroup]` automatically; the selector is public API
     selector: '[controlErrorContainer], [formGroup]'
 })
 export class ControlErrorContainerDirective {

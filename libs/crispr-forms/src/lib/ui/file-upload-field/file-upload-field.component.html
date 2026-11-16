@@ -5,7 +5,7 @@
     [attr.data-testid]="testId()"
     [color]="config().color"
     appearance="outline"
-    [crisprFileDropzone]="!(disabled$ | async) && !(config().disableOnUpload && uploaded())"
+    [crisprFileDropzone]="(disabled$ | async) !== true && !(config().disableOnUpload && uploaded())"
     [formGroup]="group()"
     (fileDrop)="filesChanged($event)">
 

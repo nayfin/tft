@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SEARCH_CONFIG } from '../search.config'
 import { NgAisHitsModule, NgAisInstantSearchModule } from 'angular-instantsearch';
 import { MisFilterSelectComponent, MisPaginationComponent, MisSearchBoxComponent } from '@tft/mat-instantsearch';
@@ -15,13 +15,7 @@ import { MisFilterSelectComponent, MisPaginationComponent, MisSearchBoxComponent
     MisSearchBoxComponent
   ]
 })
-export class OverviewComponent implements OnInit {
+export class OverviewComponent {
 
   searchConfig = SEARCH_CONFIG;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

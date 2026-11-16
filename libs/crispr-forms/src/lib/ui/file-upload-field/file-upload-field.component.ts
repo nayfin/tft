@@ -127,15 +127,15 @@ export class FileUploadFieldComponent
     this.uploaded.set(false);
   }
 
-  writeValue(value: null) {
-    // clear file input
-    // this.host.nativeElement.value = '';
-    // this.file = null;
+  writeValue() {
+    // no-op: required by ControlValueAccessor; programmatic value writes are not reflected in the UI
   }
 
   registerOnChange(fn: () => void) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: () => void) {}
+  registerOnTouched() {
+    // no-op: required by ControlValueAccessor; touched state is not propagated to the form control
+  }
 }

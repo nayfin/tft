@@ -4,7 +4,7 @@
   mat-button
   [ngClass]="matButtonClass"
   [color]="config().color"
-  [disabled]="config().disabledOnInvalidForm && !(formValid$ | async)"
+  [disabled]="config().disabledOnInvalidForm && (formValid$ | async) !== true"
   [type]="config().type"
   (click)="handleClick(group(), $event)"
   [matTooltip]="config().info?.content"

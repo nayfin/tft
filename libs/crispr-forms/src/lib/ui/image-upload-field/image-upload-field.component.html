@@ -29,7 +29,7 @@
             <img [src]="srcUrl" alt="">
           } @else {
             <div class="drop-container"
-              [crisprFileDropzone]="!(disabled$ | async)"
+              [crisprFileDropzone]="(disabled$ | async) !== true"
               (fileDrop)="filesChanged($event)">
               <mat-icon class="drop-icon" inline="true">cloud_upload</mat-icon>
               <h2 class="mat-h2">{{config().dropZoneText}}</h2>

@@ -376,11 +376,15 @@ export class ImageUploadFieldComponent
     }
   }
 
-  writeValue(value: null) {}
+  writeValue() {
+    // no-op: required by ControlValueAccessor; programmatic value writes are not reflected in the UI
+  }
 
   registerOnChange(fn: () => void) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: () => void) {}
+  registerOnTouched() {
+    // no-op: required by ControlValueAccessor; touched state is not propagated to the form control
+  }
 }

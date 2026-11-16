@@ -5,7 +5,7 @@ import { ErrorDictionary } from '../form-errors';
 
 
 @Directive({
-    // tslint:disable-next-line: directive-selector
+    // eslint-disable-next-line @angular-eslint/directive-selector -- attaches to every `<form>` automatically; the selector is public API
     selector: 'form'
 })
 // TODO: rename this directive as it does more than just capture button submits

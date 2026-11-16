@@ -40,6 +40,10 @@ jobs:
       - name: Type-check specs
         run: npx nx run-many -t typecheck --exclude=documentation,api,api-interfaces,mat-instantsearch,ui-imports
 
+      # Lint errors fail the build; warnings do not. Excludes the projects slated for deletion and the Cypress project.
+      - name: Lint
+        run: npx nx run-many -t lint --exclude=api,api-interfaces,core,ui-imports,mat-instantsearch,documentation-e2e
+
       - name: Install Playwright browser
         run: npx playwright install --with-deps chromium
 

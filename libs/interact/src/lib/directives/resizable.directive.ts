@@ -22,7 +22,6 @@ interface ActiveEdges {
 @Directive({
   selector: '[tftResizable]',
   standalone: true,
-  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
     // prevents touch events from colliding with mouse events on touch screen
     '[style.touch-action]': 'resizeDisabled() ? "auto" : "none"',
