@@ -15,7 +15,7 @@ import { buildFormGroupFromConfig } from "./";
     : controlConfig.controlType === ControlType.GROUP_LIST
     ? new FormArray([], (controlConfig as FormGroupListConfig).validators)
     : new FormControl(
-      value || null,
+      value ?? null,
       (controlConfig as CrisprControlConfig).validators
     );
 

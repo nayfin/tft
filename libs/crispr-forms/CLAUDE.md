@@ -58,6 +58,7 @@ config: FormConfig = {
   label: 'Name',
   inputType: 'text' | 'number' | 'email' | 'password' | 'tel' | 'date',
   min: 0, max: 100,             // for number inputs
+  valueAsNumber: true,          // only with inputType 'number': control value is a number (empty -> null). Default false = string; maxLength/pattern not applied in this mode
   autoComplete: 'off',
   autoCapitalize: 'off',
   spellcheck: true,

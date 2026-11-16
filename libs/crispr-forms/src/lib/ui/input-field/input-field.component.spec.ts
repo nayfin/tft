@@ -107,4 +107,66 @@ describe('InputFieldComponent', () => {
       expect(component.hintVisible()).toBe(true);
     });
   });
+
+  describe('valueAsNumber', () => {
+    function input(): HTMLInputElement {
+      return fixture.nativeElement.querySelector('input');
+    }
+
+    async function configure(overrides: Partial<InputFieldConfig>) {
+      fixture.componentRef.setInput('config', { ...config, ...overrides });
+      await fixture.whenStable();
+    }
+
+    function type(value: string) {
+      const el = input();
+      el.value = value;
+      el.dispatchEvent(new Event('input'));
+    }
+
+    it('should write a number to the control when typing into a number input', async () => {
+      await configure({ inputType: 'number', valueAsNumber: true });
+
+      type('3');
+
+      const value = group.get('field').value;
+      expect(value).toBe(3);
+      expect(typeof value).toBe('number');
+    });
+
+    it('should write null to the control when a number input is cleared', async () => {
+      await configure({ inputType: 'number', valueAsNumber: true });
+
+      type('3');
+      type('');
+
+      expect(group.get('field').value).toBeNull();
+    });
+
+    it('should render a number set on the control in the input', async () => {
+      await configure({ inputType: 'number', valueAsNumber: true });
+
+      group.get('field').setValue(2);
+      await fixture.whenStable();
+
+      expect(input().type).toBe('number');
+      expect(input().value).toBe('2');
+    });
+
+    it('should keep string values for number inputs when the flag is not set', async () => {
+      await configure({ inputType: 'number' });
+
+      type('3');
+
+      expect(group.get('field').value).toBe('3');
+    });
+
+    it('should ignore the flag when the input type is not number', async () => {
+      await configure({ inputType: 'text', valueAsNumber: true });
+
+      type('3');
+
+      expect(group.get('field').value).toBe('3');
+    });
+  });
 });

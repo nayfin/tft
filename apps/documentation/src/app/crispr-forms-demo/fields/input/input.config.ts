@@ -15,6 +15,7 @@ export const inputFormConfig: FormConfig = {
       label: 'Number Input Field',
       inputType: 'number',
       controlName: 'numberInput',
+      valueAsNumber: true,
       min: 0,
       max: 4,
       validators: [Validators.min(0), Validators.max(4)]

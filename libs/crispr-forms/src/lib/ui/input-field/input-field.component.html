@@ -4,11 +4,19 @@
     <mat-label>
       {{config().label}}
     </mat-label>
-    <input [type]="config().inputType" matInput [placeholder]="config().placeholder"
-      [formControlName]="config().controlName" [min]="config().min" [max]="config().max"
-      [maxlength]="config().maxLength" [step]="config().step" [autofocus]="config().autofocus"
-      [pattern]="config().pattern" [spellcheck]="config().spellcheck" [autocomplete]="config().autoComplete"
-      [autocapitalize]="config().autoCapitalize">
+    <!-- Angular's NumberValueAccessor only matches a static type="number" attribute, so
+         the element is duplicated rather than binding [type] (which falls back to string values). -->
+    @if (config().inputType === 'number' && config().valueAsNumber) {
+      <input type="number" matInput [placeholder]="config().placeholder"
+        [formControlName]="config().controlName" [min]="config().min" [max]="config().max"
+        [step]="config().step" [autofocus]="config().autofocus" [autocomplete]="config().autoComplete">
+    } @else {
+      <input [type]="config().inputType" matInput [placeholder]="config().placeholder"
+        [formControlName]="config().controlName" [min]="config().min" [max]="config().max"
+        [maxlength]="config().maxLength" [step]="config().step" [autofocus]="config().autofocus"
+        [pattern]="config().pattern" [spellcheck]="config().spellcheck" [autocomplete]="config().autoComplete"
+        [autocapitalize]="config().autoCapitalize">
+    }
     @if (config().fieldSuffix) {<span matSuffix>{{config().fieldSuffix}}</span>}
     @if (config().info) {<crispr-info matSuffix [info]="config().info" />}
     @if (config().hint && hintVisible()) {<mat-hint>{{config().hint}}</mat-hint>}
