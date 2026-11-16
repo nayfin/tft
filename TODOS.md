@@ -12,6 +12,8 @@
 - CI: e2e compiles the docs app three times (production build, then a dev server per suite). Serve the production build statically for both suites instead
 - CI: upgrade Playwright (1.58.2 cannot install Chromium on Ubuntu 26.04), then move `ci.yml` back from `ubuntu-24.04` to `ubuntu-latest`
 
+- run prettier across the workspace in its own PR (many files are not prettier-clean, and it errors on two crispr-forms templates), then add `nx format:check` to CI
+
 ## Done
 - Convert everything to standalone components
 - Convert to signals (plus zoneless and strictTemplates)
