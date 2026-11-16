@@ -1,7 +1,7 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { ControlType, FormConfig, CrisprFormComponent } from '@tft/crispr-forms';
-import { of, combineLatest } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { MatCard } from '@angular/material/card';
 
 @Component({

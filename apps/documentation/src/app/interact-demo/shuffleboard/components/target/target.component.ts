@@ -1,6 +1,5 @@
-import { Component, ChangeDetectionStrategy, input, output } from '@angular/core';
-import { TftDragEvent, TftDropEvent, DropzoneDirective } from '@tft/interact';
-import { Team } from '../../models/shuffleboard.model';
+import { Component, input, output } from '@angular/core';
+import { TftDropEvent, DropzoneDirective } from '@tft/interact';
 import { DropzoneOptions } from '@interactjs/types/index';
 import { NgClass } from '@angular/common';
 

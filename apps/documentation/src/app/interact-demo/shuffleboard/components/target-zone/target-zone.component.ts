@@ -1,7 +1,5 @@
 import { Component, output } from '@angular/core';
 import { TftDropEvent, DropzoneDirective } from '@tft/interact';
-import { Team } from '../../models/shuffleboard.model';
-import { DropzoneOptions } from '@interactjs/types/index';
 
 @Component({
     selector: 'tft-target-zone',

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, computed, input, output } from '@angular/core';
+import { Component, OnInit, computed, input, output } from '@angular/core';
 import { Team, Puck } from '../../models/shuffleboard.model';
 import { DraggableOptions } from '@interactjs/types/index';
 import interact from 'interactjs';
