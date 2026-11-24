@@ -151,7 +151,8 @@ For multiple triggers, use `combineLatest` in the callback.
 1. `ng g c <name> --project=crispr-forms`
 2. Create `libs/crispr-forms/src/lib/utils/models/<name>.config.ts` extending `CrisprControlConfig`
 3. Add to `ControlType` enum and `AnyFieldConfig` union in `crispr-field.config.ts`
-4. Map in `libs/crispr-forms/src/lib/field-component-map.const.ts`
+4. Map in `libs/crispr-forms/src/lib/field-component-map.const.ts`, lazily via `import()`
+5. Export the component from `src/lib/ui/public-api.ts` as a type only (`export type { ... }`). Field components must not be value exports of the entry point, or Rollup inlines the lazy chunks and the optional packages (`@angular/google-maps`, `browser-image-compression`, `@angular/material-date-fns-adapter`) end up in the main bundle. The `no-restricted-syntax` override in `libs/crispr-forms/.eslintrc.json` guards this: add the new field folder to its list
 
 ## Export skill
 `libs/crispr-forms/export-skill/` contains the published skill docs:
