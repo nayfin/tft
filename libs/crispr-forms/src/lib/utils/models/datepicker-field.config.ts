@@ -22,4 +22,15 @@ export interface DatepickerFieldConfig extends CrisprControlConfig,
    * Pass a component into mat-datepicker-actions component see [docs](https://material.angular.io/components/datepicker/overview#confirmation-action-buttons)
    */
   datepickerActions?: ComponentType<any>;
+  /**
+   * Show a clear button next to the datepicker toggle while the control has a value and is enabled.
+   * Clicking it empties the control and marks it dirty and touched, so a required field shows its required error.
+   * Defaults to `false`.
+   */
+  clearable?: boolean;
+  /**
+   * The accessible name (`aria-label`) of the clear button. Only used when `clearable` is `true`.
+   * Defaults to `'Clear date'`.
+   */
+  clearButtonLabel?: string;
 }

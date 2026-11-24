@@ -4,6 +4,7 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   AfterContentInit,
+  computed,
 } from '@angular/core';
 import {
   MatCalendarCellClassFunction,
@@ -12,6 +13,8 @@ import {
 import { MatDateFnsModule } from '@angular/material-date-fns-adapter';
 import { Observable, of } from 'rxjs';
 import { ComponentPortal, Portal, PortalModule } from '@angular/cdk/portal';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -39,6 +42,8 @@ const defaultConfig: Partial<DatepickerFieldConfig> = {
         MatFormFieldModule,
         ReactiveFormsModule,
         MatInputModule,
+        MatButtonModule,
+        MatIconModule,
         MatDateFnsModule,
         PortalModule,
         ControlErrorContainerDirective,
@@ -58,6 +63,24 @@ export class DatepickerFieldComponent
 
   /** A portal containing the footer component type for this calendar. */
   calendarFooterPortal: Portal<any>;
+
+  /** Whether the control holds a date. `null`, `undefined` and `''` count as no value. */
+  readonly hasValue = computed(() => {
+    const value = this.controlValue();
+    return value !== null && value !== undefined && value !== '';
+  });
+
+  /**
+   * Empties the control and marks it dirty and touched, so a required field shows its required error.
+   * The control is marked touched before the value changes: the error display only reacts to value and status
+   * changes, and ignores them while the control is untouched.
+   */
+  clear() {
+    const control = this.control();
+    control.markAsTouched();
+    control.markAsDirty();
+    control.setValue(null);
+  }
 
   ngOnInit() {
     super.ngOnInit();

@@ -14,6 +14,18 @@
       [max]="config().max"
       [matDatepicker]="picker"
       [matDatepickerFilter]="config().datepickerFilter">
+    @if (config().clearable && controlEnabled() && hasValue()) {
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        class="crispr-datepicker-clear"
+        [attr.data-testid]="testId() + '-clear'"
+        [attr.aria-label]="config().clearButtonLabel ?? 'Clear date'"
+        (click)="clear()">
+        <mat-icon>clear</mat-icon>
+      </button>
+    }
     <mat-datepicker-toggle matSuffix [for]="picker" />
     <mat-datepicker
       [touchUi]="config().touchUi"
