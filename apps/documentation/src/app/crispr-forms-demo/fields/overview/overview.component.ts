@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit, input, viewChild } from '@angular/core';
-import { FormConfig, ControlType, SelectOption, CrisprFormComponent } from '@tft/crispr-forms';
+import { ChangeDetectionStrategy, Component, OnInit, input, signal, viewChild } from '@angular/core';
+import { FormConfig, ControlType, SelectOption, CrisprFormComponent, InvalidField } from '@tft/crispr-forms';
 import { Validators, FormGroup } from '@angular/forms';
 import { BehaviorSubject, of } from 'rxjs';
 import { map, delay } from 'rxjs/operators';
@@ -100,6 +100,7 @@ export class OverviewComponent implements OnInit{
 
   config: FormConfig = {
     autoComplete: 'off',
+    showInvalidErrors: true,
     errorDictionary: {
       required: () => {
         return `I am a custom error message on a required field`
@@ -129,6 +130,7 @@ export class OverviewComponent implements OnInit{
       {
         controlType: ControlType.RADIO,
         controlName: 'radioField',
+        label: 'Radio Field',
         validators: [Validators.required],
         options: () => {
           return [
@@ -435,6 +437,9 @@ export class OverviewComponent implements OnInit{
 
   readonly crisprForm = viewChild<CrisprFormComponent>('crisprForm');
 
+  /** The fields the form reported with its last invalid submit, null until there has been one. */
+  readonly lastInvalidSubmit = signal<InvalidField[] | null>(null);
+
   ngOnInit(): void {
     const currentFormValue = this.valueSubject.getValue()
     // this.valueSubject.next(currentFormValue);
@@ -444,6 +449,10 @@ export class OverviewComponent implements OnInit{
     const rawValue = form.getRawValue();
     console.log({rawValue})
     this.valueSubject.next(rawValue);
+  }
+
+  handleInvalidSubmit(invalidFields: InvalidField[]) {
+    this.lastInvalidSubmit.set(invalidFields);
   }
 
   handleValueChanges(value: any) {

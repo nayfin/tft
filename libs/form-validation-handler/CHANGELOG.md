@@ -1,5 +1,10 @@
 # Changelog
 
+## 21.2.0
+
+### Added
+- `getErrorMessage(controlErrors, dictionary?)` builds the message for a control's errors the way `ControlErrorsDirective` does. It uses the first error only, looks its key up in the library defaults with your `dictionary` taking precedence, falls back to the `default` entry for an unknown key, and returns `null` when there are no errors. `ControlErrorsDirective` uses the same lookup, so its behaviour is unchanged.
+
 ## 21.1.1
 
 ### Fixed

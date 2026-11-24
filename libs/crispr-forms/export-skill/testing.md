@@ -100,11 +100,13 @@ getLabel(page, testId)            // mat-label inside the field
 getHint(page, testId)             // mat-hint inside the field
 getMatSelect(page, testId)        // mat-select inside a select field
 getCheckbox(page, testId)         // mat-checkbox element
+getRadioGroup(page, testId)       // mat-radio-group of a radio field
+getRadioOption(page, testId, label) // the radio input of one option, by exact label (assert toBeChecked())
 getAutocompleteInput(page, testId) // the visible role="textbox" input in autocomplete (NOT the hidden formControlName anchor)
 getError(page, testId, fieldType?) // <p class="tft-control-error"> paragraph
                                    // fieldType defaults to 'input'; pass kebab-case type for others:
                                    // 'select', 'autocomplete', 'autocomplete-chiplist',
-                                   // 'checkbox', 'datepicker', 'textarea'
+                                   // 'checkbox', 'datepicker', 'textarea', 'radio'
 ```
 
 ### Actions
@@ -121,6 +123,7 @@ closeDatepickerCalendar(page)           // presses Escape and waits for the cale
 getCalendarDayClasses(page)             // { [day]: class names } of the open month view's day cells
 openSelect(page, testId)          // clicks mat-select to open the panel
 selectOption(page, testId, label) // opens select and clicks the named option
+selectRadioOption(page, testId, label) // clicks the visible mat-radio-button with that label
 submitForm(page, nth?)            // programmatically clicks crispr-form's hidden submit button
                                   // (index nth, defaults to 0)
 ```
@@ -143,6 +146,7 @@ Each factory is a function that registers `test()` calls conditioned on the conf
 | `testAutocompleteChiplistField` | `AutocompleteChiplistFieldConfig` | label, hint, type+see options, add chip, remove chip, minArrayLength error |
 | `testFileUploadField` | `FileUploadFieldConfig` | label, drop zone text, select button |
 | `testUnitConversionField` | `UnitConversionFieldConfig` | label, number input, unit select |
+| `testRadioField` | `RadioFieldConfig` | group renders, label + accessible name, heading (+ accessible name when no label), static options render + select option, required (via submitForm, error under the group: `getError(page, id, 'radio')`) |
 | `testField` | `AnyFieldConfig` | dispatches to the correct factory above; skips non-control fields |
 
 ### Adding a new field test factory
@@ -177,6 +181,9 @@ Slider is not inside a `mat-form-field`. `getLabel()` queries `mat-label` and wo
 
 ### Slider: min/max are native HTML attributes
 Read `min`/`max` from `input[matSliderThumb]` native HTML attributes, not `aria-valuemin`/`aria-valuemax`.
+
+### Radio: required tests skip a preselected radio
+A radio can't be unselected through the UI, so `testRadioField` skips its required tests when an option is already checked (an initial value). Options that are an observable, promise or function are not checked by the factory (like select).
 
 ### Unit conversion: required errors are not testable
 The `displayValueControl` (visible input) is separate from the `[formControlName]` that holds validators. Validation errors are never wired to the visible input.

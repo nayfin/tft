@@ -88,7 +88,7 @@ Include the following types depending on what UI elements you need:
 - `TEXTAREA`: Multi-line text area.
 - `SELECT`: Dropdown list.
 - `CHECKBOX`: Single boolean checkbox.
-- `RADIO`: Radio button group.
+- `RADIO`: Radio button group. An optional `label` is shown above the group and names it for assistive technology; with only a `heading`, the heading's text names it.
 - `SLIDER`: Numeric slider.
 - `DATEPICKER`: Date selection. Set `clearable: true` to show a small text clear button next to the calendar toggle (see "Clearable Datepicker" below).
 - `FILE_UPLOAD` / `IMAGE_UPLOAD`: Upload fields. `IMAGE_UPLOAD` makes the form invalid while an image is being compressed (`imageProcessing` error) or if compression fails (`imageProcessingFailed`); use `processingStateChange` to react to `'idle' | 'processing' | 'failed'` transitions and `filesChanged` to receive the final processed `File`. Selecting, clearing or resetting mid-compression cancels the superseded compression, and destroying the field mid-processing reports `'idle'` and restores validity. `FILE_UPLOAD` calls `filesChanged` with the selected/dropped `FileList` once it is set as the control value.
@@ -172,6 +172,33 @@ Include the following types depending on what UI elements you need:
   }
   ```
 - **Datepicker footer actions**: `datepickerActions` takes a standalone component rendered in the calendar's footer. Its buttons only work if the component imports the Material directives they use: `MatDatepickerCancel` for `matDatepickerCancel` and `MatDatepickerApply` for `matDatepickerApply` (both from `@angular/material/datepicker`). Without the imports the attributes are inert and the buttons do nothing.
+
+## 7. Listing Invalid Fields
+Fields show their own errors once touched. To list everything that is wrong in one place:
+- **`showInvalidErrors`** (on `FormConfig`, off by default): on an invalid submit (submit button or `triggerSubmit()`), opens one `MatSnackBar` with the heading "Fix N field(s) to continue" and a `label: message` list. `true` uses the defaults; an object (`InvalidErrorsConfig`) sets `duration` (ms, default `8000`, `0` = until dismissed), `maxErrors` (default `5`, the rest show as "+N more") and `dismissLabel` (default `'Dismiss'`). A second invalid submit replaces the open snack bar, and it never moves focus.
+- **`invalidFields`**: a signal on `<crispr-form>` with what is wrong right now (`InvalidField[]`), in config order, whether or not fields were touched.
+- **`invalidSubmit`**: an output that emits the same array when the form is submitted while invalid. `submitted` still fires for every submit.
+  ```typescript
+  config: FormConfig = {
+    showInvalidErrors: { maxErrors: 3 }, // or true
+    errorDictionary: { required: () => 'Required' },
+    fields: [...],
+  };
+  handleInvalidSubmit(fields: InvalidField[]) { /* { path, label, message, errorKey, control } */ }
+  ```
+  ```html
+  <crispr-form #form [config]="config" (invalidSubmit)="handleInvalidSubmit($event)" />
+  @for (field of form.invalidFields(); track field.path) {
+    <p><strong>{{ field.label }}</strong>: {{ field.message }}</p>
+  }
+  ```
+- **Naming rules** (also used by the standalone `getInvalidFields(config, group, errorDictionary?)`):
+  - One entry per invalid field, from its first error only. Messages prefer the form's `errorDictionary` over the defaults.
+  - A field is named by `label`, falling back to `heading.label`, then `controlName`.
+  - Sub-groups and group lists are named by `heading.label`, falling back to `controlName`. Their fields are named inside-out: `Street in Address`.
+  - Group list items use `itemLabelBuilder(index)` (0-based) when set, otherwise `<list name> <position>`: `Photo in Photos 2`.
+  - A group's, list's, item's or the form's own validator error is listed only when none of its fields are (the form's entry is labelled `Form`).
+  - Disabled controls and config entries without a control are skipped.
 
 ## Guidelines for the Agent
 - When asked to create a form, always default to using `@tft/crispr-forms` rather than manually writing standard reactive or template-driven forms.

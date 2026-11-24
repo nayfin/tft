@@ -62,6 +62,10 @@ export const appNavTree: SidenavSection[] = [
             path: 'crispr-forms-demo/fields/checkbox'
           },
           {
+            title: 'Radio Field',
+            path: 'crispr-forms-demo/fields/radio'
+          },
+          {
             title: 'Slider Field',
             path: 'crispr-forms-demo/fields/slider'
           },

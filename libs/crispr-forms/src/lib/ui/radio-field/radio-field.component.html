@@ -2,7 +2,15 @@
   [config]="config()"
   [group]="group()">
 
+  @if (config().label) {
+    <label class="radio-label" [attr.id]="labelId">{{ config().label }}</label>
+  }
+  <!-- controlErrorContainer makes the control's error render right after the group, inside this field.
+  Without it the error falls back to the form's container and lands at the end of the form. -->
   <mat-radio-group
+    controlErrorContainer
+    [attr.aria-labelledby]="config().label ? labelId : null"
+    [attr.aria-label]="ariaLabel()"
     [attr.data-testid]="testId()"
     [formControl]="radioControl()"
     [color]="config().color">

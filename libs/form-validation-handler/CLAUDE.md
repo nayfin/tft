@@ -42,6 +42,15 @@ const myErrors: ErrorDictionary = {
 ```
 Pass via `FormConfig.errorDictionary` in crispr-forms, or directly to `ControlErrorsFormDirective`.
 
+## getErrorMessage
+Pure function that builds the message for a control's errors the way the directive does (the directive uses the same lookup):
+```ts
+import { getErrorMessage } from '@tft/form-validation-handler';
+
+getErrorMessage(control.errors, errorDictionary?); // string | null
+```
+First error key only. `{ ...defaultErrors, ...errorDictionary }` is searched, so the caller's dictionary wins; an unknown key falls back to the `default` entry; `null` when there are no errors. `defaultErrors` itself is not exported. Used by crispr-forms' `getInvalidFields`.
+
 ## Custom validators
 
 ### someControlIsValid
@@ -64,7 +73,7 @@ import { minArrayLength } from '@tft/form-validation-handler/utils';
 ```
 
 ## Key files
-- `libs/form-validation-handler/src/lib/form-errors.ts` — default error messages + `ErrorDictionary` / `ErrorFactory` types
+- `libs/form-validation-handler/src/lib/form-errors.ts` — default error messages, `ErrorDictionary` / `ErrorFactory` types and `getErrorMessage`
 - `libs/form-validation-handler/src/lib/directives/control-errors.directive.ts` — core auto-error directive
 - `libs/form-validation-handler/src/lib/directives/control-error-container.directive.ts` — custom error placement
 - `libs/form-validation-handler/src/lib/directives/control-errors-form.directive.ts` — form submit detection

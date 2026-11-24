@@ -17,3 +17,5 @@ export * from './file-upload-field.config';
 export * from './image-upload-field.config';
 export * from './map-field.config';
 export * from './create-chip.config';
+export * from './invalid-field';
+export * from './invalid-errors.config';

@@ -231,6 +231,65 @@ export class DatepickerFooterComponent {}
 
 `ControlType.FILE_UPLOAD`'s `filesChanged?: (parentGroup, files) => void` (previously declared but never called) now fires with the selected or dropped `FileList` after it is set as the control value. The `uploadComponent` passed to `uploadFiles` keeps its `isUploaded` boolean; it is now signal-backed, so assigning it asynchronously (e.g. when an upload completes) re-renders the field without zone.js.
 
+## Showing what is wrong when a form is submitted
+
+Each field shows its own error once it is touched. To list everything that is wrong in one place, use `showInvalidErrors`, the `invalidFields` signal and the `invalidSubmit` output.
+
+**Snack bar (opt-in).** With `showInvalidErrors`, an invalid submit (from the submit button or `triggerSubmit()`) opens one Angular Material snack bar. It has a "Fix N field(s) to continue" heading, lists the invalid fields as `label: message` and ends with a Dismiss button. It is off by default and never moves focus.
+
+```ts
+config: FormConfig = {
+  showInvalidErrors: true, // the defaults
+  // or adjust them:
+  // showInvalidErrors: { duration: 0, maxErrors: 3, dismissLabel: 'Got it' },
+  errorDictionary: { required: () => 'Required' },
+  fields: [ /* ... */ ],
+};
+```
+
+| `InvalidErrorsConfig` | Default | |
+| --- | --- | --- |
+| `duration` | `8000` | How long it stays open, in ms. `0` keeps it open until it is dismissed. |
+| `maxErrors` | `5` | How many fields to list. The rest show as "+N more". |
+| `dismissLabel` | `'Dismiss'` | The text of the button that closes it. |
+
+Only one snack bar is open at a time: a second invalid submit replaces the first.
+
+**`invalidFields` signal.** `<crispr-form>` exposes `invalidFields`, what is wrong right now, in config order, whether or not the fields have been touched. It updates as the user edits, and it keeps the same array reference while nothing observable has changed.
+
+**`invalidSubmit` output.** Emits the same array when the form is submitted while invalid. `submitted` still fires for every submit, exactly as before.
+
+```html
+<crispr-form #form [config]="config" (invalidSubmit)="handleInvalidSubmit($event)" />
+
+<ul>
+  @for (field of form.invalidFields(); track field.path) {
+    <li><strong>{{ field.label }}</strong>: {{ field.message }}</li>
+  }
+</ul>
+```
+
+```ts
+import { InvalidField } from '@tft/crispr-forms';
+
+handleInvalidSubmit(fields: InvalidField[]) {
+  console.log(fields.map((field) => field.label));
+}
+```
+
+Each `InvalidField` is `{ path, label, message, errorKey, control }`: the dot path of the control (`photos.1.caption`, empty for the whole form), a readable name, the error message, the first error key, and the control itself.
+
+**How fields are listed**
+
+- One entry per invalid field, using only its first error. The message comes from the form's `errorDictionary`, then the library defaults.
+- A field is named by its `label`, else its `heading.label`, else its `controlName`.
+- Sub-groups and group lists are named by their `heading.label`, or their `controlName`. Their invalid fields are named inside-out: `Street in Address`.
+- Group list items use `itemLabelBuilder(index)` when set (the index is 0-based), otherwise `<list name> <position>`, so `Photo in Photos 2` or, with a builder returning `'Photo 2'`, `Photo in Photo 2`.
+- A group's, list's, item's or the form's own validator error (for example `minArrayLength` on a list) is listed only when none of its fields are, named after the group (`Form` for the whole form).
+- Disabled controls and config entries without a control (headings, dividers, buttons) are skipped.
+
+The same logic is available as a plain function, `getInvalidFields(config, group, errorDictionary?)`, for forms you build without `<crispr-form>`.
+
 ## Recent changes
 
 Consumer-facing changes from the last few releases. See [CHANGELOG.md](./CHANGELOG.md) for the per-version history.
@@ -241,6 +300,7 @@ Consumer-facing changes from the last few releases. See [CHANGELOG.md](./CHANGEL
 - **`clearable` and `clearButtonLabel` on `DATEPICKER`.** Adds a small text clear button to the datepicker; `clearButtonLabel` sets its visible text. See [Datepicker Field](#datepicker-field).
 - **`testId` on any field config**, including buttons. See [Test IDs](#test-ids).
 - **`processingState` and `processingStateChange` on `IMAGE_UPLOAD`.** See [Image Upload Field](#image-upload-field).
+- **`showInvalidErrors` on `FormConfig`, the `invalidFields` signal and the `invalidSubmit` output on `<crispr-form>`.** List what is wrong when a form is submitted, with an opt-in snack bar. `submitted` is unchanged. Requires `@tft/form-validation-handler` `^21.2.0`. See [Showing what is wrong when a form is submitted](#showing-what-is-wrong-when-a-form-is-submitted).
 
 ### Behaviour changes
 

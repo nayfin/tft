@@ -114,6 +114,27 @@ export async function touchAutocomplete(page: Page, testId: string): Promise<voi
   await page.keyboard.press('Tab');
 }
 
+/** Returns the `<mat-radio-group>` of a radio field. */
+export function getRadioGroup(page: Page, testId: string): Locator {
+  return page.locator(`mat-radio-group[data-testid="${testId}"]`);
+}
+
+/** Returns the radio input of one option of a radio field, found by its exact label. Use it to assert whether the option is checked. */
+export function getRadioOption(page: Page, testId: string, optionLabel: string): Locator {
+  return getRadioGroup(page, testId).getByRole('radio', { name: optionLabel, exact: true });
+}
+
+/**
+ * Selects an option of a radio field by clicking its visible `<mat-radio-button>`, as a user would.
+ * The radio input itself is visually hidden, so it is not clicked directly.
+ */
+export async function selectRadioOption(page: Page, testId: string, optionLabel: string): Promise<void> {
+  await getRadioGroup(page, testId)
+    .locator('mat-radio-button')
+    .filter({ has: page.getByText(optionLabel, { exact: true }) })
+    .click();
+}
+
 /**
  * Programmatically clicks the hidden crispr-form submit button.
  *

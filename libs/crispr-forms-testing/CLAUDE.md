@@ -50,8 +50,10 @@ Every crispr-forms field has `data-testid` set automatically. The value is the f
 - `getHint(page, testId)` — `mat-hint` inside the field
 - `getMatSelect(page, testId)` — `mat-select` inside a select field
 - `getCheckbox(page, testId)` — `mat-checkbox` element
+- `getRadioGroup(page, testId)` — the `mat-radio-group` of a radio field
+- `getRadioOption(page, testId, optionLabel)` — the radio input of one option, by exact label (assert `toBeChecked()` on it)
 - `getAutocompleteInput(page, testId)` — the visible `role="textbox"` input in autocomplete (NOT the hidden formControlName anchor)
-- `getError(page, testId, fieldType?)` — the `<p class="tft-control-error">` paragraph. `fieldType` defaults to `'input'`; pass the field's kebab-case type for other fields (e.g. `'select'`, `'autocomplete'`, `'autocomplete-chiplist'`, `'checkbox'`, `'datepicker'`, `'textarea'`)
+- `getError(page, testId, fieldType?)` — the `<p class="tft-control-error">` paragraph. `fieldType` defaults to `'input'`; pass the field's kebab-case type for other fields (e.g. `'select'`, `'autocomplete'`, `'autocomplete-chiplist'`, `'checkbox'`, `'datepicker'`, `'textarea'`, `'radio'`)
 
 ### Actions
 - `touchInput(page, testId)` — click + Tab to blur
@@ -60,6 +62,7 @@ Every crispr-forms field has `data-testid` set automatically. The value is the f
 - `touchAutocomplete(page, testId)` — click visible input + Tab
 - `touchDatepicker(page, testId)` — click input + Tab
 - `openSelect(page, testId)` — clicks mat-select to open panel
+- `selectRadioOption(page, testId, optionLabel)` — clicks the visible `mat-radio-button` with that label
 - `selectOption(page, testId, optionLabel)` — opens select and clicks the option
 - `submitForm(page, nth?)` — programmatically clicks crispr-form's hidden submit button (index `nth`, defaults to 0)
 
@@ -83,6 +86,9 @@ Slider is not inside a `mat-form-field`, so it uses a plain `<label>`. `getLabel
 ### Slider: min/max are native HTML attributes
 Read `min`/`max` from `input[matSliderThumb]` native HTML attributes, not `aria-valuemin`/`aria-valuemax`.
 
+### Radio: required tests skip a preselected radio
+A radio can't be unselected through the UI, so `testRadioField` skips its required tests when an option is already checked (an initial value). Options that are an observable, promise or function are not checked by the factory (like select).
+
 ### Unit conversion: required errors are not testable
 The `displayValueControl` (visible input) is separate from the `[formControlName]` that holds validators. Validation errors are never wired to the visible input, so required error tests are not possible for this field type.
 
@@ -102,4 +108,5 @@ Each factory registers Playwright `test()` calls conditioned on the config:
 | `testAutocompleteChiplistField` | `AutocompleteChiplistFieldConfig` | label, hint, type+see options, add chip, remove chip, minArrayLength error |
 | `testFileUploadField` | `FileUploadFieldConfig` | label, drop zone text, select button |
 | `testUnitConversionField` | `UnitConversionFieldConfig` | label, number input, unit select |
+| `testRadioField` | `RadioFieldConfig` | group renders, label + accessible name, heading (+ accessible name when no label), static options render + select option, required (via `submitForm`, error under the group: `getError(page, id, 'radio')`) |
 | `testField` | `AnyFieldConfig` | dispatches to the correct factory above; skips non-control fields |

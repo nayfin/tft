@@ -58,6 +58,11 @@ export const FIELDS_ROUTES: Routes = [
       import('./checkbox/checkbox.component').then((m) => m.CheckboxComponent),
   },
   {
+    path: 'radio',
+    loadComponent: () =>
+      import('./radio/radio.component').then((m) => m.RadioComponent),
+  },
+  {
     path: 'datepicker',
     loadComponent: () =>
       import('./datepicker/datepicker.component').then(

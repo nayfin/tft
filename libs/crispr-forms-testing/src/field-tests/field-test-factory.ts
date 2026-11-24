@@ -12,6 +12,7 @@ import type {
   AutocompleteChiplistFieldConfig,
   FileUploadFieldConfig,
   UnitConversionFieldConfig,
+  RadioFieldConfig,
 } from '@tft/crispr-forms';
 import { testInputField } from './input.tests';
 import { testTextareaField } from './textarea.tests';
@@ -23,6 +24,7 @@ import { testAutocompleteField } from './autocomplete.tests';
 import { testAutocompleteChiplistField } from './autocomplete-chiplist.tests';
 import { testFileUploadField } from './file-upload.tests';
 import { testUnitConversionField } from './unit-conversion.tests';
+import { testRadioField } from './radio.tests';
 
 /**
  * Registers a `test.describe` block for a field config, automatically selecting
@@ -77,6 +79,9 @@ export function testField(config: AnyFieldConfig) {
         break;
       case 'unitConversion':
         testUnitConversionField(config as UnitConversionFieldConfig);
+        break;
+      case 'radio':
+        testRadioField(config as RadioFieldConfig);
         break;
     }
   });

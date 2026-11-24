@@ -4,7 +4,7 @@ import {
 import { NgControl } from '@angular/forms';
 import { Subscription, EMPTY, Observable, merge, Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
-import { defaultErrors, ErrorDictionary } from '../form-errors';
+import { defaultErrors, ErrorDictionary, lookupErrorMessage } from '../form-errors';
 import { ControlErrorsFormDirective } from './control-errors-form.directive';
 import { ControlErrorComponent } from '../components';
 import { ControlErrorContainerDirective } from './control-error-container.directive';
@@ -96,15 +96,7 @@ export class ControlErrorsDirective implements OnInit {
   }
 
   getErrorMessage() {
-    const controlErrors = this.ngControl.errors;
-    if (controlErrors) {
-      const firstKey = Object.keys(controlErrors)[0];
-      const getError = this.errors[firstKey] || this.errors['default'];
-      const text = getError(controlErrors[firstKey]);
-      return text;
-    } else {
-      return null;
-    }
+    return lookupErrorMessage(this.ngControl.errors, this.errors);
   }
 }
 
