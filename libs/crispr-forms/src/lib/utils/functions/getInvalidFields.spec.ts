@@ -202,7 +202,7 @@ describe('getInvalidFields', () => {
       expect(getInvalidFields(config, group)[0].label).toBe('name');
     });
 
-    it('does not use heading.label as the label of a leaf field', () => {
+    it('names a field by its label rather than its heading label', () => {
       const config: FormConfig = {
         fields: [
           input('name', {
@@ -215,6 +215,72 @@ describe('getInvalidFields', () => {
       const group = buildFormGroupFromConfig(config);
 
       expect(getInvalidFields(config, group)[0].label).toBe('Full name');
+    });
+
+    it('names a field with no label by its heading label', () => {
+      const config: FormConfig = {
+        fields: [
+          {
+            ...input('name', {
+              heading: { label: 'Personal' },
+              validators: required,
+            }),
+            label: undefined,
+          },
+        ],
+      };
+      const group = buildFormGroupFromConfig(config);
+
+      expect(getInvalidFields(config, group)[0].label).toBe('Personal');
+    });
+
+    it('names a field with no label inside a sub-group by its heading label', () => {
+      const config: FormConfig = {
+        fields: [
+          subGroup(
+            'address',
+            [
+              {
+                ...input('street', {
+                  heading: { label: 'Radio caption' },
+                  validators: required,
+                }),
+                label: undefined,
+              },
+            ],
+            { heading: { label: 'Address' } }
+          ),
+        ],
+      };
+      const group = buildFormGroupFromConfig(config);
+
+      expect(getInvalidFields(config, group)[0].label).toBe(
+        'Radio caption in Address'
+      );
+    });
+
+    it('names a field with no label inside a list item by its heading label', () => {
+      const photos = list(
+        'photos',
+        [
+          {
+            ...input('caption', {
+              heading: { label: 'Radio caption' },
+              validators: required,
+            }),
+            label: undefined,
+          },
+        ],
+        { heading: { label: 'Photos' } }
+      );
+      const config: FormConfig = { fields: [photos] };
+      const group = buildFormGroupFromConfig(config);
+      addItem(group, photos, { caption: 'ok' });
+      addItem(group, photos);
+
+      expect(getInvalidFields(config, group)[0].label).toBe(
+        'Radio caption in Photos 2'
+      );
     });
 
     it('builds the message from the library defaults and passes the error value to it', () => {

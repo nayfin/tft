@@ -57,13 +57,88 @@ test.describe('Radio Field', () => {
     }
   });
 
-  test('renders the heading as the caption of the group', async ({ page }) => {
+  /** The field wrapper of a radio group. */
+  const field = (page: Page, testId: string) =>
+    page
+      .locator('crispr-radio-field')
+      .filter({ has: page.locator(`[data-testid="${testId}"]`) });
+
+  test('shows the label visibly above the group', async ({ page }) => {
+    await expect(field(page, 'radioField').locator('.radio-label')).toHaveText(
+      radioConfig('radioField').label
+    );
+    // a label-only radio has no heading
     await expect(
-      page
-        .locator('crispr-radio-field')
-        .filter({ has: page.locator('[data-testid="radioField"]') })
-        .locator('crispr-heading')
-    ).toHaveText('Radio Field');
+      field(page, 'radioField').locator('crispr-heading')
+    ).toHaveCount(0);
+  });
+
+  test('renders the heading as the caption of a heading-only radio', async ({
+    page,
+  }) => {
+    await expect(
+      field(page, 'optionalRadio').locator('crispr-heading')
+    ).toHaveText(radioConfig('optionalRadio').heading.label);
+    await expect(
+      field(page, 'optionalRadio').locator('.radio-label')
+    ).toHaveCount(0);
+  });
+
+  test('shows both the heading and the label when a radio has both', async ({
+    page,
+  }) => {
+    const config = radioConfig('preselectedRadio');
+
+    await expect(
+      field(page, 'preselectedRadio').locator('crispr-heading')
+    ).toHaveText(config.heading.label);
+    await expect(
+      field(page, 'preselectedRadio').locator('.radio-label')
+    ).toHaveText(config.label);
+  });
+
+  test('names the radio group by its label for assistive technology', async ({
+    page,
+  }) => {
+    const labelled = page.getByRole('radiogroup', {
+      name: radioConfig('radioField').label,
+      exact: true,
+    });
+
+    await expect(labelled).toHaveCount(1);
+    await expect(labelled).toHaveAttribute('data-testid', 'radioField');
+    // the observable radio is labelled too, once its options have arrived
+    await expect(
+      page.getByRole('radiogroup', {
+        name: radioConfig('observableRadio').label,
+        exact: true,
+      })
+    ).toHaveAttribute('data-testid', 'observableRadio');
+  });
+
+  test('names a heading-only radio group by its heading text', async ({
+    page,
+  }) => {
+    const named = page.getByRole('radiogroup', {
+      name: radioConfig('optionalRadio').heading.label,
+      exact: true,
+    });
+
+    await expect(named).toHaveCount(1);
+    await expect(named).toHaveAttribute('data-testid', 'optionalRadio');
+  });
+
+  test('names a radio with both a label and a heading by its label', async ({
+    page,
+  }) => {
+    const config = radioConfig('preselectedRadio');
+
+    await expect(
+      page.getByRole('radiogroup', { name: config.label, exact: true })
+    ).toHaveAttribute('data-testid', 'preselectedRadio');
+    await expect(
+      page.getByRole('radiogroup', { name: config.heading.label, exact: true })
+    ).toHaveCount(0);
   });
 
   test('starts with nothing selected', async ({ page }) => {
@@ -99,7 +174,9 @@ test.describe('Radio Field', () => {
     await submitForm(page);
 
     await expect(errors(page)).toHaveCount(1);
-    await expect(error(page, 'radioField')).toHaveText('This field is required');
+    await expect(error(page, 'radioField')).toHaveText(
+      'This field is required'
+    );
     await expect(group(page, 'radioField')).toHaveClass(/ng-invalid/);
   });
 
@@ -120,7 +197,9 @@ test.describe('Radio Field', () => {
     page,
   }) => {
     await submitForm(page);
-    await expect(error(page, 'radioField')).toHaveText('This field is required');
+    await expect(error(page, 'radioField')).toHaveText(
+      'This field is required'
+    );
 
     await pick(page, 'radioField', labelsOf('radioField')[0]);
 

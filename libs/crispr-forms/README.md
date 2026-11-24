@@ -282,7 +282,7 @@ Each `InvalidField` is `{ path, label, message, errorKey, control }`: the dot pa
 **How fields are listed**
 
 - One entry per invalid field, using only its first error. The message comes from the form's `errorDictionary`, then the library defaults.
-- A field is named by its `label`, or its `controlName` if it has none (`heading.label` is not used for a field).
+- A field is named by its `label`, else its `heading.label`, else its `controlName`.
 - Sub-groups and group lists are named by their `heading.label`, or their `controlName`. Their invalid fields are named inside-out: `Street in Address`.
 - Group list items use `itemLabelBuilder(index)` when set (the index is 0-based), otherwise `<list name> <position>`, so `Photo in Photos 2` or, with a builder returning `'Photo 2'`, `Photo in Photo 2`.
 - A group's, list's, item's or the form's own validator error (for example `minArrayLength` on a list) is listed only when none of its fields are, named after the group (`Form` for the whole form).

@@ -130,6 +130,7 @@ export class OverviewComponent implements OnInit{
       {
         controlType: ControlType.RADIO,
         controlName: 'radioField',
+        label: 'Radio Field',
         validators: [Validators.required],
         options: () => {
           return [

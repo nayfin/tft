@@ -283,6 +283,7 @@ interface ImageUploadFieldConfig extends CrisprControlConfig, MatFieldProperties
 ```typescript
 interface RadioFieldConfig extends CrisprControlConfig, MatFieldProperties {
   controlType: ControlType.RADIO;
+  label?: string; // Visible label of the group and its accessible name. Without it, heading.label names the group
   options: OptionsType; // Same as SelectField OptionsType
 }
 ```

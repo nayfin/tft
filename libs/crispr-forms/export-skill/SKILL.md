@@ -88,7 +88,7 @@ Include the following types depending on what UI elements you need:
 - `TEXTAREA`: Multi-line text area.
 - `SELECT`: Dropdown list.
 - `CHECKBOX`: Single boolean checkbox.
-- `RADIO`: Radio button group.
+- `RADIO`: Radio button group. An optional `label` is shown above the group and names it for assistive technology; with only a `heading`, the heading's text names it.
 - `SLIDER`: Numeric slider.
 - `DATEPICKER`: Date selection. Set `clearable: true` to show a small text clear button next to the calendar toggle (see "Clearable Datepicker" below).
 - `FILE_UPLOAD` / `IMAGE_UPLOAD`: Upload fields. `IMAGE_UPLOAD` makes the form invalid while an image is being compressed (`imageProcessing` error) or if compression fails (`imageProcessingFailed`); use `processingStateChange` to react to `'idle' | 'processing' | 'failed'` transitions and `filesChanged` to receive the final processed `File`. Selecting, clearing or resetting mid-compression cancels the superseded compression, and destroying the field mid-processing reports `'idle'` and restores validity. `FILE_UPLOAD` calls `filesChanged` with the selected/dropped `FileList` once it is set as the control value.
@@ -194,7 +194,7 @@ Fields show their own errors once touched. To list everything that is wrong in o
   ```
 - **Naming rules** (also used by the standalone `getInvalidFields(config, group, errorDictionary?)`):
   - One entry per invalid field, from its first error only. Messages prefer the form's `errorDictionary` over the defaults.
-  - A field is named by `label`, falling back to `controlName` (`heading.label` is not used for a field).
+  - A field is named by `label`, falling back to `heading.label`, then `controlName`.
   - Sub-groups and group lists are named by `heading.label`, falling back to `controlName`. Their fields are named inside-out: `Street in Address`.
   - Group list items use `itemLabelBuilder(index)` (0-based) when set, otherwise `<list name> <position>`: `Photo in Photos 2`.
   - A group's, list's, item's or the form's own validator error is listed only when none of its fields are (the form's entry is labelled `Form`).

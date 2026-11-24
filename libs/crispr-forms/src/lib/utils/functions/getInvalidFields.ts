@@ -189,9 +189,13 @@ function ownError(
   ];
 }
 
-/** A leaf field's name: its label, or its control name when it has none. */
+/** A leaf field's name: its label, else its heading's label, else its control name. */
 function fieldLabel(config: CrisprControlConfig): string {
-  return (config as { label?: string }).label || String(config.controlName);
+  return (
+    (config as { label?: string }).label ||
+    config.heading?.label ||
+    String(config.controlName)
+  );
 }
 
 /** A group's or list's name: its heading label, or its control name when it has none. */
