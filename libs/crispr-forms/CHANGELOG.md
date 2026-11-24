@@ -11,7 +11,7 @@
 - Optional `label` on the `RADIO` field. It is shown above the radio group and is the group's accessible name (`aria-labelledby`). A radio with only a `heading` is named from the heading's text (`aria-label`), so existing radios get an accessible name without a config change. `heading` still captions the group as before.
 
 ### Fixed
-- The `RADIO` field's validation error is shown under its radio group. It was rendered at the end of the form, outside the field (it could overlap the form's last button), and `getError(page, id, 'radio')` from `@tft/crispr-forms-testing` could not find it.
+- The `RADIO` field's validation error is shown under its radio group. It was rendered at the end of the form, outside the field (it could overlap the form's last button), and `getError(page, id, 'radio')` from `@tft/crispr-forms-testing` could not find it. The radio group now keeps 16px of space below its options, so the error sits clear of them instead of overlapping, and the content below does not jump when an error appears.
 
 ### Changed (may need code updates)
 - `@tft/crispr-forms` now requires `@tft/form-validation-handler` `^21.2.0` (it was `^21.1.0`), which exports the `getErrorMessage` it uses. Update both packages together.

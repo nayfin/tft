@@ -76,6 +76,27 @@ test.describe('Radio Field', () => {
     ).toHaveText('This field is required');
   });
 
+  test('keeps the required error clear of the radio options', async ({
+    page,
+  }) => {
+    await submitForm(page);
+    const message = getError(page, 'radioField', 'radio');
+    await expect(message).toBeVisible();
+
+    const optionLabels = getRadioGroup(page, 'radioField').locator(
+      'mat-radio-button label'
+    );
+    const errorBox = await message.boundingBox();
+    const lowestLabelBottom = Math.max(
+      ...(await optionLabels.evaluateAll((labels) =>
+        labels.map((label) => label.getBoundingClientRect().bottom)
+      ))
+    );
+
+    // the error starts below the option labels, with a visible gap, instead of overlapping them
+    expect(errorBox.y).toBeGreaterThanOrEqual(lowestLabelBottom + 4);
+  });
+
   test('shows no error on submit for the optional radio', async ({ page }) => {
     await submitForm(page);
 

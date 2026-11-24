@@ -2,6 +2,14 @@ mat-radio-button {
   padding: 12px;
 }
 
+// The error component pulls itself up 16px so it sits in a form field's reserved subscript area.
+// A radio group has no such area, so reserve the space here, or the error overlaps the options.
+// Reserving it always, not only on error, keeps the content below from jumping when an error appears.
+mat-radio-group {
+  display: block;
+  padding-bottom: 16px;
+}
+
 .radio-label {
   display: block;
   margin-bottom: 4px;
