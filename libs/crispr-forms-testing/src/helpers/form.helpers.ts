@@ -137,3 +137,19 @@ export async function touchDatepicker(page: Page, testId: string): Promise<void>
   await getMatFormField(page, testId).locator('input').click();
   await page.keyboard.press('Tab');
 }
+
+/**
+ * Types a date into a datepicker's input (e.g. `'1/15/2024'` for the en-US locale) and presses Tab to blur it.
+ * The datepicker parses the text into the control value as it is typed.
+ */
+export async function enterDatepickerDate(page: Page, testId: string, text: string): Promise<void> {
+  const input = getMatFormField(page, testId).locator('input');
+  await input.click();
+  await input.fill(text);
+  await page.keyboard.press('Tab');
+}
+
+/** Returns the clear button of a `clearable` datepicker field. It is only rendered while the control has a value. */
+export function getDatepickerClearButton(page: Page, testId: string): Locator {
+  return page.locator(`[data-testid="${testId}-clear"]`);
+}

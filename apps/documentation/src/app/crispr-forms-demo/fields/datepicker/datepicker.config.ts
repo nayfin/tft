@@ -16,6 +16,26 @@ export const datepickerFormConfig: FormConfig = {
       validators: [Validators.required],
     },
     {
+      controlType: ControlType.DATEPICKER,
+      label: 'Clearable Datepicker',
+      controlName: 'clearableDatepicker',
+      clearable: true,
+    },
+    {
+      controlType: ControlType.DATEPICKER,
+      label: 'Clearable Datepicker With Custom Label',
+      controlName: 'clearableLabelDatepicker',
+      clearable: true,
+      clearButtonLabel: 'Remove date',
+    },
+    {
+      controlType: ControlType.DATEPICKER,
+      label: 'Required Clearable Datepicker',
+      controlName: 'requiredClearableDatepicker',
+      clearable: true,
+      validators: [Validators.required],
+    },
+    {
       controlType: ControlType.BUTTON,
       label: 'Submit',
     },
