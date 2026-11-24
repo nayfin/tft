@@ -114,6 +114,8 @@ touchSelect(page, testId)         // open + Escape + Tab
 touchCheckbox(page, testId)       // click + click + Tab (leaves unchecked, triggers requiredTrue)
 touchAutocomplete(page, testId)   // click visible input + Tab
 touchDatepicker(page, testId)     // click input + Tab
+enterDatepickerDate(page, testId, text) // type a date such as '1/15/2024' into the input + Tab
+getDatepickerClearButton(page, testId)  // the clear button of a `clearable` datepicker (only rendered while it has a value)
 openSelect(page, testId)          // clicks mat-select to open the panel
 selectOption(page, testId, label) // opens select and clicks the named option
 submitForm(page, nth?)            // programmatically clicks crispr-form's hidden submit button
@@ -132,7 +134,7 @@ Each factory is a function that registers `test()` calls conditioned on the conf
 | `testTextareaField` | `TextareaFieldConfig` | label, hint, required |
 | `testCheckboxField` | `CheckboxFieldConfig` | label, requiredTrue error |
 | `testSelectField` | `SelectFieldConfig` | label, hint, options count, select option, required |
-| `testDatepickerField` | `DatepickerFieldConfig` | label, hint, toggle button, required |
+| `testDatepickerField` | `DatepickerFieldConfig` | label, hint, toggle button, required; when `clearable`: clear button hidden when empty, shown with its aria-label after a date is entered, clears the input, required error after clearing |
 | `testSliderField` | `SliderFieldConfig` | renders, label, min, max |
 | `testAutocompleteField` | `AutocompleteFieldConfig` | label, hint, dropdown, select option, required (via submitForm) |
 | `testAutocompleteChiplistField` | `AutocompleteChiplistFieldConfig` | label, hint, type+see options, add chip, remove chip, minArrayLength error |

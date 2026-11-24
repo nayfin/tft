@@ -194,6 +194,20 @@ Selecting another image, clearing or resetting while an image is compressing can
 
 Default messages for the new `imageProcessing` and `imageProcessingFailed` error keys live in `defaultErrors` and can be overridden through the form's `errorDictionary`.
 
+## Datepicker Field
+
+Set `clearable: true` on a `DATEPICKER` field to let users remove a date they picked. A clear button appears next to the calendar toggle while the control has a value and is enabled. Clicking it sets the value to `null` and marks the control dirty and touched, so a required field shows its required error straight away.
+
+```ts
+{
+  controlType: ControlType.DATEPICKER,
+  controlName: 'startDate',
+  label: 'Start date',
+  clearable: true,
+  clearButtonLabel: 'Remove start date', // optional, the button's aria-label. Defaults to 'Clear date'
+}
+```
+
 ## File Upload Field
 
 `ControlType.FILE_UPLOAD`'s `filesChanged?: (parentGroup, files) => void` (previously declared but never called) now fires with the selected or dropped `FileList` after it is set as the control value. The `uploadComponent` passed to `uploadFiles` keeps its `isUploaded` boolean; it is now signal-backed, so assigning it asynchronously (e.g. when an upload completes) re-renders the field without zone.js.
@@ -205,6 +219,7 @@ Consumer-facing changes from the last few releases. See [CHANGELOG.md](./CHANGEL
 ### New config options
 
 - **`valueAsNumber` on `INPUT`.** With `inputType: 'number'`, set `valueAsNumber: true` to get a `number` control value (an empty input gives `null`) instead of a string. It is off by default and has no effect on other input types. In this mode `maxLength` and `pattern` are not applied, since browsers ignore them on number inputs.
+- **`clearable` and `clearButtonLabel` on `DATEPICKER`.** Adds a clear button to the datepicker. See [Datepicker Field](#datepicker-field).
 - **`testId` on any field config**, including buttons. See [Test IDs](#test-ids).
 - **`processingState` and `processingStateChange` on `IMAGE_UPLOAD`.** See [Image Upload Field](#image-upload-field).
 

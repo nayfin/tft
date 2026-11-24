@@ -1,5 +1,6 @@
 # TODOS
-
+- a11y
+- i18n
 - how can skills changes be automated for consumers?
   - use the google tools to make publicly available (good for resume)
 - apps/documentation, apps/api, api-interfaces, mat-instantsearch and ui-imports still have broken generator-stub Jest specs and are excluded from the CI unit test step (`--exclude` in `ci.yml`; remove each from the list once fixed)

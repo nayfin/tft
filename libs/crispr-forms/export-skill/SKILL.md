@@ -90,7 +90,7 @@ Include the following types depending on what UI elements you need:
 - `CHECKBOX`: Single boolean checkbox.
 - `RADIO`: Radio button group.
 - `SLIDER`: Numeric slider.
-- `DATEPICKER`: Date selection.
+- `DATEPICKER`: Date selection. Set `clearable: true` to show a clear button next to the calendar toggle (see "Clearable Datepicker" below).
 - `FILE_UPLOAD` / `IMAGE_UPLOAD`: Upload fields. `IMAGE_UPLOAD` makes the form invalid while an image is being compressed (`imageProcessing` error) or if compression fails (`imageProcessingFailed`); use `processingStateChange` to react to `'idle' | 'processing' | 'failed'` transitions and `filesChanged` to receive the final processed `File`. Selecting, clearing or resetting mid-compression cancels the superseded compression, and destroying the field mid-processing reports `'idle'` and restores validity. `FILE_UPLOAD` calls `filesChanged` with the selected/dropped `FileList` once it is set as the control value.
 - `AUTOCOMPLETE` / `AUTOCOMPLETE_CHIPLIST`: Type-ahead and tag inputs.
 - `HEADING` / `DIVIDER`: Structural and visual layout fields (not form controls).
@@ -160,6 +160,16 @@ Include the following types depending on what UI elements you need:
   config: FormConfig = { density: -2, fields: [...] };
   // To change at runtime (default CD):
   this.config = { ...this.config, density: -3 };
+  ```
+- **Clearable Datepicker**: Set `clearable: true` on a `DATEPICKER` field to show a clear button (an icon button before the calendar toggle) while the control has a value and is enabled. Clicking it sets the value to `null` and marks the control dirty and touched, so a required field shows its required error right away. The button's `aria-label` defaults to `'Clear date'`; set `clearButtonLabel` to change it (e.g. for another language). It is off by default.
+  ```typescript
+  {
+    controlType: ControlType.DATEPICKER,
+    controlName: 'startDate',
+    label: 'Start date',
+    clearable: true,
+    clearButtonLabel: 'Remove start date', // optional, defaults to 'Clear date'
+  }
   ```
 
 ## Guidelines for the Agent
