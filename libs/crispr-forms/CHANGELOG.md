@@ -1,5 +1,16 @@
 # Changelog
 
+## 21.5.0
+
+### Added
+- `showInvalidErrors` on `FormConfig`, with the `InvalidErrorsConfig` type. It is off by default. With `true` (or an object), submitting an invalid form, from the submit button or `triggerSubmit()`, opens one Angular Material snack bar. It has a "Fix N field(s) to continue" heading, lists the invalid fields as `label: message`, shows "+N more" past `maxErrors` and has a Dismiss button. `InvalidErrorsConfig` sets `duration` (ms, default `8000`, `0` keeps it open until dismissed), `maxErrors` (default `5`) and `dismissLabel` (default `'Dismiss'`). Only one snack bar is open at a time, so a second invalid submit replaces the first. It does not move focus.
+- `invalidFields` signal on `<crispr-form>`: what is wrong right now, one `InvalidField` per invalid field in config order, whether or not the fields have been touched. It keeps the same array while nothing observable has changed.
+- `invalidSubmit` output on `<crispr-form>`: emits the same array when the form is submitted while invalid. `submitted` is unchanged and still fires for every submit.
+- `getInvalidFields(config, group, errorDictionary?)` and the `InvalidField` type (`{ path, label, message, errorKey, control }`) are exported, for lists built outside `<crispr-form>`. Fields are named by `label` (or `controlName`), and fields inside sub-groups and group lists as `Street in Address` or `Photo in Photos 2` (`itemLabelBuilder` is used for list items when set). A group's own validator error is listed only when none of its fields are. Messages prefer the form's `errorDictionary` over the defaults.
+
+### Changed (may need code updates)
+- `@tft/crispr-forms` now requires `@tft/form-validation-handler` `^21.2.0` (it was `^21.1.0`), which exports the `getErrorMessage` it uses. Update both packages together.
+
 ## 21.4.0
 
 ### Changed (may need code updates)

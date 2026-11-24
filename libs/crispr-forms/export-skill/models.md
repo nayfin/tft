@@ -11,6 +11,27 @@ interface FormConfig {
   validators?: ValidatorFn[]; // Cross-field validators
   autoComplete?: string; // HTML autocomplete attribute
   density?: 0 | -1 | -2 | -3 | -4 | -5; // Angular Material density scale; 0 = default, -5 = most compact
+  showInvalidErrors?: boolean | InvalidErrorsConfig; // Opt in to a snack bar listing the invalid fields on an invalid submit. true = defaults. Off by default
+}
+```
+
+### `InvalidErrorsConfig` (options for `showInvalidErrors`)
+```typescript
+interface InvalidErrorsConfig {
+  duration?: number; // How long the snack bar stays open, in ms. 0 = until dismissed. Default 8000
+  maxErrors?: number; // How many fields to list, the rest show as "+N more". Default 5
+  dismissLabel?: string; // Text of the button that closes it. Default 'Dismiss'
+}
+```
+
+### `InvalidField` (an entry of `<crispr-form>`'s `invalidFields` signal, the `invalidSubmit` output and `getInvalidFields`)
+```typescript
+interface InvalidField {
+  path: string; // Dot path of the control in the form, e.g. 'photos.1.caption'. Empty for the top-level form
+  label: string; // Human name of the field, e.g. 'Caption in Photos 2'
+  message: string; // The error message, from the form's errorDictionary or the library defaults
+  errorKey: string; // The first error key on the control, e.g. 'required'
+  control: AbstractControl;
 }
 ```
 

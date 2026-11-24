@@ -20,9 +20,18 @@ config: FormConfig = {
   validators: [],          // form-level validators
   errorDictionary: {},     // override error messages
   classes: [],             // CSS classes on form element
+  showInvalidErrors: true, // opt in: snack bar listing the invalid fields on an invalid submit (or an InvalidErrorsConfig)
   fields: [ ...fieldConfigs ]
 };
 ```
+
+## Invalid fields
+List what is wrong with the form in one place:
+- `showInvalidErrors?: boolean | InvalidErrorsConfig` on `FormConfig` (off by default). On an invalid submit (button or `triggerSubmit()`) it opens one `MatSnackBar` (`Fix N field(s) to continue`, a `label: message` list, a Dismiss button). `InvalidErrorsConfig`: `duration` (ms, default 8000, 0 = until dismissed), `maxErrors` (default 5, the rest show as "+N more"), `dismissLabel` (default `'Dismiss'`). A second invalid submit replaces it. It does not move focus.
+- `invalidFields` signal on `<crispr-form>`: `InvalidField[]` (`{ path, label, message, errorKey, control }`), one per invalid field in config order, regardless of touched state.
+- `invalidSubmit` output: emits the same array when submitted while invalid. `submitted` still fires for every submit.
+- `getInvalidFields(config, group, errorDictionary?)` is the pure function behind them. A leaf is named by `label` (else `controlName`), groups and lists by `heading.label` (else `controlName`), joined inside-out (`Street in Address`, `Photo in Photos 2`; `itemLabelBuilder(i)` names list items when set). A group's own validator error is listed only when none of its fields are. Messages come from `errorDictionary` before the defaults (`getErrorMessage` from `@tft/form-validation-handler`).
+- Code: `src/lib/utils/functions/getInvalidFields.ts`, `src/lib/form/form.component.ts`, `src/lib/form/invalid-fields-snack-bar/`.
 
 ## ControlType enum
 `INPUT`, `SELECT`, `TEXTAREA`, `CHECKBOX`, `RADIO`, `AUTOCOMPLETE`, `AUTOCOMPLETE_CHIPLIST`,

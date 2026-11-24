@@ -1,6 +1,6 @@
 {
   "name": "@tft/crispr-forms",
-  "version": "21.4.0",
+  "version": "21.5.0-0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nayfin/tft.git",
@@ -12,7 +12,7 @@
     "@angular/core": "^21.0.0",
     "@angular/material": "^21.0.0",
     "@angular/cdk": "^21.0.0",
-    "@tft/form-validation-handler": "^21.1.0"
+    "@tft/form-validation-handler": "^21.2.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"
