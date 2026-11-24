@@ -1,5 +1,11 @@
 # Changelog
 
+## 21.4.0
+
+### Changed (may need code updates)
+- The `UNIT_CONVERSION` field now passes the stored value to `initialDisplayValueConversion` unchanged. A stored `0` used to arrive as `null`, so the two could not be told apart. It now arrives as `0`, and only a missing value arrives as `null`. A conversion that treats a falsy `value` as "no measurement" (for example `value ? convert(value) : 0`) now gets `0` for a stored `0` and should check `value == null` instead.
+- `storedValueConversion` and `initialDisplayValueConversion` on the `UNIT_CONVERSION` field may now return `null` as well as a number. Return `null` from both for an empty measurement and the field stays `null` on load, so a `required` field is invalid until the user enters a value. Existing configs that return a number keep compiling and behave as before.
+
 ## 21.3.0
 
 ### Added

@@ -244,6 +244,7 @@ Consumer-facing changes from the last few releases. See [CHANGELOG.md](./CHANGEL
 
 ### Behaviour changes
 
+- **`UNIT_CONVERSION` can store and load `null`.** `storedValueConversion` and `initialDisplayValueConversion` may now return `null`, and `initialDisplayValueConversion` receives the stored value unchanged. A stored `0` used to arrive as `null`; it now arrives as `0`, and only a missing value arrives as `null`. A conversion that treats a falsy `value` as "no measurement" (for example `value ? convert(value) : 0`) should check `value == null` instead. Return `null` from both conversions for an empty field to keep it `null` on load, so a `required` field starts invalid.
 - **Seeded falsy values are kept.** An initial value of `0`, `false` or `''` is no longer turned into `null`. For example, a checkbox seeded with `false` now reports `false`, and `Validators.required` treats it as filled. Use `Validators.requiredTrue` for "must be ticked".
 - **Forms are invalid while an image is processing.** A form containing an `IMAGE_UPLOAD` field is invalid during compression and after a compression failure, so buttons with `disabledOnInvalidForm` are disabled in that window.
 - **`filesChanged` now fires** on `IMAGE_UPLOAD` and `FILE_UPLOAD`. It was declared before but never called, so existing callbacks will start running.

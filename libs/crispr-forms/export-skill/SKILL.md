@@ -97,7 +97,7 @@ Include the following types depending on what UI elements you need:
 - `SUB_GROUP` / `GROUP_LIST`: For nested `FormGroup`s and `FormArray`s.
 - `BUTTON`: Submit or regular buttons.
 - `MAP`: Map selection.
-- `UNIT_CONVERSION`: Measurements.
+- `UNIT_CONVERSION`: Measurements. The user types in a display unit and the control holds the converted stored value. `storedValueConversion` and `initialDisplayValueConversion` may return `null`, and `initialDisplayValueConversion` receives the stored value unchanged (a stored `0` arrives as `0`, a missing value as `null`). Return `null` from both for an empty field where `null` and `0` mean different things, so it stays `null` on load and a `required` field starts invalid.
 
 ## 5. Creating New Chips via Inline Sub-Form (`createChip`)
 
