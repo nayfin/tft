@@ -20,4 +20,5 @@
 - Convert to signals (plus zoneless and strictTemplates)
 - interact lasso rect wrong size at scale ≠ 1: README/skill bound it in `.px`, the directive needs `.em`; covered by `interact-e2e` lasso specs
 - Adds e2e identifiers
-- autccomplete chiplists aren't deletable
+- autocomplete chiplists aren't deletable
+
