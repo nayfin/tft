@@ -2,6 +2,7 @@ import {
   test,
   expect,
   getMatFormField,
+  getError,
   submitForm,
   Page,
 } from '@tft/crispr-forms-testing';
@@ -87,8 +88,7 @@ test.describe('Radio Field', () => {
     await expect(radio(page, 'radioField', first)).not.toBeChecked();
   });
 
-  // The radio's error is rendered as a child of `crispr-form` instead of inside `crispr-radio-field`, so the
-  // `getError` helper cannot find it. The required radio is the only field that can show an error on this page.
+  const error = (page: Page, testId: string) => getError(page, testId, 'radio');
   const errors = (page: Page) => page.locator('p.tft-control-error');
 
   test('shows the required error on submit when nothing is selected', async ({
@@ -99,15 +99,28 @@ test.describe('Radio Field', () => {
     await submitForm(page);
 
     await expect(errors(page)).toHaveCount(1);
-    await expect(errors(page)).toHaveText('This field is required');
+    await expect(error(page, 'radioField')).toHaveText('This field is required');
     await expect(group(page, 'radioField')).toHaveClass(/ng-invalid/);
+  });
+
+  test('renders the required error directly under its radio group', async ({
+    page,
+  }) => {
+    await submitForm(page);
+
+    // the error is the group's next sibling inside its own field, not at the end of the form
+    await expect(
+      page.locator(
+        'crispr-radio-field:has([data-testid="radioField"]) mat-radio-group[data-testid="radioField"] + tft-control-error p.tft-control-error'
+      )
+    ).toHaveText('This field is required');
   });
 
   test('clears the required error once an option is selected', async ({
     page,
   }) => {
     await submitForm(page);
-    await expect(errors(page)).toHaveText('This field is required');
+    await expect(error(page, 'radioField')).toHaveText('This field is required');
 
     await pick(page, 'radioField', labelsOf('radioField')[0]);
 
@@ -122,6 +135,7 @@ test.describe('Radio Field', () => {
     await expect(group(page, 'optionalRadio')).toHaveClass(/ng-valid/);
     // only the required radio has an error
     await expect(errors(page)).toHaveCount(1);
+    await expect(error(page, 'optionalRadio')).toHaveCount(0);
   });
 
   test('can select, then switch, the optional radio and its false value', async ({

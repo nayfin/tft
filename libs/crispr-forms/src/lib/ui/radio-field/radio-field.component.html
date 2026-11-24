@@ -2,7 +2,10 @@
   [config]="config()"
   [group]="group()">
 
+  <!-- controlErrorContainer makes the control's error render right after the group, inside this field.
+  Without it the error falls back to the form's container and lands at the end of the form. -->
   <mat-radio-group
+    controlErrorContainer
     [attr.data-testid]="testId()"
     [formControl]="radioControl()"
     [color]="config().color">

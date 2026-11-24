@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ControlErrorsDirective } from '@tft/form-validation-handler';
+import { ControlErrorContainerDirective, ControlErrorsDirective } from '@tft/form-validation-handler';
 import { FieldContainerComponent } from '../field-container';
 import { RadioFieldConfig, SelectOption, observablifyOptions } from '../../utils';
 import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abstract';
@@ -20,6 +20,7 @@ import { CrisprControlComponent } from '../../utils/abstracts/crispr-control.abs
         ReactiveFormsModule,
         FieldContainerComponent,
         MatRadioModule,
+        ControlErrorContainerDirective,
         ControlErrorsDirective
     ],
     standalone: true

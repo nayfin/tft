@@ -8,6 +8,9 @@
 - `invalidSubmit` output on `<crispr-form>`: emits the same array when the form is submitted while invalid. `submitted` is unchanged and still fires for every submit.
 - `getInvalidFields(config, group, errorDictionary?)` and the `InvalidField` type (`{ path, label, message, errorKey, control }`) are exported, for lists built outside `<crispr-form>`. Fields are named by `label` (or `controlName`), and fields inside sub-groups and group lists as `Street in Address` or `Photo in Photos 2` (`itemLabelBuilder` is used for list items when set). A group's own validator error is listed only when none of its fields are. Messages prefer the form's `errorDictionary` over the defaults.
 
+### Fixed
+- The `RADIO` field's validation error is shown under its radio group. It was rendered at the end of the form, outside the field (it could overlap the form's last button), and `getError(page, id, 'radio')` from `@tft/crispr-forms-testing` could not find it.
+
 ### Changed (may need code updates)
 - `@tft/crispr-forms` now requires `@tft/form-validation-handler` `^21.2.0` (it was `^21.1.0`), which exports the `getErrorMessage` it uses. Update both packages together.
 
