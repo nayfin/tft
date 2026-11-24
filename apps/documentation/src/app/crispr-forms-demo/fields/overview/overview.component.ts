@@ -100,6 +100,7 @@ export class OverviewComponent implements OnInit{
 
   config: FormConfig = {
     autoComplete: 'off',
+    showInvalidErrors: true,
     errorDictionary: {
       required: () => {
         return `I am a custom error message on a required field`

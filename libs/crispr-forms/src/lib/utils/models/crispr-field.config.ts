@@ -23,7 +23,8 @@ import type {
   ImageUploadFieldConfig,
   FileUploadFieldConfig,
   UnitConversionFieldConfig,
-  MapFieldConfig
+  MapFieldConfig,
+  InvalidErrorsConfig
 } from '../models';
 
 import { ThemePalette } from '@angular/material/core';
@@ -126,6 +127,11 @@ export interface FormConfig<C = AnyFieldConfig> extends AbstractGroupConfig<C> {
    * 0 = default size, -5 = most compact.
    */
   density?: 0 | -1 | -2 | -3 | -4 | -5;
+  /**
+   * Opt in to a snack bar that lists the invalid fields, with their error messages, when the user submits an invalid form.
+   * `true` uses the defaults, an object adjusts them. Off by default. Only one snack bar is open at a time.
+   */
+  showInvalidErrors?: boolean | InvalidErrorsConfig;
 }
 /**
  * Configuration for SubGroup components

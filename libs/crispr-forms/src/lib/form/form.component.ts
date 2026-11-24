@@ -10,12 +10,14 @@ import {
   output,
   untracked,
   ElementRef,
-  viewChild
+  viewChild,
+  inject
 } from '@angular/core';
 import { outputFromObservable, takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule, FormGroup, StatusChangeEvent } from '@angular/forms';
 import { filter, switchMap } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CrisprFieldDirective } from '../field.directive';
 import { ControlErrorContainerDirective, ControlErrorsFormDirective } from '@tft/form-validation-handler';
 import { InitialControlValuePipe } from '../pipes/initial-control-value.pipe';
@@ -26,6 +28,12 @@ import {
   buildFormGroupFromConfig,
   getInvalidFields,
 } from '../utils';
+import { InvalidFieldsSnackBarComponent } from './invalid-fields-snack-bar/invalid-fields-snack-bar.component';
+
+const DEFAULT_INVALID_ERRORS_DURATION = 8000;
+const DEFAULT_INVALID_ERRORS_MAX = 5;
+const DEFAULT_INVALID_ERRORS_DISMISS_LABEL = 'Dismiss';
+
 /** Whether two lists describe the same invalid fields, so `invalidFields` keeps its array when nothing observable changed. */
 function sameInvalidFields(a: InvalidField[], b: InvalidField[]): boolean {
   return (
@@ -63,6 +71,8 @@ function sameInvalidFields(a: InvalidField[], b: InvalidField[]): boolean {
   ]
 })
 export class CrisprFormComponent implements OnInit {
+  private readonly snackBar = inject(MatSnackBar);
+
   config = input.required<FormConfig>();
   form = input<FormGroup>(new FormGroup({}));
   value = input<ControlGroupValue>(null);
@@ -133,8 +143,27 @@ export class CrisprFormComponent implements OnInit {
     if (this.form().invalid) {
       // re-evaluate, so a change that emitted no event (such as `emitEvent: false`) is not missed
       this.bumpFormEventCount();
-      this.invalidSubmit.emit(this.invalidFields());
+      const invalidFields = this.invalidFields();
+      this.invalidSubmit.emit(invalidFields);
+      this.openInvalidErrors(invalidFields);
     }
+  }
+
+  /** Lists the invalid fields in a snack bar when the config opts in. Opening one replaces any that is open. */
+  private openInvalidErrors(invalidFields: InvalidField[]) {
+    const option = this.config().showInvalidErrors;
+    if (!option || !invalidFields.length) {
+      return;
+    }
+    const options = option === true ? {} : option;
+    this.snackBar.openFromComponent(InvalidFieldsSnackBarComponent, {
+      duration: options.duration ?? DEFAULT_INVALID_ERRORS_DURATION,
+      data: {
+        fields: invalidFields,
+        maxErrors: options.maxErrors ?? DEFAULT_INVALID_ERRORS_MAX,
+        dismissLabel: options.dismissLabel ?? DEFAULT_INVALID_ERRORS_DISMISS_LABEL,
+      },
+    });
   }
 
   private bumpFormEventCount() {
