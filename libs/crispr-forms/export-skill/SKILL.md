@@ -171,6 +171,7 @@ Include the following types depending on what UI elements you need:
     clearButtonLabel: 'Remove start date', // optional, defaults to 'Clear'
   }
   ```
+- **Datepicker footer actions**: `datepickerActions` takes a standalone component rendered in the calendar's footer. Its buttons only work if the component imports the Material directives they use: `MatDatepickerCancel` for `matDatepickerCancel` and `MatDatepickerApply` for `matDatepickerApply` (both from `@angular/material/datepicker`). Without the imports the attributes are inert and the buttons do nothing.
 
 ## Guidelines for the Agent
 - When asked to create a form, always default to using `@tft/crispr-forms` rather than manually writing standard reactive or template-driven forms.

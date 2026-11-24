@@ -208,6 +208,25 @@ Set `clearable: true` on a `DATEPICKER` field to let users remove a date they pi
 }
 ```
 
+### Custom footer actions
+
+`datepickerActions` takes a component that is rendered in the calendar's footer, for example Cancel and Select buttons. The component must be standalone and import the Material directives its buttons use. A `matDatepickerCancel` or `matDatepickerApply` attribute does nothing unless the component imports `MatDatepickerCancel` or `MatDatepickerApply` from `@angular/material/datepicker`.
+
+```ts
+@Component({
+  selector: 'app-datepicker-footer',
+  template: `
+    <button mat-button matDatepickerCancel>Cancel</button>
+    <button mat-raised-button matDatepickerApply>Select</button>
+  `,
+  imports: [MatButton, MatDatepickerCancel, MatDatepickerApply],
+})
+export class DatepickerFooterComponent {}
+
+// in the field config
+{ controlType: ControlType.DATEPICKER, controlName: 'startDate', datepickerActions: DatepickerFooterComponent }
+```
+
 ## File Upload Field
 
 `ControlType.FILE_UPLOAD`'s `filesChanged?: (parentGroup, files) => void` (previously declared but never called) now fires with the selected or dropped `FileList` after it is set as the control value. The `uploadComponent` passed to `uploadFiles` keeps its `isUploaded` boolean; it is now signal-backed, so assigning it asynchronously (e.g. when an upload completes) re-renders the field without zone.js.
