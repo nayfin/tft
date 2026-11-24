@@ -110,6 +110,24 @@ config: FormConfig = {
 Clicking the clear button sets the value to `null` and marks the control dirty and touched (so `required` shows its error).
 Requires: `date-fns`, `@angular/material-date-fns-adapter`, and `MAT_DATE_LOCALE` provider in your application providers.
 
+### UNIT_CONVERSION
+```ts
+{
+  controlType: ControlType.UNIT_CONVERSION,
+  controlName: 'length',
+  label: 'Length',
+  showUnitSelect: true,               // false: one fixed unit, shown with fieldSuffix
+  initialDisplayUnit: 'ft',           // required with showUnitSelect: true
+  selectableUnits: () => [{ value: 'ft', label: 'feet' }, { value: 'in', label: 'inch' }],
+  // stored value -> number shown in the input. Receives the stored value unchanged (0 stays 0, missing is null).
+  initialDisplayValueConversion: (stored, unit) => (stored == null ? null : toDisplay(stored, unit)),
+  // number typed in the input -> value stored on the control. Runs on every change, and once on load.
+  storedValueConversion: (display, unit) => (display === '' || display == null ? null : toStored(display, unit)),
+}
+```
+The user types in the display unit and the control holds the converted stored value. Both conversions may return `null`: return `null` for an empty input when `null` (no measurement) and `0` mean different things, and the field stays `null` on load so a `required` field starts invalid. Returning `0` for an empty field makes `required` pass on load.
+Validators are on the control, not the visible input, so a required error never shows on the field. See `libs/crispr-forms-testing/CLAUDE.md`.
+
 ### HEADING / DIVIDER
 ```ts
 { controlType: ControlType.HEADING, label: 'Section Title', typographyClass: 'mat-h2' }
