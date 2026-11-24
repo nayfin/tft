@@ -5,6 +5,7 @@ import { getDayOfYear } from 'date-fns';
 import { datepickerFormConfig } from './datepicker.config';
 import { MatCard } from '@angular/material/card';
 import { MatButton } from '@angular/material/button';
+import { MatDatepickerApply, MatDatepickerCancel } from '@angular/material/datepicker';
 
 @Component({
     selector: 'doc-datepicker',
@@ -114,6 +115,6 @@ export class DatepickerComponent {
     <button mat-raised-button matDatepickerCancel>CANCEL</button>
     <button mat-raised-button matDatepickerApply>SELECT</button>
   `,
-    imports: [MatButton]
+    imports: [MatButton, MatDatepickerCancel, MatDatepickerApply]
 })
 export class CustomDatepickerFooterComponent { }

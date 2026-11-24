@@ -1,3 +1,4 @@
+import type { Page } from '@playwright/test';
 import {
   test,
   expect,
@@ -40,5 +41,31 @@ test.describe('Datepicker Field', () => {
 
     await getInput(page, 'highlightDay').fill('12');
     expect(await highlightedDays()).toEqual([12]);
+  });
+
+  // The footer is the demo's `datepickerActions` component. Its Cancel and Select buttons only work when that
+  // component imports the Material `matDatepickerCancel` and `matDatepickerApply` directives.
+  test.describe('datepickerActions footer', () => {
+    // The field's `startAt` is April 2019, so its calendar opens on that month.
+    const pickApril10 = async (page: Page) => {
+      await openDatepickerCalendar(page, 'customFooterDatepicker');
+      await page.locator('mat-calendar button.mat-calendar-body-cell[aria-label="Apr 10, 2019"]').click();
+    };
+
+    test('Cancel closes the calendar without selecting the date', async ({ page }) => {
+      await pickApril10(page);
+      await page.getByRole('button', { name: 'CANCEL' }).click();
+
+      await expect(page.locator('mat-calendar')).toHaveCount(0);
+      await expect(getInput(page, 'customFooterDatepicker')).toHaveValue('');
+    });
+
+    test('Select closes the calendar and applies the date', async ({ page }) => {
+      await pickApril10(page);
+      await page.getByRole('button', { name: 'SELECT' }).click();
+
+      await expect(page.locator('mat-calendar')).toHaveCount(0);
+      await expect(getInput(page, 'customFooterDatepicker')).toHaveValue('04/10/2019');
+    });
   });
 });
