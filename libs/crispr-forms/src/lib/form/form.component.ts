@@ -45,8 +45,7 @@ function sameInvalidFields(a: InvalidField[], b: InvalidField[]): boolean {
         field.path === other.path &&
         field.label === other.label &&
         field.message === other.message &&
-        field.errorKey === other.errorKey &&
-        field.testId === other.testId
+        field.errorKey === other.errorKey
       );
     })
   );

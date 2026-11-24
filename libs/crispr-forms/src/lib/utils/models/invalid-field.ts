@@ -14,6 +14,4 @@ export interface InvalidField {
   /** The first error key on the control, e.g. `required`. */
   errorKey: string;
   control: AbstractControl;
-  /** The field's `data-testid`, used to find and focus it, e.g. `photos[1].caption`. Empty for the top-level form. */
-  testId: string;
 }

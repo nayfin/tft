@@ -176,7 +176,6 @@ describe('CrisprFormComponent', () => {
 
       list.push(createControlForType(photos.itemConfig) as FormGroup);
       expect(labels(form)).toEqual(['Caption in Photos 1']);
-      expect(form.invalidFields()[0].testId).toBe('photos[0].caption');
 
       list.removeAt(0);
       expect(labels(form)).toEqual([]);

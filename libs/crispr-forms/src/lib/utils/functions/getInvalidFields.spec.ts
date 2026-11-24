@@ -329,7 +329,6 @@ describe('getInvalidFields', () => {
 
       expect(field.label).toBe('Street in Address in Person');
       expect(field.path).toBe('person.address.street');
-      expect(field.testId).toBe('person.address.street');
     });
 
     it("does not report the group's own error when a child is reported", () => {
@@ -371,7 +370,6 @@ describe('getInvalidFields', () => {
       expect(fields[0]).toMatchObject({
         label: 'Home address',
         path: 'address',
-        testId: 'address',
         errorKey: 'groupBroken',
         message: 'Address is broken',
         control: group.get('address'),
@@ -462,13 +460,9 @@ describe('getInvalidFields', () => {
         'photos.0.address.street',
         'photos.1.address.street',
       ]);
-      expect(fields.map((f) => f.testId)).toEqual([
-        'photos[0].address.street',
-        'photos[1].address.street',
-      ]);
     });
 
-    it('gives list item fields a path and test id', () => {
+    it('gives list item fields a path', () => {
       const photos = list('photos', photoFields);
       const config: FormConfig = { fields: [photos] };
       const group = buildFormGroupFromConfig(config);
@@ -478,7 +472,6 @@ describe('getInvalidFields', () => {
       const [field] = getInvalidFields(config, group);
 
       expect(field.path).toBe('photos.1.caption');
-      expect(field.testId).toBe('photos[1].caption');
     });
 
     it('skips disabled list items', () => {
@@ -522,7 +515,6 @@ describe('getInvalidFields', () => {
       expect(fields[0]).toMatchObject({
         label: 'Photos',
         path: 'photos',
-        testId: 'photos',
         errorKey: 'minArrayLength',
         control: group.get('photos'),
       });
@@ -544,7 +536,6 @@ describe('getInvalidFields', () => {
       expect(field).toMatchObject({
         label: 'Photos 1',
         path: 'photos.0',
-        testId: 'photos[0]',
         errorKey: 'itemBroken',
       });
     });
@@ -567,7 +558,6 @@ describe('getInvalidFields', () => {
       expect(fields[0]).toMatchObject({
         label: 'Form',
         path: '',
-        testId: '',
         errorKey: 'formBroken',
         message: 'The form is broken',
         control: group,
@@ -618,63 +608,14 @@ describe('getInvalidFields', () => {
     });
   });
 
-  describe('path and testId', () => {
-    it('uses the control name for both by default', () => {
+  describe('path', () => {
+    it('uses the control name as the path', () => {
       const config: FormConfig = {
         fields: [input('name', { validators: required })],
       };
       const group = buildFormGroupFromConfig(config);
 
-      expect(getInvalidFields(config, group)[0]).toMatchObject({
-        path: 'name',
-        testId: 'name',
-      });
-    });
-
-    it('prefers config.testId over the control name for testId only', () => {
-      const config: FormConfig = {
-        fields: [input('name', { testId: 'full-name', validators: required })],
-      };
-      const group = buildFormGroupFromConfig(config);
-
-      expect(getInvalidFields(config, group)[0]).toMatchObject({
-        path: 'name',
-        testId: 'full-name',
-      });
-    });
-
-    it('prefixes the testId of a sub-group field with the sub-group test id', () => {
-      const config: FormConfig = {
-        fields: [
-          subGroup(
-            'address',
-            [input('street', { testId: 'road', validators: required })],
-            { testId: 'home' }
-          ),
-        ],
-      };
-      const group = buildFormGroupFromConfig(config);
-
-      expect(getInvalidFields(config, group)[0]).toMatchObject({
-        path: 'address.street',
-        testId: 'home.road',
-      });
-    });
-
-    it('prefixes list item fields with the list test id and index', () => {
-      const photos = list(
-        'photos',
-        [input('caption', { testId: 'cap', validators: required })],
-        { testId: 'gallery' }
-      );
-      const config: FormConfig = { fields: [photos] };
-      const group = buildFormGroupFromConfig(config);
-      addItem(group, photos);
-
-      expect(getInvalidFields(config, group)[0]).toMatchObject({
-        path: 'photos.0.caption',
-        testId: 'gallery[0].cap',
-      });
+      expect(getInvalidFields(config, group)[0].path).toBe('name');
     });
   });
 });

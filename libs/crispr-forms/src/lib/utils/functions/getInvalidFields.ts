@@ -16,8 +16,6 @@ import { isControlConfig } from './isControlConfig';
 interface GroupContext {
   /** Dot path of the group's control, '' for the top-level form. */
   path: string;
-  /** Prefix for the `data-testid` of the group's fields, '' for the top-level form. */
-  testIdPrefix: string;
   /** The names of the group and the groups around it, inner to outer, e.g. `Address in Photos 2`. Null at the top level. */
   nameChain: string | null;
 }
@@ -44,7 +42,7 @@ export function getInvalidFields(
   if (group.disabled) {
     return [];
   }
-  const context: GroupContext = { path: '', testIdPrefix: '', nameChain: null };
+  const context: GroupContext = { path: '', nameChain: null };
   const children = collectFromFields(
     config.fields,
     group,
@@ -53,7 +51,7 @@ export function getInvalidFields(
   );
   return children.length
     ? children
-    : ownError(group, 'Form', '', '', errorDictionary);
+    : ownError(group, 'Form', '', errorDictionary);
 }
 
 function collectFromFields(
@@ -73,10 +71,6 @@ function collectFromFields(
       continue;
     }
     const path = joinPath(context.path, controlName);
-    const testId = joinTestId(
-      context.testIdPrefix,
-      fieldConfig.testId || controlName
-    );
 
     if (fieldConfig.controlType === ControlType.SUB_GROUP && isGroup(control)) {
       invalidFields.push(
@@ -84,7 +78,6 @@ function collectFromFields(
           fieldConfig as SubGroupConfig,
           control,
           path,
-          testId,
           context,
           errorDictionary
         )
@@ -98,16 +91,13 @@ function collectFromFields(
           fieldConfig as FormGroupListConfig,
           control,
           path,
-          testId,
           context,
           errorDictionary
         )
       );
     } else {
       const label = withChain(fieldLabel(fieldConfig), context.nameChain);
-      invalidFields.push(
-        ...ownError(control, label, path, testId, errorDictionary)
-      );
+      invalidFields.push(...ownError(control, label, path, errorDictionary));
     }
   }
   return invalidFields;
@@ -117,12 +107,11 @@ function collectFromSubGroup(
   config: SubGroupConfig,
   group: FormGroup,
   path: string,
-  testId: string,
   parent: GroupContext,
   errorDictionary?: ErrorDictionary
 ): InvalidField[] {
   const nameChain = withChain(groupName(config), parent.nameChain);
-  const context: GroupContext = { path, testIdPrefix: testId, nameChain };
+  const context: GroupContext = { path, nameChain };
   const children = collectFromFields(
     config.fields,
     group,
@@ -131,14 +120,13 @@ function collectFromSubGroup(
   );
   return children.length
     ? children
-    : ownError(group, nameChain, path, testId, errorDictionary);
+    : ownError(group, nameChain, path, errorDictionary);
 }
 
 function collectFromList(
   config: FormGroupListConfig,
   list: FormArray,
   path: string,
-  testId: string,
   parent: GroupContext,
   errorDictionary?: ErrorDictionary
 ): InvalidField[] {
@@ -154,7 +142,6 @@ function collectFromList(
       : `${listName} ${i + 1}`;
     const context: GroupContext = {
       path: joinPath(path, String(i)),
-      testIdPrefix: `${testId}[${i}]`,
       nameChain: withChain(itemName, parent.nameChain),
     };
     const children = collectFromFields(
@@ -166,13 +153,7 @@ function collectFromList(
     invalidItems.push(
       ...(children.length
         ? children
-        : ownError(
-            item,
-            context.nameChain,
-            context.path,
-            context.testIdPrefix,
-            errorDictionary
-          ))
+        : ownError(item, context.nameChain, context.path, errorDictionary))
     );
   });
   return invalidItems.length
@@ -181,7 +162,6 @@ function collectFromList(
         list,
         withChain(listName, parent.nameChain),
         path,
-        testId,
         errorDictionary
       );
 }
@@ -191,7 +171,6 @@ function ownError(
   control: AbstractControl,
   label: string | null,
   path: string,
-  testId: string,
   errorDictionary?: ErrorDictionary
 ): InvalidField[] {
   const errors = control.errors;
@@ -206,7 +185,6 @@ function ownError(
       message,
       errorKey: Object.keys(errors)[0],
       control,
-      testId,
     },
   ];
 }
@@ -227,11 +205,6 @@ function withChain(name: string, chain: string | null): string {
 
 function joinPath(prefix: string, segment: string): string {
   return prefix ? `${prefix}.${segment}` : segment;
-}
-
-/** Mirrors how `CrisprFieldComponent.testId` combines a prefix and an id. */
-function joinTestId(prefix: string, id: string): string {
-  return prefix ? `${prefix}.${id}` : id;
 }
 
 function isGroup(control: AbstractControl): control is FormGroup {
