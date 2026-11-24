@@ -1,3 +1,5 @@
+import type { ValidationErrors } from '@angular/forms';
+
 /**
  * Interface for the error dictionary
  */
@@ -36,6 +38,38 @@ export const defaultErrors: ErrorDictionary<string | string[]> = {
     return `You need at least ${requiredMinArrayLength} item${(+requiredMinArrayLength > 1) ? 's' : ''}, but you've only selected ${actualArrayLength}`
   }
 };
+
+/**
+ * Looks up the message for the first error in `controlErrors` in a COMPLETE dictionary (no defaults are merged in).
+ * Falls back to the dictionary's `default` entry when the key is unknown.
+ * @internal used by the control-errors directive, which lets consumers replace the whole dictionary
+ */
+export function lookupErrorMessage(
+  controlErrors: ValidationErrors | null | undefined,
+  dictionary: ErrorDictionary
+): string | null {
+  if (!controlErrors) {
+    return null;
+  }
+  const firstKey = Object.keys(controlErrors)[0];
+  if (firstKey === undefined) {
+    return null;
+  }
+  const getError = dictionary[firstKey] || dictionary['default'];
+  return getError(controlErrors[firstKey]);
+}
+
+/**
+ * Builds the error message for a control's errors, the same way the control-errors directive does.
+ * Uses the first error only. The caller's `dictionary` wins over the library's default messages.
+ * @returns the message, or null when there are no errors
+ */
+export function getErrorMessage(
+  controlErrors: ValidationErrors | null | undefined,
+  dictionary?: ErrorDictionary
+): string | null {
+  return lookupErrorMessage(controlErrors, { ...defaultErrors, ...dictionary });
+}
 
 /**
  * We export the interfaces so end users can easily strongly type their own custom error dictionary
