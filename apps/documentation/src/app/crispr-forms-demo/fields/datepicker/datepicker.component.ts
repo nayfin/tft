@@ -63,7 +63,6 @@ export class DatepickerComponent {
         cellClassFunction: (date, view) => {
           const dayOfMonth = date.getDate(); // +date.getDay();
           if(view === 'month') {
-            console.log({date})
             return dayOfMonth === 15 ? 'highlight-day' : ''
           }
           return '';
@@ -90,7 +89,7 @@ export class DatepickerComponent {
           },
         },
         label: 'Datepicker Field',
-        controlName: 'cellClassDatepicker',
+        controlName: 'cellClassObservableDatepicker',
         dateClass: (group) => {
           return group.get('classChanger').valueChanges.pipe(
             map((relativeDay: string) => {
