@@ -65,7 +65,7 @@
   },
   "devDependencies": {
     "@angular-devkit/architect": "0.2101.5",
-    "@angular-devkit/build-angular": "21.1.5",
+    "@angular-devkit/build-angular": "21.2.31",
     "@angular-devkit/core": "21.1.5",
     "@angular-devkit/schematics": "21.1.5",
     "@angular-eslint/eslint-plugin": "21.0.1",
@@ -115,7 +115,7 @@
     "ng-packagr": "21.1.0",
     "nx": "22.5.4",
     "open": "^7.0.3",
-    "postcss": "^8.3.9",
+    "postcss": "^8.5.23",
     "postcss-import": "14.1.0",
     "postcss-preset-env": "7.5.0",
     "postcss-url": "10.1.3",
