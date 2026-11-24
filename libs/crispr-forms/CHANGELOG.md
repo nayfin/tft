@@ -1,5 +1,13 @@
 # Changelog
 
+## 21.2.0
+
+### Fixed
+- The field components are lazily loaded again, restoring the chunking of 21.0.x. 21.1.0 to 21.1.3 shipped one bundle that statically imported `@angular/google-maps`, `browser-image-compression` and `@angular/material-date-fns-adapter`. They are no longer part of the entry bundle.
+
+### Changed (may need code updates)
+- The field components (`InputFieldComponent`, `SelectFieldComponent`, `MapFieldComponent`, `OptionComponent`, and so on) and `FormGroupListComponent` are exported from the entry point as types only. `SubGroupComponent` and `SubGroupModule` are not exported. They were exported as values in 21.1.0 to 21.1.3, and the exports were reverted because they defeated lazy loading. Type uses such as `ComponentRef<InputFieldComponent>` keep working. `CrisprFormComponent`, `FieldContainerComponent`, the file upload, file dropzone, selected file, heading and info components, the directives and the pipes are still exported as values.
+
 ## 21.1.1
 
 ### Fixed

@@ -11,7 +11,7 @@ import {
   createControlForType,
   FormGroupListConfig,
 } from '../utils';
-import { FieldContainerComponent } from '../ui';
+import { FieldContainerComponent } from '../ui/field-container';
 import { CrisprDisplayFieldDirective } from '../display-field.directive';
 import { CrisprControlComponent } from '../utils/abstracts/crispr-control.abstract';
 

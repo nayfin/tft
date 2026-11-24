@@ -76,7 +76,9 @@ import { CrisprFormComponent } from '@tft/crispr-forms';
 export class MyFormComponent {}
 ```
 
-> `CrisprFormsModule`, `CrisprPipesModule` and `SubGroupModule` are deprecated. They only re-export the standalone pieces and will be removed in the next major version.
+> `CrisprFormsModule` and `CrisprPipesModule` are deprecated. They only re-export the standalone pieces and will be removed in the next major version.
+
+> The field components (`InputFieldComponent`, `SelectFieldComponent`, and so on), `FormGroupListComponent` and `SubGroupComponent` are loaded lazily by `<crispr-form>` and are not importable from the package entry point (the field components and `FormGroupListComponent` are exported as types only). Use `CrisprFormComponent` and let it render them from your config.
 
 ## Usage
 
@@ -195,6 +197,55 @@ Default messages for the new `imageProcessing` and `imageProcessingFailed` error
 ## File Upload Field
 
 `ControlType.FILE_UPLOAD`'s `filesChanged?: (parentGroup, files) => void` (previously declared but never called) now fires with the selected or dropped `FileList` after it is set as the control value. The `uploadComponent` passed to `uploadFiles` keeps its `isUploaded` boolean; it is now signal-backed, so assigning it asynchronously (e.g. when an upload completes) re-renders the field without zone.js.
+
+## Recent changes
+
+Consumer-facing changes from the last few releases. See [CHANGELOG.md](./CHANGELOG.md) for the per-version history.
+
+### New config options
+
+- **`valueAsNumber` on `INPUT`.** With `inputType: 'number'`, set `valueAsNumber: true` to get a `number` control value (an empty input gives `null`) instead of a string. It is off by default and has no effect on other input types. In this mode `maxLength` and `pattern` are not applied, since browsers ignore them on number inputs.
+- **`testId` on any field config**, including buttons. See [Test IDs](#test-ids).
+- **`processingState` and `processingStateChange` on `IMAGE_UPLOAD`.** See [Image Upload Field](#image-upload-field).
+
+### Behaviour changes
+
+- **Seeded falsy values are kept.** An initial value of `0`, `false` or `''` is no longer turned into `null`. For example, a checkbox seeded with `false` now reports `false`, and `Validators.required` treats it as filled. Use `Validators.requiredTrue` for "must be ticked".
+- **Forms are invalid while an image is processing.** A form containing an `IMAGE_UPLOAD` field is invalid during compression and after a compression failure, so buttons with `disabledOnInvalidForm` are disabled in that window.
+- **`filesChanged` now fires** on `IMAGE_UPLOAD` and `FILE_UPLOAD`. It was declared before but never called, so existing callbacks will start running.
+
+### Fixes
+
+- **Form group list:**
+  - Items now receive their initial values. Nested fields that read only the `value` input (such as `AUTOCOMPLETE_CHIPLIST`) used to start empty and fire their required validators.
+  - With a `displayItemComponent`, only the selected item opens for editing (or the last one when nothing is selected). Adding an item opens the new one, and deleting an item keeps the selection correct.
+- **Image upload:** a compression failure no longer breaks the field for later selections, and selecting a new image, clearing, resetting or destroying the field cancels the in-flight compression. The preview no longer replays a stale image.
+- **`hideDisabled` fields** no longer keep their flex or grid slot, so there is no empty gap left behind.
+- **Hints react to outside changes.** Hints on the input, select, textarea, file upload, autocomplete, chiplist, datepicker and unit conversion fields now update when the control is changed from outside the template (`markAsTouched`, `setErrors`, `patchValue`, async validators). `CrisprControlComponent` exposes `controlValid`, `controlTouched` and `hintVisible` signals for this.
+- **`errorDictionary`** (`@tft/form-validation-handler`) is now reactive. A late-bound or changed dictionary is picked up, where before it was read once. `ControlErrorsDirective` also no longer throws when used outside a form.
+- **Slider** `displayWith` falls back to the raw value when it is unset.
+- **Map field:** the unused `onSelectLocation` handler is removed (the map was already recentred on the chosen location), and the `markers` callback receives the `GoogleMap` component on initialisation. The docs app has a new `searchAutocompleteRequest` example.
+
+### Lazy loading restored (21.2.0)
+
+- **Field components are lazy again.** 21.1.0 to 21.1.3 shipped one bundle that statically imported `@angular/google-maps`, `browser-image-compression` and `@angular/material-date-fns-adapter`. From 21.2.0 each field component is a lazy chunk again, so those packages are no longer part of the entry bundle.
+- **Breaking: value exports removed.** The field components (`InputFieldComponent`, `SelectFieldComponent`, `MapFieldComponent`, `OptionComponent`, and so on) and `FormGroupListComponent` are exported from the entry point as types only (`ComponentRef<InputFieldComponent>` still type-checks, but you cannot add them to a component's `imports`). `SubGroupComponent` and `SubGroupModule` are no longer exported. Use `<crispr-form>` with a `FormConfig`, or build a custom field on `CrisprControlComponent` and `FieldContainerComponent`.
+
+### Zoneless, standalone and signals (21.1.0)
+
+- **Zoneless support.** The library works in zoneless apps (`provideZonelessChangeDetection()`) as well as zone-based ones. Components are `OnPush`-friendly and no longer rely on `ChangeDetectorRef` or zone.js.
+- **Standalone everywhere.** All components, directives and pipes are standalone. The entry point exports `CrisprFormComponent`, `FieldContainerComponent`, the directives and pipes, and the file-upload, file-dropzone, selected-file, heading and info components. The other field components are loaded lazily and are exported as types only, so they cannot be imported as values (see [Lazy loading restored](#lazy-loading-restored-2120)). See [Standalone imports](#standalone-imports).
+- **Deprecated modules.** `CrisprFormsModule` and `CrisprPipesModule` (and `FormValidationHandlerModule` in `@tft/form-validation-handler`) still work but will be removed in the next major version.
+- **Signal-based inputs, outputs and queries.** Template bindings work as before. If you were using the library in unexpected ways you may have some breakages. You may want to ask yourself what posessed you to do these things in the first place:
+  - Setting an input imperatively (`instance.foo = x`) must use `ComponentRef.setInput()`.
+  - Outputs are `OutputEmitterRef`s: `.subscribe()` works, `.pipe()` does not. Use `outputToObservable()` if you need operators (for example `CrisprControlComponent.valueChanges`).
+  - Some public fields are now signals: `FormGroupListComponent.blockValue` / `selectedIndex`, `SelectFieldComponent.allSelected`, `ImageUploadFieldComponent.progress`, and `ControlErrorComponent.text()` / `hide()`.
+- **Peer dependencies corrected.** Angular (`common`, `core`, `forms`, `material`, `cdk`) is `^21.0.0` (it previously still said `^18.0.0`) and `@tft/form-validation-handler` is `^21.1.0`.
+
+### Related packages
+
+- **`@tft/crispr-forms-testing`:** consumers can import it again. A previous build failed with `Cannot find module .../helpers/form.helpers`. The README is rewritten for consumers and is now included in the published package.
+- **`@tft/interact`:** `tftResizable` no longer computes `NaN` sizes without a `tftAccountForScale` ancestor, and `provideInteract()` replaces `InteractModule.forRoot()`. The lasso docs now bind `lassoDisplayRect` with `.em` rather than `.px`, so the box is drawn correctly at scales other than 1.
 
 ## Creating a Custom Field
 

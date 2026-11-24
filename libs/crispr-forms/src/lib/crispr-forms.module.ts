@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { CrisprFormComponent } from './form/form.component';
-import { FieldContainerComponent } from './ui';
+import { FieldContainerComponent } from './ui/field-container';
 
 /**
  * @deprecated Import the standalone pieces (CrisprFormComponent, FieldContainerComponent, …) directly.

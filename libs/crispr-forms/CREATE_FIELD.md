@@ -4,7 +4,7 @@
 
 - Generate component
   `ng g c <optional-directory/some-field> --project=crispr-forms`
-- export it from `index.ts`
+- export it from `index.ts`, and from `src/lib/ui/public-api.ts` as a type only (`export type { SomeFieldComponent } from './some-field';`). A value export makes the entry point reach the component statically and defeats lazy loading (lint fails). Also add the folder to the `no-restricted-syntax` list in `libs/crispr-forms/.eslintrc.json`
 - create corresponding config in models folder <some-field.config.ts>
 - export new config from `models/index.ts`
 - in `crispr-field.config.ts`
