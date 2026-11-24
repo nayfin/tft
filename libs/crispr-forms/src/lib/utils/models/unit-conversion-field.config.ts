@@ -9,13 +9,16 @@ export type UnitConversionFieldConfig<ST = unknown, UT = unknown> = CrisprContro
 
 
   /**
-   * Used convert config value to displayed value on initialization
+   * Used convert config value to displayed value on initialization.
+   * `value` is passed through as given, so a stored `0` arrives as `0` and a missing value arrives as `null`.
+   * Return `null` to leave the display empty, which keeps a missing value `null` (and a `required` field invalid).
    */
-  initialDisplayValueConversion: (value?: ST, displayedUnit?: UT) => number;
+  initialDisplayValueConversion: (value?: ST, displayedUnit?: UT) => number | null;
   /**
-   * The function to convert the display value into the stored value as the display value changes
+   * The function to convert the display value into the stored value as the display value changes.
+   * Return `null` for an empty display value when `null` (no measurement) and `0` mean different things.
    */
-  storedValueConversion: (value?: string, displayedUnit?: UT) => number;
+  storedValueConversion: (value?: string, displayedUnit?: UT) => number | null;
   min?: number;
   max?: number;
   autofocus?: boolean;

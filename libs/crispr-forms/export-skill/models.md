@@ -315,8 +315,8 @@ interface MapFieldConfig extends CrisprControlConfig, FieldDescriptors, MatField
 ```typescript
 interface UnitConversionFieldConfig<ST = unknown, UT = unknown> extends CrisprControlConfig, FieldDescriptors, MatFieldProperties {
   controlType: ControlType.UNIT_CONVERSION;
-  initialDisplayValueConversion: (value?: ST, displayedUnit?: UT) => number;
-  storedValueConversion: (value?: string, displayedUnit?: UT) => number;
+  initialDisplayValueConversion: (value?: ST, displayedUnit?: UT) => number | null; // value is passed as stored (0 stays 0, missing is null); return null to leave the display empty
+  storedValueConversion: (value?: string, displayedUnit?: UT) => number | null; // null for an empty display value when null and 0 differ
   min?: number;
   max?: number;
   step?: number;

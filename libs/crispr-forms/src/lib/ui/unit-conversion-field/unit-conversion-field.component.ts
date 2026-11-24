@@ -99,7 +99,7 @@ export class UnitConversionFieldComponent
 
   setInitialDisplayValue(storedValue: any, unit: unknown) {
     const initialDisplayValue = this.config().initialDisplayValueConversion(
-      storedValue || null,
+      storedValue,
       unit
     );
     this.displayValueControl.setValue(initialDisplayValue);
