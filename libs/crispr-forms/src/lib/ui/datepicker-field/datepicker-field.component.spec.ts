@@ -100,6 +100,13 @@ describe('DatepickerFieldComponent', () => {
       expect(clearButton()).not.toBeNull();
     });
 
+    it('is projected into the icon suffix next to the toggle, not into the input slot', async () => {
+      await render(clearableConfig, new FormControl(new Date(2024, 0, 15)));
+      const suffix = clearButton().closest('.mat-mdc-form-field-icon-suffix');
+      expect(suffix).not.toBeNull();
+      expect(suffix.querySelector('mat-datepicker-toggle')).not.toBeNull();
+    });
+
     it('is a non-submitting button', async () => {
       await render(clearableConfig, new FormControl(new Date(2024, 0, 15)));
       expect(clearButton().type).toBe('button');
@@ -155,17 +162,20 @@ describe('DatepickerFieldComponent', () => {
       ).toContain('required');
     });
 
-    it('uses "Clear date" as the default aria-label', async () => {
+    it('shows "Clear" as the default visible text', async () => {
       await render(clearableConfig, new FormControl(new Date(2024, 0, 15)));
-      expect(clearButton().getAttribute('aria-label')).toBe('Clear date');
+      expect(clearButton().textContent.trim()).toBe('Clear');
+      expect(clearButton().hasAttribute('aria-label')).toBe(false);
+      expect(clearButton().querySelector('mat-icon')).toBeNull();
     });
 
-    it('uses clearButtonLabel as the aria-label', async () => {
+    it('shows clearButtonLabel as the visible text', async () => {
       await render(
         { ...clearableConfig, clearButtonLabel: 'Remove birthday' },
         new FormControl(new Date(2024, 0, 15))
       );
-      expect(clearButton().getAttribute('aria-label')).toBe('Remove birthday');
+      expect(clearButton().textContent.trim()).toBe('Remove birthday');
+      expect(clearButton().hasAttribute('aria-label')).toBe(false);
     });
   });
 });

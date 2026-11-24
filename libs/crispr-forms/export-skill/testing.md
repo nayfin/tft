@@ -137,7 +137,7 @@ Each factory is a function that registers `test()` calls conditioned on the conf
 | `testTextareaField` | `TextareaFieldConfig` | label, hint, required |
 | `testCheckboxField` | `CheckboxFieldConfig` | label, requiredTrue error |
 | `testSelectField` | `SelectFieldConfig` | label, hint, options count, select option, required |
-| `testDatepickerField` | `DatepickerFieldConfig` | label, hint, toggle button, required; when `clearable`: clear button hidden when empty, shown with its aria-label after a date is entered, clears the input, required error after clearing; when `cellClassFunction` or `dateClass` is set: every day of January 2024 in the open calendar carries the returned classes exactly when the config returns them (`dateClass` is evaluated with its siblings empty) |
+| `testDatepickerField` | `DatepickerFieldConfig` | label, hint, toggle button, required; when `clearable`: clear button hidden when empty, shown with its label as visible text after a date is entered, sits on the input row left of the toggle without changing the field height, clears the input, required error after clearing; when `cellClassFunction` or `dateClass` is set: every day of January 2024 in the open calendar carries the returned classes exactly when the config returns them (`dateClass` is evaluated with its siblings empty) |
 | `testSliderField` | `SliderFieldConfig` | renders, label, min, max |
 | `testAutocompleteField` | `AutocompleteFieldConfig` | label, hint, dropdown, select option, required (via submitForm) |
 | `testAutocompleteChiplistField` | `AutocompleteChiplistFieldConfig` | label, hint, type+see options, add chip, remove chip, minArrayLength error |

@@ -23,14 +23,14 @@ export interface DatepickerFieldConfig extends CrisprControlConfig,
    */
   datepickerActions?: ComponentType<any>;
   /**
-   * Show a clear button next to the datepicker toggle while the control has a value and is enabled.
+   * Show a small text button next to the datepicker toggle while the control has a value and is enabled.
    * Clicking it empties the control and marks it dirty and touched, so a required field shows its required error.
    * Defaults to `false`.
    */
   clearable?: boolean;
   /**
-   * The accessible name (`aria-label`) of the clear button. Only used when `clearable` is `true`.
-   * Defaults to `'Clear date'`.
+   * The visible text of the clear button, which is also its accessible name. Only used when `clearable` is `true`.
+   * Defaults to `'Clear'`.
    */
   clearButtonLabel?: string;
 }

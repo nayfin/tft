@@ -103,17 +103,38 @@ export function testDatepickerField(config: DatepickerFieldConfig) {
   }
 
   if (config.clearable) {
-    const label = config.clearButtonLabel ?? 'Clear date';
+    const label = config.clearButtonLabel ?? 'Clear';
 
     test('hides clear button when empty', async ({ page }) => {
       await expect(getDatepickerClearButton(page, config.controlName)).toHaveCount(0);
     });
 
-    test('shows clear button with its accessible label once a date is entered', async ({ page }) => {
+    test('shows clear button with its label as visible text once a date is entered', async ({ page }) => {
       await enterDatepickerDate(page, config.controlName, '1/15/2024');
       const clearButton = getDatepickerClearButton(page, config.controlName);
       await expect(clearButton).toBeVisible();
-      await expect(clearButton).toHaveAttribute('aria-label', label);
+      await expect(clearButton).toHaveText(label);
+    });
+
+    test('lays out the clear button on the input row, left of the toggle, without changing the field height', async ({ page }) => {
+      const tolerance = 2;
+      const field = getMatFormField(page, config.controlName);
+      const heightBefore = (await field.boundingBox()).height;
+
+      await enterDatepickerDate(page, config.controlName, '1/15/2024');
+      const clear = await getDatepickerClearButton(page, config.controlName).boundingBox();
+      const input = await getInput(page, config.controlName).boundingBox();
+      const toggle = await field.locator('mat-datepicker-toggle button').boundingBox();
+      const heightAfter = (await field.boundingBox()).height;
+
+      // Same row as the input: the button is centred on the input's line, not pushed below it.
+      const clearCentre = clear.y + clear.height / 2;
+      expect(clearCentre).toBeGreaterThanOrEqual(input.y - tolerance);
+      expect(clearCentre).toBeLessThanOrEqual(input.y + input.height + tolerance);
+      // Left of the toggle.
+      expect(clear.x + clear.width).toBeLessThanOrEqual(toggle.x + tolerance);
+      // The field does not grow when the button appears.
+      expect(Math.abs(heightAfter - heightBefore)).toBeLessThanOrEqual(tolerance);
     });
 
     test('clear button empties the input and hides itself', async ({ page }) => {

@@ -4,6 +4,7 @@
   <mat-form-field
     [attr.data-testid]="testId()"
     [color]="config().color"
+    [class.crispr-datepicker-clearable]="config().clearable"
     [appearance]="config().appearance"
     [formGroup]="group()">
     @if (config().label) {<mat-label>{{config().label}}</mat-label>}
@@ -14,18 +15,24 @@
       [max]="config().max"
       [matDatepicker]="picker"
       [matDatepickerFilter]="config().datepickerFilter">
-    @if (config().clearable && controlEnabled() && hasValue()) {
-      <button
-        mat-icon-button
-        matSuffix
-        type="button"
-        class="crispr-datepicker-clear"
-        [attr.data-testid]="testId() + '-clear'"
-        [attr.aria-label]="config().clearButtonLabel ?? 'Clear date'"
-        (click)="clear()">
-        <mat-icon>clear</mat-icon>
-      </button>
-    }
+    <!--
+      A control flow block is not projected by the attributes of the element inside it, so the form field would
+      place a bare @if'd matSuffix button in the input's slot, under the text. ngProjectAs on the wrapper puts
+      it in the icon suffix slot, next to the toggle.
+    -->
+    <ng-container ngProjectAs="[matSuffix]">
+      @if (config().clearable && controlEnabled() && hasValue()) {
+        <button
+          mat-button
+          matSuffix
+          type="button"
+          class="crispr-datepicker-clear"
+          [attr.data-testid]="testId() + '-clear'"
+          (click)="clear()">
+          {{ config().clearButtonLabel ?? 'Clear' }}
+        </button>
+      }
+    </ng-container>
     <mat-datepicker-toggle matSuffix [for]="picker" />
     <mat-datepicker
       [touchUi]="config().touchUi"

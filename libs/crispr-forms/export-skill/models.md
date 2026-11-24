@@ -184,9 +184,9 @@ interface DatepickerFieldConfig extends CrisprControlConfig, MatFieldProperties 
   startAt?: Date | ((group: FormGroup) => Observable<Date>) | null;
   touchUi?: boolean;
   datepickerFilter?: (date: Date) => boolean;
-  /** Show a clear button next to the toggle while the control has a value and is enabled. Clicking it empties the control and marks it dirty and touched, so a required field shows its required error. Defaults to false. */
+  /** Show a small text clear button next to the toggle while the control has a value and is enabled. Clicking it empties the control and marks it dirty and touched, so a required field shows its required error. Defaults to false. */
   clearable?: boolean;
-  /** The clear button's aria-label. Only used when `clearable` is true. Defaults to 'Clear date'. */
+  /** The clear button's visible text. Only used when `clearable` is true. Defaults to 'Clear'. */
   clearButtonLabel?: string;
 }
 ```

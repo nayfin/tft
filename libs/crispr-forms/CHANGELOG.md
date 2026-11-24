@@ -3,7 +3,7 @@
 ## 21.3.0
 
 ### Added
-- `clearable` and `clearButtonLabel` on the `DATEPICKER` field. With `clearable: true`, a clear button appears next to the calendar toggle while the control has a value and is enabled. Clicking it sets the value to `null` and marks the control dirty and touched, so a required field shows its required error. `clearButtonLabel` sets the button's `aria-label` (default `'Clear date'`). Both are off by default, so existing forms are unchanged.
+- `clearable` and `clearButtonLabel` on the `DATEPICKER` field. With `clearable: true`, a small text button (no icon) appears next to the calendar toggle while the control has a value and is enabled. Clicking it sets the value to `null` and marks the control dirty and touched, so a required field shows its required error. `clearButtonLabel` sets the button's visible text (default `'Clear'`). Both are off by default, so existing forms are unchanged.
 - `CrisprControlComponent` exposes `controlValue` and `controlEnabled` signals next to `controlValid` and `controlTouched`. They follow the control when the form changes it from outside the template.
 - `@tft/crispr-forms-testing`: `testDatepickerField` covers clearable datepickers, with new `enterDatepickerDate` and `getDatepickerClearButton` helpers.
 - `@tft/crispr-forms-testing`: `testDatepickerField` also checks the `cellClassFunction` and `dateClass` options by comparing every day of an open calendar with the classes the config returns, with new `openDatepickerCalendar`, `closeDatepickerCalendar` and `getCalendarDayClasses` helpers.

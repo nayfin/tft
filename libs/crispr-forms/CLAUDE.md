@@ -103,8 +103,8 @@ config: FormConfig = {
   controlType: ControlType.DATEPICKER,
   controlName: 'dob',
   label: 'Date of Birth',
-  clearable: true,                    // opt-in clear button next to the toggle; shown while the control has a value and is enabled. Default false
-  clearButtonLabel: 'Remove date',    // the clear button's aria-label. Default 'Clear date'
+  clearable: true,                    // opt-in small text button (no icon) next to the toggle; shown while the control has a value and is enabled. Default false
+  clearButtonLabel: 'Remove date',    // the clear button's visible text. Default 'Clear'
 }
 ```
 Clicking the clear button sets the value to `null` and marks the control dirty and touched (so `required` shows its error).

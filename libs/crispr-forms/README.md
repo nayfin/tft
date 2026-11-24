@@ -196,7 +196,7 @@ Default messages for the new `imageProcessing` and `imageProcessingFailed` error
 
 ## Datepicker Field
 
-Set `clearable: true` on a `DATEPICKER` field to let users remove a date they picked. A clear button appears next to the calendar toggle while the control has a value and is enabled. Clicking it sets the value to `null` and marks the control dirty and touched, so a required field shows its required error straight away.
+Set `clearable: true` on a `DATEPICKER` field to let users remove a date they picked. A small text button (no icon) appears next to the calendar toggle while the control has a value and is enabled. Clicking it sets the value to `null` and marks the control dirty and touched, so a required field shows its required error straight away.
 
 ```ts
 {
@@ -204,7 +204,7 @@ Set `clearable: true` on a `DATEPICKER` field to let users remove a date they pi
   controlName: 'startDate',
   label: 'Start date',
   clearable: true,
-  clearButtonLabel: 'Remove start date', // optional, the button's aria-label. Defaults to 'Clear date'
+  clearButtonLabel: 'Remove start date', // optional, the button's visible text. Defaults to 'Clear'
 }
 ```
 
@@ -219,7 +219,7 @@ Consumer-facing changes from the last few releases. See [CHANGELOG.md](./CHANGEL
 ### New config options
 
 - **`valueAsNumber` on `INPUT`.** With `inputType: 'number'`, set `valueAsNumber: true` to get a `number` control value (an empty input gives `null`) instead of a string. It is off by default and has no effect on other input types. In this mode `maxLength` and `pattern` are not applied, since browsers ignore them on number inputs.
-- **`clearable` and `clearButtonLabel` on `DATEPICKER`.** Adds a clear button to the datepicker. See [Datepicker Field](#datepicker-field).
+- **`clearable` and `clearButtonLabel` on `DATEPICKER`.** Adds a small text clear button to the datepicker; `clearButtonLabel` sets its visible text. See [Datepicker Field](#datepicker-field).
 - **`testId` on any field config**, including buttons. See [Test IDs](#test-ids).
 - **`processingState` and `processingStateChange` on `IMAGE_UPLOAD`.** See [Image Upload Field](#image-upload-field).
 

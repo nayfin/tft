@@ -14,7 +14,6 @@ import { MatDateFnsModule } from '@angular/material-date-fns-adapter';
 import { Observable, of } from 'rxjs';
 import { ComponentPortal, Portal, PortalModule } from '@angular/cdk/portal';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -43,7 +42,6 @@ const defaultConfig: Partial<DatepickerFieldConfig> = {
         ReactiveFormsModule,
         MatInputModule,
         MatButtonModule,
-        MatIconModule,
         MatDateFnsModule,
         PortalModule,
         ControlErrorContainerDirective,
