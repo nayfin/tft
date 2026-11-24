@@ -1,8 +1,11 @@
 import {
   test,
   expect,
-  getMatFormField,
+  testForm,
   getError,
+  getRadioGroup,
+  getRadioOption,
+  selectRadioOption,
   submitForm,
   Page,
 } from '@tft/crispr-forms-testing';
@@ -12,161 +15,41 @@ import {
   radioInitialValue,
 } from '../../../../../apps/documentation/src/app/crispr-forms-demo/fields/radio/radio.config';
 
-// `testForm` has no radio case and skips radio fields, so the radio field is tested here.
 const radioConfig = (controlName: string) =>
   radioFormConfig.fields.find(
     (field) => 'controlName' in field && field.controlName === controlName
   ) as RadioFieldConfig;
 
-/** The labels of an option array in the config. */
-const labelsOf = (controlName: string) =>
-  (radioConfig(controlName).options as SelectOption[]).map(
-    (option) => option.label
-  );
-
-const group = (page: Page, testId: string) => getMatFormField(page, testId);
-const radio = (page: Page, testId: string, label: string) =>
-  group(page, testId).getByRole('radio', { name: label, exact: true });
-/** The visible label of an option, which is what a user clicks. */
-const pick = (page: Page, testId: string, label: string) =>
-  group(page, testId)
-    .locator('mat-radio-button')
-    .filter({ hasText: label })
-    .click();
+const errors = (page: Page) => page.locator('p.tft-control-error');
 
 test.describe('Radio Field', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/crispr-forms-demo/fields/radio');
   });
 
-  test('renders every option of each radio group with its label', async ({
-    page,
-  }) => {
-    for (const controlName of [
-      'radioField',
-      'optionalRadio',
-      'preselectedRadio',
-    ]) {
-      await expect(group(page, controlName)).toHaveCount(1);
-      await expect(group(page, controlName).getByRole('radio')).toHaveCount(
-        labelsOf(controlName).length
-      );
-      for (const label of labelsOf(controlName)) {
-        await expect(radio(page, controlName, label)).toHaveCount(1);
-      }
+  // Generated from the config: the group, its label and heading, its accessible name, its options and selecting
+  // them, and the required error (see `testRadioField`). The tests below are what the config cannot tell the factory.
+  testForm(radioFormConfig);
+
+  test('starts with nothing selected', async ({ page }) => {
+    for (const option of radioConfig('radioField').options as SelectOption[]) {
+      await expect(
+        getRadioOption(page, 'radioField', option.label)
+      ).not.toBeChecked();
     }
   });
 
-  /** The field wrapper of a radio group. */
-  const field = (page: Page, testId: string) =>
-    page
-      .locator('crispr-radio-field')
-      .filter({ has: page.locator(`[data-testid="${testId}"]`) });
-
-  test('shows the label visibly above the group', async ({ page }) => {
-    await expect(field(page, 'radioField').locator('.radio-label')).toHaveText(
-      radioConfig('radioField').label
-    );
-    // a label-only radio has no heading
-    await expect(
-      field(page, 'radioField').locator('crispr-heading')
-    ).toHaveCount(0);
-  });
-
-  test('renders the heading as the caption of a heading-only radio', async ({
-    page,
-  }) => {
-    await expect(
-      field(page, 'optionalRadio').locator('crispr-heading')
-    ).toHaveText(radioConfig('optionalRadio').heading.label);
-    await expect(
-      field(page, 'optionalRadio').locator('.radio-label')
-    ).toHaveCount(0);
-  });
-
-  test('shows both the heading and the label when a radio has both', async ({
+  test('names a radio with both a label and a heading by its label, not its heading', async ({
     page,
   }) => {
     const config = radioConfig('preselectedRadio');
 
-    await expect(
-      field(page, 'preselectedRadio').locator('crispr-heading')
-    ).toHaveText(config.heading.label);
-    await expect(
-      field(page, 'preselectedRadio').locator('.radio-label')
-    ).toHaveText(config.label);
-  });
-
-  test('names the radio group by its label for assistive technology', async ({
-    page,
-  }) => {
-    const labelled = page.getByRole('radiogroup', {
-      name: radioConfig('radioField').label,
-      exact: true,
-    });
-
-    await expect(labelled).toHaveCount(1);
-    await expect(labelled).toHaveAttribute('data-testid', 'radioField');
-    // the observable radio is labelled too, once its options have arrived
-    await expect(
-      page.getByRole('radiogroup', {
-        name: radioConfig('observableRadio').label,
-        exact: true,
-      })
-    ).toHaveAttribute('data-testid', 'observableRadio');
-  });
-
-  test('names a heading-only radio group by its heading text', async ({
-    page,
-  }) => {
-    const named = page.getByRole('radiogroup', {
-      name: radioConfig('optionalRadio').heading.label,
-      exact: true,
-    });
-
-    await expect(named).toHaveCount(1);
-    await expect(named).toHaveAttribute('data-testid', 'optionalRadio');
-  });
-
-  test('names a radio with both a label and a heading by its label', async ({
-    page,
-  }) => {
-    const config = radioConfig('preselectedRadio');
-
-    await expect(
-      page.getByRole('radiogroup', { name: config.label, exact: true })
-    ).toHaveAttribute('data-testid', 'preselectedRadio');
     await expect(
       page.getByRole('radiogroup', { name: config.heading.label, exact: true })
     ).toHaveCount(0);
   });
 
-  test('starts with nothing selected', async ({ page }) => {
-    for (const label of labelsOf('radioField')) {
-      await expect(radio(page, 'radioField', label)).not.toBeChecked();
-    }
-  });
-
-  test('selecting an option checks it and leaves the others unchecked', async ({
-    page,
-  }) => {
-    const [first, second, third] = labelsOf('radioField');
-
-    await pick(page, 'radioField', second);
-    await expect(radio(page, 'radioField', second)).toBeChecked();
-    await expect(radio(page, 'radioField', first)).not.toBeChecked();
-    await expect(radio(page, 'radioField', third)).not.toBeChecked();
-
-    await pick(page, 'radioField', third);
-    await expect(radio(page, 'radioField', third)).toBeChecked();
-    await expect(radio(page, 'radioField', second)).not.toBeChecked();
-    await expect(radio(page, 'radioField', first)).not.toBeChecked();
-  });
-
-  const error = (page: Page, testId: string) => getError(page, testId, 'radio');
-  const errors = (page: Page) => page.locator('p.tft-control-error');
-
-  test('shows the required error on submit when nothing is selected', async ({
+  test('shows the default required message under the group', async ({
     page,
   }) => {
     await expect(errors(page)).toHaveCount(0);
@@ -174,10 +57,10 @@ test.describe('Radio Field', () => {
     await submitForm(page);
 
     await expect(errors(page)).toHaveCount(1);
-    await expect(error(page, 'radioField')).toHaveText(
+    await expect(getError(page, 'radioField', 'radio')).toHaveText(
       'This field is required'
     );
-    await expect(group(page, 'radioField')).toHaveClass(/ng-invalid/);
+    await expect(getRadioGroup(page, 'radioField')).toHaveClass(/ng-invalid/);
   });
 
   test('renders the required error directly under its radio group', async ({
@@ -193,51 +76,42 @@ test.describe('Radio Field', () => {
     ).toHaveText('This field is required');
   });
 
-  test('clears the required error once an option is selected', async ({
-    page,
-  }) => {
-    await submitForm(page);
-    await expect(error(page, 'radioField')).toHaveText(
-      'This field is required'
-    );
-
-    await pick(page, 'radioField', labelsOf('radioField')[0]);
-
-    await expect(errors(page)).toHaveCount(0);
-    await expect(group(page, 'radioField')).toHaveClass(/ng-valid/);
-  });
-
   test('shows no error on submit for the optional radio', async ({ page }) => {
     await submitForm(page);
 
-    await expect(group(page, 'radioField')).toHaveClass(/ng-invalid/);
-    await expect(group(page, 'optionalRadio')).toHaveClass(/ng-valid/);
+    await expect(getRadioGroup(page, 'radioField')).toHaveClass(/ng-invalid/);
+    await expect(getRadioGroup(page, 'optionalRadio')).toHaveClass(/ng-valid/);
     // only the required radio has an error
     await expect(errors(page)).toHaveCount(1);
-    await expect(error(page, 'optionalRadio')).toHaveCount(0);
+    await expect(getError(page, 'optionalRadio', 'radio')).toHaveCount(0);
   });
 
   test('can select, then switch, the optional radio and its false value', async ({
     page,
   }) => {
-    await pick(page, 'optionalRadio', 'No');
-    await expect(radio(page, 'optionalRadio', 'No')).toBeChecked();
-    await expect(radio(page, 'optionalRadio', 'Yes')).not.toBeChecked();
+    await selectRadioOption(page, 'optionalRadio', 'No');
+    await expect(getRadioOption(page, 'optionalRadio', 'No')).toBeChecked();
+    await expect(
+      getRadioOption(page, 'optionalRadio', 'Yes')
+    ).not.toBeChecked();
 
-    await pick(page, 'optionalRadio', 'Yes');
-    await expect(radio(page, 'optionalRadio', 'Yes')).toBeChecked();
-    await expect(radio(page, 'optionalRadio', 'No')).not.toBeChecked();
+    await selectRadioOption(page, 'optionalRadio', 'Yes');
+    await expect(getRadioOption(page, 'optionalRadio', 'Yes')).toBeChecked();
+    await expect(getRadioOption(page, 'optionalRadio', 'No')).not.toBeChecked();
   });
 
+  // the factory only checks static option arrays, so the observable options are checked here
   test('renders the options of an observable once it emits', async ({
     page,
   }) => {
-    await expect(group(page, 'observableRadio').getByRole('radio')).toHaveCount(
-      2
-    );
-    await pick(page, 'observableRadio', 'Evil');
-    await expect(radio(page, 'observableRadio', 'Evil')).toBeChecked();
-    await expect(radio(page, 'observableRadio', 'Good')).not.toBeChecked();
+    await expect(
+      getRadioGroup(page, 'observableRadio').getByRole('radio')
+    ).toHaveCount(2);
+    await selectRadioOption(page, 'observableRadio', 'Evil');
+    await expect(getRadioOption(page, 'observableRadio', 'Evil')).toBeChecked();
+    await expect(
+      getRadioOption(page, 'observableRadio', 'Good')
+    ).not.toBeChecked();
   });
 
   test('preselects the option given as the initial value', async ({ page }) => {
@@ -247,11 +121,11 @@ test.describe('Radio Field', () => {
     );
 
     await expect(
-      radio(page, 'preselectedRadio', preselected.label)
+      getRadioOption(page, 'preselectedRadio', preselected.label)
     ).toBeChecked();
     for (const option of options.filter((o) => o !== preselected)) {
       await expect(
-        radio(page, 'preselectedRadio', option.label)
+        getRadioOption(page, 'preselectedRadio', option.label)
       ).not.toBeChecked();
     }
   });

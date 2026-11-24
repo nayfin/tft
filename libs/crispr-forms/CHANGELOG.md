@@ -7,6 +7,7 @@
 - `invalidFields` signal on `<crispr-form>`: what is wrong right now, one `InvalidField` per invalid field in config order, whether or not the fields have been touched. It keeps the same array while nothing observable has changed.
 - `invalidSubmit` output on `<crispr-form>`: emits the same array when the form is submitted while invalid. `submitted` is unchanged and still fires for every submit.
 - `getInvalidFields(config, group, errorDictionary?)` and the `InvalidField` type (`{ path, label, message, errorKey, control }`) are exported, for lists built outside `<crispr-form>`. Fields are named by `label`, else `heading.label`, else `controlName`, and fields inside sub-groups and group lists as `Street in Address` or `Photo in Photos 2` (`itemLabelBuilder` is used for list items when set). A group's own validator error is listed only when none of its fields are. Messages prefer the form's `errorDictionary` over the defaults.
+- `@tft/crispr-forms-testing`: `testRadioField` (picked up by `testForm` and `testField`) and the `getRadioGroup`, `getRadioOption` and `selectRadioOption` helpers.
 - Optional `label` on the `RADIO` field. It is shown above the radio group and is the group's accessible name (`aria-labelledby`). A radio with only a `heading` is named from the heading's text (`aria-label`), so existing radios get an accessible name without a config change. `heading` still captions the group as before.
 
 ### Fixed

@@ -16,4 +16,5 @@ export * from './field-tests/autocomplete.tests';
 export * from './field-tests/autocomplete-chiplist.tests';
 export * from './field-tests/file-upload.tests';
 export * from './field-tests/unit-conversion.tests';
+export * from './field-tests/radio.tests';
 export * from './field-tests/field-test-factory'; // exports testField and testForm

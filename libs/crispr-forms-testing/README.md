@@ -76,6 +76,7 @@ for (const field of profileFormConfig.fields) {
 | `AUTOCOMPLETE_CHIPLIST` | `testAutocompleteChiplistField` | label, hint, typing shows options, add chip, remove chip, `minArrayLength` error |
 | `FILE_UPLOAD` | `testFileUploadField` | label, drop zone text, select button |
 | `UNIT_CONVERSION` | `testUnitConversionField` | label, number input, unit select |
+| `RADIO` | `testRadioField` | group renders, label and accessible name, heading, options, selecting an option, required (via `submitForm`) |
 
 `testForm` and `testField` do **not** cover:
 
@@ -110,8 +111,10 @@ Fields without a `controlName`, such as buttons, have no test id by default. Set
 | `getHint(page, testId)` | The `mat-hint` inside the field |
 | `getMatSelect(page, testId)` | The `mat-select` inside a select field |
 | `getCheckbox(page, testId)` | The `mat-checkbox` element |
+| `getRadioGroup(page, testId)` | The `mat-radio-group` of a radio field |
+| `getRadioOption(page, testId, optionLabel)` | The radio input of one option, found by its exact label. Assert `toBeChecked()` on it. |
 | `getAutocompleteInput(page, testId)` | The visible text input of an autocomplete or chiplist |
-| `getError(page, testId, fieldType = 'input')` | The displayed error message. Pass the field's kebab-case type for non-input fields: `'select'`, `'textarea'`, `'checkbox'`, `'datepicker'`, `'autocomplete'` or `'autocomplete-chiplist'`. |
+| `getError(page, testId, fieldType = 'input')` | The displayed error message. Pass the field's kebab-case type for non-input fields: `'select'`, `'textarea'`, `'checkbox'`, `'datepicker'`, `'radio'`, `'autocomplete'` or `'autocomplete-chiplist'`. |
 
 ### Actions
 
@@ -123,6 +126,7 @@ Fields without a `controlName`, such as buttons, have no test id by default. Set
 | `touchAutocomplete(page, testId)` | Clicks the visible input, then Tabs away |
 | `touchDatepicker(page, testId)` | Clicks the input, then Tabs away |
 | `openSelect(page, testId)` | Opens the select panel |
+| `selectRadioOption(page, testId, optionLabel)` | Clicks the visible radio button with that label, as a user would |
 | `selectOption(page, testId, optionLabel)` | Opens the select and picks the option with that label |
 | `submitForm(page, nth = 0)` | Submits the `nth` crispr form on the page, which shows every control's errors |
 
@@ -159,5 +163,7 @@ test('nested list item shows its errors on submit', async ({ page }) => {
 **`getError` targets the message, not the host.** The `tft-control-error` element is always in the DOM, even with no error, and autocomplete/chiplist fields render two of them. `getError` matches the inner `p.tft-control-error`, which only exists while a message is shown. That keeps Playwright's strict mode happy, and `toHaveCount(0)` reliably asserts "no error".
 
 **Slider labels and bounds.** Sliders aren't inside a `mat-form-field`, so their label is a plain `<label>` and `getLabel` won't find it; use `getMatFormField(page, id).locator('label')`. Read min and max from the native `min`/`max` attributes on `input[matSliderThumb]`, not from `aria-valuemin`/`aria-valuemax`.
+
+**Radio `required` tests skip a preselected radio.** A radio can't be unselected through the UI, so `testRadioField` skips its required tests when one of the options is already checked (an initial value). Options that are an observable, promise or function are not checked by the factory, as with select; assert them yourself with `getRadioOption`.
 
 **Unit conversion `required` can't be tested.** The visible input is a separate control from the one that holds the validators, so a required error never shows on the field.
