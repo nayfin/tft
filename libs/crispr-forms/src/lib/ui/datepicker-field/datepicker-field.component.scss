@@ -1,0 +1,22 @@
+// A small text button that sits in the form field's suffix without making the field taller.
+.crispr-datepicker-clear {
+  --mat-button-text-container-height: 28px;
+  --mat-button-text-horizontal-padding: 8px;
+  min-width: 0;
+  height: 28px;
+  padding: 0 8px;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  // The datepicker toggle that follows is a 48px icon button, so the gap to it is already generous.
+  margin-right: 0;
+}
+
+// In a narrow field the text input shrinks, instead of the suffix wrapping the toggle onto a second line.
+:host ::ng-deep .crispr-datepicker-clearable {
+  .mat-mdc-form-field-infix {
+    min-width: 0;
+  }
+  .mat-mdc-form-field-icon-suffix {
+    white-space: nowrap;
+  }
+}

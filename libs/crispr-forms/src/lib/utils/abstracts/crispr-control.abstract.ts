@@ -35,6 +35,16 @@ export class CrisprControlComponent<C extends CrisprControlConfig> extends Crisp
     this.controlEventCount();
     return this.control()?.touched ?? false;
   });
+  /** The control's current value. Reactive, so it is safe to read in a template. */
+  readonly controlValue = computed<ControlValue>(() => {
+    this.controlEventCount();
+    return this.control()?.value;
+  });
+  /** Whether the control is enabled. Reactive, so it is safe to read in a template. */
+  readonly controlEnabled = computed(() => {
+    this.controlEventCount();
+    return this.control()?.enabled ?? false;
+  });
   /** Whether the field's hint is shown: while the control is valid, or the user has not touched it yet. */
   readonly hintVisible = computed(() => this.controlValid() || !this.controlTouched());
 

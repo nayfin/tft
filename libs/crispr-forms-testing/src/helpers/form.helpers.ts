@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 
 /**
  * Returns the locator for a field's root element (the element with `data-testid`).
@@ -136,4 +136,55 @@ export async function submitForm(page: Page, nth = 0): Promise<void> {
 export async function touchDatepicker(page: Page, testId: string): Promise<void> {
   await getMatFormField(page, testId).locator('input').click();
   await page.keyboard.press('Tab');
+}
+
+/**
+ * Types a date into a datepicker's input (e.g. `'1/15/2024'` for the en-US locale) and presses Tab to blur it.
+ * The datepicker parses the text into the control value as it is typed.
+ */
+export async function enterDatepickerDate(page: Page, testId: string, text: string): Promise<void> {
+  const input = getMatFormField(page, testId).locator('input');
+  await input.click();
+  await input.fill(text);
+  await page.keyboard.press('Tab');
+}
+
+/** Returns the clear button of a `clearable` datepicker field. It is only rendered while the control has a value. */
+export function getDatepickerClearButton(page: Page, testId: string): Locator {
+  return page.locator(`[data-testid="${testId}-clear"]`);
+}
+
+/** Opens a datepicker's calendar with its toggle button. */
+export async function openDatepickerCalendar(page: Page, testId: string): Promise<void> {
+  await getMatFormField(page, testId).locator('mat-datepicker-toggle button').click();
+  await page.locator('mat-calendar').waitFor({ state: 'visible' });
+  // The calendar moves focus to its active day once it has opened. Escape only closes it from there.
+  await expect(page.locator('mat-calendar button.mat-calendar-body-active')).toBeFocused();
+}
+
+/** Closes the open datepicker calendar with Escape and waits until it is gone. */
+export async function closeDatepickerCalendar(page: Page): Promise<void> {
+  // Escape is retried because the datepicker ignores it while its opening animation is still running.
+  await expect(async () => {
+    await page.keyboard.press('Escape');
+    await expect(page.locator('mat-calendar')).toHaveCount(0, { timeout: 1000 });
+  }).toPass({ timeout: 10000 });
+}
+
+/**
+ * Reads the day cells of the open calendar's month view.
+ * Returns the CSS classes of each cell's `button.mat-calendar-body-cell` keyed by its day number,
+ * which is matched on the whole text of `.mat-calendar-body-cell-content` (so day 1 is never confused with 10 to 19).
+ */
+export async function getCalendarDayClasses(page: Page): Promise<Record<number, string[]>> {
+  return page.locator('mat-calendar button.mat-calendar-body-cell').evaluateAll((cells) => {
+    const days: Record<number, string[]> = {};
+    for (const cell of cells) {
+      const text = cell.querySelector('.mat-calendar-body-cell-content')?.textContent?.trim() ?? '';
+      if (/^\d+$/.test(text)) {
+        days[Number(text)] = Array.from(cell.classList);
+      }
+    }
+    return days;
+  });
 }
