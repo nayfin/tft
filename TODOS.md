@@ -2,9 +2,6 @@
 
 - how can skills changes be automated for consumers?
   - use the google tools to make publicly available (good for resume)
-- strictly typed forms
-  - would switching to signal forms enable?
-  - signal forms' `[formField]` reads number inputs natively (even with a bound `[type]`), which would make crispr-forms' `valueAsNumber` flag and its duplicated number `<input>` unnecessary
 - apps/documentation, apps/api, api-interfaces, mat-instantsearch and ui-imports still have broken generator-stub Jest specs and are excluded from the CI unit test step (`--exclude` in `ci.yml`; remove each from the list once fixed)
 - remove unused projects (core, ui-imports, mat-instantsearch, api, api-interfaces). They are excluded from CI lint rather than fixed (most still use the removed `@nrwl/linter:eslint` executor)
 - most rewritten Jest specs only check "creates" and "renders the label"; add behaviour tests (draggable/resizable registration, field value/validation wiring), and unit tests for `ControlErrorContainerDirective` (its old spec was fully commented out and deleted; `ControlErrorsDirective` has one now)
