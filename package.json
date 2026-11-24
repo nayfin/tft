@@ -113,7 +113,7 @@
     "jest-preset-angular": "16.0.0",
     "jest-util": "30.2.0",
     "ng-packagr": "21.1.0",
-    "nx": "22.5.4",
+    "nx": "22.7.10",
     "open": "^7.0.3",
     "postcss": "^8.3.9",
     "postcss-import": "14.1.0",
