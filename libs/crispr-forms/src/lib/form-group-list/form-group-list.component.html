@@ -24,7 +24,7 @@
     } @else {
     <div class="display-field-container" crisprDisplayField [component]="config().displayItemComponent"
       [value]="itemControl.value" [index]="i">
-      <button mat-icon-button (click)="clickEditItem(i)">
+      <button mat-icon-button type="button" (click)="clickEditItem(i)">
         <mat-icon>edit</mat-icon>
       </button>
     </div>
@@ -32,7 +32,7 @@
     <ng-template #display>
       <div class="display-field-container" crisprDisplayField [component]="config().displayItemComponent"
         [value]="itemControl.value" [index]="i">
-        <button mat-icon-button (click)="clickEditItem(i)">
+        <button mat-icon-button type="button" (click)="clickEditItem(i)">
           <mat-icon>edit</mat-icon>
         </button>
       </div>

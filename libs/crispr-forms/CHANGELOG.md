@@ -1,5 +1,10 @@
 # Changelog
 
+## 21.6.1
+
+### Fixed
+- The edit buttons of a group list item (the pencil shown with a `displayItemComponent`) and the Select button in the map field's marker info window had no `type`, so inside the form they were submit buttons. Clicking an edit pencil fired `submitted` and `invalidSubmit`, opened the invalid fields snack bar when `showInvalidErrors` is on, showed the errors of every field, and in an app that feeds the submitted value back into the form it could drop text typed right afterwards. All buttons in the library now have an explicit `type`. If you (accidentally) relied on the pencil submitting the form, submit it explicitly instead.
+
 ## 21.6.0
 
 ### Added

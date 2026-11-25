@@ -174,4 +174,48 @@ test.describe('Invalid fields summary', () => {
     ).toContainText('none yet');
     await expect(snackBar(page)).toHaveCount(0);
   });
+
+  // the edit pencil of a group list item sits inside the form, so it must not be a submit button
+  const editPencil = (page: Page) =>
+    page.locator('.display-field-container').getByRole('button').first();
+
+  test('opening a group list item for editing does not submit the form', async ({
+    page,
+  }) => {
+    await editPencil(page).click();
+
+    // the first item is open for editing now, so the click has been handled
+    await expect(
+      page.locator('[data-testid="groupList[0].secondSubField"] input')
+    ).toBeVisible();
+    await expect(
+      page.locator('[data-testid="last-invalid-submit"]')
+    ).toContainText('none yet');
+    await expect(snackBar(page)).toHaveCount(0);
+    await expect(page.locator('p.tft-control-error')).toHaveCount(0);
+  });
+
+  test('keeps what is typed into a group list item that was opened for editing', async ({
+    page,
+  }) => {
+    await textarea(page).fill('x');
+    await page
+      .locator('[data-testid="radioField"]')
+      .getByText('Option A')
+      .click();
+    await page
+      .locator('[data-testid="groupList[1].subField"] input')
+      .fill('Bo');
+    await editPencil(page).click();
+    const lastName = page.locator(
+      '[data-testid="groupList[0].secondSubField"] input'
+    );
+
+    await lastName.fill('Diddley');
+
+    // A click that submitted the form used to feed the form value back into it a moment later, which emptied the
+    // field again. Asserting that nothing changes needs a wait.
+    await page.waitForTimeout(1000);
+    await expect(lastName).toHaveValue('Diddley');
+  });
 });

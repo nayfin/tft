@@ -26,7 +26,7 @@
         @if(selectedMarker(); as marker) {
         <div class="info-window-content">
           <p>{{ marker.title }}</p>
-          <button mat-button (click)="selectMarker(marker)">Select</button>
+          <button mat-button type="button" (click)="selectMarker(marker)">Select</button>
         </div>
         }
       </map-info-window>
