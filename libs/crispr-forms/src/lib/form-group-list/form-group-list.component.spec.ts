@@ -1,6 +1,8 @@
 import { Component, input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormArray, FormGroup } from '@angular/forms';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { FormArray, FormGroup, Validators } from '@angular/forms';
+import { CrisprFormComponent } from '../form/form.component';
 import {
   buildFormGroupFromConfig,
   ControlType,
@@ -180,5 +182,90 @@ describe('FormGroupListComponent with a displayItemComponent', () => {
     component.clickDelete(0);
 
     expect(component.selectedIndex()).toBeNull();
+  });
+});
+
+describe('FormGroupListComponent edit buttons inside a crispr-form', () => {
+  const listConfig: FormGroupListConfig = {
+    controlName: 'items',
+    controlType: ControlType.GROUP_LIST,
+    minListLength: 0,
+    displayItemComponent: TestDisplayItemComponent,
+    itemConfig: {
+      controlName: 'item',
+      controlType: ControlType.SUB_GROUP,
+      fields: [
+        {
+          controlName: 'name',
+          controlType: ControlType.INPUT,
+          label: 'Name',
+          validators: [Validators.required],
+        },
+      ],
+    },
+  };
+
+  async function createForm() {
+    const formFixture = TestBed.createComponent(CrisprFormComponent);
+    formFixture.componentRef.setInput('config', {
+      showInvalidErrors: true,
+      fields: [listConfig],
+    });
+    // the second item is empty, so the form is invalid and a submit would show the snack bar
+    formFixture.componentRef.setInput('value', {
+      items: [{ name: 'a' }, { name: '' }],
+    });
+    // the lazily loaded group list renders a moment after the form
+    for (
+      let i = 0;
+      i < 100 &&
+      !formFixture.nativeElement.querySelector('.display-field-container');
+      i++
+    ) {
+      await formFixture.whenStable();
+      await new Promise((resolve) => setTimeout(resolve, 20));
+    }
+    await formFixture.whenStable();
+    return formFixture;
+  }
+
+  const editButton = (f: ComponentFixture<CrisprFormComponent>) =>
+    f.nativeElement.querySelector(
+      '.display-field-container button'
+    ) as HTMLButtonElement;
+
+  afterEach(() => {
+    TestBed.inject(OverlayContainer).ngOnDestroy();
+  });
+
+  it('opens the item for editing without submitting the form', async () => {
+    const formFixture = await createForm();
+    const submitted = jest.fn();
+    const invalidSubmit = jest.fn();
+    formFixture.componentInstance.submitted.subscribe(submitted);
+    formFixture.componentInstance.invalidSubmit.subscribe(invalidSubmit);
+    expect(
+      formFixture.nativeElement.querySelectorAll('.item-header')
+    ).toHaveLength(1);
+
+    editButton(formFixture).click();
+    await formFixture.whenStable();
+
+    // the first item is now the one open for editing, the second is shown as text
+    expect(
+      formFixture.nativeElement
+        .querySelector('.item-header .mat-h2')
+        .textContent.trim()
+    ).toBe('Item 1');
+    expect(submitted).not.toHaveBeenCalled();
+    expect(invalidSubmit).not.toHaveBeenCalled();
+    expect(document.querySelector('mat-snack-bar-container')).toBeNull();
+    expect(formFixture.componentInstance.form().touched).toBe(false);
+  });
+
+  it('renders the edit buttons as plain buttons, not submit buttons', async () => {
+    const formFixture = await createForm();
+
+    expect(editButton(formFixture).type).toBe('button');
   });
 });
