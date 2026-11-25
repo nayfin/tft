@@ -188,6 +188,13 @@ For multiple triggers, use `combineLatest` in the callback.
 3. Add to `ControlType` enum and `AnyFieldConfig` union in `crispr-field.config.ts`
 4. Map in `libs/crispr-forms/src/lib/field-component-map.const.ts`, lazily via `import()`
 5. Export the component from `src/lib/ui/public-api.ts` as a type only (`export type { ... }`). Field components must not be value exports of the entry point, or Rollup inlines the lazy chunks and the optional packages (`@angular/google-maps`, `browser-image-compression`, `@angular/material-date-fns-adapter`) end up in the main bundle. The `no-restricted-syntax` override in `libs/crispr-forms/.eslintrc.json` guards this: add the new field folder to its list
+6. Give every `<button>` in the new field's template an explicit `type` (see "Buttons in templates")
+
+## Buttons in templates
+Every `<button>` in the library's templates, inline templates included, must set `type` explicitly. A button without a `type` is a submit button, so inside `<crispr-form>` a click submits the whole form: `submitted` and `invalidSubmit` fire, the invalid-fields snack bar opens, every field shows its errors, and an app that feeds the submitted value back into the form can lose text typed right afterwards.
+- Use `type="button"` for anything that must not submit: edit, delete, add, clear, select, toggles and menu triggers.
+- Use `type="submit"` only when the button is meant to submit, as the `BUTTON` field's submit type and the form's hidden submit trigger do.
+- `src/lib/button-types.spec.ts` scans every template under `libs/crispr-forms/src` and fails with `file:line` for any button without a `type`, `[type]` or `[attr.type]`. If it fails, fix the template, do not weaken the scanner.
 
 ## Export skill
 `libs/crispr-forms/export-skill/` contains the published skill docs:
