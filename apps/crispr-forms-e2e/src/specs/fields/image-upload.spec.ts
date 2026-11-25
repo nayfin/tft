@@ -318,3 +318,62 @@ test.describe('Image Upload Field preview with an initial value', () => {
     await expect(initialField(page).locator('.drop-container')).toBeVisible();
   });
 });
+
+test.describe('Image Upload Field compression timeout', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/crispr-forms-demo/fields/image-upload');
+    await expect(getMatFormField(page, 'timeoutImage')).toBeVisible();
+  });
+  const TIMEOUT_FIELD = 'timeoutImage';
+  const timeoutInput = (page: Page) =>
+    getMatFormField(page, TIMEOUT_FIELD).locator('input[type="file"]');
+  const timeoutLog = (page: Page) =>
+    page.locator('[data-testid="timeout-log"] li');
+
+  test('fails with a "took too long" message when compression exceeds compressionTimeoutMs, then recovers on a small image', async ({
+    page,
+  }) => {
+    // a large image needs compression, which can not finish within the field's 1 ms timeout
+    const large = await createLargeImage(page);
+    await timeoutInput(page).setInputFiles({
+      name: 'large.png',
+      mimeType: 'image/png',
+      buffer: large,
+    });
+
+    await expect(timeoutLog(page)).toHaveText([
+      'processing:INVALID',
+      'failed:INVALID',
+    ]);
+    await expect(
+      page.locator(
+        `crispr-image-upload-field:has([data-testid="${TIMEOUT_FIELD}"]) p.tft-control-error`
+      )
+    ).toHaveText(
+      'Compressing "large.png" took too long. Please try again or choose a smaller image.'
+    );
+
+    // a small image is not compressed, so there is nothing to time out and the field recovers
+    const small = Buffer.from(
+      'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+      'base64'
+    );
+    await timeoutInput(page).setInputFiles({
+      name: 'small.png',
+      mimeType: 'image/png',
+      buffer: small,
+    });
+
+    await expect(timeoutLog(page)).toHaveText([
+      'processing:INVALID',
+      'failed:INVALID',
+      'processing:INVALID',
+      'idle:VALID',
+    ]);
+    await expect(
+      page.locator(
+        `crispr-image-upload-field:has([data-testid="${TIMEOUT_FIELD}"]) p.tft-control-error`
+      )
+    ).toHaveCount(0);
+  });
+});

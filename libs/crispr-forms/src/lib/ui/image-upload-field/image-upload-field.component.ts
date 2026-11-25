@@ -34,6 +34,8 @@ interface ProcessedImage {
   file: File | null;
   /** The selected file that could not be processed */
   failed?: File;
+  /** Set when processing was given up on because it took longer than `compressionTimeoutMs` */
+  timedOut?: boolean;
 }
 
 @Component({
@@ -79,6 +81,7 @@ export class ImageUploadFieldComponent
     targetCompressedImageFileSizeMb: 0.4,
     minCompressionThresholdMb: 0.6,
     useWebWorker: true,
+    compressionTimeoutMs: 30000,
   };
 
   private inputImageFileSubject = new Subject<File | null>();
@@ -144,17 +147,33 @@ export class ImageUploadFieldComponent
     // Each selection gets its own AbortController. switchMap unsubscribing (new selection, clear,
     // reset) runs the teardown below which aborts the superseded compression, and an aborted
     // compression never emits so it can not produce a `failed` state.
+    // A selected file also gets a timer (`compressionTimeoutMs`, read when the selection starts). When it
+    // fires first the compression is aborted and the file is reported as failed, and whatever the
+    // compression settles with afterwards is ignored.
     switchMap((file) =>
       new Observable<ProcessedImage>((subscriber) => {
         const controller = new AbortController();
         let finished = false;
+        let timer: ReturnType<typeof setTimeout> | undefined;
+        const timeoutMs = this.config().compressionTimeoutMs;
+        if (file && timeoutMs > 0) {
+          timer = setTimeout(() => {
+            if (finished) return;
+            finished = true;
+            controller.abort();
+            subscriber.next({ file: null, failed: file, timedOut: true });
+            subscriber.complete();
+          }, timeoutMs);
+        }
         this.processFile(file, controller.signal).then((result) => {
-          if (controller.signal.aborted) return;
+          if (finished || controller.signal.aborted) return;
           finished = true;
           subscriber.next(result);
           subscriber.complete();
         });
+        // completing, a new selection, a clear or a destroy all end up here, so the timer never outlives the selection
         return () => {
+          clearTimeout(timer);
           if (!finished) controller.abort();
         };
       })
@@ -163,14 +182,16 @@ export class ImageUploadFieldComponent
     takeUntilDestroyed(),
     // switchMap has already discarded results of superseded selections, so state
     // transitions made here always belong to the latest selection
-    tap(({ file, failed }) => {
+    tap(({ file, failed, timedOut }) => {
       if (this.destroyed) return;
       const control = this.control();
       if (failed) {
         this.progress.set(undefined);
         this.setProcessingState(
           'failed',
-          `Unable to process "${failed.name}". Please try a different image.`,
+          timedOut
+            ? `Compressing "${failed.name}" took too long. Please try again or choose a smaller image.`
+            : `Unable to process "${failed.name}". Please try a different image.`,
           () => control.updateValueAndValidity()
         );
       } else if (file) {

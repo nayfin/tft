@@ -36,6 +36,22 @@
 
 <mat-card>
   <h2 class="mat-h2">
+    Compression timeout
+  </h2>
+  <p class="mat-p">
+    'compressionTimeoutMs' (default 30000, 0 disables) is how long a selected image may take to process before the field gives up.
+    This field uses 1 ms, so selecting an image that needs compression fails with a 'took too long' message. Smaller images are not compressed and still work.
+  </p>
+  <crispr-form [config]="timeoutConfig" />
+  <ul data-testid="timeout-log">
+    @for (entry of timeoutLog(); track $index) {
+      <li>{{ entry.state }}:{{ entry.formStatus }}</li>
+    }
+  </ul>
+</mat-card>
+
+<mat-card>
+  <h2 class="mat-h2">
     Initial value
   </h2>
   <p class="mat-p">

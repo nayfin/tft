@@ -68,6 +68,13 @@ export type ImageUploadFieldConfig = CrisprControlConfig & MatFieldProperties & 
    * @default true
    */
   useWebWorker?: boolean;
+  /**
+   * How long, in milliseconds, a selected image may take to process before the field gives up and fails.
+   * The compression is aborted and the field goes to the `failed` state (the `imageProcessingFailed` error)
+   * with a message saying it took too long. 0 disables the timeout.
+   * @default 30000
+   */
+  compressionTimeoutMs?: number;
 
   /**
    * The height of the image preview container
