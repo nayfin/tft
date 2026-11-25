@@ -318,3 +318,130 @@ test.describe('Image Upload Field preview with an initial value', () => {
     await expect(initialField(page).locator('.drop-container')).toBeVisible();
   });
 });
+
+test.describe('Image Upload Field compression timeout', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/crispr-forms-demo/fields/image-upload');
+    await expect(getMatFormField(page, 'timeoutImage')).toBeVisible();
+  });
+  const TIMEOUT_FIELD = 'timeoutImage';
+  const timeoutInput = (page: Page) =>
+    getMatFormField(page, TIMEOUT_FIELD).locator('input[type="file"]');
+  const timeoutLog = (page: Page) =>
+    page.locator('[data-testid="timeout-log"] li');
+
+  test('fails with a "took too long" message when compression exceeds compressionTimeoutMs, then recovers on a small image', async ({
+    page,
+  }) => {
+    // a large image needs compression, which can not finish within the field's 1 ms timeout
+    const large = await createLargeImage(page);
+    await timeoutInput(page).setInputFiles({
+      name: 'large.png',
+      mimeType: 'image/png',
+      buffer: large,
+    });
+
+    await expect(timeoutLog(page)).toHaveText([
+      'processing:INVALID',
+      'failed:INVALID',
+    ]);
+    await expect(
+      page.locator(
+        `crispr-image-upload-field:has([data-testid="${TIMEOUT_FIELD}"]) p.tft-control-error`
+      )
+    ).toHaveText(
+      'Compressing "large.png" took too long. Please try again or choose a smaller image.'
+    );
+
+    // a small image is not compressed, so there is nothing to time out and the field recovers
+    const small = Buffer.from(
+      'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+      'base64'
+    );
+    await timeoutInput(page).setInputFiles({
+      name: 'small.png',
+      mimeType: 'image/png',
+      buffer: small,
+    });
+
+    await expect(timeoutLog(page)).toHaveText([
+      'processing:INVALID',
+      'failed:INVALID',
+      'processing:INVALID',
+      'idle:VALID',
+    ]);
+    await expect(
+      page.locator(
+        `crispr-image-upload-field:has([data-testid="${TIMEOUT_FIELD}"]) p.tft-control-error`
+      )
+    ).toHaveCount(0);
+  });
+});
+
+test.describe('Image Upload Field form processing state', () => {
+  const state = (page: Page) =>
+    page.locator('[data-testid="form-processing-state"]');
+  const saveButton = (page: Page) =>
+    page.locator('[data-testid="save-button"]');
+
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/crispr-forms-demo/fields/image-upload');
+    await expect(getMatFormField(page, FIELD)).toBeVisible();
+  });
+
+  test('is idle with Save enabled before an image is selected', async ({
+    page,
+  }) => {
+    await expect(state(page)).toHaveText('Form processing state: idle');
+    await expect(saveButton(page)).toBeEnabled();
+  });
+
+  test('disables Save while an image is compressing and enables it when done', async ({
+    page,
+  }) => {
+    // a big image, so that the compression takes a while
+    const image = await createLargeImage(page, 2000);
+
+    await getFileInput(page).setInputFiles({
+      name: 'large.png',
+      mimeType: 'image/png',
+      buffer: image,
+    });
+
+    await expect(state(page)).toHaveText('Form processing state: processing');
+    await expect(saveButton(page)).toBeDisabled();
+    await expect(state(page)).toHaveText('Form processing state: idle', {
+      timeout: 30000,
+    });
+    await expect(saveButton(page)).toBeEnabled();
+  });
+
+  test('keeps Save disabled after a failure and enables it once a valid image is selected', async ({
+    page,
+  }) => {
+    const corrupt = Buffer.alloc(120 * 1024);
+    for (let i = 0; i < corrupt.length; i++)
+      corrupt[i] = Math.floor(Math.random() * 256);
+
+    await getFileInput(page).setInputFiles({
+      name: 'bad.jpg',
+      mimeType: 'image/jpeg',
+      buffer: corrupt,
+    });
+
+    await expect(state(page)).toHaveText('Form processing state: failed');
+    await expect(saveButton(page)).toBeDisabled();
+
+    const image = await createLargeImage(page);
+    await getFileInput(page).setInputFiles({
+      name: 'good.png',
+      mimeType: 'image/png',
+      buffer: image,
+    });
+
+    await expect(state(page)).toHaveText('Form processing state: idle', {
+      timeout: 30000,
+    });
+    await expect(saveButton(page)).toBeEnabled();
+  });
+});

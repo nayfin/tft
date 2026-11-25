@@ -15,9 +15,15 @@
   <p class="mat-p">
     While an image is being compressed the field reports a 'processing' state and the form is invalid.
     Use 'processingStateChange' to react to every transition ('idle', 'processing', 'failed').
+    The form also exposes the aggregate of all its image fields as a 'processingState' signal and a 'processingStateChange' output,
+    so a Save button outside the form can follow it without wiring a callback into every image field's config.
   </p>
   @if (showProcessingForm()) {
-    <crispr-form [config]="processingConfig" />
+    <crispr-form #processingForm [config]="processingConfig" />
+    <p class="mat-p" data-testid="form-processing-state">Form processing state: {{ processingForm.processingState() }}</p>
+    <button mat-flat-button type="button" data-testid="save-button" [disabled]="processingForm.processingState() !== 'idle'">
+      Save
+    </button>
   }
   <button mat-button type="button" data-testid="toggle-processing-form" (click)="showProcessingForm.set(!showProcessingForm())">
     Toggle form
@@ -30,6 +36,22 @@
   <ul data-testid="files-changed-log">
     @for (entry of filesChangedLog(); track $index) {
       <li>{{ entry }}</li>
+    }
+  </ul>
+</mat-card>
+
+<mat-card>
+  <h2 class="mat-h2">
+    Compression timeout
+  </h2>
+  <p class="mat-p">
+    'compressionTimeoutMs' (default 30000, 0 disables) is how long a selected image may take to process before the field gives up.
+    This field uses 1 ms, so selecting an image that needs compression fails with a 'took too long' message. Smaller images are not compressed and still work.
+  </p>
+  <crispr-form [config]="timeoutConfig" />
+  <ul data-testid="timeout-log">
+    @for (entry of timeoutLog(); track $index) {
+      <li>{{ entry.state }}:{{ entry.formStatus }}</li>
     }
   </ul>
 </mat-card>

@@ -146,6 +146,29 @@ export class ImageUploadComponent {
     ],
   };
 
+  /** Records every processing state change of the timeout field along with the form status at the time of the callback */
+  timeoutLog = signal<{ state: ImageProcessingState; formStatus: string }[]>([]);
+
+  /** compressionTimeoutMs is 1 ms, so compressing any image that needs it times out almost immediately */
+  timeoutConfig: FormConfig = {
+    fields: [
+      {
+        controlType: ControlType.IMAGE_UPLOAD,
+        controlName: 'timeoutImage',
+        label: 'Image with a 1 ms compression timeout',
+        acceptedTypes: 'image/*',
+        compressImage: true,
+        targetCompressedImageFileSizeMb: 0.05,
+        minCompressionThresholdMb: 0.05,
+        useWebWorker: false,
+        compressionTimeoutMs: 1,
+        processingStateChange: (state, group) => {
+          this.timeoutLog.update((log) => [...log, { state, formStatus: group.status }]);
+        },
+      },
+    ],
+  };
+
   handleSubmit(form: FormGroup) {
     console.log({fieldValue: form.value.fileUploadExample})
   }

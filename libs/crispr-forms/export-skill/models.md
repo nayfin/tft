@@ -275,9 +275,12 @@ interface ImageUploadFieldConfig extends CrisprControlConfig, MatFieldProperties
   minCompressionThresholdMb?: number;
   maxWidthOrHeight?: number;
   useWebWorker?: boolean;
+  compressionTimeoutMs?: number; // How long a selected image may take to process before the field fails (imageProcessingFailed, 'took too long' message). 0 disables. Default 30000
   imagePreviewHeight?: string;
 }
 ```
+
+`<crispr-form>` also exposes the aggregate of all its image fields (sub-groups and group list items included) as `processingState: Signal<ImageProcessingState>` and a `processingStateChange` output (changes only, not the initial 'idle'). `getProcessingState(control: AbstractControl): ImageProcessingState` is the pure function behind them.
 
 ### Radio Field (`ControlType.RADIO`)
 ```typescript

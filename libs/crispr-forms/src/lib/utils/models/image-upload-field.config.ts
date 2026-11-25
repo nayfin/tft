@@ -23,6 +23,8 @@ export type ImageUploadFieldConfig = CrisprControlConfig & MatFieldProperties & 
    * `parentGroup.status` reflects the new state. While `processing` the control
    * is invalid (`imageProcessing` error) and after a failure it is invalid
    * (`imageProcessingFailed` error) until another image is selected or the field is cleared.
+   * To follow all the image fields of a form at once, use the `processingState` signal and the
+   * `processingStateChange` output of `<crispr-form>`.
    */
   processingStateChange?: (state: ImageProcessingState, parentGroup: FormGroup) => void;
   /**
@@ -68,6 +70,13 @@ export type ImageUploadFieldConfig = CrisprControlConfig & MatFieldProperties & 
    * @default true
    */
   useWebWorker?: boolean;
+  /**
+   * How long, in milliseconds, a selected image may take to process before the field gives up and fails.
+   * The compression is aborted and the field goes to the `failed` state (the `imageProcessingFailed` error)
+   * with a message saying it took too long. 0 disables the timeout.
+   * @default 30000
+   */
+  compressionTimeoutMs?: number;
 
   /**
    * The height of the image preview container

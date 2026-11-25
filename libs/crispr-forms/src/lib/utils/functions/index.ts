@@ -4,5 +4,6 @@ export * from './createControlForType';
 export * from './filterOptionsByLabel';
 export * from './isControlConfig';
 export * from './getInvalidFields';
+export * from './getProcessingState';
 export * from './observablifyOptions';
 export * from './image-compression.helpers';

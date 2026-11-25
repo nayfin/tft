@@ -91,7 +91,7 @@ Include the following types depending on what UI elements you need:
 - `RADIO`: Radio button group. An optional `label` is shown above the group and names it for assistive technology; with only a `heading`, the heading's text names it.
 - `SLIDER`: Numeric slider.
 - `DATEPICKER`: Date selection. Set `clearable: true` to show a small text clear button next to the calendar toggle (see "Clearable Datepicker" below).
-- `FILE_UPLOAD` / `IMAGE_UPLOAD`: Upload fields. `IMAGE_UPLOAD` makes the form invalid while an image is being compressed (`imageProcessing` error) or if compression fails (`imageProcessingFailed`); use `processingStateChange` to react to `'idle' | 'processing' | 'failed'` transitions and `filesChanged` to receive the final processed `File`. Selecting, clearing or resetting mid-compression cancels the superseded compression, and destroying the field mid-processing reports `'idle'` and restores validity. `FILE_UPLOAD` calls `filesChanged` with the selected/dropped `FileList` once it is set as the control value.
+- `FILE_UPLOAD` / `IMAGE_UPLOAD`: Upload fields. `IMAGE_UPLOAD` makes the form invalid while an image is being compressed (`imageProcessing` error) or if compression fails (`imageProcessingFailed`); use `processingStateChange` to react to `'idle' | 'processing' | 'failed'` transitions and `filesChanged` to receive the final processed `File`. Selecting, clearing or resetting mid-compression cancels the superseded compression, and destroying the field mid-processing reports `'idle'` and restores validity. The processing error comes before the field's other validators, so a required image shows the processing message rather than "This field is required". `compressionTimeoutMs` (default `30000`, `0` disables) fails a stalled compression with a "took too long" message under the same `imageProcessingFailed` key. To follow all image fields from the form, see "Image Processing State of a Form" below. `FILE_UPLOAD` calls `filesChanged` with the selected/dropped `FileList` once it is set as the control value.
 - `AUTOCOMPLETE` / `AUTOCOMPLETE_CHIPLIST`: Type-ahead and tag inputs.
 - `HEADING` / `DIVIDER`: Structural and visual layout fields (not form controls).
 - `SUB_GROUP` / `GROUP_LIST`: For nested `FormGroup`s and `FormArray`s.
@@ -199,6 +199,17 @@ Fields show their own errors once touched. To list everything that is wrong in o
   - Group list items use `itemLabelBuilder(index)` (0-based) when set, otherwise `<list name> <position>`: `Photo in Photos 2`.
   - A group's, list's, item's or the form's own validator error is listed only when none of its fields are (the form's entry is labelled `Form`).
   - Disabled controls and config entries without a control are skipped.
+
+## 8. Image Processing State of a Form
+`<crispr-form>` exposes the aggregate of all its `IMAGE_UPLOAD` fields (sub-groups and group list items included):
+- **`processingState`**: a signal, `'idle' | 'processing' | 'failed'` (`'processing'` wins over `'failed'`; a form without image fields is `'idle'`).
+- **`processingStateChange`**: an output that emits the new state when it changes, not the initial `'idle'`.
+- It replaces wiring the per-field `processingStateChange` config callback (still available) into every image field. `submitted` is not blocked while an image is processing.
+  ```html
+  <crispr-form #form [config]="config" />
+  <button [disabled]="form.processingState() !== 'idle'" (click)="save()">Save</button>
+  ```
+- `getProcessingState(group)` is the same aggregate as a pure function, for forms built without `<crispr-form>`.
 
 ## Guidelines for the Agent
 - When asked to create a form, always default to using `@tft/crispr-forms` rather than manually writing standard reactive or template-driven forms.
