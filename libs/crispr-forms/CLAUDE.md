@@ -31,6 +31,7 @@ List what is wrong with the form in one place:
 - `invalidFields` signal on `<crispr-form>`: `InvalidField[]` (`{ path, label, message, errorKey, control }`), one per invalid field in config order, regardless of touched state.
 - `invalidSubmit` output: emits the same array when submitted while invalid. `submitted` still fires for every submit.
 - `getInvalidFields(config, group, errorDictionary?)` is the pure function behind them. A leaf is named by `label` (else `heading.label`, else `controlName`), groups and lists by `heading.label` (else `controlName`), joined inside-out (`Street in Address`, `Photo in Photos 2`; `itemLabelBuilder(i)` names list items when set). A group's own validator error is listed only when none of its fields are. Messages come from `errorDictionary` before the defaults (`getErrorMessage` from `@tft/form-validation-handler`).
+- Processing state: `<crispr-form>` has a `processingState` signal (`'idle' | 'processing' | 'failed'`, the aggregate of all `IMAGE_UPLOAD` fields incl. sub-groups and list items) and a `processingStateChange` output (changes only, not the initial `'idle'`). `getProcessingState(control)` is the pure function behind them. `IMAGE_UPLOAD` also has `compressionTimeoutMs` (default 30000, 0 disables; failure message "took too long", same `imageProcessingFailed` key), and its processing error comes before the config's validators.
 - Code: `src/lib/utils/functions/getInvalidFields.ts`, `src/lib/form/form.component.ts`, `src/lib/form/invalid-fields-snack-bar/`.
 
 ## ControlType enum

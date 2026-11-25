@@ -1,5 +1,20 @@
 # Changelog
 
+## 21.6.0
+
+### Added
+- `compressionTimeoutMs` on the `IMAGE_UPLOAD` field: how long a selected image may take to process before the field gives up (default `30000` ms, `0` disables it). On timeout the compression is aborted and the field goes to `failed` with the message `Compressing "<name>" took too long. Please try again or choose a smaller image.`, under the same `imageProcessingFailed` error key as any other failure. A late result of the timed-out compression is ignored, and selecting another image works as usual.
+- `processingState` signal on `<crispr-form>`: the aggregate processing state of all its image upload fields (sub-groups and group list items included), `'idle' | 'processing' | 'failed'`. A form without image fields is `'idle'`. Use it to disable a Save button outside the form, instead of wiring the `processingStateChange` callback into every image field's config (that callback still exists and is unchanged).
+- `processingStateChange` output on `<crispr-form>`: emits the new `processingState` when it changes. It does not emit the initial `'idle'`, and changes within one change detection tick are coalesced. `submitted` is not blocked while an image is processing.
+- `getProcessingState(control)` is exported, for forms built without `<crispr-form>`. It walks the control tree for the `imageProcessing` and `imageProcessingFailed` errors, skipping disabled controls.
+
+### Fixed
+- A required image upload showed "This field is required" while an image compressed or after it failed, because its processing error was added after the config's validators and the error display shows the first error. The processing error now comes first, so the field shows "Please wait while the image is processed", then the failure message. After the field is cleared `required` shows again.
+- Selecting a file marks the image upload control as touched before it is cleared, so the processing error shows at once, also on a field the user had not touched.
+
+### Changed (may need code updates)
+- Image processing now times out after 30 seconds by default (`compressionTimeoutMs`). A compression that took longer used to finish, and now fails with the "took too long" message. Raise `compressionTimeoutMs`, or set it to `0`, to keep the old behaviour.
+
 ## 21.5.0
 
 ### Added

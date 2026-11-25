@@ -192,7 +192,22 @@ Selecting another image, clearing or resetting while an image is compressing can
 
 `processingStateChange?: (state, parentGroup) => void` fires on every transition. The control's validity is updated before it is called, so `parentGroup.status` already reflects the new state. `filesChanged?: (parentGroup, file) => void` (previously declared but never called) now fires with the final processed `File`.
 
-Default messages for the new `imageProcessing` and `imageProcessingFailed` error keys live in `defaultErrors` and can be overridden through the form's `errorDictionary`.
+Default messages for the new `imageProcessing` and `imageProcessingFailed` error keys live in `defaultErrors` and can be overridden through the form's `errorDictionary`. The processing error comes before the field's other validators, so a required image shows "Please wait while the image is processed" while it compresses, and the failure message after a failure, rather than "This field is required". After a clear, `required` shows again.
+
+### Compression timeout
+
+`compressionTimeoutMs` (default `30000`, `0` disables) is how long a selected image may take to process. When it is exceeded the compression is aborted and the field goes to `failed` with `Compressing "<name>" took too long. Please try again or choose a smaller image.`, under the same `imageProcessingFailed` error key. A late result of the aborted compression is ignored, and the user can select another image.
+
+### Following all image fields from the form
+
+`<crispr-form>` exposes the aggregate of all its image fields (sub-groups and group list items included) as a `processingState` signal, `'idle' | 'processing' | 'failed'`, and a `processingStateChange` output that emits when it changes (not for the initial `'idle'`). A form without image fields is `'idle'`. This replaces wiring a `processingStateChange` callback into every image field's config to, for example, disable a Save button outside the form:
+
+```html
+<crispr-form #form [config]="config" />
+<button [disabled]="form.processingState() !== 'idle'" (click)="save()">Save</button>
+```
+
+`submitted` is not blocked while an image is processing, so check the state yourself if the submit button is inside the form. For forms built without `<crispr-form>`, `getProcessingState(group)` returns the same aggregate.
 
 ## Datepicker Field
 
@@ -300,6 +315,7 @@ Consumer-facing changes from the last few releases. See [CHANGELOG.md](./CHANGEL
 - **`clearable` and `clearButtonLabel` on `DATEPICKER`.** Adds a small text clear button to the datepicker; `clearButtonLabel` sets its visible text. See [Datepicker Field](#datepicker-field).
 - **`testId` on any field config**, including buttons. See [Test IDs](#test-ids).
 - **`processingState` and `processingStateChange` on `IMAGE_UPLOAD`.** See [Image Upload Field](#image-upload-field).
+- **`compressionTimeoutMs` on `IMAGE_UPLOAD`, and `processingState` / `processingStateChange` on `<crispr-form>`.** A stalled compression fails after a timeout (default 30 s), and the form reports the state of all its image fields. See [Compression timeout](#compression-timeout) and [Following all image fields from the form](#following-all-image-fields-from-the-form).
 - **`showInvalidErrors` on `FormConfig`, the `invalidFields` signal and the `invalidSubmit` output on `<crispr-form>`.** List what is wrong when a form is submitted, with an opt-in snack bar. `submitted` is unchanged. Requires `@tft/form-validation-handler` `^21.2.0`. See [Showing what is wrong when a form is submitted](#showing-what-is-wrong-when-a-form-is-submitted).
 
 ### Behaviour changes
@@ -307,6 +323,8 @@ Consumer-facing changes from the last few releases. See [CHANGELOG.md](./CHANGEL
 - **`UNIT_CONVERSION` can store and load `null`.** `storedValueConversion` and `initialDisplayValueConversion` may now return `null`, and `initialDisplayValueConversion` receives the stored value unchanged. A stored `0` used to arrive as `null`; it now arrives as `0`, and only a missing value arrives as `null`. A conversion that treats a falsy `value` as "no measurement" (for example `value ? convert(value) : 0`) should check `value == null` instead. Return `null` from both conversions for an empty field to keep it `null` on load, so a `required` field starts invalid.
 - **Seeded falsy values are kept.** An initial value of `0`, `false` or `''` is no longer turned into `null`. For example, a checkbox seeded with `false` now reports `false`, and `Validators.required` treats it as filled. Use `Validators.requiredTrue` for "must be ticked".
 - **Forms are invalid while an image is processing.** A form containing an `IMAGE_UPLOAD` field is invalid during compression and after a compression failure, so buttons with `disabledOnInvalidForm` are disabled in that window.
+- **Image processing times out after 30 seconds by default.** A compression that took longer now fails with a "took too long" message. Raise `compressionTimeoutMs`, or set it to `0`, for the old behaviour.
+- **The image processing error comes before `required`.** A required image upload shows the processing message while compressing and the failure message after a failure, instead of "This field is required". Selecting a file also marks the control touched first, so the error shows at once on an untouched field.
 - **`filesChanged` now fires** on `IMAGE_UPLOAD` and `FILE_UPLOAD`. It was declared before but never called, so existing callbacks will start running.
 
 ### Fixes
