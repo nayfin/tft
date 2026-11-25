@@ -15,9 +15,15 @@
   <p class="mat-p">
     While an image is being compressed the field reports a 'processing' state and the form is invalid.
     Use 'processingStateChange' to react to every transition ('idle', 'processing', 'failed').
+    The form also exposes the aggregate of all its image fields as a 'processingState' signal and a 'processingStateChange' output,
+    so a Save button outside the form can follow it without wiring a callback into every image field's config.
   </p>
   @if (showProcessingForm()) {
-    <crispr-form [config]="processingConfig" />
+    <crispr-form #processingForm [config]="processingConfig" />
+    <p class="mat-p" data-testid="form-processing-state">Form processing state: {{ processingForm.processingState() }}</p>
+    <button mat-flat-button type="button" data-testid="save-button" [disabled]="processingForm.processingState() !== 'idle'">
+      Save
+    </button>
   }
   <button mat-button type="button" data-testid="toggle-processing-form" (click)="showProcessingForm.set(!showProcessingForm())">
     Toggle form

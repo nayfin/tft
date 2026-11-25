@@ -377,3 +377,71 @@ test.describe('Image Upload Field compression timeout', () => {
     ).toHaveCount(0);
   });
 });
+
+test.describe('Image Upload Field form processing state', () => {
+  const state = (page: Page) =>
+    page.locator('[data-testid="form-processing-state"]');
+  const saveButton = (page: Page) =>
+    page.locator('[data-testid="save-button"]');
+
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/crispr-forms-demo/fields/image-upload');
+    await expect(getMatFormField(page, FIELD)).toBeVisible();
+  });
+
+  test('is idle with Save enabled before an image is selected', async ({
+    page,
+  }) => {
+    await expect(state(page)).toHaveText('Form processing state: idle');
+    await expect(saveButton(page)).toBeEnabled();
+  });
+
+  test('disables Save while an image is compressing and enables it when done', async ({
+    page,
+  }) => {
+    // a big image, so that the compression takes a while
+    const image = await createLargeImage(page, 2000);
+
+    await getFileInput(page).setInputFiles({
+      name: 'large.png',
+      mimeType: 'image/png',
+      buffer: image,
+    });
+
+    await expect(state(page)).toHaveText('Form processing state: processing');
+    await expect(saveButton(page)).toBeDisabled();
+    await expect(state(page)).toHaveText('Form processing state: idle', {
+      timeout: 30000,
+    });
+    await expect(saveButton(page)).toBeEnabled();
+  });
+
+  test('keeps Save disabled after a failure and enables it once a valid image is selected', async ({
+    page,
+  }) => {
+    const corrupt = Buffer.alloc(120 * 1024);
+    for (let i = 0; i < corrupt.length; i++)
+      corrupt[i] = Math.floor(Math.random() * 256);
+
+    await getFileInput(page).setInputFiles({
+      name: 'bad.jpg',
+      mimeType: 'image/jpeg',
+      buffer: corrupt,
+    });
+
+    await expect(state(page)).toHaveText('Form processing state: failed');
+    await expect(saveButton(page)).toBeDisabled();
+
+    const image = await createLargeImage(page);
+    await getFileInput(page).setInputFiles({
+      name: 'good.png',
+      mimeType: 'image/png',
+      buffer: image,
+    });
+
+    await expect(state(page)).toHaveText('Form processing state: idle', {
+      timeout: 30000,
+    });
+    await expect(saveButton(page)).toBeEnabled();
+  });
+});

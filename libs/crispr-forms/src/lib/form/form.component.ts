@@ -15,7 +15,7 @@ import {
 } from '@angular/core';
 import { outputFromObservable, takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule, FormGroup, StatusChangeEvent } from '@angular/forms';
-import { filter, switchMap } from 'rxjs/operators';
+import { distinctUntilChanged, filter, skip, startWith, switchMap } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CrisprFieldDirective } from '../field.directive';
@@ -24,9 +24,11 @@ import { InitialControlValuePipe } from '../pipes/initial-control-value.pipe';
 import {
   ControlGroupValue,
   FormConfig,
+  ImageProcessingState,
   InvalidField,
   buildFormGroupFromConfig,
   getInvalidFields,
+  getProcessingState,
 } from '../utils';
 import { InvalidFieldsSnackBarComponent } from './invalid-fields-snack-bar/invalid-fields-snack-bar.component';
 
@@ -107,6 +109,29 @@ export class CrisprFormComponent implements OnInit {
       return getInvalidFields(config, this.form(), config.errorDictionary);
     },
     { equal: sameInvalidFields }
+  );
+
+  /**
+   * Whether any image upload field in the form is processing an image (`'processing'`) or failed to process
+   * one (`'failed'`), otherwise `'idle'`, which is also the state of a form without image fields.
+   * Use it to disable a Save button outside the form. Reactive, so it is safe to read in a template.
+   */
+  readonly processingState: Signal<ImageProcessingState> = computed(() => {
+    this.formEventCount();
+    return getProcessingState(this.form());
+  });
+
+  /**
+   * Emits the new `processingState` whenever it changes. It does not emit the initial `'idle'`: seeding with
+   * `'idle'` makes the first emission of `toObservable` a repeat that is dropped, while a form that is already
+   * processing when it first emits is still reported.
+   */
+  processingStateChange = outputFromObservable(
+    toObservable(this.processingState).pipe(
+      startWith<ImageProcessingState>('idle'),
+      distinctUntilChanged(),
+      skip(1)
+    )
   );
 
   /** Patch form values whenever the [value] input changes without firing valueChanges. */

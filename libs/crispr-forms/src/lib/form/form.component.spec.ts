@@ -348,4 +348,155 @@ describe('CrisprFormComponent', () => {
       ]);
     });
   });
+
+  describe('processingState and processingStateChange', () => {
+    const processing = { imageProcessing: true };
+    const failed = { imageProcessingFailed: { message: 'x' } };
+
+    const imageConfig: FormConfig = {
+      fields: [
+        {
+          controlType: ControlType.INPUT,
+          controlName: 'name',
+          label: 'Name',
+        },
+        {
+          controlType: ControlType.SUB_GROUP,
+          controlName: 'address',
+          fields: [
+            {
+              controlType: ControlType.INPUT,
+              controlName: 'street',
+              label: 'Street',
+            },
+          ],
+        },
+        {
+          controlType: ControlType.GROUP_LIST,
+          controlName: 'photos',
+          itemConfig: {
+            controlType: ControlType.SUB_GROUP,
+            controlName: 'item',
+            fields: [
+              {
+                controlType: ControlType.INPUT,
+                controlName: 'caption',
+                label: 'Caption',
+              },
+            ],
+          },
+        } as FormGroupListConfig,
+      ],
+    };
+
+    async function createForm(onCreated?: (f: CrisprFormComponent) => void) {
+      const formFixture = TestBed.createComponent(CrisprFormComponent);
+      formFixture.componentRef.setInput('config', imageConfig);
+      // before the first change detection, like a template binding is
+      onCreated?.(formFixture.componentInstance);
+      // the lazily loaded fields revalidate their control once they have rendered, which would clear errors set by hand
+      for (
+        let i = 0;
+        i < 100 &&
+        formFixture.nativeElement.querySelectorAll('input').length < 2;
+        i++
+      ) {
+        await formFixture.whenStable();
+        await new Promise((resolve) => setTimeout(resolve, 20));
+      }
+      await formFixture.whenStable();
+      return formFixture;
+    }
+
+    it('starts idle, also for a form without image fields', async () => {
+      const { componentInstance: form } = await createForm();
+
+      expect(form.processingState()).toBe('idle');
+    });
+
+    it('follows a field from processing to failed to idle', async () => {
+      const { componentInstance: form } = await createForm();
+      const name = form.form().get('name');
+
+      name.setErrors(processing);
+      expect(form.processingState()).toBe('processing');
+
+      name.setErrors(failed);
+      expect(form.processingState()).toBe('failed');
+
+      name.setErrors(null);
+      expect(form.processingState()).toBe('idle');
+    });
+
+    it('reacts to a field in a sub-group', async () => {
+      const { componentInstance: form } = await createForm();
+
+      form.form().get('address.street').setErrors(processing);
+
+      expect(form.processingState()).toBe('processing');
+    });
+
+    it('reacts to a field in a group list item', async () => {
+      const { componentInstance: form } = await createForm();
+      const list = form.form().get('photos') as FormArray;
+      list.push(
+        createControlForType(
+          (imageConfig.fields[2] as FormGroupListConfig).itemConfig
+        ) as FormGroup
+      );
+
+      list.at(0).get('caption').setErrors(failed);
+
+      expect(form.processingState()).toBe('failed');
+    });
+
+    it('is idle again when the processing field is disabled', async () => {
+      const { componentInstance: form } = await createForm();
+      form.form().get('name').setErrors(processing);
+      expect(form.processingState()).toBe('processing');
+
+      form.form().get('name').disable();
+
+      expect(form.processingState()).toBe('idle');
+    });
+
+    it('emits processingStateChange on every change, in order, and not for the initial state', async () => {
+      const changes: string[] = [];
+      const formFixture = await createForm((f) =>
+        f.processingStateChange.subscribe((state) => changes.push(state))
+      );
+      const name = formFixture.componentInstance.form().get('name');
+      expect(changes).toEqual([]);
+
+      name.setErrors(processing);
+      await formFixture.whenStable();
+      name.setErrors(failed);
+      await formFixture.whenStable();
+      name.setErrors(null);
+      await formFixture.whenStable();
+
+      expect(changes).toEqual(['processing', 'failed', 'idle']);
+    });
+
+    it('does not emit processingStateChange twice for the same state', async () => {
+      const changes: string[] = [];
+      const formFixture = await createForm((f) =>
+        f.processingStateChange.subscribe((state) => changes.push(state))
+      );
+      const name = formFixture.componentInstance.form().get('name');
+
+      name.setErrors(processing);
+      await formFixture.whenStable();
+      // another field starts processing, the aggregate is still processing
+      formFixture.componentInstance
+        .form()
+        .get('address.street')
+        .setErrors(processing);
+      await formFixture.whenStable();
+      name.setErrors({ required: true });
+      await formFixture.whenStable();
+
+      expect(changes).toEqual(['processing']);
+    });
+  });
 });
