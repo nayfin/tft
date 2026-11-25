@@ -282,7 +282,16 @@ export class ImageUploadFieldComponent
   ngOnInit() {
     super.ngOnInit();
     const control = this.control();
+    // The processing validator goes before the config's validators. Angular merges the errors of
+    // validators in order and the error display shows the first key, so an appended validator would
+    // show "required" while an image compresses. The config's validators are removed and added back
+    // after it, individually, so `hasValidator(Validators.required)` keeps working.
+    const configValidators = (this.config().validators ?? []).filter((validator) =>
+      control.hasValidator(validator)
+    );
+    control.removeValidators(configValidators);
     control.addValidators(this.imageProcessingValidator);
+    control.addValidators(configValidators);
     this.destroyRef.onDestroy(() => {
       this.destroyed = true;
       this.inputImageFileSubject.complete();
@@ -328,9 +337,11 @@ export class ImageUploadFieldComponent
       this.processingFileName.set(imageFile.name);
       // We clear the control here and flag the field as processing so that the control is invalid
       // while compressing, the input pipeline will take care of setting the processed value
+      // touched first: the error display only shows errors of a touched control, and patchValue is what
+      // emits the status event that makes it show the processing error
       this.setProcessingState('processing', null, () => {
-        this.control().patchValue(null);
         this.control().markAsTouched();
+        this.control().patchValue(null);
       });
       this.inputImageFileSubject.next(imageFile);
     }
